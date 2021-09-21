@@ -1,246 +1,381 @@
-SAMICTC1 ;ven/gpl - ceform copy routine ; 1/22/19 1:24pm
- ;;18.0;SAMI;;
+SAMICTC1 ;ven/gpl - ceform copy ;2021-06-04T14:28Z
+ ;;18.0;SAMI;**11**;2020-01;Build 21
+ ;;1.18.0.11+i11
  ;
- ;@license: see routine SAMIUL
+ ; SAMICTC1 & 2 selectively copy fields from a patient's most recent
+ ; existing CT Evaluation Form to a brand new form when it is created.
+ ; They support the Create Form feature of the Case Review Page.
  ;
  quit  ; no entry from top
  ;
-CTCOPY(FROM,TO) ; copies a Ct Eval form selectively
- ; the following is generated from a graph - see genCTCOPY below
- S @TO@("ceanod")=$G(@FROM@("ceanod")) ; 
- S @TO@("cennod")=$G(@FROM@("cennod")) ; 
- S @TO@("cect1en")=$G(@FROM@("cect1en")) ; Endobronchial
- S @TO@("cect2en")=$G(@FROM@("cect2en")) ; Endobronchial
- S @TO@("cect3en")=$G(@FROM@("cect3en")) ; Endobronchial
- S @TO@("cect4en")=$G(@FROM@("cect4en")) ; Endobronchial
- S @TO@("cect5en")=$G(@FROM@("cect5en")) ; Endobronchial
- S @TO@("cect6en")=$G(@FROM@("cect6en")) ; Endobronchial
- S @TO@("cect7en")=$G(@FROM@("cect7en")) ; Endobronchial
- S @TO@("cect8en")=$G(@FROM@("cect8en")) ; Endobronchial
- S @TO@("cect9en")=$G(@FROM@("cect9en")) ; Endobronchial
- S @TO@("cect10en")=$G(@FROM@("cect10en")) ; Endobronchial
- S @TO@("cect1ll")=$G(@FROM@("cect1ll")) ; Most likely location
- S @TO@("cect2ll")=$G(@FROM@("cect2ll")) ; Most likely location
- S @TO@("cect3ll")=$G(@FROM@("cect3ll")) ; Most likely location
- S @TO@("cect4ll")=$G(@FROM@("cect4ll")) ; Most likely location
- S @TO@("cect5ll")=$G(@FROM@("cect5ll")) ; Most likely location
- S @TO@("cect6ll")=$G(@FROM@("cect6ll")) ; Most likely location
- S @TO@("cect7ll")=$G(@FROM@("cect7ll")) ; Most likely location
- S @TO@("cect8ll")=$G(@FROM@("cect8ll")) ; Most likely location
- S @TO@("cect9ll")=$G(@FROM@("cect9ll")) ; Most likely location
- S @TO@("cect10ll")=$G(@FROM@("cect10ll")) ; Most likely location
- S @TO@("cect1sn")=$G(@FROM@("cect1sn")) ; CT Series Number
- S @TO@("cect2sn")=$G(@FROM@("cect2sn")) ; CT Series Number
- S @TO@("cect3sn")=$G(@FROM@("cect3sn")) ; CT Series Number
- S @TO@("cect4sn")=$G(@FROM@("cect4sn")) ; CT Series Number
- S @TO@("cect5sn")=$G(@FROM@("cect5sn")) ; CT Series Number
- S @TO@("cect6sn")=$G(@FROM@("cect6sn")) ; CT Series Number
- S @TO@("cect7sn")=$G(@FROM@("cect7sn")) ; CT Series Number
- S @TO@("cect8sn")=$G(@FROM@("cect8sn")) ; CT Series Number
- S @TO@("cect9sn")=$G(@FROM@("cect9sn")) ; CT Series Number
- S @TO@("cect10sn")=$G(@FROM@("cect10sn")) ; CT Series Number
- S @TO@("cect1inl")=$G(@FROM@("cect1inl")) ; CT Image Number (Low
- S @TO@("cect1inh")=$G(@FROM@("cect1inh")) ; CT Image Number (Hig
- S @TO@("cect2inl")=$G(@FROM@("cect2inl")) ; CT Image Number (Low
- S @TO@("cect2inh")=$G(@FROM@("cect2inh")) ; CT Image Number (Hig
- S @TO@("cect3inl")=$G(@FROM@("cect3inl")) ; CT Image Number (Low
- S @TO@("cect3inh")=$G(@FROM@("cect3inh")) ; CT Image Number (Hig
- S @TO@("cect4inl")=$G(@FROM@("cect4inl")) ; CT Image Number (Low
- S @TO@("cect4inh")=$G(@FROM@("cect4inh")) ; CT Image Number (Hig
- S @TO@("cect5inl")=$G(@FROM@("cect5inl")) ; CT Image Number (Low
- S @TO@("cect5inh")=$G(@FROM@("cect5inh")) ; CT Image Number (Hig
- S @TO@("cect6inl")=$G(@FROM@("cect6inl")) ; CT Image Number (Low
- S @TO@("cect6inh")=$G(@FROM@("cect6inh")) ; CT Image Number (Hig
- S @TO@("cect7inl")=$G(@FROM@("cect7inl")) ; CT Image Number (Low
- S @TO@("cect7inh")=$G(@FROM@("cect7inh")) ; CT Image Number (Hig
- S @TO@("cect8inl")=$G(@FROM@("cect8inl")) ; CT Image Number (Low
- S @TO@("cect8inh")=$G(@FROM@("cect8inh")) ; CT Image Number (Hig
- S @TO@("cect9inl")=$G(@FROM@("cect9inl")) ; CT Image Number (Low
- S @TO@("cect9inh")=$G(@FROM@("cect9inh")) ; CT Image Number (Hig
- S @TO@("cect10inl")=$G(@FROM@("cect10inl")) ; CT Image Number (Low
- S @TO@("cect10inh")=$G(@FROM@("cect10inh")) ; CT Image Number (Hig
- S @TO@("cect1st")=$G(@FROM@("cect1st")) ; Nodule status
- S @TO@("cect2st")=$G(@FROM@("cect2st")) ; Nodule status
- S @TO@("cect3st")=$G(@FROM@("cect3st")) ; Nodule status
- S @TO@("cect4st")=$G(@FROM@("cect4st")) ; Nodule status
- S @TO@("cect5st")=$G(@FROM@("cect5st")) ; Nodule status
- S @TO@("cect6st")=$G(@FROM@("cect6st")) ; Nodule status
- S @TO@("cect7st")=$G(@FROM@("cect7st")) ; Nodule status
- S @TO@("cect8st")=$G(@FROM@("cect8st")) ; Nodule status
- S @TO@("cect9st")=$G(@FROM@("cect9st")) ; Nodule status
- S @TO@("cect10st")=$G(@FROM@("cect10st")) ; Nodule status
- S @TO@("cect1nt")=$G(@FROM@("cect1nt")) ; Nodule Consistency
- S @TO@("cect2nt")=$G(@FROM@("cect2nt")) ; Nodule Consistency
- S @TO@("cect3nt")=$G(@FROM@("cect3nt")) ; Nodule Consistency
- S @TO@("cect4nt")=$G(@FROM@("cect4nt")) ; Nodule Consistency
- S @TO@("cect5nt")=$G(@FROM@("cect5nt")) ; Nodule Consistency
- S @TO@("cect6nt")=$G(@FROM@("cect6nt")) ; Nodule Consistency
- S @TO@("cect7nt")=$G(@FROM@("cect7nt")) ; Nodule Consistency
- S @TO@("cect8nt")=$G(@FROM@("cect8nt")) ; Nodule Consistency
- S @TO@("cect9nt")=$G(@FROM@("cect9nt")) ; Nodule Consistency
- S @TO@("cect10nt")=$G(@FROM@("cect10nt")) ; Nodule Consistency
- S @TO@("cect1sl")=$G(@FROM@("cect1sl")) ; Length (mm)
- S @TO@("cect2sl")=$G(@FROM@("cect2sl")) ; Length (mm)
- S @TO@("cect3sl")=$G(@FROM@("cect3sl")) ; Length (mm)
- S @TO@("cect4sl")=$G(@FROM@("cect4sl")) ; Length (mm)
- S @TO@("cect5sl")=$G(@FROM@("cect5sl")) ; Length (mm)
- S @TO@("cect6sl")=$G(@FROM@("cect6sl")) ; Length (mm)
- S @TO@("cect7sl")=$G(@FROM@("cect7sl")) ; Length (mm)
- S @TO@("cect8sl")=$G(@FROM@("cect8sl")) ; Length (mm)
- S @TO@("cect9sl")=$G(@FROM@("cect9sl")) ; Length (mm)
- S @TO@("cect10sl")=$G(@FROM@("cect10sl")) ; Length (mm)
- S @TO@("cect1sw")=$G(@FROM@("cect1sw")) ; Maximum Width
- S @TO@("cect2sw")=$G(@FROM@("cect2sw")) ; Maximum Width
- S @TO@("cect3sw")=$G(@FROM@("cect3sw")) ; Maximum Width
- S @TO@("cect4sw")=$G(@FROM@("cect4sw")) ; Maximum Width
- S @TO@("cect5sw")=$G(@FROM@("cect5sw")) ; Maximum Width
- S @TO@("cect6sw")=$G(@FROM@("cect6sw")) ; Maximum Width
- S @TO@("cect7sw")=$G(@FROM@("cect7sw")) ; Maximum Width
- S @TO@("cect8sw")=$G(@FROM@("cect8sw")) ; Maximum Width
- S @TO@("cect9sw")=$G(@FROM@("cect9sw")) ; Maximum Width
- S @TO@("cect10sw")=$G(@FROM@("cect10sw")) ; Maximum Width
- S @TO@("cect1sh")=$G(@FROM@("cect1sh")) ; Height
- S @TO@("cect2sh")=$G(@FROM@("cect2sh")) ; Height
- S @TO@("cect3sh")=$G(@FROM@("cect3sh")) ; Height
- S @TO@("cect4sh")=$G(@FROM@("cect4sh")) ; Height
- S @TO@("cect5sh")=$G(@FROM@("cect5sh")) ; Height
- S @TO@("cect6sh")=$G(@FROM@("cect6sh")) ; Height
- S @TO@("cect7sh")=$G(@FROM@("cect7sh")) ; Height
- S @TO@("cect8sh")=$G(@FROM@("cect8sh")) ; Height
- S @TO@("cect9sh")=$G(@FROM@("cect9sh")) ; Height
- S @TO@("cect10sh")=$G(@FROM@("cect10sh")) ; Height
- S @TO@("cect1sv")=$G(@FROM@("cect1sv")) ; Volume
- S @TO@("cect2sv")=$G(@FROM@("cect2sv")) ; Volume
- S @TO@("cect3sv")=$G(@FROM@("cect3sv")) ; Volume
- S @TO@("cect4sv")=$G(@FROM@("cect4sv")) ; Volume
- S @TO@("cect5sv")=$G(@FROM@("cect5sv")) ; Volume
- S @TO@("cect6sv")=$G(@FROM@("cect6sv")) ; Volume
- S @TO@("cect7sv")=$G(@FROM@("cect7sv")) ; Volume
- S @TO@("cect8sv")=$G(@FROM@("cect8sv")) ; Volume
- S @TO@("cect9sv")=$G(@FROM@("cect9sv")) ; Volume
- S @TO@("cect10sv")=$G(@FROM@("cect10sv")) ; Volume
- S @TO@("cect1ssl")=$G(@FROM@("cect1ssl")) ; Solid Comp. Length
- S @TO@("cect1ssw")=$G(@FROM@("cect1ssw")) ; Solid Comp. Width
- S @TO@("cect2ssl")=$G(@FROM@("cect2ssl")) ; Solid Comp. Length
- S @TO@("cect2ssw")=$G(@FROM@("cect2ssw")) ; Solid Comp. Width
- S @TO@("cect3ssl")=$G(@FROM@("cect3ssl")) ; Solid Comp. Length
- S @TO@("cect3ssw")=$G(@FROM@("cect3ssw")) ; Solid Comp. Width
- S @TO@("cect4ssl")=$G(@FROM@("cect4ssl")) ; Solid Comp. Length
- S @TO@("cect4ssw")=$G(@FROM@("cect4ssw")) ; Solid Comp. Width
- S @TO@("cect5ssl")=$G(@FROM@("cect5ssl")) ; Solid Comp. Length
- S @TO@("cect5ssw")=$G(@FROM@("cect5ssw")) ; Solid Comp. Width
- S @TO@("cect6ssl")=$G(@FROM@("cect6ssl")) ; Solid Comp. Length
- S @TO@("cect6ssw")=$G(@FROM@("cect6ssw")) ; Solid Comp. Width
- S @TO@("cect7ssl")=$G(@FROM@("cect7ssl")) ; Solid Comp. Length
- S @TO@("cect7ssw")=$G(@FROM@("cect7ssw")) ; Solid Comp. Width
- S @TO@("cect8ssl")=$G(@FROM@("cect8ssl")) ; Solid Comp. Length
- S @TO@("cect8ssw")=$G(@FROM@("cect8ssw")) ; Solid Comp. Width
- S @TO@("cect9ssl")=$G(@FROM@("cect9ssl")) ; Solid Comp. Length
- S @TO@("cect9ssw")=$G(@FROM@("cect9ssw")) ; Solid Comp. Width
- S @TO@("cect10ssl")=$G(@FROM@("cect10ssl")) ; Solid Comp. Length
- S @TO@("cect10ssw")=$G(@FROM@("cect10ssw")) ; Solid Comp. Width
- S @TO@("cect1se")=$G(@FROM@("cect1se")) ; n
- S @TO@("cect1se")=$G(@FROM@("cect1se")) ;                 No
- S @TO@("cect2se")=$G(@FROM@("cect2se")) ; n
- S @TO@("cect2se")=$G(@FROM@("cect2se")) ;                 No
- S @TO@("cect3se")=$G(@FROM@("cect3se")) ; n
- S @TO@("cect3se")=$G(@FROM@("cect3se")) ;                 No
- S @TO@("cect4se")=$G(@FROM@("cect4se")) ; n
- S @TO@("cect4se")=$G(@FROM@("cect4se")) ;                 No
- S @TO@("cect5se")=$G(@FROM@("cect5se")) ; n
- S @TO@("cect5se")=$G(@FROM@("cect5se")) ;                 No
- S @TO@("cect6se")=$G(@FROM@("cect6se")) ; n
- S @TO@("cect6se")=$G(@FROM@("cect6se")) ;                 No
- S @TO@("cect7se")=$G(@FROM@("cect7se")) ; n
- S @TO@("cect7se")=$G(@FROM@("cect7se")) ;                 No
- S @TO@("cect8se")=$G(@FROM@("cect8se")) ; n
- S @TO@("cect8se")=$G(@FROM@("cect8se")) ;                 No
- S @TO@("cect9se")=$G(@FROM@("cect9se")) ; n
- S @TO@("cect9se")=$G(@FROM@("cect9se")) ;                 No
- S @TO@("cect10se")=$G(@FROM@("cect10se")) ; n
- S @TO@("cect10se")=$G(@FROM@("cect10se")) ;                 No
- S @TO@("cectin")=$G(@FROM@("cectin")) ; 1
- S @TO@("cectin")=$G(@FROM@("cectin")) ; 2
- S @TO@("cect1sp")=$G(@FROM@("cect1sp")) ; n
- S @TO@("cect1sp")=$G(@FROM@("cect1sp")) ;                 No
- S @TO@("cect2sp")=$G(@FROM@("cect2sp")) ; n
- S @TO@("cect2sp")=$G(@FROM@("cect2sp")) ;                 No
- S @TO@("cect3sp")=$G(@FROM@("cect3sp")) ; n
- S @TO@("cect3sp")=$G(@FROM@("cect3sp")) ;                 No
- S @TO@("cect4sp")=$G(@FROM@("cect4sp")) ; n
- S @TO@("cect4sp")=$G(@FROM@("cect4sp")) ;                 No
- S @TO@("cect5sp")=$G(@FROM@("cect5sp")) ; n
- S @TO@("cect5sp")=$G(@FROM@("cect5sp")) ;                 No
- S @TO@("cect6sp")=$G(@FROM@("cect6sp")) ; n
- S @TO@("cect6sp")=$G(@FROM@("cect6sp")) ;                 No
- S @TO@("cect7sp")=$G(@FROM@("cect7sp")) ; n
- S @TO@("cect7sp")=$G(@FROM@("cect7sp")) ;                 No
- S @TO@("cect8sp")=$G(@FROM@("cect8sp")) ; n
- S @TO@("cect8sp")=$G(@FROM@("cect8sp")) ;                 No
- S @TO@("cect9sp")=$G(@FROM@("cect9sp")) ; n
- S @TO@("cect9sp")=$G(@FROM@("cect9sp")) ;                 No
- S @TO@("cect10sp")=$G(@FROM@("cect10sp")) ; n
- S @TO@("cect10sp")=$G(@FROM@("cect10sp")) ;                 No
- S @TO@("cect1pld")=$G(@FROM@("cect1pld")) ; Distance
- S @TO@("cect2pld")=$G(@FROM@("cect2pld")) ; Distance
- S @TO@("cect3pld")=$G(@FROM@("cect3pld")) ; Distance
- S @TO@("cect4pld")=$G(@FROM@("cect4pld")) ; Distance
- S @TO@("cect5pld")=$G(@FROM@("cect5pld")) ; Distance
- S @TO@("cect6pld")=$G(@FROM@("cect6pld")) ; Distance
- S @TO@("cect7pld")=$G(@FROM@("cect7pld")) ; Distance
- S @TO@("cect8pld")=$G(@FROM@("cect8pld")) ; Distance
- S @TO@("cect9pld")=$G(@FROM@("cect9pld")) ; Distance
- S @TO@("cect10pld")=$G(@FROM@("cect10pld")) ; Distance
- S @TO@("cect1co")=$G(@FROM@("cect1co")) ; Comment
- S @TO@("cect2co")=$G(@FROM@("cect2co")) ; Comment
- S @TO@("cect3co")=$G(@FROM@("cect3co")) ; Comment
- S @TO@("cect4co")=$G(@FROM@("cect4co")) ; Comment
- S @TO@("cect5co")=$G(@FROM@("cect5co")) ; Comment
- S @TO@("cect6co")=$G(@FROM@("cect6co")) ; Comment
- S @TO@("cect7co")=$G(@FROM@("cect7co")) ; Comment
- S @TO@("cect8co")=$G(@FROM@("cect8co")) ; Comment
- S @TO@("cect9co")=$G(@FROM@("cect9co")) ; Comment
- S @TO@("cect10co")=$G(@FROM@("cect10co")) ; Comment
- S @TO@("cect1pd")=$G(@FROM@("cect1pd")) ; Pathologic diagnosis
- S @TO@("cect2pd")=$G(@FROM@("cect2pd")) ; Pathologic diagnosis
- S @TO@("cect3pd")=$G(@FROM@("cect3pd")) ; Pathologic diagnosis
- S @TO@("cect4pd")=$G(@FROM@("cect4pd")) ; Pathologic diagnosis
- S @TO@("cect5pd")=$G(@FROM@("cect5pd")) ; Pathologic diagnosis
- S @TO@("cect6pd")=$G(@FROM@("cect6pd")) ; Pathologic diagnosis
- S @TO@("cect7pd")=$G(@FROM@("cect7pd")) ; Pathologic diagnosis
- S @TO@("cect8pd")=$G(@FROM@("cect8pd")) ; Pathologic diagnosis
- S @TO@("cect9pd")=$G(@FROM@("cect9pd")) ; Pathologic diagnosis
- S @TO@("cect10pd")=$G(@FROM@("cect10pd")) ; Pathologic diagnosis
- S @TO@("cectancn")=$G(@FROM@("cectancn")) ; 1
- S @TO@("cectacn")=$G(@FROM@("cectacn")) ; 1
- S @TO@("ceem")=$G(@FROM@("ceem")) ; nv
- S @TO@("ceem")=$G(@FROM@("ceem")) ; no
- S @TO@("ceoca")=$G(@FROM@("ceoca")) ; n
- S @TO@("ceoca")=$G(@FROM@("ceoca")) ; y
- S @TO@("ceccv")=$G(@FROM@("ceccv")) ; e
- S @TO@("cecclm")=$G(@FROM@("cecclm")) ;               Left m
- S @TO@("ceccld")=$G(@FROM@("ceccld")) ;               LAD
- S @TO@("cecccf")=$G(@FROM@("cecccf")) ;               Circum
- S @TO@("ceccrc")=$G(@FROM@("ceccrc")) ;               RCA
- S @TO@("pa")=$G(@FROM@("pa")) ; n
- S @TO@("pa")=$G(@FROM@("pa")) ;            No
- ; Continue copy in second routine
- D CTCOPY2^SAMICTC2(FROM,TO)
- q
  ;
-GENCTCPY ; generates the copy routine from a graph
  ;
- n root s root=$$setroot^%wd("ceform-fields")
- n fldf s fldf=$na(@root@("field"))
- w !,"generating copy from ",fldf
- n zi s zi=0
- f  s zi=$o(@fldf@(zi)) q:+zi=0  d  ;
- . i $g(@fldf@(zi,"copy"))'=1 q  ; only want copy fields
- . n name,label
- . s name=$g(@fldf@(zi,"name"))
- . s label=$g(@fldf@(zi,"label"))
- . s label=$e(label,1,20)
- . q:name=""
- . w !," S @TO@("""_name_""")=$G(@FROM@("""_name_""")) ; "_label
- q
+ ;@section 0 primary development
  ;
+ ;
+ ;
+ ;@license: see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;@contents
+ ; CTCOPY copy ct eval form selectively
+ ; GENCTCPY generates copy routine from graph
+ ;
+ ;
+ ;
+ ;@section 1 wsi WSREPORT & related subroutines
+ ;
+ ;
+ ;
+ ;@ppi CTCOPY^SAMICTC1
+CTCOPY(FROM,TO,key) ; copy ct eval form selectively
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean;silent;sac
+ ;@called-by
+ ; MKCEFORM^SAMICAS3
+ ; MKPTFORM^SAMICAS3
+ ; MKITFORM^SAMICAS3
+ ; MKBXFORM^SAMICAS3
+ ;@calls
+ ; CTCOPY2^SAMICTC2
+ ;@input
+ ; FROM = existing source form array root
+ ; TO = new target form array root
+ ; key = form key, e.g. ceform-2021-05-25
+ ;@output
+ ; @TO: selected fields copied f/source form t/target form
+ ;
+ ;
+ ;@stanza 2 copy is it new fields
+ ;
+ if $get(key)="" set key="ce"
+ ;
+ if key'["ce" do  ; all forms except ct eval form
+ . set @TO@("cect1ch")=$get(@FROM@("cect1ch"))
+ . set @TO@("cect2ch")=$get(@FROM@("cect2ch"))
+ . set @TO@("cect3ch")=$get(@FROM@("cect3ch"))
+ . set @TO@("cect4ch")=$get(@FROM@("cect4ch"))
+ . set @TO@("cect5ch")=$get(@FROM@("cect5ch"))
+ . set @TO@("cect6ch")=$get(@FROM@("cect6ch"))
+ . set @TO@("cect7ch")=$get(@FROM@("cect7ch"))
+ . set @TO@("cect8ch")=$get(@FROM@("cect8ch"))
+ . set @TO@("cect9ch")=$get(@FROM@("cect9ch"))
+ . quit
+ ;
+ else  do  ;
+ . new cei,isnew,savals
+ . set savals("pw")="" ; Prev seen, resolved
+ . set savals("px")="" ; Prev seen, not a nodule 
+ . set savals("pr")="" ; Prev seen, resected
+ . set savals("pk")="" ; Not in outside report
+ . set savals("pv")="" ; Not included in scan
+ . for cei=1:1:9 do  ;
+ . . set isnew=$get(@FROM@("cect"_cei_"ch"))
+ . . quit:isnew=""
+ . . if $data(savals(isnew)) set @TO@("cect"_cei_"ch")=isnew
+ . . quit
+ . quit
+ ;
+ ;
+ ;@stanza 3 copy most fields
+ ;
+ ; the following is generated from a graph - see GENCTCOPY below
+ set @TO@("ceanod")=$get(@FROM@("ceanod")) ; 
+ set @TO@("cennod")=$get(@FROM@("cennod")) ; 
+ ;
+ set @TO@("cect1en")=$get(@FROM@("cect1en")) ; Endobronchial
+ set @TO@("cect2en")=$get(@FROM@("cect2en")) ; Endobronchial
+ set @TO@("cect3en")=$get(@FROM@("cect3en")) ; Endobronchial
+ set @TO@("cect4en")=$get(@FROM@("cect4en")) ; Endobronchial
+ set @TO@("cect5en")=$get(@FROM@("cect5en")) ; Endobronchial
+ set @TO@("cect6en")=$get(@FROM@("cect6en")) ; Endobronchial
+ set @TO@("cect7en")=$get(@FROM@("cect7en")) ; Endobronchial
+ set @TO@("cect8en")=$get(@FROM@("cect8en")) ; Endobronchial
+ set @TO@("cect9en")=$get(@FROM@("cect9en")) ; Endobronchial
+ set @TO@("cect10en")=$get(@FROM@("cect10en")) ; Endobronchial
+ ;
+ set @TO@("cect1ll")=$get(@FROM@("cect1ll")) ; Most likely location
+ set @TO@("cect2ll")=$get(@FROM@("cect2ll")) ; Most likely location
+ set @TO@("cect3ll")=$get(@FROM@("cect3ll")) ; Most likely location
+ set @TO@("cect4ll")=$get(@FROM@("cect4ll")) ; Most likely location
+ set @TO@("cect5ll")=$get(@FROM@("cect5ll")) ; Most likely location
+ set @TO@("cect6ll")=$get(@FROM@("cect6ll")) ; Most likely location
+ set @TO@("cect7ll")=$get(@FROM@("cect7ll")) ; Most likely location
+ set @TO@("cect8ll")=$get(@FROM@("cect8ll")) ; Most likely location
+ set @TO@("cect9ll")=$get(@FROM@("cect9ll")) ; Most likely location
+ set @TO@("cect10ll")=$get(@FROM@("cect10ll")) ; Most likely location
+ ;
+ set @TO@("cect1sn")=$get(@FROM@("cect1sn")) ; CT Series Number
+ set @TO@("cect2sn")=$get(@FROM@("cect2sn")) ; CT Series Number
+ set @TO@("cect3sn")=$get(@FROM@("cect3sn")) ; CT Series Number
+ set @TO@("cect4sn")=$get(@FROM@("cect4sn")) ; CT Series Number
+ set @TO@("cect5sn")=$get(@FROM@("cect5sn")) ; CT Series Number
+ set @TO@("cect6sn")=$get(@FROM@("cect6sn")) ; CT Series Number
+ set @TO@("cect7sn")=$get(@FROM@("cect7sn")) ; CT Series Number
+ set @TO@("cect8sn")=$get(@FROM@("cect8sn")) ; CT Series Number
+ set @TO@("cect9sn")=$get(@FROM@("cect9sn")) ; CT Series Number
+ set @TO@("cect10sn")=$get(@FROM@("cect10sn")) ; CT Series Number
+ ;
+ set @TO@("cect1inl")=$get(@FROM@("cect1inl")) ; CT Image Number (Low
+ set @TO@("cect1inh")=$get(@FROM@("cect1inh")) ; CT Image Number (Hig
+ set @TO@("cect2inl")=$get(@FROM@("cect2inl")) ; CT Image Number (Low
+ set @TO@("cect2inh")=$get(@FROM@("cect2inh")) ; CT Image Number (Hig
+ set @TO@("cect3inl")=$get(@FROM@("cect3inl")) ; CT Image Number (Low
+ set @TO@("cect3inh")=$get(@FROM@("cect3inh")) ; CT Image Number (Hig
+ set @TO@("cect4inl")=$get(@FROM@("cect4inl")) ; CT Image Number (Low
+ set @TO@("cect4inh")=$get(@FROM@("cect4inh")) ; CT Image Number (Hig
+ set @TO@("cect5inl")=$get(@FROM@("cect5inl")) ; CT Image Number (Low
+ set @TO@("cect5inh")=$get(@FROM@("cect5inh")) ; CT Image Number (Hig
+ set @TO@("cect6inl")=$get(@FROM@("cect6inl")) ; CT Image Number (Low
+ set @TO@("cect6inh")=$get(@FROM@("cect6inh")) ; CT Image Number (Hig
+ set @TO@("cect7inl")=$get(@FROM@("cect7inl")) ; CT Image Number (Low
+ set @TO@("cect7inh")=$get(@FROM@("cect7inh")) ; CT Image Number (Hig
+ set @TO@("cect8inl")=$get(@FROM@("cect8inl")) ; CT Image Number (Low
+ set @TO@("cect8inh")=$get(@FROM@("cect8inh")) ; CT Image Number (Hig
+ set @TO@("cect9inl")=$get(@FROM@("cect9inl")) ; CT Image Number (Low
+ set @TO@("cect9inh")=$get(@FROM@("cect9inh")) ; CT Image Number (Hig
+ set @TO@("cect10inl")=$get(@FROM@("cect10inl")) ; CT Image Number (Low
+ set @TO@("cect10inh")=$get(@FROM@("cect10inh")) ; CT Image Number (Hig
+ ;
+ set @TO@("cect1st")=$get(@FROM@("cect1st")) ; Nodule status
+ set @TO@("cect2st")=$get(@FROM@("cect2st")) ; Nodule status
+ set @TO@("cect3st")=$get(@FROM@("cect3st")) ; Nodule status
+ set @TO@("cect4st")=$get(@FROM@("cect4st")) ; Nodule status
+ set @TO@("cect5st")=$get(@FROM@("cect5st")) ; Nodule status
+ set @TO@("cect6st")=$get(@FROM@("cect6st")) ; Nodule status
+ set @TO@("cect7st")=$get(@FROM@("cect7st")) ; Nodule status
+ set @TO@("cect8st")=$get(@FROM@("cect8st")) ; Nodule status
+ set @TO@("cect9st")=$get(@FROM@("cect9st")) ; Nodule status
+ set @TO@("cect10st")=$get(@FROM@("cect10st")) ; Nodule status
+ ;
+ set @TO@("cect1nt")=$get(@FROM@("cect1nt")) ; Nodule Consistency
+ set @TO@("cect2nt")=$get(@FROM@("cect2nt")) ; Nodule Consistency
+ set @TO@("cect3nt")=$get(@FROM@("cect3nt")) ; Nodule Consistency
+ set @TO@("cect4nt")=$get(@FROM@("cect4nt")) ; Nodule Consistency
+ set @TO@("cect5nt")=$get(@FROM@("cect5nt")) ; Nodule Consistency
+ set @TO@("cect6nt")=$get(@FROM@("cect6nt")) ; Nodule Consistency
+ set @TO@("cect7nt")=$get(@FROM@("cect7nt")) ; Nodule Consistency
+ set @TO@("cect8nt")=$get(@FROM@("cect8nt")) ; Nodule Consistency
+ set @TO@("cect9nt")=$get(@FROM@("cect9nt")) ; Nodule Consistency
+ set @TO@("cect10nt")=$get(@FROM@("cect10nt")) ; Nodule Consistency
+ ;
+ set @TO@("cect1sl")=$get(@FROM@("cect1sl")) ; Length (mm)
+ set @TO@("cect2sl")=$get(@FROM@("cect2sl")) ; Length (mm)
+ set @TO@("cect3sl")=$get(@FROM@("cect3sl")) ; Length (mm)
+ set @TO@("cect4sl")=$get(@FROM@("cect4sl")) ; Length (mm)
+ set @TO@("cect5sl")=$get(@FROM@("cect5sl")) ; Length (mm)
+ set @TO@("cect6sl")=$get(@FROM@("cect6sl")) ; Length (mm)
+ set @TO@("cect7sl")=$get(@FROM@("cect7sl")) ; Length (mm)
+ set @TO@("cect8sl")=$get(@FROM@("cect8sl")) ; Length (mm)
+ set @TO@("cect9sl")=$get(@FROM@("cect9sl")) ; Length (mm)
+ set @TO@("cect10sl")=$get(@FROM@("cect10sl")) ; Length (mm)
+ ;
+ set @TO@("cect1sw")=$get(@FROM@("cect1sw")) ; Maximum Width
+ set @TO@("cect2sw")=$get(@FROM@("cect2sw")) ; Maximum Width
+ set @TO@("cect3sw")=$get(@FROM@("cect3sw")) ; Maximum Width
+ set @TO@("cect4sw")=$get(@FROM@("cect4sw")) ; Maximum Width
+ set @TO@("cect5sw")=$get(@FROM@("cect5sw")) ; Maximum Width
+ set @TO@("cect6sw")=$get(@FROM@("cect6sw")) ; Maximum Width
+ set @TO@("cect7sw")=$get(@FROM@("cect7sw")) ; Maximum Width
+ set @TO@("cect8sw")=$get(@FROM@("cect8sw")) ; Maximum Width
+ set @TO@("cect9sw")=$get(@FROM@("cect9sw")) ; Maximum Width
+ set @TO@("cect10sw")=$get(@FROM@("cect10sw")) ; Maximum Width
+ ;
+ set @TO@("cect1sh")=$get(@FROM@("cect1sh")) ; Height
+ set @TO@("cect2sh")=$get(@FROM@("cect2sh")) ; Height
+ set @TO@("cect3sh")=$get(@FROM@("cect3sh")) ; Height
+ set @TO@("cect4sh")=$get(@FROM@("cect4sh")) ; Height
+ set @TO@("cect5sh")=$get(@FROM@("cect5sh")) ; Height
+ set @TO@("cect6sh")=$get(@FROM@("cect6sh")) ; Height
+ set @TO@("cect7sh")=$get(@FROM@("cect7sh")) ; Height
+ set @TO@("cect8sh")=$get(@FROM@("cect8sh")) ; Height
+ set @TO@("cect9sh")=$get(@FROM@("cect9sh")) ; Height
+ set @TO@("cect10sh")=$get(@FROM@("cect10sh")) ; Height
+ ;
+ set @TO@("cect1sv")=$get(@FROM@("cect1sv")) ; Volume
+ set @TO@("cect2sv")=$get(@FROM@("cect2sv")) ; Volume
+ set @TO@("cect3sv")=$get(@FROM@("cect3sv")) ; Volume
+ set @TO@("cect4sv")=$get(@FROM@("cect4sv")) ; Volume
+ set @TO@("cect5sv")=$get(@FROM@("cect5sv")) ; Volume
+ set @TO@("cect6sv")=$get(@FROM@("cect6sv")) ; Volume
+ set @TO@("cect7sv")=$get(@FROM@("cect7sv")) ; Volume
+ set @TO@("cect8sv")=$get(@FROM@("cect8sv")) ; Volume
+ set @TO@("cect9sv")=$get(@FROM@("cect9sv")) ; Volume
+ set @TO@("cect10sv")=$get(@FROM@("cect10sv")) ; Volume
+ ;
+ set @TO@("cect1ssl")=$get(@FROM@("cect1ssl")) ; Solid Comp. Length
+ set @TO@("cect1ssw")=$get(@FROM@("cect1ssw")) ; Solid Comp. Width
+ set @TO@("cect2ssl")=$get(@FROM@("cect2ssl")) ; Solid Comp. Length
+ set @TO@("cect2ssw")=$get(@FROM@("cect2ssw")) ; Solid Comp. Width
+ set @TO@("cect3ssl")=$get(@FROM@("cect3ssl")) ; Solid Comp. Length
+ set @TO@("cect3ssw")=$get(@FROM@("cect3ssw")) ; Solid Comp. Width
+ set @TO@("cect4ssl")=$get(@FROM@("cect4ssl")) ; Solid Comp. Length
+ set @TO@("cect4ssw")=$get(@FROM@("cect4ssw")) ; Solid Comp. Width
+ set @TO@("cect5ssl")=$get(@FROM@("cect5ssl")) ; Solid Comp. Length
+ set @TO@("cect5ssw")=$get(@FROM@("cect5ssw")) ; Solid Comp. Width
+ set @TO@("cect6ssl")=$get(@FROM@("cect6ssl")) ; Solid Comp. Length
+ set @TO@("cect6ssw")=$get(@FROM@("cect6ssw")) ; Solid Comp. Width
+ set @TO@("cect7ssl")=$get(@FROM@("cect7ssl")) ; Solid Comp. Length
+ set @TO@("cect7ssw")=$get(@FROM@("cect7ssw")) ; Solid Comp. Width
+ set @TO@("cect8ssl")=$get(@FROM@("cect8ssl")) ; Solid Comp. Length
+ set @TO@("cect8ssw")=$get(@FROM@("cect8ssw")) ; Solid Comp. Width
+ set @TO@("cect9ssl")=$get(@FROM@("cect9ssl")) ; Solid Comp. Length
+ set @TO@("cect9ssw")=$get(@FROM@("cect9ssw")) ; Solid Comp. Width
+ set @TO@("cect10ssl")=$get(@FROM@("cect10ssl")) ; Solid Comp. Length
+ set @TO@("cect10ssw")=$get(@FROM@("cect10ssw")) ; Solid Comp. Width
+ ;
+ set @TO@("cect1se")=$get(@FROM@("cect1se")) ; n
+ set @TO@("cect1se")=$get(@FROM@("cect1se")) ;                 No
+ set @TO@("cect2se")=$get(@FROM@("cect2se")) ; n
+ set @TO@("cect2se")=$get(@FROM@("cect2se")) ;                 No
+ set @TO@("cect3se")=$get(@FROM@("cect3se")) ; n
+ set @TO@("cect3se")=$get(@FROM@("cect3se")) ;                 No
+ set @TO@("cect4se")=$get(@FROM@("cect4se")) ; n
+ set @TO@("cect4se")=$get(@FROM@("cect4se")) ;                 No
+ set @TO@("cect5se")=$get(@FROM@("cect5se")) ; n
+ set @TO@("cect5se")=$get(@FROM@("cect5se")) ;                 No
+ set @TO@("cect6se")=$get(@FROM@("cect6se")) ; n
+ set @TO@("cect6se")=$get(@FROM@("cect6se")) ;                 No
+ set @TO@("cect7se")=$get(@FROM@("cect7se")) ; n
+ set @TO@("cect7se")=$get(@FROM@("cect7se")) ;                 No
+ set @TO@("cect8se")=$get(@FROM@("cect8se")) ; n
+ set @TO@("cect8se")=$get(@FROM@("cect8se")) ;                 No
+ set @TO@("cect9se")=$get(@FROM@("cect9se")) ; n
+ set @TO@("cect9se")=$get(@FROM@("cect9se")) ;                 No
+ set @TO@("cect10se")=$get(@FROM@("cect10se")) ; n
+ set @TO@("cect10se")=$get(@FROM@("cect10se")) ;                 No
+ ;
+ set @TO@("cectin")=$get(@FROM@("cectin")) ; 1
+ set @TO@("cectin")=$get(@FROM@("cectin")) ; 2
+ ;
+ set @TO@("cect1sp")=$get(@FROM@("cect1sp")) ; n
+ set @TO@("cect1sp")=$get(@FROM@("cect1sp")) ;                 No
+ set @TO@("cect2sp")=$get(@FROM@("cect2sp")) ; n
+ set @TO@("cect2sp")=$get(@FROM@("cect2sp")) ;                 No
+ set @TO@("cect3sp")=$get(@FROM@("cect3sp")) ; n
+ set @TO@("cect3sp")=$get(@FROM@("cect3sp")) ;                 No
+ set @TO@("cect4sp")=$get(@FROM@("cect4sp")) ; n
+ set @TO@("cect4sp")=$get(@FROM@("cect4sp")) ;                 No
+ set @TO@("cect5sp")=$get(@FROM@("cect5sp")) ; n
+ set @TO@("cect5sp")=$get(@FROM@("cect5sp")) ;                 No
+ set @TO@("cect6sp")=$get(@FROM@("cect6sp")) ; n
+ set @TO@("cect6sp")=$get(@FROM@("cect6sp")) ;                 No
+ set @TO@("cect7sp")=$get(@FROM@("cect7sp")) ; n
+ set @TO@("cect7sp")=$get(@FROM@("cect7sp")) ;                 No
+ set @TO@("cect8sp")=$get(@FROM@("cect8sp")) ; n
+ set @TO@("cect8sp")=$get(@FROM@("cect8sp")) ;                 No
+ set @TO@("cect9sp")=$get(@FROM@("cect9sp")) ; n
+ set @TO@("cect9sp")=$get(@FROM@("cect9sp")) ;                 No
+ set @TO@("cect10sp")=$get(@FROM@("cect10sp")) ; n
+ set @TO@("cect10sp")=$get(@FROM@("cect10sp")) ;                 No
+ ;
+ set @TO@("cect1pld")=$get(@FROM@("cect1pld")) ; Distance
+ set @TO@("cect2pld")=$get(@FROM@("cect2pld")) ; Distance
+ set @TO@("cect3pld")=$get(@FROM@("cect3pld")) ; Distance
+ set @TO@("cect4pld")=$get(@FROM@("cect4pld")) ; Distance
+ set @TO@("cect5pld")=$get(@FROM@("cect5pld")) ; Distance
+ set @TO@("cect6pld")=$get(@FROM@("cect6pld")) ; Distance
+ set @TO@("cect7pld")=$get(@FROM@("cect7pld")) ; Distance
+ set @TO@("cect8pld")=$get(@FROM@("cect8pld")) ; Distance
+ set @TO@("cect9pld")=$get(@FROM@("cect9pld")) ; Distance
+ set @TO@("cect10pld")=$get(@FROM@("cect10pld")) ; Distance
+ ;
+ set @TO@("cect1co")=$get(@FROM@("cect1co")) ; Comment
+ set @TO@("cect2co")=$get(@FROM@("cect2co")) ; Comment
+ set @TO@("cect3co")=$get(@FROM@("cect3co")) ; Comment
+ set @TO@("cect4co")=$get(@FROM@("cect4co")) ; Comment
+ set @TO@("cect5co")=$get(@FROM@("cect5co")) ; Comment
+ set @TO@("cect6co")=$get(@FROM@("cect6co")) ; Comment
+ set @TO@("cect7co")=$get(@FROM@("cect7co")) ; Comment
+ set @TO@("cect8co")=$get(@FROM@("cect8co")) ; Comment
+ set @TO@("cect9co")=$get(@FROM@("cect9co")) ; Comment
+ set @TO@("cect10co")=$get(@FROM@("cect10co")) ; Comment
+ ;
+ set @TO@("cect1pd")=$get(@FROM@("cect1pd")) ; Pathologic diagnosis
+ set @TO@("cect2pd")=$get(@FROM@("cect2pd")) ; Pathologic diagnosis
+ set @TO@("cect3pd")=$get(@FROM@("cect3pd")) ; Pathologic diagnosis
+ set @TO@("cect4pd")=$get(@FROM@("cect4pd")) ; Pathologic diagnosis
+ set @TO@("cect5pd")=$get(@FROM@("cect5pd")) ; Pathologic diagnosis
+ set @TO@("cect6pd")=$get(@FROM@("cect6pd")) ; Pathologic diagnosis
+ set @TO@("cect7pd")=$get(@FROM@("cect7pd")) ; Pathologic diagnosis
+ set @TO@("cect8pd")=$get(@FROM@("cect8pd")) ; Pathologic diagnosis
+ set @TO@("cect9pd")=$get(@FROM@("cect9pd")) ; Pathologic diagnosis
+ set @TO@("cect10pd")=$get(@FROM@("cect10pd")) ; Pathologic diagnosis
+ ;
+ set @TO@("cectancn")=$get(@FROM@("cectancn")) ; 1
+ set @TO@("cectacn")=$get(@FROM@("cectacn")) ; 1
+ ;
+ set @TO@("ceem")=$get(@FROM@("ceem")) ; nv
+ set @TO@("ceem")=$get(@FROM@("ceem")) ; no
+ ;
+ set @TO@("ceoca")=$get(@FROM@("ceoca")) ; n
+ set @TO@("ceoca")=$get(@FROM@("ceoca")) ; y
+ ;
+ set @TO@("ceccv")=$get(@FROM@("ceccv")) ; e
+ set @TO@("cecclm")=$get(@FROM@("cecclm")) ;               Left m
+ set @TO@("ceccld")=$get(@FROM@("ceccld")) ;               LAD
+ set @TO@("cecccf")=$get(@FROM@("cecccf")) ;               Circum
+ set @TO@("ceccrc")=$get(@FROM@("ceccrc")) ;               RCA
+ ;
+ set @TO@("pa")=$get(@FROM@("pa")) ; n
+ set @TO@("pa")=$get(@FROM@("pa")) ;            No
+ ;
+ ;
+ ;@stanza 4 continue copy in 2nd routine
+ ;
+ do CTCOPY2^SAMICTC2(FROM,TO)
+ ;
+ ;
+ ;@stanza 5 termination
+ ;
+ quit  ; end of ppi CTCOPY^SAMICTC1
+ ;
+ ;
+ ;
+ ;@dmi GENCTCOPY^SAMICTC1
+GENCTCPY ; generate copy routine from graph
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean;silent;sac
+ ;@called-by SAMI developer from direct mode
+ ;@calls
+ ; $$setroot^%wd
+ ;@input
+ ; ceform-fields graph
+ ;@output
+ ; writes compiled code to current device
+ ;
+ ;
+ ;@stanza 2 compile code to copy most fields
+ ;
+ new root set root=$$setroot^%wd("ceform-fields")
+ new fldf set fldf=$name(@root@("field"))
+ ;
+ write !,"generating copy from ",fldf
+ ;
+ new zi set zi=0
+ for  do  quit:'zi
+ . set zi=$order(@fldf@(zi))
+ . quit:'zi
+ . ;
+ . quit:$get(@fldf@(zi,"copy"))'=1  ; only want copy fields
+ . ;
+ . new name,label
+ . set name=$get(@fldf@(zi,"name"))
+ . set label=$get(@fldf@(zi,"label"))
+ . set label=$extract(label,1,20)
+ . quit:name=""
+ . ;
+ . write !," set @TO@("""_name_""")=$get(@FROM@("""_name_""")) ; "_label
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of dmi GENCTCOPY^SAMICTC1
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTC1

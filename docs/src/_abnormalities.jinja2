@@ -120,7 +120,7 @@
                         </tr>
 
                         <tr>
-                            <td><label class="control-label" >Small airways disease</label></td>
+                            <td><label class="control-label">Small airways disease</label></td>
                             <td>
                                 <div class="form-group">
                                     {{ f.yesCheckbox("cebrss") }}
@@ -173,7 +173,7 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><label class="control-label" >Traction bronchiectasis in a peripheral
+                            <td><label class="control-label">Traction bronchiectasis in a peripheral
                                 location</label></td>
                             <td>
                                 <div class="form-group">
@@ -207,7 +207,7 @@
                         </tr>
 
                         <tr>
-                            <td><label class="control-label" >Reticulations</label></td>
+                            <td><label class="control-label">Reticulations</label></td>
                             <td>
                                 <div class="form-group">
                                     {{ f.yesCheckbox("ceret") }}
@@ -273,7 +273,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <label class="control-label" >Pleural thickening/plaques</label>
+                                <label class="control-label">Pleural thickening/plaques</label>
                             </td>
                             <td>
                                 <div class="form-group">
@@ -359,7 +359,7 @@
                         </tr>
 
                         <tr>
-                            <td><label class="control-label" >Pleural tumor</label></td>
+                            <td><label class="control-label">Pleural tumor</label></td>
                             <td colspan="6">
                                 <div class="form-group">
                                     {{ f.yesCheckbox("cepu") }}
@@ -397,95 +397,38 @@
         <div id="cardiac-container" class="panel-collapse collapse" role="tabpanel">
             <div class="panel-body">
                 <input type="hidden" name="ceca"/>
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <label class="control-label" for="cecca">Aortic calcifications</label>
-                            </td>
-                            <td colspan="5">
-                                <div class="form-group">
-
-                                    <label for="cecca" class="aria-hidden">Aortic Calcifications </label>
-                                    <select name="cecca" id="cecca" class="form-control">
-                                        <option value="-"> -</option>
-                                        <option value="no"> None</option>
-                                        <option value="mi"> Minimal < &frac13;</option>
-                                        <option value="mo"> Moderate</option>
-                                        <option value="ex"> Extensive > &frac23;</option>
-                                    </select>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><label class="control-label" for="ceprevm">Pericardial effusion severity</label></td>
-                            <td colspan="5">
-                                <div class="form-group">
-                                    <select name="ceprevm" id="ceprevm" class="form-control"
-                                            title="Pericardial Effusion Severity">
-                                        <option value="-"> -</option>
-                                        <option value="no"> None</option>
-                                        <option value="mi"> Minimal</option>
-                                        <option value="mo"> Moderate</option>
-                                        <option value="ex"> Extensive</option>
-                                    </select>
-                                </div>
-
-                        <tr>
-                            <td colspan="2">
-                                <label class="control-label" for="cepaw"> Pulmonary artery width (mm)</label>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <input type="text" id="cepaw" name="cepaw" size="4"
-                                           class="form-control numeric decimalformat" title="Pulmonary Artery Width">
-                                </div>
-                            </td>
-                            <td colspan="4">&nbsp;</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2"><label class="control-label" for="ceaow">Ascending aorta width (mm)</label>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="ceaow" class="aria-hidden">Ascending Aorta Width</label>
-                                    <input type="text" id="ceaow" name="ceaow" size="4"
-                                           class="form-control numeric decimalformat">
-                                </div>
-                            </td>
-                            <td colspan="4">
-                                &nbsp;
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2"><label class="control-label" for="cepar">Pulmonary artery/aorta
-                                ratio</label><br/>
-                                <small>(calculated)</small>
-                            </td>
-                            <td colspan="5">
-                                <div class="form-group">
-                                    <span id="cepar-text"></span>
-                                    <input type="hidden" id="cepar" name="cepar">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="7">
-                                <div class="form-group">
-                                    <label for="cecommca">Additional comments on cardiac abnormalities</label>
-                                    <textarea name="cecommca" id="cecommca"
-                                              class="form-control"></textarea>
-                                    {{ f.inlineCheckbox("cecommcai", "y", "Include in impression") }}
-                                </div>
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                        <label class="control-label" for="cecca">Aortic calcifications</label>
+                        <select name="cecca" id="cecca" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="no"> None</option>
+                            <option value="mi"> Minimal < &frac13;</option>
+                            <option value="mo"> Moderate</option>
+                            <option value="ex"> Extensive > &frac23;</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                        <label class="control-label" for="ceprevm">Pericardial effusion severity</label>
+                        <select name="ceprevm" id="ceprevm" class="form-control"
+                                title="Pericardial Effusion Severity">
+                            <option value="-"> -</option>
+                            <option value="no"> None</option>
+                            <option value="mi"> Minimal</option>
+                            <option value="mo"> Moderate</option>
+                            <option value="ex"> Extensive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="cecommca">Additional comments on cardiac abnormalities</label>
+                        <textarea name="cecommca" id="cecommca"
+                                  class="form-control"></textarea>
+                        {{ f.inlineCheckbox("cecommcai", "y", "Include in impression") }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -529,7 +472,7 @@
                         </tr>
 
                         <tr>
-                            <td><label class="control-label" >Thymus</label><br/>
+                            <td><label class="control-label">Thymus</label><br/>
                                 <small>(report if ovoid &gt; 7 mm or if thymic shape with width &gt; 1.3cm)
                                 </small>
                             </td>
@@ -565,10 +508,16 @@
                         <tbody>
 
                         <tr>
-                            <td>
+                            <td width="50%">
                                 Any enlarged or growing hilar or mediastinal lymph nodes<br/>
                                 <small>(short axis &gt; 10mm)<br/>
                                     <strong>(any size for para-esophageal)</strong></small>
+                                <br/>
+                                <a href="{{ path }}img/nodal_chart.gif" target="_blank" title="Click for larger image">
+                                    <img src="{{ path }}img/nodal_chart.gif" title="Lymph node chart" class="hidden-xs"
+                                         alt="Lymph node chart" style="max-width: 675px;" />
+                                    <span class="visible-xs">View lymph node chart</span>
+                                </a>
                             </td>
                             <td>
                                 <div class="form-group form-inline">
@@ -1004,24 +953,7 @@
 </div>
 
 <script>
-
-    function calculatePulmonaryArteryAortaRatio() {
-        let res = 0;
-        const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-        if (ceaow > 0) {
-            res = (cepaw / ceaow).toFixed(1);
-            $("#cepar-text").text(res);
-            $("#cepar").val(res);
-        } else {
-            $("#cepar-text").text("");
-            $("#cepar").val("");
-        }
-    }
-
     function initAbnormalities(fv) {
-        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-        calculatePulmonaryArteryAortaRatio();
-
         //Neck and mediastinal
         $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
         $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
@@ -1044,7 +976,6 @@
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
-            fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
 
             //lymph nodes; use a real element name for the field so conditional plugins can toggle the field
             fv.addField('cemlnl1', {

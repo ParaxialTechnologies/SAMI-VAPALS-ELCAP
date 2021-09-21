@@ -1,0 +1,26 @@
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+TOUCH="$ENV touch"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+
+cat <<EOT
+If you are within the VA firewall, you cannot update your Git
+repository automatically. The software update scripts provided
+with VAPALS-ELCAP patches have no reliable way to determine this,
+but this script will place an additional file in the repository
+marking it as 'isolated' so that the installation script below
+will perform the correct actions.
+EOT
+read -p "Are you sure you want to do this [yes/no] ? " ANSWER
+
+case "$ANSWER" in
+    y* | Y* )
+        printf "Marking as 'isolated' ... "
+        $TOUCH $REPO/ISOLATED-GIT-REPO
+        echo "done."
+        ;;
+esac
+

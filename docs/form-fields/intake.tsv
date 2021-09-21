@@ -19,10 +19,10 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 18	Receiving Care Elsewhere	siceceho	checkbox	0		y	followed in hematology-oncology
 19	Receiving Care Elsewhere	sicecepr	checkbox	0		y	private care
 20	Receiving Care Elsewhere	siceceot	checkbox	0		y	other
-21	Smoking History	siceceoo	text	1	specify		
+21	Receiving Care Elsewhere	siceceoo	text	1	specify		
 22	Smoking History	siceshqd	checkbox	0		y	quit date greater than 15 years
 23	Smoking History	siceshpy	checkbox	0		y	less than 30 pack years
-24	Smoking History	siceshnc	checkbox	0		y	non-cigarette use (e.g. pipe, smokeless, vape, cannabis)
+24	Smoking History	siceshnc	checkbox	0		y	"non-cigarette use (e.g. pipe, smokeless, vape, cannabis)"
 25	Smoking History	siceshot	checkbox	0		y	other
 26	Smoking History	siceshoo	text	1	specify		
 27	Was a pre-enrollment discussion held?	sipedisc	radio	1		y;n	Yes;No
@@ -36,7 +36,7 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 35	The lung screening program reached the participant or was contacted via (check all that apply):	sipecnot	checkbox	0		1	Other
 36	The lung screening program reached the participant or was contacted via (check all that apply):	sipecnoo	text	1			Other contact method
 37	A pre-enrollment discussion with the participant resulted in:	siperslt	radio	1		y;u;nn;nf;na	Participant is interested in discussing lung screening. The program will proceed with enrollment process.;Participant is unsure of lung screening. Ok to contact in the future.;Participant is not interested in discussing lung screening at this time. Ok to contact in the future.;Participant is not interested in discussing lung screening in the future.;Unable to reach participant at this time.
-38	A pre-enrollment discussion with the participant resulted in:	sipecmnt	textarea	1			Comments
+38	A pre-enrollment discussion with the participant resulted in:	sipecmnt	textarea	0			Comments
 39	Intake discussion	sidc	text	1			Date of contact
 40	The lung screening program reached the participant or was contacted via (check all that apply):	silnip	checkbox	0		1	In person
 41	The lung screening program reached the participant or was contacted via (check all that apply):	silnph	checkbox	0		1	Telephone
@@ -67,9 +67,12 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 66	Lung CA Dx (if applicable): Location if not in VA	sicadxl	text	0			Location if not in VA
 67	Any prior CT: Date	siptct	text	0			MM/DD/YYYY
 68	Any prior CT: Location if not in VA	siptctl	text	0			Location if not in VA
-69	Informed decision making discussion complete	siidmdc	checkbox	1		1	Informed decision making discussion complete
-70	Based on this information, the veteran has opted to	sildct	radio	1		n;l;y	Not enroll;Not enroll at this time -- okay to contact in the future;Enroll in the Lung Screening program and have an LDCT ordered. Coordination of care will be made by the LSS team
+69	Informed decision making	siidmdc	radio	1		0;1	Not applicable;Discussion complete
+70	"Based on this information, the veteran has opted to"	sildct	radio	1		n;l;y	Not enroll;Not enroll at this time -- okay to contact in the future;Enroll in the Lung Screening program and have an LDCT ordered. Coordination of care will be made by the LSS team
 71	Clinical Indications for Initial Screening CT	siclin	textarea	0			Clinical Indications for Initial Screening CT
 72	Participant communication record	sipcrn	textarea	0			Participant communication record
 73	Enrollment	sistatus	radio	1		active;inactive	Active;Not active
 74	CT Appointment	sicectap	text	1			CT Appointment
+75	Reason	sistachg	select-one	1		;transferred;medical;unwilling;refused;illadvised;radiation;moved;insurance;cost;deceased;other;excluded;complete;noresponse;nocontact;followed	"-;Transferred to another institution (specify);Unable due to medical reason (specify);Unwilling due to personal reason (specify);Refused to continue;Physician advised against;Concern about radiation;Moved and unable to return;No insurance, can't have Dx CT;Burden of cost;Deceased;Other (specify);Excluded (specify);Study complete;No response to 3 calls + 3 letters;Unable to contact;Being followed elsewhere (get results)"
+76	Date of death	sidod	text	1			Date of death
+77	Explanation	sistreas	textarea	0			Explanation

@@ -31,15 +31,17 @@
 
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label class="required" for="sidof">Follow-up date</label>
+                    <label class="required" for="sidof">Form date</label>
                     {{ f.datepicker("sidof", "past", true) }}
+                </div>
+                <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                    <label class="required" for="sidoct">Next CT follow-up</label>
+                    {{ f.datepicker("sidoct", "", true) }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidoe">Date of baseline CT</label>
                     {{ f.datepicker("sidoe", "past", true) }}
                 </div>
-
-
                 <div class="col-sm-4 col-md-3 form-group">
                     <label class="required" for="sico">Coordinator</label>
                     <input type="text" name="sico" id="sico" class="form-control" required="required"/>
@@ -58,83 +60,6 @@
 
             <div class="followup-ct">
                 <h3>Ordering Information</h3>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('siopfn', 'Ordered by') }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="siopfn" class="aria-hidden">First name</label>
-                        <input type=text name="siopfn" id="siopfn" class="form-control">
-                        <span class="help-block small">First Name</span>
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="siopln" class="aria-hidden">Last name</label>
-                        <input type=text name="siopln" id="siopln" class="form-control" title="Last name">
-                        <span class="help-block small">Last Name</span>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)', "required") }}
-                    </div>
-                    <div class="col-sm-2 form-group">
-                        <input type="text" name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sidsd-n', 'Documentation of shared decision making' ,"required") }}
-                    </div>
-                    <div class="col-sm-8 form-group">
-                        {{ f.inlineRadio("sidsd", "sidsd-n", "n", "No", true) }}
-                        {{ f.inlineRadio("sidsd", "sidsd-y", "y", "Yes") }}
-                        <p class="help-block small">(shared decision making is required for reimbursement for G0297
-                            exams on baseline <strong>only</strong>)</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('', 'Reported smoking status at time of order', "required") }}
-                    </div>
-                    <div class="col-sm-8 form-group">
-                        {{ f.inlineRadio("siopss", "siopss-c", "c", "Current", true) }}
-                        {{ f.inlineRadio("siopss", "siopss-f", "f", "Former") }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sioppy', 'Reported pack years at time of order',"required") }}
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input type="text" name="sioppy" id="sioppy" class="form-control numeric decimalformat"
-                               required="required"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('siopqy', 'Reported years since quit at time of order') }}
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input type="text" name="siopqy" id="siopqy" class="form-control numeric decimalformat"/>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sioas', 'Reported asymptomatic for lung cancer at time of order', "required") }}
-                    </div>
-                    <div class="col-md-8 form-group">
-                        {{ f.inlineRadio("sioas", "sioas-n", "n", "No", true) }}
-                        {{ f.inlineRadio("sioas", "sioas-y", "y", "Yes") }}
-                    </div>
-                </div>
-                <hr/>
-
                 <div class="row">
                     <div class="col-md-4">
                         {{ f.floatingLabel('fursnscn', 'Reason for CT scan', "required") }}
@@ -525,7 +450,9 @@
 
             <div class="pull-left">
                 <input type="hidden" name="samistatus" value=""/>
-                <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
                 <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
             </div>
             <div class="pull-right">
@@ -555,7 +482,7 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sicpd', 'sidsd', 'siopss', 'sioas', 'funewct'];
+            const multiInputValidators = ['siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sicpd', 'funewct'];
 
             $form.formValidation({
                     fields: {
@@ -576,17 +503,6 @@
                         sico: {validators: {notEmpty: {message: 'Coordinator is required'}}},
 
                         //Ordering Information
-                        siopnpi: {validators: {notEmpty: {message: 'Provider ID is required'}}},
-                        sidsd: {validators: {notEmpty: {message: 'Shared decision making is required'}}},
-                        siopss: {validators: {notEmpty: {message: 'Smoking status is required'}}},
-                        sioppy: {
-                            validators: {
-                                notEmpty: {message: 'Pack years is required'},
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        sioas: {validators: {notEmpty: {message: 'Asymptomatic response is required'}}},
                         fursnscn: {validators: {notEmpty: {message: 'Reason for CT scan is required'}}},
                         siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
                         siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
@@ -623,9 +539,10 @@
                         funewct: {validators: {notEmpty: {message: 'CT/LDCT order selection is required'}}}
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -708,7 +625,10 @@
                 $("#sicpd").val("20");
             {% endif %}
 
-            createFormValidator();
+            const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             const $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {

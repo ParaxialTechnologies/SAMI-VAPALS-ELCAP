@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.TypingAnimation = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,26 +92,45 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var TypingAnimation =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(TypingAnimation, _Plugin);
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-    function TypingAnimation(opts) {
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var e = FormValidation.Plugin;
+
+  var t = /*#__PURE__*/function (_e) {
+    _inherits(t, _e);
+
+    var _super = _createSuper(t);
+
+    function t(e) {
       var _this;
 
-      _classCallCheck(this, TypingAnimation);
+      _classCallCheck(this, t);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(TypingAnimation).call(this, opts));
+      _this = _super.call(this, e);
       _this.opts = Object.assign({}, {
         autoPlay: true
-      }, opts);
+      }, e);
       return _this;
     }
 
-    _createClass(TypingAnimation, [{
+    _createClass(t, [{
       key: "install",
       value: function install() {
         this.fields = Object.keys(this.core.getFields());
@@ -114,53 +146,53 @@
       }
     }, {
       key: "animate",
-      value: function animate(fieldIndex) {
+      value: function animate(e) {
         var _this2 = this;
 
-        if (fieldIndex >= this.fields.length) {
-          return Promise.resolve(fieldIndex);
+        if (e >= this.fields.length) {
+          return Promise.resolve(e);
         }
 
-        var field = this.fields[fieldIndex];
-        var ele = this.core.getElements(field)[0];
-        var inputType = ele.getAttribute('type');
-        var samples = this.opts.data[field];
+        var t = this.fields[e];
+        var s = this.core.getElements(t)[0];
+        var i = s.getAttribute("type");
+        var r = this.opts.data[t];
 
-        if ('checkbox' === inputType || 'radio' === inputType) {
-          ele.checked = true;
-          ele.setAttribute('checked', 'true');
-          return this.core.revalidateField(field).then(function (status) {
-            return _this2.animate(fieldIndex + 1);
+        if ("checkbox" === i || "radio" === i) {
+          s.checked = true;
+          s.setAttribute("checked", "true");
+          return this.core.revalidateField(t).then(function (t) {
+            return _this2.animate(e + 1);
           });
-        } else if (!samples) {
-          return this.animate(fieldIndex + 1);
+        } else if (!r) {
+          return this.animate(e + 1);
         } else {
-          return new Promise(function (resolve) {
-            return new Typed(ele, {
-              attr: 'value',
+          return new Promise(function (i) {
+            return new Typed(s, {
+              attr: "value",
               autoInsertCss: true,
               bindInputFocusEvents: true,
               onComplete: function onComplete() {
-                resolve(fieldIndex + 1);
+                i(e + 1);
               },
-              onStringTyped: function onStringTyped(arrayPos, self) {
-                ele.value = samples[arrayPos];
+              onStringTyped: function onStringTyped(e, i) {
+                s.value = r[e];
 
-                _this2.core.revalidateField(field);
+                _this2.core.revalidateField(t);
               },
-              strings: samples,
+              strings: r,
               typeSpeed: 100
             });
-          }).then(function (nextFieldIndex) {
-            return _this2.animate(nextFieldIndex);
+          }).then(function (e) {
+            return _this2.animate(e);
           });
         }
       }
     }]);
 
-    return TypingAnimation;
-  }(Plugin);
+    return t;
+  }(e);
 
-  return TypingAnimation;
+  return t;
 
-}));
+})));

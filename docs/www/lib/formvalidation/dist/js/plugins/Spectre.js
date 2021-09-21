@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Spectre = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,51 +92,70 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var hasClass = FormValidation.utils.hasClass;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Framework = FormValidation.plugins.Framework;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-  var Spectre =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Spectre, _Framework);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-    function Spectre(opts) {
-      _classCallCheck(this, Spectre);
+      return _possibleConstructorReturn(this, result);
+    };
+  }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Spectre).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-spectre',
-        messageClass: 'form-input-hint',
-        rowInvalidClass: 'has-error',
+  var e = FormValidation.utils.classSet;
+
+  var s = FormValidation.utils.hasClass;
+
+  var t = FormValidation.plugins.Framework;
+
+  var r = /*#__PURE__*/function (_t) {
+    _inherits(r, _t);
+
+    var _super = _createSuper(r);
+
+    function r(e) {
+      _classCallCheck(this, r);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-spectre",
+        messageClass: "form-input-hint",
+        rowInvalidClass: "has-error",
         rowPattern: /^(.*)(col)(-(xs|sm|md|lg))*-[0-9]+(.*)$/,
-        rowSelector: '.form-group',
-        rowValidClass: 'has-success'
-      }, opts)));
+        rowSelector: ".form-group",
+        rowValidClass: "has-success"
+      }, e));
     }
 
-    _createClass(Spectre, [{
+    _createClass(r, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var type = e.element.getAttribute('type');
-        var parent = e.element.parentElement;
+      value: function onIconPlaced(t) {
+        var r = t.element.getAttribute("type");
+        var o = t.element.parentElement;
 
-        if ('checkbox' === type || 'radio' === type) {
-          classSet(e.iconElement, {
-            'fv-plugins-icon-check': true
+        if ("checkbox" === r || "radio" === r) {
+          e(t.iconElement, {
+            "fv-plugins-icon-check": true
           });
 
-          if (hasClass(parent, "form-".concat(type))) {
-            parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+          if (s(o, "form-".concat(r))) {
+            o.parentElement.insertBefore(t.iconElement, o.nextSibling);
           }
         }
       }
     }]);
 
-    return Spectre;
-  }(Framework);
+    return r;
+  }(t);
 
-  return Spectre;
+  return r;
 
-}));
+})));

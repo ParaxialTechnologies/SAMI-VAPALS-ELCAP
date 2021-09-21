@@ -32,57 +32,99 @@
                 },
             }, options);
 
-
-            function setupNoduleEnabledState(noduleIdx) {
-                $("#cect" + noduleIdx + "nt").conditionallyEnable({
+            function setupNoduleEnabledState(noduleId) {
+                $("#cect" + noduleId + "nt").conditionallyEnable({
                     sourceValues: "m",
-                    enable: "#cect" + noduleIdx + "-container"
+                    enable: "#cect" + noduleId + "-container"
                 });
 
-                $("#cect" + noduleIdx + "ch").on('change.cteval', function () {
+                $("#cect" + noduleId + "ch").on('change.cteval', function () {
+                    toggleFields(noduleId);
+                });
 
-                    // All fields related to this nodule.
-                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                    // nodule 10 would match cect1*
-                    const regex = new RegExp("cect" + noduleIdx + "[a-z]");
-                    const $fields = $('input,select').filter(function () {
-                        const name = $(this).attr('name');
+                const currentIsItNewValue = $("#cect" + noduleId + "ch").val();
+                // console.log("setupNoduleEnabledState(noduleIndex=" + noduleId + "): currentIsItNewValue=" + currentIsItNewValue);
+                if (currentIsItNewValue !== '-') {
+                    toggleFields(noduleId);
+                }
+            }
+
+            function toggleFields(noduleId) {
+                // const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
+                // console.log(logPrefix + 'entered');
+
+                // $fields is an array of fields related to this nodule with the exception of "is it new"
+                // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                // nodule 10 would match cect1*
+                const regex = new RegExp("cect" + noduleId + "[a-z]");
+                let $fields = $('input,select').filter(function () {
+                    const name = $(this).attr('name');
+                    const id = $(this).attr('id');
+                    return id !== "cect" + noduleId + "ch" && (regex.test(name) || regex.test(id));
+                });
+                let isItNewValue = $("#cect" + noduleId + "ch").val();
+                // console.log(logPrefix + 'isItNewValue=' + isItNewValue);
+                // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
+                // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
+                // resected (pr)
+                // NB: For IE support, we must use indexOf() instead of .includes(...);
+                let noduleResolved = ['pw', 'px', 'pr'].indexOf(isItNewValue) > -1;
+                // console.log(logPrefix + 'noduleResolved=' + noduleResolved);
+                if (noduleResolved) {
+                    //reduce the list to exclude the fields: status (st) and likely location (ll)
+                    $fields = $fields.filter(function () {
                         const id = $(this).attr('id');
-                        return id !== "cect" + noduleIdx + "ch" && (regex.test(name) || regex.test(id));
-                    });
+                        const idsToMatch = [
+                            'cect' + noduleId + 'll', // likely location
+                            'cect' + noduleId + 'st', // nodule status
+                            'cect' + noduleId + 'pd', // pathological diagnosis
+                        ];
+                        // NB: For IE support, we must use indexOf() instead of !idsToMatch.includes(...);
+                        return idsToMatch.indexOf(id) === -1;
+                    })
+                }
 
-                    if ($(this).val() === "-") {
-                        //empty out values
-                        $fields.filter("select").val("-");
-                        $fields.filter(":radio, :checkbox").prop('checked', false);
-                        $fields.filter(":text").val("");
+                if (isItNewValue === "-" || noduleResolved) {
+                    // console.log(logPrefix + 'disabling fields');
+                    //empty out values
+                    $fields.filter("select").val("-");
+                    $fields.filter(":radio, :checkbox").prop('checked', false);
+                    $fields.filter(":text").val("");
 
-                        //change trigger added to clear any calculated text values
-                        $fields.trigger("change");
+                    //change trigger added to clear any calculated text values
+                    $fields.trigger("change");
 
-                        //reset form validation messages (hide them)
-                        const fv = $("form.validated").data("formValidation");
-                        if (fv) {
-                            $.each($fields, function (i, el) {
-                                const fieldName = $(el).prop('name');
-                                if (fv.fields[fieldName]) {
-                                    fv.resetField(fieldName);
-                                }
-                            });
-                        }
-
-                        //finally disable the fields
-                        $fields.prop('disabled', true);
-                    } else { //re-enable fields
-                        $fields
-                            .prop('disabled', false)
-                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-
-                        // fixes a bug where L & W fields were required when nodule was solid and "is it new" was
-                        // changed from "-" to anything else; which occurs on subsequent scans.
-                        $("#cect" + noduleIdx + "nt").trigger('change');
+                    //reset form validation messages (hide them)
+                    const fv = $("form.validated").data("formValidation");
+                    if (fv) {
+                        $.each($fields, function (i, el) {
+                            const fieldName = $(el).prop('name');
+                            if (fv.fields[fieldName]) {
+                                fv.resetField(fieldName);
+                            }
+                        });
                     }
-                });
+
+                    //finally disable the fields
+                    $fields.prop('disabled', true);
+                } else { //re-enable fields
+                    // console.log(logPrefix + 'enabling fields');
+                    $fields
+                        .prop('disabled', false)
+                        .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+
+                    // fixes a bug where L & W fields were required when nodule was solid and "is it new" was
+                    // changed from "-" to anything else; which occurs on subsequent scans.
+                    $("#cect" + noduleId + "nt").trigger('change');
+                }
+                if (isItNewValue === "pw") {
+                    $("#cect" + noduleId + "st").val("re");
+                } else {
+                    if ($("#cect" + noduleId + "st").val() === "re" ) {
+                        $("#cect" + noduleId + "st").val("-");
+                    }
+                }
+                // console.log(logPrefix + 'exiting');
             }
 
             function mean(v1, v2) {
@@ -158,8 +200,8 @@
                 }
             }
 
-            function setupNoduleVolumeCalculations(noduleIdx) {
-                const lenWidthHeightFields = $("#cect" + noduleIdx + "sl, #cect" + noduleIdx + "sw, #cect" + noduleIdx + "sh");
+            function setupNoduleVolumeCalculations(noduleId) {
+                const lenWidthHeightFields = $("#cect" + noduleId + "sl, #cect" + noduleId + "sw, #cect" + noduleId + "sh");
                 lenWidthHeightFields.on("keyup", function () {
                     let allFilled = true;
 
@@ -170,7 +212,7 @@
                         }
                     });
 
-                    const btnElem = $("#cect" + noduleIdx + "svb");
+                    const btnElem = $("#cect" + noduleId + "svb");
                     if (allFilled) {
                         btnElem.attr("disabled", false);
                     } else {
@@ -178,25 +220,25 @@
                     }
                 }).first().trigger("keyup");
 
-                $("#cect" + noduleIdx + "svb").on('click', function () {
-                    const l = $("#cect" + noduleIdx + "sl").val() || 0;
-                    const w = $("#cect" + noduleIdx + "sw").val() || 0;
-                    const h = $("#cect" + noduleIdx + "sh").val() || 0;
+                $("#cect" + noduleId + "svb").on('click', function () {
+                    const l = $("#cect" + noduleId + "sl").val() || 0;
+                    const w = $("#cect" + noduleId + "sw").val() || 0;
+                    const h = $("#cect" + noduleId + "sh").val() || 0;
 
                     const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
-                    $("#cect" + noduleIdx + "sv").val(v.toFixed(1));
-                    markNoduleVolumeManuallyEntered(noduleIdx, false);
+                    $("#cect" + noduleId + "sv").val(v.toFixed(1));
+                    markNoduleVolumeManuallyEntered(noduleId, false);
                     //temporarily disabled
                     // checkConsistentVolumeCalculations();
                     return false;
                 });
 
 
-                $("#cect" + noduleIdx + "sv").on('change', function () {
+                $("#cect" + noduleId + "sv").on('change', function () {
                     // manually overriding the volume calculation
                     if ($(this).val() !== "") {
-                        markNoduleVolumeManuallyEntered(noduleIdx, true);
+                        markNoduleVolumeManuallyEntered(noduleId, true);
                         //temporarily disabled
                         //checkConsistentVolumeCalculations();
                     }
@@ -241,7 +283,7 @@
             }
 
             function swapFields(noduleIndex, otherIndex) {
-                console.log("swapFields() entered. noduleIndex=" + noduleIndex + ", other=" + otherIndex);
+                // console.log("swapFields() entered. noduleIndex=" + noduleIndex + ", other=" + otherIndex);
                 const nodeId1 = noduleIndex + 1;
                 const nodeId2 = otherIndex + 1;
                 const prefix1 = '#cect' + nodeId1;
@@ -265,7 +307,7 @@
 
                 const changeQueue = [];
                 // for (let i = 0; i < selectorMap.length; ++i) {
-                for (let key in selectorMap){
+                for (let key in selectorMap) {
                     const selector1 = key;
                     const selector2 = selectorMap[key];
                     swapValues(selector1, selector2);
@@ -370,7 +412,7 @@
                 // solid mean diameter calculation
                 setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
-                for (let i = 0; i < settings.availableNodules; i++) {
+                for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
                 }

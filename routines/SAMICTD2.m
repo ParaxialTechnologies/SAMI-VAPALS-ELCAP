@@ -1,19 +1,105 @@
-SAMICTD2 ;ven/gpl - ielcap: forms ; 1/22/19 1:25pm
- ;;18.0;SAMI;;
+SAMICTD2 ;ven/gpl - cteval-dict init ;2021-07-21t20:12z
+ ;;18.0;SAMI;**12**;2020-01;
+ ;;18.12
  ;
- ;@license: see routine SAMIUL
+ ; SAMICTD2 contains a pps to initialize the cteval-dict graphstore.
  ;
  quit  ; no entry from top
  ;
-INIT2GPH() ; initialize CTEVAL dictionary into graph cteval-dict
- n g,root
- s root=$$setroot^%wd("cteval-dict")
- k @root
- s g=$na(@root@("cteval-dict"))
- d INIT(g)
- q
  ;
-INIT(g) ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;
+ ;@dev-main George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-update 2021-07-21t20:12z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@version 18.12
+ ;@release-date 2020-01
+ ;@patch-list **12**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; see routine SAMICTUL
+ ;
+ ;@contents
+ ; INIT2GPH pps INIT2GPH^SAMICTD2,
+ ;  initialize CTEVAL dictionary into graph cteval-dict
+ ; INIT initialize cteval-dict graph
+ ;
+ ;
+ ;
+ ;@section 1 INIT2GPH^SAMICTD2 pps & subroutine
+ ;
+ ;
+ ;
+ ;@pps INIT2GPH^SAMICTD2
+INIT2GPH() ; initialize CTEVAL dictionary into graph cteval-dict
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;procedure;silent;clean;sac;??% tests
+ ;@called-by
+ ; WSREPORT^SAMICTR
+ ; WSREPORT^SAMICTR0
+ ; WSREPORT^SAMICTT0
+ ;@calls
+ ; $$setroot^%wd
+ ; INIT
+ ;@input none
+ ;@output
+ ; cteval-dict graph is initialized
+ ;@tests
+ ; UTIN2G^SAMIUTD2
+ ;
+ ;
+ ;@stanza 2 init cteval-dict graph
+ ;
+ new root set root=$$setroot^%wd("cteval-dict")
+ kill @root ; clear contents of cteval-dict graph
+ ;
+ new g set g=$name(@root@("cteval-dict"))
+ do INIT(g) ; initialize graph
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of INIT2GPH
+ ;
+ ;
+ ;
+INIT(g) ; initialize cteval-dict graph
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;silent;clean;sac;??% tests
+ ;@called-by
+ ; INIT2GPH
+ ;@calls none
+ ;@input
+ ; g = root of cteval-dict graph
+ ;@output
+ ; @g = initialized cteval-dict graph
+ ;@tests
+ ; UTIN2G^SAMIUTD2
+ ;
+ ;
+ ;@stanza 2 init cteval-dict graph
  ;
  ;# English Translation Dictionary for CT report generation
  ;# Last Updated: December 14, 2016
@@ -132,7 +218,8 @@ INIT(g) ;
  ;
  ;# Emphysema (ceem)
  set @g@("ceem","no")="None"
- set @g@("ceem","mi")="Minimal"
+ ;set @g@("ceem","mi")="Minimal"
+ set @g@("ceem","mi")="Mild"
  set @g@("ceem","mo")="Moderate"
  set @g@("ceem","se")="Severe"
  ;
@@ -296,5 +383,12 @@ INIT(g) ;
  ;#set CAC_recommendation "Since your Visual Coronary Artery Calcium Score (CAC) is above 3, we recommend that you consult with your physician for a clinical interpretation of this score, as you may be at risk for coronary artery disease."
  ;
  set @g@("CAC_recommendation")="Since your Visual CAC Score is above 3, we recommend that you consult with your physician for a clinical interpretation, as you may be at risk for coronary artery disease."
- q
  ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of INIT
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTD2

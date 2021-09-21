@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Checking dependencies..."
-pips=`pip freeze`
+pips=`pip3 freeze`
 
 function pip_install {
     printf "%20s: " "$1"
@@ -10,7 +10,7 @@ function pip_install {
     else
         printf "Not Installed\n"
         echo "Installing $1..."
-        pip install $1 --ignore-installed six
+        pip3 install $1 --ignore-installed six
     fi
 }
 
@@ -32,9 +32,11 @@ command -v jsdoc >/dev/null 2>&1 || { npm install -g jsdoc; }
 # Compile forms
 echo "Compiling forms..."
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-python "${DIR}/compile-forms.py"
+python3 "${DIR}/compile-forms.py"
 
 # Build Code documentation
 DOCS="${DIR}/doc"
 rm -rf "${DOCS}"
 jsdoc ${DIR}/../www/*.js --readme ${DIR}/../src/README.md -d "${DOCS}"
+
+python3 "${DIR}/tsv-dd-to-html.py"

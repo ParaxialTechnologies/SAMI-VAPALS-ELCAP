@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.05.12" name="version"/>
+  <meta content="2021.09.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -17,6 +17,8 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <link href="../www/lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <link href="../www/lib/datatables/datatables.min.css" rel="stylesheet"/>
   <style>
    #wizard-bar.affix-top {
             position: static;
@@ -56,19 +58,23 @@
   </script>
   <script src="../www/lib/clipboard.js">
   </script>
-  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  <script src="../www/lib/chart-js-2.9.3/Chart.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js">
+  <script src="../www/lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="../www/jquery-conditonally-display.js">
+  <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.09.08">
   </script>
-  <script src="../www/vapals.js">
+  <script src="../www/jquery-conditonally-display.js?v=2021.09.08">
   </script>
-  <script src="../www/init.js">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.09.08">
   </script>
-  <script src="../www/nodule-grid.js">
+  <script src="../www/vapals.js?v=2021.09.08">
+  </script>
+  <script src="../www/init.js?v=2021.09.08">
+  </script>
+  <script src="../www/nodule-grid.js?v=2021.09.08">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -127,7 +133,7 @@
         </li>
         <li>
          <a class="navigation" data-method="get" data-samireporttype="missingct" data-samiroute="report" href="table.html">
-          Missing Image &amp; CT Evaluation
+          Intake But No CT Evaluation
          </a>
         </li>
         <li>
@@ -138,6 +144,11 @@
         <li>
          <a class="navigation" data-method="get" data-samireporttype="inactive" data-samiroute="report" href="table.html">
           Inactive
+         </a>
+        </li>
+        <li id="matchingReport">
+         <a class="navigation" data-method="get" data-samireporttype="unmatched" data-samiroute="report" href="table.html">
+          Matching Report
          </a>
         </li>
         <li>
@@ -201,8 +212,8 @@
         </a>
        </li>
        <li>
-        <a href="#intervention">
-         Intervention &amp; Follow-Up
+        <a href="#follow-up">
+         Follow-Up
         </a>
        </li>
       </ul>
@@ -357,144 +368,6 @@
       </div>
      </div>
      <div class="row">
-      <div class="col-md-6 ">
-       <label for="rbcst8m">
-        Clinical TNM status
-        <small>
-         (8th edition modified)
-        </small>
-       </label>
-       <div class="form-group form-inline">
-        <label class="aria-hidden" for="rbcst8m">
-         T status
-        </label>
-        <select class="form-control" id="rbcst8m" name="rbcst8m">
-         <option value="-">
-          -
-         </option>
-         <option value="0">
-          T0
-         </option>
-         <option value="is">
-          Tis
-         </option>
-         <option value="1am">
-          T1a mi
-         </option>
-         <option value="1as">
-          T1a SS
-         </option>
-         <option value="1a1">
-          T1a
-         </option>
-         <option value="1b">
-          T1b
-         </option>
-         <option value="1c">
-          T1c
-         </option>
-         <option value="2v">
-          T2 Visc Pl
-         </option>
-         <option value="2c">
-          T2 Centr
-         </option>
-         <option value="2a">
-          T2a
-         </option>
-         <option value="2b">
-          T2b
-         </option>
-         <option value="3">
-          T3
-         </option>
-         <option value="3i">
-          T3 Inv
-         </option>
-         <option value="3s">
-          T3 Satell
-         </option>
-         <option value="4">
-          T4
-         </option>
-         <option value="4i">
-          T4 Inv
-         </option>
-         <option value="4n">
-          T4 Ipsi Nod
-         </option>
-         <option value="x">
-          TX
-         </option>
-        </select>
-        <label class="aria-hidden" for="rbcsn8m">
-         N status
-        </label>
-        <select class="form-control" id="rbcsn8m" name="rbcsn8m">
-         <option value="-">
-          -
-         </option>
-         <option value="0">
-          N0
-         </option>
-         <option value="1">
-          N1
-         </option>
-         <option value="2">
-          N2
-         </option>
-         <option value="3">
-          N3
-         </option>
-         <option value="X">
-          NX
-         </option>
-        </select>
-        <label class="aria-hidden" for="rbcsm8m">
-         M status
-        </label>
-        <select class="form-control" id="rbcsm8m" name="rbcsm8m">
-         <option value="-">
-          -
-         </option>
-         <option value="0">
-          M0
-         </option>
-         <option value="1ap">
-          M1a Pl Dissem
-         </option>
-         <option value="1ac">
-          M1a Contr Nod
-         </option>
-         <option value="1b">
-          M1b Single
-         </option>
-         <option value="1c">
-          M1c Multi
-         </option>
-         <option value="X">
-          MX
-         </option>
-        </select>
-        <div class="checkbox">
-         <label>
-          <input name="rbcsx8m" type="hidden" value=""/>
-          <input id="rbcsx8m" name="rbcsx8m" type="checkbox" value="y"/>
-          Not applicable (specify)
-         </label>
-        </div>
-       </div>
-      </div>
-      <div class="col-md-6" id="rbcsx8m-container">
-       <div class="form-group">
-        <label for="rbcsxs8m">
-         Specify
-        </label>
-        <input class="form-control" id="rbcsxs8m" name="rbcsxs8m"/>
-       </div>
-      </div>
-     </div>
-     <div class="row">
       <div class="col-md-6">
        <label for="rbcsb">
         Clinical staging based on
@@ -524,6 +397,59 @@
          Specify
         </label>
         <input class="form-control" id="rbcsbos" name="rbcsbos" type="text"/>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-6 col-md-3">
+       <div class="form-group">
+        <label>
+         Have you had a pulmonary function test?
+        </label>
+        <br/>
+        <label class="radio-inline" for="sbahpft-n">
+         <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sbahpft-y">
+         <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="form-group col-md-2">
+       <label for="sbfev1">
+        FEV1 (L/s)
+       </label>
+       <input class="form-control input-sm numeric" id="sbfev1" name="sbfev1" size="4" type="text"/>
+      </div>
+      <div class="form-group col-md-2">
+       <label for="sbfvc">
+        FVC (L)
+       </label>
+       <input class="form-control input-sm numeric" id="sbfvc" name="sbfvc" size="4" type="text"/>
+      </div>
+      <div class="form-group col-md-2">
+       <label for="sbfvc">
+        FEV1/FVC
+       </label>
+       <div class="input-group">
+        <input class="form-control input-sm whole-number" id="sbffr" maxlength="3" name="sbffr" size="3" type="text"/>
+        <span class="input-group-addon">
+         %
+        </span>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-6 col-md-3" id="sbahpft-container">
+       <div class="form-group">
+        <label for="sbcop">
+         Diffusion capacity (mL/min/mm Hg)
+        </label>
+        <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="4" type="text"/>
        </div>
       </div>
      </div>
@@ -605,6 +531,9 @@
           Other (specify)
          </option>
         </select>
+        <span class="form-text text-muted">
+         If multiple sites, select other and specify
+        </span>
        </div>
       </div>
       <div class="col-md-6" id="rbloc-container">
@@ -679,7 +608,11 @@
        </div>
        <div class="form-group col-md-3">
         <label for="rbsud">
-         Treatment date
+         Treatment
+         <span id="treatment-start-label">
+          start
+         </span>
+         date
         </label>
         <div class="input-group datepicker">
          <input aria-describedby="rbsud-addon" class="form-control" data-restriction="past" id="rbsud" name="rbsud"/>
@@ -710,52 +643,6 @@
       </h2>
       <div class="row">
        <div class="col-sm-6 col-md-4">
-        <div class="form-group">
-         <label>
-          Have you had a pulmonary function test?
-         </label>
-         <br/>
-         <label class="radio-inline" for="sbahpft-n">
-          <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
-          No
-         </label>
-         <label class="radio-inline" for="sbahpft-y">
-          <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
-          Yes
-         </label>
-        </div>
-       </div>
-       <div class="col-sm-12 col-md-8 form-inline" id="sbahpft-container">
-        <div class="form-group">
-         <label for="sbfev1">
-          FEV1 (L/s)
-         </label>
-         <input class="form-control input-sm numeric" id="sbfev1" name="sbfev1" size="4" type="text"/>
-        </div>
-        <div class="form-group">
-         <label for="sbfvc">
-          FVC (L)
-         </label>
-         <input class="form-control input-sm numeric" id="sbfvc" name="sbfvc" size="4" type="text"/>
-        </div>
-        <div class="form-group">
-         <label for="sbcop">
-          Diffusion capacity (mL/min/mm Hg)
-         </label>
-         <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="4" type="text"/>
-        </div>
-        <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
-         FEV1/FVC (%) is
-         <strong>
-          <span id="ffr-value">
-          </span>
-         </strong>
-        </div>
-        <input id="sbffr" name="sbffr" type="hidden"/>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-sm-6 col-md-4">
         <div class="form-group form-inline">
          <label>
           Was mediastinoscopy performed?
@@ -783,65 +670,69 @@
         </div>
        </div>
       </div>
-      <div class="row">
-       <div class="col-md-6">
-        <div class="row">
-         <div class="form-group col-md-6">
-          <label for="rbmed">
-           Procedure date
-          </label>
-          <div class="input-group datepicker">
-           <input aria-describedby="rbmed-addon" class="form-control" data-restriction="past" id="rbmed" name="rbmed"/>
-           <div class="input-group-addon">
-            <div class="input-group-text" id="rbmed-addon">
-             <i aria-hidden="true" class="fa fa-calendar">
-             </i>
+      <div id="rbmep-container">
+       <div class="row">
+        <div class="col-md-6">
+         <div class="row">
+          <div class="form-group col-md-6">
+           <label for="rbmed">
+            Procedure date
+           </label>
+           <div class="input-group datepicker">
+            <input aria-describedby="rbmed-addon" class="form-control" data-restriction="past" id="rbmed" name="rbmed"/>
+            <div class="input-group-addon">
+             <div class="input-group-text" id="rbmed-addon">
+              <i aria-hidden="true" class="fa fa-calendar">
+              </i>
+             </div>
             </div>
            </div>
+           <small class="form-text text-muted">
+            MM/DD/YYYY
+           </small>
           </div>
-          <small class="form-text text-muted">
-           MM/DD/YYYY
-          </small>
-         </div>
-         <div class="form-group col-md-6">
-          <label for="rbmspid">
-           Specimen ID
-          </label>
-          <input class="form-control" id="rbmspid" name="rbmspid" size="24"/>
+          <div class="form-group col-md-6">
+           <label for="rbmspid">
+            Specimen ID
+           </label>
+           <input class="form-control" id="rbmspid" name="rbmspid" size="24"/>
+          </div>
          </div>
         </div>
        </div>
-       <div class="col-md-6">
-        <div class="form-group">
-         <label for="rbmel">
-          Location of procedure
-         </label>
-         <input class="form-control" id="rbmel" name="rbmel"/>
-        </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-md-6">
-        <div class="form-group">
-         <label for="rbmemd">
-          Physician
-         </label>
-         <input class="form-control" id="rbmemd" name="rbmemd"/>
-        </div>
-       </div>
-       <div class="col-md-6">
-        <div class="row">
-         <div class="form-group col-md-6">
-          <label for="rbmemdp">
-           Physician's phone
+       <div class="row">
+        <div class="col-md-6">
+         <div class="form-group">
+          <label for="rbmel">
+           Location of procedure
           </label>
-          <input class="form-control" id="rbmemdp" name="rbmemdp"/>
+          <input class="form-control" id="rbmel" name="rbmel"/>
          </div>
-         <div class="form-group col-md-6">
-          <label for="rbmemdf">
-           Physician's fax
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-6">
+         <div class="form-group">
+          <label for="rbmemd">
+           Physician
           </label>
-          <input class="form-control" id="rbmemdf" name="rbmemdf"/>
+          <input class="form-control" id="rbmemd" name="rbmemd"/>
+         </div>
+        </div>
+        <div class="col-md-6">
+         <div class="row">
+          <div class="form-group col-md-6">
+           <label for="rbmemdp">
+            Physician's phone
+           </label>
+           <input class="form-control" id="rbmemdp" name="rbmemdp"/>
+          </div>
+          <div class="form-group col-md-6">
+           <label for="rbmemdf">
+            Physician's fax
+           </label>
+           <input class="form-control" id="rbmemdf" name="rbmemdf"/>
+          </div>
          </div>
         </div>
        </div>
@@ -963,23 +854,8 @@
        </div>
       </div>
       <div class="row">
-       <div class="col-md-6">
-        <label>
-         Was there a conversion of VATS to open?
-        </label>
-        <div class="form-group form-inline">
-         <label class="radio-inline" for="rbvto-n">
-          <input id="rbvto-n" name="rbvto" required="required" type="radio" value="n"/>
-          No
-         </label>
-         <label class="radio-inline" for="rbvto-y">
-          <input id="rbvto-y" name="rbvto" required="required" type="radio" value="y"/>
-          Yes
-         </label>
-        </div>
-       </div>
-       <div id="rbvto-container">
-        <div class="col-md-2">
+       <div>
+        <div class="col-md-3">
          <div class="form-group">
           <label for="rbexs">
            Extent of surgery
@@ -1009,13 +885,38 @@
           </select>
          </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-3">
          <div class="form-group">
           <label for="rbexss">
            Extent (specify)
           </label>
           <input class="form-control" id="rbexss" name="rbexss" size="24" type="text"/>
          </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <label>
+         Was there a conversion of VATS to open?
+        </label>
+        <div class="form-group form-inline">
+         <label class="radio-inline" for="rbvto-n">
+          <input id="rbvto-n" name="rbvto" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbvto-y">
+          <input id="rbvto-y" name="rbvto" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label for="rbrasc">
+          Comments
+         </label>
+         <textarea class="form-control" cols="64" id="rbvtoc" name="rbvtoc" rows="3"></textarea>
         </div>
        </div>
       </div>
@@ -1194,17 +1095,84 @@
        </div>
       </div>
       <div class="row">
+       <div class="col-md-3">
+        <div class="form-group">
+         <label for="rbrdd">
+          Discharge date
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="rbrdd-addon" class="form-control" data-restriction="past" id="rbrdd" name="rbrdd"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="rbrdd-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
+          </div>
+         </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <label>
+         Readmit within 30 days of discharge?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrthd-n">
+          <input id="rbrthd-n" name="rbrthd" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrthd-y">
+          <input id="rbrthd-y" name="rbrthd" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <label>
+         Discharge location?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdl-h">
+          <input id="rbrdl-h" name="rbrdl" required="required" type="radio" value="h"/>
+          Home
+         </label>
+         <label class="radio-inline" for="rbrdl-s">
+          <input id="rbrdl-s" name="rbrdl" required="required" type="radio" value="s"/>
+          Other hospital
+         </label>
+         <label class="radio-inline" for="rbrdl-t">
+          <input id="rbrdl-t" name="rbrdl" required="required" type="radio" value="t"/>
+          Extended Care / Transitional Care Unit / Rehab
+         </label>
+         <label class="radio-inline" for="rbrdl-n">
+          <input id="rbrdl-n" name="rbrdl" required="required" type="radio" value="n"/>
+          Nursing home
+         </label>
+         <label class="radio-inline" for="rbrdl-p">
+          <input id="rbrdl-p" name="rbrdl" required="required" type="radio" value="p"/>
+          Hospice
+         </label>
+         <label class="radio-inline" for="rbrdl-o">
+          <input id="rbrdl-o" name="rbrdl" required="required" type="radio" value="o"/>
+          Other
+         </label>
+        </div>
+       </div>
+      </div>
+      <div class="row">
        <div class="col-md-6">
         <label>
          Complications during surgery?
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrcs-n">
-          <input id="rbrcs-n" name="rbrcs" required="required" type="radio" value="n"/>
+          <input id="rbrcs-n" name="rbrcs" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrcs-y">
-          <input id="rbrcs-y" name="rbrcs" required="required" type="radio" value="y"/>
+          <input id="rbrcs-y" name="rbrcs" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1225,11 +1193,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrch-n">
-          <input id="rbrch-n" name="rbrch" required="required" type="radio" value="n"/>
+          <input id="rbrch-n" name="rbrch" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrch-y">
-          <input id="rbrch-y" name="rbrch" required="required" type="radio" value="y"/>
+          <input id="rbrch-y" name="rbrch" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1244,7 +1212,37 @@
        </div>
       </div>
       <div class="row">
-       <div class="col-md-6">
+       <div class="col-md-3">
+        <label>
+         Discharged with home O₂?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdox-n">
+          <input id="rbrdox-n" name="rbrdox" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrdox-y">
+          <input id="rbrdox-y" name="rbrdox" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <label>
+         Discharged with chest tube?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbdct-n">
+          <input id="rbdct-n" name="rbdct" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbdct-y">
+          <input id="rbdct-y" name="rbdct" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
         <div class="form-group">
          <label for="rbctrd">
           Date of chest tube removal
@@ -1263,6 +1261,10 @@
          </small>
         </div>
        </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+       </div>
        <div class="col-md-6">
         <div class="form-group">
          <label for="rb60dvs">
@@ -1273,11 +1275,42 @@
        </div>
       </div>
       <div class="row">
+       <div class="col-md-3">
+       </div>
+       <div class="col-md-3">
+        <label>
+         Reviewed for QA?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrqa-n">
+          <input id="rbrqa-n" name="rbrqa" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrqa-y">
+          <input id="rbrqa-y" name="rbrqa" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label for="rbrqas">
+          Specify
+         </label>
+         <textarea class="form-control" cols="64" id="rbrqas" name="rbrqas" rows="3"></textarea>
+        </div>
+       </div>
+      </div>
+      <div class="row">
        <div class="col-md-6">
         <label>
          Pathology tumor size (mm)
         </label>
         <div class="form-group form-inline">
+         <label for="rbtsl">
+          Length
+         </label>
+         <input class="form-control numeric" id="rbtsl" name="rbtsl" size="4"/>
          <label for="rbtsw">
           Width
          </label>
@@ -1286,7 +1319,7 @@
           Height
          </label>
          <input class="form-control numeric" id="rbtsh" name="rbtsh" size="4"/>
-         <label class="checkbox-inline ">
+         <label class="checkbox-inline">
           <input name="rbtsn" type="hidden" value=""/>
           <input id="rbtsn" name="rbtsn" type="checkbox" value="y"/>
           Not applicable (specify)
@@ -1309,11 +1342,11 @@
         </label>
         <div class="form-group form-inline">
          <label class="radio-inline" for="rbinv-n">
-          <input id="rbinv-n" name="rbinv" required="required" type="radio" value="n"/>
+          <input id="rbinv-n" name="rbinv" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbinv-y">
-          <input id="rbinv-y" name="rbinv" required="required" type="radio" value="y"/>
+          <input id="rbinv-y" name="rbinv" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1362,11 +1395,31 @@
         </div>
        </div>
       </div>
-      <h4>
-       T Staging
-      </h4>
       <div class="row">
-       <div class="col-md-4">
+       <div class="col-md-2">
+       </div>
+       <div class="col-md-2">
+        <div class="form-group">
+         <h4>
+          T Staging
+         </h4>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <div class="form-group">
+         <label for="rbinvp">
+          T2 Visc Pl:
+         </label>
+         <div class="checkbox">
+          <label>
+           <input name="rbinvp" type="hidden" value=""/>
+           <input id="rbinvp" name="rbinvp" type="checkbox" value="p"/>
+           Visceral Pleura
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvt2b">
           T2 Cen:
@@ -1387,7 +1440,7 @@
          </div>
         </div>
        </div>
-       <div class="col-md-4">
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvc">
           T3 Inv:
@@ -1415,7 +1468,7 @@
          </div>
         </div>
        </div>
-       <div class="col-md-4">
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvm">
           T4 Inv:
@@ -1482,6 +1535,321 @@
            <input id="rbinvt4s" name="rbinvt4s" type="checkbox" value="s"/>
            Spine
           </label>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="rbadhs">
+          Adenocarcinoma Histology (Predominant)
+         </label>
+         <select class="form-control" id="rbadhs" name="rbadhs">
+          <option value="-">
+           —
+          </option>
+          <option value="nos">
+           Adenocarcinoma NOS
+          </option>
+          <option value="snm">
+           Adenocarcinoma in situ, nonmucinous
+          </option>
+          <option value="sm">
+           Adenocarcinoma in situ, mucinous
+          </option>
+          <option value="sinm">
+           Adenocarcinoma in situ, indeterminate mucinous/nonmucinous
+          </option>
+          <option value="mnm">
+           Minimally invasive adenocarcinoma, nonmucinous
+          </option>
+          <option value="mm">
+           Minimally invasive adenocarcinoma, mucinous
+          </option>
+          <option value="mmnm">
+           Minimally invasive adenocarcinoma, Mixed nonmucinous and mucinous
+          </option>
+          <option value="mim">
+           Minimally invasive adenocarcinoma, indeterminate mucinous/nonmucinous
+          </option>
+          <option value="ilp">
+           Invasive adenocarcinoma, Lepidic predominant adenocarcinoma
+          </option>
+          <option value="iap">
+           Invasive adenocarcinoma, Acinar predominant adenocarcinoma
+          </option>
+          <option value="ipp">
+           Invasive adenocarcinoma, Papillary predominant adenocarcinoma
+          </option>
+          <option value="imp">
+           Invasive adenocarcinoma, Micropapillary predominant adenocarcinoma
+          </option>
+          <option value="isp">
+           Invasive adenocarcinoma, Solid predominant adenocarcinoma
+          </option>
+          <option value="imdp">
+           Invasive adenocarcinoma, multiple predominant patterns
+          </option>
+          <option value="ipcd">
+           Invasive adenocarcinoma, Predominant subtype cannot be determined
+          </option>
+          <option value="im">
+           Invasive mucinous adenocarcinoma
+          </option>
+          <option value="m">
+           Mixed invasive mucinous and nonmucinous adenocarcinoma
+          </option>
+          <option value="fa">
+           Fetal adenocarcinoma
+          </option>
+          <option value="ea">
+           Enteric adenocarcinoma
+          </option>
+          <option value="ca">
+           Colloid adenocarcinoma
+          </option>
+          <option value="srf">
+           Signet ring features
+          </option>
+          <option value="ccf">
+           Clear cell features
+          </option>
+          <option value="nf">
+           NSLC, favor adenocarcinoma
+          </option>
+         </select>
+        </div>
+       </div>
+       <div class="col-md-8">
+        <div class="form-group">
+         <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+           <tbody>
+            <tr>
+             <td>
+              <label>
+               Predominant features
+              </label>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamds" type="hidden" value=""/>
+                 <input id="pamds" name="pamds" type="checkbox" value="s"/>
+                 solid
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamda" type="hidden" value=""/>
+                 <input id="pamda" name="pamda" type="checkbox" value="a"/>
+                 acinar
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamdp" type="hidden" value=""/>
+                 <input id="pamdp" name="pamdp" type="checkbox" value="p"/>
+                 papillary
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamdmp" type="hidden" value=""/>
+                 <input id="pamdmp" name="pamdmp" type="checkbox" value="m"/>
+                 micropapillary
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamdb" type="hidden" value=""/>
+                 <input id="pamdb" name="pamdb" type="checkbox" value="b"/>
+                 Lepidic /bronchioloalveolar
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamdo" type="hidden" value=""/>
+                 <input id="pamdo" name="pamdo" type="checkbox" value="o"/>
+                 other (specify)
+                </label>
+               </div>
+               <input class="form-control" id="pamdos" name="pamdos"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              <label>
+               Percentages
+              </label>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdsp" name="pamdsp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdap" name="pamdap"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdpp" name="pamdpp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdmpp" name="pamdmpp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdbp" name="pamdbp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamdop" name="pamdop"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              <label>
+               Secondary / Other features
+              </label>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamas" type="hidden" value=""/>
+                 <input id="pamas" name="pamas" type="checkbox" value="s"/>
+                 solid
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamaa" type="hidden" value=""/>
+                 <input id="pamaa" name="pamaa" type="checkbox" value="a"/>
+                 acinar
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamap" type="hidden" value=""/>
+                 <input id="pamap" name="pamap" type="checkbox" value="p"/>
+                 papillary
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamamp" type="hidden" value=""/>
+                 <input id="pamamp" name="pamamp" type="checkbox" value="m"/>
+                 micropapillary
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamab" type="hidden" value=""/>
+                 <input id="pamab" name="pamab" type="checkbox" value="b"/>
+                 Lepidic /bronchioloalveolar
+                </label>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <div class="checkbox">
+                <label>
+                 <input name="pamao" type="hidden" value=""/>
+                 <input id="pamao" name="pamao" type="checkbox" value="o"/>
+                 other (specify)
+                </label>
+               </div>
+               <input class="form-control" id="pamaos" name="pamaos"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              <label>
+               Percentages
+              </label>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamasp" name="pamasp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamaap" name="pamaap"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamapp" name="pamapp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamampp" name="pamampp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamabp" name="pamabp"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="form-control numeric" id="pamaop" name="pamaop"/>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
          </div>
         </div>
        </div>
@@ -2574,7 +2942,8 @@
           <td>
            <div class="form-group">
             <label class="aria-hidden" for="rbal1pd">
-             Pathological diagnosis
+             Pathological
+                                                diagnosis
             </label>
             <select class="form-control" id="rbal1pd" name="rbal1pd">
              <option value="-">
@@ -2706,7 +3075,8 @@
           <td>
            <div class="form-group">
             <label class="aria-hidden" for="rbal2pd">
-             Pathological diagnosis
+             Pathological
+                                                diagnosis
             </label>
             <select class="form-control" id="rbal2pd" name="rbal2pd">
              <option value="-">
@@ -2838,7 +3208,8 @@
           <td>
            <div class="form-group">
             <label class="aria-hidden" for="rbal3pd">
-             Pathological diagnosis
+             Pathological
+                                                diagnosis
             </label>
             <select class="form-control" id="rbal3pd" name="rbal3pd">
              <option value="-">
@@ -2970,7 +3341,8 @@
           <td>
            <div class="form-group">
             <label class="aria-hidden" for="rbal4pd">
-             Pathological diagnosis
+             Pathological
+                                                diagnosis
             </label>
             <select class="form-control" id="rbal4pd" name="rbal4pd">
              <option value="-">
@@ -3071,6 +3443,8 @@
          Yes
         </label>
        </div>
+      </div>
+      <div class="row">
        <div class="form-group col-md-2">
         <label for="rbem">
          Evidence of metastasis
@@ -3120,138 +3494,6 @@
           MX
          </option>
         </select>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-md-7">
-        <div class="form-group">
-         <label for="rbpst8m">
-          Post-surgical TNM status (8th Edition Modified)
-         </label>
-         <div class="form-inline">
-          <select class="form-control" id="rbpst8m" name="rbpst8m">
-           <option value="-">
-            -
-           </option>
-           <option value="0">
-            T0
-           </option>
-           <option value="is">
-            Tis
-           </option>
-           <option value="1am">
-            T1a mi
-           </option>
-           <option value="1as">
-            T1a SS
-           </option>
-           <option value="1a1">
-            T1a
-           </option>
-           <option value="1b">
-            T1b
-           </option>
-           <option value="1c">
-            T1c
-           </option>
-           <option value="2v">
-            T2 Visc Pl
-           </option>
-           <option value="2c">
-            T2 Centr
-           </option>
-           <option value="2a">
-            T2a
-           </option>
-           <option value="2b">
-            T2b
-           </option>
-           <option value="3">
-            T3
-           </option>
-           <option value="3i">
-            T3 Inv
-           </option>
-           <option value="3s">
-            T3 Satell
-           </option>
-           <option value="4">
-            T4
-           </option>
-           <option value="4i">
-            T4 Inv
-           </option>
-           <option value="4n">
-            T4 Ipsi Nod
-           </option>
-           <option value="x">
-            TX
-           </option>
-          </select>
-          <label class="aria-hidden" for="rbpsn8m">
-           N Status
-          </label>
-          <select class="form-control" id="rbpsn8m" name="rbpsn8m">
-           <option value="-">
-            -
-           </option>
-           <option value="0">
-            N0
-           </option>
-           <option value="1">
-            N1
-           </option>
-           <option value="2">
-            N2
-           </option>
-           <option value="3">
-            N3
-           </option>
-           <option value="X">
-            NX
-           </option>
-          </select>
-          <label class="aria-hidden" for="rbpsm8m">
-           M Status
-          </label>
-          <select class="form-control" id="rbpsm8m" name="rbpsm8m">
-           <option value="-">
-            -
-           </option>
-           <option value="0">
-            M0
-           </option>
-           <option value="1ap">
-            M1a Pl Dissem
-           </option>
-           <option value="1ac">
-            M1a Contr Nod
-           </option>
-           <option value="1b">
-            M1b Single
-           </option>
-           <option value="1c">
-            M1c Multi
-           </option>
-           <option value="X">
-            MX
-           </option>
-          </select>
-          <label class="checkbox-inline ">
-           <input name="rbpsx8m" type="hidden" value=""/>
-           <input id="rbpsx8m" name="rbpsx8m" type="checkbox" value="y"/>
-           not applicable
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="col-md-5" id="rbpsx8m-container">
-        <div class="form-group">
-         <label for="rbpsxs8m">
-          Specify
-         </label>
-         <input class="form-control" id="rbpsxs8m" name="rbpsxs8m"/>
-        </div>
        </div>
       </div>
       <div class="row">
@@ -3369,7 +3611,7 @@
             MX
            </option>
           </select>
-          <label class="checkbox-inline ">
+          <label class="checkbox-inline">
            <input name="rbpsx8" type="hidden" value=""/>
            <input id="rbpsx8" name="rbpsx8" type="checkbox" value="y"/>
            not applicable
@@ -4613,7 +4855,7 @@
                Is it new?
               </label>
               <select class="form-control" id="cect1ch" name="cect1ch" tabindex="101">
-               <option value="-">
+               <option selected="" value="-">
                 -
                </option>
                <option value="n">
@@ -5227,7 +5469,7 @@
                <option value="-">
                 -
                </option>
-               <option value="no">
+               <option selected="" value="no">
                 No
                </option>
                <option value="tr">
@@ -5659,7 +5901,7 @@
                <option value="-">
                 -
                </option>
-               <option value="end">
+               <option selected="" value="end">
                 Endobr
                </option>
                <option value="lul">
@@ -5964,7 +6206,7 @@
               <label class="aria-hidden" for="cect1sn">
                Nodule seen in series
               </label>
-              <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text"/>
+              <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text" value="1"/>
              </div>
             </td>
             <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -6053,7 +6295,7 @@
               <label class="aria-hidden" for="cect1inl">
                Nodule seen in image (Low)
               </label>
-              <input class="form-control numeric" id="cect1inl" name="cect1inl" required="required" size="3" tabindex="106" type="text"/>
+              <input class="form-control numeric" id="cect1inl" name="cect1inl" required="required" size="3" tabindex="106" type="text" value="1"/>
               -
               <label class="aria-hidden" for="cect1inh">
                Nodule seen in image (High)
@@ -6204,7 +6446,7 @@
                <option value="-">
                 -
                </option>
-               <option value="un">
+               <option selected="" value="un">
                 Unknown
                </option>
                <option value="bc">
@@ -6816,7 +7058,7 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
+               <option selected="" value="s">
                 Solid
                </option>
                <option value="m">
@@ -7062,7 +7304,7 @@
               <label class="aria-hidden" for="cect1sl">
                length (mm)
               </label>
-              <input class="form-control numeric decimalformat" id="cect1sl" name="cect1sl" required="required" size="4" tabindex="110" type="text"/>
+              <input class="form-control numeric decimalformat" id="cect1sl" name="cect1sl" required="required" size="4" tabindex="110" type="text" value="1.5"/>
              </div>
             </td>
             <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -7152,7 +7394,7 @@
               <label class="aria-hidden" for="cect1sw">
                Maximum width
               </label>
-              <input class="form-control numeric decimalformat" id="cect1sw" name="cect1sw" required="required" size="4" tabindex="111" type="text"/>
+              <input class="form-control numeric decimalformat" id="cect1sw" name="cect1sw" required="required" size="4" tabindex="111" type="text" value="2.5"/>
              </div>
             </td>
             <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -7318,7 +7560,7 @@
               <label class="aria-hidden" for="cect1sh">
                Height
               </label>
-              <input class="form-control numeric decimalformat" id="cect1sh" name="cect1sh" size="4" tabindex="112" type="text"/>
+              <input class="form-control numeric decimalformat" id="cect1sh" name="cect1sh" size="4" tabindex="112" type="text" value="1.75"/>
              </div>
             </td>
             <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -8386,7 +8628,7 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
+               <option selected="" value="s">
                 Annual repeat CT
                </option>
                <option value="f">
@@ -9418,27 +9660,27 @@
           </span>
           Add nodule
          </button>
-         <div class="form-group">
-          <div class="checkbox">
-           <label>
-            <input name="cectancn" type="hidden" value=""/>
-            <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
-            Additional non-calcified nodules
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input name="cectacn" type="hidden" value=""/>
-            <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
-            Additional calcified nodules
-           </label>
-          </div>
-         </div>
         </div>
        </div>
       </div>
-      <input context="server" name="cennod" type="hidden" value="0"/>
-      <input context="server" name="ceanod" type="hidden" value="n"/>
+      <div class="form-group">
+       <div class="checkbox">
+        <label>
+         <input name="cectancn" type="hidden" value=""/>
+         <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+         Small non-calcified nodules are present
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="cectacn" type="hidden" value=""/>
+         <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+         Small calcified nodules are present
+        </label>
+       </div>
+      </div>
+      <input context="server" name="cennod" type="hidden" value="1"/>
+      <input context="server" name="ceanod" type="hidden" value="y"/>
       <script>
        function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
@@ -9491,7 +9733,6 @@
                     });
                     fv.addField('cect1sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect1inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect1inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect1st', {
                         validators: {
                             callback: {
@@ -9545,7 +9786,6 @@
                     });
                     fv.addField('cect2sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect2inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect2inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect2st', {
                         validators: {
                             callback: {
@@ -9599,7 +9839,6 @@
                     });
                     fv.addField('cect3sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect3inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect3inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect3st', {
                         validators: {
                             callback: {
@@ -9653,7 +9892,6 @@
                     });
                     fv.addField('cect4sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect4inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect4inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect4st', {
                         validators: {
                             callback: {
@@ -9707,7 +9945,6 @@
                     });
                     fv.addField('cect5sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect5inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect5inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect5st', {
                         validators: {
                             callback: {
@@ -9761,7 +9998,6 @@
                     });
                     fv.addField('cect6sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect6inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect6inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect6st', {
                         validators: {
                             callback: {
@@ -9815,7 +10051,6 @@
                     });
                     fv.addField('cect7sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect7inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect7inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect7st', {
                         validators: {
                             callback: {
@@ -9869,7 +10104,6 @@
                     });
                     fv.addField('cect8sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect8inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect8inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect8st', {
                         validators: {
                             callback: {
@@ -9923,7 +10157,6 @@
                     });
                     fv.addField('cect9sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect9inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect9inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect9st', {
                         validators: {
                             callback: {
@@ -9977,7 +10210,6 @@
                     });
                     fv.addField('cect10sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect10inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect10inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect10st', {
                         validators: {
                             callback: {
@@ -10052,28 +10284,6 @@
         Severe
        </label>
       </div>
-     </div>
-     <div class="form-group">
-      <label class="control-label">
-       Coronary calcifications
-      </label>
-      <br/>
-      <label class="radio-inline" for="ceccv-n">
-       <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
-       None
-      </label>
-      <label class="radio-inline" for="ceccv-m">
-       <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
-       Mild
-      </label>
-      <label class="radio-inline" for="ceccv-d">
-       <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
-       Moderate
-      </label>
-      <label class="radio-inline" for="ceccv-s">
-       <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
-       Severe
-      </label>
      </div>
      <div class="row">
       <div class="col-md-12">
@@ -10215,6 +10425,32 @@
        </div>
       </div>
      </div>
+     <div class="row">
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepaw">
+        Pulmonary artery width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="ceaow">
+        Ascending aorta width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepar">
+        Pulmonary artery/aorta ratio
+       </label>
+       <small>
+        (calculated)
+       </small>
+       <br/>
+       <span id="cepar-text">
+       </span>
+       <input id="cepar" name="cepar" type="hidden"/>
+      </div>
+     </div>
      <script>
       function initEmphysema(fv) {
         function calculateVisualCacScore() {
@@ -10233,6 +10469,22 @@
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
         calculateVisualCacScore();
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            } else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
 
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
@@ -11066,7 +11318,7 @@
                 Additional comments on pulmonary abnormalities
                </label>
                <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceoppai" type="hidden" value=""/>
                 <input id="ceoppai" name="ceoppai" type="checkbox" value="y"/>
                 Include in impression
@@ -11317,7 +11569,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceoppabi" type="hidden" value=""/>
                 <input id="ceoppabi" name="ceoppabi" type="checkbox" value="y"/>
                 Include in impression
@@ -11344,135 +11596,66 @@
        <div class="panel-collapse collapse" id="cardiac-container" role="tabpanel">
         <div class="panel-body">
          <input name="ceca" type="hidden"/>
-         <div class="table-responsive">
-          <table class="table">
-           <tbody>
-            <tr>
-             <td>
-              <label class="control-label" for="cecca">
-               Aortic calcifications
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <label class="aria-hidden" for="cecca">
-                Aortic Calcifications
-               </label>
-               <select class="form-control" id="cecca" name="cecca">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal &lt; ⅓
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive &gt; ⅔
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              <label class="control-label" for="ceprevm">
-               Pericardial effusion severity
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepaw">
-               Pulmonary artery width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="ceaow">
-               Ascending aorta width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="aria-hidden" for="ceaow">
-                Ascending Aorta Width
-               </label>
-               <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepar">
-               Pulmonary artery/aorta
-                                ratio
-              </label>
-              <br/>
-              <small>
-               (calculated)
-              </small>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <span id="cepar-text">
-               </span>
-               <input id="cepar" name="cepar" type="hidden"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="7">
-              <div class="form-group">
-               <label for="cecommca">
-                Additional comments on cardiac abnormalities
-               </label>
-               <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
-               <label class="checkbox-inline ">
-                <input name="cecommcai" type="hidden" value=""/>
-                <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
-                Include in impression
-               </label>
-              </div>
-             </td>
-            </tr>
-           </tbody>
-          </table>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="cecca">
+            Aortic calcifications
+           </label>
+           <select class="form-control" id="cecca" name="cecca">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal &lt; ⅓
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive &gt; ⅔
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="ceprevm">
+            Pericardial effusion severity
+           </label>
+           <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-12 form-group">
+           <label for="cecommca">
+            Additional comments on cardiac abnormalities
+           </label>
+           <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
+           <label class="checkbox-inline">
+            <input name="cecommcai" type="hidden" value=""/>
+            <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
+            Include in impression
+           </label>
+          </div>
          </div>
         </div>
        </div>
@@ -11616,7 +11799,7 @@
           <table class="table">
            <tbody>
             <tr>
-             <td>
+             <td width="50%">
               Any enlarged or growing hilar or mediastinal lymph nodes
               <br/>
               <small>
@@ -11626,6 +11809,13 @@
                 (any size for para-esophageal)
                </strong>
               </small>
+              <br/>
+              <a href="../www/img/nodal_chart.gif" target="_blank" title="Click for larger image">
+               <img alt="Lymph node chart" class="hidden-xs" src="../www/img/nodal_chart.gif" style="max-width: 675px;" title="Lymph node chart"/>
+               <span class="visible-xs">
+                View lymph node chart
+               </span>
+              </a>
              </td>
              <td>
               <div class="form-group form-inline">
@@ -11995,7 +12185,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceotabnm" name="ceotabnm"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceotabnmi" type="hidden" value=""/>
                 <input id="ceotabnmi" name="ceotabnmi" type="checkbox" value="y"/>
                 Include in impression
@@ -12190,7 +12380,7 @@
                 Additional comments on breast abnormalities
                </label>
                <textarea class="form-control" id="ceobrc" name="ceobrc"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceobrci" type="hidden" value=""/>
                 <input id="ceobrci" name="ceobrci" type="checkbox" value="y"/>
                 Include in impression
@@ -12223,7 +12413,7 @@
             Specify bone abnormalities
            </label>
            <textarea class="form-control" id="ceaoabb" name="ceaoabb"></textarea>
-           <label class="checkbox-inline ">
+           <label class="checkbox-inline">
             <input name="ceaoabbi" type="hidden" value=""/>
             <input id="ceaoabbi" name="ceaoabbi" type="checkbox" value="y"/>
             Include in impression
@@ -12564,7 +12754,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceaoab" name="ceaoab"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceaoabi" type="hidden" value=""/>
                 <input id="ceaoabi" name="ceaoabi" type="checkbox" value="y"/>
                 Include in impression
@@ -12580,23 +12770,7 @@
       </div>
      </div>
      <script>
-      function calculatePulmonaryArteryAortaRatio() {
-        let res = 0;
-        const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-        if (ceaow > 0) {
-            res = (cepaw / ceaow).toFixed(1);
-            $("#cepar-text").text(res);
-            $("#cepar").val(res);
-        } else {
-            $("#cepar-text").text("");
-            $("#cepar").val("");
-        }
-    }
-
-    function initAbnormalities(fv) {
-        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-        calculatePulmonaryArteryAortaRatio();
-
+      function initAbnormalities(fv) {
         //Neck and mediastinal
         $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
         $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
@@ -12619,7 +12793,6 @@
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
-            fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
 
             //lymph nodes; use a real element name for the field so conditional plugins can toggle the field
             fv.addField('cemlnl1', {
@@ -12631,46 +12804,7 @@
      </script>
     </div>
     <hr/>
-    <div id="intervention">
-     <h3>
-      Summary of interventions for this malignancy
-     </h3>
-     <div class="row">
-      <div class="col-sm-3 form-group">
-       <label for="rbdos">
-        First intervention
-       </label>
-       <div class="input-group datepicker">
-        <input aria-describedby="rbdos-addon" class="form-control" data-restriction="past" id="rbdos" name="rbdos"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="rbdos-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
-         </div>
-        </div>
-       </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
-      </div>
-      <div class="col-sm-3 form-group">
-       <label for="rbdmr">
-        Most recent intervention
-       </label>
-       <div class="input-group datepicker">
-        <input aria-describedby="rbdmr-addon" class="form-control" data-restriction="past" id="rbdmr" name="rbdmr"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="rbdmr-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
-         </div>
-        </div>
-       </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
-      </div>
-     </div>
+    <div id="follow-up" style="padding-top:8px;">
      <h3>
       Follow-Up
       <label class="small required">
@@ -12717,7 +12851,7 @@
         </label>
         <br/>
         <div class="input-group datepicker">
-         <input aria-describedby="cefud-addon" class="form-control" data-restriction="future" id="cefud" name="cefud"/>
+         <input aria-describedby="cefud-addon" class="form-control" data-restriction="" id="cefud" name="cefud"/>
          <div class="input-group-addon">
           <div class="input-group-text" id="cefud-addon">
            <i aria-hidden="true" class="fa fa-calendar">
@@ -12737,47 +12871,47 @@
         Other follow-up:
        </label>
        <br/>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefuaf" type="hidden" value=""/>
         <input id="cefuaf" name="cefuaf" type="checkbox" value="y"/>
         Antibiotics
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefucc" type="hidden" value=""/>
         <input id="cefucc" name="cefucc" type="checkbox" value="y"/>
         Contrast CT
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefupe" type="hidden" value=""/>
         <input id="cefupe" name="cefupe" type="checkbox" value="y"/>
         PET
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefufn" type="hidden" value=""/>
         <input id="cefufn" name="cefufn" type="checkbox" value="y"/>
         Percutaneous biopsy
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefubr" type="hidden" value=""/>
         <input id="cefubr" name="cefubr" type="checkbox" value="y"/>
         Bronchoscopy
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefupc" type="hidden" value=""/>
         <input id="cefupc" name="cefupc" type="checkbox" value="y"/>
         Pulmonary consultation
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefutb" type="hidden" value=""/>
         <input id="cefutb" name="cefutb" type="checkbox" value="y"/>
         Refer to tumor board
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefunf" type="hidden" value=""/>
         <input id="cefunf" name="cefunf" type="checkbox" value="y"/>
         No other further follow-up
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefuo" type="hidden" value=""/>
         <input id="cefuo" name="cefuo" type="checkbox" value="y"/>
         Other
@@ -12830,28 +12964,32 @@
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
             const when = $("[name='cefuw']:checked").val();
+            let baseDate = moment($("#cedos").val());
+            if (!baseDate.isValid()) {
+                baseDate = moment();
+            }
             const $field = $("#cefud");
             switch (when) {
                 case "1y":
-                    $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'year').format(VAPALS.DATE_FORMAT));
                     break;
                 case "nw":
-                    $field.val(moment().format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.format(VAPALS.DATE_FORMAT));
                     break;
                 case "1m":
-                    $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "3m":
-                    $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(3, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "6m":
-                    $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(6, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 default:
                     $field.val("").focus();
             }
 
-            if (fv) {
+            if (typeof fv !== 'undefined' && fv.fields['cefud']) {
                 fv.revalidateField('cefud');
             }
         });
@@ -12859,21 +12997,9 @@
         //display other followup specify field if "other" checkbox is enabled.
         $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
 
-        function setCtFollowUpOther() {
-            $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-        }
-
-        //auto-select "other" if user modifies the date
-        $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
-
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('cefud', {
-                validators: {
-                    date: {min: VAPALS.todaysDate(), message: 'Follow-up date must be at least today\'s date'}
-                }
-            });
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
 
@@ -12884,7 +13010,7 @@
     <hr/>
     <div class="pull-left">
      <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" id="save-for-later-button" type="submit">
+     <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
       Save for Later
      </button>
      <button class="btn btn-primary" id="submit-button" type="submit">
@@ -12938,7 +13064,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.05.12
+     2021.09.08
     </span>
    </div>
   </footer>
@@ -12962,10 +13088,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {
@@ -13038,6 +13222,10 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
+        $(document).ready(function() {
+            $('table.datatables').DataTable();
+        } );
+
     })
   </script>
   <script>
@@ -13055,6 +13243,7 @@
                         rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        sbffr: {validators: {lessThan: {max: 100, message: 'Value must be less than or equal to 100'}}},
                         rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
                         rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
                         rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},
@@ -13094,9 +13283,10 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -13129,24 +13319,11 @@
 
         $(function () {
             const fv = createFormValidator();
-
-            //hook for calculating Pulmonary function test percentage (FFR)
-            $("#sbfev1, #sbfvc").on('change', function () {
-                const fev1 = $("#sbfev1").val();
-                const fvc = $("#sbfvc").val();
-                const ffr = VAPALS.calculatePulmonaryFunction(fev1, fvc);
-                if (ffr > 0) {
-                    $("#sbffr").val(ffr);
-                    $("#ffr-value").text(ffr);
-                    $("#ffr-message").show();
-                } else {
-                    $("#sbffr").val("");
-                    $("#ffr-message").hide();
-                }
-            }).first().trigger('change');
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             $("#rbcsx8").conditionallyEnable({enable: "#rbcsx8-container"});
-            $("#rbcsx8m").conditionallyEnable({enable: "#rbcsx8m-container"});
             $("[name=rbcsb]").conditionallyEnable({sourceValues: "o", enable: "#rbcsb-container"});
             $("[name=rbloc]").conditionallyEnable({sourceValues: "o", enable: "#rbloc-container"});
             $("[name=rbtri]").conditionallyEnable({sourceValues: "o", enable: "#rbtri-container"});
@@ -13154,7 +13331,7 @@
 
             //Surgical section
             $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert"});
+            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert, #rbmep-container"});
             $("[name=rbrep]").conditionallyEnable({sourceValues: "n,r", enable: "#rbrep-container"});
             $("#rbtoso").conditionallyEnable({sourceValues: "o", enable: "#rbtoso-container"});
             $("[name=rbvto]").conditionallyEnable({enable: "#rbvto-container"});
@@ -13162,7 +13339,6 @@
             $("#rbino").conditionallyEnable({sourceValues: "o", enable: "#rbino-container"});
             $("[name=rbal]").conditionallyDisplay({enable: "#rbal-container"});
             $("[name=rbem]").conditionallyEnable({enable: "#rbem-container"});
-            $("[name=rbpsx8m]").conditionallyEnable({enable: "#rbpsx8m-container"});
             $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
 
             //Radiation section
@@ -13189,6 +13365,7 @@
                 $("#surgery").toggle(val === 's');
                 $("#radiation").toggle(val === 'r');
                 $("#chemotherapy").toggle(val === 'c')
+                $("#treatment-start-label").toggle(val === 'r' || val === 'c')
             }).trigger('change');
 
             

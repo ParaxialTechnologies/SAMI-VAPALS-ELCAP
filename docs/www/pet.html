@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.05.12" name="version"/>
+  <meta content="2021.09.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: PET Evaluation Form
@@ -17,6 +17,8 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <link href="lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <link href="lib/datatables/datatables.min.css" rel="stylesheet"/>
  </head>
  <body id="body" style="position: relative;">
   <script src="lib/es6-shim.js">
@@ -45,19 +47,23 @@
   </script>
   <script src="lib/clipboard.js">
   </script>
-  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  <script src="lib/chart-js-2.9.3/Chart.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js">
+  <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-display.js">
+  <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js">
+  <script src="jquery-conditonally-enable.js?v=2021.09.08">
   </script>
-  <script src="vapals.js">
+  <script src="jquery-conditonally-display.js?v=2021.09.08">
   </script>
-  <script src="init.js">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.09.08">
   </script>
-  <script src="nodule-grid.js">
+  <script src="vapals.js?v=2021.09.08">
+  </script>
+  <script src="init.js?v=2021.09.08">
+  </script>
+  <script src="nodule-grid.js?v=2021.09.08">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -116,7 +122,7 @@
         </li>
         <li>
          <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing Image &amp; CT Evaluation
+          Intake But No CT Evaluation
          </a>
         </li>
         <li>
@@ -127,6 +133,11 @@
         <li>
          <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
           Inactive
+         </a>
+        </li>
+        <li id="matchingReport">
+         <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
+          Matching Report
          </a>
         </li>
         <li>
@@ -5360,23 +5371,23 @@
          </span>
          Add nodule
         </button>
-        <div class="form-group">
-         <div class="checkbox">
-          <label>
-           <input name="cectancn" type="hidden" value=""/>
-           <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
-           Additional non-calcified nodules
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input name="cectacn" type="hidden" value=""/>
-           <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
-           Additional calcified nodules
-          </label>
-         </div>
-        </div>
        </div>
+      </div>
+     </div>
+     <div class="form-group">
+      <div class="checkbox">
+       <label>
+        <input name="cectancn" type="hidden" value=""/>
+        <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+        Small non-calcified nodules are present
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input name="cectacn" type="hidden" value=""/>
+        <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+        Small calcified nodules are present
+       </label>
       </div>
      </div>
      <input context="server" name="cennod" type="hidden" value="0"/>
@@ -5433,7 +5444,6 @@
                     });
                     fv.addField('cect1sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect1inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect1inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect1st', {
                         validators: {
                             callback: {
@@ -5487,7 +5497,6 @@
                     });
                     fv.addField('cect2sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect2inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect2inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect2st', {
                         validators: {
                             callback: {
@@ -5541,7 +5550,6 @@
                     });
                     fv.addField('cect3sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect3inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect3inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect3st', {
                         validators: {
                             callback: {
@@ -5595,7 +5603,6 @@
                     });
                     fv.addField('cect4sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect4inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect4inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect4st', {
                         validators: {
                             callback: {
@@ -5649,7 +5656,6 @@
                     });
                     fv.addField('cect5sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect5inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect5inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect5st', {
                         validators: {
                             callback: {
@@ -5703,7 +5709,6 @@
                     });
                     fv.addField('cect6sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect6inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect6inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect6st', {
                         validators: {
                             callback: {
@@ -5757,7 +5762,6 @@
                     });
                     fv.addField('cect7sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect7inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect7inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect7st', {
                         validators: {
                             callback: {
@@ -5811,7 +5815,6 @@
                     });
                     fv.addField('cect8sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect8inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect8inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect8st', {
                         validators: {
                             callback: {
@@ -5865,7 +5868,6 @@
                     });
                     fv.addField('cect9sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect9inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect9inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect9st', {
                         validators: {
                             callback: {
@@ -5919,7 +5921,6 @@
                     });
                     fv.addField('cect10sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect10inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect10inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect10st', {
                         validators: {
                             callback: {
@@ -6143,7 +6144,7 @@
     </h3>
     <div class="row">
      <div class="col-md-6 form-group">
-      <label class="required" for="cefu">
+      <label for="cefu">
        Follow-up
       </label>
       <select class="form-control" id="cefu" name="cefu" required="required">
@@ -6180,11 +6181,11 @@
       </select>
      </div>
      <div class="col-md-6 form-group">
-      <label class="required" for="cefud">
+      <label for="cefud">
        When
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="cefud-addon" class="form-control" data-restriction="future" id="cefud" name="cefud" required="required"/>
+       <input aria-describedby="cefud-addon" class="form-control" data-restriction="" id="cefud" name="cefud" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cefud-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -6293,7 +6294,7 @@
     <hr/>
     <div class="pull-left">
      <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" id="save-for-later-button" type="submit">
+     <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
       Save for Later
      </button>
      <button class="btn btn-primary" id="submit-button" type="submit">
@@ -6347,7 +6348,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.05.12
+     2021.09.08
     </span>
    </div>
   </footer>
@@ -6371,10 +6372,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {
@@ -6447,6 +6506,10 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
+        $(document).ready(function() {
+            $('table.datatables').DataTable();
+        } );
+
     })
   </script>
   <script>
@@ -6476,20 +6539,14 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
                             }
                         },
-                        cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
-                        cefud: {
-                            validators: {
-                                notEmpty: {message: 'Follow-up date is required'},
-                                date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
-                            }
-                        },
                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
                         ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -6522,6 +6579,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             //follow-up date calculator.
             $("[name=cefuw]").on("change", function () {

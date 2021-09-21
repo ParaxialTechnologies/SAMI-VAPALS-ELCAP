@@ -3,8 +3,8 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 2	Radiologist	ptrad	text	1			Radiologist
 3	Radiologist NPI	ptradnpi	text	0			Radiologist NPI
 4	PET scan performed at outside institution	ptofr	radio	0		n;yes	No;Yes
-5	Date of baseline CT	sidoe	text	1			
-6	Date of most recent comparative study	cedos	text	1			
+5	Date of baseline CT	sidoe	text	1
+6	Date of most recent comparative study	cedos	text	1
 7	Are there any nodules noted in the CT scan	ceanod	radio	0		n;yes	No;Yes
 8	"Are non-calcified nodules noted, all less than 6 mm"	cenncnlt	radio	0		n;yes	No;Yes
 9	Is it a new nodule?  Nodule 1	cect1ch	select-one	0		-;n;pn;pd;pe;pi;pj;po;pw;px;pr;rn;rd;ri;rj;pk;pv	"-;Newly seen;Prev seen, no change;Prev seen, slight decr;Prev seen, marked decr;Prev seen, slight incr;Prev seen, marked incr;Prev seen, obscured;Prev seen, resolved;Prev seen, not a nodule;Prev seen, resected;Retrospect, no chg;Retrospect, decrease;Retrospect, slight incr;Retrospect, marked incr;Not in outside report;Not included in scan"
@@ -177,7 +177,7 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 176	Calcifications Nodule 8	cect8ca	checkbox	0		y	Yes
 177	Calcifications Nodule 9	cect9ca	checkbox	0		y	Yes
 178	Calcifications Nodule 10	cect10ca	checkbox	0		y	Yes
-179	Index Nodule	cectin	checkbox	0		1	
+179	Index Nodule	cectin	checkbox	0		1
 180	Index Nodule Nodule 1	cect1in	checkbox	0		y	Yes
 181	Index Nodule Nodule 2	cect2in	checkbox	0		y	Yes
 182	Index Nodule Nodule 3	cect3in	checkbox	0		y	Yes
@@ -238,8 +238,8 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 237	Pathologic diagnosis. Nodule 8	cect8pd	select-one	0		-;aa;ap;ai;mi;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;AIS;MIA;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
 238	Pathologic diagnosis. Nodule 9	cect9pd	select-one	0		-;aa;ap;ai;mi;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;AIS;MIA;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
 239	Pathologic diagnosis. Nodule 10	cect10pd	select-one	0		-;aa;ap;ai;mi;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;AIS;MIA;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
-240	Additional non-calcified nodules	cectancn	checkbox	0		1	Additional non-calcified nodules
-241	Additional calcified nodules	cectacn	checkbox	0		1	Additional calcified nodules
+240	Small non-calcified nodules are present	cectancn	checkbox	0		1	Small non-calcified nodules are present
+241	Small calcified nodules are present	cectacn	checkbox	0		1	Small calcified nodules are present
 242	Lung-RADS	celrad	radio	1		-;0;1;2;3;4A;4B;4X	Not applicable;0 (incomplete);1 (negative);2 (benign appearance or behavior);3 (probably benign);4A (suspicious);4B (suspicious);4X (suspicious)
 243	Lung-RADS Modifiers.  Clinically significant or potentially clinically significant findings (non lung cancer)	celrads	checkbox	0		S	S - clinically significant or potentially clinically significant findings (non lung cancer)
 244	Lung-RADS Modifiers.  Prior diagnosis of lung cancer who return to screening	celradc	checkbox	0		C	C - prior diagnosis of lung cancer who return to screening
@@ -252,8 +252,8 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 251	Organ/Location 2 describe	ceafo2	text	0			Describe
 252	Comments	ceafmc	textarea	0			Comments
 253	Other findings	ceofo	textarea	0			Any other findings
-254	Follow-up	cefu	select-one	1		-;rs;dx;af;pe;cc;fn;br;va;su	-;Annual repeat CT;Follow-up CT;Abx + follow-up CT;PET;CT w contrast;CT-guided biopsy;Bronchoscopy;VAT;Resection
-255	Follow-up date	cefud	text	1			When
+254	Follow-up	cefu	select-one	0		-;rs;dx;af;pe;cc;fn;br;va;su	-;Annual repeat CT;Follow-up CT;Abx + follow-up CT;PET;CT w contrast;CT-guided biopsy;Bronchoscopy;VAT;Resection
+255	Follow-up date	cefud	text	0			When
 256	Next follow-up	cefuw	radio	0		nw;1m;3m;6m;1y;os	Now;1 month;3 months;6 months;1 year;Other
 257	Nodule impression	ceimn	radio			rs;ro;ru	"No evidence of abnormal uptake. Follow-up as recommended above.;Uptake as described above. Follow-up as recommended above.;Nodule(s) unchanged, as described above. Follow-up as recommended above."
 258	Nodule - other findings	ceimo	radio			rs;oa;da	No other abnormalities.;Other abnormalities and suggested follow-up as described above.;Diffuse abnormalities.

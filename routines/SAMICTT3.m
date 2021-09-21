@@ -1,12 +1,55 @@
-SAMICTR3 ;ven/gpl - ielcap: forms ; 1/23/19 5:14pm
- ;;18.0;SAMI;;
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-08-17T19:12Z
+ ;;18.0;SAMI;**4,10,13**;2020-01;Build 2
+ ;;18.13
  ;
- ;@license: see routine SAMIUL
+ ; SAMICTT3 creates the Emphysema section of the ELCAP CT Report in
+ ; text format.
  ;
  quit  ; no entry from top
  ;
-EMPHYS(rtn,vals,dict) ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;@contents
+ ; EMPHYS: emphysema section of ctreport text format
+ ; $$CCMSTR = form phrases
+ ; $$LOWC = convert X to lowercase
+ ; OUT: output a line of ct report
+ ; OUTOLD: old version of out
+ ; HOUT: output a ct report header line
+ ; $$XVAL = patient value for var
+ ; $$XSUB = dictionary value defined by var
+ ;
+ ;
+ ;
+ ;@section 1 EMPHYS & related subroutines
+ ;
+ ;
+ ;
+EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
+ ;
  ; repgen4,repgen5
+ ;
+ ;@called-by
+ ; WSREPORT^SAMICTT0
+ ;@calls
+ ; $$XVAL
+ ; HOUT
+ ; OUT
+ ; $$XSUB
+ ; $$LOBESTR^SAMICTR2
+ ; $$CCMSTR
+ ; $$LOWC
+ ;@input
+ ; rtn
+ ; vals
+ ; dict
+ ;@output: create emphysema section of ct eval report
  ;  
  ;# Emphysema
  ;
@@ -22,6 +65,9 @@ EMPHYS(rtn,vals,dict) ;
  . D OUT(sp1_$$XSUB("ceem",vals,dict))
  . s outmode="go" d OUT("")
  ;
+ if $$XVAL("ceem",vals)="" d  ;
+ . D HOUT("Emphysema: None")
+ . s outmode="go" d OUT("")
  ;d OUT("")
  s outmode="hold"
  D HOUT("Pleura: ")
@@ -40,19 +86,19 @@ EMPHYS(rtn,vals,dict) ;
  . . if $$XVAL("ceper",vals)'="-" d  ;
  . . . if $$XVAL("cepel",vals)'="-" d  ;
  . . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
- . . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions.") d OUT("")
+ . . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions. ") d OUT("")
  . . . . else  d  ;
- . . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right.")
+ . . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right. ")
  . . . . . s pe=1
  . . . else  d  ;
- . . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion.") d OUT("")
+ . . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
  . . . . s pe=1
  . . else  d  ;
- . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion.") d OUT("")
+ . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
  . . . s pe=1
  . ;
  i $$XVAL("cepev",vals)'="y" d  ; 
- . d OUT(sp1_"No pleural effusions.") d OUT("")
+ . d OUT(sp1_"No pleural effusions. ") d OUT("")
  ;  if { $pe == 0 } {
  ;    puts "[tr "No pleural effusions"].${para}"
  ;  }
@@ -61,7 +107,7 @@ EMPHYS(rtn,vals,dict) ;
  ;
  if $$XVAL("cebatr",vals)="y" d  ;
  . ;d OUT("Rounded atelectasis in the ")
- . d OUT(sp1_"Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_".") ;d OUT("")
+ . d OUT(sp1_"Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_". ") ;d OUT("")
  . s yespp=1
  ;
  if $$XVAL("cept",vals)="y" d  ;
@@ -77,24 +123,24 @@ EMPHYS(rtn,vals,dict) ;
  . . s str=str_" left"
  . . s numl=numl+1
  . ;if numl>1 d  ;
- . ;. s str=str_" lungs."
+ . ;. s str=str_" lungs. "
  . ;else  d  ;
- . ;. s str=str_" lung."
- . s str=str_"."
- . if numl=0 set str=sp1_"Pleural thickening/plaques."
+ . ;. s str=str_" lung. "
+ . s str=str_". "
+ . if numl=0 set str=sp1_"Pleural thickening/plaques. "
  . d OUT(str) ;d OUT("")
  ;
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
- . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals)) 
- . e  d OUT(sp1_"Pleural tumor.")
+ . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals))
+ . e  d OUT(sp1_"Pleural tumor. ")
  . ;d OUT("")
  ;
  i yespp=0 d OUT("")
  ;
  d  ;
- . if $$XVAL("ceoppab",vals)'="" d OUT(sp1_$$XVAL("ceoppab",vals)_".") ;d OUT("")
+ . if $$XVAL("ceoppab",vals)'="" d OUT(sp1_$$XVAL("ceoppab",vals)_". ") ;d OUT("")
  . else  d
  . . if yespp=1 d OUT("")
  ;
@@ -106,8 +152,8 @@ EMPHYS(rtn,vals,dict) ;
  n vcac,cac,cacrec
  s (cac,cacrec)=""
  ;
- if $$XVAL("cecccac",vals)'="" d  ;
- . s @vals@("ceccv")="e"
+ ; if $$XVAL("cecccac",vals)'="" d  ;
+ ; . s @vals@("ceccv")="e"
  ;
  d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)
@@ -118,15 +164,25 @@ EMPHYS(rtn,vals,dict) ;
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))
  ;
  ;
- n samicac s samicac=0
- i $$XVAL("cecclm",vals)'="no" s samicac=1
- i $$XVAL("ceccld",vals)'="no" s samicac=1
- ;i $$XVAL("cecclf",vals)'="no" s samicac=1
- i $$XVAL("cecccf",vals)'="no" s samicac=1
- i $$XVAL("ceccrc",vals)'="no" s samicac=1
+ ;n samicac s samicac=0
+ ;i $$XVAL("cecclm",vals)'="no" s samicac=1
+ ;i $$XVAL("ceccld",vals)'="no" s samicac=1
+ ;;i $$XVAL("cecclf",vals)'="no" s samicac=1
+ ;i $$XVAL("cecccf",vals)'="no" s samicac=1
+ ;i $$XVAL("ceccrc",vals)'="no" s samicac=1
  ;
- ;s outmode="hold" s line=""
- i samicac=1 d  ;
+ ;;s outmode="hold" s line=""
+ ;i samicac=1 d  ;
+ i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no"
+ i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
+ i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no"
+ i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
+ i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no"
+ i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no"
+ i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no"
+ i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no"
+ ;
+ d  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
@@ -142,16 +198,18 @@ EMPHYS(rtn,vals,dict) ;
  . s outmode="go" d OUT("")
  ;
  s outmode="hold"
- d HOUT("Cardiac Findings: ")
+ n ocf s ocf=0
+ d HOUT("Other Cardiac Findings: ")
+ ;d HOUT("Other Cardiac Findings: ")
  ;
  ;s outmode="hold"
  ;# Pericardial Effusion
  if $$XVAL("ceprevm",vals)'="-" d  ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
  . . if $$XVAL("ceprevm",vals)'="" d
- . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_".") d OUT("")
- . . . s pe=1
- . . else  d OUT("No pericardial effusion.") d OUT("")
+ . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_". ") d OUT("")
+ . . . s pe=1 s ocf=1
+ . . else  d OUT("No pericardial effusion. ") d OUT("")
  ;
  ;
  ;;# Pulmonary and Aortic Diameter
@@ -161,11 +219,13 @@ EMPHYS(rtn,vals,dict) ;
  . . d OUT("Widest ascending aortic diameter at the same level is "_$$XVAL("ceaow",vals)_" mm. ")
  . . if $$XVAL("cepar",vals)'="" d  ;
  . . . d OUT("The ratio is "_$$XVAL("cepar",vals)_". ")
- . d OUT("")
+ . d OUT("") s ocf=1
  ;
  ; #"Additional Comments on Cardiac Abnormalities:"
  if $$XVAL("cecommca",vals)'="" d  ;
- . d OUT($$XVAL("cecommca",vals)_".")
+ . d OUT($$XVAL("cecommca",vals)_". ")
+ . s ocf=1
+ i ocf=0 d OUT("None. ")
  s outmode="go"
  d OUT("")
  ;
@@ -178,14 +238,14 @@ EMPHYS(rtn,vals,dict) ;
  . s yeamm=1
  . s abn=$$CCMSTR("ceatc^ceaty^ceatm",vals)
  . ;d OUT("[abn="_abn_"]")
- . i abn="" d OUT(sp1_"Noted in the thyroid.")
- . i abn'="" d OUT(sp1_abn_" thyroid.")
+ . i abn="" d OUT(sp1_"Noted in the thyroid. ")
+ . i abn'="" d OUT(sp1_abn_" thyroid. ")
  . i $$XVAL("ceato",vals)="o" d OUT(sp1_$$XVAL("ceatos",vals)_"<br>")
  i $$XVAL("ceaya",vals)="y" d  ;
  . s yesmm=1
  . s abn=$$CCMSTR("ceayc^ceayy^ceaym",vals)
  . i abn="" d OUT(sp1_"Noted in the thymus")
- . i abn'="" d OUT(sp1_abn_" thymus.")
+ . i abn'="" d OUT(sp1_abn_" thymus. ")
  . i $$XVAL("ceayo",vals)="o" d OUT(sp1_$$XVAL("ceayos",vals))
  ;
  ;   # Non-calcified lymph nodes
@@ -228,7 +288,7 @@ EMPHYS(rtn,vals,dict) ;
  . . i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
  . n lnum,slnum
  . s lnum=$o(llist(""),-1)
- . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted.")
+ . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted. ")
  . i lnum>0 d  ;
  . . s slnum=lnum
  . . d OUT("Enlarged or growing lymph nodes in the ")
@@ -238,27 +298,27 @@ EMPHYS(rtn,vals,dict) ;
  . . . i lnum>2 d OUT(", ")
  . . . i lnum=2 d OUT(" and ")
  . . . s lnum=lnum-1
- . . i slnum>1 d OUT(" locations.")
- . . i slnum=1 d OUT(" location.")
+ . . i slnum>1 d OUT(" locations. ")
+ . . i slnum=1 d OUT(" location. ")
  ;
  ;s outmode="go"
  ;d OUT("")
  ;
  if $$XVAL("cemlncab",vals)="y" d  ;
  . set yesmm=1
- . d OUT("Calcified lymph nodes present.")
+ . d OUT("Calcified lymph nodes present. ")
  ;
  if $$XVAL("ceagaln",vals)="y" d  ;
  . set yesmm=1
- . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen.")
+ . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen. ")
  . d OUT($$XVAL("ceagalns",vals))
  ;
  if $$XVAL("cemva",vals)="y" d  ;
  . set yesmm=1
  . if $$XVAL("cemvaa",vals)="a" d  ;
- . . d OUT("Other vascular abnormalities are seen in the aorta.")
+ . . d OUT("Other vascular abnormalities are seen in the aorta. ")
  . if $$XVAL("cemvaa",vals)="w" d  ;
- . . d OUT("Other vascular abnormalities are seen in the pulmonary series.")
+ . . d OUT("Other vascular abnormalities are seen in the pulmonary series. ")
  . d OUT($$XVAL("cemvaos",vals)_"<br>")
  ;
  ;s outmode="hold"
@@ -276,7 +336,7 @@ EMPHYS(rtn,vals,dict) ;
  . if $$XVAL("cemelnm",vals)="m" d  ;
  . . s elist($o(elist(""),-1)+1)="A mass"
  . . s numl=numl+1
- . if numl=0 d OUT("Esophageal abnormality noted.")
+ . if numl=0 d OUT("Esophageal abnormality noted. ")
  . e  d  ;
  . . d OUT($g(elist(1)))
  . . if numl=1 d OUT(" is ")
@@ -287,7 +347,7 @@ EMPHYS(rtn,vals,dict) ;
  . . . d OUT($$LOWC($g(elist(2))))
  . . . if numl=3 d  ;
  . . . . d OUT(", and "_$$LOWC($g(elist(3))))
- . . d OUT("seen in the esophagus.")
+ . . d OUT("seen in the esophagus. ")
  . d OUT($$XVAL("cemelnos",vals))
  ;s outmode="go"
  ;d OUT("")
@@ -296,7 +356,7 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("cehhn",vals)="y" d  ;
  . set yesmm=1
  . if $$XVAL("cehhnos",vals)'="" d OUT("Hiatal hernia: "_$$XVAL("cehhnos",vals))
- . if $$XVAL("cehhnos",vals)="" d OUT("Hiatal hernia.")
+ . if $$XVAL("cehhnos",vals)="" d OUT("Hiatal hernia. ")
  . d OUT("")
  ;
  if $$XVAL("ceomm",vals)="y" d  ;
@@ -307,17 +367,30 @@ EMPHYS(rtn,vals,dict) ;
  . if abn="" d OUT(sp1_"Abnormality noted in the mediastinum. ")
  . e  d OUT(sp1_abn_" mediastinum. ")
  . d OUT(tval)
- i yesmm=0 d OUT(sp1_"No abnormalities.")
+ ;i yesmm=0 d OUT(sp1_"No abnormalities. ")
+ i yesmm=0 d OUT(sp1_"Unremarkable. ")
  i $$XVAL("ceotabnm",vals)'="" d  ;
- . d OUT(sp1_$$XVAL("ceotabnm",vals)_".")
+ . d OUT(sp1_$$XVAL("ceotabnm",vals)_". ")
  s outmode="go"
  d OUT("")
  ;
  ;
- q
+ quit  ; end of EMPHYS
+ ;
  ;
  ;
 CCMSTR(lst,vals) ; extrinsic that forms phrases
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls
+ ; $$XVAL
+ ; $$LOWC
+ ;@input
+ ; lst
+ ; vals
+ ;@output = phrase for comments
+ ;
  n retstr s retstr=""
  n lblist s lblist=""
  n lb,ib s ib=""
@@ -334,12 +407,34 @@ CCMSTR(lst,vals) ; extrinsic that forms phrases
  i $o(lblist(""),-1)=1 s retstr=retstr_lblist(1)_" is seen in the"
  e  i $o(lblist(""),-1)=2 s retstr=retstr_lblist(1)_" and "_$$LOWC(lblist(2))_" are seen in the"
  e  i $o(lblist(""),-1)=3 s retstr=retstr_"Calicification, cyst, and mass are seen in the"
- q retstr
  ;
-LOWC(X) ;  CONVERT X TO LOWERCASE
- Q $TR(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
+ quit retstr ; end of $$CCMSTR
  ;
-OUT(ln) ;
+ ;
+ ;
+LOWC(X) ; convert X to lowercase
+ ;
+ ;@called-by
+ ; EMPHYS
+ ; $$CCMSTR
+ ;@calls none
+ ;@input
+ ; X
+ ;@output = lowercase string
+ ;
+ quit $translate(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
+ ;
+ ;
+ ;
+OUT(ln) ; output a line of ct report
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
  n lnn
@@ -350,41 +445,90 @@ OUT(ln) ;
  . s line=""
  . s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-OUTOLD(ln) ;
+ quit  ; end of OUT
+ ;
+ ;
+ ;
+OUTOLD(ln) ; old version of out
+ ;
+ ;@called-by none
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-HOUT(ln) ;
+ quit  ; end of OUTOLD
+ ;
+ ;
+ ;
+HOUT(ln) ; output a ct report header line
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls
+ ; OUT
+ ;@input
+ ; ln = header output to add
+ ;@output: header line added to report
+ ;
  D OUT(ln)
  ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
- q
+ ;
+ quit  ; end of HOUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
- ; vals is passed by name
+ ;
+ ;@called-by
+ ; EMPHYS
+ ; $$CCMSTR
+ ;@calls none
+ ;@input
+ ; var
+ ; vals is passed by nam
+ ;@output = patient value for var
+ ;
+ ;e
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
+ ;
+ ;
  ;
 XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls none
+ ;@input
+ ; var
  ; vals and dict are passed by name
  ; valdx is used for nodules ala cect2co with the nodule number included
+ ;@output = dictionary value for var
+ ;
+ ;
  ;n dict s dict=$$setroot^%wd("cteval-dict")
  n zr,zv,zdx
  s zdx=$g(valdx)
@@ -394,5 +538,9 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  i zv="" s zr="" q zr
  s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
- q zr
  ;
+ quit zr ; end of $$XSUB
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTT3

@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Shoelace = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,49 +92,68 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Framework = FormValidation.plugins.Framework;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Shoelace =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Shoelace, _Framework);
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-    function Shoelace(opts) {
-      _classCallCheck(this, Shoelace);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Shoelace).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-shoelace',
-        messageClass: 'fv-help-block',
-        rowInvalidClass: 'input-invalid',
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var e = FormValidation.utils.classSet;
+
+  var t = FormValidation.plugins.Framework;
+
+  var n = /*#__PURE__*/function (_t) {
+    _inherits(n, _t);
+
+    var _super = _createSuper(n);
+
+    function n(e) {
+      _classCallCheck(this, n);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-shoelace",
+        messageClass: "fv-help-block",
+        rowInvalidClass: "input-invalid",
         rowPattern: /^(.*)(col|offset)-[0-9]+(.*)$/,
-        rowSelector: '.input-field',
-        rowValidClass: 'input-valid'
-      }, opts)));
+        rowSelector: ".input-field",
+        rowValidClass: "input-valid"
+      }, e));
     }
 
-    _createClass(Shoelace, [{
+    _createClass(n, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var parent = e.element.parentElement;
-        var type = e.element.getAttribute('type');
+      value: function onIconPlaced(t) {
+        var n = t.element.parentElement;
+        var l = t.element.getAttribute("type");
 
-        if ('checkbox' === type || 'radio' === type) {
-          classSet(e.iconElement, {
-            'fv-plugins-icon-check': true
+        if ("checkbox" === l || "radio" === l) {
+          e(t.iconElement, {
+            "fv-plugins-icon-check": true
           });
 
-          if ('LABEL' === parent.tagName) {
-            parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+          if ("LABEL" === n.tagName) {
+            n.parentElement.insertBefore(t.iconElement, n.nextSibling);
           }
         }
       }
     }]);
 
-    return Shoelace;
-  }(Framework);
+    return n;
+  }(t);
 
-  return Shoelace;
+  return n;
 
-}));
+})));

@@ -1,31 +1,133 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 5/7/19 4:48pm
- ;;18.0;SAMI;;
+SAMINOT1 ;ven/gpl - text notes ;2021-07-01t17:21z
+ ;;18.0;SAMI;**2,6,8,10,11,12**;2020-01;build 2
+ ;;18.12
  ;
- ;@license: see routine SAMIUL
+ ; SAMINOT1 contains a web service & associated subroutines to produce
+ ; VAPALS-ELCAP text notes.
  ;
  quit  ; no entry from top
  ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@dev-main George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-update 2021-07-01t17:21z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 18.12
+ ;@release-date 2020-01
+ ;@patch-list **2,6,8,10,11,12**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Larry G. Carlson (lgc)
+ ; larry.g.carlson@gmail.com
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@dev-add Alexis R. Carlson (arc)
+ ; whatisthehumanspirit@gmail.com
+ ;@dev-add Domenic DiNatale (dom)
+ ; domenic.dinatale@paraxialtech.com
+ ;
+ ;@module-credits
+ ;@project VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org Paraxial Technologies (par)
+ ; http://paraxialtech.com/
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; see routine SAMINUL
+ ;
+ ;@contents
+ ; $$EXISTCE does chart eligibility note exist?
+ ; $$EXISTPRE does pre-enrollment note exist?
+ ; $$EXISTINT does intake note exist?
+ ; WSNOTE web service: text note
+ ; NOTE create note
+ ; $$HASINNT is intake note present?
+ ; MKEL make eligibility note
+ ; MKPRE make pre-enrollment note
+ ; MKIN make intake note
+ ; $$MKNT make note
+ ; $$MKNTLOC location for note
+ ; $$NTDTTM date & time in note format
+ ; $$NTLOCN location of nth note
+ ; $$NTLAST location of latest note
+ ; $$NTIEN latest note for this form
+ ; $$NTLIST note list
+ ; TLST ???
+ ; ELNOTE eligibility note text
+ ; PRENOTE pre-enrollment note
+ ; SUBRSLT translation of discussion result
+ ; INNOTE intake note
+ ; SDM add shared decision making text to array
+ ; GLOUT glob out, 1st wrap ln, then put in dest
+ ; OUT ???
+ ; $$XVAL patient value for variable
+ ;
+ ;
+ ;
+ ;@section 1 wsi WSNOTE^SAMINOT1 & related subroutines
+ ;
+ ;
+ ;
 EXISTCE(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if a Chart Eligibility Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sicechrt"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" q "true"
- q "false"
+ i $g(@gvals@("chart-eligibility-complete"))="true" q "true"
+ ;
+ quit "false" ; end of $$EXISTCE
+ ;
+ ;
  ;
 EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if a Pre-enrollment Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
- q "false"
+ ;i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" q "true"
+ ;
+ quit "false" ; end of $$EXISTPRE
+ ;
+ ;
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if an Intake Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  i $g(@root@("graph",SID,FORM,"sistatus"))="y" q "true"
- q "false"
+ ;
+ quit "false" ; end of $$EXISTINT
+ ;
+ ;
  ;
 WSNOTE(return,filter) ; web service which returns a text note
  ;
@@ -92,12 +194,14 @@ WSNOTE(return,filter) ; web service which returns a text note
  . . . ;s tout(cnt)=@note@(zj)_"<br>"
  . . . s tout(cnt)=@note@(zj)_$char(13,10)
  m return=tout
- q
+ ;
+ quit  ; end of WSNOTE
+ ;
+ ;
  ;
 NOTE(filter) ; extrnisic which creates a note
+ ;
  ; returns 1 if successful, 0 if not
- ;
- ;
  ;
  ; set up patient values
  ;
@@ -130,10 +234,12 @@ NOTE(filter) ; extrnisic which creates a note
  n didnote s didnote=0
  ;
  i $g(@vals@("samistatus"))="chart-eligibility" d  ;
+ . q:$g(@vals@("chart-eligibility-complete"))="true"
  . d MKEL(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="pre-enrollment-discussion" d  ;
+ . q:$g(@vals@("pre-note-complete"))="true"
  . d MKPRE(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
@@ -142,17 +248,28 @@ NOTE(filter) ; extrnisic which creates a note
  . d MKIN(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
- q didnote
+ n nien s nien=0
+ i didnote=1 s nien=$$NTIEN(si,samikey)
+ ;
+ quit nien ; end of $$NOTE
+ ;
+ ;
  ;
 HASINNT(vals) ; extrinsic returns 1 if intake note is present
+ ;
  ; else returns 0
+ ;
  n zzi,zzrtn s (zzi,zzrtn)=0
  q:'$d(@vals)
  f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
  . i $g(@vals@("notes",zzi,"name"))["Intake" s zzrtn=1
- q zzrtn
+ ;
+ quit zzrtn ; end of $$HASINNT
+ ;
+ ;
  ;
 MKEL(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("eligibility-note"))
  n dest s dest=$$MKNT(vals,"Eligibility Note","eligibility",.filter)
@@ -160,9 +277,13 @@ MKEL(sid,form,vals,filter) ;
  d OUT("Lung Screening Program Chart Eligibility Note")
  d OUT("")
  d ELNOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKEL
+ ;
+ ;
  ;
 MKPRE(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("pre-note"))
  n dest s dest=$$MKNT(vals,"Pre-enrollment Discussion Note","prenote",.filter)
@@ -175,9 +296,13 @@ MKPRE(sid,form,vals,filter) ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
  . d OUT("")
  d PRENOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKPRE
+ ;
+ ;
  ;
 MKIN(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("intake-note"))
  n dest s dest=$$MKNT(vals,"Intake Note","intake",.filter)
@@ -189,17 +314,27 @@ MKIN(sid,form,vals,filter) ;
  i $g(@vals@("pre-note-complete"))'="true" d  ;
  . d PRENOTE(vals,dest,cnt)
  d INNOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKIN
+ ;
+ ;
  ;
 MKNT(vals,title,ntype,filter) ; extrinsic makes a note date=now returns 
+ ;
  ; global addr. filter must be passed by reference
+ ;
  n ntdt s ntdt=$$NTDTTM($$NOW^XLFDT)
  n ntptr
  s ntptr=$$MKNTLOC(vals,title,ntdt,$g(ntype),.filter)
- q ntptr
+ ;
+ quit ntptr ; end of $$MKNT
+ ;
+ ;
  ;
 MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the 
+ ;
  ;location for the note
+ ;
  n nien
  s nien=$o(@vals@("notes",""),-1)+1
  s filter("nien")=nien
@@ -207,19 +342,43 @@ MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the
  s @nloc@("name")=title_" "_$g(ndate)
  s @nloc@("date")=$g(ndate)
  s @nloc@("type")=$g(ntype)
- q $na(@nloc@("text"))
+ ;
+ quit $name(@nloc@("text")) ; end of $$MKNTLOC
+ ;
+ ;
  ;
 NTDTTM(ZFMDT) ; extrinsic returns the date and time in Note format
+ ;
  ; ZFMDT is the fileman date/time to translate
- q $$FMTE^XLFDT(ZFMDT,"5")
+ ;
+ quit $$FMTE^XLFDT(ZFMDT,"5") ; end of $$NTDTTM
+ ;
+ ;
  ;
 NTLOCN(sid,form,nien) ; extrinsic returns the location of the Nth note
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
- q $na(@root@("graph",sid,form,"notes",nien))
+ ;
+ quit $name(@root@("graph",sid,form,"notes",nien)) ; end of $$NTLOCN
+ ;
+ ;
  ;
 NTLAST(sid,form,ntype) ; extrinsic returns the location of the latest note
+ ;
  ; of the type ntype
- q
+ ;
+ quit  ; end of NTLAST
+ ;
+ ;
+ ;
+NTIEN(sid,form) ; extrinsic which returns the latest note for this form
+ ;
+ n root s root=$$setroot^%wd("vapals-patients")
+ n rtn s rtn=$o(@root@("graph",sid,form,"notes"," "),-1)
+ ;
+ quit rtn ; end of $$NTIEN
+ ;
+ ;
  ;
 NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  ;
@@ -232,19 +391,27 @@ NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  . s @nlist@(zn,"name")=@gn@(zn,"name")
  . s @nlist@(zn,"nien")=zn
  ;
- q
+ quit  ; end of NTLIST
+ ;
+ ;
  ;
 TLST ;
- S SID="XXX00677"
- S FORM="siform-2019-04-23"
- D NTLIST("G",SID,FORM)
+ ;
+ set SID="XXX00677"
+ set FORM="siform-2019-04-23"
+ do NTLIST("G",SID,FORM)
  ;ZWR G
- Q
+ ;
+ quit  ; end of TLST
+ ;
+ ;
  ;
 ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
+ ;
  D OUT("")
  D OUT("Date of chart review: "_$$XVAL("sidc",vals))
- D OUT("The participant was identified as a potential lung screening candidate by: "_$$XVAL("siceiden",vals))
+ D GLOUT("The participant was identified as a potential lung screening candidate by: ")
+ D GLOUT($$XVAL("siceiden",vals),4)
  if $$XVAL("siceiden",vals)="referral" d  ;
  . D OUT("Date of Referral: "_$$XVAL("sicerfdt",vals))
  . n spec s spec=""
@@ -255,13 +422,17 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  . s:$$XVAL("sicerfon",vals)="y" spec=spec_" Oncology"
  . s:$$XVAL("sicerfsc",vals)="y" spec=spec_" Smoking Cessation"
  . s:$$XVAL("sicerfot",vals)="y" spec=spec_" "_$$XVAL("sicerfoo",vals)
- . D OUT("Specialty of referring provider: "_spec)
+ . D GLOUT("Specialty of referring provider: ")
+ . D GLOUT(spec,4)
  n elig
  s elig=$$XVAL("sicechrt",vals)
  D OUT("The participant is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
  D OUT("")
  s @vals@("chart-eligibility-complete")="true"
- q
+ ;
+ quit  ; end of ELNOTE
+ ;
+ ;
  ;
 PRENOTE(vals,dest,cnt) ;
  ;
@@ -279,20 +450,32 @@ PRENOTE(vals,dest,cnt) ;
  s:$$XVAL("sipecnpp",vals)="1" via=via_" Message in patient portal"
  s:$$XVAL("sipecnvd",vals)="1" via=via_" Video-on-Demand (VOD)"
  s:$$XVAL("sipecnot",vals)="1" via=via_" "_$$XVAL("sipecnoo",vals)
- D OUT("The lung screening program reached the potential candidate or was contacted via:"_via)
- D OUT("The pre-enrollment discussion with the participant resulted in: "_$$SUBRSLT($$XVAL("siperslt",vals)))
- D OUT("Comments: "_$$XVAL("sipecmnt",vals))
+ ;D OUT("The lung screening program reached the potential candidate or was contacted via:"_via)
+ D GLOUT("The lung screening program reached the potential candidate or was contacted via:")
+ D GLOUT(via,4)
+ ;D OUT("The pre-enrollment discussion with the participant resulted in: "_$$SUBRSLT($$XVAL("siperslt",vals)))
+ D OUT("The pre-enrollment discussion with the participant resulted in: ")
+ D GLOUT($$SUBRSLT($$XVAL("siperslt",vals)),4)
+ D OUT("Comments: ")
+ D GLOUT($$XVAL("sipecmnt",vals),4)
  ;
  s @vals@("pre-note-complete")="true"
- q
+ ;
+ quit  ; end of PRENOTE
+ ;
+ ;
  ;
 SUBRSLT(XVAL) ; translation of discussion result
+ ;
  q:XVAL="y" "Participant is interested in discussing lung screening. The program will proceed with enrollment process."
  q:XVAL="u" "Participant is unsure of lung screening. Ok to contact in the future."
  q:XVAL="nn" "Participant is not interested in discussing lung screening at this time. Ok to contact in the future."
  q:XVAL="nf" "Participant is not interested in discussing lung screening in the future."
  q:XVAL="na" "Unable to reach participant at this time"
- q ""
+ ;
+ quit "" ; end of $$SUBRSLT
+ ;
+ ;
  ;
 INNOTE(vals,dest,cnt) ;
  ;
@@ -342,7 +525,9 @@ INNOTE(vals,dest,cnt) ;
  s:$$XVAL("silnpp",vals) learn=learn_" Message in patient portal"
  s:$$XVAL("silnvd",vals) learn=learn_" Video-on-Demand (VOD)"
  s:$$XVAL("silnot",vals) learn=learn_" "_$$XVAL("silnoo",vals)
- d OUT("   "_"How did you learn about the Lung Screening Program?: "_learn)
+ ;d GLOUT("   "_"How did you learn about the Lung Screening Program?: "_learn,4)
+ d GLOUT("How did you learn about the Lung Screening Program?: ",4)
+ d GLOUT(learn,6)
  n verified s verified=""
  s:$$XVAL("sipav",vals)="y" verified="Yes"
  s:$$XVAL("sipav",vals)="n" verified="No"
@@ -362,7 +547,7 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("      "_csz)
  d:$$XVAL("sippn",vals)'="" OUT("      "_$$XVAL("sippn",vals))
  d OUT("   "_"Ever smoked?: ")
- d OUT("      "_$$XVAL("sies",vals))
+ d GLOUT($$XVAL("sies",vals),6)
  n sstatus s sstatus=""
  s:$$XVAL("siesm",vals)="n" sstatus=sstatus_" Never smoked"
  s:$$XVAL("siesm",vals)="p" sstatus=sstatus_" Past"
@@ -383,72 +568,43 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("")
  i $$XVAL("sicep",vals)'="" d  ;
  . d OUT("Smoking cessation education provided:")
- . d OUT("    "_$$XVAL("sicep",vals))
+ . d GLOUT("    "_$$XVAL("sicep",vals),4)
  i $$XVAL("sicadx",vals)'="" d
  . d OUT("Prior lung cancer diagnosis date: "_$$XVAL("sicadx",vals))
  . i $$XVAL("sicadxl",vals)'="" d  ;
  . . d OUT("Location where prior lung cancer diagnosis was made:")
- . . d OUT("    "_$$XVAL("sicadxl",vals))
+ . . d GLOUT("    "_$$XVAL("sicadxl",vals),4)
  i $$XVAL("siptct",vals)'="" d
  . d OUT("Prior CT: "_$$XVAL("siptct",vals))
  . i $$XVAL("siptctl",vals)'="" d  ;
  . . d OUT("Location where prior CT was made:")
- . . d OUT("    "_$$XVAL("siptctl",vals))
+ . . d GLOUT("    "_$$XVAL("siptctl",vals),4)
  d OUT(" ")
  d OUT("Shared Decision Making: ")
  d OUT(" ")
- n sdm s sdm=""
- s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
- s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
- s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
- s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
- s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
- s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
- s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
- s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
- s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
- s sdm=sdm_"material was provided to the veteran."
- s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
- s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
- s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
- s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
- s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
- s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
- s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
- s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
- s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
- s sdm=sdm_"material was provided to the veteran."
- d OUT(sdm)
- ;d OUT(" ")
- ;d OUT("Veteran of age and exposure to cigarette smoke as described above, and without")
- ;d OUT("a current diagnosis or obvious symptoms suggestive of lung cancer, has been")
- ;d OUT("educated today about the estimated risk for lung cancer, the possibility of")
- ;d OUT("cure or life prolonging if an early lung cancer were to be found during")
- ;d OUT("screening, the possibility of imaging abnormalities not being lung cancer, the")
- ;d OUT("possibility of complications from additional diagnostic procedures, and the")
- ;d OUT("approximate amount of radiation exposure associated with each screening")
- ;d OUT("procedure.  In addition, the veteran has been educated today about the")
- ;d OUT("importance of adhering to annual lung screening, the possible impact of other")
- ;d OUT("medical conditions on the overall health status, the importance of avoiding")
- ;d OUT("exposure to cigarette smoke, available tobacco cessation programs and")
- ;d OUT("available lung screening services at the Phoenix VA.  Education material was")
- ;d OUT("provided to the veteran.  Based on this information, the veteran has opted")
- ;d OUT("for: ")
+ n shareddm
+ s shareddm=+$$XVAL("siidmdc",vals)
+ i shareddm=1 d SDM(dest)
+ e  d OUT("Shared decision making was not applicable")
  d OUT(" ")
  n ldct s ldct=""
  s:$$XVAL("sildct",vals)="n" ldct="No"
  s:$$XVAL("sildct",vals)="l" ldct="No"
  s:$$XVAL("sildct",vals)="y" ldct="Yes"
- d OUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
+ d GLOUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
  i $$XVAL("sildct",vals)="l" d  ;
- . d OUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.")
+ . d GLOUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.",4)
  i ldct="Yes" d  ;
  . d OUT("LDCT ordered: "_ldct)
  . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
  . d OUT("    "_"will be made by the LSS team.  ")
  . i $$XVAL("siclin",vals)'="" d  ;
+ . . quit
+ . quit
+ n tmpclin s tmpclin=$$XVAL("siclin",vals)
+ i tmpclin'="" d  ;
  . d OUT("Clinical Indications for Initial Screening CT:")
- . d OUT("    "_$$XVAL("siclin",vals))
+ . d GLOUT("    "_tmpclin,4)
  ;
  ;The veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
@@ -463,26 +619,91 @@ INNOTE(vals,dest,cnt) ;
  ;Clinical Indications:          [Show Input Text]
  ;
  ;
- q
+ quit  ; end of INNOTE
+ ;
+ ;
+ ;
+SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
+ ;
+ n ii s ii=$o(@ary@(" "),-1)
+ s ii=ii+1
+ s @ary@(ii)="Veteran of age and exposure to cigarette smoke as described above, and "
+ s ii=ii+1
+ s @ary@(ii)="without a current diagnosis or obvious symptoms suggestive of lung cancer, "
+ s ii=ii+1
+ s @ary@(ii)="has been educated today about the estimated risk for lung cancer, the "
+ s ii=ii+1
+ s @ary@(ii)="possibility of cure or life prolonging if an early lung cancer were to be "
+ s ii=ii+1
+ s @ary@(ii)="found during screening, the possibility of imaging abnormalities not being "
+ s ii=ii+1
+ s @ary@(ii)="lung cancer, the possibility of complications from additional diagnostic "
+ s ii=ii+1
+ s @ary@(ii)="procedures, and the approximate amount of radiation exposure associated "
+ s ii=ii+1
+ s @ary@(ii)="with each screening procedure. In addition, the Veteran has been educated "
+ s ii=ii+1
+ s @ary@(ii)="today about the importance of adhering to annual lung screening, the "
+ s ii=ii+1
+ s @ary@(ii)="possible impact of other medical conditions on the overall health status, "
+ s ii=ii+1
+ s @ary@(ii)="the importance of avoiding exposure to cigarette smoke, available tobacco "
+ s ii=ii+1
+ s @ary@(ii)="cessation programs and available lung screening services at this site. "
+ s ii=ii+1
+ s @ary@(ii)="Education material was provided to the veteran. "
+ s ii=ii+1
+ ;s @ary@(ii)="Based on this information, the Veteran has opted for "
+ ;
+ quit  ; end of SDM
+ ;
+ ;
+ ;
+GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
+ n arytmp
+ s arytmp(1)=ln
+ i $g(indent)="" s indent=1
+ d wrap^%tt("arytmp",indent_":80")
+ n ii s ii=""
+ f  s ii=$o(arytmp(ii)) q:ii=""  d  ;
+ . d OUT(arytmp(ii))
+ ;
+ quit  ; end of GLOUT
+ ;
+ ;
  ;
 OUT(ln) ;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@dest@(" "),-1)+1
  s @dest@(lnn)=ln
+ ;
  ;i $g(debug)=1 d  ;
  ;. i ln["<" q  ; no markup
  ;. n zs s zs=$STACK
  ;. n zp s zp=$STACK(zs-2,"PLACE")
  ;. s @dest@(lnn)=zp_":"_ln
- q
+ ;
+ quit  ; end of OUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
+ ;
  ; vals is passed by name
+ ;
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
  ;
  ;
+ ;
+EOR ; end of routine SAMINOT1

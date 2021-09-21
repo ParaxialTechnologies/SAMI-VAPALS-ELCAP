@@ -147,6 +147,7 @@
                                 <option value="0.75">0.75</option>
                                 <option value="0.8">0.8</option>
                                 <option value="1.0">1.0</option>
+                                <option value="1.25">1.25</option>
                                 <option value="o">Other</option>
                             </select>
                         </div>
@@ -160,7 +161,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="cectcdti" class="control-label">CDTI (vol)</label>
+                            <label for="cectcdti" class="control-label">CTDI (vol)</label>
                             <input class="form-control decimalformat" type="text" name="cectcdti" id="cectcdti"
                                    maxlength="10">
                         </div>
@@ -419,9 +420,10 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
                         // below to sort nodule grid (if necessary), then submit
                         //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
@@ -457,6 +459,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
@@ -478,6 +483,12 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
+            const ctProtocol = $("[name=cectp]:checked").val();
+            if (ctProtocol === undefined) {
+                $("#cectp-l").prop("checked", true);
+            }
 
             //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});

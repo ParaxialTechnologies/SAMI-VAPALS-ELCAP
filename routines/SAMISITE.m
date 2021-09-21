@@ -1,31 +1,77 @@
-SAMISITE ;ven/gpl,arc - ielcap: forms;2020-03-27T17:45Z ;Mar 27, 2020@16:04
- ;;18.0;SAMI;;
+SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07t16:52z
+ ;;18.0;SAMI;**5,12**;2020-01;Build 11
+ ;;18.12
  ;
- ;@license: see routine SAMIUL
+ ; Routine SAMISITE contains subroutines for implementing the VAPALS-
+ ; ELCAP 
  ;
- ; @section 0 primary development
+ quit  ; no entry from top
  ;
- ; @routine-credits
- ; @primary-dev: George P. Lilly (gpl)
- ;  gpl@vistaexpertise.net
- ; @additional-dev: Alexis Carlson (arc)
- ;  alexis@vistaexpertise.net
- ; @primary-dev-org: Vista Expertise Network (ven)
- ;  http://vistaexpertise.net
- ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @application: SAMI
- ; @version: 18.0
- ; @patch-list: none yet
  ;
- ; @to-do
- ;   Add label comments
+ ;@section 0 primary development
  ;
- ; @section 1 code
  ;
- quit  ; No entry from top
+ ;
+ ;@routine-credits
+ ;@dev-main: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main: Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright: 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-update 2021-07-07t16:52z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 18.12
+ ;@release-date 2020-01
+ ;@patch-list **5,12**
+ ;
+ ;@dev-add: Alexis Carlson (arc)
+ ; alexis@vistaexpertise.net
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; 2020-04-02/05-26 ven/gpl 1.18.0.5+i5 d36b7cad,36607664,521e0bdc,
+ ; d018f52e,156be19e,476b2ff4,0a1538ef
+ ;  SAMISITE add multitenancy, fix bug in logout, fix sitetitle on 1st
+ ; time in, add superuser site selection feature, fix bug in cache.
+ ;
+ ; 2021-06-05 ven/gpl 18.12-t2 223b5900
+ ;  SAMISITE upgrade parameter with system overrides, add
+ ; systemDemoOnly & systemDemoUseDUZ parameters.
+ ;
+ ; 2021-07-01/07 ven/mcglk&toad&gpl 18.12-t2 cbf7e46b,bfeea24b,
+ ; 1dd91fea
+ ;  SAMISITE bump version & dates, add hdr comments & dev log; in
+ ; FINDSITE add missing 0 to quit.
+ ;
+ ;@to-do
+ ; Add label comments
+ ;
+ ;@contents
+ ; $$FINDSITE current site for user
+ ; $$USER ien of user accessing system
+ ; $$SITE ien of institution file entry for user's site
+ ; $$SITEID symbol for site
+ ; $$SITEACTV is site active?
+ ; $$SITENM site name from ien
+ ; $$SITENM2 site name from symbol
+ ; LOGIN login processing
+ ; $$SIGNON signon with access & verify code
+ ; SUPER site selection page for super users
+ ; UPGRADE init: convert to multi-tenancy
+ ;
+ ;
+ ;
+ ;@section 1 subroutines
+ ;
+ ;
  ;
 FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ; to be used by this user: ARGS("siteid")=siteid and
@@ -51,7 +97,7 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ;
  n site,siteid,siteactv,sitenm
  ;
- i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q 0 ; superuser
  . d SUPER("SAMIRETURN",.ARGS)
  . s HTTPRSP("mime")="text/html"
  ;
@@ -80,12 +126,16 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  s ARGS("sitetitle")=$$SITENM(site)_" - "_siteid
  q 1
  ;
+ ;
+ ;
 USER() ; extrinsic returns the DUZ of the user accessing the system
  ; -1 means user not known
  n rtn s rtn=-1
  s rtn=+$G(DUZ)
  i rtn=0 s rtn=-1
  q rtn
+ ;
+ ;
  ;
 SITE(USER) ; extrinsic returns the pointer to the Institution file
  ; which is the site of the user
@@ -96,6 +146,8 @@ SITE(USER) ; extrinsic returns the pointer to the Institution file
  i +rtn="" s rtn=-1
  q rtn
  ;
+ ;
+ ;
 SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
  ; this is found in the SAMI SITE file
  ; null means SITEID not found
@@ -104,6 +156,8 @@ SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
  q:ien="" -1
  s rtn=$$GET1^DIQ(311.12,ien_",",.02)
  q rtn
+ ;
+ ;
  ; 
 SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
  ; otherwise 0
@@ -111,7 +165,9 @@ SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
  n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
  q:ien="" -1
  s rtn=$$GET1^DIQ(311.12,ien_",",.03,"I")
- q rtn 
+ q rtn
+ ;
+ ;
  ;
 SITENM(SITE) ; Extrinsic which returns the Site name
  ;
@@ -120,22 +176,38 @@ SITENM(SITE) ; Extrinsic which returns the Site name
  i rtn="" s rtn=-1
  q rtn
  ;
+ ;
+ ;
 SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
  ;
  q:SITEID="" -1
  n siteien
  s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
  n site
- q $$GET1^DIQ(311.12,siteien_",",.01,"E") 
+ q $$GET1^DIQ(311.12,siteien_",",.01,"E")
+ ;
+ ;
  ;
 LOGIN(RTN,VALS) ; login processing
  ;
  n access,verify
  s access=$g(VALS("access"))
+ if access="" s access=$g(VALS("username"))
  s verify=$g(VALS("verify"))
- i access="" d  ;
- . s access="PHXNAV1"
- . s verify="$#happy6"
+ if verify="" s verify=$g(VALS("password"))
+ ;i verify="@demo123" s verify="@demo321"
+ ;i verify="@demo123" s verify="$#happy10"
+ ;i access="ZZZUSER1" s access="SUPER6"
+ ;i access="" d  ;
+ ;. s access="PHXNAV1"
+ ;. s verify="$#happy6"
+ I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
+ . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
+ . I +DUZ=0 D  ;
+ . . S DUZ=$O(^SAMI(311.13,"B",""))
+ . s VALS("samiroute")=""
+ . s VALS("siteid")=""
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
  n ACVC s ACVC=access_";"_verify
  i $$SIGNON(ACVC) D  Q  ;
  . s VALS("samiroute")=""
@@ -145,6 +217,8 @@ LOGIN(RTN,VALS) ; login processing
  . s VALS("errorMessage")="Invalid login"
  . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
  q
+ ;
+ ;
  ;
 SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  ; Sign-on
@@ -156,6 +230,8 @@ SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  I $L(RTN(3)) Q 0  ; Error Message
  ;
  q
+ ;
+ ;
  ;
 SUPER(RTN,FILTER) ; returns site selection page for super users
  ;
@@ -204,6 +280,8 @@ SUPER(RTN,FILTER) ; returns site selection page for super users
  . s @RTN@(cnt)=temp(zk)
  q
  ;
+ ;
+ ;
 UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
  ; to all existing patients - runs one time as the Post Install 
  ; to the installation
@@ -239,3 +317,6 @@ UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
  . d MES^XPDUTL(cnt_" patient records set to site "_site)
  q
  ;
+ ;
+ ;
+EOR ; end of routine SAMISITE

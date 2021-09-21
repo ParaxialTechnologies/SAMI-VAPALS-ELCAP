@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.05.12" name="version"/>
+  <meta content="2021.09.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -17,6 +17,8 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <link href="lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <link href="lib/datatables/datatables.min.css" rel="stylesheet"/>
   <style>
    #wizard-bar.affix-top {
             position: static;
@@ -56,19 +58,23 @@
   </script>
   <script src="lib/clipboard.js">
   </script>
-  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  <script src="lib/chart-js-2.9.3/Chart.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js">
+  <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-display.js">
+  <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js">
+  <script src="jquery-conditonally-enable.js?v=2021.09.08">
   </script>
-  <script src="vapals.js">
+  <script src="jquery-conditonally-display.js?v=2021.09.08">
   </script>
-  <script src="init.js">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.09.08">
   </script>
-  <script src="nodule-grid.js">
+  <script src="vapals.js?v=2021.09.08">
+  </script>
+  <script src="init.js?v=2021.09.08">
+  </script>
+  <script src="nodule-grid.js?v=2021.09.08">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -127,7 +133,7 @@
         </li>
         <li>
          <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing Image &amp; CT Evaluation
+          Intake But No CT Evaluation
          </a>
         </li>
         <li>
@@ -138,6 +144,11 @@
         <li>
          <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
           Inactive
+         </a>
+        </li>
+        <li id="matchingReport">
+         <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
+          Matching Report
          </a>
         </li>
         <li>
@@ -261,7 +272,7 @@
         Clinical information
        </label>
        <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="ceclini" type="hidden" value=""/>
         <input id="ceclini" name="ceclini" type="checkbox" value="y"/>
         Include in impression
@@ -353,6 +364,9 @@
          <option value="1.0">
           1.0
          </option>
+         <option value="1.25">
+          1.25
+         </option>
          <option value="o">
           Other
          </option>
@@ -370,7 +384,7 @@
       <div class="col-sm-4">
        <div class="form-group">
         <label class="control-label" for="cectcdti">
-         CDTI (vol)
+         CTDI (vol)
         </label>
         <input class="form-control decimalformat" id="cectcdti" maxlength="10" name="cectcdti" type="text"/>
        </div>
@@ -5386,23 +5400,23 @@
          </span>
          Add nodule
         </button>
-        <div class="form-group">
-         <div class="checkbox">
-          <label>
-           <input name="cectancn" type="hidden" value=""/>
-           <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
-           Additional non-calcified nodules
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input name="cectacn" type="hidden" value=""/>
-           <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
-           Additional calcified nodules
-          </label>
-         </div>
-        </div>
        </div>
+      </div>
+     </div>
+     <div class="form-group">
+      <div class="checkbox">
+       <label>
+        <input name="cectancn" type="hidden" value=""/>
+        <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+        Small non-calcified nodules are present
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input name="cectacn" type="hidden" value=""/>
+        <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+        Small calcified nodules are present
+       </label>
       </div>
      </div>
      <input context="server" name="cennod" type="hidden" value="0"/>
@@ -5459,7 +5473,6 @@
                     });
                     fv.addField('cect1sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect1inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect1inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect1st', {
                         validators: {
                             callback: {
@@ -5513,7 +5526,6 @@
                     });
                     fv.addField('cect2sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect2inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect2inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect2st', {
                         validators: {
                             callback: {
@@ -5567,7 +5579,6 @@
                     });
                     fv.addField('cect3sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect3inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect3inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect3st', {
                         validators: {
                             callback: {
@@ -5621,7 +5632,6 @@
                     });
                     fv.addField('cect4sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect4inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect4inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect4st', {
                         validators: {
                             callback: {
@@ -5675,7 +5685,6 @@
                     });
                     fv.addField('cect5sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect5inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect5inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect5st', {
                         validators: {
                             callback: {
@@ -5729,7 +5738,6 @@
                     });
                     fv.addField('cect6sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect6inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect6inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect6st', {
                         validators: {
                             callback: {
@@ -5783,7 +5791,6 @@
                     });
                     fv.addField('cect7sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect7inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect7inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect7st', {
                         validators: {
                             callback: {
@@ -5837,7 +5844,6 @@
                     });
                     fv.addField('cect8sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect8inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect8inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect8st', {
                         validators: {
                             callback: {
@@ -5891,7 +5897,6 @@
                     });
                     fv.addField('cect9sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect9inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect9inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect9st', {
                         validators: {
                             callback: {
@@ -5945,7 +5950,6 @@
                     });
                     fv.addField('cect10sn', {validators: {notEmpty: {message: 'Enter a series'}}});
                     fv.addField('cect10inl', {validators: {notEmpty: {message: 'Enter image number (low)'}}});
-                    fv.addField('cect10inh', {validators: {notEmpty: {message: 'Enter image number (high)'}}});
                     fv.addField('cect10st', {
                         validators: {
                             callback: {
@@ -6008,28 +6012,6 @@
         Severe
        </label>
       </div>
-     </div>
-     <div class="form-group">
-      <label class="control-label">
-       Coronary calcifications
-      </label>
-      <br/>
-      <label class="radio-inline" for="ceccv-n">
-       <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
-       None
-      </label>
-      <label class="radio-inline" for="ceccv-m">
-       <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
-       Mild
-      </label>
-      <label class="radio-inline" for="ceccv-d">
-       <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
-       Moderate
-      </label>
-      <label class="radio-inline" for="ceccv-s">
-       <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
-       Severe
-      </label>
      </div>
      <div class="row">
       <div class="col-md-12">
@@ -6171,6 +6153,32 @@
        </div>
       </div>
      </div>
+     <div class="row">
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepaw">
+        Pulmonary artery width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="ceaow">
+        Ascending aorta width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepar">
+        Pulmonary artery/aorta ratio
+       </label>
+       <small>
+        (calculated)
+       </small>
+       <br/>
+       <span id="cepar-text">
+       </span>
+       <input id="cepar" name="cepar" type="hidden"/>
+      </div>
+     </div>
      <script>
       function initEmphysema(fv) {
         function calculateVisualCacScore() {
@@ -6189,6 +6197,22 @@
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
         calculateVisualCacScore();
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            } else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
 
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
@@ -7021,7 +7045,7 @@
                 Additional comments on pulmonary abnormalities
                </label>
                <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceoppai" type="hidden" value=""/>
                 <input id="ceoppai" name="ceoppai" type="checkbox" value="y"/>
                 Include in impression
@@ -7272,7 +7296,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceoppabi" type="hidden" value=""/>
                 <input id="ceoppabi" name="ceoppabi" type="checkbox" value="y"/>
                 Include in impression
@@ -7299,135 +7323,66 @@
        <div class="panel-collapse collapse" id="cardiac-container" role="tabpanel">
         <div class="panel-body">
          <input name="ceca" type="hidden"/>
-         <div class="table-responsive">
-          <table class="table">
-           <tbody>
-            <tr>
-             <td>
-              <label class="control-label" for="cecca">
-               Aortic calcifications
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <label class="aria-hidden" for="cecca">
-                Aortic Calcifications
-               </label>
-               <select class="form-control" id="cecca" name="cecca">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal &lt; ⅓
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive &gt; ⅔
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              <label class="control-label" for="ceprevm">
-               Pericardial effusion severity
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepaw">
-               Pulmonary artery width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="ceaow">
-               Ascending aorta width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="aria-hidden" for="ceaow">
-                Ascending Aorta Width
-               </label>
-               <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepar">
-               Pulmonary artery/aorta
-                                ratio
-              </label>
-              <br/>
-              <small>
-               (calculated)
-              </small>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <span id="cepar-text">
-               </span>
-               <input id="cepar" name="cepar" type="hidden"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="7">
-              <div class="form-group">
-               <label for="cecommca">
-                Additional comments on cardiac abnormalities
-               </label>
-               <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
-               <label class="checkbox-inline ">
-                <input name="cecommcai" type="hidden" value=""/>
-                <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
-                Include in impression
-               </label>
-              </div>
-             </td>
-            </tr>
-           </tbody>
-          </table>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="cecca">
+            Aortic calcifications
+           </label>
+           <select class="form-control" id="cecca" name="cecca">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal &lt; ⅓
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive &gt; ⅔
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="ceprevm">
+            Pericardial effusion severity
+           </label>
+           <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-12 form-group">
+           <label for="cecommca">
+            Additional comments on cardiac abnormalities
+           </label>
+           <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
+           <label class="checkbox-inline">
+            <input name="cecommcai" type="hidden" value=""/>
+            <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
+            Include in impression
+           </label>
+          </div>
          </div>
         </div>
        </div>
@@ -7571,7 +7526,7 @@
           <table class="table">
            <tbody>
             <tr>
-             <td>
+             <td width="50%">
               Any enlarged or growing hilar or mediastinal lymph nodes
               <br/>
               <small>
@@ -7581,6 +7536,13 @@
                 (any size for para-esophageal)
                </strong>
               </small>
+              <br/>
+              <a href="img/nodal_chart.gif" target="_blank" title="Click for larger image">
+               <img alt="Lymph node chart" class="hidden-xs" src="img/nodal_chart.gif" style="max-width: 675px;" title="Lymph node chart"/>
+               <span class="visible-xs">
+                View lymph node chart
+               </span>
+              </a>
              </td>
              <td>
               <div class="form-group form-inline">
@@ -7950,7 +7912,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceotabnm" name="ceotabnm"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceotabnmi" type="hidden" value=""/>
                 <input id="ceotabnmi" name="ceotabnmi" type="checkbox" value="y"/>
                 Include in impression
@@ -8145,7 +8107,7 @@
                 Additional comments on breast abnormalities
                </label>
                <textarea class="form-control" id="ceobrc" name="ceobrc"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceobrci" type="hidden" value=""/>
                 <input id="ceobrci" name="ceobrci" type="checkbox" value="y"/>
                 Include in impression
@@ -8178,7 +8140,7 @@
             Specify bone abnormalities
            </label>
            <textarea class="form-control" id="ceaoabb" name="ceaoabb"></textarea>
-           <label class="checkbox-inline ">
+           <label class="checkbox-inline">
             <input name="ceaoabbi" type="hidden" value=""/>
             <input id="ceaoabbi" name="ceaoabbi" type="checkbox" value="y"/>
             Include in impression
@@ -8519,7 +8481,7 @@
                                         abnormalities
                </label>
                <textarea class="form-control" id="ceaoab" name="ceaoab"></textarea>
-               <label class="checkbox-inline ">
+               <label class="checkbox-inline">
                 <input name="ceaoabi" type="hidden" value=""/>
                 <input id="ceaoabi" name="ceaoabi" type="checkbox" value="y"/>
                 Include in impression
@@ -8535,23 +8497,7 @@
       </div>
      </div>
      <script>
-      function calculatePulmonaryArteryAortaRatio() {
-        let res = 0;
-        const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-        if (ceaow > 0) {
-            res = (cepaw / ceaow).toFixed(1);
-            $("#cepar-text").text(res);
-            $("#cepar").val(res);
-        } else {
-            $("#cepar-text").text("");
-            $("#cepar").val("");
-        }
-    }
-
-    function initAbnormalities(fv) {
-        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-        calculatePulmonaryArteryAortaRatio();
-
+      function initAbnormalities(fv) {
         //Neck and mediastinal
         $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
         $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
@@ -8574,7 +8520,6 @@
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
-            fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
 
             //lymph nodes; use a real element name for the field so conditional plugins can toggle the field
             fv.addField('cemlnl1', {
@@ -8727,7 +8672,7 @@
         </label>
         <br/>
         <div class="input-group datepicker">
-         <input aria-describedby="cefud-addon" class="form-control" data-restriction="future" id="cefud" name="cefud"/>
+         <input aria-describedby="cefud-addon" class="form-control" data-restriction="" id="cefud" name="cefud"/>
          <div class="input-group-addon">
           <div class="input-group-text" id="cefud-addon">
            <i aria-hidden="true" class="fa fa-calendar">
@@ -8747,47 +8692,47 @@
         Other follow-up:
        </label>
        <br/>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefuaf" type="hidden" value=""/>
         <input id="cefuaf" name="cefuaf" type="checkbox" value="y"/>
         Antibiotics
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefucc" type="hidden" value=""/>
         <input id="cefucc" name="cefucc" type="checkbox" value="y"/>
         Contrast CT
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefupe" type="hidden" value=""/>
         <input id="cefupe" name="cefupe" type="checkbox" value="y"/>
         PET
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefufn" type="hidden" value=""/>
         <input id="cefufn" name="cefufn" type="checkbox" value="y"/>
         Percutaneous biopsy
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefubr" type="hidden" value=""/>
         <input id="cefubr" name="cefubr" type="checkbox" value="y"/>
         Bronchoscopy
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefupc" type="hidden" value=""/>
         <input id="cefupc" name="cefupc" type="checkbox" value="y"/>
         Pulmonary consultation
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefutb" type="hidden" value=""/>
         <input id="cefutb" name="cefutb" type="checkbox" value="y"/>
         Refer to tumor board
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefunf" type="hidden" value=""/>
         <input id="cefunf" name="cefunf" type="checkbox" value="y"/>
         No other further follow-up
        </label>
-       <label class="checkbox-inline ">
+       <label class="checkbox-inline">
         <input name="cefuo" type="hidden" value=""/>
         <input id="cefuo" name="cefuo" type="checkbox" value="y"/>
         Other
@@ -8922,28 +8867,32 @@
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
             const when = $("[name='cefuw']:checked").val();
+            let baseDate = moment($("#cedos").val());
+            if (!baseDate.isValid()) {
+                baseDate = moment();
+            }
             const $field = $("#cefud");
             switch (when) {
                 case "1y":
-                    $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'year').format(VAPALS.DATE_FORMAT));
                     break;
                 case "nw":
-                    $field.val(moment().format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.format(VAPALS.DATE_FORMAT));
                     break;
                 case "1m":
-                    $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "3m":
-                    $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(3, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "6m":
-                    $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(6, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 default:
                     $field.val("").focus();
             }
 
-            if (fv) {
+            if (typeof fv !== 'undefined' && fv.fields['cefud']) {
                 fv.revalidateField('cefud');
             }
         });
@@ -8951,21 +8900,9 @@
         //display other followup specify field if "other" checkbox is enabled.
         $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
 
-        function setCtFollowUpOther() {
-            $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-        }
-
-        //auto-select "other" if user modifies the date
-        $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
-
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('cefud', {
-                validators: {
-                    date: {min: VAPALS.todaysDate(), message: 'Follow-up date must be at least today\'s date'}
-                }
-            });
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
 
@@ -9031,7 +8968,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.05.12
+     2021.09.08
     </span>
    </div>
   </footer>
@@ -9055,10 +8992,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {
@@ -9130,6 +9125,10 @@
         const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
+        $(document).ready(function() {
+            $('table.datatables').DataTable();
+        } );
 
     })
   </script>
@@ -9231,9 +9230,10 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
                         // below to sort nodule grid (if necessary), then submit
                         //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
@@ -9269,6 +9269,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
@@ -9290,6 +9293,12 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
+            const ctProtocol = $("[name=cectp]:checked").val();
+            if (ctProtocol === undefined) {
+                $("#cectp-l").prop("checked", true);
+            }
 
             //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});

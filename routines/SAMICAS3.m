@@ -1,38 +1,72 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2019-03-14T19:08Z
- ;;18.0;SAM;;
+SAMICAS3 ;ven/gpl - case review cont ;2021-08-10t18:39z
+ ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 11
+ ;;18.12
  ;
- ;@license: see routine SAMIUL
- ;
- ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
- ; It is currently untested & in progress.
- ;
- ; see SAMICUL for documentation
+ ; SAMICAS3 contains ppis and other subroutines to support processing
+ ; of the VAPALS-IELCAP case review page.
  ;
  quit  ; no entry from top
  ;
  ;
- ;;@ppi - post new form selection (post service)
-WSNFPOST ; post new form selection (post service)
+ ;
+ ;@section 0 primary development: see routine %wful
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICUL
+ ;@contents
+ ; WSNFPOST wri-code WSNFPOST^SAMICAS3, post vapals addform: new form
+ ; MKSBFORM create background form
+ ;
+ ; $$PREVNOD key of latest form including nodule grid
+ ; $$LASTCMP date & key of last comparison scan
+ ; $$PRIORCMP dates of all scans before last comparison scan
+ ; $$KEY2DT date to put in prior scans field
+ ; SORTFRMS sorts all forms for patient sid by date
+ ;
+ ; MKCEFORM create ct evaluation form
+ ; MKFUFORM create follow-up form
+ ; $$BASELNDT last previous baseline ct date
+ ; MKPTFORM create pet evaluation form
+ ; MKITFORM create intervention form
+ ; MKBXFORM create biopsy form
+ ; CASETBL generates case review table
+ ;
+ ;
+ ;
+ ;@section 1 WSNFPOST & related subroutines
+ ;
+ ;
+ ;
+ ;@wri-code WSNFPOST^SAMICAS3
+WSNFPOST ; post vapals addform: new form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;web service;procedure;
- ;@web service
- ; web service SAMICASE-wsNuFormPost
- ;@called by
+ ;ven/gpl;wri;procedure;clean;silent;sac;??% tests
+ ;@signature
+ ; do WSNFPOST^SAMICASE(ARGS,BODY,RESULT)
+ ;@branches-from
  ; WSNFPOST^SAMICASE
+ ;@ppi-called-by
+ ; WSVAPALS^SAMIHOME [wr addform of ws post vapals]
+ ;@called-by none
  ;@calls
  ; parseBody^%wf
  ; GETHOME^SAMIHOM3
  ; $$KEYDATE^SAMIHOM3
  ; $$setroot^%wd
  ; $$KEY2FM^SAMICAS2
+ ; $$FMADD^XLFDT
+ ; WSCASE^SAMICASE
  ; MKSBFORM^SAMICAS3
  ; MKCEFORM^SAMICAS3
  ; MKFUFORM^SAMICAS3
  ; MKBXFORM^SAMICAS3
  ; MKPTFORM^SAMICAS3
  ; MKITFORM^SAMICAS3
+ ; wsGetForm^%wf
  ;@input
  ; .ARGS
  ; .ARGS("form")
@@ -43,7 +77,8 @@ WSNFPOST ; post new form selection (post service)
  ;@output
  ; @RESULT
  ;@tests
- ; SAMIUTS2
+ ; UTNFPST^SAMIUTS2
+ ;
  ;
  ;@stanza 2 get new form
  ;
@@ -67,9 +102,9 @@ WSNFPOST ; post new form selection (post service)
  ; check to see if form already exists
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- n collide s collide=0 ; duplicate form for today - backdate forms scenario
+ new collide set collide=0 ; duplicate form for today - backdate forms scenario
  if $data(@root@("graph",sid,nuform_"-"_datekey)) do  ; already exists
- . s collide=1
+ . set collide=1
  . if nuform="siform" quit
  . if nuform="sbform" quit  ; do not create multiple background forms
  . new lastone
@@ -77,20 +112,23 @@ WSNFPOST ; post new form selection (post service)
  . quit:lastone=""
  . set newfm=$$KEY2FM^SAMICASE(lastone)
  . set datekey=$$KEYDATE^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
+ . quit
  ;
  ; code to not allow two same forms for a patient a day
  ;
- i collide=1 d  q  ;
- . s ARGS("errorMessage")="Form already exists for today"
- . s ARGS("studyid")=sid
- . d WSCASE^SAMICASE(.RESULT,.ARGS)
+ if collide=1 do  quit  ;
+ . set ARGS("errorMessage")="Form already exists for today"
+ . set ARGS("studyid")=sid
+ . do WSCASE^SAMICASE(.RESULT,.ARGS)
+ . quit
  ;
  if nuform="sbform" do  ;
- . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
- . i $e(oldkey,1,6)="sbform" d  q  ;
+ . new oldkey set oldkey=$order(@root@("graph",sid,"sbform"))
+ . if $extract(oldkey,1,6)="sbform" do  quit  ;
  . . set ARGS("key")=oldkey
  . . set ARGS("studyid")=sid
  . . set ARGS("form")="vapals:sbform"
+ . . quit
  . new key set key="sbform-"_datekey
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
@@ -140,9 +178,11 @@ WSNFPOST ; post new form selection (post service)
  ;
  do wsGetForm^%wf(.RESULT,.ARGS)
  ;
+ ;
  ;@stanza 3 termination
  ;
- quit  ; end of wsNuFormPost
+ quit  ; end of wri WSNFPOST^SAMICASE
+ ;
  ;
  ;
 MKSBFORM(sid,key) ; create background form
@@ -155,9 +195,10 @@ MKSBFORM(sid,key) ; create background form
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; SSAMISTA^SAMICASE
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. sbform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
@@ -168,6 +209,7 @@ MKSBFORM(sid,key) ; create background form
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
+ ;
  new cdate set cdate=$piece(key,"sbform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
@@ -177,55 +219,264 @@ MKSBFORM(sid,key) ; create background form
  ;
  quit  ; end of MKSBFORM
  ;
-PREVNOD(sid) ; extrinsic which returns the key of the latest form
- ; that includes a nodule grid. used for nodule copy
- n retkey s retkey=""
- n fary
- d SORTFRMS(.fary,sid)
- n tdt s tdt=""
- f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
- . n tmpkey s tmpkey=""
- . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
- . . i tmpkey["ceform" s retkey=tmpkey
- . . i tmpkey["ptform" s retkey=tmpkey
- . . i tmpkey["bxform" s retkey=tmpkey
  ;
- q retkey
+ ;
+PREVNOD(sid) ; key of latest form including nodule grid
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;
+ ;@called-by none [commented out in MKCEFORM,MKPTFORM,MKBXFORM]
+ ;@calls
+ ; SORTFRMS
+ ;@input
+ ; sid = study id
+ ;@output = key of latest form incl nodule grid
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; used for nodule copy
+ ;
+ ;
+ ;@stanza 2 calculate key of latest form incl nodule grid
+ ;
+ new retkey set retkey=""
+ new fary
+ do SORTFRMS(.fary,sid)
+ ;
+ new tdt set tdt=""
+ for  set tdt=$order(fary(tdt),-1) quit:tdt=""  quit:retkey'=""  do  ; 
+ . new tmpkey set tmpkey=""
+ . for  set tmpkey=$order(fary(tdt,tmpkey)) quit:tmpkey=""  quit:retkey'=""  do  ; 
+ . . if tmpkey["ceform" set retkey=tmpkey
+ . . if tmpkey["ptform" set retkey=tmpkey
+ . . if tmpkey["bxform" set retkey=tmpkey
+ . . quit
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit retkey ; end of $$PREVNOD
+ ;
+ ;
+ ;
+LASTCMP(sid,retkey) ; date & key of last comparison scan
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;
+ ;@called-by
+ ; MKBXFORM
+ ; MKCEFORM
+ ; MKFUFORM
+ ; MKITFORM
+ ; MKPTFORM
+ ;@calls
+ ; SORTFRMS
+ ; $$NOW^XLFDT
+ ; $$KEY2FM^SAMICASE
+ ; $$VAPALSDT^SAMICASE
+ ;@input
+ ; sid = study id
+ ;@output = date of last comparison scan
+ ; .retkey = key of last comparison scan
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 calculate date & key of last comparison scan
+ ;
+ set retkey=""
+ new fary
+ do SORTFRMS(.fary,sid)
+ ;
+ ;new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
+ new tdt set tdt=$piece($$NOW^XLFDT,".",1) ; start with before today
+ for  set tdt=$order(fary(tdt),-1) quit:tdt=""  quit:retkey'=""  do  ; 
+ . new tmpkey set tmpkey=""
+ . for  set tmpkey=$order(fary(tdt,tmpkey)) quit:tmpkey=""  quit:retkey'=""  do  ; 
+ . . if tmpkey["ceform" set retkey=tmpkey
+ . . quit
+ . quit
+ ;
+ new retdt set retdt=-1
+ if retkey'="" do  ;
+ . new fmdt set fmdt=$$KEY2FM^SAMICASE(retkey)
+ . set retdt=$$VAPALSDT^SAMICASE(fmdt)
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit retdt ; end of $$LASTCMP
+ ;
+ ;
+ ;
+PRIORCMP(sid) ; dates of all scans before last comparison scan
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;
+ ;@called-by
+ ; MKCEFORM
+ ; MKPTFORM
+ ; MKITFORM
+ ;@calls
+ ; SORTFRMS
+ ; $$NOW^XLFDT
+ ; $$KEY2DT
+ ; $$VAPALSDT^SAMICASE
+ ;@input
+ ; sid = study id
+ ;@output = dates of all scans before last comparison scan
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 calculate dates of all scans before last comparison scan
+ ;
+ new retstr set retstr=""
+ new lastcmp set lastcmp=""
+ new fary
+ do SORTFRMS(.fary,sid)
+ ;
+ ;new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
+ new tdt set tdt=$piece($$NOW^XLFDT,".",1) ; start with before today
+ for  set tdt=$order(fary(tdt),-1) quit:tdt=""  do  ; 
+ . ;
+ . if lastcmp="" do  ; first find the last comparison scan
+ . . new tmpkey set tmpkey=""
+ . . for  set tmpkey=$order(fary(tdt,tmpkey)) quit:tmpkey=""  quit:lastcmp'=""  do  ; 
+ . . . if tmpkey["ceform" set lastcmp=tmpkey
+ . . . quit
+ . . quit
+ . ;
+ . do  ;
+ . . ; next add all previous scans to retstr
+ . . new tmpkey2 set tmpkey2=""
+ . . for  set tmpkey2=$order(fary(tdt,tmpkey2)) quit:tmpkey2=""  do  ; 
+ . . . if tmpkey2["ceform" do  ; convert to external date
+ . . . . set retstr=$$KEY2DT(tmpkey2)_retstr
+ . . . . quit
+ . . . quit
+ . . quit
+ . quit
+ ;
+ if $extract(retstr,$length(retstr))="," do
+ . set retstr=$extract(retstr,1,$length(retstr)-1)
+ . quit
+ ;
+ if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit retstr ; end of $$PRIORCMP
+ ;
+ ;
+ ;
+KEY2DT(key) ; date to put in prior scans field
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;
+ ;@called-by
+ ; $$PRIORCMP
+ ;@calls
+ ; $$KEY2FM^SAMICASE
+ ; $$VAPALSDT^SAMICASE
+ ;@input
+ ; key = form key, e.g. ctform-2021-05-25
+ ;@output = date to put in prior scans field
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 calculate prior scans date
+ ;
+ new retstr2 set retstr2=""
+ new fmdt set fmdt=$$KEY2FM^SAMICASE(tmpkey2)
+ set retstr2=$$VAPALSDT^SAMICASE(fmdt)_","_retstr2
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit retstr2 ; end of $$KEY2DT
+ ;
+ ;
  ;
 SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
- ; and returns in ARY, passed by reference
- ; format of return is ARY(fmdate,key)=""
- n root s root=$$setroot^%wd("vapals-patients")
- q:'$d(@root@("graph",sid))
- n froot s froot=$na(@root@("graph",sid))
- n zi s zi=""
- f  s zi=$o(@froot@(zi)) q:zi=""  d  ;
- . n ftype s ftype=$p(zi,"-",1)
- . n fdate s fdate=$p(zi,ftype_"-",2)
- . n X,Y
- . s X=fdate
- . D ^%DT
- . i Y=-1 d ^ZTER Q  ;
- . S ARY(Y,zi)=""
- q
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean;silent;sac;
+ ;@called-by
+ ; $$PREVNOD
+ ; $$LASTCMP
+ ; $$PRIORCMP
+ ;@calls
+ ; $$setroot^%wd
+ ; ^%DT
+ ; ^%ZTER
+ ;@input
+ ; sid = study id
+ ;@output
+ ; .ARY: sorted array of all forms for patient by date
+ ;  ARY(fmdate,key)=""
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 sort patient's forms by date
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ quit:'$data(@root@("graph",sid))
+ new froot set froot=$name(@root@("graph",sid))
+ ;
+ new zi set zi=""
+ for  set zi=$order(@froot@(zi)) quit:zi=""  do  ;
+ . new ftype set ftype=$piece(zi,"-",1)
+ . new fdate set fdate=$piece(zi,ftype_"-",2)
+ . new X,Y
+ . set X=fdate
+ . do ^%DT
+ . if Y=-1 do ^%ZTER quit  ;
+ . set ARY(Y,zi)=""
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of SORTFRMS
+ ;
+ ;
  ;
 MKCEFORM(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac;
  ;@called-by
  ; WSNFPOST^SAMICAS3
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$LASTCMP
+ ; CTCOPY^SAMICTC1
+ ; SSAMISTA^SAMICASE
+ ; $$BASELNDT^SAMICAS3
+ ; $$VAPALSDT^SAMICASE
+ ; $$LASTCMP^SAMICAS3
+ ; $$PRIORCMP^SAMICAS3
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. ceform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
+ ;
  ;
  ;@stanza 2 create ct eval form
  ;
@@ -233,173 +484,313 @@ MKCEFORM(sid,key) ; create ct evaluation form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
+ ;
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
- i srckey'="" d  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ ; new srckey set srckey=$$PREVNOD(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
  ; end nodule copy
- ;new items,prevct
- ;do GETITEMS^SAMICASE("items",sid)
- ;set prevct=""
- ;if $data(items("type","vapals:ceform")) do  ;previous cteval exists
- ;. set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
- ;if prevct'="" do  ;
- ;. new target,source
- ;. set source=$name(@root@("graph",sid,prevct))
- ;. set target=$name(@root@("graph",sid,key))
- ;. do CTCOPY^SAMICTC1(source,target)
+ ;
+ ; new items,prevct
+ ; do GETITEMS^SAMICASE("items",sid)
+ ; set prevct=""
+ ; if $data(items("type","vapals:ceform")) do  ; previous cteval exists
+ ; . set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
+ ; . quit
+ ; if prevct'="" do  ;
+ ; . new target,source
+ ; . set source=$name(@root@("graph",sid,prevct))
+ ; . set target=$name(@root@("graph",sid,key))
+ ; . do CTCOPY^SAMICTC1(source,target,key)
+ ; . quit
+ ;
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
+ ; set baseline CT date and last comparison scan date
+ do  ;
+ . new basedt
+ . set basedt=$$BASELNDT^SAMICAS3(sid)
+ . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
+ . if lastdt=-1 set lastdt=basedt
+ . new priordt set priordt=$$PRIORCMP^SAMICAS3(sid)
+ . if priordt=-1 set priordt=lastdt
+ . if priordt="" set priordt=lastdt
+ . set @root@("graph",sid,key,"sidoe")=basedt
+ . set @root@("graph",sid,key,"cedcs")=lastdt
+ . set @root@("graph",sid,key,"cedps")=priordt
+ . quit
+ ;
  ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKCEFORM
  ;
+ ;
+ ;
 MKFUFORM(sid,key) ; create Follow-up form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac;
  ;@called-by
  ; WSNFPOST^SAMICAS3
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$KEY2DSPD^SAMICAS2
+ ; $$BASELNDT
+ ; $$LASTCMP
+ ; $$NOW^XLFDT
+ ; $$VAPALSDT^SAMICASE
+ ; SSAMISTA^SAMICASE
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. fuform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
+ ;
  ;
  ;@stanza 2 create Follow-up form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
+ ;
  new cdate set cdate=$piece(key,"fuform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
+ ;
  set @root@("graph",sid,key,"samicreatedate")=cdate
  set @root@("graph",sid,key,"sidof")=$$KEY2DSPD^SAMICAS2(cdate)
- set @root@("graph",sid,key,"sidoe")=$$BASELNDT(sid)
+ new basedt
+ set basedt=$$BASELNDT^SAMICAS3(sid)
+ if basedt=-1 set basedt=$$LASTCMP^SAMICAS3(sid)
+ if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ set @root@("graph",sid,key,"sidoe")=basedt
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
  ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKFUFORM
  ;
-BASELNDT(sid) ; Extrinsic returns the last previous baseline CT date
  ;
- n root s root=$$setroot^%wd("vapals-patients")
- n groot s groot=$na(@root@("graph",sid))
- n items s items=""
- d GETITEMS^SAMICASE("items",sid)
- q:'$d(items) ""
- n bdate s bdate=""
- n bkey s bkey=""
- n done s done=0
- f  s bkey=$o(items("type","vapals:ceform",bkey)) q:bkey=""  d  ;
- . ;w !,bkey," ",$g(@groot@(bkey,"cetex"))
- . if $g(@groot@(bkey,"cetex"))="b" d  ;
- . . s done=1
- . . s bdate=$p(bkey,"ceform-",2)
- s bdate=$$KEY2DSPD^SAMICAS2(bdate)
- q bdate
+ ;
+BASELNDT(sid) ; last previous baseline ct date
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac
+ ;@called-by
+ ; MKCEFORM
+ ; MKFUFORM
+ ; MKPTFORM
+ ; MKITFORM
+ ;@calls
+ ; $$setroot^%wd
+ ; GETITEMS^SAMICASE
+ ; $$KEY2DSPD^SAMICAS2
+ ;@input
+ ; sid = study id
+ ;@output = last previous baseline ct date
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 calculate last previous baseline ct date
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new groot set groot=$name(@root@("graph",sid))
+ new items set items=""
+ do GETITEMS^SAMICASE("items",sid)
+ quit:'$data(items) ""
+ ;
+ new bdate set bdate=""
+ new bkey set bkey=""
+ new done set done=0
+ for  set bkey=$order(items("type","vapals:ceform",bkey)) quit:bkey=""  do  ;
+ . ; write !,bkey," ",$get(@groot@(bkey,"cetex"))
+ . if $get(@groot@(bkey,"cetex"))="b" do  ;
+ . . set done=1
+ . . set bdate=$piece(bkey,"ceform-",2)
+ . . quit
+ . quit
+ set bdate=$$KEY2DSPD^SAMICAS2(bdate)
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit bdate ; end of $$BASELNDT
+ ;
+ ;
  ;
 MKPTFORM(sid,key) ; create pet evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac
  ;@called-by
  ; WSNFPOST^SAMICAS3
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$LASTCMP
+ ; CTCOPY^SAMICTC1
+ ; SSAMISTA^SAMICASE
+ ; $$BASELNDT^SAMICAS3
+ ; $$VAPALSDT^SAMICASE
+ ; $$LASTCMP^SAMICAS3
+ ; $$PRIORCMP^SAMICAS3
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. ptform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
+ ;
  ;
  ;@stanza 2 create pet eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
+ ;
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
- i srckey'="" d  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ ; new srckey set srckey=$$PREVNOD(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
  ; end nodule copy
+ ;
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ;
+ do  ;
+ . new basedt
+ . set basedt=$$BASELNDT^SAMICAS3(sid)
+ . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
+ . if lastdt=-1 set lastdt=basedt
+ . new priordt set priordt=$$PRIORCMP^SAMICAS3(sid)
+ . if priordt=-1 set priordt=lastdt
+ . set @root@("graph",sid,key,"sidoe")=basedt
+ . ; set @root@("graph",sid,key,"cedcs")=lastdt
+ . set @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ . ; set @root@("graph",sid,key,"cedps")=priordt
+ . quit
+ ;
+ ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKPTFORM
+ ;
+ ;
  ;
 MKITFORM(sid,key) ; create intervention form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac
  ;@called-by
  ; WSNFPOST^SAMICAS3
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$PREVNODE [commented out]
+ ; $$LASTCMP
+ ; CTCOPY^SAMICTC1
+ ; SSAMISTA^SAMICASE
+ ; $$BASELNDT^SAMICAS3
+ ; $$VAPALSDT^SAMICASE
+ ; $$LASTCMP^SAMICAS3
+ ; $$PRIORCMP^SAMICAS3
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. itform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
+ ;
  ;
  ;@stanza 2 create intervention form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
+ ;
  new cdate set cdate=$piece(key,"itform-",2)
+ ;
+ ; nodule copy
+ ; new srckey set srckey=$$PREVNOD(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
+ ; end nodule copy
+ ;
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
+ do  ;
+ . new basedt
+ . set basedt=$$BASELNDT^SAMICAS3(sid)
+ . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
+ . if lastdt=-1 set lastdt=basedt
+ . new priordt set priordt=$$PRIORCMP^SAMICAS3(sid)
+ . if priordt=-1 set priordt=lastdt
+ . set @root@("graph",sid,key,"sidoe")=basedt
+ . ; set @root@("graph",sid,key,"cedcs")=lastdt
+ . set @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ . ; set @root@("graph",sid,key,"cedps")=priordt
+ . quit
+ ;
  ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKITFORM
  ;
+ ;
+ ;
 MKBXFORM(sid,key) ; create biopsy form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac
  ;@called-by
  ; WSNFPOST^SAMICAS3
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$LASTCMP
+ ; CTCOPY^SAMICTC1
+ ; SSAMISTA^SAMICASE
  ;@input
  ; sid = study id
- ; key =
+ ; key = form key, e.g. bxform-2021-05-25
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
+ ;
  ;
  ;@stanza 2 create background form
  ;
@@ -407,29 +798,34 @@ MKBXFORM(sid,key) ; create biopsy form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
+ ;
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
- i srckey'="" d  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ ; new srckey set srckey=$$PREVNOD(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
  ; end nodule copy
+ ;
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
  ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKBXFORM
  ;
  ;
+ ;
 CASETBL(ary) ; generates case review table
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
- ;@called by : none
+ ;ven/gpl;private;procedure;clean;silent;sac
+ ;@called by none
  ;@calls
  ;@input
  ; ary = name of array (passed by name, will be cleared)
@@ -437,6 +833,7 @@ CASETBL(ary) ; generates case review table
  ; @ary
  ;@tests
  ; SAMIUTS2
+ ;
  ;
  ;@stanza 2 build table
  ;
@@ -492,9 +889,11 @@ CASETBL(ary) ; generates case review table
  set @ary@("ceform","name")="CT Evaluation"
  set @ary@("ceform","image")="preview.gif"
  ;
+ ;
  ;@stanza 3 termination
  ;
- quit  ; end of casetbl
+ quit  ; end of CASETBL
+ ;
  ;
  ;
 EOR ; end of routine SAMICAS3

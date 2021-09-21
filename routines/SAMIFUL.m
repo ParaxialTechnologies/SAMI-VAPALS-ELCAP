@@ -1,8 +1,9 @@
-SAMIFUL ;ven/gpl - vapals-elcap: form log ; 6/28/19 5:30pm
- ;;18.0;SAMI;;
+SAMIFUL ;ven/gpl - vapals-elcap: form log ;2021-03-21T23:32Z
+ ;;18.0;SAMI;**10**;2020-01;
+ ;;1.18.0.10-i10
  ;
- ; Routine SAMIFUL contains routine & module info & the primary
- ; development log for VAPALS-ELCAP's Form module, SAMIF.
+ ; SAMIFUL contains routine & module info & the primary development
+ ; log for VAPALS-ELCAP's Form module, SAMIF.
  ; It contains no public interfaces or executable code.
  ;
  quit  ; no entry from top
@@ -14,234 +15,250 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ; 6/28/19 5:30pm
  ;
  ;
  ;@routine-credits
- ;@primary-dev: George P. Lilly (gpl)
+ ;@primary-dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org: Vista Expertise Network (ven)
+ ;@primary-dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright: 2017/2019, gpl, all rights reserved
- ;@license: Apache 2.0
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-01-17T16:30Z
- ;@application: Screening Applications Management (SAM)
- ;@module: VAPALS-ELCAP (SAMI)
- ;@version: 18.0T04 (fourth development version)
- ;@release-date: not yet released
- ;@patch-list: none yet
+ ;@last-updated 2021-03-21T23:32Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@version 1.18.0.10-i10
+ ;@release-date 2020-01
+ ;@patch-list **10**
  ;
- ;@additional-dev: Frederick D. S. Marshall (toad)
+ ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev: Larry G. Carlson (lgc)
+ ;@additional-dev Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
- ;@additional-dev: Domenic DiNatale (dom)
+ ;@additional-dev Alexis Carlson (arc)
+ ; alexis.carlson@vistaexpertise.net
+ ;@additional-dev Domenic DiNatale (dom)
  ; domenic.dinatale@paraxialtech.com
  ;
  ;@module-credits
- ;@project: VA Partnership to Increase Access to Lung Screening
+ ;@project VA Partnership to Increase Access to Lung Screening
  ; (VA-PALS)
  ; http://va-pals.org/
- ;@funding: 2017/2019, Bristol-Myers Squibb Foundation (bmsf)
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
  ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
- ;@partner-org: Veterans Affairs Office of Rural health
+ ;@partner-org Veterans Affairs Office of Rural health
  ; https://www.ruralhealth.va.gov/
- ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
  ; http://ielcap.com/
- ;@partner-org: Paraxial Technologies
+ ;@partner-org Paraxial Technologies (par)
  ; http://paraxialtech.com/
- ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
  ;@module-log
- ; 2017-09-19 ven/gpl v18.0t01 SAMIFRM: initialize the SAMI FORM file
- ; from elcap-patient graphs, using mash tools and graphs (%yottaq,^%wd)
+ ; 2017-09-19 ven/gpl 1.18.0-t01 
+ ;  SAMIFRM: initialize SAMI FORM file from elcap-patient graphs,
+ ; using mash tools & graphs (%yottaq,^%wd).
  ;
- ; 2017-09-18 ven/gpl v18.0t01 SAMIFRM: update
+ ; 2017-09-18 ven/gpl 1.18.0-t01
+ ;  SAMIFRM: update.
  ;
- ; 2017-12-18 ven/gpl v18.0t01 SAMIFRM: update
+ ; 2017-12-18 ven/gpl 1.18.0-t01
+ ;  SAMIFRM: update.
  ;
- ; 2018-01-03 ven/gpl v18.0t01 SAMIFRM: update
+ ; 2018-01-03 ven/gpl 1.18.0-t01
+ ;  SAMIFRM: update.
  ;
- ; 2018-01-14 ven/gpl v18.0t01 SAMIFRM: update
+ ; 2018-01-14 ven/gpl 1.18.0-t01
+ ;  SAMIFRM: update.
  ;
- ; 2018-02-04 ven/gpl v18.0t01 SAMIFRM: update
+ ; 2018-02-04 ven/gpl 1.18.0-t01
+ ;  SAMIFRM: update.
  ;
- ; 2018-02-05/07 ven/toad v18.0t04 SAMIFRM: update license & attribution
- ; & hdr comments, add white space & do-dot quits, spell out language
- ; elements; in SAMISUBS r/replaceAll^%wfhform w/replaceAll^%wf.
- ; r/calls to $$setroot^%yottaq & getVals^%yottaq w/$$setroot^%wdgraph
- ; & getVals^%wf.
+ ; 2018-02-05/07 ven/toad 1.18.0-t04
+ ;  SAMIFRM: update license & attribution & hdr comments, add white
+ ; space & do-dot quits, spell out language elements; in SAMISUBS
+ ; replaceAll^%wfhform > replaceAll^%wf; $$setroot^%yottaq > 
+ ; $$setroot^%wdgraph; getVals^%yottaq > getVals^%wf.
  ;
- ; 2018-02-14 ven/toad v18.0t04 SAMIFRM: r/replaceAll^%wf
- ; w/findReplaceAll^%wf, r/ln w/line, add @calls & @called-by tags, break
- ; up some long lines, scope variables in $$GETDIR & $$GETFN.
+ ; 2018-02-14 ven/toad 1.18.0-t04
+ ;  SAMIFRM: replaceAll^%wf > findReplaceAll^%wf, ln > line, add
+ ; @calls & @called-by tags, break up some long lines, scope variables
+ ; in $$GETDIR & $$GETFN.
  ;
- ; 2018-03-01 ven/toad v18.0t04 SAMIFRM: r/findReplaceAll^%wf
- ; w/findReplace^%ts.
+ ; 2018-03-01 ven/toad 1.18.0-t04
+ ;  SAMIFRM: findReplaceAll^%wf > findReplace^%ts.
  ;
- ; 2018-03-07/08 ven/toad v18.0t04 SAMIFRM: in SAMISUBS
- ; r/$$setroot^%wdgraph w/$$setroot^%wf, fix bug when r/css w/see.
+ ; 2018-03-07/08 ven/toad 1.18.0-t04
+ ;  SAMIFRM: in SAMISUBS $$setroot^%wdgraph > $$setroot^%wf, fix bug
+ ; when r/css w/see.
  ;
- ; 2018-03-18 ven/toad SAMI*18.0t04 SAMIFRM2: restore calls to
- ; findReplaceAll^%ts.
+ ; 2018-03-18 ven/toad 1.18.0-t04
+ ;  SAMIFRM2: restore calls to findReplaceAll^%ts.
  ;
- ; 2018-03-21/04-02 ven/gpl SAMI*18.0t04 SAMIFRM2: max date insertion,
- ; case review navigation changed to post, date order for CT Eval in
- ; case review; changes to support incomplete forms display & processing;
- ; fix to not inject html in the javascript for case review navigation;
- ; fix followup submit.
+ ; 2018-03-21/04-02 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: insert max date, chg case review navigation to post,
+ ; date order for CT Eval in case review; support incomplete forms
+ ; display & processing; fix to not inject html in javascript for case
+ ; review navigation; fix followup submit.
  ;
- ; 2018-04-24 ven/gpl SAMI*18.0t04 SAMIFRM2: added Pet & Biopsy forms.
+ ; 2018-04-24 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: add Pet & Biopsy forms.
  ;
- ; 2018-05-18/21 ven/gpl SAMI*18.0t04 SAMIFRM2: conversion to new graph
- ; & simplified forms processing.
+ ; 2018-05-18/21 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: convert to new graph, simplify forms processing.
  ;
- ; 2018-05-22 par/dom SAMI*18.0t04 SAMIFRM2: VAP-95 - removed code that
- ; replaced hard-coded date w/"today" from backend, no longer needed.
+ ; 2018-05-22 par/dom 1.18.0-t04
+ ;  SAMIFRM2: VAP-95 - remove code that replaced hard-coded date
+ ; w/"today" from backend, no longer needed.
  ;
- ; 2018-05-24 ven/gpl SAMI*18.0t04 SAMIFRM2: changes for submit processing
- ; on forms.
+ ; 2018-05-24 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: changes for submit processing on forms.
  ;
- ; 2018-05-25 par/dom SAMI*18.0t04 SAMIFRM2: merge pull request 3 fr/
- ; OSEHRA/VAP-95-Remove-Today-Text-Replacement2. VAP-95 remove today text
- ; replacement.
+ ; 2018-05-25 par/dom 1.18.0-t04
+ ;  SAMIFRM2: merge pull request 3 fr/OSEHRA/VAP-95-Remove-Today-Text-
+ ; Replacement2. VAP-95 remove today text replacement.
  ;
- ; 2018-05-25 ven/gpl SAMI*18.0t04 SAMIFRM2: add STUDYID for txt replace;
- ; more changes for STUDYID substitution.
+ ; 2018-05-25 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: add STUDYID for txt replace; more changes for STUDYID
+ ; substitution.
  ;
- ; 2018-07-11 ven/gpl SAMI*18.0t04 SAMIFRM2: added FROZEN variable based
- ; on samistatus=compete.
+ ; 2018-07-11 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: add FROZEN variable based on samistatus=compete.
  ;
- ; 2018-08-19 ven/gpl SAMI*18.0t04 SAMIFRM2: use ssn instead of last5 where
- ; available; revised ssn formatting.
+ ; 2018-08-19 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: use ssn instead of last5 where available; revise ssn
+ ; formatting.
  ;
- ; 2018-09-30 ven/gpl SAMI*18.0t04 SAMIFRM2: header & prefill of intake.
+ ; 2018-09-30 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: header & prefill of intake.
  ;
- ; 2018-10-15 ven/gpl SAMI*18.0t04 SAMIFRM2: initial user reports:
- ; enrollment.
+ ; 2018-10-15 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: initial user reports: enrollment.
  ;
- ; 2018-10-31 ven/gpl SAMI*18.0t04 SAMIFRM2: new input form features,
- ; report menu fix.
+ ; 2018-10-31 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: new input form features, report menu fix.
  ;
- ; 2018-11-13 ven/gpl SAMI*18.0t04 SAMIFRM2: every occurance of SAMIHOM2
- ; changed to SAMIHOM3.
+ ; 2018-11-13 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: SAMIHOM2 > SAMIHOM3.
  ;
- ; 2018-11-14 ven/gpl SAMI*18.0t04 SAMIFRM2: fix graph store forms.
+ ; 2018-11-14 ven/gpl 1.18.0-t04
+ ;  SAMIFRM2: fix graph store forms.
  ;
- ; 2018-11-29 ven/lgc SAMI*18.0t04 SAMIFRM2: ongoing unit-test work.
+ ; 2018-11-29 ven/lgc 1.18.0-t04
+ ;  SAMIFRM2: ongoing unit-test work.
  ;
- ; 2018-12-11/12 ven/toad SAMI*18.0t04 SAMIFRM2: update chg log; in SAMISUB2
- ; r/last findReplace^%ts w/a flag and r/w/findReplaceAll^%ts; passim
- ; spell out language elements, update tags called-by, calls, tests;
- ; namespace call-by-ref & call-by-name actuals.
+ ; 2018-12-11/12 ven/toad 1.18.0-t04
+ ;  SAMIFRM2: update chg log; in SAMISUB2 r/last findReplace^%ts w/a
+ ; flag & r/w/findReplaceAll^%ts; passim spell out language elements,
+ ; update tags called-by, calls, tests; namespace call-by-ref & call-
+ ; by-name actuals.
  ;
- ; 2019-01-02/17 ven/toad SAMI*18.0t04 SAMIFRM2: update chg log; in INIT1FRM
- ; r/id w/form; doc signatures, web services, unit tests, dmis, ppis, input,
- ; output, thruput.
+ ; 2019-01-02/17 ven/toad 1.18.0-t04
+ ;  SAMIFRM2: update chg log; in INIT1FRM id > form; doc signatures,
+ ; web services, unit tests, dmis, ppis, input, output, thruput.
  ;  SAMIFUL: create from SAMIFRM2 as primary development log.
- ;  SAMIFLD: create from SAMIFRM2 w/SAMISUB2,GETHDR,GETLAST5,FIXSRC,FIXHREF,
- ; GETNAME,GETSSN; rename SAMISUB2->LOAD, reroute calls, namespace
- ; filter->SAMIFILTER,%j->SAMILNUM,zhtml->SAMIHTML,vals->SAMIVALS (& add to
- ; params), key->form; convert to ppi-code (no params); minor edits.
- ;  SAMIFORM: create from SAMIFRM2 w/all ppi, dmi, & wsi entry points, no
- ; code, goto code in other routines.
- ;  SAMIFWS: create from SAMIFRM2 w/WSSBFORM,WSSIFORM,WSCEFORM; convert to
- ; ppi-code (no params); minor edits.
- ;  SAMIFDM: create from SAMIFRM2 w/renamed INITFRMS->INIT,INIT1FRM->INIT1,
- ; REGFORMS->REGISTER,LOADDATA->IMPORT,PRSFLNM,GETDIR,GETFN; convert to
- ; ppi-code (no params); annotation & minor edits; move unit-test switch to
- ; cover more code.
+ ;  SAMIFLD: create from SAMIFRM2 w/SAMISUB2,GETHDR,GETLAST5,FIXSRC,
+ ; FIXHREF,GETNAME,GETSSN; SAMISUB2 > LOAD, reroute calls, namespace
+ ; filter > SAMIFILTER, %j > SAMILNUM, zhtml > SAMIHTML, vals >
+ ; SAMIVALS (& add to params), key > form; convert to ppi-code (no
+ ; params); minor edits.
+ ;  SAMIFORM: create from SAMIFRM2 w/all ppi, dmi, & wsi entry points,
+ ; no code, goto code in other routines.
+ ;  SAMIFWS: create from SAMIFRM2 w/WSSBFORM,WSSIFORM,WSCEFORM;
+ ; convert to ppi-code (no params); minor edits.
+ ;  SAMIFDM: create from SAMIFRM2, INITFRMS > INIT, INIT1FRM > INIT1,
+ ; REGFORMS > REGISTER, LOADDATA > IMPORT,PRSFLNM,GETDIR,GETFN;
+ ; convert to ppi-code (no params); annotate & minor edits; move unit-
+ ; test switch to cover more code.
+ ;  related changes:
+ ;  SAMICAS2,SAMICASE,SAMIFLD,SAMINOTI,SAMIUR,SAMIUR1,SAMIUTF,%tsfwr,
+ ; %tsfwra,%wfhform: passim SAMIFRM2 > SAMIFORM.
+ ;  SAMIUTST: SAMIFRM2 > SAMIFORM, add SAMIFLD,SAMIFDM,SAMIFWS.
  ;
- ; 2019-03-26 ven/lgc SAMI*18.0t04 SAMIFLD
- ;  Added changlog code to the end of the LOAD^SAMIFLD code
- ;   to account for the new changelog functionality
+ ; 2019-03-26 ven/lgc 1.18.0-t04
+ ;  SAMIFLD: Add changlog code to end of LOAD^SAMIFLD code to account
+ ; for new changelog functionality.
  ;
- ; 2019-03-27 ven/lgc SAMI*18.0t04 SAMIFWS
- ;  Commented out line 106,164,and 222 in SAMIFWS.
- ;    GETITEMS^SAMICAS2 does not have formal list
- ;    not have formal list. I think this may have been part
- ;    of temporary debug code
- ;  106;new items do GETITEMS^SAMICAS2("items",sid)
- ;  164;new items do GETITEMS^SAMICAS2("items",sid)
- ;  222;new items do GETITEMS^SAMICAS2("items",sid)
+ ; 2019-03-27 ven/lgc 1.18.0-t04
+ ;  SAMIFWS: Comment out lines 106, 164, 222 in SAMIFWS;
+ ; GETITEMS^SAMICAS2 does not have formal list, may have been part of
+ ; temporary debug code.
+ ; 106;new items do GETITEMS^SAMICAS2("items",sid)
+ ; 164;new items do GETITEMS^SAMICAS2("items",sid)
+ ; 222;new items do GETITEMS^SAMICAS2("items",sid)
  ;
- ; 2019-03-28 ven/lgc SAMI*18.0t04 SAMIFMD
- ;   Modified IMPORT code in SAMIFMD to account
- ;    for Unit Test where we do not wish to prompt
- ;    user for a directory.  Also modified the directory
- ;    for the json files to be within the repo
+ ; 2019-03-28 ven/lgc 1.18.0-t04
+ ; SAMIFDM: in IMPORT account for unit test where we do not wish to
+ ; prompt user for directory; also modified directory for json files
+ ; in repo.
  ;
- ; 2019-03-29 ven/lgc SAMI*18*0t04 SAMIFLD
- ;   Modified LOAD to include George's new variables
- ;     for intake notes.
+ ; 2019-03-29 ven/lgc 1.18*0-t04
+ ;  SAMIFLD: in LOAD include George's new variables for intake notes.
  ;
- ; 2019-06-28 ven/lgc SAMI*18*1
- ;   Modified SAMIFLD to use MASH age^%th to calculate
- ;     patient's age
+ ; 2019-04-16 ven/lgc 1.18.0-t04 e54b76d1
+ ;  SAMIFDM,SAMIFLD,SAMIFORM,SAMIFWS: SAMIFRM2 > SAMIFORM.
  ;
- ;SAMICAS2.m:44: ; FIXHREF^SAMIFRM2 ---FIXHREF^SAMIFORM
- ;SAMICAS2.m:45: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
- ;SAMICAS2.m:48: ; $$GETLAST5^SAMIFRM2 ---GETLAST5^SAMIFORM
- ;SAMICAS2.m:49: ; $$GETSSN^SAMIFRM2 ---GETSSN^SAMIFORM
- ;SAMICAS2.m:50: ; $$GETNAME^SAMIFRM2 ---GETNAME^SAMIFORM
- ;SAMICAS2.m:104: . . do FIXHREF^SAMIFRM2(.ln)  ---FIXHREF^SAMIFORM
- ;SAMICAS2.m:108: . . do FIXSRC^SAMIFRM2(.ln)  ---FIXSRC^SAMIFORM 
- ;SAMICAS2.m:135: new last5 set last5=$$GETLAST5^SAMIFRM2(sid) ---GETLAST5^SAMIFORM
- ;SAMICAS2.m:136: new pssn set pssn=$$GETSSN^SAMIFRM2(sid) ---GETSSN^SAMIFORM
- ;SAMICAS2.m:137: new pname set pname=$$GETNAME^SAMIFRM2(sid) ---GETNAME^SAMIFORM
- ;SAMICAS2.m:447: ; FIXHREF^SAMIFRM2  ---FIXHREF^SAMIFORM
- ;SAMICAS2.m:448: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
- ;SAMICAS2.m:490: . . do FIXHREF^SAMIFRM2(.ln) ---FIXHREF^SAMIFORM
- ;SAMICAS2.m:494: . . do FIXSRC^SAMIFRM2(.ln) ---FIXHREF^SAMIFORM
+ ; 2019-04-16 ven/lgc 1.18.0-t04 e54b76d1
+ ;  SAMINOT1: SAMIFRM2 > SAMIFORM.
  ;
- ;SAMICASE.m:28: ; FIXHREF^SAMIFRM2 ---FIXHREF^SAMIFORM
- ;SAMICASE.m:29: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
- ;SAMICASE.m:32: ; $$GETLAST5^SAMIFRM2 ---GETLAST5^SAMIFORM
- ;SAMICASE.m:33: ; $$GETSSN^SAMIFRM2 ---GETSSN^SAMIFORM
- ;SAMICASE.m:34: ; $$GETNAME^SAMIFRM2 ---GETNAME^SAMIFORM
- ;SAMICASE.m:71: ; WSSBFORM^SAMIFRM2 ---WSSBFORM^SAMIFORM
- ;SAMICASE.m:72: ; WSSIFORM^SAMIFRM2 ---WSSIFORM^SAMIFORM
- ;SAMICASE.m:73: ; WSCEFORM^SAMIFRM2 ---WSCEFORM^SAMIFORM
- ;SAMICASE.m:113: ; FIXHREF^SAMIFRM2 ---FIXHREF^SAMIFORM
- ;SAMICASE.m:114: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
+ ; 2019-04-18 ven/gpl 1.18.0-t04 2b6f0d63
+ ;  SAMIFLD: fix missing patient name.
  ;
- ;SAMIFLD.m:192: ; $$GETHDR^SAMIFRM2(sid) ---GETNAME^SAMIFORM
- ;SAMIFLD.m:411: quit pssn ; end of $$GETSSN^SAMIFRM2 ---GETSSN^SAMIFORM
- ;SAMIHOM4.m:246: . . d FIXHREF^SAMIFRM2(.ln) ---FIXHREF^SAMIFORM
- ;SAMIHOM4.m:250: . . d FIXSRC^SAMIFRM2(.ln) ---FIXSRC^SAMIFORM
+ ; 2019-04-22 ven/lgc 1.18.0-t04 e7afbfa1
+ ;  SAMIFWS: removal of SAMIFRM2 reference.
  ;
- ;SAMINOTI.m:43: . D SAMISUB2^SAMIFRM2(.line,samikey,si,.filter) ---SAMISUB2^SAMIFORM
+ ; 2019-04-23 ven/lgc 1.18.0-t04 529e8f2f,89bffd3b
+ ;  SAMIFDM: comment out zwrite commands.
+ ;  SAMIFORM: SAMISUB2 > LOAD.
  ;
- ;SAMIUR1.m:53: . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter) ---SAMISUB2^SAMIFORM
- ;SAMIUR1.m:85: . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid) ---GETSSN^SAMIFORM
- ;SAMIUR1.m:88: . . . s hdf=$$GETHDR^SAMIFRM2(sid) ---GETHDR^SAMIFLD
- ;SAMIUR1.m:89: . . . s ssn=$$GETSSN^SAMIFRM2(sid) ---GETSSN^SAMIFORM
+ ; 2019-05-08 ven/lgc 1.18.0-t04 33dfa8c2
+ ;  SAMIFDM: replace zsystem command with MASH call.
  ;
- ;SAMIUR.m:49: . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter) ---SAMISUB2^SAMIFORM
- ;SAMIUR.m:85: . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFRM2(sid) ---GETSSN^SAMIFORM
+ ; 2019-06-10/19 ven/arc 1.18.0-t04 5d7a987d,c69b6787
+ ;  SAMIFDM: chg explicit paths, unify paths to unit test json data.
  ;
- ;SAMIUTF.m:1:SAMIUTF ;ven/lgc - UNIT TEST for SAMIFRM2 ; 3/28/19 1:39pm
- ; --- for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM
+ ; 2019-06-28/07-08 ven/lgc 1.18.0-t04 703c3050
+ ;  SAMIFLD: fix patient age calculations, calculate patient age
+ ; w/MASH age^%th.
  ;
- ;SAMIUTST
- ;207      ;;SAMIFRM2 --- 207      ;;SAMIFORM
- ;208      ;;SAMIFLD
- ;209      ;;SAMIFWS
- ;210      ;;SAMIFDM
+ ; 2019-08-01 ven/arc 1.18.0-t04 d710f27d
+ ;  SAMIFLD,SAMIFORM: pull displayed facility code from vista
+ ; parameter.
  ;
- ;_tsfwra.m:67: ; FIXHREF^SAMIFRM2 ---FIXHREF^SAMIFORM
- ;_tsfwra.m:68: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
+ ; 2019-08-03 ven/gpl 1.18.0-t04 bea65f7b,ffc94f65
+ ;  SAMIFLD: fix bugs in Have You Ever Smoked processing in changelog
+ ; & intake note, fix smoking status on enrollment report, fix change
+ ; log display.
  ;
- ;_tsfwr.m:78: ; SAMISUB2^SAMIFRM2 ---SAMISUB2^SAMIFORM
- ;%tsfwr.m:76: ; SAMISUB2^SAMIFRM2 ---SAMISUB2^SAMIFORM
+ ; 2019-08-05 ven/gpl 1.18.0-t04 4ee0d3e6
+ ;  SAMIFLD: add GETPRFX to avoid colision with VAP-435.
  ;
- ;_wfhform.m:182: . ;if form["vapals:" do SAMISUB2^SAMIFRM2(.tln,form,sid,.filter,.%j,.zhtml) ---SAMISUB2^SAMIFORM
- ;_wfhform.m:183: . if newstyle=1 do SAMISUB2^SAMIFRM2(.tln,key,sid,.filter,.%j,.zhtml) ---SAMISUB2^SAMIFORM
- ;NOTE: 184-185  if newstyle=0 do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)???
+ ; 2019-08-14 ven/gpl 1.18.0-t04 0aa37766,4e6f4fdf,08d45d99
+ ;  SAMIFLD: resolve conflict over semicolon in comment, merge pull
+ ; request #70 from OSEHRA/VAP-426-eversmoked, merge with 417.
+ ;
+ ; 2019-09-26 ven/gpl 1.18.0-t04 92b12324 VAP-420
+ ;  SAMIFLD: add smoking history to intake/followup forms (#75).
+ ;
+ ; 2019-10-22 ven/lgc 1.18.0-t04 613e8ff4
+ ;  SAMIFLD: update unit test routines for dfn 1.
+ ;
+ ; 2019-11-22 par/dom 1.18.0 b2cc389d VAP-458
+ ;  SAMIFLD: add new manual registration page.
+ ;
+ ; 2020-01-21 ven/arc 1.18.0 a4c143be
+ ;  SAMIFLD: patient matching additions.
+ ;
+ ; 2020-04-07/11 ven/gpl 1.18.0.5-i5 36607664,c8f4cf30,2f2c29c1
+ ;  SAMIFLD,SAMIFORM,SAMIFWS: multi-tenancy.
+ ;
+ ; 2021-03-16 ven/gpl 1.18.0.10-i10 002071de
+ ;  SAMIFLD: dob age calculation fix from hl7 dob format.
+ ;
+ ; 2021-03-21 ven/toad 1.18.0.10-i10
+ ;  SAMIFLD: bump date & version, lt refactor.
  ;
  ;
- ; 2019-04-16 ven/lgc SAMI*18*0t04 SAMINOT1
- ;   Modified to use SAMIFORM rather than SAMIFRM2
- ;SAMINOT1.m 65       . D SAMISUB2^SAMIFRM2(.line,samikey,si,.filter) SAMISUB2^SAMIFORM
  ;
  ;@contents
  ; SAMIFORM: form library

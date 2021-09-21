@@ -153,7 +153,7 @@
             <h3>Follow-Up</h3>
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label class="required" for="cefu">Follow-up</label>
+                    <label for="cefu">Follow-up</label>
                     <select name="cefu" id="cefu" class="form-control" required="required">
                         <option value="-"> -
                         <option value="rs"> Annual repeat CT
@@ -168,8 +168,8 @@
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="required" for="cefud">When</label>
-                    {{ f.datepicker("cefud", "future", true) }}
+                    <label for="cefud">When</label>
+                    {{ f.datepicker("cefud", "", true) }}
                     <br/>
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
                     {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}
@@ -240,7 +240,9 @@
             <hr/>
             <div class="pull-left">
                 <input type="hidden" name="samistatus" value=""/>
-                <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
                 <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
             </div>
             <div class="pull-right">
@@ -282,20 +284,14 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
                             }
                         },
-                        cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
-                        cefud: {
-                            validators: {
-                                notEmpty: {message: 'Follow-up date is required'},
-                                date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
-                            }
-                        },
                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
                         ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -328,6 +324,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             //follow-up date calculator.
             $("[name=cefuw]").on("change", function () {

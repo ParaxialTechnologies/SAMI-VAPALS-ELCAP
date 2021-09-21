@@ -1,0 +1,32 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        {% include '_messages.jinja2' %}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Login</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" id="login-form" class="validated"
+                              action="{{ formPage+".html" if mockup else "/vapals" }}">
+                            <input type="hidden" name="site" value="ZZZ">
+                            <input type="hidden" name="samiroute" value="login">
+                            <input type="hidden" name="access" value="ZZZUSER1">
+                            <input type="hidden" name="verify" value="@demo123">
+                            <div class="text-center">
+                                <h3>Press "Login" to access the DEMO site!</h3>
+                                <br/>
+                                <br/>
+                                <button type="submit" id="submit-button" class="btn btn-primary btn-lg">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

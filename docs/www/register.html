@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.05.12" name="version"/>
+  <meta content="2021.09.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Register
@@ -17,6 +17,8 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <link href="lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <link href="lib/datatables/datatables.min.css" rel="stylesheet"/>
  </head>
  <body id="body" style="position: relative;">
   <script src="lib/es6-shim.js">
@@ -45,19 +47,23 @@
   </script>
   <script src="lib/clipboard.js">
   </script>
-  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  <script src="lib/chart-js-2.9.3/Chart.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js">
+  <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-display.js">
+  <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js">
+  <script src="jquery-conditonally-enable.js?v=2021.09.08">
   </script>
-  <script src="vapals.js">
+  <script src="jquery-conditonally-display.js?v=2021.09.08">
   </script>
-  <script src="init.js">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.09.08">
   </script>
-  <script src="nodule-grid.js">
+  <script src="vapals.js?v=2021.09.08">
+  </script>
+  <script src="init.js?v=2021.09.08">
+  </script>
+  <script src="nodule-grid.js?v=2021.09.08">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -116,7 +122,7 @@
         </li>
         <li>
          <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing Image &amp; CT Evaluation
+          Intake But No CT Evaluation
          </a>
         </li>
         <li>
@@ -127,6 +133,11 @@
         <li>
          <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
           Inactive
+         </a>
+        </li>
+        <li id="matchingReport">
+         <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
+          Matching Report
          </a>
         </li>
         <li>
@@ -165,7 +176,7 @@
       <label class="required">
        Name
       </label>
-      <input class="form-control" id="name" name="name" placeholder="LAST, FIRST MI" required="required" type="text"/>
+      <input class="form-control" id="name" name="name" placeholder="LAST, FIRST MI SUFFIX" required="required" type="text"/>
      </div>
      <div class="col-sm-3 col-md-3 form-group">
       <label class="required">
@@ -205,19 +216,23 @@
     <div class="row">
      <div class="col-sm-6 col-md-3 form-group">
       <label class="required">
-       <abbr title="Social Security Number">
-        SSN
+       <abbr data-params-attr='{"title":"socialSecurityNumber"}' title="Social Security Number">
+        <span data-params-text="socialSecurityNumber.short">
+         SSN
+        </span>
        </abbr>
       </label>
-      <input class="form-control" id="ssn" name="ssn" placeholder="000-00-0000" required="required" type="text"/>
-     </div>
-     <div class="col-sm-6 col-md-3 form-group">
-      <label>
-       <abbr title="Integration Control Number">
-        ICN
-       </abbr>
-      </label>
-      <input class="form-control" id="icn" name="icn" type="text"/>
+      <input class="form-control"
+             data-fv-not-empty="true"
+             data-fv-not-empty___message="Value is required"
+             data-fv-regexp___message="Value is invalid"
+             data-params-attr='{"placeholder":"socialSecurityNumber.mask", "pattern": "socialSecurityNumber.pattern"}'
+             id="ssn"
+             name="ssn"
+             pattern="^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+             placeholder="000-00-0000"
+             required="required"
+             type="text"/>"
      </div>
     </div>
     <hr/>
@@ -237,7 +252,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.05.12
+     2021.09.08
     </span>
    </div>
   </footer>
@@ -261,10 +276,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {
@@ -337,6 +410,10 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
+        $(document).ready(function() {
+            $('table.datatables').DataTable();
+        } );
+
     })
   </script>
   <script>
@@ -347,15 +424,6 @@
             $form.formValidation({
                     fields: {
                         name: {validators: {notEmpty: {message: 'Name is required'}}},
-                        ssn: {
-                            validators: {
-                                notEmpty: {message: 'SSN is required'},
-                                regexp: {
-                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
-                                    message: 'SSN is invalid'
-                                }
-                            }
-                        },
                         dob: {
                             validators: {
                                 notEmpty: {message: 'Date of birth is required'},
@@ -368,9 +436,10 @@
                         gender: {validators: {notEmpty: {message: 'Gender is required'}}}
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({

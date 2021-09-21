@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Transformer = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,47 +92,66 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Transformer =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(Transformer, _Plugin);
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-    function Transformer(opts) {
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var t = FormValidation.Plugin;
+
+  var e = /*#__PURE__*/function (_t) {
+    _inherits(e, _t);
+
+    var _super = _createSuper(e);
+
+    function e(t) {
       var _this;
 
-      _classCallCheck(this, Transformer);
+      _classCallCheck(this, e);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Transformer).call(this, opts));
+      _this = _super.call(this, t);
       _this.valueFilter = _this.getElementValue.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(Transformer, [{
+    _createClass(e, [{
       key: "install",
       value: function install() {
-        this.core.registerFilter('field-value', this.valueFilter);
+        this.core.registerFilter("field-value", this.valueFilter);
       }
     }, {
       key: "uninstall",
       value: function uninstall() {
-        this.core.deregisterFilter('field-value', this.valueFilter);
+        this.core.deregisterFilter("field-value", this.valueFilter);
       }
     }, {
       key: "getElementValue",
-      value: function getElementValue(defaultValue, field, element, validator) {
-        if (this.opts[field] && this.opts[field][validator] && 'function' === typeof this.opts[field][validator]) {
-          return this.opts[field][validator].apply(this, [field, element, validator]);
+      value: function getElementValue(t, e, i, s) {
+        if (this.opts[e] && this.opts[e][s] && "function" === typeof this.opts[e][s]) {
+          return this.opts[e][s].apply(this, [e, i, s]);
         }
 
-        return defaultValue;
+        return t;
       }
     }]);
 
-    return Transformer;
-  }(Plugin);
+    return e;
+  }(t);
 
-  return Transformer;
+  return e;
 
-}));
+})));

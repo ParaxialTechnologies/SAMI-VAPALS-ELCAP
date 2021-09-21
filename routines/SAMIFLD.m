@@ -1,11 +1,12 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
- ;;18.0;SAMI;;
+SAMIFLD ;ven/gpl - elcap: form load & case review ;2021-03-21T23:51Z
+ ;;18.0;SAMI;**10**;2020-01;Build 11
+ ;;1.18.0.10-i10
  ;
- ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
- ; specifically loading JSON data into the graphstore for each line.
- ; Since three of those subroutines are also code for ppis called by
- ; WSCASE^SAMICASE, two additional subroutines are included that are not
- ; part of the LOAD opus but are called by WSCASE^SAMICASE.
+ ; SAMIFLD contains subroutines for processing ELCAP forms, loading
+ ; JSON data into the graphstore for each line. Since three of those
+ ; subroutines are also code for ppis called by WSCASE^SAMICASE, two
+ ; additional subroutines are included that are not part of the LOAD
+ ; opus but are called by WSCASE^SAMICASE.
  ; SAMIFLD contains no public entry points (see SAMIFORM).
  ;
  quit  ; no entry from top
@@ -17,35 +18,39 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
  ;
  ;
  ;@routine-credits
- ;@primary-dev: George P. Lilly (gpl)
+ ;@primary-dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org: Vista Expertise Network (ven)
+ ;@primary-dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright: 2017/2019, gpl, all rights reserved
- ;@license: Apache 2.0
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-08-01T15:42Z
- ;@application: Screening Applications Management (SAM)
- ;@module: Screening Applications Management - VAPALS-ELCAP (SAMI)
- ;@version: 18.0T04 (fourth development version)
- ;@release-date: not yet released
- ;@patch-list: none yet
+ ;@last-updated 2021-03-21T23:51Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - VAPALS-ELCAP (SAMI)
+ ;@version 1.18.0.10-i10
+ ;@release-date 2020-01
+ ;@patch-list **10**
+ ;@build 11
  ;
- ;@additional-dev: Frederick D. S. Marshall (toad)
+ ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev: Larry G. Carlson (lgc)
+ ;@additional-dev Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
- ;@additional-dev: Alexis Carlson (arc)
+ ;@additional-dev Alexis Carlson (arc)
  ; alexis.carlson@vistaexpertise.net
+ ;@additional-dev Domenic DiNatale (dom)
+ ; domenic.dinatale@paraxialtech.com
  ;
  ;@module-credits [see SAMIFUL]
  ;
  ;@contents
  ; LOAD: code for ppi LOAD^SAMIFORM
- ;  used for Dom's new style forms
+ ;  process html line, e.g., load json data into graph
  ;
- ; $$GETHDR = header string for patient sid
+ ; $$xpand = expand # to 8 digits
+ ; $$GETHDR-AGE = header string for patient sid
  ;
  ; GETLAST5 = code for ppi $$GETLAST5^SAMIFORM
  ;  last5 for patient sid
@@ -58,6 +63,8 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
  ;  name for patient sid
  ; GETSSN = code for ppi $$GETSSN^SAMIFORM
  ;  ssn for patient sid
+ ; GETPRFX = code for ppi $$GETPRFX^SAMIFORM [deprecated]
+ ;  retrieve study id prefix from parameter file
  ;
  ;
  ;
@@ -82,6 +89,7 @@ LOAD ; process html line, e.g., load json data into graph
  ; $$GETLAST5^SAMIFORM
  ; findReplace^%ts
  ; findReplaceAll^%ts
+ ; $$xpand
  ; FIXSRC^SAMIFORM
  ; FIXHREF^SAMIFORM
  ;@thruput
@@ -281,13 +289,31 @@ LOAD ; process html line, e.g., load json data into graph
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
-xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0
- ; and add a 1 at the end so that 10,20 etc still collate
- n g1,g2,g3
- s g1=8-$l(zi)
- s $p(g2,"0",g1)=""
- s g3=g2_zi_"1"
- q g3
+ ;
+ ;
+xpand(zi) ; expand # to 8 digits
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;0% tests
+ ;@called-by
+ ; LOAD
+ ;@calls none
+ ;@input
+ ; zi = # to expand
+ ;@output = # expanded to 8 digits by prefixing 0 & appending 1 so 10,
+ ; 20, etc. collate properly
+ ;
+ ;@stanza 2 algorithm
+ ;
+ new g1 set g1=8-$length(zi)
+ new g2 set $piece(g2,"0",g1)=""
+ new g3 set g3=g2_zi_"1"
+ ;
+ ;@stanza 3 termination
+ ;
+ quit g3 ; end of $$xpand
+ ;
  ;
  ;
 GETHDR(sid) ; header string for patient sid
@@ -330,6 +356,8 @@ GETHDR(sid) ; header string for patient sid
  . quit
  ;
 AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
+ i dob["-" s dob=$e(dob,6,7)_"/"_$e(dob,9,10)_"/"_$e(dob,1,4)
+ i dob'["/" s dob=$e(dob,5,6)_"/"_$e(dob,7,8)_"/"_$e(dob,1,4)
  new X set X=dob
  new Y
  do ^%DT
@@ -345,7 +373,7 @@ AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  ;
  new rtn set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  ;
- quit rtn ; end of $$GETHDR
+ quit rtn ; end of $$GETHDR-AGE
  ;
  ;
  ;
@@ -454,7 +482,7 @@ FIXHREF ; fix html href lines to use resources in see/
  ;
  ;
  ;
- ;@section 3 code for ppis $$GETNAME^SAMIFORM,$$GETSSN^SAMIFORM
+ ;@section 3 code for ppis $$GETNAME,$$GETSSN,$$GETPRFX^SAMIFORM
  ;
  ;
  ;
@@ -517,10 +545,13 @@ GETSSN ; ssn for patient sid
  . set @root@(ien,"sissn")=pssn
  . quit
  ;
- quit pssn ; end of $$GETSSN^SAMIFORM
+ quit pssn ; end of ppi $$GETSSN^SAMIFORM
  ;
+ ;
+ ;
+ ;@ppi-code $$GETPRFX^SAMIFORM [deprecated]
 GETPRFX ; Retrieve study ID prefix from parameter file
- ; This routine is depricated as of the multi-tenancy features
+ ; This subroutine is deprecated as of the multi-tenancy features.
  ;
  ;@signature
  ; $$GETPRFX^SAMIFORM()
@@ -540,7 +571,8 @@ GETPRFX ; Retrieve study ID prefix from parameter file
  i prefix="" s prefix=$g(ARG("site"))
  if $get(prefix)="" set prefix="UNK"
  ;
- quit prefix ; End of $$GETPRFX^SAMIFORM
+ quit prefix ; end of ppi $$GETPRFX^SAMIFORM
+ ;
  ;
  ;
 EOR ; end of routine SAMIFLD

@@ -1,11 +1,55 @@
-SAMINOT2 ;ven/gpl - followup form notes ; 5/7/19 4:48pm
- ;;18.0;SAMI;;
+SAMINOT2 ;ven/gpl - followup form notes ;2021-07-01t17:21z
+ ;;18.0;SAMI;**1,9,12**;2020-01;
+ ;;18.12
  ;
- ;@license: see routine SAMIUL
+ ; SAMINOT2 contains web services & other subroutines for producing
+ ; the ELCAP Followup Form Notes.
  ;
  quit  ; no entry from top
  ;
-WSNOTE(return,filter) ; web service which returns a text note
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMINUL
+ ;@contents
+ ; WSNOTE web service to return text note
+ ; $$NOTE create note
+ ; $$HASINNT is intake note present?
+ ; $$HASVCNT is communication note present?
+ ; $$HASLCSNT is lung cancer screening note present?
+ ; MKVC make communication note
+ ; MKLCS make lung cancer screening note
+ ; $$MKNT make note w/date=now
+ ; $$MKNTLOC make note
+ ; $$NTDTTM convert date/time fr/fm to/note format
+ ; $$NTLOCN location of nth note
+ ; $$NTLAST location of latest note of a type
+ ; NTLIST return note list
+ ; TLST test NTLIST
+ ; VCNOTE veteran communication note
+ ; SSTATUS smoking status
+ ; LCSNOTE lung cancer screening note
+ ; OUT output new line to note
+ ; $$XVAL value of form variable
+ ; $$PREVCT key to previous ct eval form
+ ; CTINFO extracts from latest ct eval form
+ ; IMPRESS impressions from ct eval report
+ ; $$XSUB dictionary value for variable
+ ;
+ ;
+ ;
+ ;@section 1 wsi WSNOTE & related subroutines
+ ;
+ ;
+ ;
+ ;@wsi WSNOTE^SAMINOT2, vapals-elcap followup note
+WSNOTE(return,filter) ; web service to return text note
+ ;
+ ;ven/gpl;web service;procedure;
  ;
  n debug s debug=0
  i $g(filter("debug"))=1 s debug=1
@@ -70,11 +114,15 @@ WSNOTE(return,filter) ; web service which returns a text note
  . . . ;s tout(cnt)=@note@(zj)_"<br>"
  . . . s tout(cnt)=@note@(zj)_$char(13,10)
  m return=tout
- q
  ;
-NOTE(filter) ; extrnisic which creates a note
- ; returns 1 if successful, 0 if not
+ quit  ; end of wsi WSNOTE^SAMINOT2
  ;
+ ;
+ ;
+NOTE(filter) ; extrnisic to create note
+ ;
+ ;ven/gpl;private;function;
+ ;@output = 1 if successful, 0 if not
  ;
  k ^gpl("funote")
  m ^gpl("funote")=filter
@@ -117,6 +165,10 @@ NOTE(filter) ; extrnisic which creates a note
  i $g(@vals@("futype"))="ct" d  ;
  . i $g(@vals@("samistatus"))'="complete" q  ;
  . ;q:$$HASLCSNT(vals)
+ . n ctdt,ctkey
+ . s ctdt=$$LASTCMP^SAMICAS3(si,.ctkey)
+ . i ctdt=-1 d  q  ;
+ . . s filter("errorMessage")="No CT Eval form exists, followup note not created."
  . d MKLCS(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
@@ -125,33 +177,56 @@ NOTE(filter) ; extrnisic which creates a note
  ;. d MKVC(si,samikey,vals,.filter) ;
  ;. s didnote=1
  ;
- q didnote
+ quit didnote ; end of $$NOTE
  ;
-HASINNT(vals) ; extrinsic returns 1 if intake note is present
- ; else returns 0
+ ;
+ ;
+HASINNT(vals) ; is intake note present?
+ ;
+ ;ven/gpl;private;function;
+ ;@output = 1 if intake note is present, 0 if not
+ ;
  n zzi,zzrtn s (zzi,zzrtn)=0
  q:'$d(@vals)
  f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
  . i $g(@vals@("notes",zzi,"name"))["Intake" s zzrtn=1
- q zzrtn
  ;
-HASVCNT(vals) ; extrinsic returns 1 if communication note is present
- ; else returns 0
+ quit zzrtn ; end of $$HASINNT
+ ;
+ ;
+ ;
+HASVCNT(vals) ; is communication note present?
+ ;
+ ;ven/gpl;private;function;
+ ;@output = 1 if communication note is present, 0 if not
+ ;
  n zzi,zzrtn s (zzi,zzrtn)=0
  q:'$d(@vals)
  f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
  . i $g(@vals@("notes",zzi,"name"))["Communication" s zzrtn=1
- q zzrtn
  ;
-HASLCSNT(vals) ; extrinsic returns 1 if communication note is present
- ; else returns 0
+ quit zzrtn ; end of $$HASVCNT
+ ;
+ ;
+ ;
+HASLCSNT(vals) ; is lung cancer screening note present?
+ ;
+ ;ven/gpl;private;function;
+ ;@output = 1 if communication note is present, 0 if not
+ ;
  n zzi,zzrtn s (zzi,zzrtn)=0
  q:'$d(@vals)
  f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
  . i $g(@vals@("notes",zzi,"name"))["Lung" s zzrtn=1
- q zzrtn
  ;
-MKVC(sid,form,vals,filter) ;
+ quit zzrtn ; end of $$HASLCSNT
+ ;
+ ;
+ ;
+MKVC(sid,form,vals,filter) ; make communication note
+ ;
+ ;ven/gpl;private;procedure;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("communication-note"))
  n dest s dest=$$MKNT(vals,"Communication Note","communication",.filter)
@@ -159,9 +234,15 @@ MKVC(sid,form,vals,filter) ;
  d OUT("Veteran Communication Note")
  d OUT("")
  d VCNOTE(vals,dest,cnt)
- q
  ;
-MKLCS(sid,form,vals,filter) ;
+ quit  ; end of MKVC
+ ;
+ ;
+ ;
+MKLCS(sid,form,vals,filter) ; make lung cancer screening note
+ ;
+ ;ven/gpl;private;procedure;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("lcs-note"))
  n dest s dest=$$MKNT(vals,"Lung Cancer Screening Note","lcs",.filter)
@@ -169,17 +250,31 @@ MKLCS(sid,form,vals,filter) ;
  d OUT("Lung Screening and Surveillance Follow up Note")
  d OUT("")
  d LCSNOTE(vals,dest,cnt)
- q
  ;
-MKNT(vals,title,ntype,filter) ; extrinsic makes a note date=now returns 
- ; global addr. filter must be passed by reference
+ quit  ; end of MKLCS
+ ;
+ ;
+ ;
+MKNT(vals,title,ntype,filter) ; make note w/date=now
+ ;
+ ;ven/gpl;private;pseudo-function;
+ ;@input
+ ; .filter (passed by reference)
+ ;@output = global address
+ ;
  n ntdt s ntdt=$$NTDTTM($$NOW^XLFDT)
  n ntptr
  s ntptr=$$MKNTLOC(vals,title,ntdt,$g(ntype),.filter)
- q ntptr
  ;
-MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the 
- ;location for the note
+ quit ntptr ; end of $$MKNT
+ ;
+ ;
+ ;
+MKNTLOC(vals,title,ndate,ntype,filter) ; make note
+ ;
+ ;ven/gpl;private;pseudo-function;
+ ;@output = note location (global address)
+ ;
  n nien
  s nien=$o(@vals@("notes",""),-1)+1
  s filter("nien")=nien
@@ -187,21 +282,51 @@ MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the
  s @nloc@("name")=title_" "_$g(ndate)
  s @nloc@("date")=$g(ndate)
  s @nloc@("type")=$g(ntype)
- q $na(@nloc@("text"))
  ;
-NTDTTM(ZFMDT) ; extrinsic returns the date and time in Note format
- ; ZFMDT is the fileman date/time to translate
- q $$FMTE^XLFDT(ZFMDT,"5")
+ quit $na(@nloc@("text"))
  ;
-NTLOCN(sid,form,nien) ; extrinsic returns the location of the Nth note
+ ;
+ ;
+NTDTTM(ZFMDT) ; convert date/time fr/fm to/note format
+ ;
+ ;ven/gpl;private;function;
+ ;@input
+ ; ZFMDT = fileman date/time to translate
+ ;@output = date/time in note format
+ ;
+ quit $$FMTE^XLFDT(ZFMDT,"5") ; end of $$NTDTTM
+ ;
+ ;
+ ;
+NTLOCN(sid,form,nien) ; location of nth note
+ ;
+ ;ven/gpl;private;function;
+ ;@output = global location of Nth note
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
- q $na(@root@("graph",sid,form,"notes",nien))
  ;
-NTLAST(sid,form,ntype) ; extrinsic returns the location of the latest note
- ; of the type ntype
- q
+ quit $na(@root@("graph",sid,form,"notes",nien)) ; end of $$NTLOCN
  ;
-NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
+ ;
+ ;
+NTLAST(sid,form,ntype) ; location of latest note of a type
+ ;
+ ;ven/gpl;private;function;
+ ;@input
+ ; ntype = type of note
+ ;@output = global location of latest note of type ntype
+ ;
+ ; not yet written
+ ;
+ quit  ; end of $$NTLAST
+ ;
+ ;
+ ;
+NTLIST(nlist,sid,form) ; return note list
+ ;
+ ;ven/gpl;private;procedure;
+ ;@output
+ ; .nlist = note list [pass by reference]
  ;
  n zn,root,gn
  s root=$$setroot^%wd("vapals-patients")
@@ -212,17 +337,30 @@ NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  . s @nlist@(zn,"name")=@gn@(zn,"name")
  . s @nlist@(zn,"nien")=zn
  ;
- q
+ quit  ; end of NTLIST
  ;
-TLST ;
- S SID="XXX00677"
- S FORM="siform-2019-04-23"
- D NTLIST("G",SID,FORM)
- ;ZWR G
- Q
  ;
-VCNOTE(vals,dest,cnt) ; Veteran Communication Note
- ;d OUT("")
+ ;
+TLST ; test NTLIST
+ ;
+ ;ven/gpl;test;procedure;
+ ;
+ set SID="XXX00677"
+ set FORM="siform-2019-04-23"
+ do NTLIST("G",SID,FORM)
+ ;
+ ; zwrite G
+ ;
+ quit  ; end of TLST
+ ;
+ ;
+ ;
+VCNOTE(vals,dest,cnt) ; veteran communication note
+ ;
+ ;ven/gpl;private;procedure;
+ ;
+ ; do OUT("")
+ ;
  d OUT("Veteran was contacted via:")
  n sp1 s sp1="    "
  d:$$XVAL("fucmotip",vals) OUT(sp1_"In person")
@@ -239,9 +377,15 @@ VCNOTE(vals,dest,cnt) ; Veteran Communication Note
  . d OUT(sp1_$$XVAL("fucmotde",vals))
  ;
  d SSTATUS(vals) ; insert smoking status section
- q
  ;
-SSTATUS(vals)
+ quit  ; end of VCNOTE
+ ;
+ ;
+ ;
+SSTATUS(vals) ; smoking status
+ ;
+ ;ven/gpl;private;procedure;
+ ;
  n sstat s sstat=""
  i $$XVAL("sisa",vals)="y" d  ; 
  . s sstat="Current"
@@ -276,7 +420,7 @@ SSTATUS(vals)
  . d OUT(sp1_"PPD: "_$$XVAL("sippd",vals))
  . d OUT(sp1_"Current cumulative pack years: "_newcum)
  i $$XVAL("sisa",vals)'="y" d  ;  
- . d OUT("Smoking History") 
+ . d OUT("Smoking History")
  n zi
  f zi=1:1:cur d  ;
  . d OUT(sp1_cumary("rpt",zi,1)_" "_cumary("rpt",zi,2))
@@ -322,10 +466,17 @@ SSTATUS(vals)
  . d OUT("Tobacco cessation provided:")
  . d OUT(sp1_cess)
  . i cess2'="" d OUT(sp1_cess2)
- q
  ;
-LCSNOTE(vals,dest,cnt) ; Lung Screening Note
- ;d OUT("")
+ quit  ; end of SSTATUS
+ ;
+ ;
+ ;
+LCSNOTE(vals,dest,cnt) ; lung cancer screening note
+ ;
+ ;ven/gpl;private;procedure;
+ ;
+ ; do OUT("")
+ ;
  n sp1 s sp1="    "
  d OUT("Initial LDCT/Baseline: "_$$XVAL("sidoe",vals))
  d OUT("Date of most recent CT/LDCT: "_$$XVAL("fulctdt",vals))
@@ -377,37 +528,84 @@ LCSNOTE(vals,dest,cnt) ; Lung Screening Note
  i pulmon'="" d  ;
  . s pulmon=$s(pulmon="y":"Yes",pulmon="n":"No",1:"")
  . d OUT("Communicated to Pulmonary: "_pulmon)
- q
  ;
-OUT(ln) ;
+ quit  ; end of LCSNOTE
+ ;
+ ;
+TOUT(sid) ;
+ s root=$$setroot^%wd("vapals-patients")
+ s groot=$na(@root@("graph",sid))
+ s g=""
+ f  s g=$o(@groot@(g)) q:g=""  d  ;
+ . w !,g
+ quit
+ ;
+OUT(ln) ; output new line to note
+ ;
+ ;ven/gpl;private;procedure;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@dest@(" "),-1)+1
  s @dest@(lnn)=ln
+ ;
  ;i $g(debug)=1 d  ;
  ;. i ln["<" q  ; no markup
  ;. n zs s zs=$STACK
  ;. n zp s zp=$STACK(zs-2,"PLACE")
  ;. s @dest@(lnn)=zp_":"_ln
- q
  ;
-XVAL(var,vals) ; extrinsic returns the patient value for var
- ; vals is passed by name
- n zr
- s zr=$g(@vals@(var))
- ;i zr="" s zr="["_var_"]"
- q zr
+ quit  ; end of OUT
  ;
-PREVCT(SID,FORM) ; extrinic returns the form key to the CT Eval form
- ; previous to FORM. If FORM is null, the latest CT Eval form key is returned
- ; FORM sensitivity is tbd.. always returns latest CTEval
- n gn s gn=$$setroot^%wd("vapals-patients")
- n prev s prev=$o(@gn@("graph",SID,"ceform-30"),-1)
- q prev
  ;
-CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
- ; ARY passed by name
+ ;
+XVAL(var,vals) ; value of form variable
+ ;
+ ;ven/gpl;private;function;
+ ;@input
+ ; var = name of form variable
+ ; vals = global root of form variable array
+ ; @vals = form variable array [pass by name]
+ ;@output = value of form variable
+ ;
+ new zr
+ set zr=$get(@vals@(var))
+ ;
+ ; i zr="" s zr="["_var_"]"
+ ;
+ quit zr ; end of $$XVAL
+ ;
+ ;
+ ;
+PREVCT(SID,FORM) ; key to previous ct eval form
+ ;
+ ;ven/gpl;private;function;
+ ;@input
+ ; FORM = [not yet implemented, always treated as if FORM=""]
+ ;@output = form key of CT Eval form previous to FORM
+ ;
+ ; $$PREVCT returns the form key to the CT Eval form previous to
+ ; FORM. If FORM is null, the latest CT Eval form key is returned.
+ ;
+ new gn set gn=$$setroot^%wd("vapals-patients")
+ new prev set prev=$order(@gn@("graph",SID,"ceform-30"),-1)
+ ;
+ quit prev ; end of $$PREVCT
+ ;
+ ;
+ ;
+CTINFO(ARY,SID,FORM) ; extracts from latest CT Eval form
+ ;
+ ;ven/gpl;private;procedure;
+ ;@input
+ ; ARY = name of output array
+ ; SID
+ ; FORM
+ ;@output
+ ; @ARY = extract from latest ct eval form [passed by name]
  ;
  n ctkey s ctkey=$$PREVCT(SID,$G(FORM))
  q:ctkey=""
@@ -427,7 +625,7 @@ CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
  s futbl("os")="other"
  i futext'="" s futext=$g(futbl(futext))
  n fudate s fudate=$g(@ctroot@("cefud"))
-; #Other followup
+ ; #Other followup
  n zfu,ofu,tofu,comma
  n vals s vals=ctroot
  s comma=0,tofu=""
@@ -449,9 +647,19 @@ CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
  s @ARY@("followup2")=tofu
  s @ARY@("followup3")=$$XVAL("cefuoo",vals)
  ;
- q
+ quit  ; end of CTINFO
+ ;
+ ;
  ; 
-IMPRESS(ARY,SID) ; impressions from CTEval report
+IMPRESS(ARY,SID) ; impressions from ct eval report
+ ;
+ ;ven/gpl;private;procedure;
+ ;@input
+ ; ARY = name of output array
+ ; SID
+ ;@output
+ ; @ARY = impressions from ct eval report [passed by name]
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n ctkey s ctkey=$g(@ARY@("ctform"))
  n vals s vals=$na(@root@("graph",SID,ctkey))
@@ -507,12 +715,25 @@ IMPRESS(ARY,SID) ; impressions from CTEval report
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;
  . d OUT(sp1_$$XVAL("ceimre",vals)_"."_para)
- q
  ;
-XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
- ; vals and dict are passed by name
- ; valdx is used for nodules ala cect2co with the nodule number included
- ;n dict s dict=$$setroot^%wd("cteval-dict")
+ quit  ; end of IMPRESS
+ ;
+ ;
+ ;
+XSUB(var,vals,dict,valdx) ; dictionary value for variable
+ ;
+ ;ven/gpl;private;function;
+ ;@input
+ ; var = name of dictionary value
+ ; vals = name of variables array
+ ; @vals = variables array [passed by name]
+ ; dict = name of dictionary array
+ ; @dict = dictionary array [passed by name]
+ ; valdx = used for nodules ala cect2co with nodule # included
+ ;@output = dictionary value for variable
+ ;
+ ; new dict set dict=$$setroot^%wd("cteval-dict")
+ ;
  n zr,zv,zdx
  s zdx=$g(valdx)
  i zdx="" s zdx=var
@@ -521,5 +742,9 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  i zv="" s zr="" q zr
  s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
- q zr
  ;
+ quit zr ; end of $$XSUB
+ ;
+ ;
+ ;
+EOR ; end of routine SAMINOT2

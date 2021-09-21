@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-sm-4 col-md-4 form-group">
             <label for="cefud">Approximate follow-up date:</label><br/>
-            {{ f.datepicker("cefud", "future") }}
+            {{ f.datepicker("cefud") }}
         </div>
     </div>
 </div>
@@ -73,10 +73,7 @@
 {% if isCT %}
     {# Place holder for Lung-RADS section #}
     <div id="lung-rads-bottom"></div>
-
-
-        {% include "_lung-rads-fields.jinja2" %}
-
+    {% include "_lung-rads-fields.jinja2" %}
 {% endif %}
 
 <script>
@@ -120,28 +117,32 @@
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
             const when = $("[name='cefuw']:checked").val();
+            let baseDate = moment($("#cedos").val());
+            if (!baseDate.isValid()) {
+                baseDate = moment();
+            }
             const $field = $("#cefud");
             switch (when) {
                 case "1y":
-                    $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'year').format(VAPALS.DATE_FORMAT));
                     break;
                 case "nw":
-                    $field.val(moment().format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.format(VAPALS.DATE_FORMAT));
                     break;
                 case "1m":
-                    $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "3m":
-                    $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(3, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "6m":
-                    $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(6, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 default:
                     $field.val("").focus();
             }
 
-            if (fv) {
+            if (typeof fv !== 'undefined' && fv.fields['cefud']) {
                 fv.revalidateField('cefud');
             }
         });
@@ -149,21 +150,9 @@
         //display other followup specify field if "other" checkbox is enabled.
         $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
 
-        function setCtFollowUpOther() {
-            $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-        }
-
-        //auto-select "other" if user modifies the date
-        $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
-
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('cefud', {
-                validators: {
-                    date: {min: VAPALS.todaysDate(), message: 'Follow-up date must be at least today\'s date'}
-                }
-            });
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
 

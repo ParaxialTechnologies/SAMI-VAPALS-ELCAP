@@ -764,7 +764,7 @@
        <input class="form-control" id="sippn" name="sippn" type="text"/>
       </div>
      </div>
-     <div class="row">
+     <div class="row" id="rural-status-container">
       <div class="col-md-12 form-group">
        <label class="required">
         Rural status
@@ -1799,6 +1799,9 @@
             const UNKNOWN = 'n';
             let zipLookupTimer = 0;
 
+            const veteransAffairsSiteVal = getParameter("veteransAffairsSite");
+            const veteransAffairsSite = veteransAffairsSiteVal == null || veteransAffairsSiteVal === "true";
+
             function zipLookup(updateSelection) {
                 const zipcode = $zipField.val();
                 const $ruralText = $("#rural-text");
@@ -1830,19 +1833,24 @@
             }
 
             //whenever the zip code is changed, determine the zip code designation, but wait until user stops typing.
-            $zipField.on('keyup change', function () {
-                if (zipLookupTimer) {
-                    clearTimeout(zipLookupTimer);
-                }
-                zipLookupTimer = setTimeout(function () {
-                    zipLookup(true);
-                }, 400);
-            });
+            if (veteransAffairsSite) {
+                $zipField.on('keyup change', function () {
+                    if (zipLookupTimer) {
+                        clearTimeout(zipLookupTimer);
+                    }
+                    zipLookupTimer = setTimeout(function () {
+                        zipLookup(true);
+                    }, 400);
+                });
 
-            if ($zipField.val() !== "") {
-                //if selection is blank, select the appropriate value, otherwise just get the help text
-                const updateSelection = initialRuralUrbanValue === undefined;
-                zipLookup(updateSelection);
+                if ($zipField.val() !== "") {
+                    //if selection is blank, select the appropriate value, otherwise just get the help text
+                    const updateSelection = initialRuralUrbanValue === undefined;
+                    zipLookup(updateSelection);
+                }
+            }
+            else {
+                $("#rural-status-container").remove();
             }
 
             //PRE-ENROLLMENT CHART ELIGIBILITY

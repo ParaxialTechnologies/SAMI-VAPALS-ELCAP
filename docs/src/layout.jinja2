@@ -143,7 +143,8 @@
     <footer>
         <div class="container-fluid" style="max-width:1550px">
             <hr/>
-            <a href="https://paraxial.atlassian.net/projects/VAP/" target="_blank" tabindex="9000">Submit feedback</a>
+            <a href="https://paraxial.atlassian.net/projects/VAP/" target="_blank" tabindex="9000" id="feedback-link">
+                Submit feedback</a>
             <span id="sami-version" style="float:right; font-family: Courier,monospace"><span id="formMode"></span>&nbsp;{{ version }}</span>
         </div>
     </footer>
@@ -234,6 +235,10 @@
         $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
+        const veteransAffairsSite = getParameter("veteransAffairsSite");
+        if (veteransAffairsSite == null || veteransAffairsSite === "true") {
+            $("#feedback-link").remove();
+        }
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");
@@ -304,9 +309,9 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('table.datatables').DataTable();
-        } );
+        });
 
     })
 </script>

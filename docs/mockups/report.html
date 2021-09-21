@@ -248,7 +248,7 @@ Interpreted by: IJL+DY
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
-    <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
+    <a href="https://paraxial.atlassian.net/projects/VAP/" id="feedback-link" tabindex="9000" target="_blank">
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
@@ -342,6 +342,10 @@ Interpreted by: IJL+DY
         $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
+        const veteransAffairsSite = getParameter("veteransAffairsSite");
+        if (veteransAffairsSite == null || veteransAffairsSite === "true") {
+            $("#feedback-link").remove();
+        }
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");
@@ -412,9 +416,9 @@ Interpreted by: IJL+DY
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('table.datatables').DataTable();
-        } );
+        });
 
     })
   </script>

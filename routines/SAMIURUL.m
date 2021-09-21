@@ -1,6 +1,6 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
- ;;18.0;SAMI;**12,13**;2020-01;
- ;;18.13
+SAMIURUL ;ven/gpl - user reports log ;2021-09-11T01:18Z
+ ;;18.0;SAMI;**12,14**;2020-01;
+ ;;18.14
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,13 +21,13 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-26T18:33Z
+ ;@last-update 2021-09-11T01:18Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18.14
  ;@release-date 2020-01
- ;@patch-list **12**
+ ;@patch-list **12,14**
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
@@ -51,7 +51,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ; 2020-02-10/12 ven/gpl 18.0-t4 d543f7bb,f9869dfb,0e4d8b9a,5e67489
+ ; 2020-02-10/12 ven/gpl 18.0-t4 d543f7bb,f9869dfb,0e4d8b9a,5e67489f
  ;  SAMIUR,SAMIUR2 1st version of revised user reports, progress on
  ; user reports, fixed a bug in enrollment report, add rural/urban &
  ; compute.
@@ -62,20 +62,20 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ; 2020-03-10/12 ven/gpl 18.0-t4 8de06b06,4ad52d64
  ;  SAMIUR user report date filtering, fix end date logic in UR.
  ;
- ; 2019-03-24/28 ven/gpl 18.0-t4 1fd4a4c,0cebb36
+ ; 2019-03-24/28 ven/gpl 18.0-t4 1fd4a4c8,0cebb36b
  ;  SAMIUR2 revise incomplete form report, remove ethnicity from
  ; enrollment report (we can't get it).
  ;
  ; 2020-04-16/23 ven/lgc 18.0-t4 e54b76d1b,89bffd3b
  ;  SAMIUR SAMIFRM2 > SAMIFORM, SAMISUB2 > LOAD.
  ;
- ; 2019-05-08 ven/lgc 18.0 2172e51
+ ; 2019-05-08 ven/lgc 18.0 2172e512
  ;  SAMIUR2 remove blank last line.
  ;
- ; 2019-06-21 par/dom 18.0 c6a4a57 VAP-352
+ ; 2019-06-21 par/dom 18.0 c6a4a57f VAP-352
  ;  SAMIUR2 proper spelling of "follow up."
  ;
- ; 2019-08-03/04 ven/gpl 18.0 ffc94f6,d03557d,cd865e2b VPA-438
+ ; 2019-08-03/04 ven/gpl 18.0 ffc94f65,d03557d4,cd865e2b VPA-438
  ;  SAMIUR requested changes to followup report.
  ;  SAMIUR2 fix smoking status on enrollment report, fix change log
  ; display, add pack years at intake to enrollment report, add
@@ -85,24 +85,24 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;  SAMIUR add smoking history.
  ;  SAMIUR2 smoking history, new cummulative packyear processing.
  ;
- ; 2019-10-01 par/dom 18.0 4caf1a9 VAP-344
+ ; 2019-10-01 par/dom 18.0 4caf1a98 VAP-344
  ;  SAMIUR2 make capitalization consistent.
  ;
  ; 2020-01-01/05 ven/arc 18.0 399f8547,62e3200f
  ;  SAMIUR unmatched participant processing.
  ;  SAMIUR2 add unmatched patient processing.
  ;
- ; 2020-01-10 ven/gpl 18.0 1590577
+ ; 2020-01-10 ven/gpl 18.0 1590577c
  ;  SAMIUR2 fix return on RACE^SAMIUR2 for cache.
  ;
  ; 2020-04-29/05-13 ven/gpl 18.5 e8b8ea2d,61c7d208
  ;  SAMIUR fixes for reports, worklist functionality.
  ;
- ; 2020-05-13/14 ven/gpl 18.5 61c7d20,b05df41
+ ; 2020-05-13/14 ven/gpl 18.5 61c7d208,b05df417
  ;  SAMIUR2 add worklist functionality, fix gender & dob detection on
  ; reports.
  ;
- ; 2021-03-22/23 ven/gpl 18.10 256efe63,ba81b86a2
+ ; 2021-03-22/23 ven/gpl 18.10 256efe63,ba81b86a
  ;  SAMIUR sort all reports by name, added row totals to reports.
  ;
  ; 2021-03-23 ven/toad 18.10 96f461d0,af86e0eb
@@ -114,13 +114,13 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ; set SRT="" and uncomment zwrite SRT; in WKLIST add 2 commented-out
  ; debugging lines.
  ;
- ; 2021-03-30 ven/toad 18.11 7b14bb2
+ ; 2021-03-30 ven/toad 18.11 7b14bb29
  ;  SAMIUR bump version, date, log; in WSREPORT comment zwrite SRT.
  ;
- ; 2021-03-31 ven/gpl 18.11 66d89cd
+ ; 2021-03-31 ven/gpl 18.11 66d89cde
  ;  SAMIUR sort on all uppercase names for reports
  ;
- ; 2021-04-13 ven/gpl 18.11 a12765b,f09ffef,fb399ab
+ ; 2021-04-13 ven/gpl 18.11 a12765bf,f09ffef9,fb399aba
  ;  SAMIUR inactive report created.
  ;  SAMIUR2 in RPTTBL,GENDER create inactive report, move last exam
  ; column on followup report, fix gender being blank in reports.
@@ -166,9 +166,18 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;  SAMIUR in WSREPORT,NUHREF,WKLIST.
  ;  SAMIUR2 in TDDT,BLINEDT,DOB,FUDATE,LASTEXM,INACTDT,LDOC,STUDYDT
  ;
- ; 2021-08-26 ven/gpl 18.14
+ ; 2021-08-26 ven/gpl 18.14 de044cf9
  ; SAMIUR, SAMIUR2 make changes to user reports as requested.
- ; Reports changed were enrollment, activity, and follow-up.
+ ; Reports changed were Enrollment, Activity, and Follow-up.
+ ;
+ ; 2021-08-28 ven/gpl 18.14  cd69ff8b, fbd9196d
+ ; SAMIUR, SAMIUR2 fix bugs causing Activity report to work incorrectly.
+ ; Also fixed problem with Work List.
+ ;
+ ; 2021-09-09 ven/gpl 18.14  afa4bfc2, 7f668e64, 8d45ebac
+ ; SAMIUR fix bugs in reports showing inactive patients on wrong reports,
+ ; "baseline" showing up in F/U date on Follow-up report, wrong patients
+ ; on Intake but Missing CT Eval report.
  ;
  ;
  ;@contents

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+CP="$ENV cp"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR=`pwd`
+
+cd $INDIR
+$RM -rf ./back
+$MKDIR -p ./back
+echo "Backing up files to $INDIR/back:"
+for I in form-fields www; do
+    printf "* Backing up \$REPO/docs/$I ... "
+    $CP -r $REPO/docs/$I ./back/
+    echo "done."
+done
+echo "Backup complete."
+

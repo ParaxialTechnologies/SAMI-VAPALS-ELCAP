@@ -220,7 +220,7 @@ DEVMSG(routine,type,message) ; Create a dev/test message in ^TMP
  set routine=$get(routine)
  set type=$get(type)
  ;
- set msgSubscript="Dev Message"
+ set msgSubscript="DEV MSG"
  new timestamp set timestamp=$horolog
  new timeSubscript set timeSubscript=$piece(timestamp,",",2)
  ;

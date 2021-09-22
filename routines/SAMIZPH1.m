@@ -175,8 +175,9 @@ CALCNAME(SARY) ; extrinsic returns lastname,firstname from array
  ;
 CALCSSN(SARY) ; extrinsic returns false but correctly formatted ssn
  n ssn s ssn=$g(@SARY@("ssn"))
- i $l(ssn)<10 d  ;
- . s ssn=999999_$e("0000",1,4-$l(ssn))_ssn
+ i $l(ssn)<9 d  ;
+ . i $l(ssn)=4 s ssn=99999_ssn q
+ . s ssn=99999_$e("0000",1,4-$l(ssn))_ssn
  Q ssn
  ;
 QUITSM(SARY) ; extrinsic returns quit date from REDCAP variables

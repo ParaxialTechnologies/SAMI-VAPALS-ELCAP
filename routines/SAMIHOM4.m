@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-06-16t18:09z
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-9-22t00:34z
  ;;18.0;SAMI;**1,4,5,6,9,12**;
  ;;18.12
  ;
@@ -1060,7 +1060,8 @@ WSNEWCAS ; web route newcase (creates new case)
  ;
  new vars,bdy
  set SAMIBDY=$get(SAMIBODY(1))
- do parseBody^%wf("vars",.SAMIBDY)
+ if SAMIBDY="" M vars=SAMIARGS
+ else  do parseBody^%wf("vars",.SAMIBDY)
  merge ^SAMIUL("newCase","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")

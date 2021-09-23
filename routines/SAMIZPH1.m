@@ -1,4 +1,4 @@
-SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 9/22/21 12:32am
+SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 9/23/21 12:32am
  ;;18.0;SAMI;;;Build 2
  ;
  ;@license: see routine SAMIUL
@@ -193,7 +193,7 @@ RCAPTBL(PARY) ; initialize the redcap mapping table
  S @PARY@("last5","ssn")="$$CALC5"
  ;notes 
  ;samicreatedate 2021-09-21
- S @PARY@("samicreatedate","consult")=""
+ S @PARY@("samicreatedate","sdm_visit_date")=""
  ;samifirsttime false
  S @PARY@("samifirsttime")="false"
  ;saminame GPL34567,TEST76543
@@ -247,7 +247,7 @@ RCAPTBL(PARY) ; initialize the redcap mapping table
  ;sicpd 40
  S @PARY@("sicpd","smoking_per_day")=""
  ;sidc 09/21/2021
- S @PARY@("sidc","consult")=""
+ S @PARY@("sidc","sdm_visit_date")=""
  ;sidob 1/12/1952
  S @PARY@("sidob","dob")=""
  ;sies 
@@ -287,7 +287,7 @@ RCAPTBL(PARY) ; initialize the redcap mapping table
  ;sipecnth 
  ;sipecnvd 
  ;sipedc 09/21/2021
- S @PARY@("sipedc","consult")=""
+ S @PARY@("sipedc","sdm_visit_date")=""
  ;sipedisc n
  S @PARY@("sipedisc")="n"
  ;sippd 2.00
@@ -405,8 +405,8 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  S @PARY@("sicpd","smoking_per_day")=""
  S @HACK@("sicpd")=$g(@HACK@("smoking_per_day"))
  ;sidc 09/21/2021
- S @PARY@("sidc","consult")=""
- s formdate=$g(@HACK@("consult"))
+ S @PARY@("sidc","sdm_visit_date")=""
+ s formdate=$g(@HACK@("sdm_visit_date"))
  i formdate'="" s @HACK@("sidc")=formdate
  ;sidob 1/12/1952
  S @PARY@("sidob","dob")=""
@@ -457,7 +457,7 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  ;sipecnth 
  ;sipecnvd 
  ;sipedc 09/21/2021
- S @PARY@("sipedc","consult")=""
+ S @PARY@("sipedc","sdm_visit_date")=""
  i formdate'="" s @HACK@("sipedc")=formdate
  ;sipedisc n
  S @PARY@("sipedisc")="n"

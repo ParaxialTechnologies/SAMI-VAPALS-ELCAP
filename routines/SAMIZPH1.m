@@ -180,10 +180,6 @@ CALCSSN(SARY) ; extrinsic returns false but correctly formatted ssn
  . s ssn=99999_$e("0000",1,4-$l(ssn))_ssn
  Q ssn
  ;
-QUITSM(SARY) ; extrinsic returns quit date from REDCAP variables
- ; don't know how to do this
- Q ""
- ;
 RCAPTBL(PARY) ; initialize the redcap mapping table
  ;chart-eligibility-complete true
  S @PARY@("chart-eligibility-complete")="true"
@@ -220,8 +216,10 @@ RCAPTBL(PARY) ; initialize the redcap mapping table
  ;sicecepr 
  ;sicechrt y
  S @PARY@("sicechrt")="y"
+ n elig s elig=$g(@HACK@("elig_enroll"))
+ S @HACK@("sicechrt")=$s(elig=0:"n",1:"y")
  ;sicectap 08/27/2018
- S @PARY@("sicectap","base_completion_date")=""
+ S @PARY@("sicectap","base_order_date")=""
  ;siceiden outreach
  S @PARY@("siceiden")="outreach"
  ;sicemhhs 
@@ -301,7 +299,7 @@ RCAPTBL(PARY) ; initialize the redcap mapping table
  ;siptctl 
  ;sipz 
  ;siq 01/01/2018
- S @PARY@("siq","quit_smoking")="$$QUITSM"
+ S @PARY@("siq","year_quit")=""
  ;sisid XXX9000098
  ;sisny 59.0
  S @PARY@("sisny","smoked_years")=""
@@ -337,9 +335,9 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  S @HACK@("last5")=$$CALC5(HACK)
  ;notes 
  ;samicreatedate 2021-09-21
- S @PARY@("samicreatedate","consult")=""
+ S @PARY@("samicreatedate","sdm_visit_date")=""
  N formdate
- s formdate=$g(@HACK@("consult"))
+ s formdate=$g(@HACK@("sdm_visit_date"))
  i formdate='"" s @HACK@("samicreatedate")=formdate
  ;samifirsttime false
  S @PARY@("samifirsttime")="false"
@@ -372,11 +370,11 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  S @PARY@("sicechrt")="y"
  S @HACK@("sicechrt")="y"
  ;sicectap 08/27/2018
- S @PARY@("sicectap","base_completion_date")=""
- S @HACK@("sicectap")=$g(@HACK@("base_completion_date"))
+ S @PARY@("sicectap","base_order_date")=""
+ S @HACK@("sicectap")=$g(@HACK@("base_order_date"))
  ;siceiden outreach
- S @PARY@("siceiden")="outreach"
- S @HACK@("siceiden")="outreach"
+ S @PARY@("siceiden")="primary/self"
+ S @HACK@("siceiden")="primary/self"
  ;sicemhhs 
  ;sicemhlc 
  ;sicemhoo 
@@ -384,7 +382,9 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  ;sicep declined smoking cessation
  S @PARY@("sicep","smoking_cessation_not")=""
  S @HACK@("sicep")=$G(@HACK@("smoking_cessation_not"))
- ;sicerfdt 
+ ;sicerfdt
+ S @PARY@("sicerfdt","consult")=""
+ S @HACK@("sicerfdt")=$G(@HACK@("consult")) 
  ;sicerfge 
  ;sicerfon 
  ;sicerfoo 
@@ -413,8 +413,9 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  s @HACK@("sidob")=$g(@HACK@("dob"))
  ;sies 
  ;siesm p
- S @PARY@("siesm")="p"
- S @HACK@("siesm")="p"
+ S @PARY@("siesm","smoking_history")="$$HISTORY"
+ n history s history=$g(@HACK@("smoking_history"))
+ S @HACK@("siesm")=$s(history=2:"p",history=3:"n",1:"c")
  ;siesq 
  ;siidmdc 1
  S @PARY@("siidmdc")=1
@@ -470,7 +471,12 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  ;siptctl 
  ;sipz 
  ;siq 01/01/2018
- S @PARY@("siq","quit_smoking")="$$QUITSM"
+ S @PARY@("siq","year_quit")=""
+ S @HACK@("siq")=$g(@HACK@("year_quit"))
+ ;sirs r
+ S @PARY@("sirs","rural")="$$RURAL"
+ n rural s rural=$g(@HACK@("rural"))
+ S @HACK@("sirs")=$s(rural=1:"r",rural=0:"u",1:"n")
  ;sisid XXX9000098
  ;sisny 59.0
  S @PARY@("sisny","smoked_years")=""
@@ -479,8 +485,9 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  S @PARY@("sissn","ssn")="$$CALCSSN"
  S @HACK@("sissn")=$$CALCSSN(HACK)
  ;sistatus active
+ n noshow s noshow=$g(@HACK@("ldct_no_show_base"))
  S @PARY@("sistatus")="active"
- S @HACK@("sistatus")="active"
+ S @HACK@("sistatus")=$S(noshow'="":"inactive",1:"active")
  ;site XXX
  ;siteid XXX
  ;ssn 999990027

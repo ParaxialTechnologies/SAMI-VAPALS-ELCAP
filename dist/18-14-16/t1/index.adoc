@@ -65,7 +65,7 @@ _&_ Frederick D. S. Marshall +
 ** <<be-osehra,Assume the identity of your `osehra` Unix user>>
 ** <<prep-installdir,Prepare install directory>>
 ** <<prep-archive,Download and prepare the archive file>>
-** <<install-www,Install web-application files>>
+** <<copy-test-import,Copy test-import data>>
 ** <<backup-m,Back up M routines>>
 *** <<enter-m,Enter M>>
 **** <<enter-m-cache,On Caché>>
@@ -81,6 +81,7 @@ _&_ Frederick D. S. Marshall +
 *** <<signin-kids,Enter the KIDS Installation menu>>
 *** <<load-pkg,Load KIDS package>>
 *** <<install-pkg,Install KIDS package>>
+*** <<import-test-data,Import test data for new import feature>>
 * <<backout,Optional backout instructions>>
 * <<routines,Routines>>
 * <<authors,Authors>>
@@ -257,6 +258,17 @@ $ _
 // -------------------------------------------------------------------------------
 
 // // eval::[Section.setlevel(2)]
+
+[[copy-test-import]]
+=== Copy test-import data
+
+This update comes with a new data-import feature to support certain sites that
+are using a RedCap database for their existing lung-cancer screening
+program. It is most convenient if this data exists in the `~/www` directory.
+
+-------------------------------------------------------------------------------
+$ cp ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/LCSV2_DATA_2021-06-29_REDCAP.tsv ~/www/
+-------------------------------------------------------------------------------
 
 [[backup-m]]
 === Back up M routines
@@ -557,6 +569,44 @@ Install Completed
           Unload a Distribution
 
 Select Installation <TEST ACCOUNT> Option:_
+
+> _
+-------------------------------------------------------------------------------
+
+[[import-test-data]]
+==== Import test data for new import feature
+
+Once the package has been installed, the test data that we saved off
+earlier into `~/www` must be pulled in.
+
+-------------------------------------------------------------------------------
+> D EN^SAMIZPH1
+
+Select SAMI SITE: PHI  PHILADELPHIA, PA VAMC     PHI  PA  VAMC  642  
+File Directory: /home/osehra/www/// 
+Enter filename to load.: LCSV2_DATA_2021-06-29_REDCAP.tsv
+  Replace 
+
+McDonald
+sid: PHI9000006 sikey: siform-2021-09-24
+Reynolds
+sid: PHI9000007 sikey: siform-2021-09-24
+Kelly
+sid: PHI9000008 sikey: siform-2021-09-24
+Reynolds
+sid: PHI9000009 sikey: siform-2021-09-24
+Dee
+sid: PHI9000010 sikey: siform-2021-09-24
+McPoyle
+sid: PHI9000011 sikey: siform-2021-09-24
+Snail
+sid: PHI9000012 sikey: siform-2021-09-24
+Mathis
+sid: PHI9000013 sikey: siform-2021-09-24
+Taft
+sid: PHI9000014 sikey: siform-2021-09-24
+Ponderosa
+sid: PHI9000015 sikey: siform-2021-09-24
 
 > halt
 $ _

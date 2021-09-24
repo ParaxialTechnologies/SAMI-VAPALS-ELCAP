@@ -40,7 +40,7 @@ ii. Contents
   o Assume the identity of your osehra Unix user
   o Prepare install directory
   o Download and prepare the archive file
-  o Install web-application files
+  o Copy test-import data
   o Back up M routines
     - Enter M
     - Sign into Vista
@@ -51,6 +51,7 @@ ii. Contents
     - Enter the KIDS installation menu
     - Load KIDS package
     - Install KIDS package
+    - Import test data for new import feature
  Optional backout instructions
  Routines
  Authors
@@ -156,7 +157,17 @@ ii. Contents
       [... 3 files in archive ...]
     $ _
 
- 3.4. Back up M routines
+ 3.4. Copy test-import data
+
+   This update comes with a new data-import feature to support certain
+   sites that are using a RedCap database for their existing
+   lung-cancer screening program. It is most convenient if this data
+   exists in the ~/www directory.
+
+    $ cp ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/LCSV2_DATA_2021-06-29_REDCAP.tsv ~/www/
+
+
+ 3.5. Back up M routines
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
@@ -168,7 +179,7 @@ ii. Contents
    are likely to be minor differences between implementations. Be sure
    to follow the correct dialog for your implementation.
 
-  3.4.1. Enter M
+  3.5.1. Enter M
 
     At the unix prompt, enter the M environment in direct mode, using
     the 'csession' command on Cache or the 'mumps' command on
@@ -190,7 +201,7 @@ ii. Contents
     >
 
 
-  3.4.2. Sign into Vista
+  3.5.2. Sign into Vista
 
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -208,7 +219,7 @@ ii. Contents
     Select OPTION NAME:
     >
 
-  3.4.3. List of routines
+  3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
@@ -422,6 +433,42 @@ SAMIHUL
 
      Select Installation <TEST ACCOUNT> Option:_
 
+     >_
+
+
+  4.1.4. Import test data for new import feature
+
+    Once the package has been installed, the test data that we saved
+    off earlier into ~/www must be pulled in.
+
+     > D EN^SAMIZPH1
+
+     Select SAMI SITE: PHI  PHILADELPHIA, PA VAMC     PHI  PA  VAMC  642
+     File Directory: /home/osehra/www///
+     Enter filename to load.: LCSV2_DATA_2021-06-29_REDCAP.tsv
+       Replace
+
+     McDonald
+     sid: PHI9000006 sikey: siform-2021-09-24
+     Reynolds
+     sid: PHI9000007 sikey: siform-2021-09-24
+     Kelly
+     sid: PHI9000008 sikey: siform-2021-09-24
+     Reynolds
+     sid: PHI9000009 sikey: siform-2021-09-24
+     Dee
+     sid: PHI9000010 sikey: siform-2021-09-24
+     McPoyle
+     sid: PHI9000011 sikey: siform-2021-09-24
+     Snail
+     sid: PHI9000012 sikey: siform-2021-09-24
+     Mathis
+     sid: PHI9000013 sikey: siform-2021-09-24
+     Taft
+     sid: PHI9000014 sikey: siform-2021-09-24
+     Ponderosa
+     sid: PHI9000015 sikey: siform-2021-09-24
+
      > halt
      $ _
 
@@ -431,11 +478,13 @@ SAMIHUL
    environment is operational and bug-free, before notifying users
    that VAPALS-ELCAP is ready for their use.
 
+
 5. Optional backout instructions
 
  Should errors or other problems result from installing this package
  contact the VAPALS-ELCAP development team for package-backout
  instructions.
+
 
 6. Routines
 
@@ -450,6 +499,7 @@ SAMIHUL
  SAMIHOM4  B899951012       -?-             **?**
  SAMIHUL   B111466          -?-             **?**
  SAMIZPH1  ---              -?-             **?**
+
 
 7. Authors
 

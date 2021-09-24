@@ -82,7 +82,7 @@ IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
  . d CREATE(.onepat)
  Q
  ;
-T1()
+T1() ;
  ;
  n vars
  n saminame
@@ -385,7 +385,7 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  S @HACK@("sicep")=$G(@HACK@("smoking_cessation_not"))
  ;sicerfdt
  S @PARY@("sicerfdt","consult")=""
- S @HACK@("sicerfdt")=$G(@HACK@("consult")) 
+ S @HACK@("sicerfdt")=$G(@HACK@("consult"))
  ;sicerfge 
  ;sicerfon 
  ;sicerfoo 
@@ -497,7 +497,7 @@ RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  ;studyid XXX9000098
  Q
  ;
-T2()
+T2() ;
  N RCAPARY,ZTBL
  D RCAPTBL("ZTBL")
  D RCAPTST("RCAPARY")

@@ -1,8 +1,8 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2021-08-09t10:11z
- ;;18.0;SAMI;**9,12**;
- ;;18.12
+SAMIHUL ;ven/gpl - ielcap: home page log ;2021-09-24t20:11z
+ ;;18.0;SAMI;**9,12,16**;2020-01
+ ;18-x-16-t1
  ;
- ; SAMIHOME contains subroutines for producing the ELCAP Home Page.
+ ; SAMIHOM3 contains subroutines for producing the ELCAP Home Page.
  ; SAMIHUL contains the development log for the SAMIHOM* routines.
  ; It contains no executable code.
  ;
@@ -22,13 +22,13 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-08-09t10:11z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-09t10:11z
+ ;@last-update 2021-09-24t20:11z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18-14-16
  ;@release-date 2020-01
- ;@patch-list **9,12**
+ ;@patch-list **9,12,16**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -213,6 +213,10 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-08-09t10:11z
  ; 2021-08-01 ven/gpl 18.12 5bd7c627
  ;  SAMIHOM3 set intake form to incomplete on creation: in MKSIFORM
  ; r/complete w/incomplete.
+ ;
+ ; 2021-09-20/23 ven/gpl 18-14-16
+ ;  SAMIHOM4 (with new routine SAMIZPH1) developed to import data from 
+ ;  Philadelphia VA's previous LCS database in Red Cap, bump dates & versions.
  ;
  ;@contents
  ; SAMIHOM3 homepage interface library

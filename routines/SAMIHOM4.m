@@ -1,6 +1,6 @@
-SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-9-22t00:34z
- ;;18.0;SAMI;**1,4,5,6,9,12**;
- ;;18.12
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-9-24t20:33z
+ ;;18.0;SAMI;**1,4,5,6,9,12,16**;2020-01
+ ;18-x-16-t1
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.

@@ -1,0 +1,54 @@
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+AWK="$ENV awk"
+DC="$ENV dc"
+LS="$ENV ls"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+TAR="$ENV tar"
+TEE="$ENV tee"
+TOUCH="$ENV touch"
+ZIP="$ENV zip"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR=`pwd`
+BACKUP="./.webapp-backup"
+INSTALL="./webapp-upgrade-files"
+BACKUPLOG="./.webapp-backup.log"
+
+HBAR="-------------------------------------------------------------------------------"
+
+cd $INDIR
+$RM -rf $BACKUP
+$MKDIR -p $BACKUP
+echo "Backing up files to $BACKUP:"
+for I in docs/form-fields docs/www; do
+    echo "* Backing up \$REPO/$I ..."
+    (cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -)
+done
+$TOUCH $BACKUPLOG
+NOW=`date +'%Y%m%d-%H%M%S'`
+BACKZIP=".webapp-backup-$NOW.zip"
+echo $HBAR >> $BACKUPLOG
+echo $NOW >> $BACKUPLOG
+echo "Compressing the backup:"
+$ZIP -r $BACKZIP $BACKUP 2>&1 | $TEE $BACKUP_LOG
+echo "Cleaning up."
+$RM -rf $BACKUP
+echo "Done."
+echo ""
+if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
+    printf "Updating from $INSTALL ... "
+    (cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -)
+else
+    echo "Found a valid Git repository; pulling updates ..."
+    cd $REPO
+    $GIT pull
+fi
+
+echo "Done."
+echo ""
+echo "You may now proceed with the KIDS installation."
+

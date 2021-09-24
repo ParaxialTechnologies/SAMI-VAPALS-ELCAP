@@ -1,0 +1,630 @@
+:doctitle: VAPALS-ELCAP: SAMI 18-15-16-t1
+:numbered:
+
+// (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ./webmake publish newsite/project/vapals-elcap")))
+
+// date -u +"%Y-%m-%dT%H:%MZ"
+-------------------------------------------------------------------------------
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-09-24t18:17z
+-------------------------------------------------------------------------------
+
+[role="center h3"]
+Unnamed Philadelphia RedCap Patch #16
+
+[role="center h1"]
+SAMI (VAPALS-ELCAP) 18-15-16-t1
+[role="center h3"]
+(SAMI*18.0*16 SEQ #15 T1)
+
+[role="center"]
+George P. Lilly,
+Domenic DiNatale,
+Larry G. Carlson
+_&_ Frederick D. S. Marshall +
+2021-09-24
+
+[[front]]
+[role="h2"]
+{zwj}i. Front matter
+
+[cols=">.<0v,<.<1v",grid="none",frame="none",width="1%"]
+|==============================================================================
+| App         | SAMI (VAPALS-ELCAP)
+| Version     | 18-15-16-t1
+| Vista ID    | ††SAMI*18.0*16 SEQ #15 T1††: Version 18.0, Patch ID #16, Seq #15, Test 1
+| Priority    | High
+| Categories  | Routine, File
+| Status      | Test Patch: ++sami-18-15-16-t1.zip++
+| Depends on  | SAMI 18-1 (††SAMI*18.0*1 SEQ #1††) +
+                SAMI 18-2 (††SAMI*18.0*2 SEQ #2††) +
+                SAMI 18-3 (††SAMI*18.0*3 SEQ #3††) +
+                SAMI 18-4 (††SAMI*18.0*4 SEQ #4††) +
+                SAMI 18-5 (††SAMI*18.0*5 SEQ #5††) +
+                SAMI 18-6 (††SAMI*18.0*6 SEQ #6††) +
+                SAMI 18-8 (††SAMI*18.0*8 SEQ #8††) +
+                SAMI 18-9 (††SAMI*18.0*9 SEQ #9††) +
+                SAMI 18-10 (††SAMI*18.0*10 SEQ #10††) +
+                SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
+                SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
+                link:../../18-13/[SAMI 18-13] (††SAMI*18.0*13 SEQ #13††)
+|==============================================================================
+
+[[toc]]
+[role="h2"]
+{zwj}ii. Contents
+
+[cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
+|==============================================================================
+|[options="compact"]
+* <<front,Front matter>>
+** <<toc,Contents>>
+* <<desc,Description>>
+* <<pkg-elements,Package elements>>
+* <<prepare,Prepare for installation>>
+** <<be-osehra,Assume the identity of your `osehra` Unix user>>
+** <<prep-installdir,Prepare install directory>>
+** <<prep-archive,Download and prepare the archive file>>
+** <<install-www,Install web-application files>>
+** <<backup-m,Back up M routines>>
+*** <<enter-m,Enter M>>
+**** <<enter-m-cache,On Caché>>
+**** <<enter-m-yotta,On YottaDB/GT.M>>
+*** <<signin,Sign into Vista>>
+*** <<routine-list,List of routines>>
+*** <<run-ro,Run the backup>>
+**** <<backup-cache,On Caché>>
+**** <<backup-yotta,On YottaDB/GT.M>>
+|[options="compact"]
+* <<install,Main install instructions>>
+** <<install-kids,Install the KIDS package>>
+*** <<signin-kids,Enter the KIDS Installation menu>>
+*** <<load-pkg,Load KIDS package>>
+*** <<install-pkg,Install KIDS package>>
+* <<backout,Optional backout instructions>>
+* <<routines,Routines>>
+* <<authors,Authors>>
+|==============================================================================
+
+[[desc]]
+== Description
+
+SAMI 18-15-16-t1 adds one update, a data-import method for the Philadelphia
+VAPALS rollout.
+
+The definitive source for the VAPALS-ELCAP application---codebase, package
+distributions (including this patch), and documentation---is a
+https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/[public GitHub repository].
+
+These instructions are for your Vista environment's sysadmin. As usual, please
+capture the complete dialog of your install and send it to your VAPALS-ELCAP
+support team.
+
+The following list shows changes for:
+
+[options="compact"]
+* High-priority changes (<<fix-1,1>>)
+
+
+[[fix-1]]
+=== Enrollment Report: Import data from Philadelphia Red Cap system
+
+**Issue 21-178:** Philadelphia VA will be starting to use the VAPALS-ELCAP
+system soon. They want to move whatever data they can from their current LCS
+program which is on a Red Cap database.
+
+**Solution:** Develop new routine to perform import.
+
+**Reported:** [when?] by the Philadelphia team.
+
+[[pkg-elements]]
+== Package elements
+
+[cols="<.<1,<.<0",options="header",role="center",width="50%"]
+|==============================================================================
+| File                          | Change
+| `sami-18-15-16-t1-recipe.txt` | new
+| `sami-18-15-16-t1.txt`        | new
+| `sami-18-15-16-t1.kid`        | new
+| `sami-18-15-16-t1.zip`        | new
+|==============================================================================
+
+[cols="<.<1,<.<0",options="header",role="center",width="1%"]
+|==============================================================================
+| Routine                | Change
+| `SAMIHOM4`             | modified
+| `SAMIHUL`              | modified
+| `SAMIZPH1`             | new
+|==============================================================================
+
+// [cols="<.<1v,<.<0v",options="header",role="center",width="1%"]
+// |==============================================================================
+// | Fileman File                              | Change
+// | ††SAMI ZZZZ†† (++311.π++)                 | irradiated
+// |==============================================================================
+
+[[prepare]]
+== Prepare for installation
+
+This involves creating a directory to work in, running a script to back up
+certain datafiles and web-application files, and then going through steps to
+back up M routines that will be replaced by the patch.
+
+[[be-osehra]]
+=== Assume the identity of your +osehra+ Unix user
+
+This step assumes you use a `dzdo` or `sudo` command to do this; here, the
+symbol `$DEMAND` will stand for whichever command you use. (Also, in all the
+command-line examples below, `$` simply means your command-line prompt.) If
+your configuration is different, please adjust this step to match your
+configuration:
+
+-------------------------------------------------------------------------------
+$ $DEMAND su - osehra
+$ _
+-------------------------------------------------------------------------------
+
+[[prep-installdir]]
+=== Prepare install directory
+
+If this is your first time installling this, execute the following commands.
+They create a shell variable, and then creates the work directory and sets it
+as your current directory.
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-15-16-t1
+$ mkdir -p $INDIR
+$ cd $INDIR
+-------------------------------------------------------------------------------
+
+If you've already tried installing this once, you can use the following
+commands instead:
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-15-16-t1
+$ cd $INDIR
+$ rm -rf ./sami*.{txt,kid}
+-------------------------------------------------------------------------------
+
+[[prep-archive]]
+=== Download and prepare the archive file
+
+You may safely download the archive file
+(link:sami-18-15-16-t1.zip[`sami-18-15-16-t1.zip`]) in advance of the actual install.
+In the following text, `[now]` represents a time stamp representing your
+current time, and `[bits/sec]` is a data rate and `[time]` is how long the file
+took to transfer (both of which vary based on the user's network conditions).
+
+// (cd ../../../..; ls; ./recipeproc.py --wget --unzip --adoc sami 18-15-16-t1)
+-------------------------------------------------------------------------------
+$ wget --no-verbose 'http://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-15-16-t1/sami-18-15-16-t1.zip'
+{now} URL:http://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-15-16-t1/sami-18-15-16-t1.zip [{size}/{size}] -> "sami-18-15-16-t1.zip" [1]
+$ _
+-------------------------------------------------------------------------------
+
+Then unzip the archive file with the following command.
+
+// ../../../recipeproc.py --wget --unzip --adoc sami 18-15-16-t1
+-------------------------------------------------------------------------------
+$ unzip sami-18-15-16-t1.zip
+Archive:  sami-18-15-16-t1.zip
+  [... 3 files in archive ...]
+$ _
+-------------------------------------------------------------------------------
+
+// [[install-www]]
+// === Install web-application files
+
+// At this point, the web-application files must be installed. This is done with a
+// script that backs up the affected directories before installing anything, then
+// upgrades the web-application files. The output looks like this (where `[x]`
+// represents a number).
+
+// -------------------------------------------------------------------------------
+// $ ./upgrade-webapp
+// Backing up files to ./.webapp-backup:
+// [... lists of files backed up ...]
+// Compressing the backup:
+// [... list of files being compressed ...]
+// Cleaning up.
+// Done.
+
+// Updating from ./webapp-upgrade-files ...
+// [... list of files being updated ...]
+// Done.
+
+// You may now proceed with the KIDS installation.
+// $ _
+// -------------------------------------------------------------------------------
+
+// Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
+// official GitHub repository, and this script will have different output.
+
+// -------------------------------------------------------------------------------
+// $ ./upgrade-webapp
+// Backing up files to ./.webapp-backup:
+// [... lists of files backed up ...]
+// Compressing the backup:
+// [... list of files being compressed ...]
+// Cleaning up.
+// Done.
+
+// Found a valid Git repository; pulling updates ...
+// [... output varies ...]
+// Done.
+// $ _
+// -------------------------------------------------------------------------------
+
+// // eval::[Section.setlevel(2)]
+
+[[backup-m]]
+=== Back up M routines
+
+Before the installation, we also need to back up existing VAPALS-ELCAP routines
+that will be overwritten by this install. To do this, you will have to start a
+Caché or YottaDB session (depending on your particular installation), sign in
+to Vista, and then call the direct-mode interface `^%RO` (“routine out”).
+
+We have made efforts to display accurate instructions, but there are likely to
+be minor differences between implementations. Be sure to follow the correct
+dialog for your implementation.
+
+[[enter-m]]
+==== Enter M
+
+At the Unix prompt, enter the M environment in direct mode, using the
+`csession` command on Caché or the `mumps` command on YottaDB/GT.M:
+
+[[enter-m-cache]]
+††**On Caché**††
+
+-------------------------------------------------------------------------------
+$ csession vapals
+
+Node: vapalscache, Instance: VAPALS
+
+>_
+-------------------------------------------------------------------------------
+
+[[enter-m-yotta]]
+††**On YottaDB/GT.M**††
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
+[[signin]]
+==== Sign into Vista
+
+At the M prompt, call Vista's direct-mode interface, enter your access code,
+and then just press return at the [ttsp nowrap]##OPTION NAME## prompt to return
+to direct mode. This sets up your authentication variables. Here's a sample
+capture of this step:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME:
+>_
+-------------------------------------------------------------------------------
+
+[[routine-list]]
+==== List of routines
+
+The routine names to save are listed below; you may copy the list and paste it
+at the appropriate `Routine` prompt. At the final `Routine` prompt, press
+return to indicate the list of routines is done.
+
+-------------------------------------------------------------------------------
+SAMIHOM4
+SAMIHUL
+-------------------------------------------------------------------------------
+
+[[run-ro]]
+==== Run the backup
+
+Creating the routine backup file differs by implementation.
+
+[[backup-cache]]
+††**On Caché**††
+
+Note that routines that don't currently exist will result in a warning message
+(specifically, the routine name will have `[???]` after it, and the line
+[ttsp]##[does not exist]## after that). These messages can be safely
+disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
++Description+ and press return at the +Parameters+ and [ttsp]##Printer Format##
+prompts to accept the defaults of +WNS+ and +No+, respectively:
+
+// Do relative filenames work in Caché?
+// ../../../recipeproc.py --rbackcache --adoc sami 18-15-16-t1
+-------------------------------------------------------------------------------
+>do ^%RO
+
+Routine output (please use %ROMF for object code output)
+Routines(s): SAMIHOM4
+Routines(s): SAMIHUL
+Routines(s):
+
+Description: SAMI*18*16 SEQ #15 T1 routine backup
+
+Output routines to
+Device: /home/osehra/run/in/sami/18-15-16-t1/sami-18-15-16-t1-back.ro
+Parameters? ("WNS") =>
+Printer Format? No => No
+SAMIOM4.INT    SAMIHUL.INT
+>_
+-------------------------------------------------------------------------------
+
+[[backup-yotta]]
+††**On YottaDB/GT.M**††
+
+Note that routines that don't currently exist will result in the routine name
+not appearing under the input line, and won't count towards the number of
+routines. These can be safely disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+// Do relative filenames work in YottaDB?
+// ./recipeproc.py --rbackyotta --adoc sami 18-15-16-t1
+-------------------------------------------------------------------------------
+>do ^%RO
+
+Routine Output - Save selected routines into RO file.
+
+Routines: SAMIHOM4
+SAMIHOM4
+Current total of 1 routines.
+
+Routines: SAMIHUL
+SAMIHUL
+Current total of 2 routines.
+
+Routine:
+
+Output device <terminal>: /home/osehra/run/in/sami/18-15-16-t1/sami-18-15-16-t1-back.ro
+
+Header Label: SAMI*18*16 SEQ #15 T1 routine backup
+Strip comments <No>?:
+SAMIHOM4  SAMIHUL
+
+Total of 1347 lines in 2 routines.
+
+>_
+-------------------------------------------------------------------------------
+
+eval::[Section.setlevel(2)]
+
+You'll remain in the M environment for the next section.
+
+[[install]]
+== Main install instructions
+
+This consists of loading and installing the KIDS package, and activating the
+new web-application files.
+
+[[install-kids]]
+=== Installing the KIDS package
+
+This installs the various M assets required by the application.
+
+[[signin-kids]]
+==== Enter the KIDS Installation menu
+
+At the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
+[ttsp]##Kernel Installation & Distribution System## main menu, and at the
+[ttsp]##Select \... Option## prompt select +Installation+:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+
+
+      Edits and Distribution ...
+      Utilities ...
+      Installation ...
+      Patch Monitor Main Menu ...
+
+Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: installation
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[load-pkg]]
+==== Load KIDS package
+
+Select option 1 and press return at the +Continue+ prompt.
+
+// Does this routine use relative file specifications?
+// ./recipeproc.py --loadkids --adoc sami 18-15-16-t1
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+Enter a Host File: /home/osehra/run/in/sami/18-15-16-t1/sami-18-15-16-t1.kid
+
+   KIDS Distribution saved on Sep 10, 2021@18:52:20
+   Comment: Test Release SAMI*18.0*16 SEQ #15 T1 (sami-18-15-16-t1)
+
+This Distribution contains Transport Globals for the following Package(s):
+   SAMI*18.0*16
+Distribution OK!
+
+Want to Continue with Load? YES//
+   Loading Distribution...
+
+   SAMI*18.0*16
+Use INSTALL NAME: SAMI*18.0*16 to install this Distribution.
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[install-pkg]]
+==== Install KIDS package
+
+Select option 6, enter the space bar at the [ttsp]##INSTALL NAME## prompt, and
+press return at the next three prompts. Note that `[now]` denotes the current
+time when you're doing the install.
+
+// ./recipeproc.py --install --adoc sami 18-15-16-t1
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+Select INSTALL NAME:    SAMI*18.0*16     Loaded from Distribution    [now]
+   => Test Release SAMI*18.0*16 SEQ #15 T1 (sami-18-15-16-t1)  ;Created on Sep 10, 2021@18:52:20
+
+This Distribution was loaded on [now] with header of
+   Test Release SAMI*18.0*16 SEQ #15 T1 (sami-18-15-16-t1)  ;Created on Sep 10, 2021@18:52:20
+   It consisted of the following Install(s):
+   SAMI*18.0*16
+Checking Install for Package SAMI*18.0*16
+
+Install Questions for SAMI*18.0*16
+
+
+
+Want KIDS to INHIBIT LOGONs during the install? NO//
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+ Install Started for SAMI*18.0*16 :
+               [now]
+
+Build Distribution Date: Sep 10, 2021
+
+ Installing Routines:.....
+               [now]
+
+ Running Post-Install Routine: POS1814^SAMIPAT.
+
+ Updating Routine file......
+
+ Updating KIDS files.....
+
+ SAMI*18.0*16 Installed.
+               [now]
+
+ No link to PACKAGE file
+
+ NO Install Message sent
+
+Install Completed
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+
+> halt
+$ _
+-------------------------------------------------------------------------------
+
+// eval::[Section.setlevel(2)]
+
+eval::[Section.setlevel(2)]
+
+You now have VAPALS-ELCAP 18-15-16-t1 (††SAMI*18.0*16 SEQ #15 T1††) installed in
+your M environment. The install is now complete. We recommend running tests of
+your VAPALS-ELCAP application to confirm the environment is operational and
+bug-free, before notifying users that VAPALS-ELCAP is ready for their use.
+
+[[backout]]
+== Optional backout instructions
+
+Should errors or other problems result from installing this package, contact
+the VAPALS-ELCAP development team for package-backout instructions.
+
+[[routines]]
+== Routines
+
+Lines 2 and 3 of each of these routines now look like:
+
+-------------------------------------------------------------------------------
+ ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+ ;;18.13
+-------------------------------------------------------------------------------
+
+The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
+
+[cols="<.<1m,<.<1m,<.<1m,<.<1m",options="header",width="50%"]
+|==============================================================================
+| Name       | Checksum before   | Checksum after   | Patch list
+| `SAMIHOM4` | `B899951012`      | ---?---          | `**?**`
+| `SAMIHUL`  | `B111466`         | ---?---          | `**?**`
+| `SAMIZPH1` | ---               | ---?---`         | `**?**`
+|==============================================================================
+
+[[authors]]
+== Authors
+
+[cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
+|==============================================================================
+|           | Dates                 | By
+| Developed | 2021-08-31/09-09      | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Tested    | 2021-09-09/11         | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Claudia Henschke (VA-PHO) +
+                                      Artit Jirapatnakul (VA-PHO) +
+                                      Providencia Morales (VA-PHO) +
+                                      Lorenza A. Murphy (VA-PHO) +
+                                      Martha A. Rukavena (VA-PHO) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Released  | 2021-09-11            | Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+|==============================================================================
+
+eval::[Section.setlevel(1)]
+
+-------------------------------------------------------------------------------
+$END TXT
+-------------------------------------------------------------------------------

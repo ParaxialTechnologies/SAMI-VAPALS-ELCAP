@@ -50,8 +50,10 @@ ii. Contents
   o Installing the KIDS package
     - Enter the KIDS installation menu
     - Load KIDS package
+    - Verify routine checksums
     - Install KIDS package
     - Import test data for new import feature
+    - Test installation of data-import function
  Optional backout instructions
  Routines
  Authors
@@ -60,12 +62,17 @@ ii. Contents
 1. Description
 
  SAMI 18-14-16-t1 adds one update, a data-import method for the
- Philadelphia VAPALS rollout.  The definitive source for the
+ Philadelphia VAPALS rollout. The definitive source for the
  VAPALS-ELCAP application - codebase, package distributions (including
  this one), and documentation - is at the following public Github
  repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+
+ Because these instructions are included with the distribution, the
+ most accurate version of these instructions may be found at
+
+ https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-14-16/t1/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -73,11 +80,13 @@ ii. Contents
 
  The high-priority change made is:
 
- 1.1. Data Import: Import data from Philadelphia Red Cap system
+ 1.1. Data Import: Add data-import functionality for the Philadelphia
+      RedCap system
 
-      issue 21-178: Philadelphia VA will be starting to use the VAPALS-ELCAP
-      system soon. They want to move whatever data they can from their current
-      LCS program which is on a Red Cap database.
+      issue 21-178: Philadelphia VA will be starting to use the
+      VAPALS-ELCAP system soon. They want to move whatever data they
+      can from their current LCS program which is on a RedCap
+      database.
 
       solution: Develop new routine to perform import.
 
@@ -86,12 +95,13 @@ ii. Contents
 
 2. Package elements
 
- File                           Change
- ----                           ------
- sami-18-14-t2-recipe.txt       new
- sami-18-14-t2.txt              new
- sami-18-14-t2.kid              new
- sami-18-14-t2.zip              new
+ File                                   Change
+ ----                                   ------
+ sami-18-14-t2-recipe.txt               new
+ sami-18-14-t2.txt                      new
+ sami-18-14-t2.kid                      new
+ LCSV2_DATA_2021-06-29_REDCAP.tsv`      new
+ sami-18-14-t2.zip                      new
 
  Routine    Change
  -------    ------
@@ -117,7 +127,7 @@ ii. Contents
    adjust this step to match your configuration:
 
     $ $DEMAND su - osehra
-    $
+    $ _
 
 
  3.2. Prepare install directory
@@ -126,16 +136,19 @@ ii. Contents
    commands.  They create a shell variable, and then creates the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/sami/18-14-16/t1
+    $ INDIR=~/run/in/sami/18-x-16/t1
     $ mkdir -p $INDIR
     $ cd $INDIR
+    $ _
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/sami/18-14-16/t1
+    $ INDIR=~/run/in/sami/18-x-16/t1
     $ cd $INDIR
     $ rm -rf ./sami*.{txt,kid}
+    $ _
+
 
  3.3. Download and prepare the archive file
 
@@ -154,8 +167,9 @@ ii. Contents
 
     $ unzip sami-18-14-16-t1.zip
     Archive:  sami-18-14-16-t1.zip
-      [... 3 files in archive ...]
+      [... 4 files in archive ...]
     $ _
+
 
  3.4. Copy test-import data
 
@@ -164,7 +178,7 @@ ii. Contents
    lung-cancer screening program. It is most convenient if this data
    exists in the ~/www directory.
 
-    $ cp ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/LCSV2_DATA_2021-06-29_REDCAP.tsv ~/www/
+    $ cp LCSV2_DATA_2021-06-29_REDCAP.tsv ~/www/
 
 
  3.5. Back up M routines
@@ -178,6 +192,7 @@ ii. Contents
    We have made efforts to display accurate instructions, but there
    are likely to be minor differences between implementations. Be sure
    to follow the correct dialog for your implementation.
+
 
   3.5.1. Enter M
 
@@ -219,7 +234,58 @@ ii. Contents
     Select OPTION NAME:
     >
 
-  3.5.3. List of routines
+
+  3.5.3.  Make Philadelphia site active
+
+    This technically doesn't have anything to do with the routine
+    backup, but it's the most convenient place to take care of this.
+
+    When you log into VAPALS-ELCAP as a superuser, you are presented
+    with a site-selection screen. If "PHILADELPHA, PA VAMC - PHI"
+    isn't on the list, then you'll need to make that site active for
+    this patch to work properly. Here's how to do that:
+
+     >set DUZ=1 do ^XUP
+
+     Setting up programmer environment
+     This is a TEST account.
+
+     Terminal Type set to: C-VT220
+
+     Select OPTION NAME: 
+     VAPALS YottaDB> do Q^DI
+
+
+     VA FileMan 22.2
+
+
+     Select OPTION: ENTER OR EDIT FILE ENTRIES  
+
+
+
+     Input to what File: ROUTINE// SAMI SITE    (12 entries)
+     EDIT WHICH FIELD: ALL// 
+
+
+     Select SAMI SITE: PHILADELPHIA, PA VAMC    PA  VAMC  642  
+              ...OK? Yes//   (Yes)
+              PHI
+     SITE: PHILADELPHIA, PA VAMC// 
+     SYMBOL: PHI// 
+     ACTIVE: NO// YES  YES
+     DEFAULT PARAMETERS: 
+     Select PARM: 
+
+
+     Select SAMI SITE: ^
+
+
+
+
+     Select OPTION: ^
+
+
+  3.5.4. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
@@ -229,7 +295,7 @@ ii. Contents
 SAMIHOM4
 SAMIHUL
 
-  3.5.4. Run the backup
+  3.5.5. Run the backup
 
     Creating the routine backup file differs by implementation.
 
@@ -252,10 +318,10 @@ SAMIHUL
      Routines(s): SAMIHUL
      Routines(s):
 
-     Description: sami*18*14 SEQ #14 T2 routine backup
+     Description: SAMI*18*16 SEQ #14 T1 routine backup
 
      Output routines to
-     Device: /home/osehra/run/in/sami/18-14-16/t1/sami-18-14-16-t1-back.ro
+     Device: /home/osehra/run/in/sami/18-x-16/t1/sami-18-14-16-t1-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
      SAMIHOM4.INT    SAMIHUL.INT
@@ -285,7 +351,7 @@ SAMIHUL
 
      Routine:
 
-     Output device <terminal>: /home/osehra/run/in/sami/18-14-16/t1/sami-18-14-16-t1-back.ro
+     Output device <terminal>: /home/osehra/run/in/sami/18-x-16/t1/sami-18-14-16-t1-back.ro
 
      Header Label: sami*18*14 SEQ #14 T2 routine backup
      Strip comments <No>?:
@@ -299,8 +365,8 @@ SAMIHUL
 
 4. Main install instructions
 
- This consists of loading and installing the KIDS package, and
- activating the new web-application files.
+ This consists of loading, verifying and installing the KIDS package,
+ and importing some test data for the new import feature.
 
  4.1. Installing the KIDS package
 
@@ -341,10 +407,10 @@ SAMIHUL
     Select option 1 and press return at the Continue prompt.
 
      Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-     Enter a Host File: /home/osehra/run/in/sami/18-14-16/t1/sami-18-14-16-t1.kid
+     Enter a Host File: /home/osehra/run/in/sami/18-x-16/t1/sami-18-14-16-t1.kid
 
-        KIDS Distribution saved on Sep 10, 2021@18:52:20
-        Comment: Test Release SAMI*18.0*16 SEQ #14 T1 (sami-18-14-16-t1)
+        KIDS Distribution saved on Sep 24, 2021@17:17:40
+        Comment: Test release SAMI*18.0*16 SEQ #14 T1
 
      This Distribution contains Transport Globals for the following Package(s):
         SAMI*18.0*16
@@ -368,56 +434,35 @@ SAMIHUL
 
      Select Installation <TEST ACCOUNT> Option:_
 
-  4.1.3. Install KIDS package
 
-    Select option 6, enter the space bar at the INSTALL NAME prompt,
-    and press return at the next three prompts. Note that '[now]'
-    denotes the current time when you're doing the install.
+  4.1.3. Verify routine checksums
 
-     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
-     Select INSTALL NAME:    SAMI*18.0*16     Loaded from Distribution    [now]
-        => Test Release SAMI*18.0*16 SEQ #14 T1 (sami-18-14-16-t1)  ;Created on Sep 10, 2021@18:52:20
+    As a quality-assurance measure, we encourage you to compare
+    routine checksums with their expacted values. To do this is simple
+    enough:
 
-     This Distribution was loaded on [now] with header of
-        Test Release SAMI*18.0*16 SEQ #14 T1 (sami-18-14-16-t1)  ;Created on Sep 10, 2021@18:52:20
+     Select Installation <TEST ACCOUNT> Option: 2  Verify Checksums in Transport Global
+     Select INSTALL NAME: SAMI*18.0*16       Loaded from Distribution    [now]
+          => Test release SAMI*18.0*16 SEQ #14 T1  ;Created on Sep 24, 2021@17:17:40
+
+     This Distribution was loaded on [now] with header of 
+        Test release SAMI*18.0*16 SEQ #14 T1  ;Created on Sep 24, 2021@17:17:40
         It consisted of the following Install(s):
         SAMI*18.0*16
-     Checking Install for Package SAMI*18.0*16
 
-     Install Questions for SAMI*18.0*16
-
-
-
-     Want KIDS to INHIBIT LOGONs during the install? NO//
-     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
-
-     Enter the Device you want to print the Install messages.
-     You can queue the install by enter a 'Q' at the device prompt.
-     Enter a '^' to abort the install.
-
+     Want each Routine Listed with Checksums: Yes//   YES
      DEVICE: HOME// ;C-SCROLL  TELNET
 
 
-      Install Started for SAMI*18.0*16 :
-                    [now]
 
-     Build Distribution Date: Sep 10, 2021
+     {page header}
 
-      Installing Routines:.....
-                    [now]
+     SAMIHOM4  Calculated  902907585
+     SAMIHUL   Calculated     109364
+     SAMIZPH1  Calculated  214547012
 
-      Updating Routine file......
+        3 Routines checked, 0 failed.
 
-      Updating KIDS files.....
-
-      SAMI*18.0*16 Installed.
-                    [now]
-
-      No link to PACKAGE file
-
-      NO Install Message sent
-
-     Install Completed
 
 
         1      Load a Distribution
@@ -431,10 +476,85 @@ SAMIHUL
 
      Select Installation <TEST ACCOUNT> Option:_
 
+    These will match the “Checksum after” column in the Routines
+    section below.
+
+
+  4.1.4. Install KIDS package
+
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that '[now]'
+    denotes the current time when you're doing the install.
+
+     Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+     Select INSTALL NAME: SAMI*18.0*16       Loaded from Distribution    9/24/21@17:28:01
+          => Test release SAMI*18.0*16 SEQ #14 T1  ;Created on Sep 24, 2021@17:17:40
+
+     This Distribution was loaded on [now] with header of 
+        Test release SAMI*18.0*16 SEQ #14 T1  ;Created on Sep 24, 2021@17:17:40
+        It consisted of the following Install(s):
+        SAMI*18.0*16
+     Checking Install for Package SAMI*18.0*16
+
+     Install Questions for SAMI*18.0*16
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO// 
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*16 : 
+                    [now]
+
+     Build Distribution Date: Sep 24, 2021
+
+      Installing Routines:....
+                    [now]
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*16 Installed. 
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent 
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: 
+
+
+               Edits and Distribution ...
+               Utilities ...
+               Installation ...
+               Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+
+     Select Installation <TEST ACCOUNT> Option:_
+
      >_
 
 
-  4.1.4. Import test data for new import feature
+  4.1.5. Import test data for new import feature
 
     Once the package has been installed, the test data that we saved
     off earlier into ~/www must be pulled in.
@@ -467,7 +587,7 @@ SAMIHUL
      Ponderosa
      sid: PHI9000015 sikey: siform-2021-09-24
 
-     > halt
+     >halt
      $ _
 
    You now have VAPALS-ELCAP 18-14-16-t1 (SAMI*18.0*16 SEQ #14 T1)
@@ -475,6 +595,25 @@ SAMIHUL
    recommend running tests of your VAPALS-ELCAP app to confirm the
    environment is operational and bug-free, before notifying users
    that VAPALS-ELCAP is ready for their use.
+
+
+
+  4.1.6. Test installation of data-import function
+
+    You may confirm that the install has worked by pulling up the
+    import-test data that was installed with this update. To do that,
+    you’ll have to enter VAPALS-ELCAP on the browser, select the
+    Philadelphia site, go to Reports, pull down, and select
+    Enrollment. You should be looking at something that looks like
+    this:
+
+    https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-14-16/t1/post-install-enrollment-report.png
+
+  You now have VAPALS-ELCAP 18-14-16-t1 (SAMI*18.0*16 SEQ #14 T1)
+  installed in your M environment. The install is now complete. We
+  recommend running tests of your VAPALS-ELCAP application to confirm
+  the environment is operational and bug-free, before notifying users
+  that VAPALS-ELCAP is ready for their use.
 
 
 5. Optional backout instructions
@@ -502,26 +641,21 @@ SAMIHUL
 7. Authors
 
              Dates              By
- Developed   2021-08-31/09-09   George P. Lilly (ven)
+ Developed   2021-09-20/23      George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2021-09-09/11      George P. Lilly (ven)
-                                Domenic DiNatale (par)
-                                Larry G. Carlson (ven)
+ Tested      2021-09-23         George P. Lilly (ven)
                                 Claudia Henschke (va-pho)
                                 Artit Jirapatnakul (va-pho)
                                 Providencia Morales (va-pho)
-                                Lorenza A. Murphy (va-pho)
-                                Martha A. Rukavena (va-pho)
-                                Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Released    2021-09-11         Frederick D. S. Marshall (ven)
+ Released    2021-09-24         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

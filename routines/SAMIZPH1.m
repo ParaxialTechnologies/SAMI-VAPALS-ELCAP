@@ -1,4 +1,4 @@
-SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-24t20:30z
+SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ;;18.0;SAMI;**16**;2020-01;Build 2
  ;18-x-16-t1
  ;
@@ -36,6 +36,12 @@ EN ;
  K @GN
  N OK
  S OK=$$FTG^%ZISH(SAMIDIR,FN,GN,3)
+ D  ;
+ . ;
+ . ; Normalize overflow nodes (and hope for the best that we don't go over 32k)
+ . new i,j set (i,j)=""
+ . for  set i=$order(^TMP("SAMICSV",$J,i)) quit:'i  for  set j=$order(^TMP("SAMICSV",$J,i,"OVF",j)) quit:'j  do
+ .. set ^TMP("SAMICSV",$J,i)=^TMP("SAMICSV",$J,i)_^TMP("SAMICSV",$J,i,"OVF",j)  ;
  K ^gpl("CSV")
  M ^gpl("CSV")=^TMP("SAMICSV",$J)
  D TOGRAPH(SITE)

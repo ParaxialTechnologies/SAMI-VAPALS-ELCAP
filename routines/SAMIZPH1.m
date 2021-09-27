@@ -1,8 +1,54 @@
 SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ;;18.0;SAMI;**16**;2020-01;Build 2
- ;18-x-16-t1
+ ;18-x-16-t2
  ;
  ;@license: see routine SAMIUL
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@dev-main George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-update 2021-09-27t20:30z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 18-14-16
+ ;@release-date 2020-01
+ ;@patch-list **16**
+ ;
+ ;
+ ;@module-credits
+ ;@project VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org Paraxial Technologies (par)
+ ; http://paraxialtech.com/
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ;
+ ; 2021-09-20/23 ven/gpl sami-18-14-16-t1
+ ; SAMIZPH1 develop method to import data from a REDCap data system used by
+ ; the Philadelphia VA.
+ ;
+ ; 2021-09-27 ven/gpl sami-18-14-16-t1
+ ; SAMIZPH1 fix bug where Cache was putting the TSV records in overflow
+ ;
  ;
  Q
  ;

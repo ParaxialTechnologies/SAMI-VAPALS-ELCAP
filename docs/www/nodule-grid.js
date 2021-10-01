@@ -377,6 +377,351 @@
                 $("#add-first-nodule").toggle(count === 0);
             }
 
+            function _revertData() {
+                // put back original data where it was saved from an updateData call
+                //VAPALS.displayNotification("Reverting Data");
+                if (!confirm("Do you really want to revert to the data prior to the data update?")) {
+                    return;
+                }
+
+                // should breadcrumbs be saved in added nodules and then these be removed - not for now
+                
+                for (let noduleId = 1; noduleId <= settings.getNoduleCount(); noduleId++) {
+                    // Need to work: “Finding”: “Pulmonary nodule”
+
+                    // “Finding site”: “Upper lobe of right lung”                    
+                    ll = "#cect" + noduleId + "ll";
+                    if ($(ll).hasClass("update-data")) {
+                        $(ll).val($(ll).attr("original-value"));
+                        $(ll).removeAttr("original-value");
+                        $(ll).removeClass("update-data");
+                    }
+
+                    // “Attenuation Characteristic”: “Solid”, bold: Consistency - cect1nt
+                    nt = "#cect" + noduleId + "nt";
+                    if ($(nt).hasClass("update-data")) {
+                        $(nt).val($(nt).attr("original-value"));
+                        $(nt).removeAttr("original-value");
+                        $(nt).removeClass("update-data");
+                    }
+
+                    // "Radiographic Lesion Margin"
+                    se = "#cect" + noduleId + "se";
+                    sp = "#cect" + noduleId + "sp";
+                    if ($(se).hasClass("update-data")) {
+                        if ($(se).attr("original-value") === "true") {
+                            $(se).prop("checked", true);
+                        } else {
+                            $(se).prop("checked", false);
+                        }
+                        $(se).removeAttr("original-value");
+                        $(se).removeClass("update-data");
+                        // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
+                        $(se).parent().parent().removeClass("update-data");
+                    }
+                    if ($(sp).hasClass("update-data")) {
+                        if ($(sp).attr("original-value") === "true") {
+                            $(sp).prop("checked", true);
+                        } else {
+                            $(sp).prop("checked", false);
+                        }
+                        $(sp).removeAttr("original-value");
+                        $(sp).removeClass("update-data");
+                        // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
+                        $(sp).parent().parent().removeClass("update-data");
+                    }
+
+                    // "Maximum 2D diameter"
+                    sl = "#cect" + noduleId + "sl";
+                    if ($(sl).hasClass("update-data")) {
+                        $(sl).val($(sl).attr("original-value"));
+                        $(sl).removeAttr("original-value");
+                        $(sl).removeClass("update-data");
+                    }
+
+                    // "Maximum perpendicular 2D diameter"
+                    sl = "#cect" + noduleId + "sw";
+                    if ($(sl).hasClass("update-data")) {
+                        $(sl).val($(sl).attr("original-value"));
+                        $(sl).removeAttr("original-value");
+                        $(sl).removeClass("update-data");
+                    }
+
+                    // "Volume"
+                    sv = "#cect" + noduleId + "sv";
+                    if ($(sv).hasClass("update-data")) {
+                        $(sv).val($(sv).attr("original-value"));
+                        $(sv).removeAttr("original-value");
+                        $(sv).removeClass("update-data");
+                    }
+                }
+            }
+
+            function _updateData() {
+                // theData is hard coded here for now
+                theData = [
+                    {
+                        "Tracking Identifier": "L1",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with spiculated margin",
+                        "Finding site": "Lower lobe of left lung",
+                        "Lung-RADS assessment": "Lung-rads 4x",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "36.3",
+                        "Maximum 3D diameter": "42.2",
+                        "Maximum perpendicular 2D diameter": "26.7",
+                        "Mean 2D diameter": "31.5",
+                        "Volume": "14789.7"
+                    },
+                    {
+                        "Tracking Identifier": "R2",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Upper lobe of right lung",
+                        "Lung-RADS assessment": "Lung-rads 4a",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "15.0",
+                        "Maximum 3D diameter": "17.3",
+                        "Maximum perpendicular 2D diameter": "9.5",
+                        "Mean 2D diameter": "12.2",
+                        "Volume": "580.4"
+                    },
+                    {
+                        "Tracking Identifier": "L3",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "PartSolid",
+                        "Radiographic Lesion Margin": "Lesion with spiculated margin",
+                        "Finding site": "Upper lobe of left lung",
+                        "Lung-RADS assessment": "Lung-rads 4x",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "14.5",
+                        "Maximum 3D diameter": "24.4",
+                        "Maximum perpendicular 2D diameter": "9.7",
+                        "Mean 2D diameter": "12.1",
+                        "Volume": "1145.7"
+                    },
+                    {
+                        "Tracking Identifier": "R4",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with spiculated margin",
+                        "Finding site": "Upper lobe of right lung",
+                        "Lung-RADS assessment": "Lung-rads 4x",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "12.6",
+                        "Maximum 3D diameter": "13.1",
+                        "Maximum perpendicular 2D diameter": "7.8",
+                        "Mean 2D diameter": "10.2",
+                        "Volume": "381.3"
+                    },
+                    {
+                        "Tracking Identifier": "L5",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Lower lobe of left lung",
+                        "Lung-RADS assessment": "Lung-rads 4a",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "11.5",
+                        "Maximum 3D diameter": "11.7",
+                        "Maximum perpendicular 2D diameter": "8.6",
+                        "Mean 2D diameter": "10.1",
+                        "Volume": "371.2"
+                    },
+                    {
+                        "Tracking Identifier": "L6",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Lower lobe of left lung",
+                        "Lung-RADS assessment": "Lung-rads 2",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "7.8",
+                        "Maximum 3D diameter": "7.8",
+                        "Maximum perpendicular 2D diameter": "4.8",
+                        "Mean 2D diameter": "6.3",
+                        "Volume": "79.1"
+                    },
+                    {
+                        "Tracking Identifier": "R7",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Upper lobe of right lung",
+                        "Lung-RADS assessment": "Lung-rads 2",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "6.1",
+                        "Maximum 3D diameter": "6.2",
+                        "Maximum perpendicular 2D diameter": "6.1",
+                        "Mean 2D diameter": "6.1",
+                        "Volume": "42.1"
+                    },
+                    {
+                        "Tracking Identifier": "R8",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Unknown",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Lower lobe of right lung",
+                        "Lung-RADS assessment": "Lung-rads 0",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "5.5",
+                        "Maximum 3D diameter": "6.2",
+                        "Maximum perpendicular 2D diameter": "4.2",
+                        "Mean 2D diameter": "4.9",
+                        "Volume": "34.5"
+                    },
+                    {
+                        "Tracking Identifier": "R9",
+                        "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                        "Finding": "Pulmonary nodule",
+                        "Attenuation Characteristic": "Solid",
+                        "Radiographic Lesion Margin": "Lesion with circumscribed margin",
+                        "Finding site": "Upper lobe of right lung",
+                        "Lung-RADS assessment": "Lung-rads 2",
+                        "Lesion Review Status": "Accepted",
+                        "Maximum 2D diameter": "5.4",
+                        "Maximum 3D diameter": "5.4",
+                        "Maximum perpendicular 2D diameter": "4.0",
+                        "Mean 2D diameter": "4.7",
+                        "Volume": "21.4"
+                    }
+                ];
+
+                //VAPALS.displayNotification("Updating Data");
+                if (!confirm("Do you really want to do the data update?")) {
+                    return;
+                }
+
+                // if number of nodules shown is less than the number of entries in theData array then increase the number of nodules to they match
+                while (settings.getNoduleCount() < theData.length) {
+                    _addNodule()
+                }
+
+                noduleId = 1;
+                theData.forEach(obj => {
+                    Object.entries(obj).forEach(([key, value]) => {
+                        // Need to work: “Finding”: “Pulmonary nodule”,
+
+                        // Need to work: “Finding site”: “Upper lobe of right lung”
+                        //So assuming using the "Most likely location" field ( cect1ll ) of the form.
+                        //“Upper lobe of right lung” = "RUL"
+                        //"Upper lobe of left lung" = "LUL"
+                        //"Lower lobe of right lung" = "RLL"
+                        //"Lower lobe of left lung" = "LLL"
+                        if (key === "Finding site") {
+                            ll = "#cect" + noduleId + "ll";
+                            if (!$(ll).hasClass("update-data")) {
+                                $(ll).addClass("update-data");
+                                $(ll).attr("original-value", $(ll).val());
+                            }
+                            if (value == "Upper lobe of right lung") {
+                                $(ll).val("rul");
+                            } else if (value == "Upper lobe of left lung") {
+                                $(ll).val("lul");
+                            } else if (value == "Lower lobe of right lung") {
+                                $(ll).val("rll");
+                            } else if (value == "Lower lobe of left lung") {
+                                $(ll).val("lll");
+                            }
+                        }
+
+                        // “Attenuation Characteristic”: “Solid”, bold: Consistency - cect1nt
+                        // values include: PartSolid, Solid, Unknown
+                        // cectXnt values are "s" for Solid, "m" for Part-solid, "g" for Nonsolid, "o" for Other (see comment)
+                        // using "s" for "Solid", "m" for "PartSolid" and "o" for "Unknown"
+                        // Do not have an example of what is used for Nonsolid, assuming "NonSolid" for now.
+                        if (key === "Attenuation Characteristic") {
+                            //console.log("noduleId: theData[noduleId - 1]['Attenuation Characteristic'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Attenuation Characteristic"] + " : " + value);
+                            nt = "#cect" + noduleId + "nt";
+                            if (!$(nt).hasClass("update-data")) {
+                                $(nt).addClass("update-data");
+                                $(nt).attr("original-value", $(nt).val());
+                            }
+                            if (value == "Solid") {
+                                $(nt).val("s");
+                            } else if (value == "PartSolid") {
+                                $(nt).val("m");
+                            } else if (value == "NonSolid") {
+                                $(nt).val("g");
+                            } else if (value == "Unknown") {
+                                $(nt).val("o");
+                            }
+                        }
+                        if (key === "Radiographic Lesion Margin") {
+                            //console.log("noduleId: theData[noduleId - 1]['Radiographic Lesion Margin'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Radiographic Lesion Margin"] + " : " + value);
+                            // save the current values of the smooth edges (ecircumsribed) (cect se) and spiculated (cect sp) check boxes if not already saved
+                            // and set the value based on theData
+                            se = "#cect" + noduleId + "se";
+                            sp = "#cect" + noduleId + "sp";
+                            if (!$(se).hasClass("update-data")) {
+                                $(se).addClass("update-data");
+                                $(se).attr("original-value", $(se).prop("checked"));
+                                // also add class "update-data" to the parent's parent which is a div to be used for stlying
+                                $(se).parent().parent().addClass("update-data");
+                            }
+                            if (!$(sp).hasClass("update-data")) {
+                                $(sp).addClass("update-data");
+                                $(sp).attr("original-value", $(sp).prop("checked"));
+                                // also add class "update-data" to the parent's parent which is a div to be used for stlying
+                                $(sp).parent().parent().addClass("update-data");
+                            }
+                            if (value == "Lesion with circumscribed margin") {
+                                $(se).prop("checked", true);
+                                $(sp).prop("checked", false);
+                            }
+                            if (value == "Lesion with spiculated margin") {
+                                $(sp).prop("checked", true);
+                                $(se).prop("checked", false);
+                            }
+                        }
+                        if (key === "Maximum 2D diameter") {
+                            //console.log("noduleId: theData[noduleId - 1]['Maximum 2D diameter'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Maximum 2D diameter"] + " : " + value);
+                            currentElement = "#cect" + noduleId + "sl";
+                            if ($(currentElement).hasClass("update-data")) {
+                                $(currentElement).val(value);
+                            } else {
+                                $(currentElement).addClass("update-data");
+                                $(currentElement).attr("original-value", $(currentElement).val());
+                                $(currentElement).val(value);
+                            }
+                        }
+                        if (key === "Maximum perpendicular 2D diameter") {
+                            //console.log("noduleId: theData[noduleId - 1]['Maximum perpendicular 2D diameter'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Maximum perpendicular 2D diameter"] + " : " + value);
+                            currentElement = "#cect" + noduleId + "sw";
+                            if ($(currentElement).hasClass("update-data")) {
+                                $(currentElement).val(value);
+                            } else {
+                                $(currentElement).addClass("update-data");
+                                $(currentElement).attr("original-value", $(currentElement).val());
+                                $(currentElement).val(value);
+                            }
+                        }
+                        if (key === "Volume") {
+                            //console.log("noduleId: theData[noduleId - 1]['Volume'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Volume"] + " : " + value);
+                            currentElement = "#cect" + noduleId + "sv";
+                            if ($(currentElement).hasClass("update-data")) {
+                                $(currentElement).val(value);
+                            } else {
+                                $(currentElement).addClass("update-data");
+                                $(currentElement).attr("original-value", $(currentElement).val());
+                                $(currentElement).val(value);
+                            }
+                        }
+                    });
+                    noduleId++;
+                });
+            }
+
             function _addNodule() {
                 let noduleCount = settings.getNoduleCount();
 
@@ -421,6 +766,8 @@
                 return {
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
+                    updateData: _updateData,
+                    revertData: _revertData,
                     removeNodule: _removeNodule,
                     sortData: _sortData
                 };

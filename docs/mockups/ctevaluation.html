@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.09.21" name="version"/>
+  <meta content="2021.10.01" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.09.21">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.10.01">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.09.21">
+  <script src="../www/jquery-conditonally-display.js?v=2021.10.01">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.09.21">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.01">
   </script>
-  <script src="../www/vapals.js?v=2021.09.21">
+  <script src="../www/vapals.js?v=2021.10.01">
   </script>
-  <script src="../www/init.js?v=2021.09.21">
+  <script src="../www/init.js?v=2021.10.01">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.09.21">
+  <script src="../www/nodule-grid.js?v=2021.10.01">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -508,6 +508,16 @@
          </span>
          Add nodule
         </button>
+        <button class="btn btn-default btn-xs update-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Update Data
+        </button>
+        <button class="btn btn-default btn-xs revert-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Revert Data
+        </button>
        </div>
       </div>
       <div class="col-md-12" id="nodule-table" style="display: none;">
@@ -516,6 +526,16 @@
          <span aria-hidden="true" class="fa fa-plus">
          </span>
          Add nodule
+        </button>
+        <button class="btn btn-default btn-sm update-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Update Data
+        </button>
+        <button class="btn btn-default btn-sm revert-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Revert Data
         </button>
         <table class="table-striped" style="table-layout:auto;">
          <thead>
@@ -5436,6 +5456,8 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
+            $(".update-data-button").on('click', $noduleGrid.updateData);
+            $(".revert-data-button").on('click', $noduleGrid.revertData);
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
@@ -8990,7 +9012,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.09.21
+     2021.10.01
     </span>
    </div>
   </footer>

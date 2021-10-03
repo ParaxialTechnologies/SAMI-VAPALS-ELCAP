@@ -627,7 +627,7 @@
                             if (!$(ll).hasClass("update-data")) {
                                 $(ll).addClass("update-data");
                                 $(ll).attr("original-value", $(ll).val());
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(ll);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(ll);
                                 $(ll).parent().addClass("update-data-parent");
                             }
                             if (value == "Upper lobe of right lung") {
@@ -652,7 +652,7 @@
                             if (!$(nt).hasClass("update-data")) {
                                 $(nt).addClass("update-data");
                                 $(nt).attr("original-value", $(nt).val());
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(nt);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(nt);
                             }
                             if (value == "Solid") {
                                 $(nt).val("s");
@@ -675,14 +675,14 @@
                                 $(se).attr("original-value", $(se).prop("checked"));
                                 // also add class "update-data" to the parent's parent which is a div to be used for stlying
                                 //$(se).parent().parent().addClass("update-data-grandparent");
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(se);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(se);
                             }
                             if (!$(sp).hasClass("update-data")) {
                                 $(sp).addClass("update-data");
                                 $(sp).attr("original-value", $(sp).prop("checked"));
                                 // also add class "update-data" to the parent's parent which is a div to be used for stlying
                                 //$(sp).parent().parent().addClass("update-data-grandparent");
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(sp);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(sp);
                             }
                             if (value == "Lesion with circumscribed margin") {
                                 $(se).prop("checked", true);
@@ -703,7 +703,7 @@
                                 $(currentElement).addClass("update-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Maximum perpendicular 2D diameter") {
@@ -715,7 +715,7 @@
                                 $(currentElement).addClass("update-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Volume") {
@@ -730,7 +730,7 @@
 
                                 $(currentElement).parent().addClass("update-data-parent");
                                 
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
                                 
                             }
                         }

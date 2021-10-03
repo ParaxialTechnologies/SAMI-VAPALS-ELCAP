@@ -516,6 +516,25 @@
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
-    </script>
 
+         function revertField(element) { 
+            //alert("revertField element: element.val(): " + element + " : " + $(element).val()
+            //    + " : " + $(element).prev() + " : " + $(element).prev().val() );
+            ele = $(element).prev();
+            if ($(ele).hasClass("update-data")) {
+                $(ele).val($(ele).attr("original-value"));
+                $(ele).removeAttr("original-value");
+                $(ele).removeClass("update-data");
+                if ($(ele).parent().hasClass("update-data-parent")) {
+                    $(ele).parent().removeClass("update-data-parent");
+                }
+                //if ($(ele).parent().parent().hasClass("update-data-grandparent")) {
+                //    $(ele).parent().parent().removeClass("update-data-grandparent");
+                //}
+            }
+            $(element).prev().focus();  // does not seem to work??
+            $(element).remove();
+         }
+    </script>
+)
 {% endblock %}

@@ -386,7 +386,9 @@
 
                 // should breadcrumbs be saved in added nodules and then these be removed - not for now
                 
-                for (let noduleId = 1; noduleId <= settings.getNoduleCount(); noduleId++) {
+                // loop thru all potential nodules even if not shown since they may get hidden after a data update
+                //for (let noduleId = 1; noduleId <= settings.getNoduleCount(); noduleId++) {
+                for (let noduleId = 1; noduleId <= options.availableNodules; noduleId++) {
                     // Need to work: “Finding”: “Pulmonary nodule”
 
                     // “Finding site”: “Upper lobe of right lung”                    
@@ -417,7 +419,7 @@
                         $(se).removeAttr("original-value");
                         $(se).removeClass("update-data");
                         // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
-                        $(se).parent().parent().removeClass("update-data");
+                        //$(se).parent().parent().removeClass("update-data-grandparent");
                     }
                     if ($(sp).hasClass("update-data")) {
                         if ($(sp).attr("original-value") === "true") {
@@ -428,7 +430,7 @@
                         $(sp).removeAttr("original-value");
                         $(sp).removeClass("update-data");
                         // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
-                        $(sp).parent().parent().removeClass("update-data");
+                        //$(sp).parent().parent().removeClass("update-data-grandparent");
                     }
 
                     // "Maximum 2D diameter"
@@ -453,8 +455,10 @@
                         $(sv).val($(sv).attr("original-value"));
                         $(sv).removeAttr("original-value");
                         $(sv).removeClass("update-data");
+                        $(sv).parent().removeClass("update-data-parent");
                     }
                 }
+                $(".revert-field").remove(); // remove all revert-field buttons
             }
 
             function _updateData() {
@@ -623,6 +627,8 @@
                             if (!$(ll).hasClass("update-data")) {
                                 $(ll).addClass("update-data");
                                 $(ll).attr("original-value", $(ll).val());
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(ll);
+                                $(ll).parent().addClass("update-data-parent");
                             }
                             if (value == "Upper lobe of right lung") {
                                 $(ll).val("rul");
@@ -646,6 +652,7 @@
                             if (!$(nt).hasClass("update-data")) {
                                 $(nt).addClass("update-data");
                                 $(nt).attr("original-value", $(nt).val());
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(nt);
                             }
                             if (value == "Solid") {
                                 $(nt).val("s");
@@ -667,13 +674,15 @@
                                 $(se).addClass("update-data");
                                 $(se).attr("original-value", $(se).prop("checked"));
                                 // also add class "update-data" to the parent's parent which is a div to be used for stlying
-                                $(se).parent().parent().addClass("update-data");
+                                //$(se).parent().parent().addClass("update-data-grandparent");
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(se);
                             }
                             if (!$(sp).hasClass("update-data")) {
                                 $(sp).addClass("update-data");
                                 $(sp).attr("original-value", $(sp).prop("checked"));
                                 // also add class "update-data" to the parent's parent which is a div to be used for stlying
-                                $(sp).parent().parent().addClass("update-data");
+                                //$(sp).parent().parent().addClass("update-data-grandparent");
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(sp);
                             }
                             if (value == "Lesion with circumscribed margin") {
                                 $(se).prop("checked", true);
@@ -684,6 +693,7 @@
                                 $(se).prop("checked", false);
                             }
                         }
+
                         if (key === "Maximum 2D diameter") {
                             //console.log("noduleId: theData[noduleId - 1]['Maximum 2D diameter'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Maximum 2D diameter"] + " : " + value);
                             currentElement = "#cect" + noduleId + "sl";
@@ -693,6 +703,7 @@
                                 $(currentElement).addClass("update-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Maximum perpendicular 2D diameter") {
@@ -704,6 +715,7 @@
                                 $(currentElement).addClass("update-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Volume") {
@@ -715,6 +727,11 @@
                                 $(currentElement).addClass("update-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
+
+                                $(currentElement).parent().addClass("update-data-parent");
+                                
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)>R</button>").insertAfter(currentElement);
+                                
                             }
                         }
                     });

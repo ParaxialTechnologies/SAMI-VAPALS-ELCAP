@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-09-10t01:37z
+SAMIUR ;ven/gpl - user reports ;2021-10-03t01:37z
  ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 4
  ;;18.14
  ;
@@ -523,7 +523,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set SAMIPATS(efmdate,zi,"aformdt")=$$VAPALSDT^SAMICASE(fmanyform)
  . . . set SAMIPATS(efmdate,zi,"edate")=edate
  . . . set SAMIPATS(efmdate,zi)=""
- . . . if ceform="" set cefud="baseline"
+ . . . ;if ceform="" set cefud="baseline"
  . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
  . . . set SAMIPATS(efmdate,zi,"cedos")=cedos
  . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
@@ -558,7 +558,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . if complete=0 do  ; has incomplete form(s) 
  . . . set SAMIPATS(efmdate,zi,"edate")=edate
  . . . set SAMIPATS(efmdate,zi)=""
- . . . if ceform="" set cefud="baseline"
+ . . . ;if ceform="" set cefud="baseline"
  . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
  . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
  . . . set SAMIPATS(efmdate,zi,"siform")=siform

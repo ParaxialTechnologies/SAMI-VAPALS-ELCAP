@@ -455,12 +455,12 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . if type="enrollment",enrolled'="y" quit  ; must be enrolled
  . ;
  . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
- . new lastce,sifm,cefm
- . set (lastce,sifm,cefm)=""
+ . new lastce,sifm,cefm,baseline
+ . set (lastce,sifm,cefm,baseline)=""
  . set sifm=$$FMDT^SAMIUR2(siform)
  . f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
- . . q:ceform'["ceform"
- . . if lastce="" set lastce=ceform
+ . . ;q:ceform'["ceform"
+ . . if ceform["ceform" if lastce="" set lastce=ceform
  . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
  . . if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
  . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
@@ -468,6 +468,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . quit
  . if $$FMDT^SAMIUR2(lastce)<sifm set lastce=""
  . ;
+ . set baseline=$$BASELNDT^SAMICAS3(sid)
  . set edate=$get(@root@("graph",sid,siform,"sidc"))
  . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
  . set efmdate=$$FMDT^SAMIUR2(edate)
@@ -501,6 +502,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set SAMIPATS(fmcefud,zi,"aform")=aform
  . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
+ . . . set SAMIPATS(fmcefud,zi,"baseline")=baseline
  . . . set SAMIPATS(fmcefud,zi)=""
  . . . ;if ceform="" set cefud="baseline"
  . . . set SAMIPATS(fmcefud,zi,"cefud")=cefud

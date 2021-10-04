@@ -441,12 +441,13 @@ TDDT(ZDT) ; embed date in table cell
  ;@calls
  ; ^%DT
  ;
- new X,Y
+ new X,Y,Z
  set X=ZDT
  do ^%DT
  if Y=-1 set Y=""
+ set Z=$$VAPALSDT^SAMICASE(Y)
  new cell
- set cell="<td data-order="""_Y_""" data-search="""_ZDT_""">"_ZDT_"</td>"
+ set cell="<td data-order="""_Y_""" data-search="""_Z_""">"_Z_"</td>"
  ;
  quit cell ; end of $$TDDT
  ; 
@@ -543,7 +544,8 @@ AFORM(zdt,dfn,SAMIPATS) ; Name of most recent form
  Q $GET(SAMIPATS(zdt,dfn,"aform"))
  ;
 AFORMDT(zdt,dfn,SAMIPATS) ; Date of most recent form
- Q $GET(SAMIPATS(zdt,dfn,"aformdt"))
+ N ZD S ZD=$GET(SAMIPATS(zdt,dfn,"aformdt"))
+ Q $$VAPALSDT^SAMICASE(ZD)
  ;
 AGE(zdt,dfn,SAMIPATS) ; age
  ;
@@ -577,7 +579,7 @@ BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;@calls
  ; $$TDDT
  ;
- new bldt set bldt=$get(SAMIPATS(zdt,dfn,"edate"))
+ new bldt set bldt=$get(SAMIPATS(zdt,dfn,"baseline"))
  ;
  quit $$TDDT(bldt) ; end of ppi $$BLINEDT^SAMIUR2
  ;

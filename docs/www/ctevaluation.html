@@ -508,16 +508,6 @@
          </span>
          Add nodule
         </button>
-        <button class="btn btn-default btn-xs update-data-button" type="button">
-         <span aria-hidden="true" class="fa">
-         </span>
-         Update Data
-        </button>
-        <button class="btn btn-default btn-xs revert-data-button" type="button">
-         <span aria-hidden="true" class="fa">
-         </span>
-         Revert Data
-        </button>
        </div>
       </div>
       <div class="col-md-12" id="nodule-table" style="display: none;">
@@ -526,16 +516,6 @@
          <span aria-hidden="true" class="fa fa-plus">
          </span>
          Add nodule
-        </button>
-        <button class="btn btn-default btn-sm update-data-button" type="button">
-         <span aria-hidden="true" class="fa">
-         </span>
-         Update Data
-        </button>
-        <button class="btn btn-default btn-sm revert-data-button" type="button">
-         <span aria-hidden="true" class="fa">
-         </span>
-         Revert Data
         </button>
         <table class="table-striped" style="table-layout:auto;">
          <thead>
@@ -5456,7 +5436,7 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".update-data-button").on('click', $noduleGrid.updateData);
+            $(".import-data-button").on('click', $noduleGrid.updateData);
             $(".revert-data-button").on('click', $noduleGrid.revertData);
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
@@ -9375,19 +9355,19 @@
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
 
-         function revertField(element) { 
+         function revertField(element) {
             //alert("revertField element: element.val(): " + element + " : " + $(element).val()
             //    + " : " + $(element).prev() + " : " + $(element).prev().val() );
             ele = $(element).prev();
-            if ($(ele).hasClass("update-data")) {
+            if ($(ele).hasClass("import-data")) {
                 $(ele).val($(ele).attr("original-value"));
                 $(ele).removeAttr("original-value");
-                $(ele).removeClass("update-data");
-                if ($(ele).parent().hasClass("update-data-parent")) {
-                    $(ele).parent().removeClass("update-data-parent");
+                $(ele).removeClass("import-data");
+                if ($(ele).parent().hasClass("import-data-parent")) {
+                    $(ele).parent().removeClass("import-data-parent");
                 }
-                //if ($(ele).parent().parent().hasClass("update-data-grandparent")) {
-                //    $(ele).parent().parent().removeClass("update-data-grandparent");
+                //if ($(ele).parent().parent().hasClass("import-data-grandparent")) {
+                //    $(ele).parent().parent().removeClass("import-data-grandparent");
                 //}
             }
             $(element).prev().focus();  // does not seem to work??

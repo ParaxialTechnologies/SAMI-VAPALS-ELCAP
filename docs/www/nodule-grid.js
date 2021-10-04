@@ -385,77 +385,77 @@
                 }
 
                 // should breadcrumbs be saved in added nodules and then these be removed - not for now
-                
+
                 // loop thru all potential nodules even if not shown since they may get hidden after a data update
                 //for (let noduleId = 1; noduleId <= settings.getNoduleCount(); noduleId++) {
                 for (let noduleId = 1; noduleId <= options.availableNodules; noduleId++) {
                     // Need to work: “Finding”: “Pulmonary nodule”
 
-                    // “Finding site”: “Upper lobe of right lung”                    
+                    // “Finding site”: “Upper lobe of right lung”
                     ll = "#cect" + noduleId + "ll";
-                    if ($(ll).hasClass("update-data")) {
+                    if ($(ll).hasClass("import-data")) {
                         $(ll).val($(ll).attr("original-value"));
                         $(ll).removeAttr("original-value");
-                        $(ll).removeClass("update-data");
+                        $(ll).removeClass("import-data");
                     }
 
                     // “Attenuation Characteristic”: “Solid”, bold: Consistency - cect1nt
                     nt = "#cect" + noduleId + "nt";
-                    if ($(nt).hasClass("update-data")) {
+                    if ($(nt).hasClass("import-data")) {
                         $(nt).val($(nt).attr("original-value"));
                         $(nt).removeAttr("original-value");
-                        $(nt).removeClass("update-data");
+                        $(nt).removeClass("import-data");
                     }
 
                     // "Radiographic Lesion Margin"
                     se = "#cect" + noduleId + "se";
                     sp = "#cect" + noduleId + "sp";
-                    if ($(se).hasClass("update-data")) {
+                    if ($(se).hasClass("import-data")) {
                         if ($(se).attr("original-value") === "true") {
                             $(se).prop("checked", true);
                         } else {
                             $(se).prop("checked", false);
                         }
                         $(se).removeAttr("original-value");
-                        $(se).removeClass("update-data");
-                        // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
-                        //$(se).parent().parent().removeClass("update-data-grandparent");
+                        $(se).removeClass("import-data");
+                        // also remove the class "import-data" from the parent's parent which is a div to be used for stlying
+                        //$(se).parent().parent().removeClass("import-data-grandparent");
                     }
-                    if ($(sp).hasClass("update-data")) {
+                    if ($(sp).hasClass("import-data")) {
                         if ($(sp).attr("original-value") === "true") {
                             $(sp).prop("checked", true);
                         } else {
                             $(sp).prop("checked", false);
                         }
                         $(sp).removeAttr("original-value");
-                        $(sp).removeClass("update-data");
-                        // also remove the class "update-data" from the parent's parent which is a div to be used for stlying
-                        //$(sp).parent().parent().removeClass("update-data-grandparent");
+                        $(sp).removeClass("import-data");
+                        // also remove the class "import-data" from the parent's parent which is a div to be used for stlying
+                        //$(sp).parent().parent().removeClass("import-data-grandparent");
                     }
 
                     // "Maximum 2D diameter"
                     sl = "#cect" + noduleId + "sl";
-                    if ($(sl).hasClass("update-data")) {
+                    if ($(sl).hasClass("import-data")) {
                         $(sl).val($(sl).attr("original-value"));
                         $(sl).removeAttr("original-value");
-                        $(sl).removeClass("update-data");
+                        $(sl).removeClass("import-data");
                     }
 
                     // "Maximum perpendicular 2D diameter"
                     sl = "#cect" + noduleId + "sw";
-                    if ($(sl).hasClass("update-data")) {
+                    if ($(sl).hasClass("import-data")) {
                         $(sl).val($(sl).attr("original-value"));
                         $(sl).removeAttr("original-value");
-                        $(sl).removeClass("update-data");
+                        $(sl).removeClass("import-data");
                     }
 
                     // "Volume"
                     sv = "#cect" + noduleId + "sv";
-                    if ($(sv).hasClass("update-data")) {
+                    if ($(sv).hasClass("import-data")) {
                         $(sv).val($(sv).attr("original-value"));
                         $(sv).removeAttr("original-value");
-                        $(sv).removeClass("update-data");
-                        $(sv).parent().removeClass("update-data-parent");
+                        $(sv).removeClass("import-data");
+                        $(sv).parent().removeClass("import-data-parent");
                     }
                 }
                 $(".revert-field").remove(); // remove all revert-field buttons
@@ -624,11 +624,11 @@
                         //"Lower lobe of left lung" = "LLL"
                         if (key === "Finding site") {
                             ll = "#cect" + noduleId + "ll";
-                            if (!$(ll).hasClass("update-data")) {
-                                $(ll).addClass("update-data");
+                            if (!$(ll).hasClass("import-data")) {
+                                $(ll).addClass("import-data");
                                 $(ll).attr("original-value", $(ll).val());
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(ll);
-                                $(ll).parent().addClass("update-data-parent");
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(ll);
+                                $(ll).parent().addClass("import-data-parent");
                             }
                             if (value == "Upper lobe of right lung") {
                                 $(ll).val("rul");
@@ -649,10 +649,10 @@
                         if (key === "Attenuation Characteristic") {
                             //console.log("noduleId: theData[noduleId - 1]['Attenuation Characteristic'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Attenuation Characteristic"] + " : " + value);
                             nt = "#cect" + noduleId + "nt";
-                            if (!$(nt).hasClass("update-data")) {
-                                $(nt).addClass("update-data");
+                            if (!$(nt).hasClass("import-data")) {
+                                $(nt).addClass("import-data");
                                 $(nt).attr("original-value", $(nt).val());
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(nt);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(nt);
                             }
                             if (value == "Solid") {
                                 $(nt).val("s");
@@ -670,19 +670,19 @@
                             // and set the value based on theData
                             se = "#cect" + noduleId + "se";
                             sp = "#cect" + noduleId + "sp";
-                            if (!$(se).hasClass("update-data")) {
-                                $(se).addClass("update-data");
+                            if (!$(se).hasClass("import-data")) {
+                                $(se).addClass("import-data");
                                 $(se).attr("original-value", $(se).prop("checked"));
-                                // also add class "update-data" to the parent's parent which is a div to be used for stlying
-                                //$(se).parent().parent().addClass("update-data-grandparent");
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(se);
+                                // also add class "import-data" to the parent's parent which is a div to be used for stlying
+                                //$(se).parent().parent().addClass("import-data-grandparent");
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(se);
                             }
-                            if (!$(sp).hasClass("update-data")) {
-                                $(sp).addClass("update-data");
+                            if (!$(sp).hasClass("import-data")) {
+                                $(sp).addClass("import-data");
                                 $(sp).attr("original-value", $(sp).prop("checked"));
-                                // also add class "update-data" to the parent's parent which is a div to be used for stlying
-                                //$(sp).parent().parent().addClass("update-data-grandparent");
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(sp);
+                                // also add class "import-data" to the parent's parent which is a div to be used for stlying
+                                //$(sp).parent().parent().addClass("import-data-grandparent");
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(sp);
                             }
                             if (value == "Lesion with circumscribed margin") {
                                 $(se).prop("checked", true);
@@ -697,41 +697,41 @@
                         if (key === "Maximum 2D diameter") {
                             //console.log("noduleId: theData[noduleId - 1]['Maximum 2D diameter'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Maximum 2D diameter"] + " : " + value);
                             currentElement = "#cect" + noduleId + "sl";
-                            if ($(currentElement).hasClass("update-data")) {
+                            if ($(currentElement).hasClass("import-data")) {
                                 $(currentElement).val(value);
                             } else {
-                                $(currentElement).addClass("update-data");
+                                $(currentElement).addClass("import-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Maximum perpendicular 2D diameter") {
                             //console.log("noduleId: theData[noduleId - 1]['Maximum perpendicular 2D diameter'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Maximum perpendicular 2D diameter"] + " : " + value);
                             currentElement = "#cect" + noduleId + "sw";
-                            if ($(currentElement).hasClass("update-data")) {
+                            if ($(currentElement).hasClass("import-data")) {
                                 $(currentElement).val(value);
                             } else {
-                                $(currentElement).addClass("update-data");
+                                $(currentElement).addClass("import-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(currentElement);
                             }
                         }
                         if (key === "Volume") {
                             //console.log("noduleId: theData[noduleId - 1]['Volume'] or rather value: " + noduleId + " : " + theData[noduleId - 1]["Volume"] + " : " + value);
                             currentElement = "#cect" + noduleId + "sv";
-                            if ($(currentElement).hasClass("update-data")) {
+                            if ($(currentElement).hasClass("import-data")) {
                                 $(currentElement).val(value);
                             } else {
-                                $(currentElement).addClass("update-data");
+                                $(currentElement).addClass("import-data");
                                 $(currentElement).attr("original-value", $(currentElement).val());
                                 $(currentElement).val(value);
 
-                                $(currentElement).parent().addClass("update-data-parent");
-                                
-                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-arrow-circle-left'></i></button>").insertAfter(currentElement);
-                                
+                                $(currentElement).parent().addClass("import-data-parent");
+
+                                $("<button class=revert-field title='Revert back to the original data for this field' onclick=revertField(this)><i class='fa fa-undo'></i></button>").insertAfter(currentElement);
+
                             }
                         }
                     });

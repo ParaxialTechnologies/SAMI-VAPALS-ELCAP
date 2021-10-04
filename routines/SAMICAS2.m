@@ -505,6 +505,7 @@ GETITEMS ; get items available for studyid
  . if $get(fname)="" set fname="unknown"
  . ;
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
+ . set zdate=$$FMDT^SAMIUR2(zdate)
  . quit:$get(zdate)=""
  . quit:$get(zform)=""
  . quit:$get(zi)=""
@@ -625,7 +626,8 @@ VAPALSDT ; vapals format for dates
  ; new vdate set vdate=$$FMTE^XLFDT(fmdate,"9D")
  ; set vdate=$translate(vdate," ","/")
  ;
- new vdate set vdate=$$FMTE^XLFDT(fmdate,"5D")
+ ;new vdate set vdate=$$FMTE^XLFDT(fmdate,"5D")
+ new vdate set vdate=$$FMTE^XLFDT(fmdate,"5DZ")
  ;
  ;
  ;@stanza 3 termination

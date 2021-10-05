@@ -194,6 +194,15 @@ ii. Contents
       solution: Add inactive patients to Activity report.
 
       reported: 2021-09-30 by Murphy.
+      
+ #.. User reports: Date formats are inconsistent in all user reports.
+ 
+      issue: 21-181 through 21-188: Three date formats were in use in the
+      user reports, so they were updated to consistently be MM/DD/YYYY
+      
+      solution: Fixed inconsistencies
+
+      reported: 2021-09-30 by Yaw.
 
  #.. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
 
@@ -204,7 +213,6 @@ ii. Contents
 
       reported: 2021-08-23 by Henschke.
 
-
  #.. Data Dictionary: Add calculated CAC score to DD for CT Eval and
       Intervention forms
 
@@ -213,8 +221,26 @@ ii. Contents
 
       solution: Added field to Data Dictionaries
 
-      reported: 2021-08-21 by Yip and Jirapatnakul
+      reported: 2021-08-21 by Yip and Jirapatnakul.
 
+ #.. CT Evaluation Form: The smooth edge and spiculated boxes should be next
+     to each other.
+
+      issue: 21-146 Minor change in nodule grid to move Spiculated up under
+      smooth edge since they are related.
+
+      solution: Changed form.
+
+      reported: 2021-07-25 by Chenoweth.
+      
+ #.. All pages: The submit feedback link does not work in the VA.
+
+      issue: 21-154 The VA firewall blocks the link to Jira so the team 
+      decided to remove that link for all pages in the VA.
+      
+      solution: Removed submit feedback link.
+
+      reported: 2021-07-25 by Chenoweth.    
 
 
 #. Package elements
@@ -379,6 +405,8 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
+SAMICAS2
+SAMICUL
 SAMIPAT
 SAMIUR
 SAMIUR2
@@ -403,6 +431,8 @@ SAMIURUL
      >do ^%RO
 
      Routine output (please use %ROMF for object code output)
+     Routines(s): SAMICAS2
+     Routines(s): SAMICUL
      Routines(s): SAMIPAT
      Routines(s): SAMIUR
      Routines(s): SAMIUR2
@@ -432,21 +462,29 @@ SAMIURUL
 
      Routine Output - Save selected routines into RO file.
 
-     Routines: SAMIPAT
+     Routines: SAMICAS2
      SAMIPAT
      Current total of 1 routines.
 
-     Routines: SAMIUR
+     Routines: SAMICUL
      SAMIUR
      Current total of 2 routines.
 
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 3 routines.
+
+     Routines: SAMIUR
+     SAMIUR
+     Current total of 4 routines.
+
      Routines: SAMIUR2
      SAMIUR2
-     Current total of 3 routines.
+     Current total of 5 routines.
 
      Routines: SAMIURUL
      SAMIURUL
-     Current total of 4 routines.
+     Current total of 6 routines.
 
      Routine:
 
@@ -456,7 +494,7 @@ SAMIURUL
      Strip comments <No>?:
      SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
 
-     Total of 2263 lines in 4 routines.
+UPDATE     Total of 2263 lines in 4 routines.
 
      >_
 
@@ -621,8 +659,10 @@ SAMIURUL
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
- Name      Checksum before  Checksum after  Patch list
+UPDATE Name      Checksum before  Checksum after  Patch list
  --------  ---------------  --------------  -----------------
+ SAMICAS2  B445469337
+ SAMICUL   B134436
  SAMIPAT   B761477          B9183353        **12,14**
  SAMIUR    B520612339       B608610712      **5,10,11,12,14**
  SAMIUR2   B1265246653      B1328996822     **5,11,12,14**
@@ -631,14 +671,14 @@ SAMIURUL
 #. Authors
 
              Dates              By
- Developed   2021-08-31/09-09   George P. Lilly (ven)
+ Developed   2021-10-01/05   George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2021-09-09/11      George P. Lilly (ven)
+ Tested      2021-10-04/05      George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Claudia Henschke (va-pho)
@@ -650,7 +690,7 @@ SAMIURUL
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Released    2021-09-11         Frederick D. S. Marshall (ven)
+ Released    2021-10-05         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

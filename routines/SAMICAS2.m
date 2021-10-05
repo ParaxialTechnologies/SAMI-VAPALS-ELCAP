@@ -1,6 +1,6 @@
-SAMICAS2 ;ven/gpl - case review cont ;2021-08-09t17:03z
- ;;18.0;SAMI;**1,5,9,12**;2020-01;
- ;;18.12
+SAMICAS2 ;ven/gpl - case review cont ;2021-10-05t23:14z
+ ;;18.0;SAMI;**1,5,9,12,14**;2020-01;
+ ;;18.14
  ;
  ; SAMICAS2 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.

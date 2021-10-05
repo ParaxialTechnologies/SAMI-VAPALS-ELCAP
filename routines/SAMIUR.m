@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-10-03t01:37z
+SAMIUR ;ven/gpl - user reports ;2021-10-05t23:24z
  ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 4
  ;;18.14
  ;
@@ -21,11 +21,11 @@ SAMIUR ;ven/gpl - user reports ;2021-10-03t01:37z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-10t01:39z
+ ;@last-update 2021-10-05t23:24z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18.14
  ;@release-date 2020-01
  ;@patch-list **5,10,11,12,14**
  ;
@@ -37,6 +37,8 @@ SAMIUR ;ven/gpl - user reports ;2021-10-03t01:37z
  ; whatisthehumanspirit@gmail.com
  ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
  ;
  ;@module-credits see SAMIHUL
  ;

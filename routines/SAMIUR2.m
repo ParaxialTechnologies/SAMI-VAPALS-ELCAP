@@ -573,7 +573,7 @@ AGE(zdt,dfn,SAMIPATS) ; age
  ;
  ;
  ;
-ENROLLDT(zdt,dfn,SAMIPATS)
+ENROLLDT(zdt,dfn,SAMIPATS) ; enrollment date
  ;
  ;;ppi;function;clean;silent;sac
  ;@called-by

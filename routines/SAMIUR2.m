@@ -135,6 +135,8 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
+ . set RPT(2.2,"header")="Active/Inactive"
+ . set RPT(2.2,"routine")="$$ACTIVE^SAMIUR2"
  . set RPT(2.5,"header")="Form"
  . set RPT(2.5,"routine")="$$AFORM^SAMIUR2"
  . set RPT(3,"header")="Form Date"

@@ -448,7 +448,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
  . if type="inactive",status="active" quit  ; for inactive report
  . ;if type'="inactive",status'="active" quit  ; for other reports
- . if type'="inactive",type'="enrollment",status'="active" quit  ;other rpts
+ . if type'="inactive",type'="activity",type'="enrollment",status'="active" quit  ;other rpts
  . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
  . if type="enrollment",eligible'="y" quit  ; must be eligible
  . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))

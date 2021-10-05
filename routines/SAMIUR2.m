@@ -225,7 +225,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(4,"header")=$$SSNLABEL(SITE)
  . set RPT(4,"routine")="$$SSN^SAMIUR2"
  . set RPT(5,"header")="Enrollment date"
- . set RPT(5,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(5,"routine")="$$ENROLLDT^SAMIUR2"
  . quit
  ;
  if TYPE="cumpy" do  quit  ;

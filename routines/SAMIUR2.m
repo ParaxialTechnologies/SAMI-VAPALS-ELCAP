@@ -181,7 +181,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="Enrollment date"
- . set RPT(3,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(3,"routine")="$$ENROLLDT^SAMIUR2"
  . ;set RPT(3,"header")="CT Date"
  . ;set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
  . ;set RPT(4,"header")="Gender"
@@ -206,7 +206,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  ;
  if TYPE="incomplete" do  quit  ;
  . set RPT(1,"header")="Enrollment date"
- . set RPT(1,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(1,"routine")="$$ENROLLDT^SAMIUR2"
  . set RPT(2,"header")="Name"
  . set RPT(2,"routine")="$$NAME^SAMIUR2"
  . set RPT(3,"header")=$$SSNLABEL(SITE)
@@ -571,6 +571,19 @@ AGE(zdt,dfn,SAMIPATS) ; age
  ;
  ;
  ;
+ENROLLDT(zdt,dfn,SAMIPATS)
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$TDDT
+ ;
+ new enroldt set enroldt=$get(SAMIPATS(zdt,dfn,"edate"))
+ ;
+ quit $$TDDT(enroldt) ; end of ppi $$ENROLLDT^SAMIUR2
+ ;
+ ;
 BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;
  ;;ppi;function;clean;silent;sac
@@ -582,7 +595,6 @@ BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  new bldt set bldt=$get(SAMIPATS(zdt,dfn,"baseline"))
  ;
  quit $$TDDT(bldt) ; end of ppi $$BLINEDT^SAMIUR2
- ;
  ;
  ;
 CONTACT(zdt,dfn,SAMIPATS) ; patient street address

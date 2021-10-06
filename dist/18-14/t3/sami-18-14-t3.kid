@@ -1,5 +1,5 @@
 KIDS Distribution saved on Oct 05, 2021@17:58:41
-Test Release SAMI*18.0*14 SEQ#14 T3
+Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)
 **KIDS**:SAMI*18.0*14^
 
 **INSTALL NAME**
@@ -9,7 +9,7 @@ SAMI*18.0*14^^0^3211005^n
 "BLD",11514,1,0)
 ^^1^1^3210910^^
 "BLD",11514,1,1,0)
-Test Release SAMI*18.0*14 SEQ #14 T2 (18-14-t2)
+Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)
 "BLD",11514,4,0)
 ^9.64PA^^
 "BLD",11514,6.3)

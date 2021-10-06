@@ -70,9 +70,9 @@ ii. Contents
 
 #. Description
 
- SAMI #{version} adds [[[n]]] updates, most of them changes to the
- user reports.  The definitive source for the VAPALS-ELCAP application
- - codebase, package distributions (including this one), and
+ #{nmsp} #{version} adds 16 updates, most of them changes to the user
+ reports.  The definitive source for the VAPALS-ELCAP application -
+ codebase, package distributions (including this one), and
  documentation - is at the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
@@ -85,7 +85,7 @@ ii. Contents
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
 
- The [[[n]]] high priority changes made or bugs fixed are:
+ The 12 high-priority changes made or bugs fixed are:
 
  #.#. Enrollment Report: Add inactive/active column
 
@@ -96,77 +96,77 @@ ii. Contents
       solution: Added column using definition.
 
       reported: 2021-08-23 by Henschke.
-      
- #.. Activity Report: Rearrange columns.
 
-      issues 21-156 (21-126): Order of columns is: Name, SSN or PID, Form, Form
-      Date, Followup, on Date. Remove When column.
+ #.#. Activity Report: Rearrange columns
+
+      issue 21-156 and 21-126: Order of columns is: Name, SSN or PID,
+      Form, Form Date, Followup, on Date. Remove When column.
 
       solution: Changed columns as requested.
 
-      reported: 2021-08-23 2021-07-12 by Henschke
-      
- #.. Activity Report: Correct problem were "baseline" appears instead of
-      follow up date.
+      reported: 2021-08-23, 2021-07-12 by Henschke
 
-      issues 21-173: The word "baseline" shows up in the "on Date" column when
+ #.#. Activity Report: Correct problem were "baseline" appears instead of
+      follow up date
+
+      issue 21-173: The word "baseline" shows up in the "on Date" column when
       CT scan is a baseline scan.
 
       solution: Fixed to put in date.
 
-      reported: 2021-09-14 by Rukavena   
+      reported: 2021-09-14 by Rukavena
 
- #.. Activity Report: Form date doesn't sort properly.
+ #.#. Activity Report: Form date doesn't sort properly
 
-      issues 21-182: Dates are being sorted as text instead of dates.
+      issue 21-182: Dates are being sorted as text instead of dates.
 
       solution: Fixed to sort as date.
 
       reported: 2021-09-30 by Jarapatnakul
 
- #.. Follow up Report: Rearrange columns, change title, add phone number
+ #.#. Follow up Report: Rearrange columns, change title, add phone number
 
-      issues: 21-158, 21-157, 21-120 Change followup report columns to F/U
-      Date, Name, SSN or PID, Baseline Date, Last Form, Form Date,
-      Recommendation, Contact Info. (remove When) Change title of Followup
-      report to Participant Follow-up, add phone number to contact info, add
-      other types of Follow up.
+      issues 21-158, 21-157, and 21-120: Change followup report
+      columns to F/U Date, Name, SSN or PID, Baseline Date, Last Form,
+      Form Date, Recommendation, Contact Info. (remove When) Change
+      title of Followup report to Participant Follow-up, add phone
+      number to contact info, add other types of Follow up.
 
       solution: Made changes as requested.
 
       reported: 2021-08-23, 2021-07-09 by Henschke and Jirapatnakul
 
- #.. Follow-up Report: Correct problem were "baseline" appears instead of
-      follow-up date.
+ #.#. Follow-up Report: Correct problem were "baseline" appears instead of
+      follow-up date
 
       issue 21-168: The word "baseline" appears instead of follow up date
       sometimes.
 
-      solution: Fix bug
+      solution: Fix bug.
 
-      reported: 2021-08-29 by Jirapatnakul
-      
- #.. Follow-up Report: Follow-up form is not being considered in calculating
-      follow-up date.
+      reported: 2021-08-29 by Jirapatnakul.
+
+ #.#. Follow-up Report: Follow-up form is not being considered in calculating
+      follow-up date
 
       issue 21-174: The follow-up date on the follow-up form is also the date
       of scheduled CT, so the field name (sidoct) was different than the field
       name in other forms (cefud). This meant that the date on the follow-up
       form was not included in algorithm to determine follow-up date.
 
-      solution: Changed field name
+      solution: Changed field name.
 
-      reported: 2021-09-14 by Lily  
+      reported: 2021-09-14 by Lily.
 
- #.. Follow-up Report: The baseline date is being used as the intake date.
+ #.#. Follow-up Report: The baseline date is being used as the intake date
 
       issue 21-175: The wrong date was being used for the intake date.
 
-      solution: Fix bug
+      solution: Fix bug.
 
-      reported: 2021-09-14 by Yaw
+      reported: 2021-09-14 by Yaw.
 
- #.. Intake But No CT Eval Report: Wrong patients on report
+ #.#. Intake But No CT Eval Report: Wrong patients on report
 
       issue 21-165: Missing CT report is reporting patients who do have CT
       Evals.
@@ -174,19 +174,19 @@ ii. Contents
       solution: Fixed bug
 
       reported: 2021-08-31 by Murphy
-      
- #.. User reports: Inactive patients in wrong reports
 
-      issue: 21-164 Inactive patients are showing up in reports that they
+ #.#. User reports: Inactive patients in wrong reports
+
+      issue 21-164: Inactive patients are showing up in reports that they
       should not be in. They should only be in enrollment and inactive reports.
 
       solution: Fixed to keep inactive patients out of inappropriate reports.
 
-      reported: 2021-08-31 by the Phoenix Team
-      
- #.. User reports: Team decided to add inactive patients to Activity Report
+      reported: 2021-08-31 by the Phoenix Team.
 
-      issue: 21-181: If an inactive patient has a CT Scan or other intervention
+ #.#. User reports: Team decided to add inactive patients to Activity Report
+
+      issue 21-181: If an inactive patient has a CT Scan or other intervention
       the Nurse Navigator will not be alerted. The team decided to add inactive
       patients to the activity report so they can correct status of patient if
       needed and will follow-up as appropriate.
@@ -194,27 +194,9 @@ ii. Contents
       solution: Add inactive patients to Activity report.
 
       reported: 2021-09-30 by Murphy.
-      
- #.. User reports: Date formats are inconsistent in all user reports.
- 
-      issue: 21-181 through 21-188: Three date formats were in use in the
-      user reports, so they were updated to consistently be MM/DD/YYYY
-      
-      solution: Fixed inconsistencies
 
-      reported: 2021-09-30 by Yaw.
-
- #.. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
-
-      issue: 21-159 Change dropdown menu item from "Missing Image & CT
-      Evaluation" to "Intake But No CT Evaluation"
-
-      solution: Changed item.
-
-      reported: 2021-08-23 by Henschke.
-
- #.. Data Dictionary: Add calculated CAC score to DD for CT Eval and
-      Intervention forms
+ #.#. Data Dictionary: Add calculated CAC score to DD for CT Eval and
+       Intervention forms
 
       issue: 21-161 Include CAC score field from CT Eval form in Data
       Dictionary
@@ -223,24 +205,44 @@ ii. Contents
 
       reported: 2021-08-21 by Yip and Jirapatnakul.
 
- #.. CT Evaluation Form: The smooth edge and spiculated boxes should be next
-     to each other.
+ The 4 medium-priority changes made or bugs fixed are:
 
-      issue: 21-146 Minor change in nodule grid to move Spiculated up under
+ #.#. User reports: Date formats are inconsistent in all user reports
+
+      issues 21-181 through 21-188: Three date formats were in use in the
+      user reports, so they were updated to consistently be MM/DD/YYYY.
+
+      solution: Fixed inconsistencies.
+
+      reported: 2021-09-30 by Yaw.
+
+ #.#. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
+
+      issue 21-159: Change dropdown menu item from "Missing Image & CT
+      Evaluation" to "Intake But No CT Evaluation".
+
+      solution: Changed item.
+
+      reported: 2021-08-23 by Henschke.
+
+ #.#. CT Evaluation Form: The smooth edge and spiculated boxes should be next
+       to each other
+
+      issue 21-146: Minor change in nodule grid to move Spiculated up under
       smooth edge since they are related.
 
       solution: Changed form.
 
       reported: 2021-07-25 by Chenoweth.
-      
- #.. All pages: The submit feedback link does not work in the VA.
 
-      issue: 21-154 The VA firewall blocks the link to Jira so the team 
+ #.#. All pages: The submit feedback link does not work in the VA
+
+      issue 21-154: The VA firewall blocks the link to Jira so the team
       decided to remove that link for all pages in the VA.
-      
+
       solution: Removed submit feedback link.
 
-      reported: 2021-07-25 by Chenoweth.    
+      reported: 2021-07-25 by Chenoweth.
 
 
 #. Package elements
@@ -294,14 +296,12 @@ ii. Contents
    data rate and "[time]" is how long the file took to transfer (both
    of which vary based on the user's network conditions).
 
-    $ wget --no-verbose 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/sami-#{version}.zip'
-    {now} URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/sami-#{version}.zip [{size}/{size}] -> "sami-#{version}.zip" [1]
-    $ _
+#>include: .dtool/wget-snippet.txt
 
    Then unzip the archive file with the following command.
 
-    $ unzip sami-18-14-t3.zip
-    Archive:  sami-18-14-t3.zip
+    $ unzip #{lnmsp}-#{version}.zip
+    Archive:  #{lnmsp}-#{version}.zip
       [... list of files being extracted ...]
     $ _
 
@@ -405,12 +405,8 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
-SAMICAS2
-SAMICUL
-SAMIPAT
-SAMIUR
-SAMIUR2
-SAMIURUL
+#>include: .dtool/routine-list.txt
+
 
   #.#.#. Run the backup
 
@@ -439,13 +435,13 @@ SAMIURUL
      Routines(s): SAMIURUL
      Routines(s):
 
-     Description: sami*18*14 SEQ #14 T3 routine backup
+     Description: #{vista-version} routine backup
 
      Output routines to
-     Device: /home/osehra/run/in/sami/18-14/t3/sami-18-14-t3-back.ro
+     Device: /home/osehra/run/in/#{lnmsp}/#{partialdir}/#{lnmsp}-#{version}-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMICAS2.INT    SAMICUL.INT     SAMIPAT.INT     SAMIUR.INT      
+     SAMICAS2.INT    SAMICUL.INT     SAMIPAT.INT     SAMIUR.INT
      SAMIUR2.INT     SAMIURUL.INT
      >_
 
@@ -489,9 +485,9 @@ SAMIURUL
 
      Routine:
 
-     Output device <terminal>: /home/osehra/run/in/sami/18-14/t3/sami-18-14-t3-back.ro
+     Output device <terminal>: /home/osehra/run/in/#{lnmsp}/#{partialdir}/#{lnmsp}-#{version}-back.ro
 
-     Header Label: sami*18*14 SEQ #14 T3 routine backup
+     Header Label: #{vista-version} routine backup
      Strip comments <No>?:
      SAMICAS2   SAMICUL   SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
 
@@ -547,7 +543,7 @@ SAMIURUL
      Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
      Enter a Host File: /home/osehra/run/in/sami/18-14/t3/sami-18-14-t3.kid
 
-        KIDS Distribution saved on Sep 10, 2021@18:52:20
+        KIDS Distribution saved on Oct 05, 2021@17:58:41
         Comment: Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)
 
      This Distribution contains Transport Globals for the following Package(s):
@@ -580,10 +576,10 @@ SAMIURUL
 
      Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
      Select INSTALL NAME:    SAMI*18.0*14     Loaded from Distribution    [now]
-        => Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)  ;Created on Sep 10, 2021@18:52:20
+        => Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)  ;Created on Oct 05, 2021@17:58:41
 
      This Distribution was loaded on [now] with header of
-        Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)  ;Created on Sep 10, 2021@18:52:20
+        Test Release SAMI*18.0*14 SEQ #14 T3 (sami-18-14-t3)  ;Created on Oct 05, 2021@17:58:41
         It consisted of the following Install(s):
         SAMI*18.0*14
      Checking Install for Package SAMI*18.0*14
@@ -605,7 +601,7 @@ SAMIURUL
       Install Started for SAMI*18.0*14 :
                     [now]
 
-     Build Distribution Date: Sep 10, 2021
+     Build Distribution Date: Oct 05, 2021
 
       Installing Routines:.....
                     [now]
@@ -656,14 +652,14 @@ SAMIURUL
 
  Lines 2 & 3 of each of these routines now look like:
   ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
-  ;;18.14
+  ;;18-14
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
  Name      Checksum before  Checksum after  Patch list
  --------  ---------------  --------------  -----------------
- SAMICAS2  B445469337		B447463890		**1,5,9,12,14**
- SAMICUL   B134436			B135148			**9,11,12,14**
+ SAMICAS2  B445469337       B447463890      **1,5,9,12,14**
+ SAMICUL   B134436          B135148         **9,11,12,14**
  SAMIPAT   B761477          B9183353        **12,14**
  SAMIUR    B520612339       B618867768      **5,10,11,12,14**
  SAMIUR2   B1265246653      B1360826675     **5,11,12,14**
@@ -672,7 +668,7 @@ SAMIURUL
 #. Authors
 
              Dates              By
- Developed   2021-10-01/05   George P. Lilly (ven)
+ Developed   2021-10-01/05      George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)

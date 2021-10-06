@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.10.03" name="version"/>
+  <meta content="2021.10.05" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.10.03">
+  <script src="jquery-conditonally-enable.js?v=2021.10.05">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.10.03">
+  <script src="jquery-conditonally-display.js?v=2021.10.05">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.10.03">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.10.05">
   </script>
-  <script src="vapals.js?v=2021.10.03">
+  <script src="vapals.js?v=2021.10.05">
   </script>
-  <script src="init.js?v=2021.10.03">
+  <script src="init.js?v=2021.10.05">
   </script>
-  <script src="nodule-grid.js?v=2021.10.03">
+  <script src="nodule-grid.js?v=2021.10.05">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -5436,7 +5436,7 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".import-data-button").on('click', $noduleGrid.updateData);
+            $(".import-data-button").on('click', $noduleGrid.importData);
             $(".revert-data-button").on('click', $noduleGrid.revertData);
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
@@ -8970,7 +8970,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.10.03
+     2021.10.05
     </span>
    </div>
   </footer>
@@ -9333,24 +9333,29 @@
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
 
-         function revertField(element) {
-            //alert("revertField element: element.val(): " + element + " : " + $(element).val()
-            //    + " : " + $(element).prev() + " : " + $(element).prev().val() );
-            ele = $(element).prev();
-            if ($(ele).hasClass("import-data")) {
-                $(ele).val($(ele).attr("original-value"));
-                $(ele).removeAttr("original-value");
-                $(ele).removeClass("import-data");
-                if ($(ele).parent().hasClass("import-data-parent")) {
-                    $(ele).parent().removeClass("import-data-parent");
+        function revertField(element, fieldSelector) {
+            const $ele = $(fieldSelector);
+            if ($ele.hasClass("import-data")) {
+                if ($ele.prop('type') === "checkbox") {
+                    if ($ele.attr("original-value") === "false") {
+                        $ele.prop("checked", true);
+                    } else {    
+                        $ele.prop("checked", false);
+                    }                
+                } else {
+                    $ele.val($ele.attr("original-value"));
                 }
-                //if ($(ele).parent().parent().hasClass("import-data-grandparent")) {
-                //    $(ele).parent().parent().removeClass("import-data-grandparent");
-                //}
+                $ele.removeAttr("original-value");
+                $ele.removeClass("import-data");
+                if ($ele.parent().hasClass("import-data")) {
+                    $ele.parent().removeClass("import-data");
+                }
+                if ($ele.parent().hasClass("import-data-parent")) {
+                    $ele.parent().removeClass("import-data-parent");
+                }
+                $(element).remove();
             }
-            $(element).prev().focus();  // does not seem to work??
-            $(element).remove();
-         }
+        }
   </script>
   )
  </body>

@@ -517,24 +517,29 @@
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
 
-         function revertField(element) {
-            //alert("revertField element: element.val(): " + element + " : " + $(element).val()
-            //    + " : " + $(element).prev() + " : " + $(element).prev().val() );
-            ele = $(element).prev();
-            if ($(ele).hasClass("import-data")) {
-                $(ele).val($(ele).attr("original-value"));
-                $(ele).removeAttr("original-value");
-                $(ele).removeClass("import-data");
-                if ($(ele).parent().hasClass("import-data-parent")) {
-                    $(ele).parent().removeClass("import-data-parent");
+        function revertField(element, fieldSelector) {
+            const $ele = $(fieldSelector);
+            if ($ele.hasClass("import-data")) {
+                if ($ele.prop('type') === "checkbox") {
+                    if ($ele.attr("original-value") === "false") {
+                        $ele.prop("checked", true);
+                    } else {    
+                        $ele.prop("checked", false);
+                    }                
+                } else {
+                    $ele.val($ele.attr("original-value"));
                 }
-                //if ($(ele).parent().parent().hasClass("import-data-grandparent")) {
-                //    $(ele).parent().parent().removeClass("import-data-grandparent");
-                //}
+                $ele.removeAttr("original-value");
+                $ele.removeClass("import-data");
+                if ($ele.parent().hasClass("import-data")) {
+                    $ele.parent().removeClass("import-data");
+                }
+                if ($ele.parent().hasClass("import-data-parent")) {
+                    $ele.parent().removeClass("import-data-parent");
+                }
+                $(element).remove();
             }
-            $(element).prev().focus();  // does not seem to work??
-            $(element).remove();
-         }
+        }
     </script>
 )
 {% endblock %}

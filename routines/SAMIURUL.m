@@ -179,9 +179,10 @@ SAMIURUL ;ven/gpl - user reports log ;2021-10-05T23:35Z
  ; "baseline" showing up in F/U date on Follow-up report, wrong patients
  ; on Intake but Missing CT Eval report.
  ;
- ; 2021-10-05 ven/gpl 18.14
- ; SAMIIUR, SAMIUR2 fix some small bus, make date consistent, bump versions
- ; and dates.
+ ; 2021-10-05 ven/gpl 18.14   3251c582, c4343d69, 368fa7f7, c4343d69
+ ;  b3cd039b, 237109df, 368fa7f7
+ ; SAMIIUR, SAMIUR2 fix some small bugs, make date formats consistent, bump 
+ ; versions and dates.
  ;
  ;
  ;@contents

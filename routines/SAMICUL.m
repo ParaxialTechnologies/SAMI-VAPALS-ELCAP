@@ -315,7 +315,7 @@ SAMICUL ;ven/gpl - case review log ;2021-10-05t23:23z
  ; report exists: in LASTCMP start w/before today; in PRIORCMP add
  ; line to handle retstr="".
  ;
- ; 2021-10-04/05 ven gpl 18.14
+ ; 2021-10-04/05 ven gpl 18.14 ec3b6e5d
  ;  SAMICAS2 updated date format, bumped date and version.
  ;
  ;@contents

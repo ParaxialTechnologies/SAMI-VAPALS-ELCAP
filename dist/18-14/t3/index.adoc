@@ -7,7 +7,7 @@
 
 // grep '\$TXT' sami-18-14-t3.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-10-06t03:49z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-10-06t03:52z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -90,7 +90,7 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-SAMI {version} adds 16 updates, most of them changes to the user reports.
+SAMI {version} adds 17 updates, most of them changes to the user reports.
 
 The definitive source for the VAPALS-ELCAP application---codebase, package
 distributions (including this patch), and documentation---is a
@@ -107,7 +107,7 @@ The following list shows changes for:
   <<fix-4,4>>, <<fix-5,5>>, <<fix-6,6>>, <<fix-7,7>>, <<fix-8,8>>, <<fix-9,9>>,
   <<fix-10,10>>, <<fix-11,11>>, <<fix-12,12>>);
 * Medium-priority changes and bugfixes (<<fix-13,13>>, <<fix-14,14>>,
-  <<fix-15,15>>, <<fix-16,16>>)
+  <<fix-15,15>>, <<fix-16,16>>, <<fix-17,17>>)
 
 [[fix-1]]
 === Enrollment Report: Add inactive/active column
@@ -276,6 +276,16 @@ to remove that link for all pages in the VA.
 **Solution:** Removed submit feedback link.
 
 **Reported:** 2021-07-25 by Chenoweth.
+
+[[fix-17]]
+=== Login page: Make login able to use username and password
+
+**Issue m015:** To prepare for non-VA installations, access/verify needs to be
+changed to username/password.
+
+**Solution:** Parameter created to change wording.
+
+**Reported:** 2021-02-24 by Beyond VAPALS team.
 
 [[pkg-elements]]
 == Package elements
@@ -485,6 +495,7 @@ Routine output (please use %ROMF for object code output)
 Routine(s): SAMICAS2
 Routine(s): SAMICUL
 Routine(s): SAMIPAT
+Routine(s): SAMISITE
 Routine(s): SAMIUR
 Routine(s): SAMIUR2
 Routine(s): SAMIURUL
@@ -551,7 +562,7 @@ Header Label: SAMI*18*14 SEQ #14 T3 routine backup
 Strip comments <No>?:
 SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
 
-Total of 3557 lines in 6 routines.
+Total of 3558 lines in 6 routines.
 
 >_
 -------------------------------------------------------------------------------
@@ -746,6 +757,7 @@ The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
 | `SAMICAS2` | `B445469337`      | `B447463890`     | `**1,5,9,12,14**`
 | `SAMICUL`  | `B134436`         | `B135148`        | `**9,11,12,14**`
 | `SAMIPAT`  | `B761477`         | `B9183353`       | `**12,14**`
+| `SAMISITE` | `B91053774`       | `B95807248`      | `**5,12,14**`
 | `SAMIUR`   | `B520612339`      | `B618867768`     | `**5,10,11,12,14**`
 | `SAMIUR2`  | `B1265246653`     | `B1360826675`    | `**5,11,12,14**`
 | `SAMIURUL` | `B98717`          | `B103109`        | `**12,14**`

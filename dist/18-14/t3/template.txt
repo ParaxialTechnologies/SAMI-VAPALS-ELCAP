@@ -70,7 +70,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 16 updates, most of them changes to the user
+ #{nmsp} #{version} adds 17 updates, most of them changes to the user
  reports.  The definitive source for the VAPALS-ELCAP application -
  codebase, package distributions (including this one), and
  documentation - is at the following public Github repository:
@@ -205,7 +205,7 @@ ii. Contents
 
       reported: 2021-08-21 by Yip and Jirapatnakul.
 
- The 4 medium-priority changes made or bugs fixed are:
+ The 5 medium-priority changes made or bugs fixed are:
 
  #.#. User reports: Date formats are inconsistent in all user reports
 
@@ -244,7 +244,7 @@ ii. Contents
 
       reported: 2021-07-25 by Chenoweth.
       
-#.#. Login page: Make login able to use username and password.
+#.#. Login page: Make login able to use username and password
 
       issue m015: To prepare for non-VA installations, access/verify needs
       to be changed to username/password.
@@ -436,13 +436,14 @@ ii. Contents
      >do ^%RO
 
      Routine output (please use %ROMF for object code output)
-     Routines(s): SAMICAS2
-     Routines(s): SAMICUL
-     Routines(s): SAMIPAT
-     Routines(s): SAMIUR
-     Routines(s): SAMIUR2
-     Routines(s): SAMIURUL
-     Routines(s):
+     Routine(s): SAMICAS2
+     Routine(s): SAMICUL
+     Routine(s): SAMIPAT
+     Routine(s): SAMISITE
+     Routine(s): SAMIUR
+     Routine(s): SAMIUR2
+     Routine(s): SAMIURUL
+     Routine(s):
 
      Description: #{vista-version} routine backup
 
@@ -450,8 +451,8 @@ ii. Contents
      Device: /home/osehra/run/in/#{lnmsp}/#{partialdir}/#{lnmsp}-#{version}-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMICAS2.INT    SAMICUL.INT     SAMIPAT.INT     SAMIUR.INT
-     SAMIUR2.INT     SAMIURUL.INT
+     SAMICAS2.INT    SAMICUL.INT     SAMIPAT.INT     SAMISITE.INT
+     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
      >_
 
     On YottaDB/GT.M
@@ -480,17 +481,21 @@ ii. Contents
      SAMIPAT
      Current total of 3 routines.
 
-     Routines: SAMIUR
+     Routines: SAMISITE
      SAMIUR
      Current total of 4 routines.
 
+     Routines: SAMIUR
+     SAMIUR
+     Current total of 5 routines.
+
      Routines: SAMIUR2
      SAMIUR2
-     Current total of 5 routines.
+     Current total of 6 routines.
 
      Routines: SAMIURUL
      SAMIURUL
-     Current total of 6 routines.
+     Current total of 7 routines.
 
      Routine:
 
@@ -498,9 +503,10 @@ ii. Contents
 
      Header Label: #{vista-version} routine backup
      Strip comments <No>?:
-     SAMICAS2   SAMICUL   SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
+     SAMICAS2   SAMICUL   SAMIPAT   SAMISITE  SAMIUR    SAMIUR2
+     SAMIURUL
 
-     Total of 3557 lines in 6 routines.
+     Total of 3886 lines in 7 routines.
 
      >_
 
@@ -670,6 +676,7 @@ ii. Contents
  SAMICAS2  B445469337       B447463890      **1,5,9,12,14**
  SAMICUL   B134436          B135148         **9,11,12,14**
  SAMIPAT   B761477          B9183353        **12,14**
+ SAMISITE  B91053774        B95807248       *5,12,14*
  SAMIUR    B520612339       B618867768      **5,10,11,12,14**
  SAMIUR2   B1265246653      B1360826675     **5,11,12,14**
  SAMIURUL  B98717           B103109         **12,14**

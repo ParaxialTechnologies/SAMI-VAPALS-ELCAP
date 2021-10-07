@@ -7,7 +7,7 @@
 
 // grep '\$TXT' sami-18-14-t3.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-10-07t00:16z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-10-07t21:11z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -23,7 +23,7 @@ George P. Lilly,
 Domenic DiNatale,
 Larry G. Carlson
 _&_ Frederick D. S. Marshall +
-2021-10-06
+2021-10-07
 
 [[front]]
 [role="h2"]
@@ -90,7 +90,7 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-SAMI {version} adds 17 updates, most of them changes to the user reports.
+SAMI {version} adds 18 updates, most of them changes to the user reports.
 
 The definitive source for the VAPALS-ELCAP application---codebase, package
 distributions (including this patch), and documentation---is a
@@ -105,9 +105,9 @@ The following list shows changes for:
 [options="compact"]
 * High-priority changes and bugfixes (<<fix-1,1>>, <<fix-2,2>>, <<fix-3,3>>,
   <<fix-4,4>>, <<fix-5,5>>, <<fix-6,6>>, <<fix-7,7>>, <<fix-8,8>>, <<fix-9,9>>,
-  <<fix-10,10>>, <<fix-11,11>>, <<fix-12,12>>);
-* Medium-priority changes and bugfixes (<<fix-13,13>>, <<fix-14,14>>,
-  <<fix-15,15>>, <<fix-16,16>>, <<fix-17,17>>)
+  <<fix-10,10>>, <<fix-11,11>>, <<fix-12,12>>, <<fix-13,13>>);
+* Medium-priority changes and bugfixes (<<fix-14,14>>, <<fix-15,15>>,
+  <<fix-16,16>>, <<fix-17,17>>, <<fix-18,18>>)
 
 [[fix-1]]
 === Enrollment Report: Add inactive/active column
@@ -238,6 +238,21 @@ Dictionary.
 **Reported:** 2021-08-21 by Yip and Jirapatnakul.
 
 [[fix-13]]
+=== Followup form: Make a way for clinicians to change the followup date
+
+**Issue 21-049:** Allow clinicians other than the radiologist to reset the date
+to Followup (approximate date) on the Followup report. Change existing
+††__Followup Date__†† field to ††__Followup Form Date__†† and add new date
+field called ††__Next Followup Date__††. Computation of new CT Eval Form date
+will attend to this new field instead of the old one. Insert new field before
+Date of baseline CT.
+
+**Solution:** Next CT Followup added and used to determine date for Participant
+Followup Report.
+
+**Reported:** 2021-04-22 by Anil and Yaw.
+
+[[fix-14]]
 === User reports: Date formats are inconsistent in all user reports
 
 **Issues 21-181 through 21-188:** Three date formats were in use in the user
@@ -247,7 +262,7 @@ reports, so they were updated to consistently be MM/DD/YYYY.
 
 **Reported:** 2021-09-30 by Yaw.
 
-[[fix-14]]
+[[fix-15]]
 === Report Menu: Change dropdown menu item to “Intake But No CT Evaluation”
 
 **Issues 21-159:** Change dropdown menu item from ††__Missing Image & CT
@@ -257,7 +272,7 @@ Evaluation__†† to ††__Intake But No CT Evaluation__††.
 
 **Reported:** 2021-08-23 by Henschke.
 
-[[fix-15]]
+[[fix-16]]
 === CT Evaluation Form: The smooth edge and spiculated boxes should be next to each other
 
 **Issue 21-146:** Minor change in nodule grid to move ††Spiculated†† up under
@@ -267,7 +282,7 @@ smooth edge since they are related.
 
 **Reported:** 2021-07-25 by Chenoweth.
 
-[[fix-16]]
+[[fix-17]]
 === All pages: The submit feedback link does not work in the VA
 
 **Issue 21-154:** The VA firewall blocks the link to Jira, so the team decided
@@ -277,7 +292,7 @@ to remove that link for all pages in the VA.
 
 **Reported:** 2021-07-25 by Chenoweth.
 
-[[fix-17]]
+[[fix-18]]
 === Login page: Make login able to use username and password
 
 **Issue m015:** To prepare for non-VA installations, access/verify needs to be
@@ -352,7 +367,7 @@ Then unzip the archive file with the following command.
 -------------------------------------------------------------------------------
 $ unzip sami-18-14-t3.zip
 Archive:  sami-18-14-t3.zip
-  [... 441 files in archive, about 9.7 Mb ...]
+  [... 553 files in archive, about 9.7 Mb ...]
 $ _
 -------------------------------------------------------------------------------
 
@@ -791,7 +806,7 @@ The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2021-10-06            | Frederick D. S. Marshall (VEN) +
+| Released  | 2021-10-07            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

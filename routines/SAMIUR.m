@@ -459,16 +459,17 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
  . new lastce,sifm,cefm,baseline
  . set (lastce,sifm,cefm,baseline)=""
- . set sifm=$$FMDT^SAMIUR2(siform)
- . f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
- . . ;q:ceform'["ceform"
- . . if ceform["ceform" if lastce="" set lastce=ceform
- . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
- . . if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
- . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
- . . if cedos'="" set fmcedos=$$FMDT^SAMIUR2(cedos)
- . . quit
- . if $$FMDT^SAMIUR2(lastce)<sifm set lastce=""
+ . set sifm=$$FMDT^SAMIUR2($p(siform,"siform-",2))
+ . ;f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
+ . ;f  set ceform=$order(items(ceform),-1) q:ceform=""  d  ;
+ . ;. q:ceform'["form"
+ . ;. if ceform["ceform" if lastce="" set lastce=ceform
+ . ;. set cefud=$get(@root@("graph",sid,ceform,"cefud"))
+ . ;. if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
+ . ;. set cedos=$get(@root@("graph",sid,ceform,"cedos"))
+ . ;. if cedos'="" set fmcedos=$$FMDT^SAMIUR2(cedos)
+ . ;. quit
+ . ;if $$FMDT^SAMIUR2($p(lastce,"ceform-",2))<sifm set lastce=""
  . ;
  . set baseline=$$BASELNDT^SAMICAS3(sid)
  . set edate=$get(@root@("graph",sid,siform,"sidc"))
@@ -480,21 +481,31 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . new aform,aformdt set (aform,aformdt)=""
  . new anyform set anyform=""
  . new proot set proot=$na(@root@("graph",sid))
- . for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
+ . ;for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
+ . for  set anyform=$order(items("sort",anyform),-1) q:anyform=""  d  ;
  . . new tempf set tempf=""
- . . f  set tempf=$order(items("sort",anyform,tempf)) q:tempf=""  q:aform'=""  d  ;
+ . . ;f  set tempf=$order(items("sort",anyform,tempf)) q:tempf=""  q:aform'=""  d  ;
+ . . f  set tempf=$order(items("sort",anyform,tempf)) q:tempf=""  d  ;
  . . . if latef="" d  ; record the latest form for activity report
  . . . . set latefdt=anyform ; date of latest form
  . . . . new latekey set latekey=$order(items("sort",anyform,tempf,""))
  . . . . set latef=$order(items("sort",anyform,tempf,latekey,""))
- . . . if tempf["bxform" q  ; don't want any biopsy forms
+ . . . if lastce="" d  ; if looking for latest ct eval
+ . . . . if tempf'["ceform" q  ; this is not a ceform
+ . . . . set lastce=$order(items("sort",anyform,tempf,""))
+ . . . . if anyform<sifm set lastce="" ; doesn't count - before enrollment
+ . . . ;if tempf["bxform" q  ; don't want any biopsy forms
  . . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
- . . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+ . . . ;if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
  . . . new tempt set tempt=$order(items("sort",anyform,tempf,tempk,""))
- . . . set cefud=$g(@proot@(tempk,"cefud"))
- . . . set fmcefud=$$FMDT^SAMIUR2(cefud)
- . . . set aform=tempt
- . . . set aformdt=anyform
+ . . . if cefud="" d  ;
+ . . . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+ . . . . set cefud=$g(@proot@(tempk,"cefud"))
+ . . . . set fmcefud=$$FMDT^SAMIUR2(cefud)
+ . . . . set ceform=tempk
+ . . . if aform="" d  ;
+ . . . . set aform=tempt
+ . . . . set aformdt=anyform
  . ;
  . if type="followup" do  ;
  . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
@@ -502,7 +513,9 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . if +fmcefud<(fmenddt+1) do  ; before end date
  . . . quit:cefud=""  ; no followup date
  . . . set SAMIPATS(fmcefud,zi,"aform")=aform
+ . . . ;set SAMIPATS(fmcefud,zi,"aform")=latef
  . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
+ . . . ;set SAMIPATS(fmcefud,zi,"aformdt")=latefdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
  . . . set SAMIPATS(fmcefud,zi,"baseline")=baseline
  . . . set SAMIPATS(fmcefud,zi)=""

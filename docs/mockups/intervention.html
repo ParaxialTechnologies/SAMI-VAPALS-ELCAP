@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.10.05" name="version"/>
+  <meta content="2021.10.16" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -64,17 +64,17 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.10.05">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.10.16">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.10.05">
+  <script src="../www/jquery-conditonally-display.js?v=2021.10.16">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.05">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.16">
   </script>
-  <script src="../www/vapals.js?v=2021.10.05">
+  <script src="../www/vapals.js?v=2021.10.16">
   </script>
-  <script src="../www/init.js?v=2021.10.05">
+  <script src="../www/init.js?v=2021.10.16">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.10.05">
+  <script src="../www/nodule-grid.js?v=2021.10.16">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -9702,7 +9702,7 @@
       <input context="server" name="cennod" type="hidden" value="1"/>
       <input context="server" name="ceanod" type="hidden" value="y"/>
       <script>
-       function initNoduleGrid(fv) {
+       function initNoduleGrid(fv, dicomData) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -9716,8 +9716,13 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".import-data-button").on('click', $noduleGrid.importData);
-            $(".revert-data-button").on('click', $noduleGrid.revertData);
+            if (dicomData) {
+                console.log("dicom is present")
+                $(".import-data-button").on('click', function () {
+                    $noduleGrid.importData(dicomData);
+                });
+                $(".revert-data-button").on('click', $noduleGrid.revertData);
+            }
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
@@ -13086,7 +13091,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.10.05
+     2021.10.16
     </span>
    </div>
   </footer>
@@ -13396,7 +13401,7 @@
 
             
 
-            initNoduleGrid(fv);
+            initNoduleGrid(fv, null);
             initAbnormalities(fv);
             initEmphysema(fv);
             initFollowup(fv);

@@ -608,7 +608,7 @@
     <input type="hidden" name="ceanod" value="{{ "y" if mockup else "n" }}" context="server"/>
 
     <script>
-        function initNoduleGrid(fv) {
+        function initNoduleGrid(fv, dicomData) {
             const noduleArrayLength = parseInt("{{ noduleArray|length }}");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -622,8 +622,13 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".import-data-button").on('click', $noduleGrid.importData);
-            $(".revert-data-button").on('click', $noduleGrid.revertData);
+            if (dicomData) {
+                console.log("dicom is present")
+                $(".import-data-button").on('click', function () {
+                    $noduleGrid.importData(dicomData);
+                });
+                $(".revert-data-button").on('click', $noduleGrid.revertData);
+            }
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 

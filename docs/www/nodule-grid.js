@@ -32,144 +32,6 @@
                 },
             }, options);
 
-            // dicomStructuredReport is hard coded here for now
-            const dicomStructuredReport = [
-                {
-                    "Tracking Identifier": "L1",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with spiculated margin",
-                    "Finding site": "Lower lobe of left lung",
-                    "Lung-RADS assessment": "Lung-rads 4x",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "36.3",
-                    "Maximum 3D diameter": "42.2",
-                    "Maximum perpendicular 2D diameter": "26.7",
-                    "Mean 2D diameter": "31.5",
-                    "Volume": "14789.7"
-                },
-                {
-                    "Tracking Identifier": "R2",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Upper lobe of right lung",
-                    "Lung-RADS assessment": "Lung-rads 4a",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "15.0",
-                    "Maximum 3D diameter": "17.3",
-                    "Maximum perpendicular 2D diameter": "9.5",
-                    "Mean 2D diameter": "12.2",
-                    "Volume": "580.4"
-                },
-                {
-                    "Tracking Identifier": "L3",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "PartSolid",
-                    "Radiographic Lesion Margin": "Lesion with spiculated margin",
-                    "Finding site": "Upper lobe of left lung",
-                    "Lung-RADS assessment": "Lung-rads 4x",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "14.5",
-                    "Maximum 3D diameter": "24.4",
-                    "Maximum perpendicular 2D diameter": "9.7",
-                    "Mean 2D diameter": "12.1",
-                    "Volume": "1145.7"
-                },
-                {
-                    "Tracking Identifier": "R4",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with spiculated margin",
-                    "Finding site": "Upper lobe of right lung",
-                    "Lung-RADS assessment": "Lung-rads 4x",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "12.6",
-                    "Maximum 3D diameter": "13.1",
-                    "Maximum perpendicular 2D diameter": "7.8",
-                    "Mean 2D diameter": "10.2",
-                    "Volume": "381.3"
-                },
-                {
-                    "Tracking Identifier": "L5",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Lower lobe of left lung",
-                    "Lung-RADS assessment": "Lung-rads 4a",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "11.5",
-                    "Maximum 3D diameter": "11.7",
-                    "Maximum perpendicular 2D diameter": "8.6",
-                    "Mean 2D diameter": "10.1",
-                    "Volume": "371.2"
-                },
-                {
-                    "Tracking Identifier": "L6",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Lower lobe of left lung",
-                    "Lung-RADS assessment": "Lung-rads 2",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "7.8",
-                    "Maximum 3D diameter": "7.8",
-                    "Maximum perpendicular 2D diameter": "4.8",
-                    "Mean 2D diameter": "6.3",
-                    "Volume": "79.1"
-                },
-                {
-                    "Tracking Identifier": "R7",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Upper lobe of right lung",
-                    "Lung-RADS assessment": "Lung-rads 2",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "6.1",
-                    "Maximum 3D diameter": "6.2",
-                    "Maximum perpendicular 2D diameter": "6.1",
-                    "Mean 2D diameter": "6.1",
-                    "Volume": "42.1"
-                },
-                {
-                    "Tracking Identifier": "R8",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Unknown",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Lower lobe of right lung",
-                    "Lung-RADS assessment": "Lung-rads 0",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "5.5",
-                    "Maximum 3D diameter": "6.2",
-                    "Maximum perpendicular 2D diameter": "4.2",
-                    "Mean 2D diameter": "4.9",
-                    "Volume": "34.5"
-                },
-                {
-                    "Tracking Identifier": "R9",
-                    "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                    "Finding": "Pulmonary nodule",
-                    "Attenuation Characteristic": "Solid",
-                    "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                    "Finding site": "Upper lobe of right lung",
-                    "Lung-RADS assessment": "Lung-rads 2",
-                    "Lesion Review Status": "Accepted",
-                    "Maximum 2D diameter": "5.4",
-                    "Maximum 3D diameter": "5.4",
-                    "Maximum perpendicular 2D diameter": "4.0",
-                    "Mean 2D diameter": "4.7",
-                    "Volume": "21.4"
-                }
-            ];
 
             function setupNoduleEnabledState(noduleId) {
                 $("#cect" + noduleId + "nt").conditionallyEnable({
@@ -259,7 +121,7 @@
                 if (isItNewValue === "pw") {
                     $("#cect" + noduleId + "st").val("re");
                 } else {
-                    if ($("#cect" + noduleId + "st").val() === "re" ) {
+                    if ($("#cect" + noduleId + "st").val() === "re") {
                         $("#cect" + noduleId + "st").val("-");
                     }
                 }
@@ -533,12 +395,12 @@
             }
 
             function _revertData() {
-                $("#nodule-table").find("[original-value]").each(function() {
+                $("#nodule-table").find("[original-value]").each(function () {
                     if ($(this).hasClass("import-data")) {
                         if ($(this).prop('type') === "checkbox") {
                             if ($(this).attr("original-value") === "false") {
                                 $(this).prop("checked", false);
-                            } else {    
+                            } else {
                                 $(this).prop("checked", true);
                             }
                         } else {
@@ -548,28 +410,25 @@
                         $(this).removeClass("import-data");
                     }
                 });
-                $("#nodule-table").find(".import-data").each(function() {
+                $("#nodule-table").find(".import-data").each(function () {
                     $(this).removeClass("import-data");
                 });
-                $("#nodule-table").find(".import-data-parent").each(function() {
+                $("#nodule-table").find(".import-data-parent").each(function () {
                     $(this).removeClass("import-data-parent");
                 });
                 $(".revert-field").remove(); // remove all revert-field buttons
             }
 
-            function _importData() {
-                _importDataX(dicomStructuredReport);
-            }
-            function _importDataX(theData) {
-                // if number of nodules shown is less than the number of entries in theData array then increase the number of nodules
-                if (settings.getNoduleCount() < theData.length) {
-                    let noduleCount = theData.length;
+            function _importData(dicomData) {
+                // if number of nodules shown is less than the number of entries in dicomData array then increase the number of nodules
+                if (settings.getNoduleCount() < dicomData.length) {
+                    let noduleCount = dicomData.length;
                     _displayNodules(noduleCount);
                     settings.setNoduleCount(noduleCount);
                 }
 
                 noduleId = 1;
-                theData.forEach(obj => {
+                dicomData.forEach(obj => {
                     Object.entries(obj).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
 
@@ -579,23 +438,23 @@
                             const $field = $(fieldSelector);
                             if (!$field.hasClass("import-data")) {
                                 $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());                                
+                                $field.attr("original-value", $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
-                                const originalValue =  $(fieldSelectorWithVal).text().trim();
+                                const originalValue = $(fieldSelectorWithVal).text().trim();
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelector);
                                 $field.parent().addClass("import-data-parent");
                             }
-                            if (value == "Upper lobe of right lung") {
+                            if (value === "Upper lobe of right lung") {
                                 $field.val("rul");
-                            } else if (value == "Upper lobe of left lung") {
+                            } else if (value === "Upper lobe of left lung") {
                                 $field.val("lul");
-                            } else if (value == "Lower lobe of right lung") {
+                            } else if (value === "Lower lobe of right lung") {
                                 $field.val("rll");
-                            } else if (value == "Lower lobe of left lung") {
+                            } else if (value === "Lower lobe of left lung") {
                                 $field.val("lll");
-                            } else if (value == "“Middle lobe of lung") {
+                            } else if (value === "“Middle lobe of lung") {
                                 $field.val("rml");
                             }
                         }
@@ -608,18 +467,18 @@
                                 $field.addClass("import-data");
                                 $field.attr("original-value", $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
-                                const originalValue =  $(fieldSelectorWithVal).text().trim();
+                                const originalValue = $(fieldSelectorWithVal).text().trim();
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelector);
                             }
-                            if (value == "Solid") {
+                            if (value === "Solid") {
                                 $field.val("s");
-                            } else if (value == "PartSolid") {
+                            } else if (value === "PartSolid") {
                                 $field.val("m");
-                            } else if (value == "NonSolid") {
+                            } else if (value === "NonSolid") {
                                 $field.val("g");
-                            } else if (value == "Unknown") {
+                            } else if (value === "Unknown") {
                                 $field.val("o");
                             }
                         }
@@ -634,34 +493,26 @@
                                 $fieldSe.addClass("import-data");
                                 $fieldSe.parent().addClass("import-data");
                                 $fieldSe.attr("original-value", $fieldSe.prop("checked"));
-                                
-                                if ($fieldSe.prop("checked")) {
-                                    originalValue = "checked";
-                                } else {
-                                    originalValue = "unchecked";
-                                }
+
+                                const originalValue = $fieldSe.prop("checked") ? "checked" : "unchecked";
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelectorSe + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelectorSe + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelectorSe);
                             }
                             if (!$fieldSp.hasClass("import-data")) {
                                 $fieldSp.addClass("import-data");
                                 $fieldSp.parent().addClass("import-data");
                                 $fieldSp.attr("original-value", $fieldSp.prop("checked"));
-                                if ($fieldSp.prop("checked")) {
-                                    originalValue = "checked";
-                                } else {
-                                    originalValue = "unchecked";
-                                }
+                                const originalValue = $fieldSp.prop("checked") ? "checked" : "unchecked";
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelectorSp + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelectorSp + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelectorSp);
                             }
-                            if (value == "Lesion with circumscribed margin") {
+                            if (value === "Lesion with circumscribed margin") {
                                 $fieldSe.prop("checked", true);
                                 $fieldSp.prop("checked", false);
                             }
-                            if (value == "Lesion with spiculated margin") {
+                            if (value === "Lesion with spiculated margin") {
                                 $fieldSp.prop("checked", true);
                                 $fieldSe.prop("checked", false);
                             }
@@ -679,7 +530,7 @@
                                 const originalValue = $field.val();
                                 $field.val(value);
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelector);
                             }
                         }
@@ -696,7 +547,7 @@
                                 const originalValue = $field.val();
                                 $field.val(value);
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelector);
                             }
                         }
@@ -706,7 +557,6 @@
                             const fieldSelector = "#cect" + noduleId + "sv";
                             const $field = $(fieldSelector);
                             if ($field.hasClass("import-data")) {
-                                //originalValue = $field.attr("original-value").val();
                                 $field.val(value);
                             } else {
                                 $field.addClass("import-data");
@@ -715,7 +565,7 @@
                                 $field.val(value);
                                 $field.parent().addClass("import-data-parent");
                                 const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
+                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
                                 $(iElementStr).insertAfter(fieldSelector);
                             }
                         }

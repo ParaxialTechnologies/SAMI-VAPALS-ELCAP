@@ -419,6 +419,11 @@
                 $(".revert-field").remove(); // remove all revert-field buttons
             }
 
+            function createRevertElement(fieldName, originalValue) {
+                return $("<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" +
+                    originalValue + ") for this field\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>");
+            }
+
             function _importData(dicomData) {
                 // if number of nodules shown is less than the number of entries in dicomData array then increase the number of nodules
                 if (settings.getNoduleCount() < dicomData.length) {
@@ -441,9 +446,7 @@
                                 $field.attr("original-value", $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
                                 const originalValue = $(fieldSelectorWithVal).text().trim();
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelector);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                                 $field.parent().addClass("import-data-parent");
                             }
                             if (value === "Upper lobe of right lung") {
@@ -468,9 +471,7 @@
                                 $field.attr("original-value", $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
                                 const originalValue = $(fieldSelectorWithVal).text().trim();
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelector);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                             if (value === "Solid") {
                                 $field.val("s");
@@ -495,18 +496,14 @@
                                 $fieldSe.attr("original-value", $fieldSe.prop("checked"));
 
                                 const originalValue = $fieldSe.prop("checked") ? "checked" : "unchecked";
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelectorSe + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelectorSe);
+                                createRevertElement(fieldSelectorSe, originalValue).insertAfter(fieldSelectorSe);
                             }
                             if (!$fieldSp.hasClass("import-data")) {
                                 $fieldSp.addClass("import-data");
                                 $fieldSp.parent().addClass("import-data");
                                 $fieldSp.attr("original-value", $fieldSp.prop("checked"));
                                 const originalValue = $fieldSp.prop("checked") ? "checked" : "unchecked";
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelectorSp + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelectorSp);
+                                createRevertElement(fieldSelectorSp, originalValue).insertAfter(fieldSelectorSp);
                             }
                             if (value === "Lesion with circumscribed margin") {
                                 $fieldSe.prop("checked", true);
@@ -529,9 +526,7 @@
                                 $field.attr("original-value", $field.val());
                                 const originalValue = $field.val();
                                 $field.val(value);
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelector);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
 
@@ -546,9 +541,7 @@
                                 $field.attr("original-value", $field.val());
                                 const originalValue = $field.val();
                                 $field.val(value);
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelector);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
 
@@ -564,9 +557,7 @@
                                 const originalValue = $field.val();
                                 $field.val(value);
                                 $field.parent().addClass("import-data-parent");
-                                const iElementStr = "<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" + originalValue + ") for this field\"" +
-                                    " onclick=\"revertField(this, '" + fieldSelector + "')\"></i>";
-                                $(iElementStr).insertAfter(fieldSelector);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
                     });
@@ -625,7 +616,6 @@
                     sortData: _sortData
                 };
             }
-
             return _init();
         }
     });

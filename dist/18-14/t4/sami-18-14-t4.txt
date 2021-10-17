@@ -1,33 +1,22 @@
-#:patchtitle: Nashville Demo Patch
-#:nmsp: SAMI
-#:lnmsp: sami
-#:appname: VAPALS-ELCAP
-#:version: 18-14-t4
-#:partialdir: 18-14/t4
-#:status: test patch
-#:vista-version: SAMI*18.0*14 SEQ #14 T4
-#:vista-longversion: Version 18.0, Patch ID #14, Seq #14, Test 4
-#:priority: high
-#:categories: routine, file
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-10-17t20:26z
 
-#>center: Nashville Demo Patch
-#>center: #{nmsp} (#{appname}) #{version}
-#>center: (#{vista-version})
+                         Nashville Demo Patch
+                     SAMI (VAPALS-ELCAP) 18-14-t4
+                      (SAMI*18.0*14 SEQ #14 T4)
 
-#>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
-#>center: & Frederick D. S. Marshall
-#>center: #{now-iso-ymd}
+           George P. Lilly, Dom DiNatale, Larry G. Carlson,
+                      & Frederick D. S. Marshall
+                              2021-10-17
 
 i. Front matter
 
- App         #{nmsp} (#{appname})
- Version     #{version}
- Vista ID    #{vista-version}
-             #{vista-longversion}
- Priority    #{priority}
- Categories  #{categories}
- Status      #{status}: #{nmsp}-#{version}.zip
+ App         SAMI (VAPALS-ELCAP)
+ Version     18-14-t4
+ Vista ID    SAMI*18.0*14 SEQ #14 T4
+             Version 18.0, Patch ID #14, Seq #14, Test 4
+ Priority    high
+ Categories  routine, file
+ Status      test patch: SAMI-18-14-t4.zip
  Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
              SAMI 18-2 (SAMI*18.0*2 SEQ #2)
              SAMI 18-3 (SAMI*18.0*3 SEQ #3)
@@ -68,9 +57,9 @@ ii. Contents
 
 
 
-#. Description
+1. Description
 
- #{nmsp} #{version} adds 20 updates, most of them changes to the user
+ SAMI 18-14-t4 adds 20 updates, most of them changes to the user
  reports.  The definitive source for the VAPALS-ELCAP application -
  codebase, package distributions (including this one), and
  documentation - is at the following public Github repository:
@@ -79,7 +68,7 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/
+ https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-14/t4/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -87,7 +76,7 @@ ii. Contents
 
  The 14 high-priority changes made or bugs fixed are:
 
- #.#. Enrollment Report: Add inactive/active column
+ 1.1. Enrollment Report: Add inactive/active column
 
       issue 21-155: Add inactive/active column after name on the Enrollment
       report. "Enrolled" is defined as eligible on intake form and marked as
@@ -97,7 +86,7 @@ ii. Contents
 
       reported: 2021-08-23 by Henschke.
 
- #.#. Activity Report: Rearrange columns
+ 1.2. Activity Report: Rearrange columns
 
       issue 21-156 and 21-126: Order of columns is: Name, SSN or PID,
       Form, Form Date, Followup, on Date. Remove When column.
@@ -106,7 +95,7 @@ ii. Contents
 
       reported: 2021-08-23, 2021-07-12 by Henschke
 
- #.#. Activity Report: Correct problem were "baseline" appears instead of
+ 1.3. Activity Report: Correct problem were "baseline" appears instead of
       follow up date
 
       issue 21-173: The word "baseline" shows up in the "on Date" column when
@@ -116,7 +105,7 @@ ii. Contents
 
       reported: 2021-09-14 by Rukavena
 
- #.#. Activity Report: Form date doesn't sort properly
+ 1.4. Activity Report: Form date doesn't sort properly
 
       issue 21-182: Dates are being sorted as text instead of dates.
 
@@ -124,7 +113,7 @@ ii. Contents
 
       reported: 2021-09-30 by Jarapatnakul
 
- #.#. Follow up Report: Rearrange columns, change title, add phone number
+ 1.5. Follow up Report: Rearrange columns, change title, add phone number
 
       issues 21-158, 21-157, and 21-120: Change followup report
       columns to F/U Date, Name, SSN or PID, Baseline Date, Last Form,
@@ -136,7 +125,7 @@ ii. Contents
 
       reported: 2021-08-23, 2021-07-09 by Henschke and Jirapatnakul
 
- #.#. Follow-up Report: Correct problem were "baseline" appears instead of
+ 1.6. Follow-up Report: Correct problem were "baseline" appears instead of
       follow-up date
 
       issue 21-168: The word "baseline" appears instead of follow up date
@@ -146,7 +135,7 @@ ii. Contents
 
       reported: 2021-08-29 by Jirapatnakul.
 
- #.#. Follow-up Report: Follow-up form is not being considered in calculating
+ 1.7. Follow-up Report: Follow-up form is not being considered in calculating
       follow-up date
 
       issue 21-174: The follow-up date on the follow-up form is also the date
@@ -158,7 +147,7 @@ ii. Contents
 
       reported: 2021-09-14 by Lily.
 
- #.#. Follow-up Report: The baseline date is being used as the intake date
+ 1.8. Follow-up Report: The baseline date is being used as the intake date
 
       issue 21-175: The wrong date was being used for the intake date.
 
@@ -166,7 +155,7 @@ ii. Contents
 
       reported: 2021-09-14 by Yaw.
 
- #.#. Intake But No CT Eval Report: Wrong patients on report
+ 1.9. Intake But No CT Eval Report: Wrong patients on report
 
       issue 21-165: Missing CT report is reporting patients who do have CT
       Evals.
@@ -174,8 +163,8 @@ ii. Contents
       solution: Fixed bug
 
       reported: 2021-08-31 by Murphy
-      
-#.#. Intake But No CT Eval Report: There are patients with CT Evals in report
+
+1.10. Intake But No CT Eval Report: There are patients with CT Evals in report
 
       issue 21-193: Patients who had a follow-up form after a CT Eval were
       shown on report because algorithm stopped looking for a CT Eval in the
@@ -185,7 +174,7 @@ ii. Contents
 
       reported: 2021-10-12 by Murphy.
 
- #.#. User reports: Inactive patients in wrong reports
+ 1.11. User reports: Inactive patients in wrong reports
 
       issue 21-164: Inactive patients are showing up in reports that they
       should not be in. They should only be in enrollment and inactive reports.
@@ -194,7 +183,7 @@ ii. Contents
 
       reported: 2021-08-31 by the Phoenix Team.
 
- #.#. User reports: Team decided to add inactive patients to Activity Report
+ 1.12. User reports: Team decided to add inactive patients to Activity Report
 
       issue 21-181: If an inactive patient has a CT Scan or other intervention
       the Nurse Navigator will not be alerted. The team decided to add inactive
@@ -205,7 +194,7 @@ ii. Contents
 
       reported: 2021-09-30 by Murphy.
 
- #.#. Data Dictionary: Add calculated CAC score to DD for CT Eval and
+ 1.13. Data Dictionary: Add calculated CAC score to DD for CT Eval and
        Intervention forms
 
       issue 21-161: Include CAC score field from CT Eval form in Data
@@ -215,7 +204,7 @@ ii. Contents
 
       reported: 2021-08-21 by Yip and Jirapatnakul.
 
- #.#. Followup form: Make a way for clinicians to change the followup date
+ 1.14. Followup form: Make a way for clinicians to change the followup date
 
       issue 21-049: Allow clinicians other than the radiologist to reset the
       date to Followup (approximate date) on the Followup report. Change
@@ -231,7 +220,7 @@ ii. Contents
 
  The 6 medium-priority changes made or bugs fixed are:
 
- #.#. User reports: Date formats are inconsistent in all user reports
+ 1.15. User reports: Date formats are inconsistent in all user reports
 
       issues 21-181 through 21-188: Three date formats were in use in the
       user reports, so they were updated to consistently be MM/DD/YYYY.
@@ -240,7 +229,7 @@ ii. Contents
 
       reported: 2021-09-30 by Yaw.
 
- #.#. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
+ 1.16. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
 
       issue 21-159: Change dropdown menu item from "Missing Image & CT
       Evaluation" to "Intake But No CT Evaluation".
@@ -249,7 +238,7 @@ ii. Contents
 
       reported: 2021-08-23 by Henschke.
 
- #.#. CT Evaluation Form: The smooth edge and spiculated boxes should be next
+ 1.17. CT Evaluation Form: The smooth edge and spiculated boxes should be next
        to each other
 
       issue 21-146: Minor change in nodule grid to move Spiculated up under
@@ -258,8 +247,8 @@ ii. Contents
       solution: Changed form.
 
       reported: 2021-07-25 by Chenoweth.
-      
- #.#. Participant Followup Form: Rename and move Next CT follow-up field
+
+ 1.18. Participant Followup Form: Rename and move Next CT follow-up field
 
       issue 21-190: Change "Next CT followup" field name to "New CT follow-up
       date if needed". Remove red star. Move field below "Time since
@@ -269,7 +258,7 @@ ii. Contents
 
       reported: 2021-10-14 by the Phoenix Team.
 
- #.#. All pages: The submit feedback link does not work in the VA
+ 1.19. All pages: The submit feedback link does not work in the VA
 
       issue 21-154: The VA firewall blocks the link to Jira so the team
       decided to remove that link for all pages in the VA.
@@ -278,7 +267,7 @@ ii. Contents
 
       reported: 2021-07-25 by Chenoweth.
 
-#.#. Login page: Make login able to use username and password
+1.20. Login page: Make login able to use username and password
 
       issue m015: To prepare for non-VA installations, access/verify needs
       to be changed to username/password.
@@ -288,12 +277,30 @@ ii. Contents
       reported: 2021-02-24 by Beyond VAPALS team.
 
 
-#. Package elements
+2. Package elements
 
-#>include: .dtool/packelements.txt
+ File                      Change
+ ------------------------  --------
+ sami-18-14-t4-recipe.txt  new
+ sami-18-14-t4.kid         new
+ sami-18-14-t4.txt         new
+ docs/form-fields/*        modified
+ docs/www/*                modified
+ upgrade-webapp            new
+ sami-18-14-t4.zip         new
+ 
+ Routine   Change
+ --------  --------
+ SAMICAS2  modified
+ SAMICUL   modified
+ SAMIPAT   modified
+ SAMISITE  modified
+ SAMIUR    modified
+ SAMIUR2   modified
+ SAMIURUL  modified
+ 
 
-
-#. Prepare for installation
+3. Prepare for installation
 
  This involves creating a directory to work in, running a script to
  back up certain datafiles and web-application files, and then going
@@ -301,7 +308,7 @@ ii. Contents
  patch.
 
 
- #.#. Assume the identity of your osehra Unix user
+ 3.1. Assume the identity of your osehra Unix user
 
    This step assumes you type a dzdo or sudo to do this; here the
    symbol $DEMAND will stand for whichever command you use. (Also, in
@@ -313,43 +320,45 @@ ii. Contents
     $
 
 
- #.#. Prepare install directory
+ 3.2. Prepare install directory
 
    If this is your first time installling this, execute the following
    commands.  They create a shell variable, and then creates the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-14/t4
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-14/t4
     $ cd $INDIR
     $ rm -rf ./sami*.{txt,kid} ./*webapp*
 
 
- #.#. Download and prepare the archive file
+ 3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-#{version}.zip in advance
+   You may safely download the archive file sami-18-14-t4.zip in advance
    of the actual install. In the following text, "[now]" represents a
    time stamp representing your current time, and "[bits/sec]" is a
    data rate and "[time]" is how long the file took to transfer (both
    of which vary based on the user's network conditions).
 
-#>include: .dtool/wget-snippet.txt
-
+    $ wget --no-verbose 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-14/t4/sami-18-14-t4.zip'
+    {now} URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-14/t4/sami-18-14-t4.zip [{size}/{size}] -> "sami-18-14-t4.zip" [1]
+    $ _
+    
    Then unzip the archive file with the following command.
 
-    $ unzip #{lnmsp}-#{version}.zip
-    Archive:  #{lnmsp}-#{version}.zip
+    $ unzip sami-18-14-t4.zip
+    Archive:  sami-18-14-t4.zip
       [... list of files being extracted ...]
     $ _
 
 
- #.#. Install web-application files
+ 3.4. Install web-application files
 
     At this point, the web-application files must be installed. This is done
     with a script that backs up the affected directories before installing
@@ -387,7 +396,7 @@ ii. Contents
      $ _
 
 
- #.#. Back up M routines
+ 3.5. Back up M routines
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
@@ -400,7 +409,7 @@ ii. Contents
    to follow the correct dialog for your implementation.
 
 
-  #.#.#. Enter M
+  3.5.1. Enter M
 
     At the unix prompt, enter the M environment in direct mode, using
     the 'csession' command on Cache or the 'mumps' command on
@@ -422,7 +431,7 @@ ii. Contents
     >
 
 
-  #.#.#. Sign into Vista
+  3.5.2. Sign into Vista
 
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -441,17 +450,23 @@ ii. Contents
     >
 
 
-  #.#.#. List of routines
+  3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
     Routine prompt, press return to indicate the list of routines is
     done.
 
-#>include: .dtool/routine-list.txt
+SAMICAS2
+SAMICUL
+SAMIPAT
+SAMISITE
+SAMIUR
+SAMIUR2
+SAMIURUL
 
 
-  #.#.#. Run the backup
+  3.5.4. Run the backup
 
     Creating the routine backup file differs by implementation.
 
@@ -467,9 +482,29 @@ ii. Contents
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
 
-#>include: .dtool/cache-ro-snippet.txt
+     >do ^%RO
+     
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMICAS2
+     Routine(s): SAMICUL
+     Routine(s): SAMIPAT
+     Routine(s): SAMISITE
+     Routine(s): SAMIUR
+     Routine(s): SAMIUR2
+     Routine(s): SAMIURUL
+     Routine(s):
+     
+     Description: SAMI*18.0*14 SEQ #14 T4 routine backup
+     
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-14/t4/sami-18-14-t4-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMICAS2.INT    SAMICUL.INT     SAMIPAT.INT     SAMISITE.INT
+     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
+     >_
 
-    On YottaDB/GT.M
+On YottaDB/GT.M
     ---------------
     Note that routines that don't currently exist will result in the
     routine name not appearing under the input line, and won't count
@@ -479,29 +514,94 @@ ii. Contents
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
 
-#>include: .dtool/yotta-ro-snippet.txt
+     >do ^%RO
+     
+     Routine Output - Save selected routines into RO file.
+     
+     Routines: SAMICAS2
+     SAMICAS2
+     Current total of 1 routines.
+     
+     Routines: SAMICUL
+     SAMICUL
+     Current total of 2 routines.
+     
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 3 routines.
+     
+     Routines: SAMISITE
+     SAMISITE
+     Current total of 4 routines.
+     
+     Routines: SAMIUR
+     SAMIUR
+     Current total of 5 routines.
+     
+     Routines: SAMIUR2
+     SAMIUR2
+     Current total of 6 routines.
+     
+     Routines: SAMIURUL
+     SAMIURUL
+     Current total of 7 routines.
+     
+     Routine:
+     
+     Output device <terminal>: /home/osehra/run/in/sami/18-14/t4/sami-18-14-t4-back.ro
+     
+     Header Label: SAMI*18.0*14 SEQ #14 T4 routine backup
+     Strip comments <No>?: 
+     SAMICAS2  SAMICUL   SAMIPAT   SAMISITE  SAMIUR    SAMIUR2
+     SAMIURUL
+     
+     Total of 3745 lines in 7 routines.
+     
+     >_
 
     You'll remain in the M environment for the next section.
 
-#. Main install instructions
+4. Main install instructions
 
  This consists of loading and installing the KIDS package, and
  activating the new web-application files.
 
- #.#. Installing the KIDS package
+ 4.1. Installing the KIDS package
 
    This installs the various M assets required by the application.
 
-  #.#.#. Enter the KIDS Installation menu
+  4.1.1. Enter the KIDS Installation menu
 
     At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
     Installation & Distribution System main menu, and at the Select
     ... Option prompt, select Installation:
 
-#>include: .dtool/enter-kids-snippet.txt
+     >do ^XUP
+     
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
+     
+     
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+     
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+     
+     
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+     
+     Select Installation <TEST ACCOUNT> Option: _
+     
 
-
-  #.#.#. Load KIDS package
+  4.1.2. Load KIDS package
 
     Select option 1 and press return at the Continue prompt.
 
@@ -533,7 +633,7 @@ ii. Contents
 
      Select Installation <TEST ACCOUNT> Option:_
 
-  #.#.#. Install KIDS package
+  4.1.3. Install KIDS package
 
     Select option 6, enter the space bar at the INSTALL NAME prompt,
     and press return at the next three prompts. Note that '[now]'
@@ -607,13 +707,13 @@ ii. Contents
    environment is operational and bug-free, before notifying users
    that VAPALS-ELCAP is ready for their use.
 
-#. Optional backout instructions
+5. Optional backout instructions
 
  Should errors or other problems result from installing this package
  contact the VAPALS-ELCAP development team for package-backout
  instructions.
 
-#. Routines
+6. Routines
 
  Lines 2 & 3 of each of these routines now look like:
   ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
@@ -631,7 +731,7 @@ ii. Contents
  SAMIUR2   B1265246653      B1360826675     **5,11,12,14**
  SAMIURUL  B98717           B104949         **12,14**
 
-#. Authors
+7. Authors
 
              Dates              By
  Developed   2021-10-13/14      George P. Lilly (ven)
@@ -653,7 +753,7 @@ ii. Contents
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Released    2021-10-15         Frederick D. S. Marshall (ven)
+ Released    2021-10-17         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

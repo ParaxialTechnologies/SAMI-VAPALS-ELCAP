@@ -420,8 +420,11 @@
             }
 
             function createRevertElement(fieldName, originalValue) {
-                return $("<i class=\"fa fa-undo revert-field\" title=\"Revert back to the original value (" +
-                    originalValue + ") for this field\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>");
+                const html = "<i data-toggle=\"tooltip\" class=\"fa fa-undo revert-field\" title=\"Revert to '" +
+                    originalValue + "'\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>";
+                const $revertElement = $(html);
+                $revertElement.tooltip();
+                return $revertElement;
             }
 
             function _importData(dicomData) {
@@ -616,6 +619,7 @@
                     sortData: _sortData
                 };
             }
+
             return _init();
         }
     });

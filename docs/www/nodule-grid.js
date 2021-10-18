@@ -610,6 +610,19 @@
                 }
 
                 _displayNodules(settings.getNoduleCount());
+
+                $(".import-data-button").hide();
+                $(".revert-data-button").hide();
+                $("[name=cetex]").on('change', function () {
+                    if ($("[name=cetex]:checked").val() === "b") {
+                        $(".import-data-button").show();
+                        $(".revert-data-button").show();
+                    } else {
+                        $(".import-data-button").hide();
+                        $(".revert-data-button").hide();
+                    }
+                });
+
                 return {
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,

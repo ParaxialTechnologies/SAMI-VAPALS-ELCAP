@@ -195,11 +195,28 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  n vcac,cac,cacrec
  s (cac,cacrec)=""
  ;
+ n cectot s cectot=0
+ i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no" s cectot=cectot+1
+ i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no" s cectot=cectot+1
+ i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
+ S ^gpl("cectot")=cectot
+ i cectot=4 d  ;
+ . d OUT("Coronary Artery Calcification score not provided.") d OUT("")
  ; if $$XVAL("cecccac",vals)'="" d  ;
  ; . s @vals@("ceccv")="e"
  ;
  d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)
+ . if cectot=4 q  ;
  . if vcac'="" d  ;
  . . s cacrec=""
  . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
@@ -216,23 +233,16 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;
  ;;s outmode="hold" s line=""
  ;i samicac=1 d  ;
- i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no"
- i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
- i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no"
- i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
- i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no"
- i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no"
- i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no"
- i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no"
  ;
  d  ;
+ . if cectot=4 q  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
  . d OUT($$XSUB("cecc",vals,dict,"cecccf")_" in circumflex, and ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccrc")_" in right coronary. "_cac)
- . s outmode="go"
- . d OUT("")
+ s outmode="go"
+ d OUT("")
  ; 
  s outmode="hold"
  if $$XVAL("cecca",vals)'="-" d  ;

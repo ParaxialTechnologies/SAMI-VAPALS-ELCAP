@@ -251,32 +251,69 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;   # Non-calcified lymph nodes
  n lnlist,lnlistt
  set lnlist(1)="cemlnl1"
- set lnlist(2)="cemlnl2r"
- set lnlist(3)="cemlnl2l"
- set lnlist(4)="cemlnl3"
- set lnlist(5)="cemlnl4r"
- set lnlist(6)="cemlnl4l"
- set lnlist(7)="cemlnl5"
- set lnlist(8)="cemlnl6"
- set lnlist(9)="cemlnl7"
- set lnlist(10)="cemlnl8"
- set lnlist(11)="cemlnl9"
- set lnlist(12)="cemlnl10r"
- set lnlist(13)="cemlnl10l"
+ set lnlist(2)="cemlnl10"
+ set lnlist(3)="cemlnl11"
+ set lnlist(4)="cemlnl12"
+ set lnlist(5)="cemlnl13"
+ set lnlist(6)="cemlnl14"
+ set lnlist(7)="cemlnl2l"
+ set lnlist(8)="cemlnl2r"
+ set lnlist(9)="cemlnl3a"
+ set lnlist(10)="cemlnl3p"
+ set lnlist(11)="cemlnl4l"
+ set lnlist(12)="cemlnl4r"
+ set lnlist(13)="cemlnl5"
+ set lnlist(14)="cemlnl6"
+ set lnlist(15)="cemlnl7"
+ set lnlist(16)="cemlnl8"
+ set lnlist(17)="cemlnl9"
  ;
- set lnlistt(1)="high mediastinal"
- set lnlistt(2)="right upper paratracheal"
- set lnlistt(3)="left upper paratracheal"
- set lnlistt(4)="prevascular/retrotracheal"
- set lnlistt(5)="right lower paratracheal"
- set lnlistt(6)="left lower paratracheal"
- set lnlistt(7)="sub-aortic (A-P window)"
- set lnlistt(8)="para-aortic"
- set lnlistt(9)="subcarinal"
- set lnlistt(10)="para-esophageal"
- set lnlistt(11)="pulmonary ligament"
- set lnlistt(12)="right hilar"
- set lnlistt(13)="left hilar"
+ set lnlistt(1)="low cervical, supraclavicular, and sternal notch nodes"
+ set lnlistt(2)="hilar"
+ set lnlistt(3)="interlobar"
+ set lnlistt(4)="lobar"
+ set lnlistt(5)="segmental"
+ set lnlistt(6)="subsegmental"
+ set lnlistt(7)="upper paratracheal (left)"
+ set lnlistt(8)="upper paratracheal (right)"
+ set lnlistt(9)="prevascular"
+ set lnlistt(10)="retrotracheal"
+ set lnlistt(11)="lower paratracheal (left)"
+ set lnlistt(12)="lower paratracheal (right)"
+ set lnlistt(13)="subaortic"
+ set lnlistt(14)="para-aortic (ascending aorta or phrenic)"
+ set lnlistt(15)="subcarinal"
+ set lnlistt(16)="paraesophageal (below carina)"
+ set lnlistt(17)="pulmonary ligament"
+
+
+ ;set lnlist(1)="cemlnl1"
+ ;set lnlist(2)="cemlnl2r"
+ ;set lnlist(3)="cemlnl2l"
+ ;set lnlist(4)="cemlnl3"
+ ;set lnlist(5)="cemlnl4r"
+ ;set lnlist(6)="cemlnl4l"
+ ;set lnlist(7)="cemlnl5"
+ ;set lnlist(8)="cemlnl6"
+ ;set lnlist(9)="cemlnl7"
+ ;set lnlist(10)="cemlnl8"
+ ;set lnlist(11)="cemlnl9"
+ ;set lnlist(12)="cemlnl10r"
+ ;set lnlist(13)="cemlnl10l"
+ ;
+ ;set lnlistt(1)="high mediastinal"
+ ;set lnlistt(2)="right upper paratracheal"
+ ;set lnlistt(3)="left upper paratracheal"
+ ;set lnlistt(4)="prevascular/retrotracheal"
+ ;set lnlistt(5)="right lower paratracheal"
+ ;set lnlistt(6)="left lower paratracheal"
+ ;set lnlistt(7)="sub-aortic (A-P window)"
+ ;set lnlistt(8)="para-aortic"
+ ;set lnlistt(9)="subcarinal"
+ ;set lnlistt(10)="para-esophageal"
+ ;set lnlistt(11)="pulmonary ligament"
+ ;set lnlistt(12)="right hilar"
+ ;set lnlistt(13)="left hilar"
  ;
  ;
  ;s outmode="hold"
@@ -541,6 +578,31 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;
  quit zr ; end of $$XSUB
  ;
+GENLNL()
+ ;
+ n droot s droot=$$setroot^%wd("form fields - ct evaluation")
+ n froot s froot=$na(@droot@("field","B"))
+ n cnt s cnt=0
+ n cemlnl s cemlnl="cemlnl"
+ f  s cemlnl=$o(@froot@(cemlnl)) q:cemlnl=""  q:cemlnl'["cemlnl"  d  ;
+ . w !,cemlnl
+ . s cnt=cnt+1
+ . n fien s fien=$o(@froot@(cemlnl,""))
+ . q:fien=""
+ . ;zwr @droot@("field",fien,"input",1,*)
+ . n lbl
+ . s lbl=$g(@droot@("field",fien,"input",1,"label"))
+ . s lbl=$p(lbl,": ",2)
+ . s lbl=$$LOWC^SAMICTT3(lbl)
+ . w !,lbl
+ . s lnlist(cnt)=cemlnl
+ . s lnlistt(cnt)=lbl
+ ;zwr lnlist
+ ;zwr lnlistt
+ f i=1:1:cnt w !," set lnlist(",i,")=""",lnlist(i),""""
+ w !," ;"
+ f i=1:1:cnt w !," set lnlistt(",i,")=""",lnlistt(i),""""
+ q
  ;
  ;
 EOR ; end of routine SAMICTT3

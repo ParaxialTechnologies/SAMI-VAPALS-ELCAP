@@ -159,8 +159,10 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;d OUT($$XVAL("sisid",vals))
  ;d OUT("</TD>")
  ;
+ n etype
+ s etype=""
  d  ;
- . n etype s etype=$$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict)
+ . s etype=$$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict)
  . d OUT("Type of Examination: "_etype)
  ;d OUT("<TR><TD><B>Type of Examination:</B></TD><TD>")
  ;d OUT($$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict))
@@ -214,10 +216,12 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  n nopri s nopri=1
  d HOUT("Comparison CT Scans: ")
  if $$XVAL("cedcs",vals)'="" d  ;
+ . i etype["Baseline" q  ;
  . d OUT($$XSUB("cetex",vals,dict)_". ")
  . d OUT("Comparisons: "_$$XVAL("cedcs",vals))
  . s nopri=0
  if $$XVAL("cedps",vals)'="" d  ;
+ . i etype["Baseline" q  ;
  . d OUT(" "_$$XVAL("cedps",vals))
  . s nopri=0
  d:nopri OUT("None")

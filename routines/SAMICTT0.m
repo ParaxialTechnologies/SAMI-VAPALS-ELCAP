@@ -224,7 +224,7 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  s outmode="go" d OUT("")
  ;
  s outmode="hold"
- d HOUT(" Description: ")
+ d HOUT("Description: ")
  i $$XVAL("cectp",vals)="i" d  ;
  . d OUT("Limited Diagnostic CT examination was performed. ")
  e  d  ;

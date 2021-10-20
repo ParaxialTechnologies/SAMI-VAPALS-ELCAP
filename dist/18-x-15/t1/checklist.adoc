@@ -1,0 +1,95 @@
+:doctitle: SAMI Patching Checklist for 18-x-15-t1
+
+[role="h1 center"]
+SAMI Patching Checklist for 18-15-t1
+
+-------------------------------------------------------------------------------
+X 0. Project discussion
+  0.1. Which changes will be included
+	    Issues included
+	    
+
+  0.2. Timeline: Release goal 10/21/2021, released 
+
+ 1. Project set up
+X  1.1. git pull
+X  1.2. prepare checklist
+  1.3. prepare recipe doc
+  1.4. prepare template.txt doc
+  1.5. git pull/push
+  1.6. add updated routines to BBEdit project
+       SAMIPARM
+       SAMICTD2
+       SAMICTT0
+       SAMICTT3
+       SAMINOT1
+       SAMINOT2
+       SAMINOT3
+       SAMIHOM4      
+  1.7. add log routine to BBEdit project
+            
+  1.8. write change descriptions
+  1.9. update template.txt doc
+  1.10. update dashboard (Google Drive) (sami pax)
+  1.11. Regrettable Bodge
+
+ 2. Update routines
+N  2.1. Update SAMIPAT for pre/post-install if needed
+  2.2. convert to new short version ids, update dates & times in each routine
+   or routine log
+      view log with files
+      git log --source --name-status
+      or example: git log routines/SAMIUR.m
+      or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
+  2.3. update change log routine (SAMIURUL)
+  2.4. push to repo
+
+ 3. Run XINDEX and ARJT
+  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+  3.2. copy routines to ~/run/routine directory
+  3.3. run XINDEX
+  3.4. fix any bugs,
+  3.5. use ARJT tools do recipe^ARJTXRW (see Introduction to ARJT tools)
+  3.6. update recipe
+  3.7. update checksums in template.txt
+  3.8. update dashboard (sami vers)
+  3.9. git pull/push
+
+ 4. KIDS Build
+  4.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+  4.2. copy routines to ~/run/routine directory
+  4.3. Create KIDS build (XPD MAIN Menu)
+  4.4. export to out dock (Transport distribution) 
+		HF is /home/osehra/run/out/sami/18-14/t4/sami-18-14-t4.kid
+  4.5. copy to personal repo scp 'vapalsyotta:/home/osehra/run/out/sami/18-14/t3/*.kid' ./
+  4.6. push to sami repo
+
+ 5. Finish draft documents
+  5.1. Review recipe and make any needed changes
+  5.2. Review template.txt and make any needed changes
+  5.3. Make {version}.adoc and {version}.tx doc from template.txt
+       ../../dtool --textfile
+  5.4. Review {version}.adoc and {version}.tx doc and make any needed updates
+  5.5. git push/pull
+   
+ 6. Create Zip package
+   6.1. use zip to create archive package (../../dtool --makezip)
+   6.2. push archive package to repo
+   6.3. update version website's link
+
+ 7. Test Install
+  7.1. install on vapalsyotta (& revise if necessary),
+  7.2. test changes on vapalsyotta
+  7.3. update dashboard (sami envs)
+N  7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
+N  7.5. test changes on vapalscache
+  7.6. update dashboard (sami envs)
+  7.7. send any necessary updates to Kathy for user and tech manual changes
+  7.8. Skype team and ask them to test
+
+8. Release Patch
+  8.1. Email interested parties
+  8.2. Update VAPALS Bugs and Requested Features spreadsheet
+  8.3. File any returned captures
+  8.4. Update dashboard (sami envs)
+-------------------------------------------------------------------------------

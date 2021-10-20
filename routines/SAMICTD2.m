@@ -335,13 +335,13 @@ INIT(g) ; initialize cteval-dict graph
  ;
  ;# Impression (Nodules) (ceimn)
  set @g@("ceimn","rs")="No evidence of nodules"
- set @g@("ceimn","ro")="Nodule(s) as described above. Consistent with old granulomatous disease"
- set @g@("ceimn","ru")="Nodule(s) unchanged, as described above"
- set @g@("ceimn","nf")="Nodule(s) as described above"
+ set @g@("ceimn","ro")="Nodule(s) as described. Consistent with old granulomatous disease"
+ set @g@("ceimn","ru")="Nodule(s) unchanged, as described"
+ set @g@("ceimn","nf")="Nodule(s) as described"
  ;
  ;# Impression (Other Findings) (ceimo)
  set @g@("ceimo","no")="No other abnormalities"
- set @g@("ceimo","oa")="Other abnormalities as described above"
+ set @g@("ceimo","oa")="Other abnormalities as described"
  set @g@("ceimo","da")="Diffuse abnormalities"
  ;
  ;# Breast Density

@@ -169,8 +169,11 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . ; set RPT(5,"routine")="$$RACE^SAMIUR2"
  . set RPT(6,"header")="Age"
  . set RPT(6,"routine")="$$AGE^SAMIUR2"
- . set RPT(7,"header")="Urban/Rural"
- . set RPT(7,"routine")="$$RURAL^SAMIUR2"
+ . d  ;
+ . . n filter s filter("siteid")=SITE
+ . . i $$ISVA^SAMIPARM(.filter) d  ;
+ . . . set RPT(7,"header")="Urban/Rural"
+ . . . set RPT(7,"routine")="$$RURAL^SAMIUR2"
  . set RPT(8,"header")="Smoking Status"
  . set RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
  . set RPT(9,"header")="Pack Years at Intake"

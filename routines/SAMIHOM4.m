@@ -243,6 +243,9 @@ GETHOME ; get homepage (not subsequent visit)
  set SAMISITE=$get(SAMIFILTER("siteid"))
  set SAMITITL=$get(SAMIFILTER("sitetitle"))
  ;
+ new VASITE set VASITE=$$GET1PARM^SAMIPARM("veteransAffairsSite",SAMISITE)
+ set SAMIFILTER("veteransAffairsSite")=VASITE
+ ;
  new temp,tout,form
  set form="vapals:home"
  do GETTMPL^SAMICASE("temp",form)

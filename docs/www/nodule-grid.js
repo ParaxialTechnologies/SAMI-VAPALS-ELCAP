@@ -380,16 +380,31 @@
 
             function setUpImportDataOnChange() {
                 $("#nodule-table").find("[original-value]").on('change', function () {
-                    if ($(this).hasClass("import-data")) {
-                        $(this).removeAttr("original-value");
-                        $(this).removeClass("import-data");
-                        if ($(this).parent().hasClass("import-data")) {
-                            $(this).parent().removeClass("import-data");
+                    if (importFieldHit || revertFieldHit) {
+                        importFieldHit = false;
+                        revertFieldHit = false;
+                    } else {
+                        let importValue = "";
+                        if ($(this).hasClass("import-data")) {
+                            if ($(this).prop('type') === "checkbox") {
+                                if ($(this).attr("import-value") === "false") {
+                                    importValue = "unchecked";
+                                } else {
+                                    importValue = "checked";
+                                }
+                            } else {
+                                if ($(this).prop('type') === "select-one") {
+                                    const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr("import-value") + "\"]";
+                                    importValue = $(fieldSelectorWithVal).text().trim();
+                                } else {
+                                    importValue = $(this).attr("import-value");
+                                }
+                            }
+                            $(this).parent().find(".revert-field").remove();
+                            $(this).parent().find(".import-field").remove();
+                        
+                            createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
                         }
-                        if ($(this).parent().hasClass("import-data-parent")) {
-                            $(this).parent().removeClass("import-data-parent");
-                        }
-                        $(this).parent().find(".revert-field").remove();
                     }
                 });
             }
@@ -407,6 +422,7 @@
                             $(this).val($(this).attr("original-value"));
                         }
                         $(this).removeAttr("original-value");
+                        $(this).removeAttr("import-value");
                         $(this).removeClass("import-data");
                     }
                 });
@@ -416,18 +432,13 @@
                 $("#nodule-table").find(".import-data-parent").each(function () {
                     $(this).removeClass("import-data-parent");
                 });
-                $(".revert-field").remove(); // remove all revert-field buttons
-            }
-
-            function createRevertElement(fieldName, originalValue) {
-                const html = "<i data-toggle=\"tooltip\" class=\"fa fa-undo revert-field\" title=\"Revert to '" +
-                    originalValue + "'\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>";
-                const $revertElement = $(html);
-                $revertElement.tooltip();
-                return $revertElement;
+                $(".revert-field").remove(); // remove all revert-field icons
+                $(".import-field").remove(); // remove all import-field icons
             }
 
             function _importData(dicomData) {
+                importFieldHit = false;
+                revertFieldHit = false;
                 // if number of nodules shown is less than the number of entries in dicomData array then increase the number of nodules
                 if (settings.getNoduleCount() < dicomData.length) {
                     let noduleCount = dicomData.length;
@@ -454,14 +465,19 @@
                             }
                             if (value === "Upper lobe of right lung") {
                                 $field.val("rul");
+                                $field.attr("import-value", "rul");
                             } else if (value === "Upper lobe of left lung") {
                                 $field.val("lul");
+                                $field.attr("import-value", "lul");
                             } else if (value === "Lower lobe of right lung") {
                                 $field.val("rll");
+                                $field.attr("import-value", "rll");
                             } else if (value === "Lower lobe of left lung") {
                                 $field.val("lll");
+                                $field.attr("import-value", "lll");
                             } else if (value === "“Middle lobe of lung") {
                                 $field.val("rml");
+                                $field.attr("import-value", "rml");
                             }
                         }
 
@@ -478,12 +494,16 @@
                             }
                             if (value === "Solid") {
                                 $field.val("s");
+                                $field.attr("import-value", "s");
                             } else if (value === "PartSolid") {
                                 $field.val("m");
+                                $field.attr("import-value", "m");
                             } else if (value === "NonSolid") {
                                 $field.val("g");
+                                $field.attr("import-value", "g");
                             } else if (value === "Unknown") {
                                 $field.val("o");
+                                $field.attr("import-value", "o");
                             }
                         }
 
@@ -497,7 +517,6 @@
                                 $fieldSe.addClass("import-data");
                                 $fieldSe.parent().addClass("import-data");
                                 $fieldSe.attr("original-value", $fieldSe.prop("checked"));
-
                                 const originalValue = $fieldSe.prop("checked") ? "checked" : "unchecked";
                                 createRevertElement(fieldSelectorSe, originalValue).insertAfter(fieldSelectorSe);
                             }
@@ -511,10 +530,14 @@
                             if (value === "Lesion with circumscribed margin") {
                                 $fieldSe.prop("checked", true);
                                 $fieldSp.prop("checked", false);
+                                $fieldSe.attr("import-value", true);
+                                $fieldSp.attr("import-value", false);
                             }
                             if (value === "Lesion with spiculated margin") {
                                 $fieldSp.prop("checked", true);
                                 $fieldSe.prop("checked", false);
+                                $fieldSp.attr("import-value", true);
+                                $fieldSe.attr("import-value", false);
                             }
                         }
 
@@ -529,6 +552,7 @@
                                 $field.attr("original-value", $field.val());
                                 const originalValue = $field.val();
                                 $field.val(value);
+                                $field.attr("import-value", value);
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
@@ -544,6 +568,7 @@
                                 $field.attr("original-value", $field.val());
                                 const originalValue = $field.val();
                                 $field.val(value);
+                                $field.attr("import-value", value);
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
@@ -559,6 +584,7 @@
                                 $field.attr("original-value", $field.val());
                                 const originalValue = $field.val();
                                 $field.val(value);
+                                $field.attr("import-value", value);
                                 $field.parent().addClass("import-data-parent");
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
@@ -637,4 +663,3 @@
         }
     });
 }(jQuery));
-

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.10.18" name="version"/>
+  <meta content="2021.10.21" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.10.18">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.10.21">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.10.18">
+  <script src="../www/jquery-conditonally-display.js?v=2021.10.21">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.18">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.21">
   </script>
-  <script src="../www/vapals.js?v=2021.10.18">
+  <script src="../www/vapals.js?v=2021.10.21">
   </script>
-  <script src="../www/init.js?v=2021.10.18">
+  <script src="../www/init.js?v=2021.10.21">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.10.18">
+  <script src="../www/nodule-grid.js?v=2021.10.21">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -8995,7 +8995,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.10.18
+     2021.10.21
     </span>
    </div>
   </footer>
@@ -9499,26 +9499,87 @@
 
         function revertField(element, fieldSelector) {
             const $ele = $(fieldSelector);
+            let importValue = "";
             if ($ele.hasClass("import-data")) {
                 if ($ele.prop('type') === "checkbox") {
+                    revertFieldHit = true;
+                    importFieldHit = false;
                     if ($ele.attr("original-value") === "false") {
                         $ele.prop("checked", true);
                     } else {
                         $ele.prop("checked", false);
                     }
+                    if ($ele.attr("import-value") === "false") {
+                        importValue = "unchecked";
+                    } else {
+                        importValue = "checked";
+                    }
                 } else {
                     $ele.val($ele.attr("original-value"));
+
+                    if ($ele.prop('type') === "select-one") {
+                        const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $ele.attr("import-value") + "\"]";
+                        importValue = $(fieldSelectorWithVal).text().trim();
+                    } else {
+                        importValue = $ele.attr("import-value");
+                    }
+
                 }
-                $ele.removeAttr("original-value");
-                $ele.removeClass("import-data");
-                if ($ele.parent().hasClass("import-data")) {
-                    $ele.parent().removeClass("import-data");
-                }
-                if ($ele.parent().hasClass("import-data-parent")) {
-                    $ele.parent().removeClass("import-data-parent");
-                }
+               
                 $(element).tooltip('destroy').remove();
+
+                createImportElement(fieldSelector, importValue).insertAfter(fieldSelector);
             }
+        }
+
+        function createImportElement(fieldName, importValue) {
+            const html = "<i data-toggle=\"tooltip\" class=\"fa fa-repeat import-field\" title=\"Import '" +
+                importValue + "'\"" + " onclick=\"importField(this, '" + fieldName + "')\"></i>";
+            const $importElement = $(html);
+            $importElement.tooltip();
+            return $importElement;
+        }
+
+        function importField(element, fieldSelector) {
+            const $ele = $(fieldSelector);
+            let origValue = "";
+            if ($ele.hasClass("import-data")) {
+                if ($ele.prop('type') === "checkbox") {
+                    importFieldHit = true;
+                    revertFieldHit = false;
+                    if ($ele.attr("import-value") === "false") {
+                        $ele.prop("checked", true);
+                    } else {
+                        $ele.prop("checked", false);
+                    }
+                    if ($ele.attr("original-value") === "false") {
+                        origValue = "unchecked";
+                    } else {
+                        origValue = "checked";
+                    }
+                } else {
+                    $ele.val($ele.attr("import-value"));
+                    
+                    if ($ele.prop('type') === "select-one") {
+                        const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $ele.attr("original-value") + "\"]";
+                        origValue = $(fieldSelectorWithVal).text().trim();
+                    } else {
+                        origValue = $ele.attr("original-value");
+                    }
+                }
+                
+                $(element).tooltip('destroy').remove();
+
+                createRevertElement(fieldSelector, origValue).insertAfter(fieldSelector);
+            }
+        }
+
+        function createRevertElement(fieldName, originalValue) {
+            const html = "<i data-toggle=\"tooltip\" class=\"fa fa-undo revert-field\" title=\"Revert to '" +
+                originalValue + "'\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>";
+            const $revertElement = $(html);
+            $revertElement.tooltip();
+            return $revertElement;
         }
   </script>
   )

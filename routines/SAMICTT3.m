@@ -384,7 +384,8 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . n llist,item
  . s (llist,item)=""
  . f  s item=$o(lnlist(item)) q:item=""  d  ;
- . . i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
+ . . ;i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
+ . . i $$XVAL(lnlist(item),vals)'="" s llist(item)=lnlist(item)
  . n lnum,slnum
  . s lnum=$o(llist(""),-1)
  . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted. ")

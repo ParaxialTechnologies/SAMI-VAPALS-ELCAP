@@ -155,7 +155,7 @@
     const userId = "@@USER@@";
     const isLoggedIn = isSet(userId);
     const siteIdVal = "@@SITE@@";
-    const siteId = isSet(siteIdVal) ? siteIdVal : '';
+    const siteId = isSet(siteIdVal) ? siteIdVal : 'SYS';
     const studyIdVal = "@@SID@@";
     const studyId = isSet(studyIdVal) ? studyIdVal : '';
     const frozen = "@@FROZEN@@";
@@ -228,7 +228,7 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+    if (isSet(siteId)) {
         paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');

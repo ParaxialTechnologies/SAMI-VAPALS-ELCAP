@@ -84,6 +84,13 @@ NOTE(filter) ; extrnisic which creates a note
  . ;w !,"error, patient values not found"
  ;zwr @vals@(*)
  ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ i $g(filter("veteransAffairsSite"))="false" d  ;
+ . set vetstxt="participant"
+ . set vetstxt2="Participant"
+ set filter("vetstxt")=vetstxt
+ ;
  k ^SAMIUL("NOTE")
  m ^SAMIUL("NOTE","vals")=@vals
  m ^SAMIUL("NOTE","filter")=filter
@@ -141,7 +148,7 @@ MKVC(sid,form,vals,filter) ;
  ;n dest s dest=$na(@vals@("communication-note"))
  n dest s dest=$$MKNT(vals,"Communication Note","communication",.filter)
  k @dest
- d OUT("Veteran Communication Note")
+ d OUT(vetstxt_" Communication Note")
  d OUT("")
  d VCNOTE(vals,dest,cnt)
  q
@@ -208,7 +215,7 @@ TLST ;
  ;
 VCNOTE(vals,dest,cnt) ; Veteran Communication Note
  ;d OUT("")
- d OUT("Veteran was contacted via:")
+ d OUT(vetstxt2_" was contacted via:")
  n sp1 s sp1="    "
  d:$$XVAL("fucmotip",vals) OUT(sp1_"In person")
  d:$$XVAL("fucmotte",vals) OUT(sp1_"Telephone")
@@ -301,7 +308,7 @@ SSTATUS(vals)
  i $$XVAL("siscmd",vals)="d" s cess="Declined"
  i $$XVAL("siscmd",vals)="a" s cess="Advised to quit smoking; VA resources provided"
  i $$XVAL("siscmd",vals)="i" d  ;
- . s cess="Interested in VA tobacco cessation medication. Encouraged Veteran"
+ . s cess="Interested in VA tobacco cessation medication. Encouraged "_vetstxt
  . s cess2="to talk to provider or pharmacist about which medication option is best for you."
  i cess'="" d  ;
  . d OUT("Tobacco cessation provided:")

@@ -147,6 +147,14 @@ NOTE(filter) ; extrnisic to create note
  . ;w !,"error, patient values not found"
  ;zwr @vals@(*)
  ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ ;i $g(filter("veteransAffairsSite"))="false" d  ;
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="participant"
+ . set vetstxt2="Participant"
+ set filter("vetstxt")=vetstxt
+ ;
  k ^SAMIUL("NOTE")
  m ^SAMIUL("NOTE","vals")=@vals
  m ^SAMIUL("NOTE","filter")=filter
@@ -231,9 +239,9 @@ MKVC(sid,form,vals,filter) ; make communication note
  ;n dest s dest=$na(@vals@("communication-note"))
  n dest s dest=$$MKNT(vals,"Communication Note","communication",.filter)
  k @dest
- d OUT("Veteran Communication Note")
+ d OUT(vetstxt2_" Communication Note")
  d OUT("")
- d VCNOTE(vals,dest,cnt)
+ d VCNOTE(vals,dest,cnt,.filter)
  ;
  quit  ; end of MKVC
  ;
@@ -249,7 +257,7 @@ MKLCS(sid,form,vals,filter) ; make lung cancer screening note
  k @dest
  d OUT("Lung Screening and Surveillance Follow up Note")
  d OUT("")
- d LCSNOTE(vals,dest,cnt)
+ d LCSNOTE(vals,dest,cnt,.filter)
  ;
  quit  ; end of MKLCS
  ;
@@ -355,13 +363,13 @@ TLST ; test NTLIST
  ;
  ;
  ;
-VCNOTE(vals,dest,cnt) ; veteran communication note
+VCNOTE(vals,dest,cnt,filter) ; veteran communication note
  ;
  ;ven/gpl;private;procedure;
  ;
  ; do OUT("")
  ;
- d OUT("Veteran was contacted via:")
+ d OUT(vetstxt2_" was contacted via:")
  n sp1 s sp1="    "
  d:$$XVAL("fucmotip",vals) OUT(sp1_"In person")
  d:$$XVAL("fucmotte",vals) OUT(sp1_"Telephone")
@@ -460,7 +468,7 @@ SSTATUS(vals) ; smoking status
  i $$XVAL("siscmd",vals)="d" s cess="Declined"
  i $$XVAL("siscmd",vals)="a" s cess="Advised to quit smoking; VA resources provided"
  i $$XVAL("siscmd",vals)="i" d  ;
- . s cess="Interested in VA tobacco cessation medication. Encouraged Veteran"
+ . s cess="Interested in VA tobacco cessation medication. Encouraged "_vetstxt
  . s cess2="to talk to provider or pharmacist about which medication option is best for you."
  i cess'="" d  ;
  . d OUT("Tobacco cessation provided:")
@@ -471,7 +479,7 @@ SSTATUS(vals) ; smoking status
  ;
  ;
  ;
-LCSNOTE(vals,dest,cnt) ; lung cancer screening note
+LCSNOTE(vals,dest,cnt,filter) ; lung cancer screening note
  ;
  ;ven/gpl;private;procedure;
  ;

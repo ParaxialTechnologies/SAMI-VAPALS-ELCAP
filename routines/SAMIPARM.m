@@ -1,4 +1,4 @@
-SAMIPARM ;ven/gpl - get params web service ;2021-07-01t17:45z
+SAMIPARM ;ven/gpl - get params web service ;2021-10-17t17:45z
  ;;18.0;SAMI;**12**;2020-01;
  ;;18.12
  ;
@@ -61,15 +61,11 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  . n site
  . s site=$g(filter("site"))
  . i site="" s site=$g(filter("siteid"))
- . q:site=""
+ . ;q:site=""
  . n parms
- . d GETARY(.parms,site)
- . ;s parms("socialSecurityNumber")="Patient ID"
- . ;s parms("socialSecurityNumber.short")="PID"
- . ;s parms("socialSecurityNumber.mask")=""
- . ;s parms("socialSecurityNumber.regex")=""
- . ; and so on
- . ;n parmsjson
+ . i site="" d  ;
+ . . d GETSYS(.parms)
+ . e  d GETARY(.parms,site)
  . d ENCODE^%webjson("parms","parmsjson")
  . set HTTPRSP("mime")="application/json"
  q
@@ -87,8 +83,10 @@ GET1PARM(PARM,SITE) ; extrinsic returns the vale of PARM for site SITE
  ;
  ;
  ;
-GETARY(ARY,SITE) ; return the parameter array ART, passed by reference
+GETARY(ARY,SITE) ; return the parameter array ARY, passed by reference
  ;
+ I $L(SITE)'=3 D  Q  ; poorly formed SITE indicator
+ . D GETSYS(.ARY) ; pass back only SYS parameters
  N SITEIEN S SITEIEN=""
  I SITE'="" S SITEIEN=$O(^SAMI(311.12,"SYM",SITE,""))
  N DEFREC ; default record in SAMI PARAMETER DEFAULT 311.14
@@ -96,10 +94,13 @@ GETARY(ARY,SITE) ; return the parameter array ART, passed by reference
  I $G(DEFREC)="" S DEFREC="VHA"
  M ARY=^SAMI(311.14,"D",DEFREC)
  I SITE'="" M ARY=^SAMI(311.12,"D",SITE)
+ D GETSYS(.ARY)
+ Q
+ ;
+GETSYS(ARY) ; returns SYS (system) parameters
  Q:'$D(^SAMI(311.14,"D","SYS"))
  M ARY=^SAMI(311.14,"D","SYS")
  Q
- ;
  ;
  ;
 ADDSVC() ; add the params webservice to the system

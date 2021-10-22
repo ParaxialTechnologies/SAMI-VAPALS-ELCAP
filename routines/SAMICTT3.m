@@ -77,26 +77,69 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;
  ; # Pleural Effusion
  ; 
+ ;i $$XVAL("cepev",vals)="y" d  ;
+ ;. if $$XVAL("ceper",vals)="-" d  ;
+ ;. . if $$XVAL("cepel",vals)="-" d  ;
+ ;. . . s @vals@("cepev")="e"
+ ;. ;
+ ;. if $$XVAL("cepev",vals)'="e" d  ;
+ ;. . if $$XVAL("ceper",vals)'="-" d  ;
+ ;. . . if $$XVAL("cepel",vals)'="-" d  ;
+ ;. . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
+ ;. . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions. ") d OUT("")
+ ;. . . . else  d  ;
+ ;. . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right. ")
+ ;. . . . . s pe=1
+ ;. . . else  d  ;
+ ;. . . . ;d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
+ ;. . . . d OUT(sp1_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion on right and "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion on left. ") d OUT("")
+ ;. . . . s pe=1
+ ;. . else  d  ;
+ ;. . . ;d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
+ ;. . . d OUT(sp1_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion on right and "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion on left. ") d OUT("")
+ ;. . . s pe=1
+ ;. ;
+ ;i $$XVAL("cepev",vals)'="y" d  ; 
+ ;. d OUT(sp1_"No pleural effusions. ") d OUT("")
+ ;;  if { $pe == 0 } {
+ ;;    puts "[tr "No pleural effusions"].${para}"
+ ;;  }
  i $$XVAL("cepev",vals)="y" d  ;
- . if $$XVAL("ceper",vals)="-" d  ;
- . . if $$XVAL("cepel",vals)="-" d  ;
- . . . s @vals@("cepev")="e"
- . ;
- . if $$XVAL("cepev",vals)'="e" d  ;
- . . if $$XVAL("ceper",vals)'="-" d  ;
- . . . if $$XVAL("cepel",vals)'="-" d  ;
- . . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
- . . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions. ") d OUT("")
- . . . . else  d  ;
- . . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right. ")
- . . . . . s pe=1
- . . . else  d  ;
- . . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
- . . . . s pe=1
- . . else  d  ;
- . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
+ . n ceper,cepel,cepert,cepelt
+ . s ceper=$$XVAL("ceper",vals)
+ . s cepel=$$XVAL("cepel",vals)
+ . s cepert=$$XSUB("cepe",vals,dict,"ceper")
+ . s cepelt=$$XSUB("cepe",vals,dict,"cepel")
+ . n left,right,both,neither,same
+ . s left=1
+ . i cepel="-" s left=0
+ . i cepel="no" s left=0
+ . s right=1
+ . i ceper="-" s right=0
+ . i ceper="no" s right=0
+ . if right+left=2 set both=1
+ . e  set both=0
+ . if right+left=0 set neither=1
+ . e  set neither=0
+ . if ((both=1)&(ceper=cepel)) set same=1
+ . e  set same=0
+ . if same=1 d  ;
+ . . d OUT(sp1_"Bilateral "_cepelt_" pleural effusions. ") d OUT("")
+ . . s pe=1
+ . if both=1 d  ;
+ . . i pe=1 q  ;
+ . . d OUT(sp1_"Bilateral pleural effusions ; "_cepelt_" on left, and "_cepert_" on right. ")
+ . . s pe=1
+ . if pe=0 d  ; both and same not done
+ . . if right d  ;
+ . . . d OUT(sp1_cepert_" pleural effusion on right.")
  . . . s pe=1
- . ;
+ . . if left d  ;
+ . . . d OUT(sp1_cepert_" pleural effusion on left.")
+ . . . s pe=1
+ . if pe=0 d  ; nothing worked
+ . . d OUT(sp1_"No pleural effusions. ") d OUT("")
+ ;
  i $$XVAL("cepev",vals)'="y" d  ; 
  . d OUT(sp1_"No pleural effusions. ") d OUT("")
  ;  if { $pe == 0 } {
@@ -152,11 +195,28 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  n vcac,cac,cacrec
  s (cac,cacrec)=""
  ;
+ n cectot s cectot=0
+ i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no" s cectot=cectot+1
+ i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no" s cectot=cectot+1
+ i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
+ S ^gpl("cectot")=cectot
+ i cectot=4 d  ;
+ . d OUT("Coronary Artery Calcification score not provided.") d OUT("")
  ; if $$XVAL("cecccac",vals)'="" d  ;
  ; . s @vals@("ceccv")="e"
  ;
  d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)
+ . if cectot=4 q  ;
  . if vcac'="" d  ;
  . . s cacrec=""
  . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
@@ -173,23 +233,16 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;
  ;;s outmode="hold" s line=""
  ;i samicac=1 d  ;
- i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no"
- i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
- i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no"
- i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
- i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no"
- i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no"
- i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no"
- i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no"
  ;
  d  ;
+ . if cectot=4 q  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
  . d OUT($$XSUB("cecc",vals,dict,"cecccf")_" in circumflex, and ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccrc")_" in right coronary. "_cac)
- . s outmode="go"
- . d OUT("")
+ s outmode="go"
+ d OUT("")
  ; 
  s outmode="hold"
  if $$XVAL("cecca",vals)'="-" d  ;
@@ -251,32 +304,78 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;   # Non-calcified lymph nodes
  n lnlist,lnlistt
  set lnlist(1)="cemlnl1"
- set lnlist(2)="cemlnl2r"
- set lnlist(3)="cemlnl2l"
- set lnlist(4)="cemlnl3"
- set lnlist(5)="cemlnl4r"
- set lnlist(6)="cemlnl4l"
- set lnlist(7)="cemlnl5"
- set lnlist(8)="cemlnl6"
- set lnlist(9)="cemlnl7"
- set lnlist(10)="cemlnl8"
- set lnlist(11)="cemlnl9"
- set lnlist(12)="cemlnl10r"
- set lnlist(13)="cemlnl10l"
+ set lnlist(2)="cemlnl10l"
+ set lnlist(3)="cemlnl10r"
+ set lnlist(4)="cemlnl11l"
+ set lnlist(5)="cemlnl11r"
+ set lnlist(6)="cemlnl12l"
+ set lnlist(7)="cemlnl12r"
+ set lnlist(8)="cemlnl13l"
+ set lnlist(9)="cemlnl13r"
+ set lnlist(10)="cemlnl14l"
+ set lnlist(11)="cemlnl14r"
+ set lnlist(12)="cemlnl2l"
+ set lnlist(13)="cemlnl2r"
+ set lnlist(14)="cemlnl3a"
+ set lnlist(15)="cemlnl3p"
+ set lnlist(16)="cemlnl4l"
+ set lnlist(17)="cemlnl4r"
+ set lnlist(18)="cemlnl5"
+ set lnlist(19)="cemlnl6"
+ set lnlist(20)="cemlnl7"
+ set lnlist(21)="cemlnl8"
+ set lnlist(22)="cemlnl9"
  ;
- set lnlistt(1)="high mediastinal"
- set lnlistt(2)="right upper paratracheal"
- set lnlistt(3)="left upper paratracheal"
- set lnlistt(4)="prevascular/retrotracheal"
- set lnlistt(5)="right lower paratracheal"
- set lnlistt(6)="left lower paratracheal"
- set lnlistt(7)="sub-aortic (A-P window)"
- set lnlistt(8)="para-aortic"
- set lnlistt(9)="subcarinal"
- set lnlistt(10)="para-esophageal"
- set lnlistt(11)="pulmonary ligament"
- set lnlistt(12)="right hilar"
- set lnlistt(13)="left hilar"
+ set lnlistt(1)="low cervical, supraclavicular, and sternal notch nodes"
+ set lnlistt(2)="hilar (left)"
+ set lnlistt(3)="hilar (right)"
+ set lnlistt(4)="interlobar (left)"
+ set lnlistt(5)="interlobar (right)"
+ set lnlistt(6)="lobar (left)"
+ set lnlistt(7)="lobar (right)"
+ set lnlistt(8)="segmental (left)"
+ set lnlistt(9)="segmental (right)"
+ set lnlistt(10)="subsegmental (left)"
+ set lnlistt(11)="subsegmental (right)"
+ set lnlistt(12)="upper paratracheal (left)"
+ set lnlistt(13)="upper paratracheal (right)"
+ set lnlistt(14)="prevascular"
+ set lnlistt(15)="retrotracheal"
+ set lnlistt(16)="lower paratracheal (left)"
+ set lnlistt(17)="lower paratracheal (right)"
+ set lnlistt(18)="subaortic"
+ set lnlistt(19)="para-aortic (ascending aorta or phrenic)"
+ set lnlistt(20)="subcarinal"
+ set lnlistt(21)="paraesophageal (below carina)"
+ set lnlistt(22)="pulmonary ligament"
+ ;
+ ;set lnlist(1)="cemlnl1"
+ ;set lnlist(2)="cemlnl2r"
+ ;set lnlist(3)="cemlnl2l"
+ ;set lnlist(4)="cemlnl3"
+ ;set lnlist(5)="cemlnl4r"
+ ;set lnlist(6)="cemlnl4l"
+ ;set lnlist(7)="cemlnl5"
+ ;set lnlist(8)="cemlnl6"
+ ;set lnlist(9)="cemlnl7"
+ ;set lnlist(10)="cemlnl8"
+ ;set lnlist(11)="cemlnl9"
+ ;set lnlist(12)="cemlnl10r"
+ ;set lnlist(13)="cemlnl10l"
+ ;
+ ;set lnlistt(1)="high mediastinal"
+ ;set lnlistt(2)="right upper paratracheal"
+ ;set lnlistt(3)="left upper paratracheal"
+ ;set lnlistt(4)="prevascular/retrotracheal"
+ ;set lnlistt(5)="right lower paratracheal"
+ ;set lnlistt(6)="left lower paratracheal"
+ ;set lnlistt(7)="sub-aortic (A-P window)"
+ ;set lnlistt(8)="para-aortic"
+ ;set lnlistt(9)="subcarinal"
+ ;set lnlistt(10)="para-esophageal"
+ ;set lnlistt(11)="pulmonary ligament"
+ ;set lnlistt(12)="right hilar"
+ ;set lnlistt(13)="left hilar"
  ;
  ;
  ;s outmode="hold"
@@ -285,7 +384,8 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . n llist,item
  . s (llist,item)=""
  . f  s item=$o(lnlist(item)) q:item=""  d  ;
- . . i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
+ . . ;i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
+ . . i $$XVAL(lnlist(item),vals)'="" s llist(item)=lnlist(item)
  . n lnum,slnum
  . s lnum=$o(llist(""),-1)
  . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted. ")
@@ -541,6 +641,31 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;
  quit zr ; end of $$XSUB
  ;
+GENLNL()
+ ;
+ n droot s droot=$$setroot^%wd("form fields - ct evaluation")
+ n froot s froot=$na(@droot@("field","B"))
+ n cnt s cnt=0
+ n cemlnl s cemlnl="cemlnl"
+ f  s cemlnl=$o(@froot@(cemlnl)) q:cemlnl=""  q:cemlnl'["cemlnl"  d  ;
+ . w !,cemlnl
+ . s cnt=cnt+1
+ . n fien s fien=$o(@froot@(cemlnl,""))
+ . q:fien=""
+ . ;zwr @droot@("field",fien,"input",1,*)
+ . n lbl
+ . s lbl=$g(@droot@("field",fien,"input",1,"label"))
+ . s lbl=$p(lbl,": ",2)
+ . s lbl=$$LOWC^SAMICTT3(lbl)
+ . w !,lbl
+ . s lnlist(cnt)=cemlnl
+ . s lnlistt(cnt)=lbl
+ ;zwr lnlist
+ ;zwr lnlistt
+ f i=1:1:cnt w !," set lnlist(",i,")=""",lnlist(i),""""
+ w !," ;"
+ f i=1:1:cnt w !," set lnlistt(",i,")=""",lnlistt(i),""""
+ q
  ;
  ;
 EOR ; end of routine SAMICTT3

@@ -1,6 +1,6 @@
-SAMICAS2 ;ven/gpl - case review cont ;2021-08-09t17:03z
- ;;18.0;SAMI;**1,5,9,12**;2020-01;
- ;;18.12
+SAMICAS2 ;ven/gpl - case review cont ;2021-10-05t23:14z
+ ;;18.0;SAMI;**1,5,9,12,14**;2020-01;
+ ;;18.14
  ;
  ; SAMICAS2 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -505,6 +505,7 @@ GETITEMS ; get items available for studyid
  . if $get(fname)="" set fname="unknown"
  . ;
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
+ . set zdate=$$FMDT^SAMIUR2(zdate)
  . quit:$get(zdate)=""
  . quit:$get(zform)=""
  . quit:$get(zi)=""
@@ -625,7 +626,8 @@ VAPALSDT ; vapals format for dates
  ; new vdate set vdate=$$FMTE^XLFDT(fmdate,"9D")
  ; set vdate=$translate(vdate," ","/")
  ;
- new vdate set vdate=$$FMTE^XLFDT(fmdate,"5D")
+ ;new vdate set vdate=$$FMTE^XLFDT(fmdate,"5D")
+ new vdate set vdate=$$FMTE^XLFDT(fmdate,"5DZ")
  ;
  ;
  ;@stanza 3 termination

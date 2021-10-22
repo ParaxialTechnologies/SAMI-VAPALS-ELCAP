@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - case review log ;2021-08-10t18:36z
- ;;18.0;SAMI;**9,11,12**;2020-01;
- ;;18.12
+SAMICUL ;ven/gpl - case review log ;2021-10-05t23:23z
+ ;;18.0;SAMI;**9,11,12,14**;2020-01;
+ ;;18.14
  ;
  ; SAMICUL contains the development log for the VAPALS-IELCAP Case
  ; Review Page (SAMICA* routines).
@@ -314,6 +314,9 @@ SAMICUL ;ven/gpl - case review log ;2021-08-10t18:36z
  ;  SAMICAS3 exclude current date from last compare field when prev ct
  ; report exists: in LASTCMP start w/before today; in PRIORCMP add
  ; line to handle retstr="".
+ ;
+ ; 2021-10-04/05 ven gpl 18.14 ec3b6e5d
+ ;  SAMICAS2 updated date format, bumped date and version.
  ;
  ;@contents
  ; SAMICASE case review

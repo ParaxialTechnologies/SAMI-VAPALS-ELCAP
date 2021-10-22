@@ -143,6 +143,14 @@ WSNOTE(return,filter) ; web service which returns a text note
  . s si="XXX00333"
  q:si=""
  ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ ;i $g(filter("veteransAffairsSite"))="false" d  ;
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
+ ;
  n samikey
  s samikey=$g(filter("form"))
  n root s root=$$setroot^%wd("vapals-patients")
@@ -213,6 +221,15 @@ NOTE(filter) ; extrnisic which creates a note
  . s si="XXX00333"
  q:si=""
  ;
+ ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt="Veteran"
+ ;i $g(filter("veteransAffairsSite"))="false" d  ;
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
+ ;
  n samikey
  s samikey=$g(filter("form"))
  n root s root=$$setroot^%wd("vapals-patients")
@@ -276,7 +293,7 @@ MKEL(sid,form,vals,filter) ;
  k @dest
  d OUT("Lung Screening Program Chart Eligibility Note")
  d OUT("")
- d ELNOTE(vals,dest,cnt)
+ d ELNOTE(vals,dest,cnt,.filter)
  ;
  quit  ; end of MKEL
  ;
@@ -291,11 +308,11 @@ MKPRE(sid,form,vals,filter) ;
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d OUT("Lung Screening Program Chart Eligibility and Pre-enrollment Discussion Note")
  . d OUT("")
- . d ELNOTE(vals,dest,cnt)
+ . d ELNOTE(vals,dest,cnt,.filter)
  i $g(@vals@("chart-eligibility-complete"))="true" d  ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
  . d OUT("")
- d PRENOTE(vals,dest,cnt)
+ d PRENOTE(vals,dest,cnt,.filter)
  ;
  quit  ; end of MKPRE
  ;
@@ -310,10 +327,10 @@ MKIN(sid,form,vals,filter) ;
  d OUT("Lung Screening Program Intake Note")
  d OUT("")
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
- . d ELNOTE(vals,dest,cnt)
+ . d ELNOTE(vals,dest,cnt,.filter)
  i $g(@vals@("pre-note-complete"))'="true" d  ;
- . d PRENOTE(vals,dest,cnt)
- d INNOTE(vals,dest,cnt)
+ . d PRENOTE(vals,dest,cnt,.filter)
+ d INNOTE(vals,dest,cnt,.filter)
  ;
  quit  ; end of MKIN
  ;
@@ -406,7 +423,15 @@ TLST ;
  ;
  ;
  ;
-ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
+ELNOTE(vals,dest,cnt,filter) ; eligibility NOTE TEXT
+ ;
+ ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
  ;
  D OUT("")
  D OUT("Date of chart review: "_$$XVAL("sidc",vals))
@@ -434,13 +459,21 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  ;
  ;
  ;
-PRENOTE(vals,dest,cnt) ;
+PRENOTE(vals,dest,cnt,filter) ;
+ ;
+ ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
  ;
  i $g(@vals@("sipedisc"))'="y" q  ; no prelim discussion
  D OUT("")
  ;d OUT("A pre-enrollment discussion was held.")
  ;[If Yes is selected then add the following 5 lines]
- D OUT("The program attempted to reach the Veteran to discuss lung screening.")
+ D OUT("The program attempted to reach the "_vetstxt_" to discuss lung screening.")
  D OUT("Date of pre-enrollment discussion: "_$$XVAL("sipedc",vals))
  n via s via=""
  s:$$XVAL("sipecnip",vals)="1" via=via_" In person"
@@ -477,7 +510,7 @@ SUBRSLT(XVAL) ; translation of discussion result
  ;
  ;
  ;
-INNOTE(vals,dest,cnt) ;
+INNOTE(vals,dest,cnt,filter) ;
  ;
  ;Lung Screening Program Intake Note
  ;
@@ -514,6 +547,15 @@ INNOTE(vals,dest,cnt) ;
  ;Location where prior lung cancer diagnosis was made: [Location Text]
  ;
  ;Shared Decision Making:
+ ;
+ ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ ;i $g(filter("veteransAffairsSite"))="false" d  ;
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
  ;
  d OUT(" ")
  d OUT("   "_"Date of intake discussion contact: "_$$XVAL("sidc",vals))
@@ -584,19 +626,19 @@ INNOTE(vals,dest,cnt) ;
  d OUT(" ")
  n shareddm
  s shareddm=+$$XVAL("siidmdc",vals)
- i shareddm=1 d SDM(dest)
+ i shareddm=1 d SDM(dest,.filter)
  e  d OUT("Shared decision making was not applicable")
  d OUT(" ")
  n ldct s ldct=""
  s:$$XVAL("sildct",vals)="n" ldct="No"
  s:$$XVAL("sildct",vals)="l" ldct="No"
  s:$$XVAL("sildct",vals)="y" ldct="Yes"
- d GLOUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
+ d GLOUT("The "_vetstxt_" has decided to enroll in the Lung Screening Program: "_ldct)
  i $$XVAL("sildct",vals)="l" d  ;
- . d GLOUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.",4)
+ . d GLOUT("The "_vetstxt_" has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.",4)
  i ldct="Yes" d  ;
  . d OUT("LDCT ordered: "_ldct)
- . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
+ . d OUT("    "_vetstxt2_" enrolled in the LSS program. Results and coordination of care ")
  . d OUT("    "_"will be made by the LSS team.  ")
  . i $$XVAL("siclin",vals)'="" d  ;
  . . quit
@@ -623,11 +665,20 @@ INNOTE(vals,dest,cnt) ;
  ;
  ;
  ;
-SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
+SDM(ary,filter) ; adds Shared Decision Making text to array ary, passed by name
+ ;
+ ;
+ n vetstxt s vetstxt="veteran"
+ n vetstxt2 s vetstxt2="Veteran"
+ ;i $g(filter("veteransAffairsSite"))="false" d  ;
+ i '$$ISVA^SAMIPARM(.filter) d  ;
+ . set vetstxt="candidate"
+ . set vetstxt2="Candidate"
+ set filter("vetstxt")=vetstxt
  ;
  n ii s ii=$o(@ary@(" "),-1)
  s ii=ii+1
- s @ary@(ii)="Veteran of age and exposure to cigarette smoke as described above, and "
+ s @ary@(ii)=vetstxt2_" of age and exposure to cigarette smoke as described above, and "
  s ii=ii+1
  s @ary@(ii)="without a current diagnosis or obvious symptoms suggestive of lung cancer, "
  s ii=ii+1
@@ -641,7 +692,7 @@ SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
  s ii=ii+1
  s @ary@(ii)="procedures, and the approximate amount of radiation exposure associated "
  s ii=ii+1
- s @ary@(ii)="with each screening procedure. In addition, the Veteran has been educated "
+ s @ary@(ii)="with each screening procedure. In addition, the "_vetstxt_" has been educated "
  s ii=ii+1
  s @ary@(ii)="today about the importance of adhering to annual lung screening, the "
  s ii=ii+1
@@ -651,7 +702,7 @@ SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
  s ii=ii+1
  s @ary@(ii)="cessation programs and available lung screening services at this site. "
  s ii=ii+1
- s @ary@(ii)="Education material was provided to the veteran. "
+ s @ary@(ii)="Education material was provided to the "_vetstxt_". "
  s ii=ii+1
  ;s @ary@(ii)="Based on this information, the Veteran has opted for "
  ;

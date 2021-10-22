@@ -1,4 +1,4 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2021-09-10t01:30z
+SAMIUR2 ;ven/gpl - user reports cont ;2021-10-05t23:28z
  ;;18.0;SAMI;**5,11,12,14**;2020-01;Build 11
  ;;18.14
  ;
@@ -21,13 +21,13 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-09-10t01:30z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-10t01:30z
+ ;@last-update 2021-10-05t23:28z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18.14
  ;@release-date 2020-01
- ;@patch-list **5,11,12**
+ ;@patch-list **5,11,12,14**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -135,6 +135,8 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
+ . set RPT(2.2,"header")="Active/Inactive"
+ . set RPT(2.2,"routine")="$$ACTIVE^SAMIUR2"
  . set RPT(2.5,"header")="Form"
  . set RPT(2.5,"routine")="$$AFORM^SAMIUR2"
  . set RPT(3,"header")="Form Date"
@@ -167,8 +169,11 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . ; set RPT(5,"routine")="$$RACE^SAMIUR2"
  . set RPT(6,"header")="Age"
  . set RPT(6,"routine")="$$AGE^SAMIUR2"
- . set RPT(7,"header")="Urban/Rural"
- . set RPT(7,"routine")="$$RURAL^SAMIUR2"
+ . d  ;
+ . . n filter s filter("siteid")=SITE
+ . . i $$ISVA^SAMIPARM(.filter) d  ;
+ . . . set RPT(7,"header")="Urban/Rural"
+ . . . set RPT(7,"routine")="$$RURAL^SAMIUR2"
  . set RPT(8,"header")="Smoking Status"
  . set RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
  . set RPT(9,"header")="Pack Years at Intake"
@@ -181,7 +186,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="Enrollment date"
- . set RPT(3,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(3,"routine")="$$ENROLLDT^SAMIUR2"
  . ;set RPT(3,"header")="CT Date"
  . ;set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
  . ;set RPT(4,"header")="Gender"
@@ -206,7 +211,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  ;
  if TYPE="incomplete" do  quit  ;
  . set RPT(1,"header")="Enrollment date"
- . set RPT(1,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(1,"routine")="$$ENROLLDT^SAMIUR2"
  . set RPT(2,"header")="Name"
  . set RPT(2,"routine")="$$NAME^SAMIUR2"
  . set RPT(3,"header")=$$SSNLABEL(SITE)
@@ -225,7 +230,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(4,"header")=$$SSNLABEL(SITE)
  . set RPT(4,"routine")="$$SSN^SAMIUR2"
  . set RPT(5,"header")="Enrollment date"
- . set RPT(5,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(5,"routine")="$$ENROLLDT^SAMIUR2"
  . quit
  ;
  if TYPE="cumpy" do  quit  ;
@@ -441,12 +446,13 @@ TDDT(ZDT) ; embed date in table cell
  ;@calls
  ; ^%DT
  ;
- new X,Y
+ new X,Y,Z
  set X=ZDT
  do ^%DT
  if Y=-1 set Y=""
+ set Z=$$VAPALSDT^SAMICASE(Y)
  new cell
- set cell="<td data-order="""_Y_""" data-search="""_ZDT_""">"_ZDT_"</td>"
+ set cell="<td data-order="""_Y_""" data-search="""_Z_""">"_Z_"</td>"
  ;
  quit cell ; end of $$TDDT
  ; 
@@ -543,7 +549,8 @@ AFORM(zdt,dfn,SAMIPATS) ; Name of most recent form
  Q $GET(SAMIPATS(zdt,dfn,"aform"))
  ;
 AFORMDT(zdt,dfn,SAMIPATS) ; Date of most recent form
- Q $GET(SAMIPATS(zdt,dfn,"aformdt"))
+ N ZD S ZD=$GET(SAMIPATS(zdt,dfn,"aformdt"))
+ Q $$VAPALSDT^SAMICASE(ZD)
  ;
 AGE(zdt,dfn,SAMIPATS) ; age
  ;
@@ -569,6 +576,19 @@ AGE(zdt,dfn,SAMIPATS) ; age
  ;
  ;
  ;
+ENROLLDT(zdt,dfn,SAMIPATS) ; enrollment date
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$TDDT
+ ;
+ new enroldt set enroldt=$get(SAMIPATS(zdt,dfn,"edate"))
+ ;
+ quit $$TDDT(enroldt) ; end of ppi $$ENROLLDT^SAMIUR2
+ ;
+ ;
 BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;
  ;;ppi;function;clean;silent;sac
@@ -577,10 +597,9 @@ BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;@calls
  ; $$TDDT
  ;
- new bldt set bldt=$get(SAMIPATS(zdt,dfn,"edate"))
+ new bldt set bldt=$get(SAMIPATS(zdt,dfn,"baseline"))
  ;
  quit $$TDDT(bldt) ; end of ppi $$BLINEDT^SAMIUR2
- ;
  ;
  ;
 CONTACT(zdt,dfn,SAMIPATS) ; patient street address

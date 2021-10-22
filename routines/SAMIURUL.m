@@ -1,4 +1,4 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-09-11T01:18Z
+SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
  ;;18.0;SAMI;**12,14**;2020-01;
  ;;18.14
  ;
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-09-11T01:18Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-11T01:18Z
+ ;@last-update 2021-10-15T01:01Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -178,6 +178,18 @@ SAMIURUL ;ven/gpl - user reports log ;2021-09-11T01:18Z
  ; SAMIUR fix bugs in reports showing inactive patients on wrong reports,
  ; "baseline" showing up in F/U date on Follow-up report, wrong patients
  ; on Intake but Missing CT Eval report.
+ ;
+ ; 2021-10-05 ven/gpl 18.14   3251c582, c4343d69, 368fa7f7, c4343d69
+ ;  b3cd039b, 237109df, 368fa7f7
+ ; SAMIIUR, SAMIUR2 fix some small bugs, make date formats consistent, bump 
+ ; versions and dates.
+ ;
+ ; 2021-10-14 ven/gpl 18.14  6a973630
+ ; SAMIUR fix bug where patients with CT Evals would appear on the Intake
+ ; but no CT report
+ ;
+ ; 2021-10-15 ven/lmry 
+ ; SAMIUR, SAMIURUL update history, bump dates
  ;
  ;
  ;@contents

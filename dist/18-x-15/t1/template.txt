@@ -97,23 +97,23 @@ ii. Contents
       solution: Increase the size of the lymph node map.
 
       reported: 2021-07-25 by Chenoweth.
-      
-      
+
+
 #.#. CT Evaluation Form: Keep previous information for nodules listed as "Not
       included in scan" and "Not in outside report"
 
       issue 21-128 (medium priority): Current behavior of these two nodule
       status options is to blank out fields in the nodule table; desired
       behavior is to keep the information (as maybe later scans will have the
-      nodules). This partially reverts an earlier request. The fields should 
-      only be grayed out for Prev seen, resolved or Prev seen, not a nodule, 
+      nodules). This partially reverts an earlier request. The fields should
+      only be grayed out for Prev seen, resolved or Prev seen, not a nodule,
       not for other choices.
 
       solution: Changed to desired behavior.
 
       reported: 2021-07-13 by Yip.
-      
-      
+
+
 #.#. CT Evaluation Form: If "Is it new" is set to Prev seen resolved, set
       nodule status to Resolved
 
@@ -123,76 +123,76 @@ ii. Contents
       solution: Changed to desired behavior.
 
       reported: 2021-07-13 by Yip.
-      
-      
+
+
 #.#. CT Evaluation Form: If CT Eval is a baseline, suppress comparative scans
       and prior scans in report.
-      
+
       issue 21-167 (medium priority): Automatically set the nodule status to
       resolved if the "is it new?" option is set to Prev seen, resolved.
 
       solution: Changed to desired behavior.
 
       reported: 2021-09-02 by Phoenix Team.
-      
-      
-#.#. CT Evaluation Form and CT Report: Add right and left for lymph nodes 
+
+
+#.#. CT Evaluation Form and CT Report: Add right and left for lymph nodes
       N10-N14.
-      
+
       issue 21-170 (high priority): In the Neck and Mediastinal section on the
-      form add right and left for lymph nodes N10-N14. Extend CT Report to 
+      form add right and left for lymph nodes N10-N14. Extend CT Report to
       handle new form fields.
 
       solution: Added form-fields and checkboxes.
-      
+
       reported: 2021-09-07 by Henschke
-      
-      
+
+
 #.#. CT Report: The lymph node station does not carry over to the CT Report.
-      
-      issue 21-170 (high priority): Lymph node stations are reported in the 
-      Neck and Mediastinal section on the form but that information is not 
+
+      issue 21-170 (high priority): Lymph node stations are reported in the
+      Neck and Mediastinal section on the form but that information is not
       included in the CT Report.
 
       solution: Add lymph node stations to CT Report.
 
       reported: 2021-07-25 by Chenoweth.
-      
-      
+
+
 #.#. CT Report: There is an extra space in front of Description
-      
-      issue 21-150 (low priority): There is an extra space in front of 
+
+      issue 21-150 (low priority): There is an extra space in front of
       Description at the top of the CT Report.
 
       solution: Removed extra space.
 
       reported: 2021-07-25 by Chenoweth.
-      
-      
+
+
 #.#. CT Report: Pleural effusion text revision in CT report
-      
-      issue 21-135 (medium priority): Current text reads "on right pleural 
+
+      issue 21-135 (medium priority): Current text reads "on right pleural
       effusion and on left pleural effusion", should be "pleural effusion on
       right and pleural effusion on left"
 
       solution: Correct CT Report translation.
 
       reported: 2021-08-03 by Slaughter.
-      
+
 
 #.#. CT Report: In Impression section please remove the word "above"
-      
-      issue 21-176 (low priority): 
+
+      issue 21-176 (low priority):
 
       solution: Remove word from CT Report. Must run INIT2GPH^SAMICTD2 to get
       the fix which will be in the Post-install. No extra action required by
       system administrator.
 
       reported: 2021-09-16 by Murphy.
-      
-      
+
+
 #.#. CT Report: Change wording for when nothing is put in CAC or emphysema.
-      
+
       issue 21-192 (high priority): In Emphysema and Coronary Artery
       Calcification, if nothing is entered, then in the report, indicate
       "Emphysema score not provided" and "Coronary Artery Calcification score
@@ -201,63 +201,64 @@ ii. Contents
       solution: Changed report translation.
 
       reported: 2021-10-11 by Henschke.
-      
-      
+
+
 #.#. Intake but no CT Report: Include patients who had CTs before enrollment
      but none since enrollment
-      
+
       issue 21-160 (high priority): To make sure all participants have a CT
       Scan in the program those who had CT Scans before enrollment need to be
       on this report.
 
-      solution: Add active patients who have not had a CT Scan since 
+      solution: Add active patients who have not had a CT Scan since
       enrollment.
-      
+
       reported: 2021-08-23 by Henschke.
-      
-      
+
+
  #.#. Infrastructure: Improve support for parameterization by system and site.
-      
+
       issue 21-194 (high priority): Some sites or organizations will need
-      different wording or other differences from the default. (For example, 
+      different wording or other differences from the default. (For example,
       ELCAP protocols vs Lung-Rads.)
 
       solution: Developed new parameters to customize VAPALS.
 
-      reported: 2021-02-24 by Avila.     
-      
+      reported: 2021-02-24 by Avila.
+
       NUMBER: 1                               NAME: Non VA
-PARM: socialSecurityNumber              VALUE: Patient ID
-PARM: socialSecurityNumber.short        VALUE: PID
-PARM: socialSecurityNumber.mask
-PARM: socialSecurityNumber.regex
-PARM: matchingReportEnabled             VALUE: true
-PARM: ruralUrbanChartEnabled            VALUE: false
-PARM: lungradsOrElcapCTtemplate         VALUE: elcap
-PARM: username                          VALUE: User Name
-PARM: password                          VALUE: Password
-PARM: veteransAffairsSite               VALUE: false
+      PARM: socialSecurityNumber              VALUE: Patient ID
+      PARM: socialSecurityNumber.short        VALUE: PID
+      PARM: socialSecurityNumber.mask
+      PARM: socialSecurityNumber.regex
+      PARM: matchingReportEnabled             VALUE: true
+      PARM: ruralUrbanChartEnabled            VALUE: false
+      PARM: lungradsOrElcapCTtemplate         VALUE: elcap
+      PARM: username                          VALUE: User Name
+      PARM: password                          VALUE: Password
+      PARM: veteransAffairsSite               VALUE: false
 
-NUMBER: 3                               NAME: SYS
-PARM: systemDemoOnly                    VALUE: false
-PARM: systemDemoUseDUZ
-PARM: username                          VALUE: User Name
-PARM: password                          VALUE: Password
+      NUMBER: 2                               NAME: VHA
+      PARM: socialSecurityNumber
+        VALUE: Social Security Number
+      PARM: socialSecurityNumber.short        VALUE: SSN
+      PARM: socialSecurityNumber.mask         VALUE: 000-00-0000
+      PARM: socialSecurityNumber.regex
+        VALUE: `(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
+      PARM: matchingReportEnabled             VALUE: true
+      PARM: ruralUrbanChartEnabled            VALUE: true
+      PARM: lungradsOrElcapCTtemplate         VALUE: lungrads
+      PARM: username                          VALUE: Access
+      PARM: password                          VALUE: Verify
+      PARM: veteransAffairsSite               VALUE: true
 
-NUMBER: 2                               NAME: VHA
-PARM: socialSecurityNumber              VALUE: Social Security Number
-PARM: socialSecurityNumber.short        VALUE: SSN
-PARM: socialSecurityNumber.mask         VALUE: 000-00-0000
-PARM: socialSecurityNumber.regex
-  VALUE: `(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
-PARM: matchingReportEnabled             VALUE: true
-PARM: ruralUrbanChartEnabled            VALUE: true
-PARM: lungradsOrElcapCTtemplate         VALUE: lungrads
-PARM: username                          VALUE: Access
-PARM: password                          VALUE: Verify
-PARM: veteransAffairsSite               VALUE: true
-      
-      
+      NUMBER: 3                               NAME: SYS
+      PARM: systemDemoOnly                    VALUE: false
+      PARM: systemDemoUseDUZ
+      PARM: username                          VALUE: User Name
+      PARM: password                          VALUE: Password
+
+
 #. Package elements
 
 #>include: .dtool/packelements.txt

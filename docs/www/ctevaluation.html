@@ -432,14 +432,13 @@
         months since baseline
        </small>
       </div>
-      <div id="non-baseline-container">
+      <div>
        <div class="col-sm-4 form-group">
-        <label class="control-label required" for="cedcs">
-         Most recent comparative
-                                study
+        <label class="control-label" for="cedcs">
+         Most recent comparative study
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="cedcs-addon" class="form-control" data-restriction="past" id="cedcs" name="cedcs" required="required"/>
+         <input aria-describedby="cedcs-addon" class="form-control" data-restriction="past" id="cedcs" name="cedcs"/>
          <div class="input-group-addon">
           <div class="input-group-text" id="cedcs-addon">
            <i aria-hidden="true" class="fa fa-calendar">
@@ -452,10 +451,10 @@
         </small>
        </div>
        <div class="col-sm-4 form-group">
-        <label class="control-label required" for="cedps">
+        <label class="control-label" for="cedps">
          Prior scans
         </label>
-        <input class="form-control" id="cedps" name="cedps" required="required" type="text"/>
+        <input class="form-control" id="cedps" name="cedps" type="text"/>
        </div>
       </div>
      </div>
@@ -9280,16 +9279,6 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
                             }
                         },
-                        cedcs: {
-                            validators: {
-                                notEmpty: {message: 'Most recent comparative study date is required'},
-                                date: {
-                                    max: VAPALS.todaysDate(),
-                                    message: 'Most recent comparative study date may not be in the future'
-                                }
-                            }
-                        },
-                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
@@ -9366,7 +9355,7 @@
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
                 }
-            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+            });
 
             // If no value is selected for CT Protocol, preselect "low-dose" as the default.
             const ctProtocol = $("[name=cectp]:checked").val();

@@ -118,13 +118,14 @@
     </label>
 {%- endmacro %}
 
-{# 
+{#
     requiredMessage - serves both as a flag that the field is required, as well as provies the message
-        that is displayed if the field value is not present. This error message is presented only when 
-        there is no value provided in the field, and not when any of the date restrictions are not met. 
-    dateRestriction - the parameter would accept any string, but honors only 'past' and 'future' to add 
+        that is displayed if the field value is not present. This error message is presented only when
+        there is no value provided in the field, and not when any of the date restrictions are not met.
+    dateRestriction - the parameter would accept any string, but honors only 'past' and 'future' to add
         a restriction on the valid date in the date picker. Note that the error message shown is the
         the standard FV message indicating that the date needs to be before/after the current date
+    required - optional parameter indicating that the field is required.
  #}
 {% macro datepicker(name, dateRestriction, required) -%}
     <div class="input-group datepicker">

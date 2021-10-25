@@ -193,16 +193,14 @@
                         </small>
                     </div>
 
-                    <div id="non-baseline-container">
+                    <div>
                         <div class="col-sm-4 form-group">
-                            <label for="cedcs" class="control-label required">Most recent comparative
-                                study</label>
-                            {{ f.datepicker("cedcs", "past", true) }}
+                            <label for="cedcs" class="control-label">Most recent comparative study</label>
+                            {{ f.datepicker("cedcs", "past") }}
                         </div>
                         <div class="col-sm-4  form-group">
-                            <label for="cedps" class="control-label required">Prior scans</label>
-                            <input type="text" class="form-control" id="cedps" name="cedps"
-                                   required="required"/>
+                            <label for="cedps" class="control-label">Prior scans</label>
+                            <input type="text" class="form-control" id="cedps" name="cedps"/>
                         </div>
                     </div>
                 </div>
@@ -396,16 +394,6 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
                             }
                         },
-                        cedcs: {
-                            validators: {
-                                notEmpty: {message: 'Most recent comparative study date is required'},
-                                date: {
-                                    max: VAPALS.todaysDate(),
-                                    message: 'Most recent comparative study date may not be in the future'
-                                }
-                            }
-                        },
-                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
@@ -482,7 +470,7 @@
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
                 }
-            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+            });
 
             // If no value is selected for CT Protocol, preselect "low-dose" as the default.
             const ctProtocol = $("[name=cectp]:checked").val();

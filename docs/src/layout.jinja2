@@ -166,6 +166,7 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
+    const sysConfig = []
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
@@ -178,6 +179,11 @@
         } else {
             return params[key];
         }
+    }
+
+    function getBooleanParameter(key, defaultValue) {
+        const val = getParameter(key);
+        return val == null ? defaultValue : val;
     }
 
     function paramSubstitution(siteId) {
@@ -230,13 +236,18 @@
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) {
         paramSubstitution(siteId);
+
+        //Load system configuration with defaults favoring a VA site
+        sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", true)
+
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
-        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
+        $("#matchingReport").toggle(sysConfig["MATCHING_REPORT_ENABLED"]);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
-        const veteransAffairsSite = getParameter("veteransAffairsSite");
-        if (veteransAffairsSite == null || veteransAffairsSite === true) {
+        if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("#feedback-link").remove();
         }
     } else {

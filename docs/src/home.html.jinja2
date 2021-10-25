@@ -160,7 +160,7 @@
             }).focus();
         });
 
-        if (getParameter("ruralUrbanChartEnabled") !== false) {
+        if (sysConfig.RURAL_URBAN_CHART_ENABLED) {
             $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
                 const ruralData = json.result;
                 $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)

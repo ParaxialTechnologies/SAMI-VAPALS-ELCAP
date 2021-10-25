@@ -1025,11 +1025,14 @@
       </div>
       <div class="col-md-4 form-group">
        <label class="aria-hidden" for="sicadxl">
-        Lunc CA Dx location
+        Lung CA Dx location
        </label>
        <input class="form-control" id="sicadxl" name="sicadxl" type="text"/>
        <span class="help-block">
-        Location if not in VA
+        Location
+        <span class="va-only">
+         if not in VA
+        </span>
        </span>
       </div>
      </div>
@@ -1062,7 +1065,10 @@
        </label>
        <input class="form-control" id="siptctl" name="siptctl" type="text"/>
        <span class="help-block">
-        Location if not in VA
+        Location
+        <span class="va-only">
+         if not in VA
+        </span>
        </span>
       </div>
      </div>
@@ -1468,6 +1474,8 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("#feedback-link").remove();
+        } else {
+            $(".va-only").remove();
         }
     } else {
         localStorage.removeItem("siteid");

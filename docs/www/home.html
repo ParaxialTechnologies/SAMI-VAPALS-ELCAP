@@ -362,6 +362,8 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("#feedback-link").remove();
+        } else {
+            $(".va-only").remove();
         }
     } else {
         localStorage.removeItem("siteid");
@@ -514,7 +516,8 @@
             }).focus();
         });
 
-        if (sysConfig.RURAL_URBAN_CHART_ENABLED) {
+        //NB: Rural/Urban demographics is only collected for VA sites, so hide the chart if both conditions are not met.
+        if (sysConfig.RURAL_URBAN_CHART_ENABLED && sysConfig.VETERAN_AFFAIRS_SITE) {
             $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
                 const ruralData = json.result;
                 $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)

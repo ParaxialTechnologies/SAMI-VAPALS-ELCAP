@@ -415,23 +415,18 @@
                                     Discussion complete
                                 </label>
                                 <p class="alert alert-warning" id="siidmdc-affirmation">
-                                    Veteran of age and exposure to cigarette smoke as described above, and without a
-                                    current
-                                    diagnosis or obvious symptoms suggestive of lung cancer, has been educated today
-                                    about
-                                    the estimated risk for lung cancer, the possibility of a cure or life prolonging if
-                                    an
-                                    early lung cancer were to be found during screening, the possibility of imaging
-                                    abnormalities not being lung cancer, the possibility of complications from
-                                    additional
-                                    diagnostic procedures, and the approximate amount of radiation exposure associated
-                                    with
-                                    each screening procedure. In addition, the Veteran has been educated today about the
-                                    importance of adhering to annual lung screening, the possible impact of other
-                                    medical
-                                    conditions on the overall health status, the importance of avoiding exposure to
-                                    cigarette smoke, available tobacco cessation programs and available lung screening
-                                    services at this VA facility. Education material was provided to the Veteran.
+                                    Candidate is of age and exposure to cigarette smoke as described above, and without
+                                    a current diagnosis or obvious symptoms suggestive of lung cancer, has been
+                                    educated today about the estimated risk for lung cancer, the possibility of a cure
+                                    or life prolonging if an early lung cancer were to be found during screening, the
+                                    possibility of imaging abnormalities not being lung cancer, the possibility of
+                                    complications from additional diagnostic procedures, and the approximate amount of
+                                    radiation exposure associated with each screening procedure. In addition, the
+                                    candidate has been educated today about the importance of adhering to annual lung
+                                    screening, the possible impact of other medical conditions on the overall health
+                                    status, the importance of avoiding exposure to cigarette smoke, available tobacco
+                                    cessation programs and available lung screening services at this VA facility.
+                                    Education material was provided to the candidate.
                                     <br/>
                                 </p>
                             </div>
@@ -440,7 +435,7 @@
 
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label class="required">Based on this information, the Veteran has opted to</label>
+                            <label class="required">Based on this information, the candidate has opted to</label>
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
@@ -648,7 +643,7 @@
             const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
             const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and " +
                 "participant is enrolled in the Lung Screening program.</div>");
-            $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veteran's option to enroll
+            $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); // candidates option to enroll
             $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 
             $enrollCol.append($enrollAlert);
@@ -771,7 +766,7 @@
 
                 // INTAKE AREA
                 fv.addField('siidmdc', {validators: {notEmpty: {message: 'Informed decision making is required'}}});
-                fv.addField('sildct', {validators: {notEmpty: {message: 'Veteran\'s option is required'}}});
+                fv.addField('sildct', {validators: {notEmpty: {message: 'Candidate option is required'}}});
                 fv.addField('sidod', {
                     validators: {
                         notEmpty: {message: 'Date of death is required'},

@@ -367,7 +367,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  . set retstr=$extract(retstr,1,$length(retstr)-1)
  . quit
  ;
- if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  ;
  ;
  ;@stanza 3 termination
@@ -518,7 +518,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . set basedt=$$BASELNDT^SAMICAS3(sid)
  . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
- . if lastdt=-1 set lastdt=basedt
+ . if lastdt=-1 set lastdt=""
  . new priordt set priordt=$$PRIORCMP^SAMICAS3(sid)
  . if priordt=-1 set priordt=lastdt
  . if priordt="" set priordt=lastdt

@@ -66,7 +66,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . s outmode="go" d OUT("")
  ;
  if $$XVAL("ceem",vals)="" d  ;
- . D HOUT("Emphysema: None")
+ . D HOUT("Emphysema: Emphysema score not provided.")
  . s outmode="go" d OUT("")
  ;d OUT("")
  s outmode="hold"

@@ -110,6 +110,27 @@ ISVA(filter) ; sets filter based on parms
  set filter("veteransAffairsSite")=ISVA
  Q $S(ISVA="false":0,1:1)
  ;
+SETPARM(LVL,PNAME,VALUE) ; 
+ ;
+ N ien,SAMIERR
+ S ien=$o(^SAMI(311.14,"B",$G(LVL),"")) ; locate parameter set
+ I ien="" q
+ Q:$G(PNAME)=""
+ n pien s pien=$o(^SAMI(311.14,ien,1,"B",$G(PNAME),""))
+ i pien="" d  ; add the parameter to the set
+ . n fda
+ . s fda(311.141,"?+1,"_ien_",",.01)=PNAME
+ . D UPDATE^DIE("","fda","","SAMIERR")
+ . s pien=$o(^SAMI(311.14,ien,1,"B",$G(PNAME),""))
+ i pien="" D ^ZTER
+ ;
+ N FDA
+ S FDA(311.141,pien_","_ien_",",.02)=VALUE
+ D UPDATE^DIE("","FDA","","SAMIERR")
+ I $D(SAMIERR) D ^ZTER
+ S ^SAMI(311.14,"D",LVL,PNAME)=VALUE
+ Q
+ ;
 ADDSVC() ; add the params webservice to the system
  d addService^%webutils("GET","params","WSPARAMS^SAMIPARM")
  Q

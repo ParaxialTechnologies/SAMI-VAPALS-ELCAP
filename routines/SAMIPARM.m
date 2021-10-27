@@ -114,6 +114,13 @@ SETPARM(LVL,PNAME,VALUE) ;
  ;
  N ien,SAMIERR
  S ien=$o(^SAMI(311.14,"B",$G(LVL),"")) ; locate parameter set
+ i ien="" d  ;
+ . if LVL="SYS" d  ;
+ . . n fda
+ . . s fda(311.14,"?+1,",.01)="SYS"
+ . . d UPDATE^DIE("","fda","","SAMIERR")
+ . . i $d(SAMIERR) D ^ZTER
+ . . S ien=$o(^SAMI(311.14,"B",$G(LVL),"")) ; locate parameter set
  I ien="" q
  Q:$G(PNAME)=""
  n pien s pien=$o(^SAMI(311.14,ien,1,"B",$G(PNAME),""))

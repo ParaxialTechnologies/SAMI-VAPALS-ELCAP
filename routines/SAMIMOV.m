@@ -141,6 +141,13 @@ AUDIT() ;
  . s site=$g(@lroot@(zi,"siteid"))
  . s lname=$g(@lroot@(zi,"saminame"))
  . s ldfn=$g(@lroot@(zi,"dfn"))
+ . i ldfn="" d  q  ;
+ . . ;d ^ZTER
+ . . w !,"error ",zi
+ . . s ln="error, missing dfn lien="_lien
+ . . s ln=ln_" "_$g(@lroot@(zi,"saminame"))
+ . . d outaudit(rpt,ln)
+ . . s ln=""
  . i $o(@lroot@("dfn",ldfn,""))'=lien d  ;
  . . w !,"error in dfn index dfn="_ldfn_" lien="_lien
  . s pien=$o(@proot@("dfn",ldfn,""))
@@ -161,6 +168,7 @@ AUDIT() ;
  . s ln=ln_" "_sid
  . d outaudit(rpt,ln)
  . s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
+ ;B
  D BROWSE^DDBR(rpt,"N","audit")
  ;
  q

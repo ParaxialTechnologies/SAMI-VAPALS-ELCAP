@@ -102,6 +102,13 @@ GETSYS(ARY) ; returns SYS (system) parameters
  M ARY=^SAMI(311.14,"D","SYS")
  Q
  ;
+ISVA(filter) ; sets filter based on parms
+ ;
+ n site s site=$g(filter("siteid"))
+ q:site=""
+ new ISVA set ISVA=$$GET1PARM^SAMIPARM("veteransAffairsSite",site)
+ set filter("veteransAffairsSite")=ISVA
+ Q $S(ISVA="false":0,1:1)
  ;
 ADDSVC() ; add the params webservice to the system
  d addService^%webutils("GET","params","WSPARAMS^SAMIPARM")

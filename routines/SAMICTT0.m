@@ -216,12 +216,13 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  n nopri s nopri=1
  d HOUT("Comparison CT Scans: ")
  if $$XVAL("cedcs",vals)'="" d  ;
- . i etype["Baseline" q  ;
+ . ;i etype["Baseline" q  ;
  . d OUT($$XSUB("cetex",vals,dict)_". ")
- . d OUT("Comparisons: "_$$XVAL("cedcs",vals))
+ . ;d OUT("Comparisons: "_$$XVAL("cedcs",vals))
+ . d OUT("Comparisons: ")
  . s nopri=0
  if $$XVAL("cedps",vals)'="" d  ;
- . i etype["Baseline" q  ;
+ . ;i etype["Baseline" q  ;
  . d OUT(" "_$$XVAL("cedps",vals))
  . s nopri=0
  d:nopri OUT("None")

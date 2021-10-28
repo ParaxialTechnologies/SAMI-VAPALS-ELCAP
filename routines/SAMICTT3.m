@@ -196,6 +196,10 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  s (cac,cacrec)=""
  ;
  n cectot s cectot=0
+ i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
  i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no" s cectot=cectot+1
  i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no" s cectot=cectot+1
  i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no" s cectot=cectot+1
@@ -204,12 +208,8 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no" s cectot=cectot+1
  i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no" s cectot=cectot+1
  i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no" s cectot=cectot+1
- i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
- i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
- i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
- i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
  S ^gpl("cectot")=cectot
- i cectot=4 d  ;
+ i cectot>3 d  ;
  . d OUT("Coronary Artery Calcification score not provided.") d OUT("")
  ; if $$XVAL("cecccac",vals)'="" d  ;
  ; . s @vals@("ceccv")="e"
@@ -235,7 +235,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;i samicac=1 d  ;
  ;
  d  ;
- . if cectot=4 q  ;
+ . if cectot>3 q  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")

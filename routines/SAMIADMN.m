@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ;Jan 17, 2020@13:46
+SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-28t20:43z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -12,20 +12,48 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ;Jan 17, 2020@13:46
  ; Primary development organization: Vista Expertise Network (VEN)
  ;
  ; @change-log
- ;   2018-05-03 ven/arc: Create entry point to clear M Web Server files cache
- ;   2018-07-01 ven/arc: added SETELCAP and SETLUNGRADS to switch between Ct Evaluation
- ;     forms
- ;   2018-08-14 ven/arc: web services for setlrads and setelcap, fix to setelcap and 
+ ;   2018-05-03 ven/arc   4a67353e
+ ;     New Mumps routine for admin actions, like clearing the web server cache.
+ ;   2018-07-01 ven/arc   45cd1b95
+ ;     added SETELCAP and SETLUNGRADS to switch between Ct Evaluation forms
+ ;   2018-08-14 ven/arc   972c5196,31d4be6f
+ ;     web services for setlrads and setelcap, fix to setelcap and 
  ;     setlungrads web services
- ;   2018-08-16 ven/arc: adding quotes to json, return valid json and added /ctversion
- ;   2018-08-20 ven/gpl: fixed but in /ctversion
- ;   2018-12-06 ven/lmry: minor edits for SAC compliance
- ;   2018-12-11 ven/lgc: update routines for SAC compliance
- ;   2018-12-27 ven/lgc: update routines for SAC compliance
- ;   2019-01-22 ven/lgc: add license info and edit for lower case initials
- ;   2019-03-12 ven/lmry: Spell out commands, add table of contents, few format changes, 
- ;     also noted routines used for debugging, added history, added gpl, lgc, me to devs
- ;   2019-10-11 ven/arc : Add entry point DODD
+ ;   2018-08-16 ven/arc   12e4b537
+ ;     adding quotes to json, return valid json and added /ctversion
+ ;   2018-08-20 ven/gpl   3f2c0f46
+ ;     fixed bug in /ctversion
+ ;   2018-12-06 ven/lmry  9925713f
+ ;     minor edits for SAC compliance
+ ;   2018-12-11 ven/lgc   3ceb74b5
+ ;     update routines for SAC compliance
+ ;   2018-12-27 ven/lgc   d22e0f21
+ ;     update routines for SAC compliance
+ ;   2019-01-22 ven/lgc   5ddb29c5,53681219
+ ;     add license info and edit for lower case initials
+ ;   2019-03-12 ven/lmry   0519c1db
+ ;     Spell out commands, add table of contents, few format changes, also 
+ ;     noted routines used for debugging, added history, added gpl, lgc, me to
+ ;     devs
+ ;   2019-05-09 ven/lgc   3c969b31
+ ;     updated for new web server file
+ ;   2019-05-10 ven/lgc   1c7a3aa1
+ ;      modifications for new web service file
+ ;   2019-05-17 ven/lgc   19798fe7
+ ;     correct second line of routines
+ ;   2019-05-28 ven/lgc   33e150a2
+ ;     replace ^%WO with ^%webapi
+ ;   2019-10-11 ven/arc   e4a64268
+ ;     Add entry point DODD
+ ;   2020-01-17 ven/arc   7936ae40
+ ;     Clean up TSV utilities.
+ ;   2020-02-04 ven/arc   4981a87a
+ ;     Fix TSV utilities. Add utility (DEVMSG) for debug and unit testing
+ ;   2020-09-20 ven/lgc 18.15 6771aee4
+ ;     Change set msgSubscript= from "Dev Message" to "DEV MSG"
+ ;   2021-10-28 ven/lmry  18.15
+ ;     Add parameter for path to DODD, added to change log, added short IDs to
+ ;     change log, added to toc
  ;
  quit  ; No entry from top
  ;
@@ -38,7 +66,8 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ;Jan 17, 2020@13:46
  ; WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; WSSTLRAD(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; WSCTVERS(rtn,filter) ; web service to return the current ctform version
- ; DODD ; Import TSV files to build form field DDs
+ ; DODD(path) ; Import TSV files to build form field DDs
+ ; DEVMSG ; utility for debug and unit testing.
  ;
 CLRWEB ; Clear the M Web Server files cache
  ;ven/arc;test;procedure;dirty;silent;non-sac
@@ -194,8 +223,8 @@ PRODSERV ;;
  ;;***END***
  ;
  ;
-DODD ; Import TSV files to build form field DDs
- new path set path=$$GET^XPAR("SYS","SAMI FORM FIELDS DEF PATH",,"Q")
+DODD(path) ; Import TSV files to build form field DDs
+ if $get(path)="" set path=$$GET^XPAR("SYS","SAMI FORM FIELDS DEF PATH",,"Q")
  quit:path=""
  ;
  do PRSTSV^SAMIFF(path,"background.tsv","form fields - background")

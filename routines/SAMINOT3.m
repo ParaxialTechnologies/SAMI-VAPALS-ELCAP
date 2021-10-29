@@ -1,5 +1,6 @@
-SAMINOT3 ;ven/gpl - CTeval report plain text ; 5/7/19 4:48pm
- ;;18.0;SAMI;;
+SAMINOT3 ;ven/gpl - CTeval report plain text ; 2021-10-29t20:28z
+ ;;18.0;SAMI;**15**;
+ ;;18-15
  ;
  ;@license: see routine SAMIUL
  ;

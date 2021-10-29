@@ -1,6 +1,6 @@
-SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-18t17:06z
- ;;18.0;SAMI;**10,11,12,13**;2020-01;
- ;;18.13
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-10-29t02:02z
+ ;;18.0;SAMI;**10,11,12,13,15**;2020-01;
+ ;;18.15
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which
@@ -26,7 +26,7 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-18t17:06z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-update 2021-08-17t21:42z
+ ;@last-update 2021-10-29t02:02z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@version 18.13
@@ -39,6 +39,8 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-18t17:06z
  ; alexis.carlson@vistaexpertise.net
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
  ;
  ;@module-credits
  ;@project VA Partnership to Increase Access to Lung Screening
@@ -119,10 +121,32 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-18t17:06z
  ;  SAMICTC1 fold in gpl chg, log, bump dates.
  ;
  ; 2021-07-19 ven/gpl 18.12 e9359411
- ;  SAMICTD2 chg minimal to mild for emphesema in ct report.
+ ;  SAMICTD2 chg minimal to mild for emphysema in ct report.
  ;
- ; 2021-08-17 ven/gpl 18.13 
- ;  SAMIICTT3 correct typo in field name for circumflex in CAC section
+ ; 2021-08-17 ven/gpl 18.13 023fcdff
+ ;  SAMICTT3 correct typo in field name for circumflex in CAC section
+ ;
+ ; 2021-10-19 ven/gpl 18.15 520cbe86,f9b7b5a1,137e131e,514476c3,ba04a578,
+ ;  013dd1ad
+ ;  SAMICTT0 remove extra space in front of Description, surpress comparison 
+ ;  scans on baseline CT eval
+ ;  SAMICTT3 added GENLNL for lymph nodes, fixed pleural effusion logic, if no
+ ;  input, say CAC score not provided,new lymph node table generated from the
+ ;  ct eval tsv graph
+ ;  SAMICTD2 remove above from Impression section of ct rpt and followup note
+ ;
+ ; 2021-10-21 ven/gpl 18.15 5b9cd54b
+ ;  SAMICTT3 fix in lymph node description algorithm
+ ;
+ ; 2021-10-25 ven/gpl 18.15 d147d56f
+ ;  SAMICTT3 corrections to pleura and lymph node report text
+ ;
+ ; 2021-10-26 ven/gpl 18.15 cd36ee6a,f31f8722
+ ;  SAMICTT0 fixed CT report Comparison Scans logic
+ ;  SAMICTT3 change working on emphysema score not provided
+ ;
+ ; 2021-10-28 ven/gpl 18.15 194989af
+ ;  SAMICTT3 fix detecting no cac score provided
  ;
  ;
  ;@contents

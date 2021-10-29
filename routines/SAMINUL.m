@@ -1,6 +1,6 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-07-01t17:41z
- ;;18.0;SAMI;**9,10,11,12**;2020-01;build 2
- ;;18.12
+SAMINUL ;ven/gpl - ielcap: note log ;2021-10-29t02:49z
+ ;;18.0;SAMI;**9,10,11,12,15**;2020-01;build 2
+ ;;18-15
  ;
  ; SAMINOTE contains subroutines for producing the ELCAP Note Pages.
  ; SAMINUL contains the development log for the SAMINOT* routines.
@@ -22,13 +22,13 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-07-01t17:41z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-07-01t17:41z
+ ;@last-update 2021-10-29t02:49z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18-15
  ;@release-date 2020-01
- ;@patch-list **9,10,11,12**
+ ;@patch-list **9,10,11,12,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -157,6 +157,15 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-07-01t17:41z
  ;
  ; 2021-07-01 ven/mcglk&toad 18.12-t2 cbf7e46b
  ;  SAMINOT1,2 bump dates & versions, update dev log, update contents.
+ ;
+ ; 2021-10-19 ven/gpl 18-15 138d45e5
+ ;  SAMINOT1,2,3 parameterize veteran vs participant or candidate for notes
+ ;
+ ; 2021-10-25 ven/gpl 18-15 15b95a8b
+ ;  SAMINOT3 removed parenthetical phone numbers
+ ;
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMINUL SAMINOT1,2,3 bump dates & versions, update dev log
  ;
  ;
  ;

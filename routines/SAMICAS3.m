@@ -1,6 +1,6 @@
-SAMICAS3 ;ven/gpl - case review cont ;2021-08-10t18:39z
- ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 11
- ;;18.12
+SAMICAS3 ;ven/gpl - case review cont ;2021-10-26t19:39z
+ ;;18.0;SAMI;**3,9,11,12,15**;2020-01;Build 11
+ ;;18-15
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
  ; of the VAPALS-IELCAP case review page.

@@ -1,6 +1,6 @@
-SAMICTD2 ;ven/gpl - cteval-dict init ;2021-07-21t20:12z
- ;;18.0;SAMI;**12**;2020-01;
- ;;18.12
+SAMICTD2 ;ven/gpl - cteval-dict init ;2021-10-19t22:03z
+ ;;18.0;SAMI;**12,15**;2020-01;
+ ;;18-15
  ;
  ; SAMICTD2 contains a pps to initialize the cteval-dict graphstore.
  ;

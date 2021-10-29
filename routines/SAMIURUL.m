@@ -191,6 +191,23 @@ SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
  ; 2021-10-15 ven/lmry 
  ; SAMIUR, SAMIURUL update history, bump dates
  ;
+ ; 2021-10-28 ven/lmry,mcglk,gpl 18-15
+ ;  39e871f8, 23e68f40, 013dd1ad, cd36ee6a, f9b7b5a1, 520cbe86, 194989af,
+ ;  f31f8722, d147d56f, 5b9cd54b, ba04a578, 514476c3, 137e131e, c26f02d7
+ ; SAMIADMN: add parameter to DODD, various updates to change log, etc.
+ ; SAMICAS3: initialize last comparitive and prior scan fields to blank if
+ ;  there were none.
+ ; SAMICTD2: remove above from Impression section of ct rpt and followup note.
+ ; SAMICTT0: fixed CT report Comparison Scans logic + surpress comparison scans
+ ;  on baseline CT eval + remove extra space in front of Description
+ ; SAMICTT3: fix detecting no cac score provided + change working on emphysema
+ ;  score not provided + corrections to pleura and lymph node report text + fix
+ ;  in lymph node description algorithm + new lymph node table generated from
+ ;  the ct eval tsv graph + if no input, say CAC score not provided + fixed
+ ;  pleural effusion logic + added GENLNL for lymph nodes
+ ; SAMICTUL: ???
+ ; SAMICUL: ???
+ ; 
  ;
  ;@contents
  ; SAMIUR user reports
@@ -202,3 +219,4 @@ SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
  ;
  ;
 EOR ; end of SAMIURUL
+

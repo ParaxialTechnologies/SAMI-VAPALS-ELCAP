@@ -1,6 +1,6 @@
 SAMIPAT ;ven/toad - init subroutines ;2021-10-28t21:37z
  ;;18.0;SAMI;**12,14,15**;2020-01;
- ;;18.15
+ ;;18-15
  ;
  ; Routine SAMIPAT contains VAPALS-ELCAP initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.

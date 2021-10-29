@@ -1,6 +1,6 @@
-SAMICTT0 ;ven/gpl - ctreport text main ;2021-05-21T20:47Z
- ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
- ;;1.18.0.11+i11
+SAMICTT0 ;ven/gpl - ctreport text main ;2021-10-27t03:21z
+ ;;18.0;SAMI;**4,10,11,15**;2020-01;Build 2
+ ;;18-15
  ;
  ; SAMICTT0 contains a web route & associated subroutines to produce
  ; the ELCAP CT Report in text format (route ctreport, format text).

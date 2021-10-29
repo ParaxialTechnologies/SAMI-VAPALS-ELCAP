@@ -1,5 +1,6 @@
 SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-28t20:43z
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;**15**;2020-01;
+ ;;18-15
  ;
  ;@license: see routine SAMIUL
  ;
@@ -49,11 +50,11 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-28t20:43z
  ;     Clean up TSV utilities.
  ;   2020-02-04 ven/arc   4981a87a
  ;     Fix TSV utilities. Add utility (DEVMSG) for debug and unit testing
- ;   2020-09-20 ven/lgc 18.15 6771aee4
+ ;   2020-09-20 ven/lgc 18-15 6771aee4
  ;     Change set msgSubscript= from "Dev Message" to "DEV MSG"
- ;   2021-10-28 ven/lmry  18.15
+ ;   2021-10-28 ven/lmry  18-15
  ;     Add parameter for path to DODD, added to change log, added short IDs to
- ;     change log, added to toc
+ ;     change log, added to toc.
  ;
  quit  ; No entry from top
  ;

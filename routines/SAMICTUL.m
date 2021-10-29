@@ -29,9 +29,9 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-10-29t02:02z
  ;@last-update 2021-10-29t02:02z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
- ;@version 18.13
+ ;@version 18.15
  ;@release-date 2020-01
- ;@patch-list **10,11,12**
+ ;@patch-list **10,11,12,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

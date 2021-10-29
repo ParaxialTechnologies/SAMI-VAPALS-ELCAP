@@ -1,4 +1,4 @@
-SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-10-28t19:48z
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-10-29t22:43z
  ;;18.0;SAMI;**4,10,13,15**;2020-01;Build 2
  ;;18-15
  ;
@@ -23,6 +23,7 @@ SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-10-28t19:48z
  ; OUTOLD: old version of out
  ; HOUT: output a ct report header line
  ; $$XVAL = patient value for var
+ ; GENLNL 
  ; $$XSUB = dictionary value defined by var
  ;
  ;
@@ -647,7 +648,7 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;
  quit zr ; end of $$XSUB
  ;
-GENLNL()
+GENLNL() ;
  ;
  n droot s droot=$$setroot^%wd("form fields - ct evaluation")
  n froot s froot=$na(@droot@("field","B"))

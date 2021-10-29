@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-28t20:43z
+SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-29t22:35z
  ;;18.0;SAMI;**15**;2020-01;
  ;;18-15
  ;
@@ -55,6 +55,8 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-28t20:43z
  ;   2021-10-28 ven/lmry  18-15
  ;     Add parameter for path to DODD, added to change log, added short IDs to
  ;     change log, added to toc.
+ ;   2021-10-29 ven/lmry 18-15
+ ;     Remove null line at bottom of routine for XINDEX
  ;
  quit  ; No entry from top
  ;
@@ -268,4 +270,3 @@ DEVMSG(routine,type,message) ; Create a dev/test message in ^TMP
  ;
  ;
 EOR ; End of routine SAMIADMN
-

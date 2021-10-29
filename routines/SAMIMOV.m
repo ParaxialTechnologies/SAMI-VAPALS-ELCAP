@@ -1,4 +1,4 @@
-SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t19:49z
+SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
  ;;18.0;SAMI;**7,15**;;Build 2
  ;;18-15
  ;
@@ -19,7 +19,7 @@ SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t19:49z
  ;@copyright 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t19:49z
+ ;@last-update 2021-10-29t23:29z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -46,7 +46,8 @@ SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t19:49z
  ; 2021-10-26 ven/gpl 18-15 d12b1b10
  ;  SAMIMOV parameter detection routine for identifying VA systems
  ; 2021-10-29 ven/lmry 18-15
- ;  SAMIMOV insert section 0, bump versions and dates
+ ;  SAMIMOV insert section 0, bump versions and dates, added semicolon after
+ ;  PICSITE for XINDEX
  ;
  ;@contents
  ; EN entry point to change a patient's site
@@ -171,7 +172,7 @@ PICPAT(PATRTN,SITE) ; pick a patient in site SITE
  I +Y>0 M PATRTN=LIST("result",Y)
  q
  ;
-PICSITE()
+PICSITE()  ;
  ;
  ; pick a site
  N X,Y,DIC,SITEIEN,SITEID

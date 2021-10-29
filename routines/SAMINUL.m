@@ -1,4 +1,4 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-10-29t02:49z
+SAMINUL ;ven/gpl - ielcap: note log ;2021-10-29t23:40z
  ;;18.0;SAMI;**9,10,11,12,15**;2020-01;build 2
  ;;18-15
  ;
@@ -166,6 +166,7 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-10-29t02:49z
  ;
  ; 2021-10-29 ven/lmry 18-15
  ;  SAMINUL SAMINOT1,2,3 bump dates & versions, update dev log
+ ;  SAMINOT3 add semicolon; remove space, add space for XINDEX
  ;
  ;
  ;

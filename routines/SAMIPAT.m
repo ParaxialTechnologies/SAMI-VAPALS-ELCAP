@@ -1,4 +1,4 @@
-SAMIPAT ;ven/toad - init subroutines ;2021-10-28t21:37z
+SAMIPAT ;ven/toad - init subroutines ;2021-10-29t22:32z
  ;;18.0;SAMI;**12,14,15**;2020-01;
  ;;18-15
  ;
@@ -21,7 +21,7 @@ SAMIPAT ;ven/toad - init subroutines ;2021-10-28t21:37z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-28t21:37z
+ ;@last-update 2021-10-29t22:32z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -49,9 +49,13 @@ SAMIPAT ;ven/toad - init subroutines ;2021-10-28t21:37z
  ; 2021-09-08 ven/lmry 18.14  2af1f2e7
  ;  SAMIPAT add post-install for patch SAMI*1.18*14
  ;
- ; 2021-10-28 ven/lmry 18.15
+ ; 2021-10-28 ven/lmry 18-15
  ;  SAMIPAT create a STANDARD subroutine with post-install commands that are used
  ;  for almost all patches. Change POS1814 to use that routine and add POS1815.
+ ;
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMIPAT remove a space before STANDARD
+ ;
  ;
  ;@contents
  ; STANDARD usual post-install commands
@@ -63,7 +67,7 @@ SAMIPAT ;ven/toad - init subroutines ;2021-10-28t21:37z
  ;
  ;@section 1 subroutine for most patches
  ;
- STANDARD ; usual post-install commands
+STANDARD ; usual post-install commands
  set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
  ;do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
  ;do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")

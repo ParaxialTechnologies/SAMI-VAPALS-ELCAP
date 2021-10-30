@@ -225,7 +225,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-10-29t02:34z
  ;  SAMIHOM4 parameterize veteran vs participant or candidate for notes
  ;
  ; 2021-10-29 ven/lmry 18-15
- ;	SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;  SAMIHOM4 and SAMIHUL bumped versions and dates
  ;
  ;@contents
  ; SAMIHOM3 homepage interface library

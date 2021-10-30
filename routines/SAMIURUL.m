@@ -1,4 +1,4 @@
-SAMIURUL ;ven/gpl - user reports log 2021-10-29T03:05Z
+SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
  ;;18.0;SAMI;**12,14,15**;2020-01;
  ;;18-15
  ;
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log 2021-10-29T03:05Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29T03:05Z
+ ;@last-update 2021-10-29T23:59Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -200,6 +200,9 @@ SAMIURUL ;ven/gpl - user reports log 2021-10-29T03:05Z
  ; 2021-10-28 ven/lmry,mcglk 18-15
  ;  SAMIUR, SAMIUR2, SAMIURUL update history, bump dates and versions
  ;
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMIUR remove blank at end of line for XINDEX
+ ;
  ;@contents
  ; SAMIUR user reports
  ; SAMIUR2 user reports cont
@@ -210,4 +213,3 @@ SAMIURUL ;ven/gpl - user reports log 2021-10-29T03:05Z
  ;
  ;
 EOR ; end of SAMIURUL
-

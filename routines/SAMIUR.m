@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-10-29t20:29z
+SAMIUR ;ven/gpl - user reports ;2021-10-29t23:57z
  ;;18.0;SAMI;**5,10,11,12,14,15**;2020-01;Build 4
  ;;18-15
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-10-29t20:29z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t20:29z
+ ;@last-update 2021-10-29t23:57z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -667,7 +667,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . set SAMIPATS(ien,dfn,"editref")=nuhref
  . quit
  ;
- i $d(ERR) d ^ZTER 
+ i $d(ERR) d ^ZTER
  ;
  quit  ; end of UNMAT
  ;

@@ -1,6 +1,6 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
- ;;18.0;SAMI;**12,14**;2020-01;
- ;;18.14
+SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
+ ;;18.0;SAMI;**12,14,15**;2020-01;
+ ;;18-15
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,13 +21,13 @@ SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-15T01:01Z
+ ;@last-update 2021-10-29T23:59Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.14
+ ;@version 18-15
  ;@release-date 2020-01
- ;@patch-list **12,14**
+ ;@patch-list **12,14,15**
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
@@ -188,9 +188,20 @@ SAMIURUL ;ven/gpl - user reports log ;2021-10-15T01:01Z
  ; SAMIUR fix bug where patients with CT Evals would appear on the Intake
  ; but no CT report
  ;
- ; 2021-10-15 ven/lmry 
+ ; 2021-10-15 ven/lmry 18.14 87fd8eb3
  ; SAMIUR, SAMIURUL update history, bump dates
  ;
+ ; 2021-10-20 ven/gpl 18-15 b63bfc06
+ ;  SAMIUR2  suppress rural column in enrollment report if not VA
+ ;
+ ; 2021-10-25 ven/gpl 18-15 b6188d2c
+ ;  SAMIUR fix for duplicates in work list and matching reports
+ ;
+ ; 2021-10-28 ven/lmry,mcglk 18-15
+ ;  SAMIUR, SAMIUR2, SAMIURUL update history, bump dates and versions
+ ;
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMIUR remove blank at end of line for XINDEX
  ;
  ;@contents
  ; SAMIUR user reports

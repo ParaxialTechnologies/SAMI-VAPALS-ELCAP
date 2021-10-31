@@ -1,6 +1,6 @@
-SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-08-17T19:12Z
- ;;18.0;SAMI;**4,10,13**;2020-01;Build 2
- ;;18.13
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-10-29t22:43z
+ ;;18.0;SAMI;**4,10,13,15**;2020-01;Build 2
+ ;;18-15
  ;
  ; SAMICTT3 creates the Emphysema section of the ELCAP CT Report in
  ; text format.
@@ -23,6 +23,7 @@ SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-08-17T19:12Z
  ; OUTOLD: old version of out
  ; HOUT: output a ct report header line
  ; $$XVAL = patient value for var
+ ; GENLNL 
  ; $$XSUB = dictionary value defined by var
  ;
  ;
@@ -66,7 +67,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . s outmode="go" d OUT("")
  ;
  if $$XVAL("ceem",vals)="" d  ;
- . D HOUT("Emphysema: None")
+ . D HOUT("Emphysema: Emphysema score not provided.")
  . s outmode="go" d OUT("")
  ;d OUT("")
  s outmode="hold"
@@ -132,16 +133,16 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . . s pe=1
  . if pe=0 d  ; both and same not done
  . . if right d  ;
- . . . d OUT(sp1_cepert_" pleural effusion on right.")
+ . . . d OUT(sp1_cepert_" right pleural effusion.")
  . . . s pe=1
  . . if left d  ;
- . . . d OUT(sp1_cepert_" pleural effusion on left.")
+ . . . d OUT(sp1_cepelt_" left pleural effusion.")
  . . . s pe=1
  . if pe=0 d  ; nothing worked
- . . d OUT(sp1_"No pleural effusions. ") d OUT("")
+ . . d OUT(sp1_"No pleural effusion. ") d OUT("")
  ;
  i $$XVAL("cepev",vals)'="y" d  ; 
- . d OUT(sp1_"No pleural effusions. ") d OUT("")
+ . d OUT(sp1_"No pleural effusion. ") d OUT("")
  ;  if { $pe == 0 } {
  ;    puts "[tr "No pleural effusions"].${para}"
  ;  }
@@ -196,6 +197,10 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  s (cac,cacrec)=""
  ;
  n cectot s cectot=0
+ i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
+ i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
+ i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
+ i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
  i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no" s cectot=cectot+1
  i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no" s cectot=cectot+1
  i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no" s cectot=cectot+1
@@ -204,12 +209,8 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no" s cectot=cectot+1
  i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no" s cectot=cectot+1
  i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no" s cectot=cectot+1
- i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
- i $g(@vals@("ceccld"))="no" s @vals@("ceccld")="no" s cectot=cectot+1
- i $g(@vals@("cecccf"))="no" s @vals@("cecccf")="no" s cectot=cectot+1
- i $g(@vals@("ceccrc"))="no" s @vals@("ceccrc")="no" s cectot=cectot+1
  S ^gpl("cectot")=cectot
- i cectot=4 d  ;
+ i cectot>3 d  ;
  . d OUT("Coronary Artery Calcification score not provided.") d OUT("")
  ; if $$XVAL("cecccac",vals)'="" d  ;
  ; . s @vals@("ceccv")="e"
@@ -235,7 +236,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;i samicac=1 d  ;
  ;
  d  ;
- . if cectot=4 q  ;
+ . if cectot>3 q  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
@@ -302,52 +303,53 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . i $$XVAL("ceayo",vals)="o" d OUT(sp1_$$XVAL("ceayos",vals))
  ;
  ;   # Non-calcified lymph nodes
- n lnlist,lnlistt
+ n lnlist,lnlistt,lnlcnt
+ set lnlcnt=22
  set lnlist(1)="cemlnl1"
- set lnlist(2)="cemlnl10l"
- set lnlist(3)="cemlnl10r"
- set lnlist(4)="cemlnl11l"
- set lnlist(5)="cemlnl11r"
- set lnlist(6)="cemlnl12l"
- set lnlist(7)="cemlnl12r"
- set lnlist(8)="cemlnl13l"
- set lnlist(9)="cemlnl13r"
- set lnlist(10)="cemlnl14l"
- set lnlist(11)="cemlnl14r"
- set lnlist(12)="cemlnl2l"
- set lnlist(13)="cemlnl2r"
- set lnlist(14)="cemlnl3a"
- set lnlist(15)="cemlnl3p"
- set lnlist(16)="cemlnl4l"
- set lnlist(17)="cemlnl4r"
- set lnlist(18)="cemlnl5"
- set lnlist(19)="cemlnl6"
- set lnlist(20)="cemlnl7"
- set lnlist(21)="cemlnl8"
- set lnlist(22)="cemlnl9"
+ set lnlist(2)="cemlnl2l"
+ set lnlist(2.5)="cemlnl2r"
+ set lnlist(3)="cemlnl3a"
+ set lnlist(3.5)="cemlnl3p"
+ set lnlist(4)="cemlnl4l"
+ set lnlist(4.5)="cemlnl4r"
+ set lnlist(5)="cemlnl5"
+ set lnlist(6)="cemlnl6"
+ set lnlist(7)="cemlnl7"
+ set lnlist(8)="cemlnl8"
+ set lnlist(9)="cemlnl9"
+ set lnlist(10)="cemlnl10l"
+ set lnlist(10.5)="cemlnl10r"
+ set lnlist(11)="cemlnl11l"
+ set lnlist(11.5)="cemlnl11r"
+ set lnlist(12)="cemlnl12l"
+ set lnlist(12.5)="cemlnl12r"
+ set lnlist(13)="cemlnl13l"
+ set lnlist(13.5)="cemlnl13r"
+ set lnlist(14)="cemlnl14l"
+ set lnlist(14.5)="cemlnl14r"
  ;
- set lnlistt(1)="low cervical, supraclavicular, and sternal notch nodes"
- set lnlistt(2)="hilar (left)"
- set lnlistt(3)="hilar (right)"
- set lnlistt(4)="interlobar (left)"
- set lnlistt(5)="interlobar (right)"
- set lnlistt(6)="lobar (left)"
- set lnlistt(7)="lobar (right)"
- set lnlistt(8)="segmental (left)"
- set lnlistt(9)="segmental (right)"
- set lnlistt(10)="subsegmental (left)"
- set lnlistt(11)="subsegmental (right)"
- set lnlistt(12)="upper paratracheal (left)"
- set lnlistt(13)="upper paratracheal (right)"
- set lnlistt(14)="prevascular"
- set lnlistt(15)="retrotracheal"
- set lnlistt(16)="lower paratracheal (left)"
- set lnlistt(17)="lower paratracheal (right)"
- set lnlistt(18)="subaortic"
- set lnlistt(19)="para-aortic (ascending aorta or phrenic)"
- set lnlistt(20)="subcarinal"
- set lnlistt(21)="paraesophageal (below carina)"
- set lnlistt(22)="pulmonary ligament"
+ set lnlistt(1)="N1: Low cervical, supraclavicular, and sternal notch nodes"
+ set lnlistt(2)="N2L: Upper paratracheal (left)"
+ set lnlistt(2.5)="N2R: Upper paratracheal (right)"
+ set lnlistt(3)="N3A: Prevascular"
+ set lnlistt(3.5)="N3P: Retrotracheal"
+ set lnlistt(4)="N4L: Lower paratracheal (left)"
+ set lnlistt(4.5)="N4R: Lower paratracheal (right)"
+ set lnlistt(5)="N5: Subaortic"
+ set lnlistt(6)="N6: Para-aortic (ascending aorta or phrenic)"
+ set lnlistt(7)="N7: Subcarinal"
+ set lnlistt(8)="N8: Paraesophageal (below carina)"
+ set lnlistt(9)="N9: Pulmonary ligament"
+ set lnlistt(10)="N10L: Hilar (left)"
+ set lnlistt(10.5)="N10R: Hilar (right)"
+ set lnlistt(11)="N11L: Interlobar (left)"
+ set lnlistt(11.5)="N11R: Interlobar (right)"
+ set lnlistt(12)="N12L: Lobar (left)"
+ set lnlistt(12.5)="N12R: Lobar (right)"
+ set lnlistt(13)="N13L: Segmental (left)"
+ set lnlistt(13.5)="N13R: Segmental (right)"
+ set lnlistt(14)="N14L: Subsegmental (left)"
+ set lnlistt(14.5)="N14R: Subsegmental (right)"
  ;
  ;set lnlist(1)="cemlnl1"
  ;set lnlist(2)="cemlnl2r"
@@ -383,23 +385,28 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . s yesmm=1
  . n llist,item
  . s (llist,item)=""
+ . n lnum,slnum
+ . s lnum=0
  . f  s item=$o(lnlist(item)) q:item=""  d  ;
  . . ;i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
- . . i $$XVAL(lnlist(item),vals)'="" s llist(item)=lnlist(item)
- . n lnum,slnum
- . s lnum=$o(llist(""),-1)
+ . . i $$XVAL(lnlist(item),vals)'="" d  ;
+ . . . s llist(item)=lnlist(item)
+ . . . s lnum=lnum+1
+ . ;s lnum=$o(llist(""),-1)
  . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted. ")
  . i lnum>0 d  ;
  . . s slnum=lnum
- . . d OUT("Enlarged or growing lymph nodes in the ")
+ . . ;d OUT("Enlarged or growing lymph nodes in the ")
+ . . d OUT("Enlarged or growing lymph nodes: ")
  . . s item=""
  . . f  s item=$o(llist(item)) q:item=""  d  ;
  . . . d OUT(lnlistt(item))
  . . . i lnum>2 d OUT(", ")
  . . . i lnum=2 d OUT(" and ")
  . . . s lnum=lnum-1
- . . i slnum>1 d OUT(" locations. ")
- . . i slnum=1 d OUT(" location. ")
+ . . ;i slnum>1 d OUT(" locations. ")
+ . . ;i slnum=1 d OUT(" location. ")
+ . . d OUT(". ")
  ;
  ;s outmode="go"
  ;d OUT("")
@@ -641,10 +648,11 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;
  quit zr ; end of $$XSUB
  ;
-GENLNL()
+GENLNL() ;
  ;
  n droot s droot=$$setroot^%wd("form fields - ct evaluation")
  n froot s froot=$na(@droot@("field","B"))
+ n lnlist,lnlistt
  n cnt s cnt=0
  n cemlnl s cemlnl="cemlnl"
  f  s cemlnl=$o(@froot@(cemlnl)) q:cemlnl=""  q:cemlnl'["cemlnl"  d  ;
@@ -655,16 +663,36 @@ GENLNL()
  . ;zwr @droot@("field",fien,"input",1,*)
  . n lbl
  . s lbl=$g(@droot@("field",fien,"input",1,"label"))
- . s lbl=$p(lbl,": ",2)
- . s lbl=$$LOWC^SAMICTT3(lbl)
- . w !,lbl
- . s lnlist(cnt)=cemlnl
- . s lnlistt(cnt)=lbl
- ;zwr lnlist
- ;zwr lnlistt
- f i=1:1:cnt w !," set lnlist(",i,")=""",lnlist(i),""""
+ . ;s lbl=$p(lbl,": ",2)
+ . ;s lbl=$$LOWC^SAMICTT3(lbl)
+ . n norder,dec
+ . s dec=0
+ . s norder=$g(@droot@("field",fien,"input",1,"value"))
+ . i $e(norder,1)'="N" w !,"N error!!" b
+ . s norder=$e(norder,2,$l(norder))
+ . i $e(norder,$l(norder))="L" d  ;
+ . . s dec=0
+ . . s norder=$e(norder,1,$l(norder)-1)
+ . i $e(norder,$l(norder))="R" d  ;
+ . . s dec=.5
+ . . s norder=$e(norder,1,$l(norder)-1)
+ . i $e(norder,$l(norder))="A" d  ;
+ . . s dec=0
+ . . s norder=$e(norder,1,$l(norder)-1)
+ . i $e(norder,$l(norder))="P" d  ;
+ . . s dec=.5
+ . . s norder=$e(norder,1,$l(norder)-1)
+ . s norder=norder+dec
+ . w !,lbl," ",norder
+ . s lnlist(norder)=cemlnl
+ . s lnlistt(norder)=lbl
+ zwr lnlist
+ zwr lnlistt
+ w !," set lnlcnt="_cnt
+ n i s i=""
+ f  s i=$o(lnlist(i)) q:i=""  w !," set lnlist(",i,")=""",lnlist(i),""""
  w !," ;"
- f i=1:1:cnt w !," set lnlistt(",i,")=""",lnlistt(i),""""
+ f  s i=$o(lnlistt(i)) q:i=""  w !," set lnlistt(",i,")=""",lnlistt(i),""""
  q
  ;
  ;

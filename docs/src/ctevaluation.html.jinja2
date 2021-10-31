@@ -109,6 +109,16 @@
                                 Follow-up (not annual repeat)
                             </label>
                         </div>
+                        {% if mockup %}
+                        <div>
+                        <button type="button" class="btn btn-default btn-xs import-data-button">
+                            <span class="fa" aria-hidden="true"></span> Import Data
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs revert-data-button">
+                            <span class="fa" aria-hidden="true"></span> Revert Data
+                        </button>
+                        </div>
+                        {% endif %}
                         <div class="alert alert-warning">
                             Only select Baseline if there is no prior CT or there is a prior CT scan more
                             than 3 years ago
@@ -193,16 +203,14 @@
                         </small>
                     </div>
 
-                    <div id="non-baseline-container">
+                    <div>
                         <div class="col-sm-4 form-group">
-                            <label for="cedcs" class="control-label required">Most recent comparative
-                                study</label>
-                            {{ f.datepicker("cedcs", "past", true) }}
+                            <label for="cedcs" class="control-label">Most recent comparative study</label>
+                            {{ f.datepicker("cedcs", "past") }}
                         </div>
                         <div class="col-sm-4  form-group">
-                            <label for="cedps" class="control-label required">Prior scans</label>
-                            <input type="text" class="form-control" id="cedps" name="cedps"
-                                   required="required"/>
+                            <label for="cedps" class="control-label">Prior scans</label>
+                            <input type="text" class="form-control" id="cedps" name="cedps"/>
                         </div>
                     </div>
                 </div>
@@ -324,8 +332,8 @@
     <!--suppress Annotator -->
     <script>
 
-        // dicomStructuredReport is hard coded here for now
-        const dicomStructuredReport = [
+        // aiStructuredReport is hard coded here for now
+        const aiStructuredReport = [
             {
                 "Tracking Identifier": "L1",
                 "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
@@ -463,6 +471,12 @@
             }
         ];
 
+        // dicomStructuredReport is hard coded here for now
+        const dicomStructuredReport = [
+            { "CT Study Date": "10/02/2021", "Reconstructed slice thickness (mm)": "0.75"}
+            //{ "CT Study Date": "10/02/2021", "Reconstructed slice thickness (mm)": "o", "Specify": "123"}
+        ];
+
         //calculate Time Since Baseline (TSB)
         function calculateTimeSinceBaseline() {
             const baselineDateString = $("#sidoe").val();
@@ -535,16 +549,6 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
                             }
                         },
-                        cedcs: {
-                            validators: {
-                                notEmpty: {message: 'Most recent comparative study date is required'},
-                                date: {
-                                    max: VAPALS.todaysDate(),
-                                    message: 'Most recent comparative study date may not be in the future'
-                                }
-                            }
-                        },
-                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
@@ -621,7 +625,7 @@
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
                 }
-            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+            });
 
             // If no value is selected for CT Protocol, preselect "low-dose" as the default.
             const ctProtocol = $("[name=cectp]:checked").val();
@@ -633,7 +637,7 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             {#NB: Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}
-            const $noduleGrid = initNoduleGrid(fv, dicomStructuredReport);
+            const $noduleGrid = initNoduleGrid(fv, aiStructuredReport, dicomStructuredReport);
             initAbnormalities(fv);
             initEmphysema(fv);
             initFollowup(fv);
@@ -687,7 +691,18 @@
                
                 $(element).tooltip('destroy').remove();
 
-                createImportElement(fieldSelector, importValue).insertAfter(fieldSelector);
+                if (fieldSelector === "#cedos") {  
+                    createImportElement(fieldSelector, importValue).insertAfter($("#cedos-addon").parent().parent());
+                } else {
+                    createImportElement(fieldSelector, importValue).insertAfter(fieldSelector);
+                    if (fieldSelector === "#cectrst") {
+                        if ($ele.attr("original-value") == "o") {
+                            $("#cectrsto-container").show();
+                        } else {
+                            $("#cectrsto-container").hide();
+                        }
+                    }
+                }
             }
         }
 
@@ -729,7 +744,18 @@
                 
                 $(element).tooltip('destroy').remove();
 
-                createRevertElement(fieldSelector, origValue).insertAfter(fieldSelector);
+                if (fieldSelector === "#cedos") {  
+                    createRevertElement(fieldSelector, origValue).insertAfter($("#cedos-addon").parent().parent());
+                } else {
+                    createRevertElement(fieldSelector, origValue).insertAfter(fieldSelector);
+                    if (fieldSelector === "#cectrst") {
+                        if ($ele.attr("import-value") == "o") {
+                            $("#cectrsto-container").show();
+                        } else {
+                            $("#cectrsto-container").hide();
+                        }
+                    }
+                }
             }
         }
 

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.10.21" name="version"/>
+  <meta content="2021.10.30" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -64,17 +64,17 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.10.21">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.10.30">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.10.21">
+  <script src="../www/jquery-conditonally-display.js?v=2021.10.30">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.21">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.10.30">
   </script>
-  <script src="../www/vapals.js?v=2021.10.21">
+  <script src="../www/vapals.js?v=2021.10.30">
   </script>
-  <script src="../www/init.js?v=2021.10.21">
+  <script src="../www/init.js?v=2021.10.30">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.10.21">
+  <script src="../www/nodule-grid.js?v=2021.10.30">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -4768,16 +4768,6 @@
           </span>
           Add nodule
          </button>
-         <button class="btn btn-default btn-xs import-data-button" type="button">
-          <span aria-hidden="true" class="fa">
-          </span>
-          Import Data
-         </button>
-         <button class="btn btn-default btn-xs revert-data-button" type="button">
-          <span aria-hidden="true" class="fa">
-          </span>
-          Revert Data
-         </button>
         </div>
        </div>
        <div class="col-md-12" id="nodule-table" style="display: none;">
@@ -4786,16 +4776,6 @@
           <span aria-hidden="true" class="fa fa-plus">
           </span>
           Add nodule
-         </button>
-         <button class="btn btn-default btn-sm import-data-button" type="button">
-          <span aria-hidden="true" class="fa">
-          </span>
-          Import Data
-         </button>
-         <button class="btn btn-default btn-sm revert-data-button" type="button">
-          <span aria-hidden="true" class="fa">
-          </span>
-          Revert Data
          </button>
          <table class="table-striped" style="table-layout:auto;">
           <thead>
@@ -9701,8 +9681,38 @@
       </div>
       <input context="server" name="cennod" type="hidden" value="1"/>
       <input context="server" name="ceanod" type="hidden" value="y"/>
+      <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
+       <div class="modal-dialog" role="document">
+        <div class="modal-content">
+         <div class="modal-header">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+           <span aria-hidden="true">
+            ×
+           </span>
+          </button>
+          <h4 class="modal-title" id="dataImportModalLabel">
+           Import Data
+          </h4>
+         </div>
+         <div class="modal-body">
+          Select which data set to import.
+         </div>
+         <div class="modal-footer">
+          <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
+           Import AI Findings
+          </button>
+          <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
+           Import DICOM Header Information
+          </button>
+          <button class="btn btn-default" data-dismiss="modal" type="button">
+           Cancel
+          </button>
+         </div>
+        </div>
+       </div>
+      </div>
       <script>
-       function initNoduleGrid(fv, dicomData) {
+       function initNoduleGrid(fv, aiData, dicomData) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -9716,13 +9726,17 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            if (dicomData) {
-                console.log("dicom is present")
-                $(".import-data-button").on('click', function () {
-                    $noduleGrid.importData(dicomData);
-                });
-                $(".revert-data-button").on('click', $noduleGrid.revertData);
-            }
+            $(".revert-data-button").on('click', $noduleGrid.revertData);
+            
+            $(".import-data-button").on('click', function () {
+                $('#dataImportModal').modal();
+            });
+            $(".importAI").on('click', function () {
+                $noduleGrid.importData(aiData);
+            });
+            $(".importDICOM").on('click', function () {
+                $noduleGrid.importData2(dicomData);
+            });
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
@@ -11952,37 +11966,72 @@
                </div>
                <div class="checkbox">
                 <label>
-                 <input name="cemlnl10" type="hidden" value=""/>
-                 <input id="cemlnl10" name="cemlnl10" type="checkbox" value="N10"/>
-                 N10: Hilar
+                 <input name="cemlnl10r" type="hidden" value=""/>
+                 <input id="cemlnl10r" name="cemlnl10r" type="checkbox" value="N10R"/>
+                 N10R: Hilar (right)
                 </label>
                </div>
                <div class="checkbox">
                 <label>
-                 <input name="cemlnl11" type="hidden" value=""/>
-                 <input id="cemlnl11" name="cemlnl11" type="checkbox" value="N11"/>
-                 N11: Interlobar
+                 <input name="cemlnl10l" type="hidden" value=""/>
+                 <input id="cemlnl10l" name="cemlnl10l" type="checkbox" value="N10L"/>
+                 N10L: Hilar (left)
                 </label>
                </div>
                <div class="checkbox">
                 <label>
-                 <input name="cemlnl12" type="hidden" value=""/>
-                 <input id="cemlnl12" name="cemlnl12" type="checkbox" value="N12"/>
-                 N12: Lobar
+                 <input name="cemlnl11r" type="hidden" value=""/>
+                 <input id="cemlnl11r" name="cemlnl11r" type="checkbox" value="N11R"/>
+                 N11R: Interlobar (right)
                 </label>
                </div>
                <div class="checkbox">
                 <label>
-                 <input name="cemlnl13" type="hidden" value=""/>
-                 <input id="cemlnl13" name="cemlnl13" type="checkbox" value="N13"/>
-                 N13: Segmental
+                 <input name="cemlnl11l" type="hidden" value=""/>
+                 <input id="cemlnl11l" name="cemlnl11l" type="checkbox" value="N11L"/>
+                 N11L: Interlobar (left)
                 </label>
                </div>
                <div class="checkbox">
                 <label>
-                 <input name="cemlnl14" type="hidden" value=""/>
-                 <input id="cemlnl14" name="cemlnl14" type="checkbox" value="N14"/>
-                 N14: Subsegmental
+                 <input name="cemlnl12r" type="hidden" value=""/>
+                 <input id="cemlnl12r" name="cemlnl12r" type="checkbox" value="N12R"/>
+                 N12R: Lobar (right)
+                </label>
+               </div>
+               <div class="checkbox">
+                <label>
+                 <input name="cemlnl12l" type="hidden" value=""/>
+                 <input id="cemlnl12l" name="cemlnl12l" type="checkbox" value="N12L"/>
+                 N12L: Lobar (left)
+                </label>
+               </div>
+               <div class="checkbox">
+                <label>
+                 <input name="cemlnl13r" type="hidden" value=""/>
+                 <input id="cemlnl13r" name="cemlnl13r" type="checkbox" value="N13R"/>
+                 N13R: Segmental (right)
+                </label>
+               </div>
+               <div class="checkbox">
+                <label>
+                 <input name="cemlnl13l" type="hidden" value=""/>
+                 <input id="cemlnl13l" name="cemlnl13l" type="checkbox" value="N13L"/>
+                 N13L: Segmental (left)
+                </label>
+               </div>
+               <div class="checkbox">
+                <label>
+                 <input name="cemlnl14r" type="hidden" value=""/>
+                 <input id="cemlnl14r" name="cemlnl14r" type="checkbox" value="N14R"/>
+                 N14R: Subsegmental (right)
+                </label>
+               </div>
+               <div class="checkbox">
+                <label>
+                 <input name="cemlnl14l" type="hidden" value=""/>
+                 <input id="cemlnl14l" name="cemlnl14l" type="checkbox" value="N14L"/>
+                 N14L: Subsegmental (left)
                 </label>
                </div>
               </div>
@@ -13091,7 +13140,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.10.21
+     2021.10.30
     </span>
    </div>
   </footer>
@@ -13099,7 +13148,7 @@
    const userId = "@@USER@@";
     const isLoggedIn = isSet(userId);
     const siteIdVal = "@@SITE@@";
-    const siteId = isSet(siteIdVal) ? siteIdVal : '';
+    const siteId = isSet(siteIdVal) ? siteIdVal : 'SYS';
     const studyIdVal = "@@SID@@";
     const studyId = isSet(studyIdVal) ? studyIdVal : '';
     const frozen = "@@FROZEN@@";
@@ -13110,6 +13159,7 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
+    const sysConfig = []
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
@@ -13122,6 +13172,11 @@
         } else {
             return params[key];
         }
+    }
+
+    function getBooleanParameter(key, defaultValue) {
+        const val = getParameter(key);
+        return val == null ? defaultValue : val;
     }
 
     function paramSubstitution(siteId) {
@@ -13172,16 +13227,23 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+    if (isSet(siteId)) {
         paramSubstitution(siteId);
+
+        //Load system configuration with defaults favoring a VA site
+        sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false)
+
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
-        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
+        $("#matchingReport").toggle(sysConfig["MATCHING_REPORT_ENABLED"]);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
-        const veteransAffairsSite = getParameter("veteransAffairsSite");
-        if (veteransAffairsSite == null || veteransAffairsSite === true) {
+        if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("#feedback-link").remove();
+        } else {
+            $(".va-only").remove();
         }
     } else {
         localStorage.removeItem("siteid");

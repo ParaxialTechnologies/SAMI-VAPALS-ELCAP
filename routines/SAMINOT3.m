@@ -1,5 +1,6 @@
-SAMINOT3 ;ven/gpl - CTeval report plain text ; 5/7/19 4:48pm
- ;;18.0;SAMI;;
+SAMINOT3 ;ven/gpl - CTeval report plain text ; 2021-10-29t23:36z
+ ;;18.0;SAMI;**15**;
+ ;;18-15
  ;
  ;@license: see routine SAMIUL
  ;
@@ -233,7 +234,7 @@ VCNOTE(vals,dest,cnt) ; Veteran Communication Note
  d SSTATUS(vals) ; insert smoking status section
  q
  ;
-SSTATUS(vals)
+SSTATUS(vals)  ;
  n sstat s sstat=""
  i $$XVAL("sisa",vals)="y" d  ; 
  . s sstat="Current"
@@ -267,8 +268,8 @@ SSTATUS(vals)
  . d OUT(sp1_"Cigarettes/day: "_$$XVAL("sicpd",vals))
  . d OUT(sp1_"PPD: "_$$XVAL("sippd",vals))
  . d OUT(sp1_"Current cumulative pack years: "_newcum)
- i $$XVAL("sisa",vals)'="y" d  ;  
- . d OUT("Smoking History") 
+ i $$XVAL("sisa",vals)'="y" d  ;
+ . d OUT("Smoking History")
  n zi
  f zi=1:1:cur d  ;
  . d OUT(sp1_cumary("rpt",zi,1)_" "_cumary("rpt",zi,2))
@@ -286,7 +287,8 @@ SSTATUS(vals)
  i $$XVAL("siscc",vals)'="" s cnt=cnt+1 s tryary(cnt)="Tapering or reducing number of cigarettes smoked per day"
  i $$XVAL("siscd",vals)'="" s cnt=cnt+1 s tryary(cnt)="Self-help material (e.g., brochure, cessation website)"
  i $$XVAL("sisce",vals)'="" s cnt=cnt+1 s tryary(cnt)="Individual consultation or cessation counseling"
- i $$XVAL("siscf",vals)'="" s cnt=cnt+1 s tryary(cnt)="Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"
+ ;i $$XVAL("siscf",vals)'="" s cnt=cnt+1 s tryary(cnt)="Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"
+ i $$XVAL("siscf",vals)'="" s cnt=cnt+1 s tryary(cnt)="Telephone cessation counseling hotline"
  i $$XVAL("siscg",vals)'="" s cnt=cnt+1 s tryary(cnt)="Peer support (e.g., Nicotine Anonymous)"
  i $$XVAL("sisch",vals)'="" s cnt=cnt+1 s tryary(cnt)="Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)"
  i $$XVAL("sisci",vals)'="" s cnt=cnt+1 s tryary(cnt)="Zyban"
@@ -419,7 +421,7 @@ CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
  s futbl("os")="other"
  i futext'="" s futext=$g(futbl(futext))
  n fudate s fudate=$g(@ctroot@("cefud"))
-; #Other followup
+ ; #Other followup
  n zfu,ofu,tofu,comma
  n vals s vals=ctroot
  s comma=0,tofu=""

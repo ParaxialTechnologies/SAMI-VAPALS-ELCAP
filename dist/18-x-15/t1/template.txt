@@ -1,0 +1,647 @@
+#:patchtitle: Chenoweth’s Patch
+#:nmsp: SAMI
+#:lnmsp: sami
+#:appname: VAPALS-ELCAP
+#:version: 18-x-15-t1
+#:partialdir: 18-x-15/t1
+#:status: test patch
+#:vista-version: SAMI*18.0*15 SEQ #14 T1
+#:vista-longversion: Version 18.0, Patch ID #15, Seq #14, Test 1
+#:priority: high
+#:categories: routine, file
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
+
+#>center: #{patchtitle}
+#>center: #{nmsp} (#{appname}) #{version}
+#>center: (#{vista-version})
+
+#>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
+#>center: & Frederick D. S. Marshall
+#>center: #{now-iso-ymd}
+
+i. Front matter
+
+ App         #{nmsp} (#{appname})
+ Version     #{version}
+ Vista ID    #{vista-version}
+             #{vista-longversion}
+ Priority    #{priority}
+ Categories  #{categories}
+ Status      #{status}: #{nmsp}-#{version}.zip
+ Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
+             SAMI 18-2 (SAMI*18.0*2 SEQ #2)
+             SAMI 18-3 (SAMI*18.0*3 SEQ #3)
+             SAMI 18-4 (SAMI*18.0*4 SEQ #4)
+             SAMI 18-5 (SAMI*18.0*5 SEQ #5)
+             SAMI 18-6 (SAMI*18.0*6 SEQ #6)
+             SAMI 18-8 (SAMI*18.0*8 SEQ #8)
+             SAMI 18-9 (SAMI*18.0*9 SEQ #9)
+             SAMI 18-10 (SAMI*18.0*10 SEQ #10)
+             SAMI 18-11 (SAMI*18.0*11 SEQ #11)
+             SAMI 18-12 (SAMI*18.0*12 SEQ #12)
+             SAMI 18-13 (SAMI*18.0*13 SEQ #13)
+
+ii. Contents
+
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Prepare for installation
+  o Assume the identity of your osehra Unix user
+  o Prepare install directory
+  o Download and prepare the archive file
+  o Install web-application files
+  o Back up M routines
+    - Enter M
+    - Sign into Vista
+    - List of routines
+    - Run the backup
+ Main install instructions
+  o Installing the KIDS package
+    - Enter the KIDS installation menu
+    - Load KIDS package
+    - Install KIDS package
+ Optional backout instructions
+ Routines
+ Authors
+
+
+
+#. Description
+
+ #{nmsp} #{version} adds 12 updates, most of them changes to the CT Eval form
+ and the CT Report.  The definitive source for the VAPALS-ELCAP application -
+ codebase, package distributions (including this one), and
+ documentation - is at the following public Github repository:
+
+ https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+
+ The most up-to-date and accurate version of this file can be found at
+
+ https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/
+
+ These instructions are for your Vista environment’s sysadmin. As
+ usual, please capture the complete dialog of your install and send it
+ to your VAPALS-ELCAP support team.
+
+ The 5 high priority, 5 medium priority, and 2 low priority changes made or
+ bugs fixed are:
+
+
+#.#. CT Evaluation Form: Make lymph node map a little bigger
+
+      issue 21-149 (medium priority): Make the lymph node map in the Neck and
+      Mediastinal section bigger if possible.
+
+      solution: Increase the size of the lymph node map.
+
+      reported: 2021-07-25 by Chenoweth.
+
+
+#.#. CT Evaluation Form: Keep previous information for nodules listed as "Not
+      included in scan" and "Not in outside report"
+
+      issue 21-128 (medium priority): Current behavior of these two nodule
+      status options is to blank out fields in the nodule table; desired
+      behavior is to keep the information (as maybe later scans will have the
+      nodules). This partially reverts an earlier request. The fields should
+      only be grayed out for Prev seen, resolved or Prev seen, not a nodule,
+      not for other choices.
+
+      solution: Changed to desired behavior.
+
+      reported: 2021-07-13 by Yip.
+
+
+#.#. CT Evaluation Form: If "Is it new" is set to Prev seen resolved, set
+      nodule status to Resolved
+
+      issue 21-129 (medium priority): Automatically set the nodule status to
+      resolved if the "is it new?" option is set to Prev seen, resolved.
+
+      solution: Changed to desired behavior.
+
+      reported: 2021-07-13 by Yip.
+
+
+#.#. CT Evaluation Form: Comparative scans and prior scans should be visible 
+      for all types of exams.
+
+      issue 21-198 (medium priority): Previously, comparative and prior scan
+      fields were not visible when type of exam was baseline.
+
+      solution: Changed to desired behavior.
+
+      reported: 2021-10-25 by Henschke.
+
+
+#.#. CT Evaluation Form and CT Report: Add right and left for lymph nodes
+      N10-N14.
+
+      issue 21-170 (high priority): In the Neck and Mediastinal section on the
+      form add right and left for lymph nodes N10-N14. Extend CT Report to
+      handle new form fields.
+
+      solution: Added form-fields and checkboxes.
+
+      reported: 2021-09-07 by Henschke
+
+
+#.#. CT Report: The lymph node station does not carry over to the CT Report.
+
+      issue 21-170 (high priority): Lymph node stations are reported in the
+      Neck and Mediastinal section on the form but that information is not
+      included in the CT Report.
+
+      solution: Add lymph node stations to CT Report.
+
+      reported: 2021-07-25 by Chenoweth.
+
+
+#.#. CT Report: There is an extra space in front of Description
+
+      issue 21-150 (low priority): There is an extra space in front of
+      Description at the top of the CT Report.
+
+      solution: Removed extra space.
+
+      reported: 2021-07-25 by Chenoweth.
+      
+      
+#.#. CT Report: Comparative scans and prior scans should not include the date
+	  of the current form.
+
+      issue 21-167 (medium priority): Current date should not be included in
+      comparative scans and prior scans in report or CT Eval.
+
+      solution: Changed to desired behavior.
+
+      reported: 2021-09-02 by Phoenix Team.
+
+
+#.#. CT Report: Pleural effusion bug in CT report
+
+      issue 21-135 (high priority): There's a bug so that the pleural
+      effusions information was translating incorrectly into the CT report.
+
+      solution: Correct CT Report translation.
+
+      reported: 2021-08-03 by Slaughter.
+
+
+#.#. CT Report: In Impression section please remove the word "above"
+
+      issue 21-176 (low priority):
+
+      solution: Remove word from CT Report. Must run INIT2GPH^SAMICTD2 to get
+      the fix which will be in the Post-install. No extra action required by
+      system administrator.
+
+      reported: 2021-09-16 by Murphy.
+
+
+#.#. CT Report: Change wording for when nothing is put in CAC or emphysema.
+
+      issue 21-192 (high priority): In Emphysema and Coronary Artery
+      Calcification, if nothing is entered, then in the report, indicate
+      "Emphysema score not provided" and "Coronary Artery Calcification score
+      not provided."
+
+      solution: Changed report translation.
+
+      reported: 2021-10-11 by Henschke.
+
+
+#.#. Intake but no CT Report: Include patients who had CTs before enrollment
+     but none since enrollment
+
+      issue 21-160 (high priority): To make sure all participants have a CT
+      Scan in the program those who had CT Scans before enrollment need to be
+      on this report.
+
+      solution: Add active patients who have not had a CT Scan since
+      enrollment.
+
+      reported: 2021-08-23 by Henschke.
+
+
+ #.#. Infrastructure: Improve support for parameterization by system and site.
+
+      issue 21-194 (high priority): Some sites or organizations will need
+      different wording or other differences from the default. (For example,
+      ELCAP protocols vs Lung-Rads.)
+
+      solution: Developed new parameters to customize VAPALS.
+
+      reported: 2021-02-24 by Avila.
+
+      NUMBER: 1                               NAME: Non VA
+      PARM: socialSecurityNumber              VALUE: Patient ID
+      PARM: socialSecurityNumber.short        VALUE: PID
+      PARM: socialSecurityNumber.mask
+      PARM: socialSecurityNumber.regex
+      PARM: matchingReportEnabled             VALUE: true
+      PARM: ruralUrbanChartEnabled            VALUE: false
+      PARM: lungradsOrElcapCTtemplate         VALUE: elcap
+      PARM: username                          VALUE: User Name
+      PARM: password                          VALUE: Password
+      PARM: veteransAffairsSite               VALUE: false
+
+      NUMBER: 2                               NAME: VHA
+      PARM: socialSecurityNumber
+        VALUE: Social Security Number
+      PARM: socialSecurityNumber.short        VALUE: SSN
+      PARM: socialSecurityNumber.mask         VALUE: 000-00-0000
+      PARM: socialSecurityNumber.regex
+        VALUE: `(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
+      PARM: matchingReportEnabled             VALUE: true
+      PARM: ruralUrbanChartEnabled            VALUE: true
+      PARM: lungradsOrElcapCTtemplate         VALUE: lungrads
+      PARM: username                          VALUE: Access
+      PARM: password                          VALUE: Verify
+      PARM: veteransAffairsSite               VALUE: true
+
+      NUMBER: 3                               NAME: SYS
+      PARM: systemDemoOnly                    VALUE: false
+      PARM: systemDemoUseDUZ
+      PARM: username                          VALUE: User Name
+      PARM: password                          VALUE: Password
+
+
+#. Package elements
+
+#>include: .dtool/packelements.txt
+
+
+#. Prepare for installation
+
+ This involves creating a directory to work in, running a script to
+ back up certain datafiles and web-application files, and then going
+ through steps to back up M routines that will be replaced by the
+ patch.
+
+
+ #.#. Assume the identity of your osehra Unix user
+
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. (Also, in
+   all the command-line examples below, '$' simply means your
+   command-line prompt.) If your configuration is different, please
+   adjust this step to match your configuration:
+
+    $ $DEMAND su - osehra
+    $
+
+
+ #.#. Prepare install directory
+
+   If this is your first time installling this, execute the following
+   commands.  They create a shell variable, and then creates the work
+   directory and sets it as your current directory.
+
+    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ mkdir -p $INDIR
+    $ cd $INDIR
+
+   If you've already tried installing this once, you can use the
+   following commands instead:
+
+    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ cd $INDIR
+    $ rm -rf ./sami*.{txt,kid} ./*webapp*
+
+
+ #.#. Download and prepare the archive file
+
+   You may safely download the archive file sami-#{version}.zip in advance
+   of the actual install. In the following text, "[now]" represents a
+   time stamp representing your current time, and "[bits/sec]" is a
+   data rate and "[time]" is how long the file took to transfer (both
+   of which vary based on the user's network conditions).
+
+#>include: .dtool/wget-snippet.txt
+
+   Then unzip the archive file with the following command.
+
+    $ unzip #{lnmsp}-#{version}.zip
+    Archive:  #{lnmsp}-#{version}.zip
+      [... list of files being extracted ...]
+    $ _
+
+
+ #.#. Install web-application files
+
+    At this point, the web-application files must be installed. This is done
+    with a script that backs up the affected directories before installing
+    anything, then upgrades the web-application files.
+
+     $ ./upgrade-webapp
+     Backing up files to ./.webapp-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of webapp files.
+
+     Updating from ./webapp-upgrade-files ...
+     [... lists of files being updated ...]
+     Done with install.
+
+     You may now proceed with the KIDS installation.
+     $ _
+
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
+    the official GitHub repository, and this script will have different output.
+
+     $ ./upgrade-webapp
+     Backing up files to ./.webapp-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of webapp files.
+
+     Found a valid Git repository; pulling updates ...
+     [... output varies ...]
+     Done with install.
+     $ _
+
+
+ #.#. Back up M routines
+
+   Before the installation, we also need to back up existing
+   VAPALS-ELCAP routines that will be overwritten by this install. To
+   do this, you will have to start a Cache or YottaDB session
+   (depending on your particular installation), sign in to Vista, and
+   then call the direct-mode interface ^%RO ("routine out").
+
+   We have made efforts to display accurate instructions, but there
+   are likely to be minor differences between implementations. Be sure
+   to follow the correct dialog for your implementation.
+
+
+  #.#.#. Enter M
+
+    At the unix prompt, enter the M environment in direct mode, using
+    the 'csession' command on Cache or the 'mumps' command on
+    YottaDB/GT.M:
+
+    On Cache:
+    ---------
+    $ csession vapals
+
+    Node: vapalscache, Instance: VAPALS
+
+    >
+
+
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+
+    >
+
+
+  #.#.#. Sign into Vista
+
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+
+    > do ^XUP
+
+    Setting up programmer environment
+    This is a TEST account.
+
+    Access Code: *******
+    Terminal Type set to: C-VT100
+
+    Select OPTION NAME:
+    >
+
+
+  #.#.#. List of routines
+
+    The routine names to save are listed below; you may copy the list
+    and paste it at the appropriate Routine prompt. At the final
+    Routine prompt, press return to indicate the list of routines is
+    done.
+
+#>include: .dtool/routine-list.txt
+
+
+  #.#.#. Run the backup
+
+    Creating the routine backup file differs by implementation.
+
+    On Caché
+    --------
+    Note that routines that don't currently exist will result in a
+    warning message (specifically, the routine name will have '[???]'
+    after it, and the line [does not exist] after it). These messages
+    can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+
+#>include: .dtool/cache-ro-snippet.txt
+
+    On YottaDB/GT.M
+    ---------------
+    Note that routines that don't currently exist will result in the
+    routine name not appearing under the input line, and won't count
+    towards the number of routines. These can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+
+#>include: .dtool/yotta-ro-snippet.txt
+
+    You'll remain in the M environment for the next section.
+
+#. Main install instructions
+
+ This consists of loading and installing the KIDS package, and
+ activating the new web-application files.
+
+ #.#. Installing the KIDS package
+
+   This installs the various M assets required by the application.
+
+  #.#.#. Enter the KIDS Installation menu
+
+    At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
+    Installation & Distribution System main menu, and at the Select
+    ... Option prompt, select Installation:
+
+#>include: .dtool/enter-kids-snippet.txt
+
+
+  #.#.#. Load KIDS package
+
+    Select option 1 and press return at the Continue prompt.
+
+#>include: .dtool/load-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-x-15/t1/sami-18-x-15-t1.kid
+
+        KIDS Distribution saved on Oct 15, 2021@11:40:34
+        Comment: Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*15
+     Distribution OK!
+
+     Want to Continue with Load? YES//
+        Loading Distribution...
+
+        SAMI*18.0*15
+     Use INSTALL NAME: SAMI*18.0*15 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+  #.#.#. Install KIDS package
+
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that '[now]'
+    denotes the current time when you're doing the install.
+
+#>include: .dtool/install-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*15     Loaded from Distribution    [now]
+        => Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)  ;Created on Oct 15, 2021@11:40:34
+
+     This Distribution was loaded on [now] with header of
+        Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)  ;Created on Oct 15, 2021@11:40:34
+        It consisted of the following Install(s):
+        SAMI*18.0*15
+     Checking Install for Package SAMI*18.0*15
+
+     Install Questions for SAMI*18.0*15
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*15 :
+                    [now]
+
+      Build Distribution Date: Oct 15, 2021
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1815^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*15 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > halt
+     $ _
+
+   You now have VAPALS-ELCAP 18-x-15-t1 (SAMI*18.0*15 SEQ #14 T1)
+   installed in your M environment. The install is now complete. We
+   recommend running tests of your VAPALS-ELCAP app to confirm the
+   environment is operational and bug-free, before notifying users
+   that VAPALS-ELCAP is ready for their use.
+
+#. Optional backout instructions
+
+ Should errors or other problems result from installing this package
+ contact the VAPALS-ELCAP development team for package-backout
+ instructions.
+
+#. Routines
+
+ Lines 2 & 3 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;18-x-15
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+
+#>include: .dtool/checksums.txt
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  -----------------
+ SAMICTD2  B193976177       -               **12,15**
+ SAMICTT0  B97674764        -               **4,10,11,15**
+ SAMICTT3  B222214559       -               **4,10,13,15**
+ SAMIHOM4  B899951012       -               **1,4,5,6,9,12,15**
+ SAMINOT1  B476861921       -               **2,6,8,10,11,12,15**
+ SAMINOT2  B473975400       -               **1,9,12,15**
+ SAMINOT3  B294865408       -               **?,15**
+ SAMIPARM  B7340153         -               **12,15**
+ SAMIUR2   B1360826675      -               **5,11,12,14,15**
+
+#. Authors
+
+             Dates              By
+ Developed   2021-10-20/        George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+ Tested      2021-10-           George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Claudia Henschke (va-pho)
+                                Artit Jirapatnakul (va-pho)
+                                Providencia Morales (va-pho)
+                                Lorenza A. Murphy (va-pho)
+                                Martha A. Rukavena (va-pho)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+ Released    2021-10-           Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+
+$END TXT

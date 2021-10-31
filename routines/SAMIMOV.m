@@ -1,9 +1,67 @@
-SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 8/15/20 4:48pm
- ;;18.0;SAMI;;;Build 2
+SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
+ ;;18.0;SAMI;**7,15**;;Build 2
+ ;;18-15
  ;
  ;@license: see routine SAMIUL
  ;
  ; allow fallthrough
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@dev-main George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-update 2021-10-29t23:29z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 18.15
+ ;@release-date 2020-01
+ ;@patch-list **7,15**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; 2020-08-24 ven/gpl 18-7 915b85e6
+ ;  SAMIMOV create utility to change patient site
+ ; 2020-09-03 ven/gpl 5ae08772
+ ;  SAMIMOV upgrade CHANGE SITE to handle patients without forms ... also
+ ;  AUDIT report
+ ; 2020-09-07 ven/gpl 498e57d5
+ ;  SAMIMOV tweeking the audit report
+ ; 2020-12-11 ven/gpl 92138cdb
+ ; 2021-10-26 ven/gpl 18-15 d12b1b10
+ ;  SAMIMOV parameter detection routine for identifying VA systems
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMIMOV insert section 0, bump versions and dates, added semicolon after
+ ;  PICSITE for XINDEX
+ ;
+ ;@contents
+ ; EN entry point to change a patient's site
+ ; MOV change patient PAT from site FROM to site TO 
+ ; SETSID propogate the new sid to all forms
+ ; PICPAT pick a patient in site SITE
+ ; PICSITE()
+ ; AUDIT()
+ ; outaudit(rpt,ln)
+ ; 
+ ;
+ ;
+ ;
+ ;@section 1 subroutines
  ;
 EN ; entry point to change a patient's site
  ;
@@ -114,7 +172,7 @@ PICPAT(PATRTN,SITE) ; pick a patient in site SITE
  I +Y>0 M PATRTN=LIST("result",Y)
  q
  ;
-PICSITE()
+PICSITE()  ;
  ;
  ; pick a site
  N X,Y,DIC,SITEIEN,SITEID
@@ -141,6 +199,13 @@ AUDIT() ;
  . s site=$g(@lroot@(zi,"siteid"))
  . s lname=$g(@lroot@(zi,"saminame"))
  . s ldfn=$g(@lroot@(zi,"dfn"))
+ . i ldfn="" d  q  ;
+ . . ;d ^ZTER
+ . . w !,"error ",zi
+ . . s ln="error, missing dfn lien="_lien
+ . . s ln=ln_" "_$g(@lroot@(zi,"saminame"))
+ . . d outaudit(rpt,ln)
+ . . s ln=""
  . i $o(@lroot@("dfn",ldfn,""))'=lien d  ;
  . . w !,"error in dfn index dfn="_ldfn_" lien="_lien
  . s pien=$o(@proot@("dfn",ldfn,""))
@@ -161,6 +226,7 @@ AUDIT() ;
  . s ln=ln_" "_sid
  . d outaudit(rpt,ln)
  . s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
+ ;B
  D BROWSE^DDBR(rpt,"N","audit")
  ;
  q

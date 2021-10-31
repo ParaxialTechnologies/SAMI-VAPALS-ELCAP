@@ -1,6 +1,6 @@
-SAMICAS3 ;ven/gpl - case review cont ;2021-08-10t18:39z
- ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 11
- ;;18.12
+SAMICAS3 ;ven/gpl - case review cont ;2021-10-26t19:39z
+ ;;18.0;SAMI;**3,9,11,12,15**;2020-01;Build 11
+ ;;18-15
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
  ; of the VAPALS-IELCAP case review page.
@@ -367,7 +367,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  . set retstr=$extract(retstr,1,$length(retstr)-1)
  . quit
  ;
- if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  ;
  ;
  ;@stanza 3 termination
@@ -518,7 +518,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . set basedt=$$BASELNDT^SAMICAS3(sid)
  . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
- . if lastdt=-1 set lastdt=basedt
+ . if lastdt=-1 set lastdt=""
  . new priordt set priordt=$$PRIORCMP^SAMICAS3(sid)
  . if priordt=-1 set priordt=lastdt
  . if priordt="" set priordt=lastdt

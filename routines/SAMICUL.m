@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - case review log ;2021-10-05t23:23z
- ;;18.0;SAMI;**9,11,12,14**;2020-01;
- ;;18.14
+SAMICUL ;ven/gpl - case review log ;2021-10-29t02:24z
+ ;;18.0;SAMI;**9,11,12,14,15**;2020-01;
+ ;;18.15
  ;
  ; SAMICUL contains the development log for the VAPALS-IELCAP Case
  ; Review Page (SAMICA* routines).
@@ -22,13 +22,13 @@ SAMICUL ;ven/gpl - case review log ;2021-10-05t23:23z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-10t18:36z
+ ;@last-update 2021-10-29t02:24z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18.15
  ;@release-date 2020-01
- ;@patch-list **9,11,12**
+ ;@patch-list **9,11,12,14,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -315,8 +315,12 @@ SAMICUL ;ven/gpl - case review log ;2021-10-05t23:23z
  ; report exists: in LASTCMP start w/before today; in PRIORCMP add
  ; line to handle retstr="".
  ;
- ; 2021-10-04/05 ven gpl 18.14 ec3b6e5d
+ ; 2021-10-04/05 ven/gpl&lmry 18.14 ec3b6e5d,d4d1b115
  ;  SAMICAS2 updated date format, bumped date and version.
+ ;
+ ; 2021-10-26 ven/gpl 18.15 23e68f40
+ ;  SAMICAS3 initialize last comparitive and prior scan fields to blank if
+ ;  there were none
  ;
  ;@contents
  ; SAMICASE case review

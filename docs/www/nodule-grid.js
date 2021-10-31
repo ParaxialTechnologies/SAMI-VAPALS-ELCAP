@@ -432,22 +432,94 @@
                 $("#nodule-table").find(".import-data-parent").each(function () {
                     $(this).removeClass("import-data-parent");
                 });
+                
+                // for fields not in "#nodule-table"
+                $(".import-data").each(function () {
+                    $(this).val($(this).attr("original-value"));
+                    if ($(this).attr("id") === "cectrst") {
+                        if ($(this).attr("original-value") == "o") {
+                            $("#cectrsto-container").show();
+                        } else {
+                            $("#cectrsto-container").hide();
+                        }
+                    }
+                    $(this).removeAttr("original-value");
+                    $(this).removeAttr("import-value");
+                    $(this).removeClass("import-data");
+                });
+
                 $(".revert-field").remove(); // remove all revert-field icons
                 $(".import-field").remove(); // remove all import-field icons
             }
 
-            function _importData(dicomData) {
+            function _importData2(dicomData) {
+                dicomData.forEach(obj => {
+                    Object.entries(obj).forEach(([key, value]) => {
+                        if (key === "CT Study Date") {
+                            const fieldSelector = "#cedos";
+                            const $field = $(fieldSelector);
+                            if ($field.hasClass("import-data")) {
+                                $field.val(value);
+                            } else {
+                                $field.addClass("import-data");
+                                $field.attr("original-value", $field.val());
+                                const originalValue = $field.val();
+                                $field.val(value);
+                                $field.attr("import-value", value);
+                            
+                                createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
+                            }
+                        }
+                        if (key === "Reconstructed slice thickness (mm)") {
+                            const fieldSelector = "#cectrst";
+                            const $field = $(fieldSelector);
+                            if ($field.hasClass("import-data")) {
+                                $field.val(value);
+                            } else {
+                                $field.addClass("import-data");
+                                $field.attr("original-value", $field.val());
+                                const originalValue = $field.val();
+                                $field.val(value);
+                                $field.attr("import-value", value);
+                                if (value === "o") {
+                                    $("#cectrsto-container").show();
+                                } else {
+                                    $("#cectrsto-container").hide();
+                                }
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                            }
+                        }
+                        if (key === "Specify") { 
+                            const fieldSelector = "#cectrsto";
+                            const $field = $(fieldSelector);
+                            $("#cectrsto-container").show();
+                            if ($field.hasClass("import-data")) {
+                                $field.val(value);
+                            } else {
+                                $field.addClass("import-data");
+                                $field.attr("original-value", $field.val());
+                                const originalValue = $field.val();
+                                $field.val(value);
+                                $field.attr("import-value", value);
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                            }
+                        }
+                    });
+                });
+            }
+
+            function _importData(aiData) {
                 importFieldHit = false;
                 revertFieldHit = false;
-                // if number of nodules shown is less than the number of entries in dicomData array then increase the number of nodules
-                if (settings.getNoduleCount() < dicomData.length) {
-                    let noduleCount = dicomData.length;
+                // if number of nodules shown is less than the number of entries in aiData array then increase the number of nodules
+                if (settings.getNoduleCount() < aiData.length) {
+                    let noduleCount = aiData.length;
                     _displayNodules(noduleCount);
                     settings.setNoduleCount(noduleCount);
                 }
 
                 noduleId = 1;
-                dicomData.forEach(obj => {
+                aiData.forEach(obj => {
                     Object.entries(obj).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
 
@@ -653,6 +725,7 @@
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
                     importData: _importData,
+                    importData2: _importData2,
                     revertData: _revertData,
                     removeNodule: _removeNodule,
                     sortData: _sortData

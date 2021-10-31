@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.10.21" name="version"/>
+  <meta content="2021.10.30" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Followup Form
@@ -53,17 +53,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.10.21">
+  <script src="jquery-conditonally-enable.js?v=2021.10.30">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.10.21">
+  <script src="jquery-conditonally-display.js?v=2021.10.30">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.10.21">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.10.30">
   </script>
-  <script src="vapals.js?v=2021.10.21">
+  <script src="vapals.js?v=2021.10.30">
   </script>
-  <script src="init.js?v=2021.10.21">
+  <script src="init.js?v=2021.10.30">
   </script>
-  <script src="nodule-grid.js?v=2021.10.21">
+  <script src="nodule-grid.js?v=2021.10.30">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -189,7 +189,7 @@
       <div class="radio">
        <label>
         <input id="futype-other" name="futype" required="required" type="radio" value="other"/>
-        Other communication with veteran
+        Other communication
        </label>
       </div>
       <div class="radio">
@@ -939,7 +939,7 @@
        <label>
         <input name="siscf" type="hidden" value=""/>
         <input id="siscf" name="siscf" type="checkbox" value="f"/>
-        Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)
+        Telephone cessation counseling hotline
        </label>
       </div>
       <div class="checkbox">
@@ -1038,13 +1038,13 @@
       <div class="radio">
        <label>
         <input id="siscmd-a" name="siscmd" type="radio" value="a"/>
-        Advised to quit smoking; VA resources provided
+        Advised to quit smoking; resources provided
        </label>
       </div>
       <div class="radio">
        <label>
         <input id="siscmd-i" name="siscmd" type="radio" value="i"/>
-        Interested in VA tobacco cessation medication. Encouraged Veteran to talk to provider or pharmacist about which medication option is best for you.
+        Interested in tobacco cessation medication. Encouraged to talk to provider or pharmacist about which medication option is best for you.
        </label>
       </div>
      </div>
@@ -1316,7 +1316,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.10.21
+     2021.10.30
     </span>
    </div>
   </footer>
@@ -1324,7 +1324,7 @@
    const userId = "@@USER@@";
     const isLoggedIn = isSet(userId);
     const siteIdVal = "@@SITE@@";
-    const siteId = isSet(siteIdVal) ? siteIdVal : '';
+    const siteId = isSet(siteIdVal) ? siteIdVal : 'SYS';
     const studyIdVal = "@@SID@@";
     const studyId = isSet(studyIdVal) ? studyIdVal : '';
     const frozen = "@@FROZEN@@";
@@ -1335,6 +1335,7 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
+    const sysConfig = []
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
@@ -1347,6 +1348,11 @@
         } else {
             return params[key];
         }
+    }
+
+    function getBooleanParameter(key, defaultValue) {
+        const val = getParameter(key);
+        return val == null ? defaultValue : val;
     }
 
     function paramSubstitution(siteId) {
@@ -1397,16 +1403,23 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+    if (isSet(siteId)) {
         paramSubstitution(siteId);
+
+        //Load system configuration with defaults favoring a VA site
+        sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false)
+
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
-        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
+        $("#matchingReport").toggle(sysConfig["MATCHING_REPORT_ENABLED"]);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
-        const veteransAffairsSite = getParameter("veteransAffairsSite");
-        if (veteransAffairsSite == null || veteransAffairsSite === true) {
+        if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("#feedback-link").remove();
+        } else {
+            $(".va-only").remove();
         }
     } else {
         localStorage.removeItem("siteid");

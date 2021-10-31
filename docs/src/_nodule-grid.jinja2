@@ -33,14 +33,6 @@
                 <button type="button" class="btn btn-default btn-xs add-nodule">
                     <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
                 </button>
-                {% if mockup %}
-                    <button type="button" class="btn btn-default btn-xs import-data-button">
-                        <span class="fa" aria-hidden="true"></span> Import Data
-                    </button>
-                    <button type="button" class="btn btn-default btn-xs revert-data-button">
-                        <span class="fa" aria-hidden="true"></span> Revert Data
-                    </button>
-                {% endif %}
             </div>
         </div>
         <div class="col-md-12" style="display: none;" id="nodule-table">
@@ -48,14 +40,6 @@
                 <button type="button" class="btn btn-default btn-sm add-nodule">
                     <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
                 </button>
-                {% if mockup %}
-                    <button type="button" class="btn btn-default btn-sm import-data-button">
-                        <span class="fa" aria-hidden="true"></span> Import Data
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm revert-data-button">
-                        <span class="fa" aria-hidden="true"></span> Revert Data
-                    </button>
-                {% endif %}
                 <table class="table-striped" style="table-layout:auto;">
                     <thead>
                     <tr>
@@ -607,8 +591,28 @@
     <input type="hidden" name="cennod" value="{{ "1" if mockup else "0" }}" context="server"/>
     <input type="hidden" name="ceanod" value="{{ "y" if mockup else "n" }}" context="server"/>
 
+
+    <div class="modal fade" id="dataImportModal" tabindex="-1" role="dialog" aria-labelledby="dataImportModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="dataImportModalLabel">Import Data</h4>
+                </div>
+                <div class="modal-body">
+                    Select which data set to import.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary importAI" data-dismiss="modal">Import AI Findings</button>
+                    <button type="button" class="btn btn-primary importDICOM" data-dismiss="modal">Import DICOM Header Information</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function initNoduleGrid(fv, dicomData) {
+        function initNoduleGrid(fv, aiData, dicomData) {
             const noduleArrayLength = parseInt("{{ noduleArray|length }}");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -622,13 +626,17 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            if (dicomData) {
-                console.log("dicom is present")
-                $(".import-data-button").on('click', function () {
-                    $noduleGrid.importData(dicomData);
-                });
-                $(".revert-data-button").on('click', $noduleGrid.revertData);
-            }
+            $(".revert-data-button").on('click', $noduleGrid.revertData);
+            
+            $(".import-data-button").on('click', function () {
+                $('#dataImportModal').modal();
+            });
+            $(".importAI").on('click', function () {
+                $noduleGrid.importData(aiData);
+            });
+            $(".importDICOM").on('click', function () {
+                $noduleGrid.importData2(dicomData);
+            });
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 

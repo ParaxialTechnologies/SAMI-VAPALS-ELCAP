@@ -353,6 +353,7 @@ WSVAPALS ; post vapals (main gateway)
  m vars=SAMIARG
  i $g(vars("siteid"))'="" d  ;
  . i $g(vars("site"))'=$g(vars("siteid")) s vars("site")=$g(vars("siteid"))
+ i $g(vars("site"))="SYS" s vars("site")=""
  m SAMIARG=vars
  m SAMIARG=SAMIBODY
  ;

@@ -3,8 +3,9 @@
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
 #:version: 18-x-15-t1
+#:rversion: 18-x-15
 #:partialdir: 18-x-15/t1
-#:status: test patch
+#:status: test release
 #:vista-version: SAMI*18.0*15 SEQ #14 T1
 #:vista-longversion: Version 18.0, Patch ID #15, Seq #14, Test 1
 #:priority: high
@@ -40,6 +41,7 @@ i. Front matter
              SAMI 18-11 (SAMI*18.0*11 SEQ #11)
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
              SAMI 18-13 (SAMI*18.0*13 SEQ #13)
+             SAMI 18-14 (SAMI*18.0*14 SEQ #14)
 
 ii. Contents
 
@@ -70,10 +72,12 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 12 updates, most of them changes to the CT Eval form
- and the CT Report.  The definitive source for the VAPALS-ELCAP application -
- codebase, package distributions (including this one), and
- documentation - is at the following public Github repository:
+ #{nmsp} #{version} adds 12 updates (five high-priority, five
+ medium-priority, and two low-priority), most of them changes to the
+ CT Eval form and the CT Report.  The definitive source for the
+ VAPALS-ELCAP application - codebase, package distributions (including
+ this one), and documentation - is at the following public Github
+ repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -85,193 +89,198 @@ ii. Contents
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
 
- The 5 high priority, 5 medium priority, and 2 low priority changes made or
- bugs fixed are:
+ The changes in this patch are:
 
 
-#.#. CT Evaluation Form: Make lymph node map a little bigger
+ #.#. CT Evaluation Form: Make lymph node map a little bigger
 
-      issue 21-149 (medium priority): Make the lymph node map in the Neck and
-      Mediastinal section bigger if possible.
+   issue 21-149 (medium priority): Make the lymph node map in the Neck
+   and Mediastinal section bigger if possible.
 
-      solution: Increase the size of the lymph node map.
+   solution: Enlarged the lymph-node map.
 
-      reported: 2021-07-25 by Chenoweth.
-
-
-#.#. CT Evaluation Form: Keep previous information for nodules listed as "Not
-      included in scan" and "Not in outside report"
-
-      issue 21-128 (medium priority): Current behavior of these two nodule
-      status options is to blank out fields in the nodule table; desired
-      behavior is to keep the information (as maybe later scans will have the
-      nodules). This partially reverts an earlier request. The fields should
-      only be grayed out for Prev seen, resolved or Prev seen, not a nodule,
-      not for other choices.
-
-      solution: Changed to desired behavior.
-
-      reported: 2021-07-13 by Yip.
+   reported: 2021-07-25 by Chenoweth.
 
 
-#.#. CT Evaluation Form: If "Is it new" is set to Prev seen resolved, set
-      nodule status to Resolved
+ #.#. CT Evaluation Form: Revert change for nodule status options
 
-      issue 21-129 (medium priority): Automatically set the nodule status to
-      resolved if the "is it new?" option is set to Prev seen, resolved.
+   issue 21-128 (medium priority): This partially reverts an earlier
+   request. Current behavior of these two nodule status options is to
+   blank out fields in the nodule table; desired behavior is to keep
+   the information (as maybe later scans will have the nodules). The
+   fields should only be grayed out for "Prev seen, resolved" or "Prev
+   seen, not a nodule", not for other choices.
 
-      solution: Changed to desired behavior.
+   solution: Changed to desired behavior.
 
-      reported: 2021-07-13 by Yip.
-
-
-#.#. CT Evaluation Form: Comparative scans and prior scans should be visible 
-      for all types of exams.
-
-      issue 21-198 (medium priority): Previously, comparative and prior scan
-      fields were not visible when type of exam was baseline.
-
-      solution: Changed to desired behavior.
-
-      reported: 2021-10-25 by Henschke.
+   reported: 2021-07-13 by Yip.
 
 
-#.#. CT Evaluation Form and CT Report: Add right and left for lymph nodes
-      N10-N14.
+ #.#. CT Evaluation Form: Automates resolution of nodule status
 
-      issue 21-170 (high priority): In the Neck and Mediastinal section on the
-      form add right and left for lymph nodes N10-N14. Extend CT Report to
-      handle new form fields.
+   issue 21-129 (medium priority): Automatically set the nodule status
+   to resolved if the "is it new?" option is set to "Prev seen,
+   resolved."
 
-      solution: Added form-fields and checkboxes.
+   solution: Changed to desired behavior.
 
-      reported: 2021-09-07 by Henschke
-
-
-#.#. CT Report: The lymph node station does not carry over to the CT Report.
-
-      issue 21-170 (high priority): Lymph node stations are reported in the
-      Neck and Mediastinal section on the form but that information is not
-      included in the CT Report.
-
-      solution: Add lymph node stations to CT Report.
-
-      reported: 2021-07-25 by Chenoweth.
+   reported: 2021-07-13 by Yip.
 
 
-#.#. CT Report: There is an extra space in front of Description
+ #.#. CT Evaluation Form: Comparative and prior scans should be
+      visible for baseline exams
 
-      issue 21-150 (low priority): There is an extra space in front of
-      Description at the top of the CT Report.
+   issue 21-198 (medium priority): Previously, comparative and prior
+   scan fields were not visible when type of exam was baseline.
 
-      solution: Removed extra space.
+   solution: Changed to desired behavior.
 
-      reported: 2021-07-25 by Chenoweth.
+   reported: 2021-10-25 by Henschke.
+
+
+ #.#. CT Evaluation Form and CT Report: Add "right" and "left" for
+      lymph nodes N10-N14
+
+   issue 21-170 (high priority): In the Neck and Mediastinal section
+   on the form add right and left for lymph nodes N10-N14. Extend CT
+   Report to handle new form fields.
+
+   solution: Added form-fields and checkboxes.
+
+   reported: 2021-09-07 by Henschke
+
+
+ #.#. CT Report: The lymph-node station does not carry over to the CT
+      Report
+
+   issue 21-148 (high priority): Lymph-node stations are reported in
+   the Neck and Mediastinal section on the form but that information
+   is not included in the CT Report.
+
+   solution: Add lymph node stations to CT Report.
+
+   reported: 2021-07-25 by Chenoweth.
+
+
+ #.#. CT Report: There is an extra space in front of Description
+
+   issue 21-150 (low priority): There is an extra space in front of
+   Description at the top of the CT Report.
+
+   solution: Removed extra space.
+
+   reported: 2021-07-25 by Chenoweth.
       
       
-#.#. CT Report: Comparative scans and prior scans should not include the date
-	  of the current form.
+ #.#. CT Report: Comparative and prior scans should not include
+      current date
 
-      issue 21-167 (medium priority): Current date should not be included in
-      comparative scans and prior scans in report or CT Eval.
+   issue 21-167 (medium priority): Current date should not be included
+   in comparative scans and prior scans in report or CT Eval.
 
-      solution: Changed to desired behavior.
+   solution: Changed to desired behavior.
 
-      reported: 2021-09-02 by Phoenix Team.
-
-
-#.#. CT Report: Pleural effusion bug in CT report
-
-      issue 21-135 (high priority): There's a bug so that the pleural
-      effusions information was translating incorrectly into the CT report.
-
-      solution: Correct CT Report translation.
-
-      reported: 2021-08-03 by Slaughter.
+   reported: 2021-09-02 by Phoenix Team.
 
 
-#.#. CT Report: In Impression section please remove the word "above"
+ #.#. CT Report: Pleural effusion bug in CT report
 
-      issue 21-176 (low priority):
+   issue 21-135 (high priority): Pleural effusions information was
+   translating incorrectly into the CT report.
 
-      solution: Remove word from CT Report. Must run INIT2GPH^SAMICTD2 to get
-      the fix which will be in the Post-install. No extra action required by
-      system administrator.
+   solution: Corrected translation.
 
-      reported: 2021-09-16 by Murphy.
-
-
-#.#. CT Report: Change wording for when nothing is put in CAC or emphysema.
-
-      issue 21-192 (high priority): In Emphysema and Coronary Artery
-      Calcification, if nothing is entered, then in the report, indicate
-      "Emphysema score not provided" and "Coronary Artery Calcification score
-      not provided."
-
-      solution: Changed report translation.
-
-      reported: 2021-10-11 by Henschke.
+   reported: 2021-08-03 by Slaughter.
 
 
-#.#. Intake but no CT Report: Include patients who had CTs before enrollment
-     but none since enrollment
+ #.##. CT Report: Wording change
 
-      issue 21-160 (high priority): To make sure all participants have a CT
-      Scan in the program those who had CT Scans before enrollment need to be
-      on this report.
+   issue 21-176 (low priority): Remove the word "above" in
+   "Impression" section.
 
-      solution: Add active patients who have not had a CT Scan since
-      enrollment.
+   solution: Removed word from CT Report. Must run INIT2GPH^SAMICTD2
+   to get the fix which will be in the Post-install. No extra action
+   required by system administrator.
 
-      reported: 2021-08-23 by Henschke.
+   reported: 2021-09-16 by Murphy.
 
 
- #.#. Infrastructure: Improve support for parameterization by system and site.
+ #.##. CT Report: Change wording for empty CAC or emphysema
 
-      issue 21-194 (high priority): Some sites or organizations will need
-      different wording or other differences from the default. (For example,
-      ELCAP protocols vs Lung-Rads.)
+   issue 21-192 (high priority): In Emphysema and Coronary Artery
+   Calcification, if nothing is entered, then in the report, indicate
+   "Emphysema score not provided" and "Coronary Artery Calcification
+   score not provided."
 
-      solution: Developed new parameters to customize VAPALS.
+   solution: Changed report translation.
 
-      reported: 2021-02-24 by Avila.
+   reported: 2021-10-11 by Henschke.
 
-      NUMBER: 1                               NAME: Non VA
-      PARM: socialSecurityNumber              VALUE: Patient ID
-      PARM: socialSecurityNumber.short        VALUE: PID
-      PARM: socialSecurityNumber.mask
-      PARM: socialSecurityNumber.regex
-      PARM: matchingReportEnabled             VALUE: true
-      PARM: ruralUrbanChartEnabled            VALUE: false
-      PARM: lungradsOrElcapCTtemplate         VALUE: elcap
-      PARM: username                          VALUE: User Name
-      PARM: password                          VALUE: Password
-      PARM: veteransAffairsSite               VALUE: false
 
-      NUMBER: 2                               NAME: VHA
-      PARM: socialSecurityNumber
-        VALUE: Social Security Number
-      PARM: socialSecurityNumber.short        VALUE: SSN
-      PARM: socialSecurityNumber.mask         VALUE: 000-00-0000
-      PARM: socialSecurityNumber.regex
-        VALUE: `(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
-      PARM: matchingReportEnabled             VALUE: true
-      PARM: ruralUrbanChartEnabled            VALUE: true
-      PARM: lungradsOrElcapCTtemplate         VALUE: lungrads
-      PARM: username                          VALUE: Access
-      PARM: password                          VALUE: Verify
-      PARM: veteransAffairsSite               VALUE: true
+ #.##. Intake-but-no-CT Report: Include patients who had CTs, but none
+       since enrollment
 
-      NUMBER: 3                               NAME: SYS
-      PARM: systemDemoOnly                    VALUE: false
-      PARM: systemDemoUseDUZ
-      PARM: username                          VALUE: User Name
-      PARM: password                          VALUE: Password
+   issue 21-160 (high priority): To make sure all participants have a
+   CT scan in the program those who had CT scans before enrollment
+   need to be on this report.
+
+   solution: Add active patients who have not had a CT scan since
+   enrollment.
+
+   reported: 2021-08-23 by Henschke.
+
+
+ #.##. Infrastructure: Improve support for parameterization by system
+       and site
+
+   issue 21-194 (high priority): Some sites or organizations will need
+   different wording or other differences from the default. (For example,
+   ELCAP protocols vs Lung-Rads.)
+
+   solution: Developed new parameters to customize VAPALS.
+
+   NUMBER: 1                               NAME: Non VA
+   PARM: socialSecurityNumber              VALUE: Patient ID
+   PARM: socialSecurityNumber.short        VALUE: PID
+   PARM: socialSecurityNumber.mask
+   PARM: socialSecurityNumber.regex
+   PARM: matchingReportEnabled             VALUE: true
+   PARM: ruralUrbanChartEnabled            VALUE: false
+   PARM: lungradsOrElcapCTtemplate         VALUE: elcap
+   PARM: username                          VALUE: User Name
+   PARM: password                          VALUE: Password
+   PARM: veteransAffairsSite               VALUE: false
+
+   NUMBER: 2                               NAME: VHA
+   PARM: socialSecurityNumber
+     VALUE: Social Security Number
+   PARM: socialSecurityNumber.short        VALUE: SSN
+   PARM: socialSecurityNumber.mask         VALUE: 000-00-0000
+   PARM: socialSecurityNumber.regex
+     VALUE: `(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
+   PARM: matchingReportEnabled             VALUE: true
+   PARM: ruralUrbanChartEnabled            VALUE: true
+   PARM: lungradsOrElcapCTtemplate         VALUE: lungrads
+   PARM: username                          VALUE: Access
+   PARM: password                          VALUE: Verify
+   PARM: veteransAffairsSite               VALUE: true
+
+   NUMBER: 3                               NAME: SYS
+   PARM: systemDemoOnly                    VALUE: false
+   PARM: systemDemoUseDUZ
+   PARM: username                          VALUE: User Name
+   PARM: password                          VALUE: Password
+
+   reported: 2021-02-24 by Avila.
 
 
 #. Package elements
 
 #>include: .dtool/packelements.txt
+
+ File                     Number  Change
+ -----------------------  ------  ---------------
+ SAMI PARAMETER DEFAULTS  311.14  modified (data)
 
 
 #. Prepare for installation
@@ -324,10 +333,7 @@ ii. Contents
 
    Then unzip the archive file with the following command.
 
-    $ unzip #{lnmsp}-#{version}.zip
-    Archive:  #{lnmsp}-#{version}.zip
-      [... list of files being extracted ...]
-    $ _
+#>include: .dtool/unzip-snippet.txt
 
 
  #.#. Install web-application files
@@ -464,14 +470,17 @@ ii. Contents
 
     You'll remain in the M environment for the next section.
 
+
 #. Main install instructions
 
  This consists of loading and installing the KIDS package, and
  activating the new web-application files.
 
+
  #.#. Installing the KIDS package
 
    This installs the various M assets required by the application.
+
 
   #.#.#. Enter the KIDS Installation menu
 
@@ -487,33 +496,7 @@ ii. Contents
     Select option 1 and press return at the Continue prompt.
 
 #>include: .dtool/load-kids-snippet.txt
-     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-     Enter a Host File: /home/osehra/run/in/sami/18-x-15/t1/sami-18-x-15-t1.kid
 
-        KIDS Distribution saved on Oct 15, 2021@11:40:34
-        Comment: Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)
-
-     This Distribution contains Transport Globals for the following Package(s):
-        SAMI*18.0*15
-     Distribution OK!
-
-     Want to Continue with Load? YES//
-        Loading Distribution...
-
-        SAMI*18.0*15
-     Use INSTALL NAME: SAMI*18.0*15 to install this Distribution.
-
-
-        1      Load a Distribution
-        2      Verify Checksums in Transport Global
-        3      Print Transport Global
-        4      Compare Transport Global to Current System
-        5      Backup a Transport Global
-        6      Install Package(s)
-               Restart Install of Package(s)
-               Unload a Distribution
-
-     Select Installation <TEST ACCOUNT> Option:_
 
   #.#.#. Install KIDS package
 
@@ -522,67 +505,6 @@ ii. Contents
     denotes the current time when you're doing the install.
 
 #>include: .dtool/install-kids-snippet.txt
-     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
-     Select INSTALL NAME:    SAMI*18.0*15     Loaded from Distribution    [now]
-        => Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)  ;Created on Oct 15, 2021@11:40:34
-
-     This Distribution was loaded on [now] with header of
-        Test Release SAMI*18.0*15 SEQ #14 T1 (sami-18-x-15-t1)  ;Created on Oct 15, 2021@11:40:34
-        It consisted of the following Install(s):
-        SAMI*18.0*15
-     Checking Install for Package SAMI*18.0*15
-
-     Install Questions for SAMI*18.0*15
-
-
-
-     Want KIDS to INHIBIT LOGONs during the install? NO//
-     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
-
-     Enter the Device you want to print the Install messages.
-     You can queue the install by enter a 'Q' at the device prompt.
-     Enter a '^' to abort the install.
-
-     DEVICE: HOME// ;C-SCROLL  TELNET
-
-
-      Install Started for SAMI*18.0*15 :
-                    [now]
-
-      Build Distribution Date: Oct 15, 2021
-
-      Installing Routines:.....
-                    [now]
-
-      Running Post-Install Routine: POS1815^SAMIPAT.
-
-      Updating Routine file......
-
-      Updating KIDS files.....
-
-      SAMI*18.0*15 Installed.
-                    [now]
-
-      No link to PACKAGE file
-
-      NO Install Message sent
-
-     Install Completed
-
-
-        1      Load a Distribution
-        2      Verify Checksums in Transport Global
-        3      Print Transport Global
-        4      Compare Transport Global to Current System
-        5      Backup a Transport Global
-        6      Install Package(s)
-               Restart Install of Package(s)
-               Unload a Distribution
-
-     Select Installation <TEST ACCOUNT> Option:_
-
-     > halt
-     $ _
 
    You now have VAPALS-ELCAP 18-x-15-t1 (SAMI*18.0*15 SEQ #14 T1)
    installed in your M environment. The install is now complete. We
@@ -590,32 +512,23 @@ ii. Contents
    environment is operational and bug-free, before notifying users
    that VAPALS-ELCAP is ready for their use.
 
+
 #. Optional backout instructions
 
  Should errors or other problems result from installing this package
  contact the VAPALS-ELCAP development team for package-backout
  instructions.
 
+
 #. Routines
 
  Lines 2 & 3 of each of these routines now look like:
-  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
-  ;;18-x-15
+#>include: .dtool/routine-lines2-3.txt
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
 #>include: .dtool/checksums.txt
- Name      Checksum before  Checksum after  Patch list
- --------  ---------------  --------------  -----------------
- SAMICTD2  B193976177       -               **12,15**
- SAMICTT0  B97674764        -               **4,10,11,15**
- SAMICTT3  B222214559       -               **4,10,13,15**
- SAMIHOM4  B899951012       -               **1,4,5,6,9,12,15**
- SAMINOT1  B476861921       -               **2,6,8,10,11,12,15**
- SAMINOT2  B473975400       -               **1,9,12,15**
- SAMINOT3  B294865408       -               **?,15**
- SAMIPARM  B7340153         -               **12,15**
- SAMIUR2   B1360826675      -               **5,11,12,14,15**
+
 
 #. Authors
 

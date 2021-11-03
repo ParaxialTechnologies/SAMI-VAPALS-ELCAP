@@ -603,8 +603,8 @@
                     Select which data set to import.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary importAI" data-dismiss="modal">Import AI Findings</button>
                     <button type="button" class="btn btn-primary importDICOM" data-dismiss="modal">Import DICOM Header Information</button>
+                    <button type="button" class="btn btn-primary importAI" data-dismiss="modal">Import AI Findings</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -612,7 +612,7 @@
     </div>
 
     <script>
-        function initNoduleGrid(fv, aiData, dicomData) {
+        function initNoduleGrid(fv, aiData) {
             const noduleArrayLength = parseInt("{{ noduleArray|length }}");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -627,7 +627,7 @@
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
             $(".revert-data-button").on('click', $noduleGrid.revertData);
-            
+
             $(".import-data-button").on('click', function () {
                 $('#dataImportModal').modal();
             });
@@ -635,7 +635,7 @@
                 $noduleGrid.importData(aiData);
             });
             $(".importDICOM").on('click', function () {
-                $noduleGrid.importData2(dicomData);
+                $noduleGrid.importDicomHeader(aiData);
             });
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);

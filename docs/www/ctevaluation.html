@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.02" name="version"/>
+  <meta content="2021.11.03" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.11.02">
+  <script src="jquery-conditonally-enable.js?v=2021.11.03">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.11.02">
+  <script src="jquery-conditonally-display.js?v=2021.11.03">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.02">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.03">
   </script>
-  <script src="vapals.js?v=2021.11.02">
+  <script src="vapals.js?v=2021.11.03">
   </script>
-  <script src="init.js?v=2021.11.02">
+  <script src="init.js?v=2021.11.03">
   </script>
-  <script src="nodule-grid.js?v=2021.11.02">
+  <script src="nodule-grid.js?v=2021.11.03">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -5437,11 +5437,11 @@
          Select which data set to import.
         </div>
         <div class="modal-footer">
-         <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
-          Import AI Findings
-         </button>
          <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
           Import DICOM Header Information
+         </button>
+         <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
+          Import AI Findings
          </button>
          <button class="btn btn-default" data-dismiss="modal" type="button">
           Cancel
@@ -5451,7 +5451,7 @@
       </div>
      </div>
      <script>
-      function initNoduleGrid(fv, aiData, dicomData) {
+      function initNoduleGrid(fv, aiData) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -5466,7 +5466,7 @@
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
             $(".revert-data-button").on('click', $noduleGrid.revertData);
-            
+
             $(".import-data-button").on('click', function () {
                 $('#dataImportModal').modal();
             });
@@ -5474,7 +5474,7 @@
                 $noduleGrid.importData(aiData);
             });
             $(".importDICOM").on('click', function () {
-                $noduleGrid.importData2(dicomData);
+                $noduleGrid.importDicomHeader(aiData);
             });
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
@@ -9065,7 +9065,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.11.02
+     2021.11.03
     </span>
    </div>
   </footer>
@@ -9249,148 +9249,69 @@
   <!--suppress Annotator -->
   <script>
    // aiStructuredReport is hard coded here for now
-        const aiStructuredReport = [
+        const structuredReport = [
             {
-                "Tracking Identifier": "L1",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                "CT Study Date": "10/02/2021",
+                "Reconstructed slice thickness (mm)": "0.75",
+                "Tracking Identifier": "R1",
+                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168010.30000021102014555582400001160",
                 "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Solid",
+                "Lesion Epicenter": "[-75.71875, -122.77734, -138.0],['POINT']",
+                "Attenuation Characteristic": "PartSolid",
                 "Radiographic Lesion Margin": "Lesion with spiculated margin",
-                "Finding site": "Lower lobe of left lung",
+                "Finding site": "Upper lobe of right lung",
                 "Lung-RADS assessment": "Lung-rads 4x",
                 "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "36.3",
-                "Maximum 3D diameter": "42.2",
-                "Maximum perpendicular 2D diameter": "26.7",
-                "Mean 2D diameter": "31.5",
-                "Volume": "14789.7"
+                "Maximum 2D diameter": "21.1",
+                "Maximum 3D diameter": "33.8",
+                "Maximum perpendicular 2D diameter": "14.6",
+                "Volume": "2508.1"
             },
             {
                 "Tracking Identifier": "R2",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168010.30000021102014555582400001160",
                 "Finding": "Pulmonary nodule",
+                "Lesion Epicenter": "[-106.26563, -113.14844, -154.8],['POINT']",
                 "Attenuation Characteristic": "Solid",
                 "Radiographic Lesion Margin": "Lesion with circumscribed margin",
                 "Finding site": "Upper lobe of right lung",
-                "Lung-RADS assessment": "Lung-rads 4a",
+                "Lung-RADS assessment": "Lung-rads 3",
                 "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "15.0",
-                "Maximum 3D diameter": "17.3",
-                "Maximum perpendicular 2D diameter": "9.5",
-                "Mean 2D diameter": "12.2",
-                "Volume": "580.4"
+                "Maximum 2D diameter": "9.6",
+                "Maximum 3D diameter": "10.1",
+                "Maximum perpendicular 2D diameter": "5.7",
+                "Volume": "203.4"
             },
             {
                 "Tracking Identifier": "L3",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168010.30000021102014555582400001160",
                 "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "PartSolid",
-                "Radiographic Lesion Margin": "Lesion with spiculated margin",
+                "Lesion Epicenter": "[74.691406, -152.66016, -177.89999],['POINT']",
+                "Attenuation Characteristic": "Calcified",
+                "Radiographic Lesion Margin": "Lesion with circumscribed margin",
                 "Finding site": "Upper lobe of left lung",
-                "Lung-RADS assessment": "Lung-rads 4x",
+                "Lung-RADS assessment": "Lung-rads 1",
                 "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "14.5",
-                "Maximum 3D diameter": "24.4",
-                "Maximum perpendicular 2D diameter": "9.7",
-                "Mean 2D diameter": "12.1",
-                "Volume": "1145.7"
+                "Maximum 2D diameter": "9.4",
+                "Maximum 3D diameter": "10.2",
+                "Maximum perpendicular 2D diameter": "6.6",
+                "Volume": "183.1"
             },
             {
-                "Tracking Identifier": "R4",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
+                "Tracking Identifier": "L4",
+                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168010.30000021102014555582400001160",
                 "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Solid",
-                "Radiographic Lesion Margin": "Lesion with spiculated margin",
-                "Finding site": "Upper lobe of right lung",
-                "Lung-RADS assessment": "Lung-rads 4x",
-                "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "12.6",
-                "Maximum 3D diameter": "13.1",
-                "Maximum perpendicular 2D diameter": "7.8",
-                "Mean 2D diameter": "10.2",
-                "Volume": "381.3"
-            },
-            {
-                "Tracking Identifier": "L5",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                "Finding": "Pulmonary nodule",
+                "Lesion Epicenter": "[151.39063, -134.39844, -329.10001],['POINT']",
                 "Attenuation Characteristic": "Solid",
                 "Radiographic Lesion Margin": "Lesion with circumscribed margin",
                 "Finding site": "Lower lobe of left lung",
-                "Lung-RADS assessment": "Lung-rads 4a",
+                "Lung-RADS assessment": "Lung-rads 3",
                 "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "11.5",
-                "Maximum 3D diameter": "11.7",
-                "Maximum perpendicular 2D diameter": "8.6",
-                "Mean 2D diameter": "10.1",
-                "Volume": "371.2"
-            },
-            {
-                "Tracking Identifier": "L6",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Solid",
-                "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                "Finding site": "Lower lobe of left lung",
-                "Lung-RADS assessment": "Lung-rads 2",
-                "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "7.8",
-                "Maximum 3D diameter": "7.8",
-                "Maximum perpendicular 2D diameter": "4.8",
-                "Mean 2D diameter": "6.3",
-                "Volume": "79.1"
-            },
-            {
-                "Tracking Identifier": "R7",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Solid",
-                "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                "Finding site": "Upper lobe of right lung",
-                "Lung-RADS assessment": "Lung-rads 2",
-                "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "6.1",
-                "Maximum 3D diameter": "6.2",
-                "Maximum perpendicular 2D diameter": "6.1",
-                "Mean 2D diameter": "6.1",
-                "Volume": "42.1"
-            },
-            {
-                "Tracking Identifier": "R8",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Unknown",
-                "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                "Finding site": "Lower lobe of right lung",
-                "Lung-RADS assessment": "Lung-rads 0",
-                "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "5.5",
-                "Maximum 3D diameter": "6.2",
-                "Maximum perpendicular 2D diameter": "4.2",
-                "Mean 2D diameter": "4.9",
-                "Volume": "34.5"
-            },
-            {
-                "Tracking Identifier": "R9",
-                "Tracking Unique Identifier": "1.3.12.2.1107.5.8.21.192168059.30000021092410281563200001347",
-                "Finding": "Pulmonary nodule",
-                "Attenuation Characteristic": "Solid",
-                "Radiographic Lesion Margin": "Lesion with circumscribed margin",
-                "Finding site": "Upper lobe of right lung",
-                "Lung-RADS assessment": "Lung-rads 2",
-                "Lesion Review Status": "Accepted",
-                "Maximum 2D diameter": "5.4",
-                "Maximum 3D diameter": "5.4",
-                "Maximum perpendicular 2D diameter": "4.0",
-                "Mean 2D diameter": "4.7",
-                "Volume": "21.4"
+                "Maximum 2D diameter": "8.9",
+                "Maximum 3D diameter": "10.7",
+                "Maximum perpendicular 2D diameter": "5.9",
+                "Volume": "241.7"
             }
-        ];
-
-        // dicomStructuredReport is hard coded here for now
-        const dicomStructuredReport = [
-            { "CT Study Date": "10/02/2021", "Reconstructed slice thickness (mm)": "0.75"}
-            //{ "CT Study Date": "10/02/2021", "Reconstructed slice thickness (mm)": "o", "Specify": "123"}
         ];
 
         //calculate Time Since Baseline (TSB)
@@ -9553,7 +9474,7 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             
-            const $noduleGrid = initNoduleGrid(fv, aiStructuredReport, dicomStructuredReport);
+            const $noduleGrid = initNoduleGrid(fv, structuredReport);
             initAbnormalities(fv);
             initEmphysema(fv);
             initFollowup(fv);
@@ -9604,10 +9525,10 @@
                     }
 
                 }
-               
+
                 $(element).tooltip('destroy').remove();
 
-                if (fieldSelector === "#cedos") {  
+                if (fieldSelector === "#cedos") {
                     createImportElement(fieldSelector, importValue).insertAfter($("#cedos-addon").parent().parent());
                 } else {
                     createImportElement(fieldSelector, importValue).insertAfter(fieldSelector);
@@ -9649,7 +9570,7 @@
                     }
                 } else {
                     $ele.val($ele.attr("import-value"));
-                    
+
                     if ($ele.prop('type') === "select-one") {
                         const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $ele.attr("original-value") + "\"]";
                         origValue = $(fieldSelectorWithVal).text().trim();
@@ -9657,10 +9578,10 @@
                         origValue = $ele.attr("original-value");
                     }
                 }
-                
+
                 $(element).tooltip('destroy').remove();
 
-                if (fieldSelector === "#cedos") {  
+                if (fieldSelector === "#cedos") {
                     createRevertElement(fieldSelector, origValue).insertAfter($("#cedos-addon").parent().parent());
                 } else {
                     createRevertElement(fieldSelector, origValue).insertAfter(fieldSelector);

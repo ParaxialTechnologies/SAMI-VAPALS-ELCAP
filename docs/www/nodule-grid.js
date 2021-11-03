@@ -402,7 +402,7 @@
                             }
                             $(this).parent().find(".revert-field").remove();
                             $(this).parent().find(".import-field").remove();
-                        
+
                             createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
                         }
                     }
@@ -432,7 +432,7 @@
                 $("#nodule-table").find(".import-data-parent").each(function () {
                     $(this).removeClass("import-data-parent");
                 });
-                
+
                 // for fields not in "#nodule-table"
                 $(".import-data").each(function () {
                     $(this).val($(this).attr("original-value"));
@@ -452,8 +452,8 @@
                 $(".import-field").remove(); // remove all import-field icons
             }
 
-            function _importData2(dicomData) {
-                dicomData.forEach(obj => {
+            function _importDicomHeader(structuredReport) {
+                structuredReport.forEach(obj => {
                     Object.entries(obj).forEach(([key, value]) => {
                         if (key === "CT Study Date") {
                             const fieldSelector = "#cedos";
@@ -466,7 +466,7 @@
                                 const originalValue = $field.val();
                                 $field.val(value);
                                 $field.attr("import-value", value);
-                            
+
                                 createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
                             }
                         }
@@ -489,7 +489,7 @@
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
-                        if (key === "Specify") { 
+                        if (key === "Specify") {
                             const fieldSelector = "#cectrsto";
                             const $field = $(fieldSelector);
                             $("#cectrsto-container").show();
@@ -508,18 +508,20 @@
                 });
             }
 
-            function _importData(aiData) {
+            function _importData(structuredReport) {
+                _importDicomHeader(structuredReport);
+
                 importFieldHit = false;
                 revertFieldHit = false;
-                // if number of nodules shown is less than the number of entries in aiData array then increase the number of nodules
-                if (settings.getNoduleCount() < aiData.length) {
-                    let noduleCount = aiData.length;
+                // if number of nodules shown is less than the number of entries in structuredReport array then increase the number of nodules
+                if (settings.getNoduleCount() < structuredReport.length) {
+                    let noduleCount = structuredReport.length;
                     _displayNodules(noduleCount);
                     settings.setNoduleCount(noduleCount);
                 }
 
                 noduleId = 1;
-                aiData.forEach(obj => {
+                structuredReport.forEach(obj => {
                     Object.entries(obj).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
 
@@ -535,19 +537,19 @@
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                                 $field.parent().addClass("import-data-parent");
                             }
-                            if (value === "Upper lobe of right lung") {
+                            if (value.indexOf("Upper lobe of right lung") !== -1) {
                                 $field.val("rul");
                                 $field.attr("import-value", "rul");
-                            } else if (value === "Upper lobe of left lung") {
+                            } else if (value.indexOf("Upper lobe of left lung") !== -1) {
                                 $field.val("lul");
                                 $field.attr("import-value", "lul");
-                            } else if (value === "Lower lobe of right lung") {
+                            } else if (value.indexOf("Lower lobe of right lung") !== -1) {
                                 $field.val("rll");
                                 $field.attr("import-value", "rll");
-                            } else if (value === "Lower lobe of left lung") {
+                            } else if (value.indexOf("Lower lobe of left lung") !== -1) {
                                 $field.val("lll");
                                 $field.attr("import-value", "lll");
-                            } else if (value === "“Middle lobe of lung") {
+                            } else if (value.indexOf("Middle lobe of lung") !== -1) {
                                 $field.val("rml");
                                 $field.attr("import-value", "rml");
                             }
@@ -564,16 +566,16 @@
                                 const originalValue = $(fieldSelectorWithVal).text().trim();
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
-                            if (value === "Solid") {
-                                $field.val("s");
-                                $field.attr("import-value", "s");
-                            } else if (value === "PartSolid") {
+                            if (value.indexOf("PartSolid") !== -1) {
                                 $field.val("m");
                                 $field.attr("import-value", "m");
-                            } else if (value === "NonSolid") {
+                            } else if (value.indexOf("NonSolid") !== -1) {
                                 $field.val("g");
                                 $field.attr("import-value", "g");
-                            } else if (value === "Unknown") {
+                            } else if (value.indexOf("Solid") !== -1) {
+                                $field.val("s");
+                                $field.attr("import-value", "s");
+                            } else if (value.indexOf("Unknown") !== -1) {
                                 $field.val("o");
                                 $field.attr("import-value", "o");
                             }
@@ -725,7 +727,7 @@
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
                     importData: _importData,
-                    importData2: _importData2,
+                    importDicomHeader: _importDicomHeader,
                     revertData: _revertData,
                     removeNodule: _removeNodule,
                     sortData: _sortData

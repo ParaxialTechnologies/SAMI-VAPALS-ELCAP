@@ -453,76 +453,78 @@
             }
 
             function _importDicomHeader(structuredReport) {
-                structuredReport.forEach(obj => {
-                    Object.entries(obj).forEach(([key, value]) => {
-                        if (key === "CT Study Date") {
-                            const fieldSelector = "#cedos";
-                            const $field = $(fieldSelector);
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
-                            } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
+                const patientData = structuredReport["patient_details"]
 
-                                createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
-                            }
+                Object.entries(patientData).forEach(([key, value]) => {
+                    if (key === "Study Date") {
+                        const fieldSelector = "#cedos";
+                        const $field = $(fieldSelector);
+                        if ($field.hasClass("import-data")) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass("import-data");
+                            $field.attr("original-value", $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr("import-value", value);
+
+                            createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
                         }
-                        if (key === "Reconstructed slice thickness (mm)") {
-                            const fieldSelector = "#cectrst";
-                            const $field = $(fieldSelector);
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
+                    }
+                    if (key === "Reconstructed slice thickness (mm)") { // NB Not used. Slice thickness is in each nodule?
+                        const fieldSelector = "#cectrst";
+                        const $field = $(fieldSelector);
+                        if ($field.hasClass("import-data")) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass("import-data");
+                            $field.attr("original-value", $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr("import-value", value);
+                            if (value === "o") {
+                                $("#cectrsto-container").show();
                             } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
-                                if (value === "o") {
-                                    $("#cectrsto-container").show();
-                                } else {
-                                    $("#cectrsto-container").hide();
-                                }
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                                $("#cectrsto-container").hide();
                             }
+                            createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                         }
-                        if (key === "Specify") {
-                            const fieldSelector = "#cectrsto";
-                            const $field = $(fieldSelector);
-                            $("#cectrsto-container").show();
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
-                            } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
+                    }
+                    if (key === "Specify") {
+                        const fieldSelector = "#cectrsto";
+                        const $field = $(fieldSelector);
+                        $("#cectrsto-container").show();
+                        if ($field.hasClass("import-data")) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass("import-data");
+                            $field.attr("original-value", $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr("import-value", value);
+                            createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                         }
-                    });
+                    }
                 });
+
             }
 
             function _importData(structuredReport) {
                 _importDicomHeader(structuredReport);
+                const nodules = structuredReport["nodules"]
 
                 importFieldHit = false;
                 revertFieldHit = false;
                 // if number of nodules shown is less than the number of entries in structuredReport array then increase the number of nodules
-                if (settings.getNoduleCount() < structuredReport.length) {
-                    let noduleCount = structuredReport.length;
+                if (settings.getNoduleCount() < nodules.length) {
+                    let noduleCount = nodules.length;
                     _displayNodules(noduleCount);
                     settings.setNoduleCount(noduleCount);
                 }
 
                 noduleId = 1;
-                structuredReport.forEach(obj => {
-                    Object.entries(obj).forEach(([key, value]) => {
+                nodules.forEach(nodule => {
+                    Object.entries(nodule).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
 
                         // “Finding site” maps to the "Most likely location" field (cect1ll) of the form.
@@ -663,7 +665,26 @@
                                 createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                         }
+
+                        // Image processing
+                        if (key === "CT details") {
+                            const mimeType = value["mimeType"];
+                            const content = value["content"];
+                            const fileName = value["fileName"]
+                            if (mimeType && content) {
+                                const $img = $("<img width=\"175\" " +
+                                    "alt=\"" + fileName + "\" " +
+                                    "title=\"" + fileName + "\" " +
+                                    "class=\"ai\" " +
+                                    "src=\"data:" + mimeType + ";base64," + content + "\"/>");
+                                const $th = $("th[data-nodule-id=" + noduleId + "]");
+                                const $imgContainer = $th.find(".nodule-image-container")
+                                $th.find("img.ai").remove(); //remove previously imported image icons.
+                                $imgContainer.append($img);
+                            }
+                        }
                     });
+
                     noduleId++;
                 });
                 setUpImportDataOnChange();

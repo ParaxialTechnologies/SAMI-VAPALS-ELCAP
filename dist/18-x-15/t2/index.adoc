@@ -1,0 +1,656 @@
+:numbered:
+:version: 18-x-15-t2
+:doctitle: VAPALS-ELCAP: SAMI {version}
+:vista-longversion: Version 18.0, Patch ID #15, Seq #15, Test 2
+:nmsp: SAMI
+:lnmsp: sami
+:appname: VAPALS-ELCAP
+:va-version: {nmsp}*18.0*15 SEQ #15 T2
+:priority: High
+:categories: Routine, File
+:status: Test Release
+
+// (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ./webmake publish newsite/project/vapals-elcap")))
+
+// grep '\$TXT' sami-18-x-15-t2.txt
+-------------------------------------------------------------------------------
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-08t00:14z
+-------------------------------------------------------------------------------
+
+[role="center h3"]
+Chenoweth’s Patch
+
+[role="center h1"]
+{nmsp} ({appname}) {version}
+[role="center h3"]
+({va-version})
+
+[role="center"]
+George P. Lilly,
+Domenic DiNatale,
+Larry G. Carlson
+_&_ Frederick D. S. Marshall +
+2021-10-20
+
+[[front]]
+[role="h2"]
+{zwj}i. Front matter
+
+[cols=">.<0v,<.<1v",grid="none",frame="none",width="1%"]
+|==============================================================================
+| App         | {nmsp} ({appname})
+| Version     | {version}
+| Vista ID    | ††{va-version}††: {vista-longversion}
+| Priority    | {priority}
+| Categories  | {categories}
+| Status      | {status}: ++{nmsp}-{version}.zip++
+| Depends on  | SAMI 18-1 (††SAMI*18.0*1 SEQ #1††) +
+                SAMI 18-2 (††SAMI*18.0*2 SEQ #2††) +
+                SAMI 18-3 (††SAMI*18.0*3 SEQ #3††) +
+                SAMI 18-4 (††SAMI*18.0*4 SEQ #4††) +
+                SAMI 18-5 (††SAMI*18.0*5 SEQ #5††) +
+                SAMI 18-6 (††SAMI*18.0*6 SEQ #6††) +
+                SAMI 18-8 (††SAMI*18.0*8 SEQ #8††) +
+                SAMI 18-9 (††SAMI*18.0*9 SEQ #9††) +
+                SAMI 18-10 (††SAMI*18.0*10 SEQ #10††) +
+                SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
+                SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
+                link:../../18-13/[SAMI 18-13] (††SAMI*18.0*13 SEQ #13††) +
+                link:../../18-14/[SAMI 18-14] (††SAMI*18.0*14 SEQ #14††)
+|==============================================================================
+
+[[toc]]
+[role="h2"]
+{zwj}ii. Contents
+
+[cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
+|==============================================================================
+|[options="compact"]
+* <<front,Front matter>>
+** <<toc,Contents>>
+* <<desc,Description>>
+* <<pkg-elements,Package elements>>
+* <<prepare,Prepare for installation>>
+** <<be-osehra,Assume the identity of your `osehra` Unix user>>
+** <<prep-installdir,Prepare install directory>>
+** <<prep-archive,Download and prepare the archive file>>
+** <<install-www,Install web-application files>>
+** <<backup-m,Back up M routines>>
+*** <<enter-m,Enter M>>
+**** <<enter-m-cache,On Caché>>
+**** <<enter-m-yotta,On YottaDB/GT.M>>
+*** <<signin,Sign into Vista>>
+*** <<routine-list,List of routines>>
+*** <<run-ro,Run the backup>>
+**** <<backup-cache,On Caché>>
+**** <<backup-yotta,On YottaDB/GT.M>>
+|[options="compact"]
+* <<install,Main install instructions>>
+** <<install-kids,Install the KIDS package>>
+*** <<signin-kids,Enter the KIDS Installation menu>>
+*** <<load-pkg,Load KIDS package>>
+*** <<install-pkg,Install KIDS package>>
+* <<backout,Optional backout instructions>>
+* <<routines,Routines>>
+* <<authors,Authors>>
+|==============================================================================
+
+[[desc]]
+== Description
+
+SAMI {version} adds 12 updates, most of them changes to the CT Evaluation form
+and the CT report.
+
+The definitive source for the VAPALS-ELCAP application---codebase, package
+distributions (including this patch), and documentation---is a
+https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/[public GitHub repository].
+
+These instructions are for your Vista environment's sysadmin. As usual, please
+capture the complete dialog of your install and send it to your VAPALS-ELCAP
+support team.
+
+The following list shows changes for:
+
+[options="compact"]
+* CT Evaluation form: high priority: <<issue-21-170,21-170>>; medium priority:
+  <<issue-21-149,21-149>>, <<issue-21-128,21-128>>, <<issue-21-120,21-120>>,
+  <<issue-21-198,21-198>>.
+* CT report: high priority: <<issue-21-148,21-148>>, <<issue-21-135,21-135>>,
+  <<issue-21-160,21-160>>, <<issue-21-192,21-192>>; medium priority:
+  <<issue-21-167,21-167>>; low priority: <<issue-21-150,21-150>>,
+  <<issue-21-176,21-176>>.
+* Intake-but-no-CT report: high priority: <<issue-21-160,21-160>>.
+* Infrastructure: high priority: <<issue-21-194,21-194>>, <<issue-21-201,21-201>>,
+
+[[issue-21-149]]
+=== CT Evaluation Form: Make lymph-node map a little bigger
+
+**Issue 21-149 (medium priority):** Make the lymph-node map in the Neck and
+Mediastinal section bigger if possible.
+
+**Solution:** Enlarged the lymph-node map.
+
+**Reported:** 2021-07-25 by Chenoweth.
+
+[[issue-21-128]]
+=== CT Evaluation Form: Revert change for nodule status options
+
+**Issue 21-128 (medium priority):** This partially reverts an earlier
+request. Current behavior of these two nodule status options is to blank out
+fields in the nodule table; desired behavior is to keep the information (as
+maybe later scans will have the nodules). The fields should only be grayed out
+for ††__Prev seen, resolved__†† or ††__Prev seen, not a nodule__††, not for
+other choices.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-07-13 by Yip.
+
+[[issue-21-120]]
+=== CT Evaluation Form: Automates resolution of nodule status
+
+**Issue 21-120 (medium priority):** Automatically set the nodule status to
+resolved if the ††__is it new?__†† option is set to ††__Prev seen,
+resolved__††.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-07-13 by Yip.
+
+[[issue-21-198]]
+=== CT Evaluation Form: Comparative and prior scans should be visible for baseline exams
+
+**Issue 21-198 (medium priority):** Previously, comparative and prior scan
+fields were not visible when type of exam was baseline.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-10-25 by Henschke.
+
+[[issue-21-170]]
+=== CT Evaluation Form and CT Report: Add “right” and “left” for lymph nodes N10--N14
+
+**Issue 21-170 (high priority):** In the Neck and Mediastinal section on the
+form add “right” and “left” for lymph nodes N10--N14. Extend CT Report to
+handle new form fields.
+
+**Solution:** Added form-fields and checkboxes.
+
+**Reported:** 2021-09-07 by Henschke
+
+[[issue-21-148]]
+=== CT Report: The lymph-node station does not carry over to the CT Report
+
+**Issue 21-148 (high priority):** Lymph-node stations are reported in the Neck
+and Mediastinal section on the form but that information is not included in the
+CT Report.
+
+**Solution:** Add lymph node stations to CT Report.
+
+**Reported:** 2021-07-25 by Chenoweth.
+
+[[issue-21-150]]
+=== CT Report: There is an extra space in front of Description
+
+**Issue 21-150 (low priority):** There is an extra space in front of
+††__Description__†† at the top of the CT Report.
+
+**Solution:** Removed extra space.
+
+**Reported:** 2021-07-25 by Chenoweth.
+      
+[[issue-21-167]]
+=== CT Report: Comparative and prior scans should not include current date
+
+**Issue 21-167 (medium priority):** Current date should not be included in
+comparative scans and prior scans in report or CT Evaluation form.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-09-02 by Phoenix Team.
+
+[[issue-21-135]]
+=== CT Report: Pleural effusion bug in CT report
+
+**Issue 21-135 (high priority):** Pleural effusions information was translating
+incorrectly into the CT report.
+
+**Solution:** Corrected translation.
+
+**Reported:** 2021-08-03 by Slaughter.
+
+[[issue-21-176]]
+=== CT Report: Wording change
+
+**Issue 21-176 (low priority):** Remove the word "above" from _Impression_
+section.
+
+**Solution:** Removed word from CT Report. Must run `INIT2GPH^SAMICTD2` to get
+the fix which will be in the Post-install. No extra action required by system
+administrator.
+
+**Reported:** 2021-09-16 by Murphy.
+
+[[issue-21-192]]
+=== CT Report: Change wording for empty CAC or emphysema
+
+**Issue 21-192 (high priority):** In Emphysema and Coronary Artery
+Calcification, if nothing is entered, then in the report, indicate “Emphysema
+score not provided” and “Coronary Artery Calcification score not provided.”
+
+**Solution:** Changed report translation.
+
+**Reported:** 2021-10-11 by Henschke.
+
+[[issue-21-160]]
+=== Intake-but-no-CT Report: Include patients who had CTs, but none since enrollment
+
+**Issue 21-160 (high priority):** To make sure all participants have a CT scan
+in the program those who had CT scans before enrollment need to be on this
+report.
+
+**Solution:** Add active patients who have not had a CT scan since enrollment.
+
+**Reported:** 2021-08-23 by Henschke.
+
+[[issue-21-194]]
+=== Infrastructure: Improve support for parameterization by system and site
+
+**Issue 21-194 (high priority):** Some sites or organizations will need
+different wording or other differences from the default (for example, ELCAP
+protocols _vs._ Lung-Rads).
+
+**Solution:** Developed new parameters to customize VAPALS.
+
+[cols="<.<2v,<.<1v",frame="none",grid="none",options="header",role="small",width="67%"]
+|==============================================================================
+| Parameter                              | Value
+2+| **Non VA** (1)
+| `socialSecurityNumber`                 | `Patient ID`
+| `socialSecurityNumber.short`           | `PID`
+| `socialSecurityNumber.mask`            |
+| `socialSecurityNumber.regex`           |
+| `matchingReportEnabled`                | `true`
+| `ruralUrbanChartEnabled`               | `false`
+| `lungradsOrElcapCTtemplate`            | `elcap`
+| `username`                             | `User Name`
+| `password`                             | `Password`
+| `veteransAffairsSite`                  | `false`
+|| {nbsp}
+2+| **VHA** (2)
+| `socialSecurityNumber`                 | `Social Security Number`
+| `socialSecurityNumber.short`           | `SSN`
+| `socialSecurityNumber.mask`            | `000-00-0000`
+| `socialSecurityNumber.regex`           | `(?!(000\|666\|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$`
+| `matchingReportEnabled`                | `true`
+| `ruralUrbanChartEnabled`               | `true`
+| `lungradsOrElcapCTtemplate`            | `lungrads`
+| `username`                             | `Access`
+| `password`                             | `Verify`
+| `veteransAffairsSite`                  | `true`
+|| {nbsp}
+2+| **SYS** (3)
+| `systemDemoOnly`                       | `false`
+| `systemDemoUseDUZ`                     |
+| `username`                             | `User Name`
+| `password`                             | `Password`
+|==============================================================================
+
+**Reported:** 2021-02-24 by Avila.
+
+[[issue-21-201]]
+=== Infrastructure: SYS is set as site when no site has been selected yet, 
+but that causes undesired behavior. 
+
+**Issue 21-201 (high priority):** Fix an error where SYS is used as a site 
+code and it shouldn't be.
+
+**Solution:** intercept site=SYS and make it null
+
+**Reported:** 2021-11-04 by Lilly.
+
+[[pkg-elements]]
+== Package elements
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<div style="display: flex; flex-flow: row wrap; align-items: flex-start;">
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+include::.dtool/packelements.adoi[]
+
+[cols="<.<1v,>.<0v,<.<0v",options="header,autowidth",role="center"]
+|==============================================================================
+| Fileman File                | Number   | Change
+| ††SAMI PARAMETER DEFAULTS†† | `311.14` | modified (data)
+|==============================================================================
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</div>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+[[prepare]]
+== Prepare for installation
+
+This involves creating a directory to work in, running a script to back up
+certain datafiles and web-application files, and then going through steps to
+back up M routines that will be replaced by the patch.
+
+[[be-osehra]]
+=== Assume the identity of your +osehra+ Unix user
+
+This step assumes you use a `dzdo` or `sudo` command to do this; here, the
+symbol `$DEMAND` will stand for whichever command you use. (Also, in all the
+command-line examples below, `$` simply means your command-line prompt.) If
+your configuration is different, please adjust this step to match your
+configuration:
+
+-------------------------------------------------------------------------------
+$ $DEMAND su - osehra
+$ _
+-------------------------------------------------------------------------------
+
+[[prep-installdir]]
+=== Prepare install directory
+
+If this is your first time installling this, execute the following commands.
+They create a shell variable, and then creates the work directory and sets it
+as your current directory.
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-x-15/t1
+$ mkdir -p $INDIR
+$ cd $INDIR
+-------------------------------------------------------------------------------
+
+If you've already tried installing this once, you can use the following
+commands instead:
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-x-15/t1
+$ cd $INDIR
+$ rm -rf ./sami*.{txt,kid} ./*webapp*
+-------------------------------------------------------------------------------
+
+[[prep-archive]]
+=== Download and prepare the archive file
+
+You may safely download the archive file
+(link:sami-{version}.zip[++sami-{version}.zip++]) in advance of the actual
+install.  In the following text, `[now]` represents a time stamp representing
+your current time, and `[bits/sec]` is a data rate and `[time]` is how long the
+file took to transfer (both of which vary based on the user's network
+conditions).
+
+include::.dtool/wget-snippet.adoi[]
+
+Then unzip the archive file with the following command.
+
+include::.dtool/unzip-snippet.adoi[]
+
+[[install-www]]
+=== Install web-application files
+
+At this point, the web-application files must be installed. This is done with a
+script that backs up the affected directories before installing anything, then
+upgrades the web-application files. The output looks like this (where `[x]`
+represents a number).
+
+-------------------------------------------------------------------------------
+$ ./upgrade-webapp
+Backing up files to ./.webapp-backup:
+[... lists of files backed up ...]
+Compressing the backup:
+[... list of files being compressed ...]
+Cleaning up.
+Done with backup of webapp files.
+
+Updating from ./webapp-upgrade-files ...
+[... list of files being updated ...]
+Done with install.
+
+You may now proceed with the KIDS installation.
+$ _
+-------------------------------------------------------------------------------
+
+Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
+official GitHub repository, and this script will have different output.
+
+-------------------------------------------------------------------------------
+$ ./upgrade-webapp
+Backing up files to ./.webapp-backup:
+[... lists of files backed up ...]
+Compressing the backup:
+[... list of files being compressed ...]
+Cleaning up.
+Done with backup of webapp files.
+
+Found a valid Git repository; pulling updates ...
+[... output varies ...]
+Done with install.
+$ _
+-------------------------------------------------------------------------------
+
+// eval::[Section.setlevel(2)]
+
+[[backup-m]]
+=== Back up M routines
+
+Before the installation, we also need to back up existing VAPALS-ELCAP routines
+that will be overwritten by this install. To do this, you will have to start a
+Caché or YottaDB session (depending on your particular installation), sign in
+to Vista, and then call the direct-mode interface `^%RO` (“routine out”).
+
+We have made efforts to display accurate instructions, but there are likely to
+be minor differences between implementations. Be sure to follow the correct
+dialog for your implementation.
+
+[[enter-m]]
+==== Enter M
+
+At the Unix prompt, enter the M environment in direct mode, using the
+`csession` command on Caché or the `mumps` command on YottaDB/GT.M:
+
+[[enter-m-cache]]
+††**On Caché**††
+
+-------------------------------------------------------------------------------
+$ csession vapals
+
+Node: vapalscache, Instance: VAPALS
+
+>_
+-------------------------------------------------------------------------------
+
+[[enter-m-yotta]]
+††**On YottaDB/GT.M**††
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
+[[signin]]
+==== Sign into Vista
+
+At the M prompt, call Vista's direct-mode interface, enter your access code,
+and then just press return at the [ttsp nowrap]##OPTION NAME## prompt to return
+to direct mode. This sets up your authentication variables. Here's a sample
+capture of this step:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME:
+>_
+-------------------------------------------------------------------------------
+
+[[routine-list]]
+==== List of routines
+
+The routine names to save are listed below; you may copy the list and paste it
+at the appropriate `Routine` prompt. At the final `Routine` prompt, press
+return to indicate the list of routines is done.
+
+include::.dtool/routine-list.adoi[]
+
+[[run-ro]]
+==== Run the backup
+
+Creating the routine backup file differs by implementation.
+
+[[backup-cache]]
+††**On Caché**††
+
+Note that routines that don't currently exist will result in a warning message
+(specifically, the routine name will have `[???]` after it, and the line
+[ttsp]##[does not exist]## after that). These messages can be safely
+disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
++Description+ and press return at the +Parameters+ and [ttsp]##Printer Format##
+prompts to accept the defaults of +WNS+ and +No+, respectively:
+
+include::.dtool/cache-ro-snippet.adoi[]
+
+[[backup-yotta]]
+††**On YottaDB/GT.M**††
+
+Note that routines that don't currently exist will result in the routine name
+not appearing under the input line, and won't count towards the number of
+routines. These can be safely disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+include::.dtool/yotta-ro-snippet.adoi[]
+
+eval::[Section.setlevel(2)]
+
+You'll remain in the M environment for the next section.
+
+[[install]]
+== Main install instructions
+
+This consists of loading and installing the KIDS package, and activating the
+new web-application files.
+
+[[install-kids]]
+=== Installing the KIDS package
+
+This installs the various M assets required by the application.
+
+[[signin-kids]]
+==== Enter the KIDS Installation menu
+
+At the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
+[ttsp]##Kernel Installation & Distribution System## main menu, and at the
+[ttsp]##Select \... Option## prompt select +Installation+:
+
+// include::.dtool/enter-kids-snippet.adoi[]
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+
+
+      Edits and Distribution ...
+      Utilities ...
+      Installation ...
+      Patch Monitor Main Menu ...
+
+Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: installation
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[load-pkg]]
+==== Load KIDS package
+
+Select option 1 and press return at the +Continue+ prompt.
+
+include::.dtool/load-kids-snippet.adoi[]
+
+[[install-pkg]]
+==== Install KIDS package
+
+Select option 6, enter the space bar at the [ttsp]##INSTALL NAME## prompt, and
+press return at the next three prompts. Note that `[now]` denotes the current
+time when you're doing the install.
+
+include::.dtool/install-kids-snippet.adoi[]
+
+eval::[Section.setlevel(2)]
+
+You now have {appname} {version} (††{va-version}††) installed in your M
+environment. The install is now complete. We recommend running tests of your
+{appname} application to confirm the environment is operational and bug-free,
+before notifying users that {appname} is ready for their use.
+
+[[backout]]
+== Optional backout instructions
+
+Should errors or other problems result from installing this package, contact
+the {appname} development team for package-backout instructions.
+
+[[routines]]
+== Routines
+
+Lines 2 and 3 of each of these routines now look like:
+
+include::.dtool/routine-lines2-3.adoi[]
+
+The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
+
+include::.dtool/checksums.adoi[]
+
+[[authors]]
+== Authors
+
+[cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
+|==============================================================================
+|           | Dates                 | By
+| Developed | 2021-10-20/31         | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Tested    | 2021-10-25/11-01      | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Claudia Henschke (VA-PHO) +
+                                      Artit Jirapatnakul (VA-PHO) +
+                                      Providencia Morales (VA-PHO) +
+                                      Lorenza A. Murphy (VA-PHO) +
+                                      Martha A. Rukavena (VA-PHO) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Released  | 2021-11-02            | Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+|==============================================================================
+
+eval::[Section.setlevel(1)]
+
+-------------------------------------------------------------------------------
+$END TXT
+-------------------------------------------------------------------------------

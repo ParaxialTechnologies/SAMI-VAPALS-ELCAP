@@ -14,51 +14,67 @@ X 0. Project discussion
  1. Project set up
 X  1.1. git pull
 X  1.2. prepare checklist
-  1.3. prepare recipe doc
-  1.4. prepare template.txt doc
-  1.5. git pull/push
+X  1.3. prepare recipe doc
+X  1.4. prepare template.txt doc
+X  1.5. git pull/push
   1.6. add updated routines to BBEdit project
-       SAMIPARM
-       SAMICTD2
-       SAMICTT0
-       SAMICTT3
-       SAMINOT1
-       SAMINOT2
-       SAMINOT3
-       SAMIHOM4      
-  1.7. add log routine to BBEdit project
-            
-  1.8. write change descriptions
-  1.9. update template.txt doc
-  1.10. update dashboard (Google Drive) (sami pax)
-  1.11. Regrettable Bodge
+b       SAMIADMN
+b       SAMICAS3
+b		SAMICTD2
+b		SAMICTT0
+b		SAMICTT3
+b		SAMIHOM4
+b		SAMIMOV
+b		SAMINOT1
+b		SAMINOT2
+b		SAMINOT3
+b		SAMIPARM
+b		SAMIPAT
+b		SAMIUR
+b		SAMIUR2
+  
+  1.7. add log routines to BBEdit project
+b 	  SAMICTUL
+b	  SAMICUL
+b 	  SAMIHUL
+b 	  SAMINUL
+b 	  SAMIURUL
+ X 1.8. write change descriptions
+ X 1.9. update template.txt doc
+ X 1.10. update recipe with before checksums  SAMIHOM4 and SAMIHUL were in
+          patch 16, so I went back to the recipe for patch 12 and pasted 
+          those checksums in instead of the patch 16 checksums.
+  1.11. update dashboard (Google Drive) (sami pax)
+X  1.12. Regrettable Bodge
 
  2. Update routines
-N  2.1. Update SAMIPAT for pre/post-install if needed
-  2.2. convert to new short version ids, update dates & times in each routine
+X  2.1. Update SAMIPAT for pre/post-install if needed
+      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t1")
+x  2.2. convert to new short version ids, update dates & times in each routine
    or routine log
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-  2.3. update change log routine (SAMIURUL)
-  2.4. push to repo
+ X 2.3. update change log routines
+x  2.4. push to repo
 
  3. Run XINDEX and ARJT
-  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
-  3.2. copy routines to ~/run/routine directory
-  3.3. run XINDEX
-  3.4. fix any bugs,
-  3.5. use ARJT tools do recipe^ARJTXRW (see Introduction to ARJT tools)
-  3.6. update recipe
+X  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+X  3.2. copy routines to ~/run/routine directory
+X  3.3. run XINDEX
+X  3.4. fix any bugs,
+X  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
+X  3.6. update recipe
   3.7. update checksums in template.txt
   3.8. update dashboard (sami vers)
   3.9. git pull/push
 
  4. KIDS Build
-  4.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
-  4.2. copy routines to ~/run/routine directory
-  4.3. Create KIDS build (XPD MAIN Menu)
+X  4.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+X  4.2. copy routines to ~/run/routine directory
+X  4.3. Create KIDS build (XPD MAIN Menu)
+  		SAMI 18.0T05 -- forgot and included SAMI*18.0*7 in required builds
   4.4. export to out dock (Transport distribution) 
 		HF is /home/osehra/run/out/sami/18-14/t4/sami-18-14-t4.kid
   4.5. copy to personal repo scp 'vapalsyotta:/home/osehra/run/out/sami/18-14/t3/*.kid' ./

@@ -1,6 +1,6 @@
-SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-9-24t20:33z
- ;;18.0;SAMI;**1,4,5,6,9,12,16**;2020-01
- ;18-x-16-t1
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-10-29t20:25z
+ ;;18.0;SAMI;**1,4,5,6,9,12,15,16**;2020-01
+ ;18-15
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.
@@ -238,6 +238,9 @@ GETHOME ; get homepage (not subsequent visit)
  ;
  ; Processing for multi-tenancy
  ;
+ i $g(HTTPREQ("method"))="GET" d  ;
+ . s SAMIFILTER("siteid")=""
+ ;
  if $get(SAMIFILTER("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) quit 0
  new SAMISITE,SAMITITL
  set SAMISITE=$get(SAMIFILTER("siteid"))
@@ -353,8 +356,12 @@ WSVAPALS ; post vapals (main gateway)
  m vars=SAMIARG
  i $g(vars("siteid"))'="" d  ;
  . i $g(vars("site"))'=$g(vars("siteid")) s vars("site")=$g(vars("siteid"))
+ i $g(vars("site"))="SYS" s vars("site")=""
+ i $g(HTTPREQ("method"))="GET" d  ;
+ . s vars("site")=""
  m SAMIARG=vars
  m SAMIARG=SAMIBODY
+ ;D ^ZTER
  ;
  ; Processing for multi-tenancy
  ;
@@ -385,7 +392,13 @@ WSVAPALS ; post vapals (main gateway)
  merge ^SAMIUL("vapals","vars")=SAMIBODY
  ;
  n route s route=$g(vars("samiroute"))
- i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+ ;i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+ i route="" d  q 0
+ . n vals
+ . s vals("siteid")=""
+ . s vals("sitetitle")="Unknown Site"
+ . s vals("errorMessage")=""
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
  ;
  i route="lookup" d  q 0
  . m SAMIARG=vars

@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-10-15t00:54z
- ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 4
- ;;18.14
+SAMIUR ;ven/gpl - user reports ;2021-10-29t23:57z
+ ;;18.0;SAMI;**5,10,11,12,14,15**;2020-01;Build 4
+ ;;18-15
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2021-10-15t00:54z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-15t00:54z
+ ;@last-update 2021-10-29t23:57z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.14
+ ;@version 18-15
  ;@release-date 2020-01
- ;@patch-list **5,10,11,12,14**
+ ;@patch-list **5,10,11,12,14,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -635,6 +635,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ; $$setroot^%wd
  ;
  set datephrase="Unmatched Persons"
+ new ERR k ^gpl("ERR")
  new lroot set lroot=$$setroot^%wd("patient-lookup")
  new dfn set dfn=9000000
  for  do  quit:'dfn  ;
@@ -643,6 +644,9 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . ;
  . new ien set ien=$order(@lroot@("dfn",dfn,""))
  . quit:ien=""
+ . i $g(@lroot@(ien,"dfn"))'=dfn d  q  ;
+ . . s ERR(dfn)="dfn index error"
+ . . m ^gpl("ERR",dfn)=@lroot@(ien)
  . n ordern
  . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
  . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
@@ -662,6 +666,8 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . set SAMIPATS(ien,dfn,"editref")=nuhref
  . quit
+ ;
+ i $d(ERR) d ^ZTER
  ;
  quit  ; end of UNMAT
  ;
@@ -692,6 +698,9 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . quit:$order(@proot@("dfn",dfn,""))'=""
  . new ien set ien=$order(@lroot@("dfn",dfn,""))
  . quit:ien=""
+ . i $g(@lroot@(ien,"dfn"))'=dfn d  q  ;
+ . . s ERR="dfn index error in patient-lookup dfn="_dfn
+ . . ;D ^ZTER
  . ;
  . ; write !,"dfn= ",dfn
  . ; zwrite @lroot@(ien,*)
@@ -700,6 +709,9 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . ;
  . merge ^gpl("worklist","lroot",ien)=@lroot@(ien)
  . merge SAMIPATS(ien,dfn)=@lroot@(ien)
+ . ;zwr SAMIPATS
+ . ;i dfn=9000166 B
+ . ;i dfn=9000136 B
  . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
  . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
  . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")

@@ -1,6 +1,6 @@
-SAMIPARM ;ven/gpl - get params web service ;2021-10-17t17:45z
- ;;18.0;SAMI;**12**;2020-01;
- ;;18.12
+SAMIPARM ;ven/gpl - get params web service ;2021-10-29t20:11z
+ ;;18.0;SAMI;**12,15**;2020-01;
+ ;;18-15
  ;
  ; Routine SAMIPARM contains subroutines for implementing the VAPALS-
  ; ELCAP get params web service.
@@ -21,13 +21,13 @@ SAMIPARM ;ven/gpl - get params web service ;2021-10-17t17:45z
  ;@copyright 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-07-01t17:45z
+ ;@last-update 2021-10-29t20:11z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.12
+ ;@version 18-15
  ;@release-date 2020-01
- ;@patch-list **12**
+ ;@patch-list **12,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -43,10 +43,32 @@ SAMIPARM ;ven/gpl - get params web service ;2021-10-17t17:45z
  ; 2021-07-01 ven/mcglk&toad 18.12-t2 cbf7e46b
  ;  SAMIPARM bump version & dates, add hdr comments & dev log.
  ;
+ ; 2021-07-14 ven/toad 18-12-t3 e36d755d
+ ;  SAMIPARM bump 12-t2 to 12-t3, log commit ids, date formats
+ ;
+ ; 2021-08-11 ven/toad 18-12 b16cd38f
+ ;  SAMIPARM SAMI 18.12 routines ready to validate
+ ;
+ ; 2021-10-17 ven/gpl 18-15 b14fcbcf
+ ;  SAMIPARM fix the param web service to provide SYS parameters if no site
+ ;  is provided
+ ;
+ ; 2021-10-26 ven/gpl 18-15 d12b1b10
+ ;  SAMIPARM parameter detection routine for identifying VA systems
+ ;
+ ; 2021-10-27 ven/gpl 18-15 a7274e10,a58c42df
+ ;  SAMIPARM create SETPARM routine, upgraded SETPARM to add SYS if not there
+ ;
+ ; 2021-10-29 ven/lmry 18-15
+ ;  SAMIPARM update history and table of contents, bump dates and versions
+ ;
  ;@contents
  ; WSPARAMS web service WSPARAMS^SAMIPARM, site paramters
  ; $$GET1PARM value of one parameter for site
  ; GETARY return parameter array
+ ; GETSYS returns SYS (system) parameters
+ ; ISVA sets filter based on parms
+ ; SETPARM
  ; ADDSVC init to install get params web service
  ;
  ;
@@ -62,6 +84,7 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  . s site=$g(filter("site"))
  . i site="" s site=$g(filter("siteid"))
  . ;q:site=""
+ . i site="SYS" s site=""
  . n parms
  . i site="" d  ;
  . . d GETSYS(.parms)
@@ -102,6 +125,41 @@ GETSYS(ARY) ; returns SYS (system) parameters
  M ARY=^SAMI(311.14,"D","SYS")
  Q
  ;
+ISVA(filter) ; sets filter based on parms
+ ;
+ n site s site=$g(filter("siteid"))
+ q:site=""
+ new ISVA set ISVA=$$GET1PARM^SAMIPARM("veteransAffairsSite",site)
+ set filter("veteransAffairsSite")=ISVA
+ Q $S(ISVA="false":0,1:1)
+ ;
+SETPARM(LVL,PNAME,VALUE) ; 
+ ;
+ N ien,SAMIERR
+ S ien=$o(^SAMI(311.14,"B",$G(LVL),"")) ; locate parameter set
+ i ien="" d  ;
+ . if LVL="SYS" d  ;
+ . . n fda
+ . . s fda(311.14,"?+1,",.01)="SYS"
+ . . d UPDATE^DIE("","fda","","SAMIERR")
+ . . i $d(SAMIERR) D ^ZTER
+ . . S ien=$o(^SAMI(311.14,"B",$G(LVL),"")) ; locate parameter set
+ I ien="" q
+ Q:$G(PNAME)=""
+ n pien s pien=$o(^SAMI(311.14,ien,1,"B",$G(PNAME),""))
+ i pien="" d  ; add the parameter to the set
+ . n fda
+ . s fda(311.141,"?+1,"_ien_",",.01)=PNAME
+ . D UPDATE^DIE("","fda","","SAMIERR")
+ . s pien=$o(^SAMI(311.14,ien,1,"B",$G(PNAME),""))
+ i pien="" D ^ZTER
+ ;
+ N FDA
+ S FDA(311.141,pien_","_ien_",",.02)=VALUE
+ D UPDATE^DIE("","FDA","","SAMIERR")
+ I $D(SAMIERR) D ^ZTER
+ S ^SAMI(311.14,"D",LVL,PNAME)=VALUE
+ Q
  ;
 ADDSVC() ; add the params webservice to the system
  d addService^%webutils("GET","params","WSPARAMS^SAMIPARM")

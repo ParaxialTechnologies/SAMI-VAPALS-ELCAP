@@ -11,8 +11,9 @@
 
         </label>
         <br/>
-        {{ f.inlineRadio("ceem", "ceem-nv", "nv", "Not visible") }}
         {{ f.inlineRadio("ceem", "ceem-no", "no", "None") }}
+        {{ f.inlineRadio("ceem", "ceem-nr", "nr", "Not reported") }}
+        {{ f.inlineRadio("ceem", "ceem-nv", "nv", "Not visible") }}
         {{ f.inlineRadio("ceem", "ceem-mi", "mi", "Mild") }}
         {{ f.inlineRadio("ceem", "ceem-mo", "mo", "Moderate") }}
         {{ f.inlineRadio("ceem", "ceem-se", "se", "Severe") }}
@@ -23,117 +24,118 @@
     <div class="form-group">
         <label class="control-label">Coronary calcifications</label><br/>
         {{ f.inlineRadio("ceccv","ceccv-n","n","None") }}
+        {{ f.inlineRadio("ceccv","ceccv-r","nr","Not reported") }}
         {{ f.inlineRadio("ceccv","ceccv-m","m","Mild") }}
         {{ f.inlineRadio("ceccv","ceccv-d","d","Moderate") }}
         {{ f.inlineRadio("ceccv","ceccv-s","s","Severe") }}
     </div>
-{% endif %}
+{% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" data-toggle="collapse"
+                     href="#coronary-container"
+                     aria-expanded="true" aria-controls="coronary-container"
+                     data-field-name="ceoca" style="cursor:pointer;">
+                    <h4 class="panel-title">
+                        <i class="fa fa-chevron-down"></i>
+                        <i class="fa fa-chevron-up" style="display: none;"></i>
+                        Coronary Artery Calcifications Score
+                    </h4>
+                </div>
+                <div id="coronary-container" class="panel-collapse collapse" role="tabpanel">
+                    <div class="panel-body">
+                        <input type="hidden" name="ceoca" value="n"/>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="cecclm" class="required">Left main</label>
+                                            <select name="cecclm" id="cecclm" class="form-control"
+                                                    required="required">
+                                                <option value=""> -</option>
+                                                <option value="no"> None</option>
+                                                <option value="mi"> Minimal < &frac13;</option>
+                                                <option value="mo"> Moderate</option>
+                                                <option value="ex"> Extensive > &frac23;
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="ceccld" class="required">LAD</label>
+                                            <select name="ceccld" id="ceccld"
+                                                    class="form-control"
+                                                    required="required">
+                                                <option value=""> -</option>
+                                                <option value="no"> None</option>
+                                                <option value="mi"> Minimal < &frac13;</option>
+                                                <option value="mo"> Moderate</option>
+                                                <option value="ex"> Extensive > &frac23;
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" data-toggle="collapse"
-                 href="#coronary-container"
-                 aria-expanded="true" aria-controls="coronary-container"
-                 data-field-name="ceoca" style="cursor:pointer;">
-                <h4 class="panel-title">
-                    <i class="fa fa-chevron-down"></i>
-                    <i class="fa fa-chevron-up" style="display: none;"></i>
-                    Coronary Artery Calcifications Score
-                </h4>
-            </div>
-            <div id="coronary-container" class="panel-collapse collapse" role="tabpanel">
-                <div class="panel-body">
-                    <input type="hidden" name="ceoca" value="n"/>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <label for="cecclm" class="required">Left main</label>
-                                        <select name="cecclm" id="cecclm" class="form-control"
-                                                required="required">
-                                            <option value=""> -</option>
-                                            <option value="no"> None</option>
-                                            <option value="mi"> Minimal < &frac13;</option>
-                                            <option value="mo"> Moderate</option>
-                                            <option value="ex"> Extensive > &frac23;
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <label for="ceccld" class="required">LAD</label>
-                                        <select name="ceccld" id="ceccld"
-                                                class="form-control"
-                                                required="required">
-                                            <option value=""> -</option>
-                                            <option value="no"> None</option>
-                                            <option value="mi"> Minimal < &frac13;</option>
-                                            <option value="mo"> Moderate</option>
-                                            <option value="ex"> Extensive > &frac23;
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="cecccf"
+                                                   class="required">Circumflex</label>
+                                            <select name="cecccf" id="cecccf"
+                                                    class="form-control"
+                                                    required="required">
+                                                <option value=""> -</option>
+                                                <option value="no"> None</option>
+                                                <option value="mi"> Minimal < &frac13;</option>
+                                                <option value="mo"> Moderate</option>
+                                                <option value="ex"> Extensive > &frac23;
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
 
-                                <td>
-                                    <div class="form-group">
-                                        <label for="cecccf"
-                                               class="required">Circumflex</label>
-                                        <select name="cecccf" id="cecccf"
-                                                class="form-control"
-                                                required="required">
-                                            <option value=""> -</option>
-                                            <option value="no"> None</option>
-                                            <option value="mi"> Minimal < &frac13;</option>
-                                            <option value="mo"> Moderate</option>
-                                            <option value="ex"> Extensive > &frac23;
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="ceccrc" class="required">RCA</label>
+                                            <select name="ceccrc" id="ceccrc"
+                                                    class="form-control"
+                                                    required="required">
+                                                <option value=""> -</option>
+                                                <option value="no"> None</option>
+                                                <option value="mi"> Minimal < &frac13;</option>
+                                                <option value="mo"> Moderate</option>
+                                                <option value="ex"> Extensive > &frac23;
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                                <td>
-                                    <div class="form-group">
-                                        <label for="ceccrc" class="required">RCA</label>
-                                        <select name="ceccrc" id="ceccrc"
-                                                class="form-control"
-                                                required="required">
-                                            <option value=""> -</option>
-                                            <option value="no"> None</option>
-                                            <option value="mi"> Minimal < &frac13;</option>
-                                            <option value="mo"> Moderate</option>
-                                            <option value="ex"> Extensive > &frac23;
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label class="control-label" for="cecccac">
-                                        Visual <abbr title="Coronary Artery Calcium">CAC</abbr>
-                                        score
-                                    </label>
-                                </td>
-                                <td colspan="5">
-                                    <span id="cecccac-text"></span>
-                                    <input type="hidden" name="cecccac" id="cecccac">
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                <tr>
+                                    <td>
+                                        <label class="control-label" for="cecccac">
+                                            Visual <abbr title="Coronary Artery Calcium">CAC</abbr>
+                                            score
+                                        </label>
+                                    </td>
+                                    <td colspan="5">
+                                        <span id="cecccac-text"></span>
+                                        <input type="hidden" name="cecccac" id="cecccac">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
+{% endif %}
+
 
 <div class="row">
     <div class="col-sm-4 form-group">

@@ -2,12 +2,12 @@
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
-#:version: 18-x-15-t1
+#:version: 18-x-15-t2
 #:rversion: 18-x-15
-#:partialdir: 18-x-15/t1
+#:partialdir: 18-x-15/t2
 #:status: test release
-#:vista-version: SAMI*18.0*15 SEQ #14 T1
-#:vista-longversion: Version 18.0, Patch ID #15, Seq #14, Test 1
+#:vista-version: SAMI*18.0*15 SEQ #15 T2
+#:vista-longversion: Version 18.0, Patch ID #15, Seq #15, Test 2
 #:priority: high
 #:categories: routine, file
 $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
@@ -72,7 +72,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 12 updates (five high-priority, five
+ #{nmsp} #{version} adds 13 updates (six high-priority, five
  medium-priority, and two low-priority), most of them changes to the
  CT Eval form and the CT Report.  The definitive source for the
  VAPALS-ELCAP application - codebase, package distributions (including
@@ -272,6 +272,16 @@ ii. Contents
    PARM: password                          VALUE: Password
 
    reported: 2021-02-24 by Avila.
+   
+#.##. Infrastructure: SYS is set as site when no site has been selected
+   yet, but that causes undesired behavior. 
+
+   issue 21-201 (high priority): Fix an error where SYS is used as a site
+   code and it shouldn't be.
+
+   solution: intercept site=SYS and make it null
+
+   reported: 2021-11-04 by Lilly.
 
 
 #. Package elements

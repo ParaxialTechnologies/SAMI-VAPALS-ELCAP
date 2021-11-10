@@ -1,20 +1,20 @@
 :numbered:
-:version: 18-x-15-t1
+:version: 18-x-15-t2
 :doctitle: VAPALS-ELCAP: SAMI {version}
-:vista-longversion: Version 18.0, Patch ID #15, Seq #15, Test 1
+:vista-longversion: Version 18.0, Patch ID #15, Seq #15, Test 2
 :nmsp: SAMI
 :lnmsp: sami
 :appname: VAPALS-ELCAP
-:va-version: {nmsp}*18.0*15 SEQ #15 T1
+:va-version: {nmsp}*18.0*15 SEQ #15 T2
 :priority: High
 :categories: Routine, File
 :status: Test Release
 
 // (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ./webmake publish newsite/project/vapals-elcap")))
 
-// grep '\$TXT' sami-18-x-15-t1.txt
+// grep '\$TXT' sami-18-x-15-t2.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-03t03:02z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-08t00:14z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -120,7 +120,7 @@ The following list shows changes for:
   <<issue-21-167,21-167>>; low priority: <<issue-21-150,21-150>>,
   <<issue-21-176,21-176>>.
 * Intake-but-no-CT report: high priority: <<issue-21-160,21-160>>.
-* Infrastructure: high priority: <<issue-21-194,21-194>>
+* Infrastructure: high priority: <<issue-21-194,21-194>>, <<issue-21-201,21-201>>,
 
 [[issue-21-149]]
 === CT Evaluation Form: Make lymph-node map a little bigger
@@ -297,6 +297,17 @@ protocols _vs._ Lung-Rads).
 |==============================================================================
 
 **Reported:** 2021-02-24 by Avila.
+
+[[issue-21-201]]
+=== Infrastructure: SYS is set as site when no site has been selected yet, 
+but that causes undesired behavior. 
+
+**Issue 21-201 (high priority):** Fix an error where SYS is used as a site 
+code and it shouldn't be.
+
+**Solution:** intercept site=SYS and make it null
+
+**Reported:** 2021-11-04 by Lilly.
 
 [[pkg-elements]]
 == Package elements

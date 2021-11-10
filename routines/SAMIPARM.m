@@ -84,6 +84,7 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  . s site=$g(filter("site"))
  . i site="" s site=$g(filter("siteid"))
  . ;q:site=""
+ . i site="SYS" s site=""
  . n parms
  . i site="" d  ;
  . . d GETSYS(.parms)

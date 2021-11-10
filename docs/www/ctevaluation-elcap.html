@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.09" name="version"/>
+  <meta content="2021.11.10" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.11.09">
+  <script src="jquery-conditonally-enable.js?v=2021.11.10">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.11.09">
+  <script src="jquery-conditonally-display.js?v=2021.11.10">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.09">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.10">
   </script>
-  <script src="vapals.js?v=2021.11.09">
+  <script src="vapals.js?v=2021.11.10">
   </script>
-  <script src="init.js?v=2021.11.09">
+  <script src="init.js?v=2021.11.10">
   </script>
-  <script src="nodule-grid.js?v=2021.11.09">
+  <script src="nodule-grid.js?v=2021.11.10">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -6018,141 +6018,135 @@
      </div>
      <div class="row">
       <div class="col-md-12">
-       <div class="panel panel-default">
-        <div aria-controls="coronary-container" aria-expanded="true" class="panel-heading" data-field-name="ceoca" data-toggle="collapse" href="#coronary-container" role="tab" style="cursor:pointer;">
-         <h4 class="panel-title">
-          <i class="fa fa-chevron-down">
-          </i>
-          <i class="fa fa-chevron-up" style="display: none;">
-          </i>
-          Coronary Artery Calcifications Score
-         </h4>
-        </div>
-        <div class="panel-collapse collapse" id="coronary-container" role="tabpanel">
-         <div class="panel-body">
-          <input name="ceoca" type="hidden" value="n"/>
-          <div class="table-responsive">
-           <table class="table">
-            <tbody>
-             <tr>
-              <td>
-               <div class="form-group">
-                <label class="required" for="cecclm">
-                 Left main
-                </label>
-                <select class="form-control" id="cecclm" name="cecclm" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="ceccld">
-                 LAD
-                </label>
-                <select class="form-control" id="ceccld" name="ceccld" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="cecccf">
-                 Circumflex
-                </label>
-                <select class="form-control" id="cecccf" name="cecccf" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="ceccrc">
-                 RCA
-                </label>
-                <select class="form-control" id="ceccrc" name="ceccrc" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-             </tr>
-             <tr>
-              <td>
-               <label class="control-label" for="cecccac">
-                Visual
-                <abbr title="Coronary Artery Calcium">
-                 CAC
-                </abbr>
-                score
-               </label>
-              </td>
-              <td colspan="5">
-               <span id="cecccac-text">
-               </span>
-               <input id="cecccac" name="cecccac" type="hidden"/>
-              </td>
-             </tr>
-            </tbody>
-           </table>
-          </div>
-         </div>
-        </div>
+       <label class="control-label">
+        Coronary calcifications
+       </label>
+       <div class="checkbox">
+        <label>
+         <input name="ceccv" type="hidden" value=""/>
+         <input id="ceccv" name="ceccv" type="checkbox" value="nr"/>
+         Not reported
+        </label>
+       </div>
+       <div class="table-responsive" id="ceccv-container">
+        <table class="table">
+         <tbody>
+          <tr>
+           <td>
+            <div class="form-group">
+             <label class="required" for="cecclm">
+              Left main
+             </label>
+             <select class="form-control" id="cecclm" name="cecclm" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="ceccld">
+              LAD
+             </label>
+             <select class="form-control" id="ceccld" name="ceccld" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="cecccf">
+              Circumflex
+             </label>
+             <select class="form-control" id="cecccf" name="cecccf" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="ceccrc">
+              RCA
+             </label>
+             <select class="form-control" id="ceccrc" name="ceccrc" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <label class="control-label" for="cecccac">
+             Visual
+             <abbr title="Coronary Artery Calcium">
+              CAC
+             </abbr>
+             score
+            </label>
+           </td>
+           <td colspan="5">
+            <span id="cecccac-text">
+            </span>
+            <input id="cecccac" name="cecccac" type="hidden"/>
+           </td>
+          </tr>
+         </tbody>
+        </table>
        </div>
       </div>
      </div>
@@ -6224,6 +6218,9 @@
             fv.addField('cecccf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
             fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
         }
+
+        //Hide CAC score table if not-reported is selected
+        $("#ceccv").conditionallyDisplay({sourceValues: "nr", disable: "#ceccv-container"});
     }
      </script>
     </div>
@@ -9006,7 +9003,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.11.09
+     2021.11.10
     </span>
    </div>
   </footer>

@@ -165,6 +165,19 @@ ADDSVC() ; add the params webservice to the system
  d addService^%webutils("GET","params","WSPARAMS^SAMIPARM")
  Q
  ;
+SETMAP(MAP,VALUE) ; set an entry in the SAMI FORM MAPPING FILE
+ ;
+ N FDA,SAMIERR
+ S FDA(311.11,"?+1,",.01)=MAP
+ D UPDATE^DIE("","FDA","","SAMIERR")
+ I $D(SAMIERR) D ^ZTER Q  ;
+ N IEN
+ S IEN=$O(^SAMI(311.11,"B",MAP,""))
+ Q:IEN=""
+ K FDA
+ S FDA(311.11,IEN_",",2)=VALUE
+ D UPDATE^DIE("","FDA","","SAMIERR")
+ I $D(SAMIERR) D ^ZTER Q  ;
  ;
  ;
 EOR ; end of routine SAMIPARM

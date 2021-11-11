@@ -54,20 +54,27 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;  
  ;# Emphysema
  ;
+ n emph1 s emph1=0
  n sp1 s sp1="  "
  s outmode="hold" s line=""
  ;if $$XVAL("ceemv",vals)'="e" d  ;
  if $$XVAL("ceem",vals)'="" d  ;
  . if $$XVAL("ceem",vals)="nv" q  ;
  . if $$XVAL("ceem",vals)="no" q  ;
+ . if $$XVAL("ceem",vals)="nr" q  ;
  . ;d OUT("")
  . D HOUT("Emphysema: ")
  . ;d OUT("")
  . D OUT(sp1_$$XSUB("ceem",vals,dict))
  . s outmode="go" d OUT("")
+ . s emph1=1
  ;
- if $$XVAL("ceem",vals)="" d  ;
- . D HOUT("Emphysema: Emphysema score not provided.")
+ ;if $$XVAL("ceem",vals)="" d  ;
+ if emph1=0 d  ;
+ . if $$XVAL("ceem",vals)="nr" d  q  ;
+ . . D HOUT("Emphysema: Emphysema score not provided.")
+ . . s outmode="go" d OUT("")
+ . D HOUT("Emphysema: None.")
  . s outmode="go" d OUT("")
  ;d OUT("")
  s outmode="hold"
@@ -195,6 +202,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;# Coronary Calcification
  n vcac,cac,cacrec
  s (cac,cacrec)=""
+ n cacout s cacout=0
  ;
  n cectot s cectot=0
  i $g(@vals@("cecclm"))="no" s @vals@("cecclm")="no" s cectot=cectot+1
@@ -210,14 +218,16 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no" s cectot=cectot+1
  i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no" s cectot=cectot+1
  S ^gpl("cectot")=cectot
- i cectot>3 d  ;
+ if $$XVAL("ceccv",vals)="nr" d  ;
  . d OUT("Coronary Artery Calcification score not provided.") d OUT("")
+ . s cacout=1
  ; if $$XVAL("cecccac",vals)'="" d  ;
  ; . s @vals@("ceccv")="e"
  ;
- d  if $$XVAL("ceccv",vals)'="n" d  ;
+ ;d  if $$XVAL("ceccv",vals)'="n" d  ;
+ if cacout=0 d  ;
  . set vcac=$$XVAL("cecccac",vals)
- . if cectot=4 q  ;
+ . ;if cectot=4 q  ;
  . if vcac'="" d  ;
  . . s cacrec=""
  . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
@@ -235,8 +245,8 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;;s outmode="hold" s line=""
  ;i samicac=1 d  ;
  ;
- d  ;
- . if cectot>3 q  ;
+ i cacout=0 d  ;
+ . ;if cectot>3 q  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")

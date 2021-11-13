@@ -72,8 +72,8 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 13 updates (six high-priority, five
- medium-priority, and two low-priority), most of them changes to the
+ #{nmsp} #{version} adds 18 updates (eight high-priority, seven
+ medium-priority, and three low-priority), most of them changes to the
  CT Eval form and the CT Report.  The definitive source for the
  VAPALS-ELCAP application - codebase, package distributions (including
  this one), and documentation - is at the following public Github
@@ -104,12 +104,13 @@ ii. Contents
 
  #.#. CT Evaluation Form: Revert change for nodule status options
 
-   issue 21-128 (medium priority): This partially reverts an earlier
-   request. Current behavior of these two nodule status options is to
-   blank out fields in the nodule table; desired behavior is to keep
-   the information (as maybe later scans will have the nodules). The
-   fields should only be grayed out for "Prev seen, resolved" or "Prev
-   seen, not a nodule", not for other choices.
+   issue 21-128 (medium priority): Keep previous information for nodules
+   listed as "Not included in scan" and "Not in outside report." This
+   partially reverts an earlier request. Current behavior of these two
+   nodule status options is to blank out fields in the nodule table; desired
+   behavior is to keep the information (as maybe later scans will have the
+   nodules). The fields should only be grayed out for "Prev seen, resolved" or 
+   "Prev seen, not a nodule", not for other choices.
 
    solution: Changed to desired behavior.
 
@@ -142,10 +143,10 @@ ii. Contents
       information about Emphysema or Coronary Artery Calcification was not
       provided.
    
-   issue 21-192, 21-203 (high priority): In Emphysema (both protocols) and 
-   Coronary Artery Calcification (for Lungrads), or CAC Score (for ELCAP), add
-   radio button for "not provided." Pre-populate Emphysema and Coronary Artery 
-   Calcification with none. 
+   issue 21-192, 21-203, 21-205 (high priority): In Emphysema (both protocols)
+   and Coronary Artery Calcification (for Lungrads), or CAC Score (for ELCAP),
+   add radio button for "not provided." Pre-populate Emphysema and Coronary 
+   Artery Calcification with none. 
    
    solution: Changed to desired behavior.
 
@@ -234,11 +235,9 @@ ii. Contents
 
  #.##. CT Report: Change wording for empty CAC or emphysema
 
-   issue 21-192, 21-203 (high priority): In Emphysema (both protocols) and 
-   Coronary Artery Calcification (for Lungrads), or CAC Score (for ELCAP), add
-   field for "not provided." Pre-populate Emphysema and Coronary Artery 
-   Calcification with none. 
-
+   issue 21-205 (high priority): Always include the Emphysema and relevant CAC
+   section in the report, even if "none" or "not reported" fields are marked.
+   
    solution: Changed report translation.
 
    reported: 2021-10-11 by Henschke.
@@ -319,6 +318,16 @@ ii. Contents
    solution: intercept site=SYS and make it null
 
    reported: 2021-11-04 by Lilly.
+
+#.##. Infrastructure: The team would like to add an "About" page to the menu
+      bar at the top of the page.
+
+   issue 21-206 (med priority): The about page will include information about
+   the application and the software version.
+
+   solution: Add link to menu bar.
+
+   reported: 2021-11-02 by DiNatale.
 
 
 #. Package elements

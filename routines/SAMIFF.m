@@ -1,4 +1,4 @@
-SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;Jan 17, 2020@12:29
+SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-13t01:46z
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -23,15 +23,41 @@ SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;Jan 17, 2020@12:29
  ; @version: 18.0
  ; @patch-list: none yet
  ;
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
+ ;
  ; @to-do
  ;   Add label comments
  ;
  ; @change-log
- ;   2019-03-22 ven/arc : Have PRSTSV report fields for which the number of
- ;     values does not match the number of labels
- ;   2019-07-31 arc/ven : Add entry points to expand and update what's in the
- ;     patient-lookup graph, export the patient-lookup graph for Phoenix, and
- ;     import a TSV to pre-populate the patient-lookup graph
+ ;   2019-03-11 ven/arc 18.0  95d8aeb4
+ ;     SAMIFF: Add SAMIFF.m to build a graph of a form's field data from a TSV
+ ;      file.
+ ;   2019-03-12 ven/arc 18.0  23b5338d
+ ;     SAMIFF: Add TSV file for background form.
+ ;   2019-03-14 ven/arc 18.0  a11a568b
+ ;     SAMIFF;   Add unit tests for SAMIFF.
+ ;   2019-03-19 ven lgc 18.0  8a2848c6
+ ;     SAMIFF: modified for XINDEX
+ ;   2019-03-22 ven/arc 18.0  e11e6545
+ ;     SAMIFF: Have PRSTSV report fields for which the number of values does
+ ;      not match the number of labels
+ ;   2019-03-25/26  ven/lgc 18.0  12ab8234,fbcad124
+ ;     SAMIFF: update DD generating routine
+ ;   2019-04-03/04 ven/arc 18.0  20003239,ef63109d
+ ;   2019-04-16 ven/lgc 18.0  e54b76d1
+ ;     SAMIFF: Update for SAMIFORM project
+ ;   2019-05-21 ven/arc 18.0  3e6873ef
+ ;     SAMIFF:Update DDs and the main DD routine.
+ ;   2019-07-31 arc/ven 18.0  e596f437
+ ;     SAMIFF: Add entry points to expand and update what's in the patient-
+ ;     lookup graph, export the patient-lookup graph for Phoenix, and import a
+ ;     TSV to pre-populate the patient-lookup graph
+ ;   2020-01-17, 2020-02-04 ven/arc 18.0  7936ae40,4981a87a
+ ;     SAMIFF: Clean up TSV utilities.
+ ;   2021-11-12 ven/lmry 18.15
+ ;     SAMIFF: change write command at bottom of routine to remove $J and add
+ ;     the graphname, update change-log
  ;
  ; @section 1 code
  ;
@@ -92,7 +118,7 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph of form fields
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
  write:$l(errmsg) !,!,"*** ",errmsg," ***",!,!
- write $J
+ write !,graphname," built"
  quit  ; End of entry point PRSTSV
  ;
  ;

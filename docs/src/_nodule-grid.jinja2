@@ -617,6 +617,7 @@
     </div>
 
     <script>
+        let j = {};
 
         function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("{{ noduleArray|length }}");
@@ -632,7 +633,9 @@
             });
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
+            {#$.ajax("http://demo.va-pals.org:9080/dcmquery?studyid=XXX0023", {dataType: "json"})#}
                 .done(function (json) {
+                    j = json;
                     if (json.result !== undefined && json.result.length > 0) {
                         const sr = json.result[0].json;
                         $noduleGrid.structuredReport(sr);
@@ -645,6 +648,7 @@
                             $('#dataImportModal').modal();
                         });
                     }
+
                 });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);

@@ -5449,7 +5449,9 @@
       </div>
      </div>
      <script>
-      function initNoduleGrid(fv) {
+      let j = {};
+
+        function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -5463,7 +5465,9 @@
             });
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
+            
                 .done(function (json) {
+                    j = json;
                     if (json.result !== undefined && json.result.length > 0) {
                         const sr = json.result[0].json;
                         $noduleGrid.structuredReport(sr);

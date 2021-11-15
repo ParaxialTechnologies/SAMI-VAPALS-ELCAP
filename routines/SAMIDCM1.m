@@ -64,7 +64,7 @@ WSDCMIN(ARGS,BODY,RESULT,ien)    ; recieve from addpatient
  set root=$$setroot^%wd("dcm-intake")
  if $get(ien)="" do
  . set ien=$order(@root@(" "),-1)+1
- . set gr=$name(@root@(ien,"json"))
+ . set gr=$name(@root@(ien))
  . do decode^%webjson("BODY",gr)
  . kill BODY  ; remove it from symbol table as it is too big
  ;

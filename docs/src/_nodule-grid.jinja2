@@ -633,7 +633,6 @@
             });
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
-            {#$.ajax("http://demo.va-pals.org:9080/dcmquery?studyid=XXX0023", {dataType: "json"})#}
                 .done(function (json) {
                     j = json;
                     if (json.result !== undefined && json.result.length > 0) {

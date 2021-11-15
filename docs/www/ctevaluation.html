@@ -316,6 +316,18 @@
          Follow-up (not annual repeat)
         </label>
        </div>
+       <div>
+        <button class="btn btn-default import-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Import Data
+        </button>
+        <button class="btn btn-default revert-data-button" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Revert Data
+        </button>
+       </div>
        <div class="alert alert-warning">
         Only select Baseline if there is no prior CT or there is a prior CT scan more
                             than 3 years ago
@@ -5492,7 +5504,6 @@
             });
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
-            
                 .done(function (json) {
                     j = json;
                     if (json.result !== undefined && json.result.length > 0) {

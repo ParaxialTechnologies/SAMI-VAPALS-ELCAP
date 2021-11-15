@@ -159,6 +159,11 @@
        </ul>
       </li>
       <li>
+       <a class="text-nowrap navigation" data-method="get" data-samiroute="about" href="about.html">
+        About
+       </a>
+      </li>
+      <li>
        <a class="navigation" data-method="get" data-samiroute="logout" href="login.html" id="logout-link">
         Logout
        </a>
@@ -9000,14 +9005,9 @@
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
-    <a href="https://paraxial.atlassian.net/projects/VAP/" id="feedback-link" tabindex="9000" target="_blank">
+    <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
      Submit feedback
     </a>
-    <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     <span id="formMode">
-     </span>
-     2021.11.15
-    </span>
    </div>
   </footer>
   <script>
@@ -9107,7 +9107,7 @@
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
-            $("#feedback-link").remove();
+            $("footer").remove();
         } else {
             $(".va-only").remove();
         }
@@ -9154,15 +9154,18 @@
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
-        $.ajax("/ctversion", {
-            success: function (data) {
-                const v = data.ctversion;
-                $("#formMode").text(v.toUpperCase());
-            },
-            error: function () {
-                $("#formMode").text("UNKNOWN");
-            }
-        });
+        const $formMode = $("#formMode"); //displayed on About page.
+        if ($formMode.length) {
+            $.ajax("/ctversion", {
+                success: function (data) {
+                    const v = data.ctversion;
+                    $formMode.text(v.toUpperCase());
+                },
+                error: function () {
+                    $formMode.text("UNKNOWN");
+                }
+            });
+        }
 
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");

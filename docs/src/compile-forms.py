@@ -17,6 +17,7 @@ version = datetime.datetime.now().strftime('%Y.%m.%d')
 
 # map where key is the template file name and value is an object representing properties of the output
 forms = [
+    {"template": "about", "title": "About", "output": "about", "withNav": "false"},
     {"template": "background", "title": "Background Form", "output": "background", "withNav": "true"},
     {"template": "blank", "title": "", "output": "blank_no_nav", "withNav": "false"},
     {"template": "intake", "title": "Lung Screening Intake Form", "output": "intake", "withNav": "true"},

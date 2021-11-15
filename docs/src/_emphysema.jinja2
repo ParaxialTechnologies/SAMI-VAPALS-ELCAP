@@ -144,17 +144,20 @@
 <script>
     function initEmphysema(fv) {
         function calculateVisualCacScore() {
-            let cal1 = $("#cecclm")[0].selectedIndex;
-            let cal2 = $("#ceccld")[0].selectedIndex;
-            let cal3 = $("#cecccf")[0].selectedIndex;
-            let cal4 = $("#ceccrc")[0].selectedIndex;
-            if (cal1 > 0) cal1 = cal1 - 1;
-            if (cal2 > 0) cal2 = cal2 - 1;
-            if (cal3 > 0) cal3 = cal3 - 1;
-            if (cal4 > 0) cal4 = cal4 - 1;
-            const res = cal1 + cal2 + cal3 + cal4;
-            $("#cecccac").val(res);
-            $("#cecccac-text").text(res);
+            const $ccm = $("#cecclm");
+            if ($ccm.length > 0) { //does not exist on LungRads page
+                let cal1 = $("#cecclm")[0].selectedIndex;
+                let cal2 = $("#ceccld")[0].selectedIndex;
+                let cal3 = $("#cecccf")[0].selectedIndex;
+                let cal4 = $("#ceccrc")[0].selectedIndex;
+                if (cal1 > 0) cal1 = cal1 - 1;
+                if (cal2 > 0) cal2 = cal2 - 1;
+                if (cal3 > 0) cal3 = cal3 - 1;
+                if (cal4 > 0) cal4 = cal4 - 1;
+                const res = cal1 + cal2 + cal3 + cal4;
+                $("#cecccac").val(res);
+                $("#cecccac-text").text(res);
+            }
         }
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);

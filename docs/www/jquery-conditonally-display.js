@@ -6,7 +6,7 @@
 
 /**
  * A jQuery plugin to conditionally show and hide containers based on the source's value.
- * @link https://github.com/OSEHRA/VA-PALS
+ * @link https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP
  * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
  * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
  * @copyright 2018 [VAPALS-ELCAP]{@link http://va-pals.org/}
@@ -80,7 +80,7 @@
                 }
             }
 
-            //finally reset any validations on all input fields - we don't want 
+            //finally reset any validations on all input fields - we don't want
             // any errors or markings to be coming out of fields that are not visible
             $.each([$enableContainer, $disableContainer], function (i, $container) {
                 if ($container != null && typeof $container !== 'undefined') {

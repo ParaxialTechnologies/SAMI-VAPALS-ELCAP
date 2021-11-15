@@ -524,6 +524,12 @@ WSVAPALS ; post vapals (main gateway)
  . m SAMIARG=vars
  . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
  ;
+ i route="about" d  q 0
+ . m SAMIARG=vars
+ . n form
+ . s form="vapals:about"
+ . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+ ;
  i route="addperson" d  q 0
  . m SAMIARG=vars
  . n form

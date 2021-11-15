@@ -16,21 +16,32 @@ X  1.1. git pull
 X  1.2. prepare checklist
 X  1.3. prepare recipe doc
 X  1.4. prepare template.txt doc
-  1.5. git pull/push
+X  1.5. git pull/push
   1.6. add updated routines to BBEdit project
-      
+        SAMICTT3
+        SAMIFF
+        SAMIHOM4
 		SAMIPARM
   
   1.7. add log routines to BBEdit project
-  1.8. write change descriptions
-  1.9. update template.txt doc
-  1.10. update recipe with before checksums  
-  1.11. update dashboard (Google Drive) (sami pax)
+        SAMICTUL
+        SAMIHUL
+        
+X  1.8. write change descriptions
+X  1.9. update template.txt doc
+X  1.10. update recipe with before checksums  do recipe^ARJTXRW
+X  1.11. update dashboard (Google Drive) (sami pax)
   1.12. Regrettable Bodge
 
  2. Update routines
-  2.1. Update SAMIPAT for pre/post-install if needed
-      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t1")
+X  2.1. Update SAMIPAT for pre/post-install if needed
+      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t2")
+      D deleteService^%webutils("GET","vapals") 
+      d addService^%webutils("GET","vapals","GETHOME^SAMIHOM3")
+      
+      to set the about.html mapping, this command should be run in the post install:
+      D SETMAP^SAMIPARM("vapals:about","about.html") 
+
   2.2. convert to new short version ids, update dates & times in each routine
    or routine log
       view log with files

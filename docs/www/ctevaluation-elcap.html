@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.09" name="version"/>
+  <meta content="2021.11.15" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.11.09">
+  <script src="jquery-conditonally-enable.js?v=2021.11.15">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.11.09">
+  <script src="jquery-conditonally-display.js?v=2021.11.15">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.09">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.15">
   </script>
-  <script src="vapals.js?v=2021.11.09">
+  <script src="vapals.js?v=2021.11.15">
   </script>
-  <script src="init.js?v=2021.11.09">
+  <script src="init.js?v=2021.11.15">
   </script>
-  <script src="nodule-grid.js?v=2021.11.09">
+  <script src="nodule-grid.js?v=2021.11.15">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -157,11 +157,6 @@
          </a>
         </li>
        </ul>
-      </li>
-      <li>
-       <a class="text-nowrap navigation" data-method="post" data-samiroute="about" href="#!">
-        About
-       </a>
       </li>
       <li>
        <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
@@ -6023,141 +6018,135 @@
      </div>
      <div class="row">
       <div class="col-md-12">
-       <div class="panel panel-default">
-        <div aria-controls="coronary-container" aria-expanded="true" class="panel-heading" data-field-name="ceoca" data-toggle="collapse" href="#coronary-container" role="tab" style="cursor:pointer;">
-         <h4 class="panel-title">
-          <i class="fa fa-chevron-down">
-          </i>
-          <i class="fa fa-chevron-up" style="display: none;">
-          </i>
-          Coronary Artery Calcifications Score
-         </h4>
-        </div>
-        <div class="panel-collapse collapse" id="coronary-container" role="tabpanel">
-         <div class="panel-body">
-          <input name="ceoca" type="hidden" value="n"/>
-          <div class="table-responsive">
-           <table class="table">
-            <tbody>
-             <tr>
-              <td>
-               <div class="form-group">
-                <label class="required" for="cecclm">
-                 Left main
-                </label>
-                <select class="form-control" id="cecclm" name="cecclm" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="ceccld">
-                 LAD
-                </label>
-                <select class="form-control" id="ceccld" name="ceccld" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="cecccf">
-                 Circumflex
-                </label>
-                <select class="form-control" id="cecccf" name="cecccf" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-              <td>
-               <div class="form-group">
-                <label class="required" for="ceccrc">
-                 RCA
-                </label>
-                <select class="form-control" id="ceccrc" name="ceccrc" required="required">
-                 <option value="">
-                  -
-                 </option>
-                 <option value="no">
-                  None
-                 </option>
-                 <option value="mi">
-                  Minimal &lt; ⅓
-                 </option>
-                 <option value="mo">
-                  Moderate
-                 </option>
-                 <option value="ex">
-                  Extensive &gt; ⅔
-                 </option>
-                </select>
-               </div>
-              </td>
-             </tr>
-             <tr>
-              <td>
-               <label class="control-label" for="cecccac">
-                Visual
-                <abbr title="Coronary Artery Calcium">
-                 CAC
-                </abbr>
-                score
-               </label>
-              </td>
-              <td colspan="5">
-               <span id="cecccac-text">
-               </span>
-               <input id="cecccac" name="cecccac" type="hidden"/>
-              </td>
-             </tr>
-            </tbody>
-           </table>
-          </div>
-         </div>
-        </div>
+       <label class="control-label">
+        Coronary calcifications
+       </label>
+       <div class="checkbox">
+        <label>
+         <input name="ceccv" type="hidden" value=""/>
+         <input id="ceccv" name="ceccv" type="checkbox" value="nr"/>
+         Not reported
+        </label>
+       </div>
+       <div class="table-responsive" id="ceccv-container">
+        <table class="table">
+         <tbody>
+          <tr>
+           <td>
+            <div class="form-group">
+             <label class="required" for="cecclm">
+              Left main
+             </label>
+             <select class="form-control" id="cecclm" name="cecclm" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="ceccld">
+              LAD
+             </label>
+             <select class="form-control" id="ceccld" name="ceccld" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="cecccf">
+              Circumflex
+             </label>
+             <select class="form-control" id="cecccf" name="cecccf" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+           <td>
+            <div class="form-group">
+             <label class="required" for="ceccrc">
+              RCA
+             </label>
+             <select class="form-control" id="ceccrc" name="ceccrc" required="required">
+              <option value="">
+               -
+              </option>
+              <option value="no">
+               None
+              </option>
+              <option value="mi">
+               Minimal &lt; ⅓
+              </option>
+              <option value="mo">
+               Moderate
+              </option>
+              <option value="ex">
+               Extensive &gt; ⅔
+              </option>
+             </select>
+            </div>
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <label class="control-label" for="cecccac">
+             Visual
+             <abbr title="Coronary Artery Calcium">
+              CAC
+             </abbr>
+             score
+            </label>
+           </td>
+           <td colspan="5">
+            <span id="cecccac-text">
+            </span>
+            <input id="cecccac" name="cecccac" type="hidden"/>
+           </td>
+          </tr>
+         </tbody>
+        </table>
        </div>
       </div>
      </div>
@@ -6190,17 +6179,20 @@
      <script>
       function initEmphysema(fv) {
         function calculateVisualCacScore() {
-            let cal1 = $("#cecclm")[0].selectedIndex;
-            let cal2 = $("#ceccld")[0].selectedIndex;
-            let cal3 = $("#cecccf")[0].selectedIndex;
-            let cal4 = $("#ceccrc")[0].selectedIndex;
-            if (cal1 > 0) cal1 = cal1 - 1;
-            if (cal2 > 0) cal2 = cal2 - 1;
-            if (cal3 > 0) cal3 = cal3 - 1;
-            if (cal4 > 0) cal4 = cal4 - 1;
-            const res = cal1 + cal2 + cal3 + cal4;
-            $("#cecccac").val(res);
-            $("#cecccac-text").text(res);
+            const $ccm = $("#cecclm");
+            if ($ccm.length > 0) { //does not exist on LungRads page
+                let cal1 = $("#cecclm")[0].selectedIndex;
+                let cal2 = $("#ceccld")[0].selectedIndex;
+                let cal3 = $("#cecccf")[0].selectedIndex;
+                let cal4 = $("#ceccrc")[0].selectedIndex;
+                if (cal1 > 0) cal1 = cal1 - 1;
+                if (cal2 > 0) cal2 = cal2 - 1;
+                if (cal3 > 0) cal3 = cal3 - 1;
+                if (cal4 > 0) cal4 = cal4 - 1;
+                const res = cal1 + cal2 + cal3 + cal4;
+                $("#cecccac").val(res);
+                $("#cecccac-text").text(res);
+            }
         }
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
@@ -6229,6 +6221,9 @@
             fv.addField('cecccf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
             fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
         }
+
+        //Hide CAC score table if not-reported is selected
+        $("#ceccv").conditionallyDisplay({sourceValues: "nr", disable: "#ceccv-container"});
     }
      </script>
     </div>
@@ -9005,9 +9000,14 @@
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
-    <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
+    <a href="https://paraxial.atlassian.net/projects/VAP/" id="feedback-link" tabindex="9000" target="_blank">
      Submit feedback
     </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     <span id="formMode">
+     </span>
+     2021.11.15
+    </span>
    </div>
   </footer>
   <script>
@@ -9107,7 +9107,7 @@
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
-            $("footer").remove();
+            $("#feedback-link").remove();
         } else {
             $(".va-only").remove();
         }
@@ -9154,18 +9154,15 @@
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
-        const $formMode = $("#formMode"); //displayed on About page.
-        if ($formMode.length) {
-            $.ajax("/ctversion", {
-                success: function (data) {
-                    const v = data.ctversion;
-                    $formMode.text(v.toUpperCase());
-                },
-                error: function () {
-                    $formMode.text("UNKNOWN");
-                }
-            });
-        }
+        $.ajax("/ctversion", {
+            success: function (data) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        });
 
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");

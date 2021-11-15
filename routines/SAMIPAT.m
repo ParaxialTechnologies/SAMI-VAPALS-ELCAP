@@ -1,4 +1,4 @@
-SAMIPAT ;ven/toad - init subroutines ;2021-10-29t22:32z
+SAMIPAT ;ven/toad - init subroutines ;2021-11-14t19:34z
  ;;18.0;SAMI;**12,14,15**;2020-01;
  ;;18-15
  ;
@@ -21,7 +21,7 @@ SAMIPAT ;ven/toad - init subroutines ;2021-10-29t22:32z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t22:32z
+ ;@last-update 2021-11-14t19:34z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -55,6 +55,9 @@ SAMIPAT ;ven/toad - init subroutines ;2021-10-29t22:32z
  ;
  ; 2021-10-29 ven/lmry 18-15
  ;  SAMIPAT remove a space before STANDARD
+ ;
+ ; 2021-11-14 ven/lmry 18-15
+ ;  SAMIPAT  Add commands for 18-15-t2.
  ;
  ;
  ;@contents
@@ -113,7 +116,10 @@ POS1814 ; kids post-install for sami 18.14
 POS1815 ; kids post-install for sami 18.15
  ;
  do STANDARD
- do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t1")
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t2")
+ do deleteService^%webutils("GET","vapals") 
+ do addService^%webutils("GET","vapals","GETHOME^SAMIHOM3")
+ do SETMAP^SAMIPARM("vapals:about","about.html")
  ;
  quit  ; end of kids-post POS1815^SAMIPAT
  ;

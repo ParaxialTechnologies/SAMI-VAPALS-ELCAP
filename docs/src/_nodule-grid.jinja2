@@ -617,6 +617,7 @@
     </div>
 
     <script>
+
         function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("{{ noduleArray|length }}");
             const $noduleGrid = $.noduleGrid({
@@ -632,15 +633,18 @@
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
                 .done(function (json) {
-                    $noduleGrid.structuredReport(json);
+                    if (json.result !== undefined && json.result.length > 0) {
+                        const sr = json.result[0].json;
+                        $noduleGrid.structuredReport(sr);
 
-                    //trigger change event on type of exam to display import buttons now that data is set.
-                    $("[name=cetex]").trigger('change');
+                        //trigger change event on type of exam to display import buttons now that data is set.
+                        $("[name=cetex]").trigger('change');
 
-                    // with data now pulled in, allow modal to open when button is clicked.
-                    $(".import-data-button").on('click', function () {
-                        $('#dataImportModal').modal();
-                    });
+                        // with data now pulled in, allow modal to open when button is clicked.
+                        $(".import-data-button").on('click', function () {
+                            $('#dataImportModal').modal();
+                        });
+                    }
                 });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);

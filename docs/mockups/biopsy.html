@@ -5647,15 +5647,18 @@
 
             $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
                 .done(function (json) {
-                    $noduleGrid.structuredReport(json);
+                    if (json.result !== undefined && json.result.length > 0) {
+                        const sr = json.result[0].json;
+                        $noduleGrid.structuredReport(sr);
 
-                    //trigger change event on type of exam to display import buttons now that data is set.
-                    $("[name=cetex]").trigger('change');
+                        //trigger change event on type of exam to display import buttons now that data is set.
+                        $("[name=cetex]").trigger('change');
 
-                    // with data now pulled in, allow modal to open when button is clicked.
-                    $(".import-data-button").on('click', function () {
-                        $('#dataImportModal').modal();
-                    });
+                        // with data now pulled in, allow modal to open when button is clicked.
+                        $(".import-data-button").on('click', function () {
+                            $('#dataImportModal').modal();
+                        });
+                    }
                 });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
@@ -5673,7 +5676,7 @@
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
             if (fv) {
-                
+
                     fv.addField('cect1ch', {
                         validators: {
                             callback: {
@@ -5726,7 +5729,7 @@
                     fv.addField('cect1sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect1ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect1ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect2ch', {
                         validators: {
                             callback: {
@@ -5779,7 +5782,7 @@
                     fv.addField('cect2sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect2ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect2ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect3ch', {
                         validators: {
                             callback: {
@@ -5832,7 +5835,7 @@
                     fv.addField('cect3sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect3ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect3ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect4ch', {
                         validators: {
                             callback: {
@@ -5885,7 +5888,7 @@
                     fv.addField('cect4sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect4ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect4ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect5ch', {
                         validators: {
                             callback: {
@@ -5938,7 +5941,7 @@
                     fv.addField('cect5sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect5ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect5ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect6ch', {
                         validators: {
                             callback: {
@@ -5991,7 +5994,7 @@
                     fv.addField('cect6sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect6ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect6ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect7ch', {
                         validators: {
                             callback: {
@@ -6044,7 +6047,7 @@
                     fv.addField('cect7sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect7ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect7ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect8ch', {
                         validators: {
                             callback: {
@@ -6097,7 +6100,7 @@
                     fv.addField('cect8sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect8ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect8ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect9ch', {
                         validators: {
                             callback: {
@@ -6150,7 +6153,7 @@
                     fv.addField('cect9sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect9ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect9ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
                     fv.addField('cect10ch', {
                         validators: {
                             callback: {
@@ -6203,7 +6206,7 @@
                     fv.addField('cect10sw', {validators: {notEmpty: {message: 'Enter a width'}}});
                     fv.addField('cect10ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                     fv.addField('cect10ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
-                
+
             }
 
             return $noduleGrid;

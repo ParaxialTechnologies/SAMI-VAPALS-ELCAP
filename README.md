@@ -35,6 +35,37 @@ available [here](https://hub.docker.com/r/osehra/va-pals/)
 - This nasty little URL will delete all but the first entry in the dcm-intake graph... clearing out the graph for new
   demos http://vendev6.vistaplex.org:9080/dcmreset
 
+## Updating an installation
+mumps -dir
+SET DUZ=1
+D ^XUP
+EVE
+1 (Systems Manager)
+U (User manager)
+E (Edit an existing user)
+1
+MAN (To edit SYSTEM MANAGER account)
+cursor to Access code or Verify code, enter Y and enter
+Enter new one (this is temporary)
+Move cursor to COMMAND area, hit S for save
+E to exit
+ENter, Enter, Enter
+Y
+DO ^ZU
+Login with access code (e.g. SUPER6)
+Password (new password)
+Prompts you to change password. If you
+
+cd ~/lib/silver/a-sami...
+git pull
+cd routines
+bash ./compare.sh (see diff of git repo and actual)
+cp SAMI*.m ~/run/routines/
+run post install (get command from Linda)
+mumps -dir 
+DO CLRWEB^SAMIADMN
+
+
 ##Resources
 1. [OSEHRA Jira Project](https://issues.osehra.org/secure/RapidBoard.jspa?projectKey=VAP) - This project uses Jira to
    manage sprints and track defects. If you see something, say something!

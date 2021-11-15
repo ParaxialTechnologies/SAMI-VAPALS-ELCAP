@@ -24,6 +24,7 @@
         noduleGrid: function (options) {
             const settings = $.extend({
                 availableNodules: 10,
+                structuredReport: null,
                 getNoduleCount: function () {
                     return 0;
                 },
@@ -31,7 +32,6 @@
                     return noduleCount;
                 },
             }, options);
-
 
             function setupNoduleEnabledState(noduleId) {
                 $("#cect" + noduleId + "nt").conditionallyEnable({
@@ -452,9 +452,10 @@
                 $(".import-field").remove(); // remove all import-field icons
             }
 
-            function _importDicomHeader(structuredReport) {
-                const patientData = structuredReport["patient_details"]
-
+            function _importDicomHeader() {
+                console.log(settings.structuredReport)
+                const patientData = settings.structuredReport["patient_study_details"]
+                console.log(patientData)
                 Object.entries(patientData).forEach(([key, value]) => {
                     if (key === "Study Date") {
                         const fieldSelector = "#cedos";
@@ -509,9 +510,9 @@
 
             }
 
-            function _importData(structuredReport) {
-                _importDicomHeader(structuredReport);
-                const nodules = structuredReport["nodules"]
+            function _importData() {
+                _importDicomHeader();
+                const nodules = settings.structuredReport["nodules"]
 
                 importFieldHit = false;
                 revertFieldHit = false;
@@ -522,7 +523,7 @@
                     settings.setNoduleCount(noduleCount);
                 }
 
-                noduleId = 1;
+                let noduleId = 1;
                 nodules.forEach(nodule => {
                     Object.entries(nodule).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
@@ -735,14 +736,10 @@
                 $(".import-data-button").hide();
                 $(".revert-data-button").hide();
                 $("[name=cetex]").on('change', function () {
-                    if ($("[name=cetex]:checked").val() === "b") {
-                        $(".import-data-button").show();
-                        $(".revert-data-button").show();
-                    } else {
-                        $(".import-data-button").hide();
-                        $(".revert-data-button").hide();
-                    }
-                });
+                    const showImport = $("[name=cetex]:checked").val() === "b" && settings.structuredReport;
+                    $(".import-data-button").toggle(showImport);
+                    $(".revert-data-button").toggle(showImport);
+                }).trigger('change');
 
                 return {
                     displayNodules: _displayNodules,
@@ -751,7 +748,14 @@
                     importDicomHeader: _importDicomHeader,
                     revertData: _revertData,
                     removeNodule: _removeNodule,
-                    sortData: _sortData
+                    sortData: _sortData,
+                    structuredReport: function (value) {
+                        if (typeof (value) != "undefined") {
+                            settings.structuredReport = value;
+                        } else {
+                            return settings.structuredReport;
+                        }
+                    }
                 };
             }
 

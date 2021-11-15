@@ -9738,7 +9738,7 @@
        </div>
       </div>
       <script>
-       function initNoduleGrid(fv, aiData) {
+       function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -9751,18 +9751,30 @@
                 }
             });
 
+            $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
+                .done(function (json) {
+                    $noduleGrid.structuredReport(json);
+
+                    //trigger change event on type of exam to display import buttons now that data is set.
+                    $("[name=cetex]").trigger('change');
+
+                    // with data now pulled in, allow modal to open when button is clicked.
+                    $(".import-data-button").on('click', function () {
+                        $('#dataImportModal').modal();
+                    });
+                });
+
             $(".add-nodule").on('click', $noduleGrid.addNodule);
             $(".revert-data-button").on('click', $noduleGrid.revertData);
 
-            $(".import-data-button").on('click', function () {
-                $('#dataImportModal').modal();
-            });
+            //Modal buttons
             $(".importAI").on('click', function () {
-                $noduleGrid.importData(aiData);
+                $noduleGrid.importData();
             });
             $(".importDICOM").on('click', function () {
-                $noduleGrid.importDicomHeader(aiData);
+                $noduleGrid.importDicomHeader();
             });
+
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 

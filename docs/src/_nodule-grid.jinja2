@@ -637,7 +637,7 @@
                 .done(function (json) {
                     j = json;
                     if (json.result !== undefined && json.result.length > 0) {
-                        const sr = json.result[0].json;
+                        const sr = json.result[0];
                         $noduleGrid.structuredReport(sr);
 
                         //trigger change event on type of exam to display import buttons now that data is set.
@@ -648,7 +648,6 @@
                             $('#dataImportModal').modal();
                         });
                     }
-
                 });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);

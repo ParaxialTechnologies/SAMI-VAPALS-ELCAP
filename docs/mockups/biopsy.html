@@ -686,51 +686,71 @@
             Nodule 1
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="1" title="Remove nodule 1">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="2" style="display:none;">
             Nodule 2
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="2" title="Remove nodule 2">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="3" style="display:none;">
             Nodule 3
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="3" title="Remove nodule 3">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="4" style="display:none;">
             Nodule 4
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="4" title="Remove nodule 4">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="5" style="display:none;">
             Nodule 5
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="5" title="Remove nodule 5">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="6" style="display:none;">
             Nodule 6
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="6" title="Remove nodule 6">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="7" style="display:none;">
             Nodule 7
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="7" title="Remove nodule 7">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="8" style="display:none;">
             Nodule 8
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="8" title="Remove nodule 8">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="9" style="display:none;">
             Nodule 9
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="9" title="Remove nodule 9">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="10" style="display:none;">
             Nodule 10
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="10" title="Remove nodule 10">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
           </tr>
          </thead>
@@ -5580,8 +5600,39 @@
      </div>
      <input context="server" name="cennod" type="hidden" value="1"/>
      <input context="server" name="ceanod" type="hidden" value="y"/>
+     <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
+      <div class="modal-dialog" role="document">
+       <div class="modal-content">
+        <div class="modal-header">
+         <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">
+           ×
+          </span>
+         </button>
+         <h4 class="modal-title" id="dataImportModalLabel">
+          Import Data
+         </h4>
+        </div>
+        <div class="modal-body">
+         Select which data set to import.
+        </div>
+        <div class="modal-footer">
+         <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
+          Import DICOM Header
+                        Information
+         </button>
+         <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
+          Import AI Findings
+         </button>
+         <button class="btn btn-default" data-dismiss="modal" type="button">
+          Cancel
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
      <script>
-      function initNoduleGrid(fv) {
+      function initNoduleGrid(fv, aiData) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -5595,6 +5646,17 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
+            $(".revert-data-button").on('click', $noduleGrid.revertData);
+
+            $(".import-data-button").on('click', function () {
+                $('#dataImportModal').modal();
+            });
+            $(".importAI").on('click', function () {
+                $noduleGrid.importData(aiData);
+            });
+            $(".importDICOM").on('click', function () {
+                $noduleGrid.importDicomHeader(aiData);
+            });
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 

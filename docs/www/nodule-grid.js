@@ -462,9 +462,9 @@
                         const $field = $(fieldSelector);
 
                         //convert value to VAPALS format
-                        const moment = moment(value);
-                        if (moment.isValid()) {
-                            value = moment.format(VAPALS.DATE_FORMAT);
+                        const studyDateMoment = moment(value);
+                        if (studyDateMoment.isValid()) {
+                            value = studyDateMoment.format(VAPALS.DATE_FORMAT);
                         }
 
                         if ($field.hasClass("import-data")) {

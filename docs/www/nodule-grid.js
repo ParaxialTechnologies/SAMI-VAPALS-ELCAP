@@ -460,6 +460,13 @@
                     if (key === "Study Date") {
                         const fieldSelector = "#cedos";
                         const $field = $(fieldSelector);
+
+                        //convert value to VAPALS format
+                        const moment = moment(value);
+                        if (moment.isValid()) {
+                            value = moment.format(VAPALS.DATE_FORMAT);
+                        }
+
                         if ($field.hasClass("import-data")) {
                             $field.val(value);
                         } else {
@@ -604,13 +611,13 @@
                                 const originalValue = $fieldSp.prop("checked") ? "checked" : "unchecked";
                                 createRevertElement(fieldSelectorSp, originalValue).insertAfter(fieldSelectorSp);
                             }
-                            if (value === "Lesion with circumscribed margin") {
+                            if (value === "Lesion with circumscribed margin") { // smooth edges
                                 $fieldSe.prop("checked", true);
                                 $fieldSp.prop("checked", false);
                                 $fieldSe.attr("import-value", true);
                                 $fieldSp.attr("import-value", false);
                             }
-                            if (value === "Lesion with spiculated margin") {
+                            if (value === "Lesion with spiculated margin") { // spiculated
                                 $fieldSp.prop("checked", true);
                                 $fieldSe.prop("checked", false);
                                 $fieldSp.attr("import-value", true);

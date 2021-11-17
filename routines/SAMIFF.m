@@ -1,4 +1,4 @@
-SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-13t01:46z
+SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-17t03:42z
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -55,9 +55,12 @@ SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-13t01:46z
  ;     TSV to pre-populate the patient-lookup graph
  ;   2020-01-17, 2020-02-04 ven/arc 18.0  7936ae40,4981a87a
  ;     SAMIFF: Clean up TSV utilities.
- ;   2021-11-12 ven/lmry 18.15
+ ;   2021-11-12 ven/lmry 18.15  d3d8c765
  ;     SAMIFF: change write command at bottom of routine to remove $J and add
  ;     the graphname, update change-log
+ ;   2021-11-16 ven/lmry 18.15
+ ;     SAMIFF: bump version and date.
+ ;
  ;
  ; @section 1 code
  ;

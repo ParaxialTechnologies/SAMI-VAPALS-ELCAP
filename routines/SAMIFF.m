@@ -1,5 +1,6 @@
-SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-17t03:42z
- ;;18.0;SAMI;;
+SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-18t23:10z
+  ;;18.0;SAMI;**15**;2020-01;
+ ;;18-15
  ;
  quit  ; No entry from top
  ;
@@ -60,6 +61,8 @@ SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;2021-11-17t03:42z
  ;     the graphname, update change-log
  ;   2021-11-16 ven/lmry 18.15
  ;     SAMIFF: bump version and date.
+ ;   2021-11-18 ven/lmry 18.15
+ ;     SAMIFF corrected lines 2 and 3
  ;
  ;
  ; @section 1 code

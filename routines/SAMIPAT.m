@@ -117,7 +117,7 @@ POS1815 ; kids post-install for sami 18.15
  ;
  do STANDARD
  do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t2")
- do deleteService^%webutils("GET","vapals") 
+ do deleteService^%webutils("GET","vapals")
  do addService^%webutils("GET","vapals","GETHOME^SAMIHOM3")
  do SETMAP^SAMIPARM("vapals:about","about.html")
  ;

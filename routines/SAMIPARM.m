@@ -1,4 +1,4 @@
-SAMIPARM ;ven/gpl - get params web service ;2021-10-29t20:11z
+SAMIPARM ;ven/gpl - get params web service ;2021-11-18t22:30z
  ;;18.0;SAMI;**12,15**;2020-01;
  ;;18-15
  ;
@@ -21,7 +21,7 @@ SAMIPARM ;ven/gpl - get params web service ;2021-10-29t20:11z
  ;@copyright 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t20:11z
+ ;@last-update 2021-11-18t22:30z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -59,8 +59,19 @@ SAMIPARM ;ven/gpl - get params web service ;2021-10-29t20:11z
  ; 2021-10-27 ven/gpl 18-15 a7274e10,a58c42df
  ;  SAMIPARM create SETPARM routine, upgraded SETPARM to add SYS if not there
  ;
- ; 2021-10-29 ven/lmry 18-15
+ ; 2021-10-29 ven/lmry 18-15 89e3b74c
  ;  SAMIPARM update history and table of contents, bump dates and versions
+ ;
+ ; 2021-11-04 ven/gpl 18-15 cf282893
+ ;  SAMIPARM intercept site=SYS and make it null
+ ;
+ ; 2021-11-10 ven/gpl 18-15 e97d42ac
+ ;  SAMIPARM added SETMAP for setting records in the SAMI FORM MAPPING file
+ ;
+ ; 2021-11-18 ven/lmry 18-15 
+ ;  SAMIPARM bump dates and versions
+ ;
+ ;
  ;
  ;@contents
  ; WSPARAMS web service WSPARAMS^SAMIPARM, site paramters

@@ -1,4 +1,4 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2021-10-29t02:34z
+SAMIHUL ;ven/gpl - ielcap: home page log ;2021-11-18t22:23z
  ;;18.0;SAMI;**9,12,15,16**;2020-01
  ;18-15
  ;
@@ -22,7 +22,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-10-29t02:34z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t02:34z
+ ;@last-update 2021-11-18t22:23z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -224,8 +224,21 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-10-29t02:34z
  ; 2021-10-19 ven/gpl 18-15 138d45e5
  ;  SAMIHOM4 parameterize veteran vs participant or candidate for notes
  ;
- ; 2021-10-29 ven/lmry 18-15
+ ; 2021-10-29 ven/lmry 18-15  4267917c
  ;  SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;
+ ; 2021-11-01 ven/gpl 18-15  e4722e8f0
+ ;  SAMIHOM4 prevent using SYS as a site
+ ;
+ ; 2021-11-09 ven/gpl 18-15 34367ef0
+ ;  SAMIHOM4 change GETHOME to cut off GET requests
+ ;
+ ; 2021-11-10 ven/gpl 18-15 ed2a3480
+ ;  SAMIHOM4 support for samiroute=about points to vapals:about
+ ;
+ ; 2021-11-18 ven/lmry 18-15 
+ ;  SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;  
  ;
  ;@contents
  ; SAMIHOM3 homepage interface library

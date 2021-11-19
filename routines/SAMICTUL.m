@@ -1,4 +1,4 @@
-SAMICTUL ;ven/gpl - ct report & copy log ;2021-10-29t22:43z
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-11-16t21:47z
  ;;18.0;SAMI;**10,11,12,13,15**;2020-01;
  ;;18.15
  ;
@@ -26,7 +26,7 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-10-29t22:43z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-update 2021-10-29t22:43z
+ ;@last-update 2021-11-16t21:47z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@version 18.15
@@ -148,9 +148,15 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-10-29t22:43z
  ; 2021-10-28 ven/gpl 18-15 194989af
  ;  SAMICTT3 fix detecting no cac score provided
  ;
- ; 2021-10-29 ven/lmry 18-15
+ ; 2021-10-29 ven/lmry 18-15 3d66553e,6e9594e8
  ;  SAMICTT0 SAMICTT3 bump versions and dates
  ;  SAMICTT3 add semi-colon after GENLNL for XINDEX
+ ;
+ ; 2021-11-10 ven/gpl 18-15  c9ab7f07
+ ;  SAMICTT3 new logic for CAC and Emphysema report output
+ ;
+ ; 2021-11-16 ven/lmry 18-15
+ ; SAMICTT3 bump versions and dates
  ;
  ;
  ;@contents

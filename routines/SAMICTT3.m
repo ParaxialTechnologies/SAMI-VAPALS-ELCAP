@@ -1,5 +1,5 @@
-SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-10-29t22:43z
- ;;18.0;SAMI;**4,10,13,15**;2020-01;Build 2
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-11-16t21:47z
+ ;;18.0;SAMI;**4,10,13,15**;2020-01;
  ;;18-15
  ;
  ; SAMICTT3 creates the Emphysema section of the ELCAP CT Report in

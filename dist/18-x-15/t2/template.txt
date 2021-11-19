@@ -72,7 +72,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 18 updates (eight high-priority, seven
+ #{nmsp} #{version} adds 19 updates (one critical-priority, eight high-priority, seven
  medium-priority, and three low-priority), most of them changes to the
  CT Eval form and the CT Report.  The definitive source for the
  VAPALS-ELCAP application - codebase, package distributions (including
@@ -309,18 +309,26 @@ ii. Contents
 
    reported: 2021-02-24 by Avila.
    
-#.##. Infrastructure: SYS is set as site when no site has been selected
-   yet, but that causes undesired behavior. 
+#.##. Infrastructure: Default site of SYS causes undesired behavior
 
    issue 21-201 (high priority): Fix an error where SYS is used as a site
    code and it shouldn't be.
 
-   solution: intercept site=SYS and make it null
+   solution: Intercept site=SYS and make it null.
 
    reported: 2021-11-04 by Lilly.
+   
+#.##. Infrastructure: If the siteid field is added to the url, signon is 
+   bypassed.
+   
+   issue 21-202 (critical priority): Important security fix needed.
+
+   solution: Remove ability to bypass signon.
+
+   reported: 2021-11-08 by Jirapatnakul.  
 
 #.##. Infrastructure: The team would like to add an "About" page to the menu
-      bar at the top of the page.
+   bar at the top of the page.
 
    issue 21-206 (med priority): The about page will include information about
    the application and the software version.
@@ -589,14 +597,14 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2021-10-20/31      George P. Lilly (ven)
+ Developed   2021-10-20/11-14      George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2021-10-25/11-01   George P. Lilly (ven)
+ Tested      2021-10-25/11-18   George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Claudia Henschke (va-pho)
@@ -608,7 +616,7 @@ ii. Contents
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Released    2021-11-02         Frederick D. S. Marshall (ven)
+ Released    2021-11-18         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

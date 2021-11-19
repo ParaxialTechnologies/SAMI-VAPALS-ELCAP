@@ -1,5 +1,5 @@
 KIDS Distribution saved on Nov 18, 2021@15:42:23
-Released SAMI*18.0*15 SEQ #15 (sami-18-15)
+Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)
 **KIDS**:SAMI*18.0*15^
 
 **INSTALL NAME**
@@ -307,7 +307,7 @@ SYS
 "DATA",311.14,3,1,0)
 ^311.141^6^7
 "DATA",311.14,3,1,1,0)
-samiSystemVersion^sami-18-15-t1
+samiSystemVersion^sami-18-x-15-t2
 "DATA",311.14,3,1,2,0)
 systemDemoOnly^false
 "DATA",311.14,3,1,3,0)

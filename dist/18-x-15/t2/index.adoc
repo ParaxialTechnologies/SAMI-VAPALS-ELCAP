@@ -98,7 +98,7 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-SAMI {version} adds 12 updates, most of them changes to the CT Evaluation form
+SAMI {version} adds 18 updates, most of them changes to the CT Evaluation form
 and the CT report.
 
 The definitive source for the VAPALS-ELCAP application---codebase, package
@@ -113,15 +113,17 @@ The following list shows changes for:
 
 [options="compact"]
 * CT Evaluation form: high priority: <<issue-21-170,21-170>>; medium priority:
-  <<issue-21-149,21-149>>, <<issue-21-128,21-128>>, <<issue-21-120,21-120>>,
-  <<issue-21-198,21-198>>.
-* CT report: high priority: <<issue-21-148,21-148>>, <<issue-21-135,21-135>>,
-  <<issue-21-160,21-160>>, <<issue-21-192,21-192>>; medium priority:
-  <<issue-21-167,21-167>>; low priority: <<issue-21-150,21-150>>,
-  <<issue-21-176,21-176>>.
+  <<issue-21-120,21-120>>, <<issue-21-128,21-128>>, <<issue-21-129,21-129>>,
+  <<issue-21-149,21-149>>, <<issue-21-192,21-192>>, <<issue-21-198,21-198>>,
+  <<issue-21-203,21-203>>, <<issue-21-204,21-204>>, <<issue-21-205,21-205>.
+* CT report: high priority: <<issue-21-135,21-135>>, <<issue-21-148,21-148>>,
+  <<issue-21-160,21-160>>; medium priority: <<issue-21-167,21-167>>; low
+  priority: <<issue-21-150,21-150>>, <<issue-21-176,21-176>>.
+* Intake form: low priority: <<issue-21-200,21-200>>.
 * Intake-but-no-CT report: high priority: <<issue-21-160,21-160>>.
-* Infrastructure: high priority: <<issue-21-194,21-194>>,
-  <<issue-21-201,21-201>>.
+* Infrastructure: critical priority: <<issue-21-202,21-202>>; high priority:
+  <<issue-21-194,21-194>>, <<issue-21-201,21-201>>; medium priority:
+  <<issue-21-206,21-206>>.
 
 [[issue-21-149]]
 === CT Evaluation Form: Make lymph-node map a little bigger
@@ -147,11 +149,11 @@ other choices.
 
 **Reported:** 2021-07-13 by Yip.
 
-[[issue-21-120]]
+[[issue-21-129]]
 === CT Evaluation Form: Automates resolution of nodule status
 
-**Issue 21-120 (medium priority):** Automatically set the nodule status to
-resolved if the ††__is it new?__†† option is set to ††__Prev seen,
+**Issue 21-129 (medium priority):** Automatically set the nodule status to
+resolved if the ††__Is it new?__†† option is set to ††__Prev seen,
 resolved__††.
 
 **Solution:** Changed to desired behavior.
@@ -167,6 +169,28 @@ fields were not visible when type of exam was baseline.
 **Solution:** Changed to desired behavior.
 
 **Reported:** 2021-10-25 by Henschke.
+
+[[issue-21-192]]
+=== anchor:issue-21-203[] anchor:issue-21-205[] CT Report: Add “Not Provided” option for Emphysema and CAC
+
+**Issues 21-192, 21-203 and 21-205 (high priority):** In Emphysema (both
+protocols) and Coronary Artery Calcification (for Lungrads), or CAC Score (for
+[nowrap]##I-ELCAP##), add a radio button for ††__Not Provided__††.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-10-11, 2021-11-08 by Henschke.
+
+[[issue-21-204]]
+=== CT Evaluation Form: CAC should be reported in different ways by protocol
+
+**Issue 21-204 (medium priority):** Leave Emphysema and Coronary Artery
+Calcification Line in Lungrads version, remove CAC Score section. Leave
+Emphysema and CAC Score section in ELCAP version, remove CAC Score section.
+
+**Solution:** Changed to desired behavior.
+
+**Reported:** 2021-11-08 by Henschke.
 
 [[issue-21-170]]
 === CT Evaluation Form and CT Report: Add “right” and “left” for lymph nodes N10--N14
@@ -232,16 +256,15 @@ administrator.
 
 **Reported:** 2021-09-16 by Murphy.
 
-[[issue-21-192]]
-=== CT Report: Change wording for empty CAC or emphysema
+[[issue-21-200]]
+=== Intake Form: Informed decision making is required but not marked so
 
-**Issue 21-192 (high priority):** In Emphysema and Coronary Artery
-Calcification, if nothing is entered, then in the report, indicate “Emphysema
-score not provided” and “Coronary Artery Calcification score not provided.”
+**Issue 21-200 (low priority):** Informed decision making is required but does
+not have a red star.
 
-**Solution:** Changed report translation.
+**Solution:** Red star added.
 
-**Reported:** 2021-10-11 by Henschke.
+**Reported:** 2021-11-04 by Yaw.
 
 [[issue-21-160]]
 === Intake-but-no-CT Report: Include patients who had CTs, but none since enrollment
@@ -309,6 +332,25 @@ code and it shouldn't be.
 
 **Reported:** 2021-11-04 by Lilly.
 
+[[issue-21-202]]
+=== Infrastructure: If the siteid field is added to the url, signon is bypassed
+
+**Issue 21-202 (critical priority):** Important security fix needed.
+
+**Solution:** Remove ability to bypass signon.
+
+**Reported:** 2021-11-08 by Jirapatnakul.
+
+[[issue-21-206]]
+=== Infrastructure: Add an "About" page to the menu bar at the top of the page
+
+**Issue 21-206 (medium priority):** The team would like an about page, which
+describes the application and the software version.
+
+**Solution:** Add link to menu bar.
+
+**Reported:** 2021-11-02 by DiNatale.
+
 [[pkg-elements]]
 == Package elements
 
@@ -368,7 +410,7 @@ commands instead:
 -------------------------------------------------------------------------------
 $ INDIR=~/run/in/sami/18-x-15/t1
 $ cd $INDIR
-$ rm -rf ./sami*.{txt,kid} ./*webapp*
+$ rm -rf ./sami*.{txt,kid} ./auxfiles
 -------------------------------------------------------------------------------
 
 [[prep-archive]]
@@ -393,15 +435,15 @@ upgrades the web-application files. The output looks like this (where `[x]`
 represents a number).
 
 -------------------------------------------------------------------------------
-$ ./upgrade-webapp
-Backing up files to ./.webapp-backup:
+$ ./upgrade-auxfiles
+Backing up files to ./.aux-backup:
 [... lists of files backed up ...]
 Compressing the backup:
 [... list of files being compressed ...]
 Cleaning up.
-Done with backup of webapp files.
+Done with backup of auxiliary files.
 
-Updating from ./webapp-upgrade-files ...
+Updating from ./auxfiles
 [... list of files being updated ...]
 Done with install.
 
@@ -413,13 +455,13 @@ Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
 official GitHub repository, and this script will have different output.
 
 -------------------------------------------------------------------------------
-$ ./upgrade-webapp
-Backing up files to ./.webapp-backup:
+$ ./upgrade-auxfiles
+Backing up files to ./.aux-backup
 [... lists of files backed up ...]
 Compressing the backup:
 [... list of files being compressed ...]
 Cleaning up.
-Done with backup of webapp files.
+Done with backup of auxiliary files.
 
 Found a valid Git repository; pulling updates ...
 [... output varies ...]

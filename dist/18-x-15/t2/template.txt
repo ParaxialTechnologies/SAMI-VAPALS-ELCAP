@@ -72,12 +72,12 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 19 updates (one critical-priority, eight high-priority, seven
- medium-priority, and three low-priority), most of them changes to the
- CT Eval form and the CT Report.  The definitive source for the
- VAPALS-ELCAP application - codebase, package distributions (including
- this one), and documentation - is at the following public Github
- repository:
+ #{nmsp} #{version} adds 18 updates (one critical-priority, eight
+ high-priority, seven medium-priority, and three low-priority), most
+ of them changes to the CT Eval form and the CT Report.  The
+ definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -104,13 +104,12 @@ ii. Contents
 
  #.#. CT Evaluation Form: Revert change for nodule status options
 
-   issue 21-128 (medium priority): Keep previous information for nodules
-   listed as "Not included in scan" and "Not in outside report." This
-   partially reverts an earlier request. Current behavior of these two
-   nodule status options is to blank out fields in the nodule table; desired
-   behavior is to keep the information (as maybe later scans will have the
-   nodules). The fields should only be grayed out for "Prev seen, resolved" or 
-   "Prev seen, not a nodule", not for other choices.
+   issue 21-128 (medium priority): This partially reverts an earlier
+   request. Current behavior of these two nodule status options is to
+   blank out fields in the nodule table; desired behavior is to keep
+   the information (as maybe later scans will have the nodules). The
+   fields should only be grayed out for "Prev seen, resolved" or "Prev
+   seen, not a nodule", not for other choices.
 
    solution: Changed to desired behavior.
 
@@ -139,24 +138,22 @@ ii. Contents
    reported: 2021-10-25 by Henschke.
    
    
- #.#. CT Evaluation Form: Add new radio buttons for option to note that
-      information about Emphysema or Coronary Artery Calcification was not
-      provided.
+ #.#. CT Evaluation Form: Add "Not Provided" option for Emphysema or
+      CAC
    
-   issue 21-192, 21-203, 21-205 (high priority): In Emphysema (both protocols)
-   and Coronary Artery Calcification (for Lungrads), or CAC Score (for ELCAP),
-   add radio button for "not provided." 
+   issues 21-192, 21-203, 21-205 (high priority): In Emphysema (both
+   protocols) and Coronary Artery Calcification (for Lungrads), or CAC
+   Score (for ELCAP), add radio button for "not provided."
    
    solution: Changed to desired behavior.
 
-   reported: 2021-11-08 by Henschke.
+   reported: 2021-10-11, 2021-11-08 by Henschke.
    
    
- #.#. CT Evaluation Form: Coronary Artery Calcification is reported in
-      different ways by ELCAP and Lungrads. Fix CT Eval forms to reflect
-      proper method.
+ #.#. CT Evaluation Form: CAC should be reported in different ways by
+      protocol
    
-   issue 21-204 (med priority) Leave Emphysema and CAC Line in Lungrads
+   issue 21-204 (med priority): Leave Emphysema and CAC Line in Lungrads
    version, remove CAC Score section. Leave Emphysema and CAC Score section in
    ELCAP version, remove CAC Score section.
    
@@ -189,7 +186,7 @@ ii. Contents
    reported: 2021-07-25 by Chenoweth.
 
 
- #.#. CT Report: There is an extra space in front of Description
+ #.##. CT Report: There is an extra space in front of Description
 
    issue 21-150 (low priority): There is an extra space in front of
    Description at the top of the CT Report.
@@ -199,8 +196,8 @@ ii. Contents
    reported: 2021-07-25 by Chenoweth.
       
       
- #.#. CT Report: Comparative and prior scans should not include
-      current date
+ #.##. CT Report: Comparative and prior scans should not include
+       current date
 
    issue 21-167 (medium priority): Current date should not be included
    in comparative scans and prior scans in report or CT Eval.
@@ -210,7 +207,7 @@ ii. Contents
    reported: 2021-09-02 by Phoenix Team.
 
 
- #.#. CT Report: Pleural effusion bug in CT report
+ #.##. CT Report: Pleural effusion bug in CT report
 
    issue 21-135 (high priority): Pleural effusions information was
    translating incorrectly into the CT report.
@@ -222,7 +219,7 @@ ii. Contents
 
  #.##. CT Report: Wording change
 
-   issue 21-176 (low priority): Remove the word "above" in
+   issue 21-176 (low priority): Remove the word "above" from
    "Impression" section.
 
    solution: Removed word from CT Report. Must run INIT2GPH^SAMICTD2
@@ -232,18 +229,7 @@ ii. Contents
    reported: 2021-09-16 by Murphy.
 
 
- #.##. CT Report: Change wording for empty CAC or emphysema
-
-   issue 21-205 (high priority): Always include the Emphysema and relevant CAC
-   section in the report, even if "none" or "not reported" fields are marked.
-   
-   solution: Changed report translation.
-
-   reported: 2021-10-11 by Henschke.
-
-
- #.##. Intake Form: Informed decision making is required but does not have a
-       red star.
+ #.##. Intake Form: Informed decision making is required but not marked so
 
    issue 21-200 (low priority): Informed decision making is required but does
    not have a red star.
@@ -251,6 +237,7 @@ ii. Contents
    solution: Red star added.
 
    reported: 2021-11-04 by Yaw.
+
 
  #.##. Intake-but-no-CT Report: Include patients who had CTs, but none
        since enrollment
@@ -317,8 +304,8 @@ ii. Contents
 
    reported: 2021-11-04 by Lilly.
    
-#.##. Infrastructure: If the siteid field is added to the url, signon is 
-   bypassed.
+#.##. Infrastructure: If the siteid field is added to the url, signon
+      is bypassed
    
    issue 21-202 (critical priority): Important security fix needed.
 
@@ -326,11 +313,11 @@ ii. Contents
 
    reported: 2021-11-08 by Jirapatnakul.  
 
-#.##. Infrastructure: The team would like to add an "About" page to the menu
-   bar at the top of the page.
+#.##. Infrastructure: Add an "About" page to the menu bar at the top
+      of the page
 
-   issue 21-206 (med priority): The about page will include information about
-   the application and the software version.
+   issue 21-206 (med priority): The team would like an about page,
+   which describes the application and the software version.
 
    solution: Add link to menu bar.
 
@@ -381,7 +368,7 @@ ii. Contents
 
     $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
     $ cd $INDIR
-    $ rm -rf ./sami*.{txt,kid} ./*webapp*
+    $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
  #.#. Download and prepare the archive file
@@ -402,15 +389,15 @@ ii. Contents
     with a script that backs up the affected directories before installing
     anything, then upgrades the web-application files.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
-     Updating from ./webapp-upgrade-files ...
+     Updating from ./auxfiles ...
      [... lists of files being updated ...]
      Done with install.
 
@@ -420,13 +407,13 @@ ii. Contents
     Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
     the official GitHub repository, and this script will have different output.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
      Found a valid Git repository; pulling updates ...
      [... output varies ...]

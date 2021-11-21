@@ -1,4 +1,4 @@
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-19t22:37z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-21t21:29z
 
                           Chenoweth’s Patch
                     SAMI (VAPALS-ELCAP) 18-x-15-t2
@@ -6,7 +6,7 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2021-11-19t22:37z
 
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-11-19
+                              2021-11-21
 
 i. Front matter
 
@@ -60,12 +60,12 @@ ii. Contents
 
 1. Description
 
- SAMI 18-x-15-t2 adds 19 updates (one critical-priority, eight high-priority, seven
- medium-priority, and three low-priority), most of them changes to the
- CT Eval form and the CT Report.  The definitive source for the
- VAPALS-ELCAP application - codebase, package distributions (including
- this one), and documentation - is at the following public Github
- repository:
+ SAMI 18-x-15-t2 adds 18 updates (one critical-priority, eight
+ high-priority, seven medium-priority, and three low-priority), most
+ of them changes to the CT Eval form and the CT Report.  The
+ definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -92,13 +92,12 @@ ii. Contents
 
  1.2. CT Evaluation Form: Revert change for nodule status options
 
-   issue 21-128 (medium priority): Keep previous information for nodules
-   listed as "Not included in scan" and "Not in outside report." This
-   partially reverts an earlier request. Current behavior of these two
-   nodule status options is to blank out fields in the nodule table; desired
-   behavior is to keep the information (as maybe later scans will have the
-   nodules). The fields should only be grayed out for "Prev seen, resolved" or
-   "Prev seen, not a nodule", not for other choices.
+   issue 21-128 (medium priority): This partially reverts an earlier
+   request. Current behavior of these two nodule status options is to
+   blank out fields in the nodule table; desired behavior is to keep
+   the information (as maybe later scans will have the nodules). The
+   fields should only be grayed out for "Prev seen, resolved" or "Prev
+   seen, not a nodule", not for other choices.
 
    solution: Changed to desired behavior.
 
@@ -127,24 +126,22 @@ ii. Contents
    reported: 2021-10-25 by Henschke.
 
 
- 1.5. CT Evaluation Form: Add new radio buttons for option to note that
-      information about Emphysema or Coronary Artery Calcification was not
-      provided.
+ 1.5. CT Evaluation Form: Add "Not Provided" option for Emphysema or
+      CAC
 
-   issue 21-192, 21-203, 21-205 (high priority): In Emphysema (both protocols)
-   and Coronary Artery Calcification (for Lungrads), or CAC Score (for ELCAP),
-   add radio button for "not provided."
+   issues 21-192, 21-203, 21-205 (high priority): In Emphysema (both
+   protocols) and Coronary Artery Calcification (for Lungrads), or CAC
+   Score (for ELCAP), add radio button for "not provided."
 
    solution: Changed to desired behavior.
 
-   reported: 2021-11-08 by Henschke.
+   reported: 2021-10-11, 2021-11-08 by Henschke.
 
 
- 1.6. CT Evaluation Form: Coronary Artery Calcification is reported in
-      different ways by ELCAP and Lungrads. Fix CT Eval forms to reflect
-      proper method.
+ 1.6. CT Evaluation Form: CAC should be reported in different ways by
+      protocol
 
-   issue 21-204 (med priority) Leave Emphysema and CAC Line in Lungrads
+   issue 21-204 (med priority): Leave Emphysema and CAC Line in Lungrads
    version, remove CAC Score section. Leave Emphysema and CAC Score section in
    ELCAP version, remove CAC Score section.
 
@@ -188,7 +185,7 @@ ii. Contents
 
 
  1.10. CT Report: Comparative and prior scans should not include
-      current date
+       current date
 
    issue 21-167 (medium priority): Current date should not be included
    in comparative scans and prior scans in report or CT Eval.
@@ -210,7 +207,7 @@ ii. Contents
 
  1.12. CT Report: Wording change
 
-   issue 21-176 (low priority): Remove the word "above" in
+   issue 21-176 (low priority): Remove the word "above" from
    "Impression" section.
 
    solution: Removed word from CT Report. Must run INIT2GPH^SAMICTD2
@@ -220,18 +217,7 @@ ii. Contents
    reported: 2021-09-16 by Murphy.
 
 
- 1.13. CT Report: Change wording for empty CAC or emphysema
-
-   issue 21-205 (high priority): Always include the Emphysema and relevant CAC
-   section in the report, even if "none" or "not reported" fields are marked.
-
-   solution: Changed report translation.
-
-   reported: 2021-10-11 by Henschke.
-
-
- 1.14. Intake Form: Informed decision making is required but does not have a
-       red star.
+ 1.13. Intake Form: Informed decision making is required but not marked so
 
    issue 21-200 (low priority): Informed decision making is required but does
    not have a red star.
@@ -240,7 +226,8 @@ ii. Contents
 
    reported: 2021-11-04 by Yaw.
 
- 1.15. Intake-but-no-CT Report: Include patients who had CTs, but none
+
+ 1.14. Intake-but-no-CT Report: Include patients who had CTs, but none
        since enrollment
 
    issue 21-160 (high priority): To make sure all participants have a
@@ -253,7 +240,7 @@ ii. Contents
    reported: 2021-08-23 by Henschke.
 
 
- 1.16. Infrastructure: Improve support for parameterization by system
+ 1.15. Infrastructure: Improve support for parameterization by system
        and site
 
    issue 21-194 (high priority): Some sites or organizations will need
@@ -296,7 +283,7 @@ ii. Contents
 
    reported: 2021-02-24 by Avila.
 
-1.17. Infrastructure: Default site of SYS causes undesired behavior
+1.16. Infrastructure: Default site of SYS causes undesired behavior
 
    issue 21-201 (high priority): Fix an error where SYS is used as a site
    code and it shouldn't be.
@@ -305,8 +292,8 @@ ii. Contents
 
    reported: 2021-11-04 by Lilly.
 
-1.18. Infrastructure: If the siteid field is added to the url, signon is
-   bypassed.
+1.17. Infrastructure: If the siteid field is added to the url, signon
+      is bypassed
 
    issue 21-202 (critical priority): Important security fix needed.
 
@@ -314,11 +301,11 @@ ii. Contents
 
    reported: 2021-11-08 by Jirapatnakul.
 
-1.19. Infrastructure: The team would like to add an "About" page to the menu
-   bar at the top of the page.
+1.18. Infrastructure: Add an "About" page to the menu bar at the top
+      of the page
 
-   issue 21-206 (med priority): The about page will include information about
-   the application and the software version.
+   issue 21-206 (med priority): The team would like an about page,
+   which describes the application and the software version.
 
    solution: Add link to menu bar.
 
@@ -334,7 +321,7 @@ ii. Contents
  sami-18-x-15-t2.txt         new
  docs/form-fields/*          modified
  docs/www/*                  modified
- upgrade-webapp              new
+ upgrade-auxfiles            new
  sami-18-x-15-t2.zip         new
 
  Routine   Change
@@ -359,7 +346,6 @@ ii. Contents
  SAMIUR    modified
  SAMIUR2   modified
  SAMIURUL  modified
-
 
  File                     Number  Change
  -----------------------  ------  ---------------
@@ -401,7 +387,7 @@ ii. Contents
 
     $ INDIR=~/run/in/sami/18-x-15/t2
     $ cd $INDIR
-    $ rm -rf ./sami*.{txt,kid} ./*webapp*
+    $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
  3.3. Download and prepare the archive file
@@ -409,17 +395,17 @@ ii. Contents
    You may safely download the archive file sami-18-x-15-t2.zip in advance
    of the actual install.
 
-    $ cd ~/run/in/sami/18-x-15/t2
-    $ curl -# -O 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-15/t2/sami-18-x-15-t2.zip
-    ######################################################################## 100.0%
-    $ _
+     $ cd ~/run/in/sami/18-x-15/t2
+     $ curl -# -O 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-15/t2/sami-18-x-15-t2.zip
+     ######################################################################## 100.0%
+     $ _
 
    Then unzip the archive file with the following command.
 
-    $ unzip sami-18-x-15-t2.zip
-    Archive:  sami-18-x-15-t2.zip
-      ...
-    $ _
+     $ unzip sami-18-x-15-t2.zip
+     Archive:  sami-18-x-15-t2.zip
+       ...
+     $ _
 
 
  3.4. Install web-application files
@@ -428,15 +414,15 @@ ii. Contents
     with a script that backs up the affected directories before installing
     anything, then upgrades the web-application files.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
-     Updating from ./webapp-upgrade-files ...
+     Updating from ./auxfiles ...
      [... lists of files being updated ...]
      Done with install.
 
@@ -446,13 +432,13 @@ ii. Contents
     Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
     the official GitHub repository, and this script will have different output.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
      Found a valid Git repository; pulling updates ...
      [... output varies ...]
@@ -560,7 +546,7 @@ SAMIURUL
     respectively:
 
      >do ^%RO
-     
+
      Routine output (please use %ROMF for object code output)
      Routine(s): SAMIADMN
      Routine(s): SAMICAS3
@@ -583,9 +569,9 @@ SAMIURUL
      Routine(s): SAMIUR2
      Routine(s): SAMIURUL
      Routine(s):
-     
+
      Description: SAMI*18.0*15 SEQ #15 T2 routine backup
-     
+
      Output routines to
      Device: /home/osehra/run/in/sami/18-x-15/t2/sami-18-x-15-t2-back.ro
      Parameters? ("WNS") =>
@@ -596,6 +582,7 @@ SAMIURUL
      SAMINOT2.INT    SAMINOT3.INT    SAMINUL.INT     SAMIPARM.INT
      SAMIPAT.INT     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
      >_
+
     On YottaDB/GT.M
     ---------------
     Note that routines that don't currently exist will result in the
@@ -607,103 +594,104 @@ SAMIURUL
     prompt to accept the default of No:
 
      >do ^%RO
-     
+
      Routine Output - Save selected routines into RO file.
-     
+
      Routines: SAMIADMN
      SAMIADMN
      Current total of 1 routines.
-     
+
      Routines: SAMICAS3
      SAMICAS3
      Current total of 2 routines.
-     
+
      Routines: SAMICTD2
      SAMICTD2
      Current total of 3 routines.
-     
+
      Routines: SAMICTT0
      SAMICTT0
      Current total of 4 routines.
-     
+
      Routines: SAMICTT3
      SAMICTT3
      Current total of 5 routines.
-     
+
      Routines: SAMICTUL
      SAMICTUL
      Current total of 6 routines.
-     
+
      Routines: SAMICUL
      SAMICUL
      Current total of 7 routines.
-     
+
      Routines: SAMIFF
      SAMIFF
      Current total of 8 routines.
-     
+
      Routines: SAMIHOM4
      SAMIHOM4
      Current total of 9 routines.
-     
+
      Routines: SAMIHUL
      SAMIHUL
      Current total of 10 routines.
-     
+
      Routines: SAMIMOV
      SAMIMOV
      Current total of 11 routines.
-     
+
      Routines: SAMINOT1
      SAMINOT1
      Current total of 12 routines.
-     
+
      Routines: SAMINOT2
      SAMINOT2
      Current total of 13 routines.
-     
+
      Routines: SAMINOT3
      SAMINOT3
      Current total of 14 routines.
-     
+
      Routines: SAMINUL
      SAMINUL
      Current total of 15 routines.
-     
+
      Routines: SAMIPARM
      SAMIPARM
      Current total of 16 routines.
-     
+
      Routines: SAMIPAT
      SAMIPAT
      Current total of 17 routines.
-     
+
      Routines: SAMIUR
      SAMIUR
      Current total of 18 routines.
-     
+
      Routines: SAMIUR2
      SAMIUR2
      Current total of 19 routines.
-     
+
      Routines: SAMIURUL
      SAMIURUL
      Current total of 20 routines.
-     
+
      Routine:
-     
+
      Output device <terminal>: /home/osehra/run/in/sami/18-x-15/t2/sami-18-x-15-t2-back.ro
-     
+
      Header Label: SAMI*18.0*15 SEQ #15 T2 routine backup
      Strip comments <No>?: 
      SAMIADMN  SAMICAS3  SAMICTD2  SAMICTT0  SAMICTT3  SAMICTUL
      SAMICUL   SAMIFF    SAMIHOM4  SAMIHUL   SAMIMOV   SAMINOT1
      SAMINOT2  SAMINOT3  SAMINUL   SAMIPARM  SAMIPAT   SAMIUR
      SAMIUR2   SAMIURUL
-     
+
      Total of 9140 lines in 20 routines.
-     
+
      >_
+
     You'll remain in the M environment for the next section.
 
 
@@ -725,18 +713,18 @@ SAMIURUL
     ... Option prompt, select Installation:
 
      >do ^XUP
-     
+
      Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
-     
-     
+
+
           Edits and Distribution ...
           Utilities ...
           Installation ...
           Patch Monitor Main Menu ...
-     
+
      Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
-     
-     
+
+
         1      Load a Distribution
         2      Verify Checksums in Transport Global
         3      Print Transport Global
@@ -745,41 +733,42 @@ SAMIURUL
         6      Install Package(s)
                Restart Install of Package(s)
                Unload a Distribution
-     
-     Select Installation <TEST ACCOUNT> Option:_
+
+     Select Installation <TEST ACCOUNT> Option: _
 
 
   4.1.2. Load KIDS package
 
     Select option 1 and press return at the Continue prompt.
 
-    Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-    Enter a Host File: /home/osehra/run/in/sami/18-x-15/t2/sami-18-x-15-t2.kid
-    
-       KIDS Distribution saved on Nov 18, 2021@15:42:23
-       Comment: Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)
-    
-    This Distribution contains Transport Globals for the following Package(s):
-       SAMI*18.0*15
-    Distribution OK!
-    
-    Want to Continue with Load? YES//
-       Loading Distribution...
-    
-       SAMI*18.0*15
-    Use INSTALL NAME: SAMI*18.0*15 to install this Distribution.
-    
-    
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-    
-    Select Installation <TEST ACCOUNT> Option:_
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-x-15/t2/sami-18-x-15-t2.kid
+
+     KIDS Distribution saved on Nov 18, 2021@15:42:23
+     Comment: Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*15
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*15
+     Use INSTALL NAME: SAMI*18.0*15 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
 
 
   4.1.3. Install KIDS package
@@ -788,67 +777,67 @@ SAMIURUL
     and press return at the next three prompts. Note that '[now]'
     denotes the current time when you're doing the install.
 
-    Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
-    Select INSTALL NAME:    SAMI*18.0*15     Loaded from Distribution    [now]
-       => Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)  ;Created on Nov 18, 2021@15:42:23
-    
-    This Distribution was loaded on [now] with header of
-       Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)  ;Created on Nov 18, 2021@15:42:23
-       It consisted of the following Install(s):
-       SAMI*18.0*15
-    Checking Install for Package SAMI*18.0*15
-    
-    Install Questions for SAMI*18.0*15
-    
-    
-    
-    Want KIDS to INHIBIT LOGONs during the install? NO//
-    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
-    
-    Enter the Device you want to print the Install messages.
-    You can queue the install by enter a 'Q' at the device prompt.
-    Enter a '^' to abort the install.
-    
-    DEVICE: HOME// ;C-SCROLL  TELNET
-    
-    
-     Install Started for SAMI*18.0*15 :
-                   [now]
-    
-    Build Distribution Date: Nov 18, 2021
-    
-     Installing Routines:.....
-                   [now]
-    
-     Running Post-Install Routine: POS1815^SAMIPAT.
-    
-     Updating Routine file......
-    
-     Updating KIDS files.....
-    
-     SAMI*18.0*15 Installed.
-                   [now]
-    
-     No link to PACKAGE file
-    
-     NO Install Message sent
-    
-    Install Completed
-    
-    
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-    
-    Select Installation <TEST ACCOUNT> Option:_
-    
-    > halt
-    $ _
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*15     Loaded from Distribution    [now]
+        => Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)  ;Created on Nov 18, 2021@15:42:23
+
+     This Distribution was loaded on [now] with header of
+        Test Release SAMI*18.0*15 SEQ #15 T2 (sami-18-x-15-t2)  ;Created on Nov 18, 2021@15:42:23
+        It consisted of the following Install(s):
+        SAMI*18.0*15
+     Checking Install for Package SAMI*18.0*15
+
+     Install Questions for SAMI*18.0*15
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*15 :
+                    [now]
+
+     Build Distribution Date: Nov 18, 2021
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1815^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*15 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > halt
+     $ _
 
    You now have {appname} {version} ({vista-version})
    installed in your M environment. The install is now complete. We

@@ -149,14 +149,29 @@ T1() ;
  ;
 CREATE(vars) ; create a patient record and an intake form from vars
  ;
+ D REGISTER(.vars)
+ D ENROLL(.vars)
+ q
+ ;
+REGISTER(vars)
+ N saminame
+ s saminame=$g(vars("saminame"))
+ i saminame="" s saminame=$g(vars("name"))
+ i saminame="" d  ;
+ . n nxtdfn s nxtdfn=$$nxtdfn^SAMIDCM1()
+ . s saminame="DOE"_nxtdfn_",JOHN"
+ . s vars("saminame")=saminame
+ s vars("name")=saminame
  n varscpy m varscpy=vars
  N SAMIRTN
  D REG^SAMIHOM4(.SAMIRTN,.varscpy)
- N saminame
- s saminame=$g(vars("saminame"))
- i saminame="" b
- s vars("name")=saminame
- s vars("dfn")=$$GETDFN(saminame)
+ ;s vars("dfn")=$$GETDFN(saminame)
+ ;m varscpy=vars
+ ;B
+ q
+ ;
+ENROLL(vars) ; 
+ n varscpy
  m varscpy=vars
  D WSNEWCAS^SAMIHOM3(.varscpy,.SAMIBDY,.SAMIRESULT)
  ;ZWR varscpy
@@ -164,7 +179,8 @@ CREATE(vars) ; create a patient record and an intake form from vars
  s sid=$g(varscpy("studyid"))
  s sikey=$g(varscpy("form"))
  s sikey=$p(sikey,"vapals:",2)
- w !,"sid: ",sid," sikey: ",sikey
+ m vars=varscpy
+ ;w !,"sid: ",sid," sikey: ",sikey
  n root s root=$$setroot^%wd("vapals-patients")
  q:sid=""
  q:sikey=""

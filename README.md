@@ -31,9 +31,11 @@ available [here](https://hub.docker.com/r/osehra/va-pals/)
 
 - To retrieve an SR:http://vendev6.vistaplex.org:9080/dcmquery?studyid=XXX0023
 - To send an SR POST to http://vendev6.vistaplex.org:9080/dcmin?siteid=XXX&returngraph=1
+- Find the graph number by: http://vendev6.vistaplex.org:9080/gtree/%25wd(17.040801,%22B%22), find dcm-intake
 - View entire graph http://vendev6.vistaplex.org:9080/gtree/%25wd(17.040801,576)
 - This nasty little URL will delete all but the first entry in the dcm-intake graph... clearing out the graph for new
   demos http://vendev6.vistaplex.org:9080/dcmreset
+- 
 
 ## Updating an installation
 mumps -dir

@@ -67,9 +67,14 @@
             </button>
             <a href="{{ "home.html" if mockup else "#!" }}" class="text-nowrap navigation" style="text-decoration: none"
                data-method="{{ formMethod }}" data-samiroute="home">
-                <img src="{{ path }}img/logo_transparent_50x50.png" title="VAPALS-ELCAP" alt="VAPALS-ELCAP Logo"
-                     class="hidden-xs"/>
-                <img src="{{ path }}img/logo_name_50x215.png" title="VAPALS-ELCAP" alt="VAPALS-ELCAP Logo"/>
+                <img src="{{ path }}img/logo_transparent_50x50.png" title="Logo" alt="Logo" class="hidden-xs va-only"/>
+                <img src="{{ path }}img/logo_name_50x215.png" title="Logo Text" alt="Logo Text" id="image-log-text"
+                     class="va-only"/>
+
+                <img src="{{ path }}img/screening-plus_logotransparent_50.png" title="Logo" alt="Logo"
+                     class="hidden-xs non-va-only"/>
+                <img src="{{ path }}img/screening-plus_logo_name_text.png" title="Logo Text" alt="Logo Text"
+                     id="image-log-text" class="non-va-only"/>
             </a>
         </div>
         {% if withNav == "true" %}
@@ -249,9 +254,11 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("footer").remove();
+            $(".non-va-only").remove();
         } else {
             $(".va-only").remove();
         }
+
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");

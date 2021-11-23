@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.16" name="version"/>
+  <meta content="2021.11.23" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@:
@@ -53,17 +53,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.11.16">
+  <script src="jquery-conditonally-enable.js?v=2021.11.23">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.11.16">
+  <script src="jquery-conditonally-display.js?v=2021.11.23">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.16">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.23">
   </script>
-  <script src="vapals.js?v=2021.11.16">
+  <script src="vapals.js?v=2021.11.23">
   </script>
-  <script src="init.js?v=2021.11.16">
+  <script src="init.js?v=2021.11.23">
   </script>
-  <script src="nodule-grid.js?v=2021.11.16">
+  <script src="nodule-grid.js?v=2021.11.23">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -82,8 +82,10 @@
       </span>
      </button>
      <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent_50x50.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
+      <img alt="Logo" class="hidden-xs va-only" src="img/logo_transparent_50x50.png" title="Logo"/>
+      <img alt="Logo Text" class="va-only" id="image-log-text" src="img/logo_name_50x215.png" title="Logo Text"/>
+      <img alt="Logo" class="hidden-xs non-va-only" src="img/screening-plus_logotransparent_50.png" title="Logo"/>
+      <img alt="Logo Text" class="non-va-only" id="image-log-text" src="img/screening-plus_logo_name_text.png" title="Logo Text"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -344,9 +346,11 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("footer").remove();
+            $(".non-va-only").remove();
         } else {
             $(".va-only").remove();
         }
+
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");

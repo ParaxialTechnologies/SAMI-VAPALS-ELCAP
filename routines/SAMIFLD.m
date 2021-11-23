@@ -405,7 +405,7 @@ GETLAST5 ; last5 for patient sid
  new ien set ien=$order(@root@("sid",sid,""))
  quit:ien=""
  ;
- quit @root@(ien,"last5") ; end of ppi $$GETLAST5^SAMIFORM
+ quit $g(@root@(ien,"last5")) ; end of ppi $$GETLAST5^SAMIFORM
  ;
  ;
  ;

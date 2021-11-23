@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-11-18t22:16z
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;;2021-11-19t22:16z
  ;;18.0;SAMI;**1,4,5,6,9,12,15,16**;2020-01
  ;18-15
  ;
@@ -634,16 +634,20 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  i pdfn>dfn s dfn=pdfn ; need a dfn that has not been used
  i dfn<9000001 s dfn=9000001
  s @root@(ptlkien,"dfn")=dfn
+ s SAMIARG("dfn")=dfn ; pass the new dfn back to the caller
+ ; note: this is the only way to link to the new record via dfn
+ ; since nothing else is unique
  d INDXPTLK(ptlkien)
  s SAMIFILTER("samiroute")="addperson"
  s SAMIFILTER("siteid")=$G(SAMIARG("siteid"))
  s SAMIFILTER("sitetitle")=$G(SAMIARG("sitetitle"))
- k SAMIARG ; return to a blank manual registration form
- s SAMIARG("siteid")=$G(SAMIFILTER("siteid"))
- s SAMIARG("sitetitle")=$G(SAMIFILTER("sitetitle"))
- d SETINFO(.SAMIFILTER,name_" was successfully entered")
- ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
- do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ D  ; slight of hand for handing back SAMIARGS while also returning a form
+ . n SAMIARG ; return to a blank manual registration form
+ . s SAMIARG("siteid")=$G(SAMIFILTER("siteid"))
+ . s SAMIARG("sitetitle")=$G(SAMIFILTER("sitetitle"))
+ . d SETINFO(.SAMIFILTER,name_" was successfully entered")
+ . ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
+ . do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  ;
  quit  ; end of REG
  ;
@@ -946,6 +950,7 @@ REINDXPL ; reindex patient lookup
  ;
  n root s root=$$setroot^%wd("patient-lookup")
  n zi s zi=0
+ k @root@("dfn")
  k @root@("ssn")
  k @root@("name")
  k @root@("last5")
@@ -970,6 +975,9 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s @proot@("name",ucname,ien)=""
  n x
  s x=$g(@proot@(ien,"dfn")) ;w !,x
+ i x="" d  ;
+ . s x=$o(@proot@("dfn","   "),-1)+1
+ . s @proot@(ien,"dfn")=x
  s:x'="" @proot@("dfn",x,ien)=""
  s x=$g(@proot@(ien,"last5")) ;w !,x
  s:x'="" @proot@("last5",x,ien)=""
@@ -986,7 +994,7 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("ssn",x,ien)=""
  s x=$g(@proot@(ien,"sinamef")) ;w !,x
  s:x'="" @proot@("sinamef",x,ien)=""
- s x=$g(@proot@(ien,"sinamel")) w !,x
+ s x=$g(@proot@(ien,"sinamel")) ;w !,x
  s:x'="" @proot@("sinamel",x,ien)=""
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
  ;

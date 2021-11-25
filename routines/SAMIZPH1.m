@@ -165,6 +165,7 @@ REGISTER(vars)
  n varscpy m varscpy=vars
  N SAMIRTN
  D REG^SAMIHOM4(.SAMIRTN,.varscpy)
+ m vars=varscpy
  ;s vars("dfn")=$$GETDFN(saminame)
  ;m varscpy=vars
  ;B

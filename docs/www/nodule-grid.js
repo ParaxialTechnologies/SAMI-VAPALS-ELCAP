@@ -484,8 +484,10 @@
                             $field.attr("original-value", $field.val());
                             const originalValue = $field.val();
                             if (!isNaN(value)) { //value is a valid number either as a string or Number
-                                $field.val(value.toString());
-                                $field.attr("import-value", value.toString());
+                                const strValue = value.toString();
+                                console.log("Setting slice thickness to %s", strValue)
+                                $field.val(strValue);
+                                $field.attr("import-value", strValue);
                                 if (value === "o") {
                                     $("#cectrsto-container").show();
                                 } else {

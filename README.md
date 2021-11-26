@@ -37,7 +37,7 @@ available [here](https://hub.docker.com/r/osehra/va-pals/)
   demos http://vendev6.vistaplex.org:9080/dcmreset
 - 
 
-## Updating an installation
+### Reset a password
 mumps -dir
 SET DUZ=1
 D ^XUP
@@ -58,6 +58,7 @@ Login with access code (e.g. SUPER6)
 Password (new password)
 Prompts you to change password. If you
 
+### Update site with HTML and M code
 cd ~/lib/silver/a-sami...
 git pull
 cd routines
@@ -68,7 +69,7 @@ mumps -dir
 SET DUZ=1
 DO CLRWEB^SAMIADMN
 
-Clear error trap:
+###Clear error trap:
 k ^%webhttp("log")
 
 ##Resources

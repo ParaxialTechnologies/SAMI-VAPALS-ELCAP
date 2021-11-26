@@ -105,7 +105,7 @@ WSDCMIN(ARGS,BODY,RESULT,ien)    ; recieve from addpatient
  d  ; Extract Identifying information
  . n vars
  . n name s name=$g(@gp@("Patient's Name"))
- . s vars("name")=name
+ . s vars("name")=$$normaliz(name)
  . n dob s dob=$g(@gp@("Patient's Birth Date"))
  . i dob="" s dob=20000302
  . s vars("dob")=dob

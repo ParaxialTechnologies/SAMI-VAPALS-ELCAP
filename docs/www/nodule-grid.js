@@ -483,14 +483,17 @@
                             $field.addClass("import-data");
                             $field.attr("original-value", $field.val());
                             const originalValue = $field.val();
-                            $field.val(value);
-                            $field.attr("import-value", value);
-                            if (value === "o") {
-                                $("#cectrsto-container").show();
-                            } else {
-                                $("#cectrsto-container").hide();
+                            if (!isNaN(value)) { //value is a valid number either as a string or Number
+                                $field.val(value.toString());
+                                $field.attr("import-value", value.toString());
+                                if (value === "o") {
+                                    $("#cectrsto-container").show();
+                                } else {
+                                    $("#cectrsto-container").hide();
+                                }
+                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
-                            createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+
                         }
                     }
                     if (key === "Specify") {

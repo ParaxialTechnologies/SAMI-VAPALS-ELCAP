@@ -69,6 +69,12 @@ mumps -dir
 SET DUZ=1
 DO CLRWEB^SAMIADMN
 
+### Copy a graph file
+You may want to make backups of graphs for restoring at a later time. Here's how:
+m ^webbak(667)=^%wd(17.040801,667)
+then to restore, just reverse it.
+m ^%wd(17.040801,667)=^webbak(667)
+
 ###Clear error trap:
 k ^%webhttp("log")
 

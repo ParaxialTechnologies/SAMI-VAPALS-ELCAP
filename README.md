@@ -65,8 +65,11 @@ bash ./compare.sh (see diff of git repo and actual)
 cp SAMI*.m ~/run/routines/
 run post install (get command from Linda)
 mumps -dir 
+SET DUZ=1
 DO CLRWEB^SAMIADMN
 
+Clear error trap:
+k ^%webhttp("log")
 
 ##Resources
 1. [OSEHRA Jira Project](https://issues.osehra.org/secure/RapidBoard.jspa?projectKey=VAP) - This project uses Jira to

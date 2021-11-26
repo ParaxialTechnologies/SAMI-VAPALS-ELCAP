@@ -484,11 +484,10 @@
                             $field.attr("original-value", $field.val());
                             const originalValue = $field.val();
                             if (!isNaN(value)) { //value is a valid number either as a string or Number
-                                if (value === 1) {
+                                if (value === 1) { //handle JSON conversion of 1.0 to 1 (back to 1.0)
                                     value = '1.0';
                                 }
                                 const strValue = value.toString();
-                                console.log("Setting slice thickness to %s", strValue)
                                 $field.val(strValue);
                                 $field.attr("import-value", strValue);
                                 if (value === "o") {

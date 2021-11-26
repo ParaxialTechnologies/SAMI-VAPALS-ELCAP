@@ -484,6 +484,9 @@
                             $field.attr("original-value", $field.val());
                             const originalValue = $field.val();
                             if (!isNaN(value)) { //value is a valid number either as a string or Number
+                                if (value === 1) {
+                                    value = '1.0';
+                                }
                                 const strValue = value.toString();
                                 console.log("Setting slice thickness to %s", strValue)
                                 $field.val(strValue);

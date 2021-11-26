@@ -380,31 +380,26 @@
 
             function setUpImportDataOnChange() {
                 $("#nodule-table").find("[original-value]").on('change', function () {
-                    if (importFieldHit || revertFieldHit) {
-                        importFieldHit = false;
-                        revertFieldHit = false;
-                    } else {
-                        let importValue = "";
-                        if ($(this).hasClass("import-data")) {
-                            if ($(this).prop('type') === "checkbox") {
-                                if ($(this).attr("import-value") === "false") {
-                                    importValue = "unchecked";
-                                } else {
-                                    importValue = "checked";
-                                }
+                    let importValue = "";
+                    if ($(this).hasClass("import-data")) {
+                        if ($(this).prop('type') === "checkbox") {
+                            if ($(this).attr("import-value") === "false") {
+                                importValue = "unchecked";
                             } else {
-                                if ($(this).prop('type') === "select-one") {
-                                    const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr("import-value") + "\"]";
-                                    importValue = $(fieldSelectorWithVal).text().trim();
-                                } else {
-                                    importValue = $(this).attr("import-value");
-                                }
+                                importValue = "checked";
                             }
-                            $(this).parent().find(".revert-field").remove();
-                            $(this).parent().find(".import-field").remove();
-
-                            createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
+                        } else {
+                            if ($(this).prop('type') === "select-one") {
+                                const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr("import-value") + "\"]";
+                                importValue = $(fieldSelectorWithVal).text().trim();
+                            } else {
+                                importValue = $(this).attr("import-value");
+                            }
                         }
+                        $(this).parent().find(".revert-field").remove();
+                        $(this).parent().find(".import-field").remove();
+
+                        createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
                     }
                 });
             }
@@ -479,7 +474,7 @@
                             createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
                         }
                     }
-                    if (key === "Reconstructed slice thickness (mm)") { // NB Not used. Slice thickness is in each nodule?
+                    if (key === "Slice Thickness") {
                         const fieldSelector = "#cectrst";
                         const $field = $(fieldSelector);
                         if ($field.hasClass("import-data")) {
@@ -521,13 +516,26 @@
                 _importDicomHeader();
                 const nodules = settings.structuredReport["nodules"]
 
-                importFieldHit = false;
-                revertFieldHit = false;
                 // if number of nodules shown is less than the number of entries in structuredReport array then increase the number of nodules
                 if (settings.getNoduleCount() < nodules.length) {
                     let noduleCount = nodules.length;
                     _displayNodules(noduleCount);
                     settings.setNoduleCount(noduleCount);
+                }
+
+                function applyTextValue(fieldNameSelector, value) {
+                    const $field = $(fieldNameSelector);
+                    if ($field.hasClass("import-data")) {
+                        $field.val(value);
+                    } else {
+                        $field.addClass("import-data");
+                        const originalValue = $field.val();
+                        $field.attr("original-value", originalValue);
+                        $field.val(value);
+                        $field.attr("import-value", value);
+                        $field.parent().addClass("import-data-parent"); //NB: used to fix wrapping of revert element
+                        createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
+                    }
                 }
 
                 let noduleId = 1;
@@ -628,50 +636,26 @@
                         // “Maximum 2D diameter” maps to the "Length (mm)" field (cect1sl) of the form.
                         if (key === "Maximum 2D diameter") {
                             const fieldSelector = "#cect" + noduleId + "sl";
-                            const $field = $(fieldSelector);
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
-                            } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
+                            applyTextValue(fieldSelector, value);
                         }
 
                         // “Maximum perpendicular 2D diameter” maps to the "Maximum width (mm)" field (cect1sw) of the form.
                         if (key === "Maximum perpendicular 2D diameter") {
                             const fieldSelector = "#cect" + noduleId + "sw";
-                            const $field = $(fieldSelector);
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
-                            } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
+                            applyTextValue(fieldSelector, value);
                         }
 
                         // “Volume” maps to the "Volume (mm3)" field (cect1sv) of the form.
                         if (key === "Volume") {
                             const fieldSelector = "#cect" + noduleId + "sv";
-                            const $field = $(fieldSelector);
-                            if ($field.hasClass("import-data")) {
-                                $field.val(value);
-                            } else {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
-                                const originalValue = $field.val();
-                                $field.val(value);
-                                $field.attr("import-value", value);
-                                $field.parent().addClass("import-data-parent");
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
+                            applyTextValue(fieldSelector, value);
+                        }
+
+                        if (key === "slice number of lesion epicenter") {
+                            const fieldSelectorLow = "#cect" + noduleId + "inl";
+                            applyTextValue(fieldSelectorLow, value);
+                            const fieldSelectorHigh = "#cect" + noduleId + "inh";
+                            applyTextValue(fieldSelectorHigh, value);
                         }
 
                         // Image processing

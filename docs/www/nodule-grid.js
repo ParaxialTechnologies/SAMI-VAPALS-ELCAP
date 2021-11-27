@@ -666,7 +666,7 @@
                         }
 
                         // Image processing
-                        if (key === "CT details") {
+                        if (key === "nodule_with_measurements") {
                             const mimeType = value["mimeType"];
                             const content = value["content"];
                             const fileName = value["fileName"]

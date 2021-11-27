@@ -278,7 +278,7 @@ WSDCMKIL(return,filter) ; kill all but the first entry in dcm-intake
  . s nam=i
  . f  s nam=$o(@lroot@("name",nam)) q:nam=""  q:nam'[i  d  ;
  . . f  s lien=$o(@lroot@("name",nam,lien)) q:lien=""  d  ;
- . . . w !,nam," ",lien
+ . . . ;w !,nam," ",lien
  . . . d UNINDXPT^SAMIHOM4(lien)
  . . . n newnam
  . . . s newnam="ZZZ"_$e(nam,4,$l(nam))
@@ -290,6 +290,23 @@ WSDCMKIL(return,filter) ; kill all but the first entry in dcm-intake
  n atmp s atmp=@droot@(0)
  k @droot
  s @droot@(0)=atmp
+ ;i $d(^webbak(587)) d  ;
+ ;. m @droot=^webbak(587) ; restore default
+ i $d(^webbak(667)) d  ;
+ . m @droot=^webbak(667) ; restore default
+ . n sid,sidien
+ . ;f dfn="9000227"  d  ;
+ . f dfn="9000057","9000058" d  ;
+ . . s lien=$o(@lroot@("dfn",dfn,""))
+ . . q:lien=""
+ . . d UNINDXPT^SAMIHOM4(lien)
+ . . n newname
+ . . s newname="DOE"_dfn_",JOHN"
+ . . s @lroot@(lien,"name")=newname
+ . . s @lroot@(lien,"saminame")=newname
+ . . s @lroot@(lien,"fname")=$p(newname,",",2)
+ . . s @lroot@(lien,"lname")=$p(newname,",",1)
+ . . d INDXPTLK^SAMIHOM4(lien)
  q
  ;
  ;n root s root=$$setroot^%wd("dcm-intake")

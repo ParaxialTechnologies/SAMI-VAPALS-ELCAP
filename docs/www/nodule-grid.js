@@ -199,6 +199,27 @@
                     $("#cect" + noduleId + "svovrrde").val("false");
                     $("#cect" + noduleId + "svovrrde-warn").addClass("invisible");
                 }
+
+                const volumeValue = parseFloat($("#cect" + noduleId + "sv").val());
+                let deviation = 0;
+                if (volumeValue >= 113.0 && volumeValue < 154.0)
+                    deviation = 0.29;
+                else if (volumeValue >= 154.0 && volumeValue < 268.0)
+                    deviation = 0.23;
+                else if (volumeValue >= 268.0 && volumeValue < 382.0)
+                    deviation = 0.19;
+                else if (volumeValue >= 382.0 && volumeValue < 524.0)
+                    deviation = 0.16;
+                else if (volumeValue >= 524.0 && volumeValue < 697.0)
+                    deviation = 0.14;
+                else if (volumeValue >= 697.0 && volumeValue < 905.0)
+                    deviation = 0.12;
+                else if (volumeValue > 905.0)
+                    deviation = 0.11;
+                //and the error percent = 1.96 x CV1 x V1
+                const errorPercent = 1.96 * volumeValue & deviation;
+                //See https://services.accumetra.com/NoduleCalculator.html
+                //TODO: set text to "+/- <errorPercent> (QIBA SLN Profile)"
             }
 
             function setupNoduleVolumeCalculations(noduleId) {

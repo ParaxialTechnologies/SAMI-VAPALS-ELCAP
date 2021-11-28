@@ -187,19 +187,8 @@
 
             }
 
-            function markNoduleVolumeManuallyEntered(noduleId, isManual) {
-                // console.log("markNoduleVolumeManuallyEntered() noduleId=" + noduleId + ", isManual=" + isManual)
-                if (isManual) {
-                    $("#cect" + noduleId + "sv").addClass("volumeOverride");
-                    $("#cect" + noduleId + "svovrrde").val("true");
-                    $("#cect" + noduleId + "svovrrde-warn").removeClass("invisible");
-                } else {
-                    $("#cect" + noduleId + "sv").removeClass("volumeOverride");
-                    // set the manually overriden hidden field to false
-                    $("#cect" + noduleId + "svovrrde").val("false");
-                    $("#cect" + noduleId + "svovrrde-warn").addClass("invisible");
-                }
-
+            function calculateVolumeError(noduleId) {
+                //See https://services.accumetra.com/NoduleCalculator.html
                 const volumeValue = parseFloat($("#cect" + noduleId + "sv").val());
                 let deviation = 0;
                 if (volumeValue >= 113.0 && volumeValue < 154.0)
@@ -217,9 +206,30 @@
                 else if (volumeValue > 905.0)
                     deviation = 0.11;
                 //and the error percent = 1.96 x CV1 x V1
-                const errorPercent = 1.96 * volumeValue & deviation;
-                //See https://services.accumetra.com/NoduleCalculator.html
-                //TODO: set text to "+/- <errorPercent> (QIBA SLN Profile)"
+                return Math.round(1.96 * volumeValue * deviation);
+            }
+
+            function markNoduleVolumeManuallyEntered(noduleId, isManual) {
+                // console.log("markNoduleVolumeManuallyEntered() noduleId=" + noduleId + ", isManual=" + isManual)
+                const $messageContainer = $("#cect" + noduleId + "svovrrde-message").removeClass("invisible");
+                if (isManual) {
+                    $("#cect" + noduleId + "sv").addClass("volumeOverride");
+                    $("#cect" + noduleId + "svovrrde").val("true");
+                    $messageContainer.find(".text-warning").text("Manually entered")
+                    $messageContainer.removeClass("invisible");
+                } else {
+                    $("#cect" + noduleId + "sv").removeClass("volumeOverride");
+                    // set the manually override hidden field to false
+                    $("#cect" + noduleId + "svovrrde").val("false");
+                    const errorPercent = calculateVolumeError(noduleId);
+                    if (!isNaN(errorPercent) && errorPercent > 0) {
+                        $messageContainer.find(".text-warning").html("+/- " + errorPercent + "mm<sup>3</sup> (QIBA SLN Profile)")
+                        $messageContainer.removeClass("invisible");
+                    }
+                    else {
+                        $messageContainer.addClass("invisible");
+                    }
+                }
             }
 
             function setupNoduleVolumeCalculations(noduleId) {

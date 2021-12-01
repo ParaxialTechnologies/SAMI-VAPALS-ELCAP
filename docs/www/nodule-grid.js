@@ -225,8 +225,7 @@
                     if (!isNaN(errorPercent) && errorPercent > 0) {
                         $messageContainer.find(".text-warning").html("+/- " + errorPercent + "mm<sup>3</sup> (QIBA SLN Profile)")
                         $messageContainer.removeClass("invisible");
-                    }
-                    else {
+                    } else {
                         $messageContainer.addClass("invisible");
                     }
                 }
@@ -563,20 +562,19 @@
 
                 function applyTextValue(fieldNameSelector, value) {
                     const $field = $(fieldNameSelector);
-                    if ($field.hasClass("import-data")) {
-                        $field.val(value);
-                    } else {
+                    if (!$field.hasClass("import-data")) {
                         $field.addClass("import-data");
                         const originalValue = $field.val();
                         $field.attr("original-value", originalValue);
-                        $field.val(value);
                         $field.attr("import-value", value);
                         $field.parent().addClass("import-data-parent"); //NB: used to fix wrapping of revert element
                         createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
                     }
+                    $field.val(value);
                 }
 
                 let noduleId = 1;
+                let lungRads = "";
                 nodules.forEach(nodule => {
                     Object.entries(nodule).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
@@ -696,6 +694,31 @@
                             applyTextValue(fieldSelectorHigh, value);
                         }
 
+                        if (key === "Lung-RADS assessment") {
+                            let thisLungRads = "0";
+                            switch (value) {
+                                case "Lung-rads 1":
+                                    thisLungRads = "1";
+                                    break;
+                                case "Lung-rads 2":
+                                    thisLungRads = "2";
+                                    break;
+                                case "Lung-rads 3":
+                                    thisLungRads = "3";
+                                    break;
+                                case "Lung-rads 4a":
+                                    thisLungRads = "4A";
+                                    break;
+                                case "Lung-rads 4b":
+                                    thisLungRads = "4B";
+                                    break;
+                                case "Lung-rads 4x":
+                                    thisLungRads = "4X";
+                                    break;
+                            }
+                            lungRads = thisLungRads > lungRads ? thisLungRads : lungRads; //Update if more severe
+                        }
+
                         // Image processing
                         if (key === "Nodule") {
                             const mimeType = value["mimeType"];
@@ -717,6 +740,18 @@
 
                     noduleId++;
                 });
+                if (lungRads > "") {
+                    const $field = $("[name=celrad][value=" + lungRads + "]");
+                    const $wrapper = $field.parents(".form-group");
+                    $wrapper.addClass("import-data");
+                    //TODO handle revert.
+                    // const originalValue = $("[name=celrad]:checked").val()
+                    // $wrapper.attr("original-value", originalValue);
+                    // $wrapper.attr("import-value", value);
+                    // $field.parent().addClass("import-data-parent"); //NB: used to fix wrapping of revert element
+                    // createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
+                    $field.prop("checked", true);
+                }
                 setUpImportDataOnChange();
             }
 

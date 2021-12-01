@@ -77,6 +77,8 @@ m ^%wd(17.040801,667)=^webbak(667)
 Kill the copy via:
 K ^webbak
 
+### Turn on matching report
+d SETPARM^SAMIPARM("Non VA","matchingReportEnabled","true")
 
 ###Clear error trap:
 k ^%webhttp("log")

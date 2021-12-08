@@ -580,10 +580,6 @@ const SR_NODULES_KEY = "nodules";
                 let lungRads = "";
 
                 const seriesNumber = study["Series Number"];
-                if (!isNaN(parseFloat(seriesNumber))) {
-                    const fieldSelectorLow = "#cect" + noduleId + "sn";
-                    applyTextValue(fieldSelectorLow, seriesNumber);
-                }
 
                 nodules.forEach(nodule => {
                     Object.entries(nodule).forEach(([key, value]) => {
@@ -620,9 +616,9 @@ const SR_NODULES_KEY = "nodules";
                         }
 
                         // Nodule seen in series #.
-                        if (key === "Series Number") {
+                        if (!isNaN(parseFloat(seriesNumber))) {
                             const fieldSelectorLow = "#cect" + noduleId + "sn";
-                            applyTextValue(fieldSelectorLow, value);
+                            applyTextValue(fieldSelectorLow, seriesNumber);
                         }
 
                         // “Attenuation Characteristic” maps to the "Nodule consistency" field (cect1nt) of the form.

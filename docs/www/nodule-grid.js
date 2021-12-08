@@ -4,6 +4,8 @@
  * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
  */
 
+const SR_PATIENT_STUDY_DETAILS_KEY = "patient_study_details";
+const SR_NODULES_KEY = "nodules";
 /**
  * A jQuery plugin to manage a nodule grid
  * @link https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP
@@ -479,7 +481,7 @@
 
             function _importDicomHeader() {
                 console.log(settings.structuredReport)
-                const patientData = settings.structuredReport["patient_study_details"]
+                const patientData = settings.structuredReport[SR_PATIENT_STUDY_DETAILS_KEY]
                 console.log(patientData)
                 Object.entries(patientData).forEach(([key, value]) => {
                     if (key === "Study Date") {
@@ -551,7 +553,8 @@
 
             function _importData() {
                 _importDicomHeader();
-                const nodules = settings.structuredReport["nodules"]
+                const nodules = settings.structuredReport[SR_NODULES_KEY];
+                const study = settings.structuredReport[SR_PATIENT_STUDY_DETAILS_KEY];
 
                 // if number of nodules shown is less than the number of entries in structuredReport array then increase the number of nodules
                 if (settings.getNoduleCount() < nodules.length) {
@@ -575,6 +578,13 @@
 
                 let noduleId = 1;
                 let lungRads = "";
+
+                const seriesNumber = study["Series Number"];
+                if (!isNaN(parseFloat(seriesNumber))) {
+                    const fieldSelectorLow = "#cect" + noduleId + "sn";
+                    applyTextValue(fieldSelectorLow, seriesNumber);
+                }
+
                 nodules.forEach(nodule => {
                     Object.entries(nodule).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
@@ -610,7 +620,7 @@
                         }
 
                         // Nodule seen in series #.
-                        if (key === "Series Number"){
+                        if (key === "Series Number") {
                             const fieldSelectorLow = "#cect" + noduleId + "sn";
                             applyTextValue(fieldSelectorLow, value);
                         }

@@ -171,6 +171,7 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
+    const timeoutMinutes = 120;
     const sysConfig = []
 
     function isSet(variable) {
@@ -332,10 +333,13 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
-        $(document).ready(function () {
-            $('table.datatables').DataTable();
-        });
+        $('table.datatables').DataTable();
 
+        if (!sysConfig.VETERAN_AFFAIRS_SITE) {
+            setTimeout(function () {
+                $("#logout-link").trigger("click");
+            }, timeoutMinutes * 1000 * 60); // convert minutes to milliseconds
+        }
     })
 </script>
 

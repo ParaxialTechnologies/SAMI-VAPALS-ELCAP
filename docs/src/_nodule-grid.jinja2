@@ -181,14 +181,14 @@
                     {% endif %}
                     <tr>
                         <td style="white-space: nowrap;">
-                            <label class="control-label required">Nodule seen in series</label>
+                            <label class="control-label required">Nodule seen in series #</label>
                             <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Help"
                                data-content="Indicate the CT series number in which the nodule appears."></i>
                         </td>
                         {% for i in noduleArray %}
                             <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
-                                    <label for="cect{{ i }}sn" class="aria-hidden">Nodule seen in series</label>
+                                    <label for="cect{{ i }}sn" class="aria-hidden">Nodule seen in series #</label>
                                     <input type="text" name="cect{{ i }}sn" id="cect{{ i }}sn" size="3"
                                            class="form-control" {{ " value=\"1\"" if (mockup and i==1) else "" }}
                                            required="required" tabindex="{{ i }}05">

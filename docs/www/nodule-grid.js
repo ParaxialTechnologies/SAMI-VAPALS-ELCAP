@@ -609,6 +609,12 @@
                             }
                         }
 
+                        // Nodule seen in series #.
+                        if (key === "Series Number"){
+                            const fieldSelectorLow = "#cect" + noduleId + "sn";
+                            applyTextValue(fieldSelectorLow, value);
+                        }
+
                         // “Attenuation Characteristic” maps to the "Nodule consistency" field (cect1nt) of the form.
                         if (key === "Attenuation Characteristic") {
                             const fieldSelector = "#cect" + noduleId + "nt";

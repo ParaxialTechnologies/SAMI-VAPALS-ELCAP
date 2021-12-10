@@ -1,4 +1,4 @@
-KIDS Distribution saved on Dec 09, 2021@19:39:25
+KIDS Distribution saved on Dec 09, 2021@20:09:52
 Release SAMI*18.0*15 SEQ #15 (sami-18-15)
 **KIDS**:SAMI*18.0*15^
 
@@ -15,7 +15,7 @@ y^y^f^^^^y
 "BLD",11517,4,"B",311.14,311.14)
 
 "BLD",11517,6.3)
-4
+5
 "BLD",11517,"INID")
 ^n
 "BLD",11517,"INIT")
@@ -307,7 +307,7 @@ SYS
 "DATA",311.14,3,1,0)
 ^311.141^6^7
 "DATA",311.14,3,1,1,0)
-samiSystemVersion^sami-18-15-t2
+samiSystemVersion^sami-18-15
 "DATA",311.14,3,1,2,0)
 systemDemoOnly^false
 "DATA",311.14,3,1,3,0)
@@ -453,7 +453,7 @@ D XPZ2^XPDIQ
 "RTN","SAMIADMN",1,0)
 SAMIADMN ; ven/arc - IELCAP: Admin tools ;2021-10-29t22:35z
 "RTN","SAMIADMN",2,0)
- ;;18.0;SAMI;**15**;2020-01;Build 4
+ ;;18.0;SAMI;**15**;2020-01;Build 5
 "RTN","SAMIADMN",3,0)
  ;;18-15
 "RTN","SAMIADMN",4,0)
@@ -999,7 +999,7 @@ EOR ; End of routine SAMIADMN
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - case review cont ;2021-10-26t19:39z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9,11,12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**3,9,11,12,15**;2020-01;Build 5
 "RTN","SAMICAS3",3,0)
  ;;18-15
 "RTN","SAMICAS3",4,0)
@@ -2799,7 +2799,7 @@ EOR ; end of routine SAMICAS3
 "RTN","SAMICTD2",1,0)
 SAMICTD2 ;ven/gpl - cteval-dict init ;2021-10-19t22:03z
 "RTN","SAMICTD2",2,0)
- ;;18.0;SAMI;**12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**12,15**;2020-01;Build 5
 "RTN","SAMICTD2",3,0)
  ;;18-15
 "RTN","SAMICTD2",4,0)
@@ -3589,7 +3589,7 @@ EOR ; end of routine SAMICTD2
 "RTN","SAMICTT0",1,0)
 SAMICTT0 ;ven/gpl - ctreport text main ;2021-10-27t03:21z
 "RTN","SAMICTT0",2,0)
- ;;18.0;SAMI;**4,10,11,15**;2020-01;Build 4
+ ;;18.0;SAMI;**4,10,11,15**;2020-01;Build 5
 "RTN","SAMICTT0",3,0)
  ;;18-15
 "RTN","SAMICTT0",4,0)
@@ -4431,7 +4431,7 @@ EOR ; end of routine SAMICTT0
 "RTN","SAMICTT3",1,0)
 SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-11-16t21:47z
 "RTN","SAMICTT3",2,0)
- ;;18.0;SAMI;**4,10,13,15**;2020-01;Build 4
+ ;;18.0;SAMI;**4,10,13,15**;2020-01;Build 5
 "RTN","SAMICTT3",3,0)
  ;;18-15
 "RTN","SAMICTT3",4,0)
@@ -5851,7 +5851,7 @@ EOR ; end of routine SAMICTT3
 "RTN","SAMICTUL",1,0)
 SAMICTUL ;ven/gpl - ct report & copy log ;2021-11-16t21:47z
 "RTN","SAMICTUL",2,0)
- ;;18.0;SAMI;**10,11,12,13,15**;2020-01;Build 4
+ ;;18.0;SAMI;**10,11,12,13,15**;2020-01;Build 5
 "RTN","SAMICTUL",3,0)
  ;;18.15
 "RTN","SAMICTUL",4,0)
@@ -6217,7 +6217,7 @@ EOR ; end of routine SAMICTUL
 "RTN","SAMICUL",1,0)
 SAMICUL ;ven/gpl - case review log ;2021-10-29t02:24z
 "RTN","SAMICUL",2,0)
- ;;18.0;SAMI;**9,11,12,14,15**;2020-01;Build 4
+ ;;18.0;SAMI;**9,11,12,14,15**;2020-01;Build 5
 "RTN","SAMICUL",3,0)
  ;;18.15
 "RTN","SAMICUL",4,0)
@@ -6885,7 +6885,7 @@ EOR ; end of routine SAMICUL
 "RTN","SAMIHOM4",1,0)
 SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-11-18t22:16z
 "RTN","SAMIHOM4",2,0)
- ;;18.0;SAMI;**1,4,5,6,9,12,15,16**;2020-01;Build 4
+ ;;18.0;SAMI;**1,4,5,6,9,12,15,16**;2020-01;Build 5
 "RTN","SAMIHOM4",3,0)
  ;18-15
 "RTN","SAMIHOM4",4,0)
@@ -9175,7 +9175,7 @@ EOR ; end of routine SAMIHOM4
 "RTN","SAMIHUL",1,0)
 SAMIHUL ;ven/gpl - ielcap: home page log ;2021-11-18t22:23z
 "RTN","SAMIHUL",2,0)
- ;;18.0;SAMI;**9,12,15,16**;2020-01;Build 4
+ ;;18.0;SAMI;**9,12,15,16**;2020-01;Build 5
 "RTN","SAMIHUL",3,0)
  ;18-15
 "RTN","SAMIHUL",4,0)
@@ -9681,7 +9681,7 @@ EOR ; end of routine SAMIHUL
 "RTN","SAMIMOV",1,0)
 SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
 "RTN","SAMIMOV",2,0)
- ;;18.0;SAMI;**7,15**;;Build 4
+ ;;18.0;SAMI;**7,15**;;Build 5
 "RTN","SAMIMOV",3,0)
  ;;18-15
 "RTN","SAMIMOV",4,0)
@@ -10159,7 +10159,7 @@ outaudit(rpt,ln) ;
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-10-29t20:26z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11,12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**2,6,8,10,11,12,15**;2020-01;Build 5
 "RTN","SAMINOT1",3,0)
  ;;18-15
 "RTN","SAMINOT1",4,0)
@@ -11681,7 +11681,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINOT2",1,0)
 SAMINOT2 ;ven/gpl - followup form notes ;2021-10-29t20:27z
 "RTN","SAMINOT2",2,0)
- ;;18.0;SAMI;**1,9,12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**1,9,12,15**;2020-01;Build 5
 "RTN","SAMINOT2",3,0)
  ;;18-15
 "RTN","SAMINOT2",4,0)
@@ -13199,7 +13199,7 @@ EOR ; end of routine SAMINOT2
 "RTN","SAMINOT3",1,0)
 SAMINOT3 ;ven/gpl - CTeval report plain text ; 2021-10-29t23:36z
 "RTN","SAMINOT3",2,0)
- ;;18.0;SAMI;**15**;;Build 4
+ ;;18.0;SAMI;**15**;;Build 5
 "RTN","SAMINOT3",3,0)
  ;;18-15
 "RTN","SAMINOT3",4,0)
@@ -14239,7 +14239,7 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-10-29t23:40z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11,12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**9,10,11,12,15**;2020-01;Build 5
 "RTN","SAMINUL",3,0)
  ;;18-15
 "RTN","SAMINUL",4,0)
@@ -14587,7 +14587,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMIPARM",1,0)
 SAMIPARM ;ven/gpl - get params web service ;2021-11-18t22:30z
 "RTN","SAMIPARM",2,0)
- ;;18.0;SAMI;**12,15**;2020-01;Build 4
+ ;;18.0;SAMI;**12,15**;2020-01;Build 5
 "RTN","SAMIPARM",3,0)
  ;;18-15
 "RTN","SAMIPARM",4,0)
@@ -14977,7 +14977,7 @@ EOR ; end of routine SAMIPARM
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/toad - init subroutines ;2021-12-07t03:10z
 "RTN","SAMIPAT",2,0)
- ;;18.0;SAMI;**12,14,15**;2020-01;Build 4
+ ;;18.0;SAMI;**12,14,15**;2020-01;Build 5
 "RTN","SAMIPAT",3,0)
  ;;18-15
 "RTN","SAMIPAT",4,0)
@@ -15257,7 +15257,7 @@ EOR ; end of routine SAMIPAT
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-10-29t23:57z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11,12,14,15**;2020-01;Build 4
+ ;;18.0;SAMI;**5,10,11,12,14,15**;2020-01;Build 5
 "RTN","SAMIUR",3,0)
  ;;18-15
 "RTN","SAMIUR",4,0)
@@ -16729,7 +16729,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - user reports cont ;2021-10-29t20:32z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11,12,14,15**;2020-01;Build 4
+ ;;18.0;SAMI;**5,11,12,14,15**;2020-01;Build 5
 "RTN","SAMIUR2",3,0)
  ;;18-15
 "RTN","SAMIUR2",4,0)
@@ -19301,7 +19301,7 @@ EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL",1,0)
 SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
 "RTN","SAMIURUL",2,0)
- ;;18.0;SAMI;**12,14,15**;2020-01;Build 4
+ ;;18.0;SAMI;**12,14,15**;2020-01;Build 5
 "RTN","SAMIURUL",3,0)
  ;;18-15
 "RTN","SAMIURUL",4,0)

@@ -118,7 +118,9 @@ UNWRAP(SITE) ;
  . f zj=1:1:$l(@GN@(zi),$$SEP) d  ;
  . . n zl s zl=$o(@key@(zj,""))
  . . i zl="" s zl="piece"_zj
- . . s @proot@(zi,zl)=$p(@GN@(zi),$$SEP,zj)
+ . . n data s data=$p(@GN@(zi),$$SEP,zj)
+ . . i data["""" s data=$tr(data,"""")
+ . . s @proot@(zi,zl)=data
  q
  ;
 IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
@@ -131,6 +133,7 @@ IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
  f  s zi=$o(@croot@(zi)) q:zi=""  d  ;
  . n onepat,ztbl
  . m onepat=@croot@(zi)
+ . s onepat("siteid")=SITE
  . i '$d(onepat("saminame")) d  ;
  . . i $d(onepat("last_name")) d  ;
  . . . d RCAPHACK^SAMIZPH1("ztbl","onepat") ; this is a REDCAP record, convert
@@ -138,6 +141,7 @@ IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
  . . w !,SITE," error, name missing. Record=",zi
  . s onepat("site")=SITE
  . i $$DEDUP(.onepat) d  q  ; is this a duplicate? if so, set studyid
+ . . w !,"error, duplicate patient. Skipping ",$g(onepat("saminame"))
  . . n siform,sid
  . . s sid=$g(onepat("studyid"))
  . . i sid="" d  b  ;
@@ -157,9 +161,13 @@ DEDUP(onepat) ; extrinsic which identifies a duplicate patient
  s proot=$$setroot^%wd("vapals-patients")
  n inname s inname=$g(onepat("saminame"))
  w !,"inname=",inname
- s lien=$o(@lroot@("name",inname,""))
+ s lien=""
+ n tlien s tlien=""
+ f  s tlien=$o(@lroot@("name",inname,tlien)) q:tlien=""  d  ;
+ . q:'$d(@lroot@(tlien))
+ . q:$g(@lroot@(tlien,"siteid"))'=SITE
+ . s lien=tlien
  q:lien="" 0
- i '$d(@lroot@(lien)) s lien=$o(@lroot@("name",inname,lien))
  w !,"lien=",lien
  i '$d(@lroot@("last5",$g(@lroot@(lien,"last5")))) d  q 0 ;
  . ;w !,"last5 not found"

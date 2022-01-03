@@ -669,14 +669,17 @@ MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  s @root@(ptlkien,"saminame")=name
  s @root@(ptlkien,"sinamef")=sinamef
  s @root@(ptlkien,"sinamel")=sinamel
- n fmdob s fmdob=$$FMDT^SAMIUR2(SAMIARG("dob"))
+ n dob s dob=$g(SAMIARG("dob"))
+ i dob="" s dob=$g(SAMIARG("sidob"))
+ n fmdob s fmdob=$$FMDT^SAMIUR2(dob)
  n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
  s ptlkdob=$TR(ptlkdob,"/","-")
  s @root@(ptlkien,"dob")=ptlkdob
  s @root@(ptlkien,"sbdob")=ptlkdob
- n gender s gender=SAMIARG("gender")
+ n gender s gender=$g(SAMIARG("gender"))
+ i gender="" s gender=$g(SAMIARG("sex"))
  s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
- s @root@(ptlkien,"sex")=SAMIARG("gender")
+ s @root@(ptlkien,"sex")=$g(SAMIARG("gender"))
  ; s @root@(ptlkien,"icn")=SAMIARG("icn")
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)

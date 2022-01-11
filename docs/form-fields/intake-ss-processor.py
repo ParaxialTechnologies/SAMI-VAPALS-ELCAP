@@ -5,6 +5,8 @@
 # that VAPALS can take in. It really should be rewritten as a proper program at
 # some point.
 # ---Ken (mcglk@vistaexpertise.net 2022-01-03)
+#
+# Version 0.7.
 #------------------------------------------------------------------------------
 
 # import argparse

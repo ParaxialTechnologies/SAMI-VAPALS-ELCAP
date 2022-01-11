@@ -52,9 +52,9 @@ SAMISS ;ven/gpl - VAPALS PATIENT IMPORT MAIN ROUTINE ; 2021-09-27t20:30z
  ;
  Q
  ;
-SSCONV(PARY,HACK,SS) ; converts the SS array, passed by reference, to a 
+SSCONV(PARY,HACK,SS) ; converts the SS array, passed by name, to a 
  ; loadable array for the import form
- ;RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
+ ;old RCAPHACK(PARY,HACK) ; initialize the redcap mapping table
  ;chart-eligibility-complete true
  ; this hack version accepts a redcap data array in HACK, passed by name
  ; and hard codes the results of the mapping rules in that same array

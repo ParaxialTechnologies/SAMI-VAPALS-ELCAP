@@ -83,7 +83,7 @@ IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
  . i '$d(onepat("saminame")) d  ;
  . . i $d(onepat("last_name")) d  ;
  . . . d RCAPHACK^SAMIZPH1("ztbl","onepat") ; this is a REDCAP record, convert
- . e  d SSCONV^SAMISS("ztbl","hack","onepat") ; Ken's conversion routine
+ . e  d SSCONV^SAMISS("onepat") ; Ken's conversion routine
  . i '$d(onepat("saminame")) d  q  ; we must at least have a name
  . . w !,SITE," error, name missing. Record=",zi
  . s onepat("site")=SITE

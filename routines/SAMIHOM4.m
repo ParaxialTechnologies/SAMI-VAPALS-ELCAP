@@ -459,6 +459,7 @@ WSVAPALS ; post vapals (main gateway)
  . . . s SAMIFILTER("notenmbr")=tiuien
  . . . n sendrslt
  . . . ;s sendrslt="1^MSG9239010"
+ . . . s SAMIFILTER("sendprotocol")=SAMISITE_" ENROLL ORU EVN"
  . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
  . . . i +sendrslt>0 d  ; success
  . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
@@ -486,6 +487,7 @@ WSVAPALS ; post vapals (main gateway)
  . . . s SAMIFILTER("notenmbr")=tiuien
  . . . n sendrslt
  . . . ;s sendrslt="0^Missing ORM Message"
+ . . . s SAMIFILTER("sendprotocol")=SAMISITE_" ENROLL ORU EVN"
  . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
  . . . i +sendrslt>0 d  ; success
  . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7

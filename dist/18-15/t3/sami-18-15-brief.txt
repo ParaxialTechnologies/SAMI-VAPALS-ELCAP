@@ -52,7 +52,7 @@ ii. Contents
  Prepare for installation
   o Assume the identity of your osehra Unix user
   o Prepare install directory
-  o Download and prepare the archive file
+  o Download and prepare the KIDS file
   o Install web-application files
   o Back up M routines
     - Enter M
@@ -72,7 +72,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 1 critical-priority update to fix problem
+ SAMI-18-15-t3 adds 1 critical-priority update to fix problem
  communicating between Nashville (TVH) and VAPALS. The definitive source
  for the VAPALS-ELCAP application - codebase, package distributions
  (including this one), and documentation - is at the following public 
@@ -82,8 +82,7 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/
-
+ https://vistaexpertise.net/newsite/project/vapals-elcap/dist/Í
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
@@ -104,32 +103,20 @@ ii. Contents
 
 #. Package elements
 
-#>include: .dtool/packelements.txt
-
- File                     Number  Change
- -----------------------  ------  ---------------
-
+  Routine   Change
+ --------  --------
+ SAMIHUL   modified
+ SAMIMOV   modified
 
 
 #. Prepare for installation
 
- This involves creating a directory to work in, running a script to
- back up certain datafiles and web-application files, and then going
+ This involves creating a directory to work in and then going
  through steps to back up M routines that will be replaced by the
  patch.
 
 
  #.#. Assume the identity of your osehra Unix user
-
-   This step assumes you type a dzdo or sudo to do this; here the
-   symbol $DEMAND will stand for whichever command you use. (Also, in
-   all the command-line examples below, '$' simply means your
-   command-line prompt.) If your configuration is different, please
-   adjust this step to match your configuration:
-
-    $ $DEMAND su - osehra
-    $
-
 
  #.#. Prepare install directory
 
@@ -137,80 +124,21 @@ ii. Contents
    commands.  They create a shell variable, and then creates the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-x-15/t3
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-x-15/t3
     $ cd $INDIR
-    $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
- #.#. Download and prepare the archive file
-
-   You may safely download the archive file sami-#{version}.zip in advance
-   of the actual install.
-
-#>include: .dtool/curl-snippet.txt
-
-   Then unzip the archive file with the following command.
-
-#>include: .dtool/unzip-snippet.txt
-
-
- #.#. Install web-application files
-
-    At this point, the web-application files must be installed. This is done
-    with a script that backs up the affected directories before installing
-    anything, then upgrades the web-application files.
-
-     $ ./upgrade-auxfiles
-     Backing up files to ./.aux-backup:
-     [... lists of files backed up ...]
-     Compressing the backup:
-     [... lists of files being compressed ...]
-     Cleaning up.
-     Done with backup of auxiliary files.
-
-     Updating from ./auxfiles ...
-     [... lists of files being updated ...]
-     Done with install.
-
-     You may now proceed with the KIDS installation.
-     $ _
-
-    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
-    the official GitHub repository, and this script will have different output.
-
-     $ ./upgrade-auxfiles
-     Backing up files to ./.aux-backup:
-     [... lists of files backed up ...]
-     Compressing the backup:
-     [... lists of files being compressed ...]
-     Cleaning up.
-     Done with backup of auxiliary files.
-
-     Found a valid Git repository; pulling updates ...
-     [... output varies ...]
-     Done with install.
-     $ _
+ #.#. Download the kids file to INDIR=~/run/in/sami/18-x-15/t3
 
 
  #.#. Back up M routines
-
-   Before the installation, we also need to back up existing
-   VAPALS-ELCAP routines that will be overwritten by this install. To
-   do this, you will have to start a Cache or YottaDB session
-   (depending on your particular installation), sign in to Vista, and
-   then call the direct-mode interface ^%RO ("routine out").
-
-   We have made efforts to display accurate instructions, but there
-   are likely to be minor differences between implementations. Be sure
-   to follow the correct dialog for your implementation.
-
 
   #.#.#. Enter M
 
@@ -260,8 +188,8 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
-#>include: .dtool/routine-list.txt
-
+SAMIHOM4
+SAMIHUL
 
   #.#.#. Run the backup
 
@@ -269,37 +197,66 @@ ii. Contents
 
     On Caché
     --------
-    Note that routines that don't currently exist will result in a
-    warning message (specifically, the routine name will have '[???]'
-    after it, and the line [does not exist] after it). These messages
-    can be safely disregarded.
-
     In addition to naming the routines and routine-out file, we also
     provide a Description and press return at the Parameters and
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
 
-#>include: .dtool/cache-ro-snippet.txt
+  >do ^%RO
 
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMIHOM4
+     Routine(s): SAMIHUL
+     Routine(s):
+
+     Description: SAMI*18.0*15 SEQ #15 T3 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-x-15/t3/sami-18-x-15-t3-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMIHOM4.INT    SAMIHUL.INT     
+     >_
+ 
+ 
     On YottaDB/GT.M
     ---------------
-    Note that routines that don't currently exist will result in the
-    routine name not appearing under the input line, and won't count
-    towards the number of routines. These can be safely disregarded.
 
     In addition to naming the routines and routine-out file, we also
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
 
-#>include: .dtool/yotta-ro-snippet.txt
+     >do ^%RO
+
+     Routine Output - Save selected routines into RO file.
+     Routines: SAMIHOM4
+     SAMIHOM4
+     Current total of 1 routines.
+
+     Routines: SAMIHUL
+     SAMIHUL
+     Current total of 2 routines.
+     
+     Routine:
+
+     Output device <terminal>: /home/osehra/run/in/sami/18-x-15/t3/sami-18-x-15-t3-back.ro
+
+     Header Label: SAMI*18.0*15 SEQ #15 T3 routine backup
+     Strip comments <No>?: 
+     SAMIHOM4  SAMIHUL
+
+     Total of 1415 lines in 2 routines.
+
+     >_
+
+
 
     You'll remain in the M environment for the next section.
 
 
 #. Main install instructions
 
- This consists of loading and installing the KIDS package, and
- activating the new web-application files.
+ This consists of loading and installing the KIDS package.
 
 
  #.#. Installing the KIDS package
@@ -313,14 +270,62 @@ ii. Contents
     Installation & Distribution System main menu, and at the Select
     ... Option prompt, select Installation:
 
-#>include: .dtool/enter-kids-snippet.txt
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
 
 
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+     
   #.#.#. Load KIDS package
 
-    Select option 1 and press return at the Continue prompt.
+     Select option 1 and press return at the Continue prompt.
 
-#>include: .dtool/load-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-x-15/t3/sami-18-x-15-t3.kid
+
+**>>     KIDS Distribution saved on Nov 18, 2021@15:42:23
+     Comment: Test Release SAMI*18.0*15 SEQ #15 T3 (sami-18-x-15-t3)
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*15
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*15
+     Use INSTALL NAME: SAMI*18.0*15 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
 
 
   #.#.#. Install KIDS package
@@ -329,30 +334,92 @@ ii. Contents
     and press return at the next three prompts. Note that '[now]'
     denotes the current time when you're doing the install.
 
-#>include: .dtool/install-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*15     Loaded from Distribution    [now]
+**>>        => Test Release SAMI*18.0*15 SEQ #15 T3 (sami-18-x-15-t3)  ;Created on Nov 18, 2021@15:42:23
 
-   You now have {appname} {version} ({vista-version})
+     This Distribution was loaded on [now] with header of
+**>>        Test Release SAMI*18.0*15 SEQ #15 T3 (sami-18-x-15-t3)  ;Created on Nov 18, 2021@15:42:23
+        It consisted of the following Install(s):
+        SAMI*18.0*15
+     Checking Install for Package SAMI*18.0*15
+
+     Install Questions for SAMI*18.0*15
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*15 :
+                    [now]
+
+     Build Distribution Date: Jan 12, 2022
+
+      Installing Routines:.....
+                    [now]
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*15 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > halt
+     $ _
+
+   You now have SAMI 18-15-T3
    installed in your M environment. The install is now complete. We
-   recommend running tests of your {appname} app to confirm the
+   recommend running tests of your SAMI app to confirm the
    environment is operational and bug-free, before notifying users
-   that {appname} is ready for their use.
+   that VAPALS-ELCAP is ready for their use.
 
 
 #. Optional backout instructions
 
  Should errors or other problems result from installing this package
- contact the {appname} development team for package-backout
+ contact the VAPALS-ELCAP development team for package-backout
  instructions.
 
 
 #. Routines
 
  Lines 2 & 3 of each of these routines now look like:
-#>include: .dtool/routine-lines2-3.txt
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;18-15
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
-#>include: .dtool/checksums.txt
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  ----------------------
+ SAMIHOM4  B899951012       B977083192      **1,4,5,6,9,12,15,16**
+ SAMIHUL   B111466          B115804         **9,12,15,16**
 
 
 #. Authors

@@ -1,3 +1,40 @@
+SAMILOAD ;ven/gpl - LOAD REDCAP INTAKE SPREADSHEET ; 2022-01-17t23:06z
+ ;;18.0;SAMI;** **;;Build
+ ;;18-16
+ ;
+ ;@license: see routine SAMIUL
+ ;
+ ; allow fallthrough
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@dev-main George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org-main Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2022, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-update 2022-01-17t23:06z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 18.16
+ ;@release-date 2021-01
+ ;@patch-list ** **
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;
+ ;
 SEP() ; extrinsic returns the separator character used
  Q $CHAR(9)
  ;

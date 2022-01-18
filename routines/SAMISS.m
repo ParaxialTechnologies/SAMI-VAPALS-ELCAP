@@ -1,4 +1,4 @@
-SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-18t00:15z
+SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-18t20:46z
  ;;18.0;SAMI;**16**;2020-01;Build 2
  ;18-16
  ;
@@ -17,7 +17,7 @@ SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-18t00:15z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-01-18t00:15z
+ ;@last-update 2022-01-18t20:46z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -44,7 +44,7 @@ SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-18t00:15z
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
  ; 2022-01-18 ven/lmry
- ;  SAMISS normalize line breaks, bump version and date
+ ;  SAMISS normalize line breaks, bump version and date, detab
  ;
  quit
  ;
@@ -82,87 +82,87 @@ SSCONV(SS) ; converts the SS array, passed by name, to a
  ; set DROOT=$$setroot^%wd("form fields - intake")
  ; -> $$FLDNUM(DROOT,"siceiden") -> IEN
  ; input fields
- ; saminame	LAST,FIRST MIDDLE SUFFIX
- ; ssn	000-00-0000
- ; sigi	Select
- ; sex	Select
- ; sbdob	yyyy-mm-dd
- ; siceiden	Select
- ; sicerfdt	yyyy-mm-dd
- ; sicerfpc	Select
- ; sicerfwh	Select
- ; sicerfge	Select
- ; sicerfpu	Select
- ; sicerfon	Select
- ; sicerfsc	Select
- ; sicerfot	Select
- ; sicerfoo	Describe
- ; sicechrt	Select
- ; sicemhlc	Select
- ; sicemhhs	Select
- ; sicemhot	Select
- ; sicemhoo	Describe
- ; sicecepc	Select
- ; sicecenc	Select
- ; siceceho	Select
- ; sicecepr	Select
- ; siceceot	Select
- ; siceceoo	Describe
- ; siceshqd	Select
- ; siceshpy	Select
- ; siceshnc	Select
- ; siceshot	Select
- ; siceshoo	Describe
- ; sipedisc	Select
- ; sipedc	yyyy-mm-dd
- ; sipecnip	Select
- ; sipecnte	Select
- ; sipecnth	Select
- ; sipecnml	Select
- ; sipecnpp	Select
- ; sipecnvd	Select
- ; sipecnot	Select
- ; sipecnoo	Describe
- ; siperslt	Select
- ; sipecmnt	Comment
- ; sidc	yyyy-mm-dd
- ; silnip	Select
- ; silnph	Select
- ; silnth	Select
- ; silnml	Select
- ; silnpp	Select
- ; silnvd	Select
- ; silnot	Select
- ; silnoo	Describe
- ; sipav	Select
- ; sipsa	Insert
- ; sipan	Insert
- ; sipcn	Insert
- ; sipc	Insert
- ; sips	Insert
- ; sipz	Insert
- ; sipcr	Insert
- ; sippn	+1 (000) 000-0000
- ; sirs	Select
- ; siesm	Select
- ; siesq	Select
- ; sies	Comment
- ; sicpd	Number
- ; sisny	Number
- ; siq	yyyy-mm-dd
- ; sicep	Describe
- ; sicadx	yyyy-mm-dd
- ; sicadxl	Describe
- ; siptct	yyyy-mm-dd
- ; siptctl	Describe
- ; siidmdc	Select
- ; sildct	Select
- ; siclin	Describe
- ; sipcrn	Describe
- ; sistatus	Select
- ; sicectap	yyyy-mm-dd
- ; sistachg	Select
- ; sidod	yyyy-mm-dd
+ ; saminame LAST,FIRST MIDDLE SUFFIX
+ ; ssn 000-00-0000
+ ; sigi Select
+ ; sex Select
+ ; sbdob yyyy-mm-dd
+ ; siceiden Select
+ ; sicerfdt yyyy-mm-dd
+ ; sicerfpc Select
+ ; sicerfwh Select
+ ; sicerfge Select
+ ; sicerfpu Select
+ ; sicerfon Select
+ ; sicerfsc Select
+ ; sicerfot Select
+ ; sicerfoo Describe
+ ; sicechrt Select
+ ; sicemhlc Select
+ ; sicemhhs Select
+ ; sicemhot Select
+ ; sicemhoo Describe
+ ; sicecepc Select
+ ; sicecenc Select
+ ; siceceho Select
+ ; sicecepr Select
+ ; siceceot Select
+ ; siceceoo Describe
+ ; siceshqd Select
+ ; siceshpy Select
+ ; siceshnc Select
+ ; siceshot Select
+ ; siceshoo Describe
+ ; sipedisc Select
+ ; sipedc yyyy-mm-dd
+ ; sipecnip Select
+ ; sipecnte Select
+ ; sipecnth Select
+ ; sipecnml Select
+ ; sipecnpp Select
+ ; sipecnvd Select
+ ; sipecnot Select
+ ; sipecnoo Describe
+ ; siperslt Select
+ ; sipecmnt Comment
+ ; sidc yyyy-mm-dd
+ ; silnip Select
+ ; silnph Select
+ ; silnth Select
+ ; silnml Select
+ ; silnpp Select
+ ; silnvd Select
+ ; silnot Select
+ ; silnoo Describe
+ ; sipav Select
+ ; sipsa Insert
+ ; sipan Insert
+ ; sipcn Insert
+ ; sipc Insert
+ ; sips Insert
+ ; sipz Insert
+ ; sipcr Insert
+ ; sippn +1 (000) 000-0000
+ ; sirs Select
+ ; siesm Select
+ ; siesq Select
+ ; sies Comment
+ ; sicpd Number
+ ; sisny Number
+ ; siq yyyy-mm-dd
+ ; sicep Describe
+ ; sicadx yyyy-mm-dd
+ ; sicadxl Describe
+ ; siptct yyyy-mm-dd
+ ; siptctl Describe
+ ; siidmdc Select
+ ; sildct Select
+ ; siclin Describe
+ ; sipcrn Describe
+ ; sistatus Select
+ ; sicectap yyyy-mm-dd
+ ; sistachg Select
+ ; sidod yyyy-mm-dd
  ; sistreas       Describe
  ;
  ; 

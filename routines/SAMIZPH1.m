@@ -1,4 +1,4 @@
-SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
+SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2022-01-18t00:32z
  ;;18.0;SAMI;**16**;2020-01;Build 2
  ;18-x-16-t2
  ;
@@ -16,7 +16,7 @@ SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-27t20:30z
+ ;@last-update 2022-01-18t00:32z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -49,6 +49,8 @@ SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ; 2021-09-27 ven/gpl sami-18-14-16-t1
  ; SAMIZPH1 fix bug where Cache was putting the TSV records in overflow
  ;
+ ; 2022-01-18 ven/lmry 18-16
+ ;  SAMIZPH1 Bump dates, fixes for XINDEX
  ;
  Q
  ;
@@ -153,7 +155,7 @@ CREATE(vars) ; create a patient record and an intake form from vars
  D ENROLL(.vars)
  q
  ;
-REGISTER(vars)
+REGISTER(vars)  ;
  N saminame
  s saminame=$g(vars("saminame"))
  i saminame="" s saminame=$g(vars("name"))
@@ -222,7 +224,7 @@ PROCTBL(ARY,TBL) ; process an array (ARY) using a mapping table (TBL)
  . i $e(proc,1,2)="$$" d  q  ;
  . . ; call an extrinsic
  . . n X s X="S @ARY@("""_samiv_""")="_proc_"(ARY)"
- . . B
+ . . ;B
  . . X @X
  . i $e(proc,1,1)="$" d  q  ;
  . . ; execute a line of code ie $select or $tr

@@ -1,5 +1,5 @@
-SAMILD2 ;ven/gpl - LOAD TVH INTAKE SPREADSHEET ; 2022-01-17t23:06z
- ;;18.0;SAMI;** **;;Build
+SAMILD2 ;ven/gpl - LOAD TVH INTAKE SPREADSHEET ; 2022-01-18t00:21z
+ ;;18.0;SAMI;**16**;;Build
  ;;18-16
  ;
  ;@license: see routine SAMIUL
@@ -19,13 +19,13 @@ SAMILD2 ;ven/gpl - LOAD TVH INTAKE SPREADSHEET ; 2022-01-17t23:06z
  ;@copyright 2022, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-01-17t23:06z
+ ;@last-update 2022-01-18t00:21z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.16
  ;@release-date 2021-01
- ;@patch-list ** **
+ ;@patch-list **16**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -33,6 +33,9 @@ SAMILD2 ;ven/gpl - LOAD TVH INTAKE SPREADSHEET ; 2022-01-17t23:06z
  ; mcglk@vistaexpertise.net
  ;@dev-add Linda M. R. Yaw (lmry)
  ; linda.yaw@vistaexpertise.net
+ ;
+ ; 2022-01-18 ven/lmry
+ ;  SAMILD2 fixes for XINDEX
  ;
  ;
 SEP() ; extrinsic returns the separator character used
@@ -154,11 +157,11 @@ IMPORT(SITE) ; import from csv stored in SITE-INTAKE graph
  . . q
  . . n siform,sid
  . . s sid=$g(onepat("studyid"))
- . . i sid="" d  b  ;
+ . . i sid="" d  ;b  ;
  . . . w !,"error processing duplicate record "
  . . . d ^ZTER
  . . s siform=$o(@proot@("graph",sid,"si"))
- . . i siform="" d  b  ;
+ . . i siform="" d  ;b  ;
  . . . w !,"error finding siform for sid ",sid
  . . m @proot@("graph",sid,siform)=onepat
  . d CREATE(.onepat)
@@ -211,7 +214,7 @@ CREATE(vars) ; create a patient record and an intake form from vars
  D ENROLL(.vars)
  q
  ;
-REGISTER(vars)
+REGISTER(vars)  ;
  N saminame
  s saminame=$g(vars("saminame"))
  i saminame="" s saminame=$g(vars("name"))

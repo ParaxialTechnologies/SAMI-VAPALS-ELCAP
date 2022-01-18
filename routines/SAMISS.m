@@ -1,6 +1,6 @@
-SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-11t18:23z
+SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-18t00:15z
  ;;18.0;SAMI;**16**;2020-01;Build 2
- ;18-x-16
+ ;18-16
  ;
  ;@license: see routine SAMIUL
  ;
@@ -17,7 +17,7 @@ SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-11t18:23z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-27t20:30z
+ ;@last-update 2022-01-18t00:15z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -43,13 +43,8 @@ SAMISS ;ven/mcglk - VAPALS 'intake.xls' importer ; 2022-01-11t18:23z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ; 2021-09-20/23 ven/gpl sami-18-14-16-t1
- ; SAMIZPH1 develop method to import data from a REDCap data system used by
- ; the Philadelphia VA.
- ;
- ; 2021-09-27 ven/gpl sami-18-14-16-t1
- ; SAMIZPH1 fix bug where Cache was putting the TSV records in overflow
- ;
+ ; 2022-01-18 ven/lmry
+ ;  SAMISS normalize line breaks, bump version and date
  ;
  quit
  ;

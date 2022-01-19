@@ -1,19 +1,33 @@
 Instructions to convert the patient data spreadsheet to VAPALS-ELCAP format.
 
-1. Export or save the patient spreadsheet as .tsv or tab-delimited format. (Known
-	hereafter as the .tsv file.)
-2. Copy the .tsv file to the tmp directory on the VAPALS-ELCAP server.
+1. Export or save the patient spreadsheet as .tsv or tab-delimited format.
+(Referred to hereafter as the .tsv file.)
+2. Copy the .tsv file to the www directory that is in the top layer of the
+osehra directory on the VAPALS-ELCAP server.
 3. Get into the M programmer's environment. (type mumps -dir at the Unix prompt)
-4. Type SET DUZ=1 D ^XUP, hit <Enter> at Select OPTION NAME.
+4. Type SET DUZ=1 D ^XUP and return.
+5. Hit <Enter> at Select OPTION NAME.
 5. Type DO LOAD^SAMILD2
-6. Enter filename ...
+6. Enter three letter site code.
+Example:
+Select SAMI SITE: XXX  VISTA HEALTH CARE     XXX      6100
 
-Select SAMI SITE: XXX  VISTA HEALTH CARE     XXX      6100  
+7. Hit enter to accept default directory.
 File Directory: /home/osehra/www/// 
+
+8. After Replace enter three periods to accept replacing whole file name, after
+With enter the file you want to use. Hit enter after the second Replace to let
+it know that you don't want to replace anything else.
+Example:
 Enter filename to load.: LCSV2_DATA_2021-06-29_REDCAP.tsv
   Replace ... With intake-nashville-test.txt  Replace 
    intake-nashville-test.txt
    
+If this happens there is a good chance you didn't put the data file in the
+right place: 
+%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+
+
 
 
 Instructions for reviewing Intake Forms before submitting
@@ -22,7 +36,7 @@ Instructions for reviewing Intake Forms before submitting
 	Forms the first time you encounter the veteran after moving over to 
 	VAPALS-ELCAP instead of trying to do them all at once.
 
-1. Please do a quick review of the data that was entered. If you find an error, 
+2. Please do a quick review of the data that was entered. If you find an error, 
 	please check the spreadsheet to see if it was correct on there. If it was
 	correct on the spreadsheet but incorrect on the Intake Form, please let
 	your VAPALS-ELCAP IT team know which field was incorrect, and as long as it
@@ -30,9 +44,13 @@ Instructions for reviewing Intake Forms before submitting
 	on the intake form. If it is, please describe what the difference was as
 	specifically as possible.
 	
-2. Check these fields in particular. If there is not a selection, please fill
-	it in. It is probably most likely to be a "No" but could have been missed
+3. Check these fields in particular. If there is not a selection, please fill
+	it in. It is most likely to be a "No" but could have been missed
 	in the process of entering data in the spreadsheet.
+	    a. Eligible based on chart review?
+	    b. Was a pre-enrollment discussion held?
+	    c. Primary address verified?
+	    
 	
 	
 Questions for the Nurse Navigator team.

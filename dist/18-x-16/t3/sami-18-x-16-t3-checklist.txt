@@ -59,19 +59,24 @@ X  4.1. convert to new short version ids, update dates & times in each routine
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m
   nope 4.2. add ids to issues listed in description
 X  4.3. add to description issues newly resolved in final version
-  4.4. update checksums in description
+dtool  4.4. update checksums in description
   4.5. update install instructions
  
 
  5. KIDS Build
-  5.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
-  5.2. copy routines to ~/run/routine directory
-  5.3. Create KIDS build (XPD MAIN Menu)
-  5.2. export to out dock, (Transport distribution)
-          Enter a Host File: /home/osehra/run/out/sami/18-14-16/sami-18-14-16.kid
-  5.3. push to repo,
-  5.5. push recipe to repo,
-  5.6. pull to out dock
+X  5.1. Make sure most up-to-date routines are in vapalsyotta.
+X  5.2.  Create out dock folder if needed
+X  5.3. Create KIDS build (XPD MAIN Menu)
+        SAMI*18.0*16
+  		SAMI 18.0T05 -- don't include SAMI*18.0*7, SAMI*18.0*14 in required builds
+  		To exit the FM text editor: <ESC> O P E
+X  5.4. export to out dock (Transport distribution) 
+		Host File: /home/osehra/run/out/sami/18-14-16/t3/sami-18-16-t3.kid
+		Header Comment: Test Release SAMI*18.0*16 SEQ #16 (sami-18-16-t3)
+        (Note: For actual releases, this would read closer to
+         Header Comment: Release SAMI*18.0*15 SEQ #15 (sami-18-15) )
+X  5.5. copy to personal repo scp 'vapalsyotta:/home/osehra/run/out/sami/18-14-16/t3/*.kid' ./
+X  5.6. push to sami repo
 
  6. Create Zip package
   6.1. use zip to create archive package (dtool makezip)

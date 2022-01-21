@@ -1,7 +1,7 @@
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-01-21t18:31z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-01-21t22:37z
 
                          Initial Data Import
-                     SAMI (VAPALS-ELCAP) 18-16-t3
+                    SAMI (VAPALS-ELCAP) 18-x-16-t3
                       (SAMI*18.0*16 SEQ #16 T3)
 
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
@@ -11,12 +11,12 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-01-21t18:31z
 i. Front matter
 
  App         SAMI (VAPALS-ELCAP)
- Version     18-16-t3
+ Version     18-x-16-t3
  Vista ID    SAMI*18.0*16 SEQ #16 T3
              Version 18.0, Patch ID #16, Seq #16, Test 3
  Priority    high
- Categories  routine, file
- Status      test release: SAMI-18-16-t3.zip
+ Categories  routine
+ Status      test release: SAMI-18-x-16-t3.zip
  Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
              SAMI 18-2 (SAMI*18.0*2 SEQ #2)
              SAMI 18-3 (SAMI*18.0*3 SEQ #3)
@@ -41,7 +41,6 @@ ii. Contents
   o Assume the identity of your osehra Unix user
   o Prepare install directory
   o Download and prepare the archive file
-  o Install web-application files
   o Back up M routines
     - Enter M
     - Sign into Vista
@@ -60,18 +59,20 @@ ii. Contents
 
 1. Description
 
- SAMI 18-16-t3 adds the ability to convert intake data from institutions
- that don't currently use the VAPALS-ELCAP system but plan to start. There is
- also test code as a step towards adding the capability to match and merge
- duplicate patient records. The definitive source for the VAPALS-ELCAP
- application - codebase, package distributions(including this one), and
- documentation - is at the following public Github repository:
+ SAMI 18-x-16-t3 adds the ability to convert intake data from
+ institutions that don't currently use the VAPALS-ELCAP system but
+ plan to start. There is also test code as a step towards adding the
+ capability to match and merge duplicate patient records.
+
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions(including this one), and documentation - is at
+ the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-16/t3/
+ https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-16/t3/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -79,35 +80,32 @@ ii. Contents
 
  The changes in this patch are:
 
- 1.1. Added conversion capability: Ability to convert from a .tsv file to VAPALS-
- ELCAP data format.
+ 1.1. Added conversion from .tsv file to VAPALS-ELCAP data format
 
-   issue 21-196 (high priority): Support for Nashville test data
+   issue 21-196 (high priority): Support for Nashville test data.
 
    solution: Developed code to convert data.
 
-   reported: 2021-10-18 by Lilly
+   reported: 2021-10-18 by Lilly.
 
- 1.2. Test of matching report: Ability to test the matching report to see if
- the algorhythm for matching records seems to be working well.
+ 1.2. Added test for matching report to verify algorithm
 
-   issue 21-115: Capability to merge duplicate patient records
+   issue 21-115: Capability to merge duplicate patient records.
 
-   solution: This is a partial solution just to test the matching algorythm.
-   Matching and merging records is not yet available.
+   solution: This is a partial solution just to test the matching
+   algorithm.  Matching and merging records is not yet available.
 
-   reported: 2021-07-09	by Jirapatnakul
+   reported: 2021-07-09 by Jirapatnakul.
 
 2. Package elements
 
- File                              Change
- --------------------------------  ------
- sami-18-x-16-t3-recipe.txt        new
- sami-18-x-16-t3.kid               new
- sami-18-x-16-t3.txt               new
- sami-18-x-16-t3.zip               new
- LCSV2_DATA_2021-06-29_REDCAP.tsv  new
- intake-test-data-tab-del.txt      new
+ File                          Change
+ ----------------------------  ------
+ sami-18-x-16-t3-recipe.txt    new
+ sami-18-x-16-t3.kid           new
+ sami-18-x-16-t3.txt           new
+ sami-18-x-16-t3.zip           new
+ intake-test-data-tab-del.txt  new
 
  Routine   Change
  --------  --------
@@ -122,17 +120,15 @@ ii. Contents
 
 3. Prepare for installation
 
- This involves creating a directory to work in, running a script to
- back up certain datafiles and web-application files, and then going
- through steps to back up M routines that will be replaced by the
- patch.
+ This involves creating a directory to work in, then going through
+ steps to back up M routines that will be replaced by the patch.
 
 
  3.1. Assume the identity of your osehra Unix user
 
-   This step assumes you type a dzdo or sudo to do this; here the
-   symbol $DEMAND will stand for whichever command you use. (Also, in
-   all the command-line examples below, '$' simply means your
+   This step assumes you use a dzdo or sudo command to do this; here
+   the symbol $DEMAND will stand for whichever command you use. (Also,
+   in all the command-line examples below, '$' simply means your
    command-line prompt.) If your configuration is different, please
    adjust this step to match your configuration:
 
@@ -146,21 +142,21 @@ ii. Contents
    commands.  They create a shell variable, and then creates the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/sami/18-16/t3
+    $ INDIR=~/run/in/sami/18-x-16/t3
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/sami/18-16/t3
+    $ INDIR=~/run/in/sami/18-x-16/t3
     $ cd $INDIR
-    $ rm -rf ./sami*.{txt,kid} ./auxfiles
+    $ rm -rf ./sami*.{txt,kid}
 
 
  3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-18-16-t3.zip in advance
+   You may safely download the archive file sami-18-x-16-t3.zip in advance
    of the actual install.
 
      $ curl -# -O 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-16/t3/sami-18-x-16-t3.zip'
@@ -179,7 +175,7 @@ ii. Contents
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
-   do this, you will have to start a Cache or YottaDB session
+   do this, you will have to start a Cache or GT.M/YottaDB session
    (depending on your particular installation), sign in to Vista, and
    then call the direct-mode interface ^%RO ("routine out").
 
@@ -200,14 +196,14 @@ ii. Contents
 
     Node: vapalscache, Instance: VAPALS
 
-    >
+    > _
 
 
     On YottaDB/GT.M:
     ----------------
     $ mumps -dir
 
-    >
+    > _
 
 
   3.4.2. Sign into Vista
@@ -226,7 +222,7 @@ ii. Contents
     Terminal Type set to: C-VT100
 
     Select OPTION NAME:
-    >
+    > _
 
 
   3.4.3. List of routines
@@ -263,7 +259,7 @@ SAMIHUL
      Routine(s): SAMIHUL
      Routine(s):
 
-     Description: SAMI*18.0*16 SEQ #X T3 routine backup
+     Description: SAMI*18.0*16 SEQ #16 T3 routine backup
 
      Output routines to
      Device: /home/osehra/run/in/sami/18-x-16/t3/sami-18-x-16-t3-back.ro
@@ -298,7 +294,7 @@ SAMIHUL
 
      Output device <terminal>: /home/osehra/run/in/sami/18-x-16/t3/sami-18-x-16-t3-back.ro
 
-     Header Label: SAMI*18.0*16 SEQ #X T3 routine backup
+     Header Label: SAMI*18.0*16 SEQ #16 T3 routine backup
      Strip comments <No>?: 
      SAMIHOM4  SAMIHUL
 
@@ -306,7 +302,7 @@ SAMIHUL
 
      >_
 
-    You'll remain in the M environment for the next section.
+   You'll remain in the M environment for the next section.
 
 
 4. Main install instructions
@@ -505,7 +501,7 @@ SAMIHUL
                                      Kennneth W. McGlothlen (ven)
                                      Linda M. R. Yaw (ven)
 
- Released    2022-01-16              Frederick D. S. Marshall (ven)
+ Released    2022-01-21              Frederick D. S. Marshall (ven)
                                      Kennneth W. McGlothlen (ven)
                                      Linda M. R. Yaw (ven)
 

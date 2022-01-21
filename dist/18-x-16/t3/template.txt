@@ -2,9 +2,9 @@
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
-#:version: 18-x-16-t3
-#:rversion: 18-x-16
-#:partialdir: 18-x-16/t3
+#:version: 18-16-t3
+#:rversion: 18-16
+#:partialdir: 18-16/t3
 #:status: test release
 #:vista-version: SAMI*18.0*16 SEQ #16 T3
 #:vista-longversion: Version 18.0, Patch ID #16, Seq #16, Test 3
@@ -73,10 +73,11 @@ ii. Contents
 #. Description
 
  #{nmsp} #{version} adds the ability to convert intake data from institutions
- that don't currently use the VAPALS-ELCAP system but plan to start. The
- definitive source for the VAPALS-ELCAP application - codebase, package
- distributions(including this one), and documentation - is at the following public 
- Github repository:
+ that don't currently use the VAPALS-ELCAP system but plan to start. There is
+ also test code as a step towards adding the capability to match and merge
+ duplicate patient records. The definitive source for the VAPALS-ELCAP
+ application - codebase, package distributions(including this one), and
+ documentation - is at the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -90,7 +91,6 @@ ii. Contents
 
  The changes in this patch are:
 
-
  #.#. Added conversion capability: Ability to convert from a .tsv file to VAPALS-
  ELCAP data format.
 
@@ -99,7 +99,16 @@ ii. Contents
    solution: Developed code to convert data.
 
    reported: 2021-10-18 by Lilly
-
+   
+ #.#. Test of matching report: Ability to test the matching report to see if 
+ the algorhythm for matching records seems to be working well.
+ 
+   issue 21-115: Capability to merge duplicate patient records
+   
+   solution: This is a partial solution just to test the matching algorythm.
+   Matching and merging records is not yet available.
+   
+   reported: 2021-07-09	by Jirapatnakul
 
 #. Package elements
 
@@ -158,44 +167,6 @@ ii. Contents
    Then unzip the archive file with the following command.
 
 #>include: .dtool/unzip-snippet.txt
-
-
- #.#. Install web-application files
-
-    At this point, the web-application files must be installed. This is done
-    with a script that backs up the affected directories before installing
-    anything, then upgrades the web-application files.
-
-     $ ./upgrade-auxfiles
-     Backing up files to ./.aux-backup:
-     [... lists of files backed up ...]
-     Compressing the backup:
-     [... lists of files being compressed ...]
-     Cleaning up.
-     Done with backup of auxiliary files.
-
-     Updating from ./auxfiles ...
-     [... lists of files being updated ...]
-     Done with install.
-
-     You may now proceed with the KIDS installation.
-     $ _
-
-    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
-    the official GitHub repository, and this script will have different output.
-
-     $ ./upgrade-auxfiles
-     Backing up files to ./.aux-backup:
-     [... lists of files backed up ...]
-     Compressing the backup:
-     [... lists of files being compressed ...]
-     Cleaning up.
-     Done with backup of auxiliary files.
-
-     Found a valid Git repository; pulling updates ...
-     [... output varies ...]
-     Done with install.
-     $ _
 
 
  #.#. Back up M routines

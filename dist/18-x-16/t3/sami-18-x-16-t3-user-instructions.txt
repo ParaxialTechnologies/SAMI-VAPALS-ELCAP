@@ -1,31 +1,68 @@
 Instructions to convert the patient data spreadsheet to VAPALS-ELCAP format.
 
-1. Export or save the patient spreadsheet as .tsv or tab-delimited format.
-(Referred to hereafter as the .tsv file.)
-2. Copy the .tsv file to the www directory that is in the top layer of the
-osehra directory on the VAPALS-ELCAP server.
-3. Get into the M programmer's environment. (type mumps -dir at the Unix prompt)
-4. Type SET DUZ=1 D ^XUP and return.
-5. Hit <Enter> at Select OPTION NAME.
-5. Type DO LOAD^SAMILD2
-6. Enter three letter site code.
+NOTE: if there are issues, please contact your VAPALS-ELCAP dev team with as
+much data as possible for instruction and fixes.
+
+1. Make sure the site is configured. If you aren't sure, check with the system
+administrator. If you are the sys admin and you don't know, see the 
+instructions for configuring a new site {here/weburl/document title}
+
+2. Try this process on a test server first to make sure it works as expected
+before completing this process on the production server. There is a test
+spreadsheet included with the install package for this function. It is named
+intake-test-data-tab-del.txt and might be in the .home/osehra/run/in/sami/18-x-16/t3
+directory. It can also be found as a download at {weburl}. If there are 
+problems with the conversion, create a new test site to try again after changes
+are made until the process runs smoothly. Then, make any changes that were
+necessary on the test server on the production server as well before attempting
+the conversion on production.
+
+3. In Excel, export or save the patient spreadsheet as .tsv or tab-delimited
+format. (Referred to hereafter as the .tsv file.)
+
+4. Copy the .tsv file to the www directory that is in the top layer of the
+osehra directory on the VAPALS-ELCAP server. (./home/osehra/www/)
+
+5. Type "mumps -dir" at the Unix prompt to enter the M programmer's environment.
+
+6. Type DO LOAD^SAMILD2 to start the conversion program.
+
+7. Enter your three letter site code. (Nashville is TVH)
 Example:
 Select SAMI SITE: XXX  VISTA HEALTH CARE     XXX      6100
 
-7. Hit enter to accept default directory.
+8. Hit enter to accept the default directory unless you had to put the .tsv
+file somewhere else.
 File Directory: /home/osehra/www/// 
 
-8. After Replace enter three periods to accept replacing whole file name, after
-With enter the file you want to use. Hit enter after the second Replace to let
-it know that you don't want to replace anything else.
+9. After "Replace," enter three periods (...) to accept replacing the whole 
+file name, after "With" enter the file you want to use. Hit enter after the 
+second "Replace" to let it know that you don't want to replace anything else.
 Example:
 Enter filename to load.: LCSV2_DATA_2021-06-29_REDCAP.tsv
-  Replace ... With intake-nashville-test.txt  Replace 
-   intake-nashville-test.txt
+  Replace ... With intake-test-data-tab-del.txt  Replace 
+   intake-test-data-tab-del.txt
    
-If this happens there is a good chance you didn't put the data file in the
-right place: 
+Note: If you see an error warning something like this, there is a good chance 
+you didn't put the data file in the right place: 
 %YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+
+This example is similar to the beginning of the output you should see:
+keyrow is 3 ROW=saminame	ssn	last5	sigi	sex	sbdob	siceidesicerfdt	sicerfpc	sic
+erfwh	sicerfge	sicerfpu	sicerfon	sicerfsc	sicerfosicerfoo	sicechrt	sicemhlc	si
+cemhhs	sicemhot	sicemhoo	sicecepc	sicecenc	sicecehsicecepr	siceceot	siceceoo	s
+iceshqd	siceshpy	siceshnc	siceshot	siceshoo	sipediss
+
+The output could spout out for many pages and several minutes depending on how
+many lines of data you have in the .tsv file. Don't worry when you see
+******** exception **********, it's not a bad thing.
+
+10. Once the output stops, type "halt" at the prompt to go back out to the 
+Unix level.
+
+11. Please then go to the VAPALS application using your web browser. Check with
+your system administrator if you haven't been given the web address and your
+login credentials. Test to make sure your data was properly entered.
 
 
 
@@ -51,6 +88,8 @@ Instructions for reviewing Intake Forms before submitting
 	    b. Was a pre-enrollment discussion held?
 	    c. Primary address verified?
 	    
+4. If everything looks good, hit Submit at the bottom of the form. You can
+    choose "Save for Later" if you aren't ready to Submit the form.
 	
 	
 Questions for the Nurse Navigator team.

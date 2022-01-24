@@ -3,9 +3,7 @@
 === 1
 
 Type [ttsp]##mumps -dir## at the Unix prompt to enter the M programmer's
-environment.
-
-At the prompt in M, type [ttsp]##SET DUZ=1 DO Q^DI##
+environment. Then, at the prompt in M, type [ttsp]##SET DUZ=1 DO Q^DI##.
 
 -------------------------------------------------------------------------------
 $ mumps -dir
@@ -26,7 +24,7 @@ option will be completed for you:
 Select OPTION: ENTER OR EDIT FILE ENTRIES
 
 
-Input to what File: SAMI SITE//
+Input to what File: SAMI SITE// _
 -------------------------------------------------------------------------------
 
 === 3
@@ -37,7 +35,7 @@ you can hit enter; if not, type [ttsp]##SAMI SITE## and hit enter:
 -------------------------------------------------------------------------------
 Input to what File: SAMI SITE//           ([n] entries)
 
-EDIT WHICH FIELD: ALL//
+EDIT WHICH FIELD: ALL// _
 -------------------------------------------------------------------------------
 
 Here, `[n]` will be some number that corresponds to your site.
@@ -47,42 +45,65 @@ Here, `[n]` will be some number that corresponds to your site.
 At the [ttsp]##EDIT WHICH FIELD## prompt, hit enter.
 
 -------------------------------------------------------------------------------
-EDIT WHICH FIELD: ALL//
+EDIT WHICH FIELD: ALL// _
 -------------------------------------------------------------------------------
 
-5. At the "SAMI SITE" prompt, select the line that says
+=== 5
 
-    SAMI SITE: ZZZTOGUS STNB    ME  STNB  4029AF   INACTIVE
+At the [ttsp]##SAMI SITE## prompt, type in the first few letters of a site
+name. For example, you can type in `ZZZTOG`, and if your facility list is the
+same as ours, it will look like this:
 
-   Note that you much choose one of the items on the existing list of
-   facilities. If you need to see the complete (and very long list),
-   you can type "??". Note also that it doesn't really matter which
-   one you select if you're on a test system.
+-------------------------------------------------------------------------------
+SAMI SITE: ZZZTOGUS STNB    ME  STNB  4029AF   INACTIVE
+-------------------------------------------------------------------------------
 
-6. You'll be prompted with this:
+Note that you must choose one of the items on the existing list of
+facilities. If you need to see the complete (and possibly long list), you can
+type `??` (as of this writing, a list of about 14 sites will appear). You can
+choose to enter if you want to see more sites, or you can hit `^` if you are
+ready to exit the list and put in the first few letters of a site name. Note
+also that it doesn't really matter which one you select if you're on a test
+system.
 
-    Are you adding 'ZZZTOGUS STNB' as a new SAMI SITE (the [nth])? No//
+=== 6
 
-   where "nth" is a number representing the number of SAMI sites that
-   will exist if you add this one. Type "Y" and press enter.
+You'll be prompted with something like this:
 
-7. You will be given a series of prompts. SYMBOL will be a
-   three-letter abbreviation for the test site. ACTIVE will by "Y" for
-   Yes. DEFAULT PARAMETERS will be "VHA", and there are is no
-   additional configuration necessary for the "Select PARM" prompt, so
-   you can hit enter.
+-------------------------------------------------------------------------------
+Are you adding 'ZZZTOGUS STNB' as a new SAMI SITE (the [nth])? No// _
+-------------------------------------------------------------------------------
 
-    SYMBOL: TGS
-    ACTIVE: Y  YES
-    DEFAULT PARAMETERS: VHA
-    Select PARM:
+where `[nth]` is an ordinalo number representing the number of SAMI sites that
+will exist if you add this one. Type `Y` and press enter.
+
+=== 7
+
+You will be given a series of prompts. `SYMBOL` will be a three-letter
+abbreviation for the test site (you will need to come up with an
+abbreviation). `ACTIVE` will by `Y` for Yes. [ttsp]##DEFAULT PARAMETERS## will
+be `VHA`, and there is no additional configuration necessary for the
+[ttsp]##Select PARM## prompt, so you can hit enter.
+
+-------------------------------------------------------------------------------
+SYMBOL: TGS
+ACTIVE: Y  YES
+DEFAULT PARAMETERS: VHA
+Select PARM:
 
 
-    Select SAMI SITE:
+Select SAMI SITE: _
+-------------------------------------------------------------------------------
 
-8. Hit enter at the "Select SAMI SITE" to get out or create another site.
+=== 8
 
-9. When the "Select OPTION:" reappears, hit enter.
+Hit enter at the [ttsp]##Select SAMI SITE## to get out, or add the beginning
+letters of a new facility to create another site.
 
-10. Finally, when you get the M prompt again, type "H" and hit enter
-    to exit M.
+=== 9
+
+When the [ttsp]##Select OPTION:## prompt reappears, hit enter.
+
+=== 10
+
+Finally, when you get the M prompt again, type "H" and hit enter to exit M.

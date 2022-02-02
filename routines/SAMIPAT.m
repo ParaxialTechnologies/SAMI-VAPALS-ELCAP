@@ -1,4 +1,4 @@
-SAMIPAT ;ven/toad - init subroutines ;2021-11-14t19:34z
+SAMIPAT ;ven/toad - init subroutines ;2021-12-07t03:10z
  ;;18.0;SAMI;**12,14,15**;2020-01;
  ;;18-15
  ;
@@ -21,13 +21,13 @@ SAMIPAT ;ven/toad - init subroutines ;2021-11-14t19:34z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-11-14t19:34z
+ ;@last-update 2021-12-07t03:10z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.14
  ;@release-date 2020-01
- ;@patch-list **12,14**
+ ;@patch-list **12,14,15**
  ;
  ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
@@ -49,15 +49,22 @@ SAMIPAT ;ven/toad - init subroutines ;2021-11-14t19:34z
  ; 2021-09-08 ven/lmry 18.14  2af1f2e7
  ;  SAMIPAT add post-install for patch SAMI*1.18*14
  ;
- ; 2021-10-28 ven/lmry 18-15
- ;  SAMIPAT create a STANDARD subroutine with post-install commands that are used
- ;  for almost all patches. Change POS1814 to use that routine and add POS1815.
+ ; 2021-10-28 ven/lmry 18-15  0b585061
+ ;  SAMIPAT create a STANDARD subroutine with post-install commands that are
+ ;  used for almost all patches. Change POS1814 to use that routine and add
+ ;  POS1815.
  ;
- ; 2021-10-29 ven/lmry 18-15
+ ; 2021-10-29 ven/lmry 18-15  6e9594e8
  ;  SAMIPAT remove a space before STANDARD
  ;
- ; 2021-11-14 ven/lmry 18-15
+ ; 2021-11-14 ven/lmry 18-15  3a30fe59
  ;  SAMIPAT  Add commands for 18-15-t2.
+ ;
+ ; 2021-11-18 ven/lmry  18-15  4d71eef7
+ ;  SAMIPAT  Fix for XINDEX
+ ;
+ ; 2021-12-07 ven/lmry 18-15
+ ;  SAMIPAT  Update for final 18-15 patch
  ;
  ;
  ;@contents
@@ -116,7 +123,7 @@ POS1814 ; kids post-install for sami 18.14
 POS1815 ; kids post-install for sami 18.15
  ;
  do STANDARD
- do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t2")
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15")
  do deleteService^%webutils("GET","vapals")
  do addService^%webutils("GET","vapals","GETHOME^SAMIHOM3")
  do SETMAP^SAMIPARM("vapals:about","about.html")

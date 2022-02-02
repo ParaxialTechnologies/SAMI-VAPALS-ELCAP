@@ -1,4 +1,4 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2021-11-18t22:23z
+SAMIHUL ;ven/gpl - ielcap: home page log ;2022-01-17t23:29z
  ;;18.0;SAMI;**9,12,15,16**;2020-01
  ;18-15
  ;
@@ -22,7 +22,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-11-18t22:23z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-11-18t22:23z
+ ;@last-update 2022-01-17t23:29z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -236,7 +236,22 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-11-18t22:23z
  ; 2021-11-10 ven/gpl 18-15 ed2a3480
  ;  SAMIHOM4 support for samiroute=about points to vapals:about
  ;
- ; 2021-11-18 ven/lmry 18-15 
+ ; 2021-11-18 ven/lmry 18-15 596ea463
+ ;  SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;
+ ; 2021-11-22 ven/gpl 18-16  d26d00a7
+ ;  SAMIHOM4 patch 16 DCM functionality
+ ;
+ ; 2022-01-02 ven/gpl 18-16 45fa4633
+ ;  SAMIHOM4 Nashville sample data processing
+ ;
+ ; 2022-01-12 ven/gpl 18-15  ea379b6b
+ ;  SAMIHOM4 change calls to SAMIORU to use a parameterized site
+ ;
+ ; 2022-01-12 ven/lmry 18-15  bcef2106
+ ;  SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;
+ ; 2022-01-17 ven/lmry 18-16
  ;  SAMIHOM4 and SAMIHUL bumped versions and dates
  ;  
  ;

@@ -1,6 +1,6 @@
-SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
+SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
  ;;18.0;SAMI;**16**;2020-01;Build 2
- ;18-x-16-t2
+ ;18-16
  ;
  ;@license: see routine SAMIUL
  ;
@@ -16,11 +16,11 @@ SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-27t20:30z
+ ;@last-update 2022-01-18t00:42z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-14-16
+ ;@version 18-16
  ;@release-date 2020-01
  ;@patch-list **16**
  ;
@@ -42,12 +42,7 @@ SAMIZPH1 ;ven/gpl - VAPALS PATIENT IMPORT FOR PHILIDELPHIA ; 2021-09-27t20:30z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ; 2021-09-20/23 ven/gpl sami-18-14-16-t1
- ; SAMIZPH1 develop method to import data from a REDCap data system used by
- ; the Philadelphia VA.
  ;
- ; 2021-09-27 ven/gpl sami-18-14-16-t1
- ; SAMIZPH1 fix bug where Cache was putting the TSV records in overflow
  ;
  ;
  Q

@@ -4,10 +4,9 @@ adoc_to_html(
 
 copy_binaries(
   *.html
+  sami*[0-9].zip
 )
 
 do_subdir(
-  18-14
-  18-14-16
-  18-15
+  t[0-9]
   )

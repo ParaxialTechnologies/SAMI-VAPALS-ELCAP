@@ -9309,6 +9309,7 @@
                 $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
+            let hasImportData = false;
             //type of exam
             $("[name=cetex]").on("change", function () {
                 let isBaseline = $("[name=cetex]:checked").val() === "b";
@@ -9334,7 +9335,7 @@
 
             
             $noduleGrid = initNoduleGrid(fv);
-            let hasImportData = false;
+
             AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
                 hasImportData = true;
 

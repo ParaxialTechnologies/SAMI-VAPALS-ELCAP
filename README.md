@@ -92,20 +92,16 @@ Kill the copy via:
 
     k ^%webhttp("log")
 
+### Add/Modify a SYSTEM parameter
+System parameters are loaded into the SYS namespace and used when no site is enabled (e.g. a logon screen)
+
+    D SETPARM^SAMIPARM("SYS","logoIcon","syslogo.png")
+
 ### Add site params
 
-Enter mumps direct mode and enter programmer mode
+Enter Fileman and create the new parameter
 
-    mumps -dir
-    VAPALS YottaDB>S DUZ=1 D ^XUP
-    
-    Setting up programmer environment
-    This is a TEST account.
-    
-    Terminal Type set to: C-VT220
-
-Enter Fileman and creaet the new parameter
-
+    S DUZ=1 
     VAPALS YottaDB>D Q^DI
     
     VA FileMan 22.2

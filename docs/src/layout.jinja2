@@ -234,8 +234,7 @@
             });
 
             //attempt to change logos
-            // IF VA, do nothing, else logo = defaultIfNull(site, system)
-            // if logo not null, change src attribute.
+            // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
             const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"];
             if (iconSrc) {
                 $("img.logo-icon").attr("src", iconSrc)

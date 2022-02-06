@@ -177,9 +177,9 @@ const AI = class {
 }
 AI.SR_PATIENT_STUDY_DETAILS_KEY = "patient_study_details";
 AI.SR_NODULES_KEY = "nodules";
-AI.IMPORT_FIELD_CLASS = "import-field"; // Added to input fields that have had their value imported
+AI.IMPORT_FIELD_CLASS = "import-data"; // See vapals.css; Added to input fields that have had their value imported
 AI.IMPORT_ORIGINAL_VALUE_ATTR = "original-value"; // Attribute name used to track original value of a field before import
 AI.IMPORT_VALUE_ATTR = "import-value"; // Attribute name used to track imported data value, for the purpose of revert
 AI.IMPORT_DATA_PARENT_CLASS = "import-data-parent"; // Class used to wrap some fields
-AI.IMPORT_ICON_CLASS = "import-field";
-AI.REVERT_ICON_CLASS = "revert-field";
+AI.IMPORT_ICON_CLASS = "import-field"; // See vapals.css
+AI.REVERT_ICON_CLASS = "revert-field"; // See vapals.css

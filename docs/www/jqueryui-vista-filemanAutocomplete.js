@@ -43,8 +43,8 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
 
         if (status == 1) {
             const logoSource = $("img.logo-icon").attr('src');
-            html = html + '<div class="col-sm-3 text-right" title="Patient enrolled">';
-            html = html + '<img src="' + logoSource + '" class="enrolled-icon" alt="Logo"/>&nbsp;<em>Enrolled</em>';
+            html = html + '<div class="col-sm-3 text-right" title="Patient is enrolled">';
+            html = html + '<img src="' + logoSource + '" class="enrolled-icon" alt="Logo"/>';
             html = html + '</div>';
         } else {
             html = html + '<div class="col-sm-3"></div>'

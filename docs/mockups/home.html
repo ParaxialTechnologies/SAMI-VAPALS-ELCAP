@@ -92,8 +92,8 @@
       </span>
      </button>
      <a class="text-nowrap navigation" data-method="get" data-samiroute="home" href="home.html" style="text-decoration: none">
-      <img alt="Logo" class="hidden-xs logo-icon" src="../www/img/logo_transparent_50x50.png" title="Logo"/>
-      <img alt="Logo Text" class="logo-text" id="image-log-text" src="../www/img/logo_name_50x215.png" title="Logo Text"/>
+      <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
+      <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -350,12 +350,14 @@
 
             //attempt to change logos
             // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
-            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"];
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
+                "../www/img/logo_transparent_50x50.png";
             if (iconSrc) {
                 $("img.logo-icon").attr("src", iconSrc)
             }
 
-            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"];
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
+                "../www/img/logo_name_50x215.png";
             if (iconText) {
                 $("img.logo-text").attr("src", iconText)
             }

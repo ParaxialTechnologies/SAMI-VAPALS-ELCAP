@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2022.02.05" name="version"/>
+  <meta content="2022.02.06" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -64,17 +64,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2022.02.05">
+  <script src="jquery-conditonally-enable.js?v=2022.02.06">
   </script>
-  <script src="jquery-conditonally-display.js?v=2022.02.05">
+  <script src="jquery-conditonally-display.js?v=2022.02.06">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2022.02.05">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2022.02.06">
   </script>
-  <script src="vapals.js?v=2022.02.05">
+  <script src="vapals.js?v=2022.02.06">
   </script>
-  <script src="init.js?v=2022.02.05">
+  <script src="init.js?v=2022.02.06">
   </script>
-  <script src="nodule-grid.js?v=2022.02.05">
+  <script src="nodule-grid.js?v=2022.02.06">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -93,8 +93,8 @@
       </span>
      </button>
      <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
-      <img alt="Logo" class="hidden-xs va-only" src="img/logo_transparent_50x50.png" title="Logo"/>
-      <img alt="Logo Text" class="va-only" id="image-log-text" src="img/logo_name_50x215.png" title="Logo Text"/>
+      <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
+      <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -13267,10 +13267,23 @@
                     }
                 });
             });
+
+            //attempt to change logos
+            // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
+                "img/logo_transparent_50x50.png";
+            if (iconSrc) {
+                $("img.logo-icon").attr("src", iconSrc)
+            }
+
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
+                "img/logo_name_50x215.png";
+            if (iconText) {
+                $("img.logo-text").attr("src", iconText)
+            }
         }
     }
 
-    //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) {
         paramSubstitution(siteId);
 
@@ -13286,7 +13299,6 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("footer").remove();
-            $(".non-va-only").remove();
         } else {
             $(".va-only").remove();
         }

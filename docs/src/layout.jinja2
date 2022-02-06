@@ -67,9 +67,9 @@
             </button>
             <a href="{{ "home.html" if mockup else "#!" }}" class="text-nowrap navigation" style="text-decoration: none"
                data-method="{{ formMethod }}" data-samiroute="home">
-                <img src="{{ path }}img/logo_transparent_50x50.png" title="Logo" alt="Logo"
+                <img src="" title="Logo" alt="Logo"
                      class="hidden-xs logo-icon"/>
-                <img src="{{ path }}img/logo_name_50x215.png" title="Logo Text" alt="Logo Text" id="image-log-text"
+                <img src="" title="Logo Text" alt="Logo Text" id="image-log-text"
                      class="logo-text"/>
             </a>
         </div>
@@ -235,12 +235,14 @@
 
             //attempt to change logos
             // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
-            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"];
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
+                "{{ path }}img/logo_transparent_50x50.png";
             if (iconSrc) {
                 $("img.logo-icon").attr("src", iconSrc)
             }
 
-            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"];
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
+                "{{ path }}img/logo_name_50x215.png";
             if (iconText) {
                 $("img.logo-text").attr("src", iconText)
             }

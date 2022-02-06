@@ -592,30 +592,6 @@
     <input type="hidden" name="cennod" value="{{ "1" if mockup else "0" }}" context="server"/>
     <input type="hidden" name="ceanod" value="{{ "y" if mockup else "n" }}" context="server"/>
 
-
-    <div class="modal fade" id="dataImportModal" tabindex="-1" role="dialog" aria-labelledby="dataImportModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="dataImportModalLabel">Import Data</h4>
-                </div>
-                <div class="modal-body">
-                    Select which data set to import.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary importDICOM" data-dismiss="modal">Import DICOM Header
-                        Information
-                    </button>
-                    <button type="button" class="btn btn-primary importAI" data-dismiss="modal">Import AI Findings
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         let j = {};
 
@@ -632,33 +608,7 @@
                 }
             });
 
-            $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
-                .done(function (json) {
-                    j = json;
-                    if (json.result !== undefined && json.result.length > 0) {
-                        const sr = json.result[0]; //temporarily pick the first one. TODO: find one closest to study date.
-                        $noduleGrid.structuredReport(sr);
-
-                        //trigger change event on type of exam to display import buttons now that data is set.
-                        $("[name=cetex]").trigger('change');
-
-                        // with data now pulled in, allow modal to open when button is clicked.
-                        $(".import-data-button").on('click', function () {
-                            $('#dataImportModal').modal();
-                        });
-                    }
-                });
-
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".revert-data-button").on('click', $noduleGrid.revertData);
-
-            //Modal buttons
-            $(".importAI").on('click', function () {
-                $noduleGrid.importData();
-            });
-            $(".importDICOM").on('click', function () {
-                $noduleGrid.importDicomHeader();
-            });
 
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);

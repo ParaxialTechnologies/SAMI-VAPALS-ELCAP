@@ -76,6 +76,8 @@
   </script>
   <script src="../www/nodule-grid.js?v=2022.02.06">
   </script>
+  <script src="../www/ai.js?v=2022.02.06">
+  </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
    <div class="container-fluid">
@@ -316,12 +318,12 @@
         </label>
        </div>
        <div>
-        <button class="btn btn-default import-data-button" type="button">
+        <button class="btn btn-default import-data-button" style="display: none;" type="button">
          <span aria-hidden="true" class="fa">
          </span>
          Import AI+ Data
         </button>
-        <button class="btn btn-default revert-data-button" type="button">
+        <button class="btn btn-default revert-data-button" style="display: none;" type="button">
          <span aria-hidden="true" class="fa">
          </span>
          Revert AI+ Data
@@ -5455,37 +5457,6 @@
      </div>
      <input context="server" name="cennod" type="hidden" value="1"/>
      <input context="server" name="ceanod" type="hidden" value="y"/>
-     <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
-      <div class="modal-dialog" role="document">
-       <div class="modal-content">
-        <div class="modal-header">
-         <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-          <span aria-hidden="true">
-           ×
-          </span>
-         </button>
-         <h4 class="modal-title" id="dataImportModalLabel">
-          Import Data
-         </h4>
-        </div>
-        <div class="modal-body">
-         Select which data set to import.
-        </div>
-        <div class="modal-footer">
-         <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
-          Import DICOM Header
-                        Information
-         </button>
-         <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
-          Import AI Findings
-         </button>
-         <button class="btn btn-default" data-dismiss="modal" type="button">
-          Cancel
-         </button>
-        </div>
-       </div>
-      </div>
-     </div>
      <script>
       let j = {};
 
@@ -5502,33 +5473,7 @@
                 }
             });
 
-            $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
-                .done(function (json) {
-                    j = json;
-                    if (json.result !== undefined && json.result.length > 0) {
-                        const sr = json.result[0]; //temporarily pick the first one. TODO: find one closest to study date.
-                        $noduleGrid.structuredReport(sr);
-
-                        //trigger change event on type of exam to display import buttons now that data is set.
-                        $("[name=cetex]").trigger('change');
-
-                        // with data now pulled in, allow modal to open when button is clicked.
-                        $(".import-data-button").on('click', function () {
-                            $('#dataImportModal').modal();
-                        });
-                    }
-                });
-
             $(".add-nodule").on('click', $noduleGrid.addNodule);
-            $(".revert-data-button").on('click', $noduleGrid.revertData);
-
-            //Modal buttons
-            $(".importAI").on('click', function () {
-                $noduleGrid.importData();
-            });
-            $(".importDICOM").on('click', function () {
-                $noduleGrid.importDicomHeader();
-            });
 
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
@@ -8955,6 +8900,37 @@
     </div>
    </form>
   </div>
+  <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title" id="dataImportModalLabel">
+       Import Data
+      </h4>
+     </div>
+     <div class="modal-body">
+      Select which data set to import.
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
+       Import DICOM Header
+                    Information
+      </button>
+      <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
+       Import AI Findings
+      </button>
+      <button class="btn btn-default" data-dismiss="modal" type="button">
+       Cancel
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
   <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
    <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -9314,8 +9290,9 @@
             return fv;
         }
 
-        $(function () {
+        let $noduleGrid; //global accessor
 
+        $(function () {
             const fv = createFormValidator();
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
@@ -9334,12 +9311,16 @@
 
             //type of exam
             $("[name=cetex]").on("change", function () {
-                const $sidoe = $("#sidoe");
-                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
+                let isBaseline = $("[name=cetex]:checked").val() === "b";
+                if (isBaseline) { // type of exam (tex) is baseline
+                    const $sidoe = $("#sidoe");
                     if (!$sidoe.val()) {
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
                 }
+                const showImport = isBaseline && hasImportData === true;
+                $(".import-data-button").toggle(showImport);
+                $(".revert-data-button").toggle(showImport);
             });
 
             // If no value is selected for CT Protocol, preselect "low-dose" as the default.
@@ -9352,8 +9333,124 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             
-            const $noduleGrid = initNoduleGrid(fv);
+            $noduleGrid = initNoduleGrid(fv);
+            let hasImportData = false;
+            AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
+                hasImportData = true;
 
+                //trigger change event on type of exam to display import buttons now that data is set.
+                $("[name=cetex]").trigger('change');
+
+                // with data now available hookup click handlers of buttons to import data
+                $(".import-data-button").on('click', function () {
+                    AI.displayModal(function () {
+                        importDicomHeader(structuredReport);
+                    }, function () {
+                        importAllData(structuredReport)
+                    })
+                });
+            })
+
+            function importAllData(structuredReport) {
+                importDicomHeader(structuredReport);
+
+                const study = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY];
+                const seriesNumber = study["Series Number"]
+                const nodules = structuredReport[AI.SR_NODULES_KEY]
+                $noduleGrid.importData(nodules, seriesNumber);
+            }
+
+            function importDicomHeader(structuredReport) {
+                console.debug("importDicomHeader(): structuredReport=%o", structuredReport);
+                const patientData = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY]
+                console.debug("importDicomHeader(): patientData=%o", patientData)
+                Object.entries(patientData).forEach(([key, value]) => {
+                    if (key === "Study Date") {
+                        const fieldSelector = "#cedos";
+                        const $field = $(fieldSelector);
+
+                        //convert value to VAPALS format
+                        const studyDateMoment = moment(value);
+                        if (studyDateMoment.isValid()) {
+                            value = studyDateMoment.format(VAPALS.DATE_FORMAT);
+                        }
+
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
+
+                            AI.createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
+                        }
+                    }
+                    if (key === "Slice Thickness") {
+                        const fieldSelector = "#cectrst";
+                        const $field = $(fieldSelector);
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            if (!isNaN(value)) { //value is a valid number either as a string or Number
+                                if (value === 1) { //handle JSON conversion of 1.0 to 1 (back to 1.0)
+                                    value = '1.0';
+                                }
+                                const strValue = value.toString();
+                                $field.val(strValue);
+                                $field.attr(AI.IMPORT_VALUE_ATTR, strValue);
+                                if (value === "o") {
+                                    $("#cectrsto-container").show();
+                                } else {
+                                    $("#cectrsto-container").hide();
+                                }
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                            }
+
+                        }
+                    }
+                    if (key === "Specify") {
+                        const fieldSelector = "#cectrsto";
+                        const $field = $(fieldSelector);
+                        $("#cectrsto-container").show();
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
+                            AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                        }
+                    }
+                });
+            }
+
+            $(".revert-data-button").on('click', function () {
+                // for fields not in "#nodule-table"
+                $("." + AI.IMPORT_FIELD_CLASS).each(function () {
+                    $(this).val($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR));
+                    if ($(this).attr("id") === "cectrst") {
+                        if ($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR) == "o") {
+                            $("#cectrsto-container").show();
+                        } else {
+                            $("#cectrsto-container").hide();
+                        }
+                    }
+                    $(this).removeAttr(AI.IMPORT_ORIGINAL_VALUE_ATTR);
+                    $(this).removeAttr(AI.IMPORT_VALUE_ATTR);
+                    $(this).removeClass(AI.IMPORT_FIELD_CLASS);
+                });
+
+                $noduleGrid.revertData();
+
+                AI.removeImportIcons();
+            });
             initAbnormalities(fv);
             initEmphysema(fv);
             initFollowup(fv);
@@ -9375,113 +9472,6 @@
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
-
-        function revertField(element, fieldSelector) {
-            const $ele = $(fieldSelector);
-            let importValue = "";
-            if ($ele.hasClass("import-data")) {
-                if ($ele.prop('type') === "checkbox") {
-                    revertFieldHit = true;
-                    importFieldHit = false;
-                    if ($ele.attr("original-value") === "false") {
-                        $ele.prop("checked", true);
-                    } else {
-                        $ele.prop("checked", false);
-                    }
-                    if ($ele.attr("import-value") === "false") {
-                        importValue = "unchecked";
-                    } else {
-                        importValue = "checked";
-                    }
-                } else {
-                    $ele.val($ele.attr("original-value"));
-
-                    if ($ele.prop('type') === "select-one") {
-                        const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $ele.attr("import-value") + "\"]";
-                        importValue = $(fieldSelectorWithVal).text().trim();
-                    } else {
-                        importValue = $ele.attr("import-value");
-                    }
-
-                }
-
-                $(element).tooltip('destroy').remove();
-
-                if (fieldSelector === "#cedos") {
-                    createImportElement(fieldSelector, importValue).insertAfter($("#cedos-addon").parent().parent());
-                } else {
-                    createImportElement(fieldSelector, importValue).insertAfter(fieldSelector);
-                    if (fieldSelector === "#cectrst") {
-                        if ($ele.attr("original-value") == "o") {
-                            $("#cectrsto-container").show();
-                        } else {
-                            $("#cectrsto-container").hide();
-                        }
-                    }
-                }
-            }
-        }
-
-        function createImportElement(fieldName, importValue) {
-            const html = "<i data-toggle=\"tooltip\" class=\"fa fa-repeat import-field\" title=\"Import '" +
-                importValue + "'\"" + " onclick=\"importField(this, '" + fieldName + "')\"></i>";
-            const $importElement = $(html);
-            $importElement.tooltip();
-            return $importElement;
-        }
-
-        function importField(element, fieldSelector) {
-            const $ele = $(fieldSelector);
-            let origValue = "";
-            if ($ele.hasClass("import-data")) {
-                if ($ele.prop('type') === "checkbox") {
-                    importFieldHit = true;
-                    revertFieldHit = false;
-                    if ($ele.attr("import-value") === "false") {
-                        $ele.prop("checked", true);
-                    } else {
-                        $ele.prop("checked", false);
-                    }
-                    if ($ele.attr("original-value") === "false") {
-                        origValue = "unchecked";
-                    } else {
-                        origValue = "checked";
-                    }
-                } else {
-                    $ele.val($ele.attr("import-value"));
-
-                    if ($ele.prop('type') === "select-one") {
-                        const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $ele.attr("original-value") + "\"]";
-                        origValue = $(fieldSelectorWithVal).text().trim();
-                    } else {
-                        origValue = $ele.attr("original-value");
-                    }
-                }
-
-                $(element).tooltip('destroy').remove();
-
-                if (fieldSelector === "#cedos") {
-                    createRevertElement(fieldSelector, origValue).insertAfter($("#cedos-addon").parent().parent());
-                } else {
-                    createRevertElement(fieldSelector, origValue).insertAfter(fieldSelector);
-                    if (fieldSelector === "#cectrst") {
-                        if ($ele.attr("import-value") == "o") {
-                            $("#cectrsto-container").show();
-                        } else {
-                            $("#cectrsto-container").hide();
-                        }
-                    }
-                }
-            }
-        }
-
-        function createRevertElement(fieldName, originalValue) {
-            const html = "<i data-toggle=\"tooltip\" class=\"fa fa-undo revert-field\" title=\"Revert to '" +
-                originalValue + "'\"" + " onclick=\"revertField(this, '" + fieldName + "')\"></i>";
-            const $revertElement = $(html);
-            $revertElement.tooltip();
-            return $revertElement;
-        }
   </script>
   )
  </body>

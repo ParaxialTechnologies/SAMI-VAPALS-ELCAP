@@ -4,8 +4,6 @@
  * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
  */
 
-const SR_PATIENT_STUDY_DETAILS_KEY = "patient_study_details";
-const SR_NODULES_KEY = "nodules";
 /**
  * A jQuery plugin to manage a nodule grid
  * @link https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP
@@ -15,9 +13,6 @@ const SR_NODULES_KEY = "nodules";
  * @param {string|function} [options.availableNodules="10"] - number of nodules externally rendered in the grid. Depends on _nodule-grid.jinja2
  * @param {string|function|object} [options.getNoduleCount=fn()] - function used to get the number of visible nodules
  * @param {string|function|object} [options.setNoduleCount=fn(noduleCount)] - function used to set the number of visible nodules
-
-
- * @todo add github link, author, copyright, license information
  * @class noduleGrid
  * @memberof jQuery
  */
@@ -26,7 +21,6 @@ const SR_NODULES_KEY = "nodules";
         noduleGrid: function (options) {
             const settings = $.extend({
                 availableNodules: 10,
-                structuredReport: null,
                 getNoduleCount: function () {
                     return 0;
                 },
@@ -46,15 +40,15 @@ const SR_NODULES_KEY = "nodules";
                 });
 
                 const currentIsItNewValue = $("#cect" + noduleId + "ch").val();
-                // console.log("setupNoduleEnabledState(noduleIndex=" + noduleId + "): currentIsItNewValue=" + currentIsItNewValue);
+                console.debug("setupNoduleEnabledState(noduleIndex=%s): currentIsItNewValue=%s", noduleId, currentIsItNewValue);
                 if (currentIsItNewValue !== '-') {
                     toggleFields(noduleId);
                 }
             }
 
             function toggleFields(noduleId) {
-                // const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
-                // console.log(logPrefix + 'entered');
+                const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
+                console.debug(logPrefix + 'entered');
 
                 // $fields is an array of fields related to this nodule with the exception of "is it new"
                 // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -66,13 +60,13 @@ const SR_NODULES_KEY = "nodules";
                     return id !== "cect" + noduleId + "ch" && (regex.test(name) || regex.test(id));
                 });
                 let isItNewValue = $("#cect" + noduleId + "ch").val();
-                // console.log(logPrefix + 'isItNewValue=' + isItNewValue);
+                console.debug(logPrefix + 'isItNewValue=%s', isItNewValue);
                 // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
                 // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
                 // resected (pr)
                 // NB: For IE support, we must use indexOf() instead of .includes(...);
                 let noduleResolved = ['pw', 'px', 'pr'].indexOf(isItNewValue) > -1;
-                // console.log(logPrefix + 'noduleResolved=' + noduleResolved);
+                console.debug(logPrefix + 'noduleResolved=%s', noduleResolved);
                 if (noduleResolved) {
                     //reduce the list to exclude the fields: status (st) and likely location (ll)
                     $fields = $fields.filter(function () {
@@ -88,7 +82,7 @@ const SR_NODULES_KEY = "nodules";
                 }
 
                 if (isItNewValue === "-" || noduleResolved) {
-                    // console.log(logPrefix + 'disabling fields');
+                    console.log(logPrefix + 'disabling fields');
                     //empty out values
                     $fields.filter("select").val("-");
                     $fields.filter(":radio, :checkbox").prop('checked', false);
@@ -111,7 +105,7 @@ const SR_NODULES_KEY = "nodules";
                     //finally disable the fields
                     $fields.prop('disabled', true);
                 } else { //re-enable fields
-                    // console.log(logPrefix + 'enabling fields');
+                    console.debug(logPrefix + 'enabling fields');
                     $fields
                         .prop('disabled', false)
                         .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
@@ -127,7 +121,7 @@ const SR_NODULES_KEY = "nodules";
                         $("#cect" + noduleId + "st").val("-");
                     }
                 }
-                // console.log(logPrefix + 'exiting');
+                console.debug(logPrefix + 'exiting');
             }
 
             function mean(v1, v2) {
@@ -325,8 +319,7 @@ const SR_NODULES_KEY = "nodules";
                     'ssl', 'ssw', 'ssd', 'ssd-val', 'se', 'ca', 'in', 'sp', 'pld', 'ac', 'co', 'pd'];
                 const selectorMap = []; //map of elements (i.e. arr['elementA'] = 'elementB' ) that needs to swap values.
                 //let x of suffixes won't wor in IE11
-                for (let i = 0; i < suffixes.length; ++i) {
-                    const suffix = suffixes[i];
+                for (const suffix of suffixes) {
                     selectorMap[prefix1 + suffix] = prefix2 + suffix;
                 }
 
@@ -411,152 +404,56 @@ const SR_NODULES_KEY = "nodules";
             }
 
             function setUpImportDataOnChange() {
-                $("#nodule-table").find("[original-value]").on('change', function () {
+                $("#nodule-table").find("[" + AI.IMPORT_ORIGINAL_VALUE_ATTR + "]").on('change', function () {
                     let importValue = "";
-                    if ($(this).hasClass("import-data")) {
+                    if ($(this).hasClass(AI.IMPORT_FIELD_CLASS)) {
                         if ($(this).prop('type') === "checkbox") {
-                            if ($(this).attr("import-value") === "false") {
+                            if ($(this).attr(AI.IMPORT_VALUE_ATTR) === "false") {
                                 importValue = "unchecked";
                             } else {
                                 importValue = "checked";
                             }
                         } else {
                             if ($(this).prop('type') === "select-one") {
-                                const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr("import-value") + "\"]";
+                                const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr(AI.IMPORT_VALUE_ATTR) + "\"]";
                                 importValue = $(fieldSelectorWithVal).text().trim();
                             } else {
-                                importValue = $(this).attr("import-value");
+                                importValue = $(this).attr(AI.IMPORT_VALUE_ATTR);
                             }
                         }
-                        $(this).parent().find(".revert-field").remove();
-                        $(this).parent().find(".import-field").remove();
-
-                        createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
+                        AI.removeImportIcons();
+                        AI.createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
                     }
                 });
             }
 
             function _revertData() {
-                $("#nodule-table").find("[original-value]").each(function () {
-                    if ($(this).hasClass("import-data")) {
+                $("#nodule-table").find("[" + AI.IMPORT_ORIGINAL_VALUE_ATTR + "]").each(function () {
+                    if ($(this).hasClass(AI.IMPORT_FIELD_CLASS)) {
                         if ($(this).prop('type') === "checkbox") {
-                            if ($(this).attr("original-value") === "false") {
+                            if ($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR) === "false") {
                                 $(this).prop("checked", false);
                             } else {
                                 $(this).prop("checked", true);
                             }
                         } else {
-                            $(this).val($(this).attr("original-value"));
+                            $(this).val($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR));
                         }
-                        $(this).removeAttr("original-value");
-                        $(this).removeAttr("import-value");
-                        $(this).removeClass("import-data");
+                        $(this).removeAttr(AI.IMPORT_ORIGINAL_VALUE_ATTR);
+                        $(this).removeAttr(AI.IMPORT_VALUE_ATTR);
+                        $(this).removeClass(AI.IMPORT_FIELD_CLASS);
                     }
                 });
-                $("#nodule-table").find(".import-data").each(function () {
-                    $(this).removeClass("import-data");
+                $("#nodule-table").find("." + AI.IMPORT_FIELD_CLASS).each(function () {
+                    $(this).removeClass(AI.IMPORT_FIELD_CLASS);
                 });
-                $("#nodule-table").find(".import-data-parent").each(function () {
-                    $(this).removeClass("import-data-parent");
+                $("#nodule-table").find("." + AI.IMPORT_DATA_PARENT_CLASS).each(function () {
+                    $(this).removeClass(AI.IMPORT_DATA_PARENT_CLASS);
                 });
-
-                // for fields not in "#nodule-table"
-                $(".import-data").each(function () {
-                    $(this).val($(this).attr("original-value"));
-                    if ($(this).attr("id") === "cectrst") {
-                        if ($(this).attr("original-value") == "o") {
-                            $("#cectrsto-container").show();
-                        } else {
-                            $("#cectrsto-container").hide();
-                        }
-                    }
-                    $(this).removeAttr("original-value");
-                    $(this).removeAttr("import-value");
-                    $(this).removeClass("import-data");
-                });
-
-                $(".revert-field").remove(); // remove all revert-field icons
-                $(".import-field").remove(); // remove all import-field icons
             }
 
-            function _importDicomHeader() {
-                console.log(settings.structuredReport)
-                const patientData = settings.structuredReport[SR_PATIENT_STUDY_DETAILS_KEY]
-                console.log(patientData)
-                Object.entries(patientData).forEach(([key, value]) => {
-                    if (key === "Study Date") {
-                        const fieldSelector = "#cedos";
-                        const $field = $(fieldSelector);
-
-                        //convert value to VAPALS format
-                        const studyDateMoment = moment(value);
-                        if (studyDateMoment.isValid()) {
-                            value = studyDateMoment.format(VAPALS.DATE_FORMAT);
-                        }
-
-                        if ($field.hasClass("import-data")) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass("import-data");
-                            $field.attr("original-value", $field.val());
-                            const originalValue = $field.val();
-                            $field.val(value);
-                            $field.attr("import-value", value);
-
-                            createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
-                        }
-                    }
-                    if (key === "Slice Thickness") {
-                        const fieldSelector = "#cectrst";
-                        const $field = $(fieldSelector);
-                        if ($field.hasClass("import-data")) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass("import-data");
-                            $field.attr("original-value", $field.val());
-                            const originalValue = $field.val();
-                            if (!isNaN(value)) { //value is a valid number either as a string or Number
-                                if (value === 1) { //handle JSON conversion of 1.0 to 1 (back to 1.0)
-                                    value = '1.0';
-                                }
-                                const strValue = value.toString();
-                                $field.val(strValue);
-                                $field.attr("import-value", strValue);
-                                if (value === "o") {
-                                    $("#cectrsto-container").show();
-                                } else {
-                                    $("#cectrsto-container").hide();
-                                }
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
-
-                        }
-                    }
-                    if (key === "Specify") {
-                        const fieldSelector = "#cectrsto";
-                        const $field = $(fieldSelector);
-                        $("#cectrsto-container").show();
-                        if ($field.hasClass("import-data")) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass("import-data");
-                            $field.attr("original-value", $field.val());
-                            const originalValue = $field.val();
-                            $field.val(value);
-                            $field.attr("import-value", value);
-                            createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                        }
-                    }
-                });
-
-            }
-
-            function _importData() {
-                _importDicomHeader();
-                const nodules = settings.structuredReport[SR_NODULES_KEY];
-                const study = settings.structuredReport[SR_PATIENT_STUDY_DETAILS_KEY];
-
-                // if number of nodules shown is less than the number of entries in structuredReport array then increase the number of nodules
+            function _importData(nodules, seriesNumber) {
+                // if current number of nodules shown is less than the number nodules provided, increase the number visible
                 if (settings.getNoduleCount() < nodules.length) {
                     let noduleCount = nodules.length;
                     _displayNodules(noduleCount);
@@ -565,21 +462,19 @@ const SR_NODULES_KEY = "nodules";
 
                 function applyTextValue(fieldNameSelector, value) {
                     const $field = $(fieldNameSelector);
-                    if (!$field.hasClass("import-data")) {
-                        $field.addClass("import-data");
+                    if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                        $field.addClass(AI.IMPORT_FIELD_CLASS);
                         const originalValue = $field.val();
-                        $field.attr("original-value", originalValue);
-                        $field.attr("import-value", value);
-                        $field.parent().addClass("import-data-parent"); //NB: used to fix wrapping of revert element
-                        createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
+                        $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, originalValue);
+                        $field.attr(AI.IMPORT_VALUE_ATTR, value);
+                        $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS); //NB: used to fix wrapping of revert element
+                        AI.createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
                     }
                     $field.val(value);
                 }
 
                 let noduleId = 1;
                 let lungRads = "";
-
-                const seriesNumber = study["Series Number"];
 
                 nodules.forEach(nodule => {
                     Object.entries(nodule).forEach(([key, value]) => {
@@ -589,29 +484,29 @@ const SR_NODULES_KEY = "nodules";
                         if (key === "Finding site") {
                             const fieldSelector = "#cect" + noduleId + "ll";
                             const $field = $(fieldSelector);
-                            if (!$field.hasClass("import-data")) {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
+                            if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $field.addClass(AI.IMPORT_FIELD_CLASS);
+                                $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
                                 const originalValue = $(fieldSelectorWithVal).text().trim();
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                                $field.parent().addClass("import-data-parent");
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                                $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS);
                             }
                             if (value.indexOf("Upper lobe of right lung") !== -1) {
                                 $field.val("rul");
-                                $field.attr("import-value", "rul");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rul");
                             } else if (value.indexOf("Upper lobe of left lung") !== -1) {
                                 $field.val("lul");
-                                $field.attr("import-value", "lul");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "lul");
                             } else if (value.indexOf("Lower lobe of right lung") !== -1) {
                                 $field.val("rll");
-                                $field.attr("import-value", "rll");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rll");
                             } else if (value.indexOf("Lower lobe of left lung") !== -1) {
                                 $field.val("lll");
-                                $field.attr("import-value", "lll");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "lll");
                             } else if (value.indexOf("Middle lobe of lung") !== -1) {
                                 $field.val("rml");
-                                $field.attr("import-value", "rml");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rml");
                             }
                         }
 
@@ -625,25 +520,25 @@ const SR_NODULES_KEY = "nodules";
                         if (key === "Attenuation Characteristic") {
                             const fieldSelector = "#cect" + noduleId + "nt";
                             const $field = $(fieldSelector);
-                            if (!$field.hasClass("import-data")) {
-                                $field.addClass("import-data");
-                                $field.attr("original-value", $field.val());
+                            if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $field.addClass(AI.IMPORT_FIELD_CLASS);
+                                $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
                                 const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
                                 const originalValue = $(fieldSelectorWithVal).text().trim();
-                                createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
                             }
                             if (value.indexOf("PartSolid") !== -1) {
                                 $field.val("m");
-                                $field.attr("import-value", "m");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "m");
                             } else if (value.indexOf("NonSolid") !== -1) {
                                 $field.val("g");
-                                $field.attr("import-value", "g");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "g");
                             } else if (value.indexOf("Solid") !== -1) {
                                 $field.val("s");
-                                $field.attr("import-value", "s");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "s");
                             } else if (value.indexOf("Unknown") !== -1) {
                                 $field.val("o");
-                                $field.attr("import-value", "o");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "o");
                             }
                         }
 
@@ -653,31 +548,31 @@ const SR_NODULES_KEY = "nodules";
                             const $fieldSe = $(fieldSelectorSe);
                             const fieldSelectorSp = "#cect" + noduleId + "sp";
                             const $fieldSp = $(fieldSelectorSp);
-                            if (!$fieldSe.hasClass("import-data")) {
-                                $fieldSe.addClass("import-data");
-                                $fieldSe.parent().addClass("import-data");
-                                $fieldSe.attr("original-value", $fieldSe.prop("checked"));
+                            if (!$fieldSe.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $fieldSe.addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSe.parent().addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSe.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $fieldSe.prop("checked"));
                                 const originalValue = $fieldSe.prop("checked") ? "checked" : "unchecked";
-                                createRevertElement(fieldSelectorSe, originalValue).insertAfter(fieldSelectorSe);
+                                AI.createRevertElement(fieldSelectorSe, originalValue).insertAfter(fieldSelectorSe);
                             }
-                            if (!$fieldSp.hasClass("import-data")) {
-                                $fieldSp.addClass("import-data");
-                                $fieldSp.parent().addClass("import-data");
-                                $fieldSp.attr("original-value", $fieldSp.prop("checked"));
+                            if (!$fieldSp.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $fieldSp.addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSp.parent().addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSp.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $fieldSp.prop("checked"));
                                 const originalValue = $fieldSp.prop("checked") ? "checked" : "unchecked";
-                                createRevertElement(fieldSelectorSp, originalValue).insertAfter(fieldSelectorSp);
+                                AI.createRevertElement(fieldSelectorSp, originalValue).insertAfter(fieldSelectorSp);
                             }
                             if (value === "Lesion with circumscribed margin") { // smooth edges
                                 $fieldSe.prop("checked", true);
                                 $fieldSp.prop("checked", false);
-                                $fieldSe.attr("import-value", true);
-                                $fieldSp.attr("import-value", false);
+                                $fieldSe.attr(AI.IMPORT_VALUE_ATTR, true);
+                                $fieldSp.attr(AI.IMPORT_VALUE_ATTR, false);
                             }
                             if (value === "Lesion with spiculated margin") { // spiculated
                                 $fieldSp.prop("checked", true);
                                 $fieldSe.prop("checked", false);
-                                $fieldSp.attr("import-value", true);
-                                $fieldSe.attr("import-value", false);
+                                $fieldSp.attr(AI.IMPORT_VALUE_ATTR, true);
+                                $fieldSe.attr(AI.IMPORT_VALUE_ATTR, false);
                             }
                         }
 
@@ -755,12 +650,12 @@ const SR_NODULES_KEY = "nodules";
                 if (lungRads > "") {
                     const $field = $("[name=celrad][value=" + lungRads + "]");
                     const $wrapper = $field.parents(".form-group");
-                    $wrapper.addClass("import-data");
+                    $wrapper.addClass(AI.IMPORT_FIELD_CLASS);
                     //TODO handle revert.
                     // const originalValue = $("[name=celrad]:checked").val()
-                    // $wrapper.attr("original-value", originalValue);
-                    // $wrapper.attr("import-value", value);
-                    // $field.parent().addClass("import-data-parent"); //NB: used to fix wrapping of revert element
+                    // $wrapper.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, originalValue);
+                    // $wrapper.attr(AI.IMPORT_VALUE_ATTR, value);
+                    // $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS); //NB: used to fix wrapping of revert element
                     // createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
                     $field.prop("checked", true);
                 }
@@ -809,29 +704,15 @@ const SR_NODULES_KEY = "nodules";
 
                 _displayNodules(settings.getNoduleCount());
 
-                $(".import-data-button").hide();
-                $(".revert-data-button").hide();
-                $("[name=cetex]").on('change', function () {
-                    const showImport = $("[name=cetex]:checked").val() === "b" && settings.structuredReport;
-                    $(".import-data-button").toggle(showImport);
-                    $(".revert-data-button").toggle(showImport);
-                }).trigger('change');
 
                 return {
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
                     importData: _importData,
-                    importDicomHeader: _importDicomHeader,
+                    // importDicomHeader: _importDicomHeader,
                     revertData: _revertData,
                     removeNodule: _removeNodule,
-                    sortData: _sortData,
-                    structuredReport: function (value) {
-                        if (typeof (value) != "undefined") {
-                            settings.structuredReport = value;
-                        } else {
-                            return settings.structuredReport;
-                        }
-                    }
+                    sortData: _sortData
                 };
             }
 

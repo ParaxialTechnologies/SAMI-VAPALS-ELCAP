@@ -67,14 +67,10 @@
             </button>
             <a href="{{ "home.html" if mockup else "#!" }}" class="text-nowrap navigation" style="text-decoration: none"
                data-method="{{ formMethod }}" data-samiroute="home">
-                <img src="{{ path }}img/logo_transparent_50x50.png" title="Logo" alt="Logo" class="hidden-xs va-only"/>
+                <img src="{{ path }}img/logo_transparent_50x50.png" title="Logo" alt="Logo"
+                     class="hidden-xs logo-icon"/>
                 <img src="{{ path }}img/logo_name_50x215.png" title="Logo Text" alt="Logo Text" id="image-log-text"
-                     class="va-only"/>
-
-                <img src="{{ path }}img/screening-plus_logotransparent_50.png" title="Logo" alt="Logo"
-                     class="hidden-xs non-va-only" style="height:40px;"/>
-                <img src="{{ path }}img/screening-plus_logo_name_text.png" title="Logo Text" alt="Logo Text"
-                     id="image-log-text" class="non-va-only" style="height:40px;"/>
+                     class="logo-text"/>
             </a>
         </div>
         {% if withNav == "true" %}
@@ -236,10 +232,22 @@
                     }
                 });
             });
+
+            //attempt to change logos
+            // IF VA, do nothing, else logo = defaultIfNull(site, system)
+            // if logo not null, change src attribute.
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"];
+            if (iconSrc) {
+                $("img.logo-icon").attr("src", iconSrc)
+            }
+
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"];
+            if (iconText) {
+                $("img.logo-text").attr("src", iconText)
+            }
         }
     }
 
-    //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) {
         paramSubstitution(siteId);
 
@@ -255,7 +263,6 @@
         localStorage.setItem("studyid", studyId);
         if (sysConfig.VETERAN_AFFAIRS_SITE) {
             $("footer").remove();
-            $(".non-va-only").remove();
         } else {
             $(".va-only").remove();
         }

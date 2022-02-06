@@ -9428,8 +9428,15 @@
                     }
                 }
                 const showImport = isBaseline && hasImportData === true;
-                $(".import-data-button").toggle(showImport);
-                $(".revert-data-button").toggle(showImport);
+                console.debug("cetex:change(): isBaseline=%s, hasImportData=%s", isBaseline, hasImportData);
+                if (showImport){
+                    $(".import-data-button").show();
+                    $(".revert-data-button").show();
+                }
+                else {
+                    $(".import-data-button").hide();
+                    $(".revert-data-button").hide();
+                }
             });
 
             // If no value is selected for CT Protocol, preselect "low-dose" as the default.

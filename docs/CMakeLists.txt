@@ -3,11 +3,7 @@ adoc_to_html(
   )
 
 copy_binaries(
-  *.html
-)
+  )
 
 do_subdir(
-  18-14
-  18-15
-  18-x-16
   )

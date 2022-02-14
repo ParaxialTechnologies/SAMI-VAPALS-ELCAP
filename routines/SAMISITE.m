@@ -271,7 +271,7 @@ SUPER(RTN,FILTER) ; returns site selection page for super users
  . ;s link=link_" data-site="""_$$SITEID(zi)_""""
  . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
  . s link=link_" href=""/vapals"">"_name
- . s link=link_"</a></li>"
+ . s link=link_"</a></li>"_$char(13,10)
  . ;n link
  . ;s link="<form method=POST action=""/vapals"">"
  . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"

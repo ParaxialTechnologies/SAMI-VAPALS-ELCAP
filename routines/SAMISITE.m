@@ -284,7 +284,7 @@ SUPER(RTN,FILTER) ; returns site selection page for super users
  n zk s zk=zj+1
  f  s zk=$o(temp(zk)) q:+zk=0  d  ;
  . s cnt=cnt+1
- . s @RTN@(cnt)=temp(zk)
+ . s @RTN@(cnt)=temp(zk)_$char(13,10)
  q
  ;
  ;

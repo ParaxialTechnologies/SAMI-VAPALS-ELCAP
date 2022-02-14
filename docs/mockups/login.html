@@ -180,7 +180,7 @@
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
-            retrieveParams(siteId)
+            retrieveParams(siteId);
         } else {
             substituteParams(params);
         }
@@ -208,7 +208,7 @@
 
             $("[data-params-attr]").each(function () {
                 const $this = $(this);
-                const jsonText = $this.attr("data-params-attr")
+                const jsonText = $this.attr("data-params-attr");
                 const attrObject = JSON.parse(jsonText);
                 Object.keys(attrObject).forEach(function (attrName) {
                     const key = attrObject[attrName];
@@ -226,13 +226,13 @@
             const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
                 "../www/img/logo_transparent_50x50.png";
             if (iconSrc) {
-                $("img.logo-icon").attr("src", iconSrc)
+                $("img.logo-icon").attr("src", iconSrc);
             }
 
             const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
                 "../www/img/logo_name_50x215.png";
             if (iconText) {
-                $("img.logo-text").attr("src", iconText)
+                $("img.logo-text").attr("src", iconText);
             }
         }
     }
@@ -242,8 +242,8 @@
 
         //Load system configuration with defaults favoring a VA site
         sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
-        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
-        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false)
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true);
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false);
 
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
@@ -272,17 +272,16 @@
             .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
             .show();
         if (displayTimeMs > 0) {
-            $msg.delay(displayTimeMs)
-                .slideUp(200);
+            $msg.delay(displayTimeMs).slideUp(200);
         }
     }
 
     if (hasErrorMessage) {
-        displayStaticMessage(errorMessage, "alert-danger", 0)
+        displayStaticMessage(errorMessage, "alert-danger", 0);
     } else if (hasWarnMessage) {
-        displayStaticMessage(warnMessage, "alert-warning", 0)
+        displayStaticMessage(warnMessage, "alert-warning", 0);
     } else if (hasInfoMessage) {
-        displayStaticMessage(infoMessage, "alert-success", 3000)
+        displayStaticMessage(infoMessage, "alert-success", 3000);
     }
 
     $(function () {
@@ -336,7 +335,7 @@
                 $("#logout-link").trigger("click");
             }, timeoutMinutes * 1000 * 60);
         }
-    })
+    });
   </script>
   <script>
    $(function () {

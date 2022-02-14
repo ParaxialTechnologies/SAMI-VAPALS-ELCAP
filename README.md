@@ -165,3 +165,5 @@ Re-enter Fileman and update indexes
    manage sprints and track defects. If you see something, say something!
 2. [OSEHRA Project Page](https://www.osehra.org/groups/va-pals-open-source-project-group) - Keep track of our progress,
    read blog posts and subscribe to events.
+
+George will provide a command to create a new parameter for SYS or a certain site. Also for default values? Needed for logo

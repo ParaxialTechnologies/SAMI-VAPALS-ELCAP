@@ -92,6 +92,59 @@ Kill the copy via:
 
     k ^%webhttp("log")
 
+### Create a new SITE
+
+Find an unused institution
+
+    SET DUZ=1
+    DO ^XUP
+    enter "SAMI" (select main menu #4)
+    SI for Site and User Menu
+    SE (Site edit)
+    Enter a ? or some characters to filter.
+    Pick one that is closely starting with the same letters as the site being added. e.g. BRAINERD CBOC for Brazil
+    
+Activate the site
+
+    DO Q^DI (fileman)
+    E (for edit)
+    enter "SAMI SITE"
+    enter "Y" (add as new site)
+    enter as site abbreviaion (e.g. BRA)
+    enter <Y> for active
+    enter <N> for "Non VA"
+    skip the PARM <enter>
+    
+Create user
+
+    D ^XUP
+    EVE
+    select #1 (Systems Manager Menu)
+    Us (user managment)
+    Gra (Grant user by profile)
+    Template person can be "MAN" (System manager)
+    <enter>
+    Y for yes
+    skip terminiation
+    for name enter <BRAZIL,USER>
+    Y for new person
+    give a fake ssn
+    enter Y to clone person class
+    Hit up-arrow to exit from "enter new person"
+    hit enter lots of times to get out.
+    U for user management
+    E for edit user
+    enter BRA to select new user
+    go to Division, type the site name (few chars)
+    If it doesn't show after save, enter ? to see it.
+    Change verify code too.
+    Go to command and enter SAVE, then exit
+    
+Change pwd
+
+    DO ^ZU
+    Login with access/verify and change password as directed
+
 ### Add/Modify a SYSTEM parameter
 System parameters are loaded into the SYS namespace and used when no site is enabled (e.g. a logon screen)
 

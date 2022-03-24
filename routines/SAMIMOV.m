@@ -1,6 +1,6 @@
-SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
- ;;18.0;SAMI;**7,15**;;Build 2
- ;;18-15
+SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2022-03-24t21:13z
+ ;;18.0;SAMI;**7,15,16**;;Build 2
+ ;;18-16
  ;
  ;@license: see routine SAMIUL
  ;
@@ -19,7 +19,7 @@ SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
  ;@copyright 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t23:29z
+ ;@last-update 2022-03-24t21:13z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -48,9 +48,16 @@ SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 2021-10-29t23:29z
  ; 2021-10-29 ven/lmry 18-15
  ;  SAMIMOV insert section 0, bump versions and dates, added semicolon after
  ;  PICSITE for XINDEX
+ ; 2022-03-24 ven/gpl add ability to create a site index showing patients and
+ ;  the ability to automatically move duplicated entries to another site to fix
+ ;  a problem with inputting data from a spreadsheet.
+ ; 2022-03-24 ven/lmry Update date and contents list
+ ; 
  ;
  ;@contents
  ; EN entry point to change a patient's site
+ ; DEDUP move duplicate patient records from one site to another
+ ; SITEIDX generate a siteid index in the patient lookup graph
  ; MOV change patient PAT from site FROM to site TO 
  ; SETSID propogate the new sid to all forms
  ; PICPAT pick a patient in site SITE

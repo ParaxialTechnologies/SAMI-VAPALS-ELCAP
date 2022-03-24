@@ -88,6 +88,64 @@ EN ; entry point to change a patient's site
  do MOV(.PAT,FROM,TO)
  q
  ;
+DEDUP() ; remove duplicate names from a site
+ ;
+ n FROM,TO,PAT
+ W !,"Pick the FROM Site -"
+ S FROM=$$PICSITE()
+ IF FROM="^" Q  ;
+ ;
+ W !,"Pick the TO Site -"
+ S TO=$$PICSITE()
+ IF TO="^" Q  ;
+ ;
+ K DIR
+ S DIR("A")="Confirm removing duplicates from  "_FROM_" by moving them to "_TO
+ S DIR(0)="Y"
+ D ^DIR
+ ;
+ I Y'=1 D  Q  ;
+ . W !,"Cancel, no change made"
+ ;
+ d SITEIDX ; insure we have a site index
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ q:lroot=""
+ n site s site=FROM
+ n gn s gn=$na(@lroot@("siteid",site))
+ i '$d(@gn) d  q  ;
+ . w !,"Error name index not found"
+ n zi,zj
+ s zi=""
+ f  s zi=$o(@gn@(zi)) q:zi=""  d  ;
+ . s zj=$o(@gn@(zi,"")) ; ien of non-duplicate record
+ . q:$g(@lroot@(zj,"siteid"))'=FROM
+ . f  s zj=$o(@gn@(zi,zj)) q:zj=""  d  ;
+ . . q:'$d(@lroot@(zj))
+ . . m PAT=@lroot@(zj)
+ . . q:$g(PAT("siteid"))'=FROM
+ . . w !,"found a duplicate "_zi_" "_zj
+ . . do MOV(.PAT,FROM,TO)
+ . . K PAT
+ D SITEIDX
+ q
+ ;
+SITEIDX() ; generate a siteid index in the patient lookup graph
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ q:lroot=""
+ k @lroot@("siteid")
+ n site,nm,ien
+ s (site,nm)=""
+ s ien=0
+ f  s ien=$o(@lroot@(ien)) q:+ien=0  d  ;
+ . s site=$g(@lroot@(ien,"siteid"))
+ . ;q:site="XXX"
+ . ;w !,ien_" site: "_site
+ . s nm=$g(@lroot@(ien,"saminame"))
+ . q:nm=""
+ . q:site=""
+ . s @lroot@("siteid",site,nm,ien)=""
+ q
+ ;
 MOV(PAT,FROM,TO) ; change patient PAT from site FROM to site TO
  ;
  n root s root=$$setroot^%wd("vapals-patients")

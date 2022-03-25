@@ -1,0 +1,41 @@
+After install, in the vapals programming environment:
+DO SITEIDX^SAMIMOV
+It won't look like anything happened, but later steps won't be possible
+without this step.
+
+In your browser, with the correct information for your site inserted in the
+url in place of "vapalsyotta.fiscientific.org", go to
+http://vapalsyotta.fiscientific.org:9080/gtree/%25wd(17.040801,%22B%22)
+
+On that page, look for 
+|--patient-lookup 
+|  |--69 
+
+The number may or may not be 69. Replace the site information
+in the following url the same way you did before and if the number is
+different replace the 69 with the correct number in the following url.
+http://vapalsyotta.fiscientific.org:9080/gtree/%25wd(17.040801,69,%22siteid%22)
+
+If it all worked right, you should see a list of patients separated by
+site. You'll notice duplicates because they'll have two or more numbers
+under their name.
+
+Choose a Site to move the duplicates to. If you don't have another site
+available follow the instructions here: 
+http://www.vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-16/t3/how-to-add-a-vapals-site.html
+
+In the vapals programming environment
+> DO DEDUP^SAMIMOV
+
+Here's an example of the interface.
+
+Pick the FROM Site -
+Select SAMI SITE: PHI  PHILADELPHIA, PA VAMC     PHI  PA  VAMC  642  
+Pick the TO Site -
+Select SAMI SITE: SEA  PUGET SOUND HCS     SEA  WA  VAMC  663  
+Confirm removing duplicates from  PHI by moving them to SEA? YES
+
+Refresh the last browser page. All of the duplicates should be moved to the
+selected site. 
+
+If any step doesn't work, please contact your VAPALS-ELCAP development team.

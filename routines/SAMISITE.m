@@ -87,6 +87,8 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ; 0 for fail - exit; page to be displayed is in SAMIRETURN
  ;
  ;d ^ZTER
+ I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP()
+ D IDUSER()
  n user
  s user=$$USER()
  i user=-1 d  q 0
@@ -217,6 +219,7 @@ LOGIN(RTN,VALS) ; login processing
  . d WSHOME^SAMIHOM3(.RTN,.VALS)
  n ACVC s ACVC=access_";"_verify
  i $$SIGNON(ACVC) D  Q  ;
+ . D STOREDUZ()
  . s VALS("samiroute")=""
  . s VALS("siteid")=""
  . d WSHOME^SAMIHOM3(.RTN,.VALS)
@@ -324,6 +327,38 @@ UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
  . d MES^XPDUTL(cnt_" patient records set to site "_site)
  q
  ;
+IDUSER() ; Identify the user
+ n pivroot s pivroot=$$setroot^%wd("piv-credentials")
+ n secid s secid=$g(HTTPREQ("SECID"))
+ Q:secid=""
+ n secien
+ s secien=$o(@pivroot@("secid",secid,""))
+ i secien="" d  q  ;
+ . s secien=$o(@pivroot@(" "),-1)+1
+ . m @pivroot@(secien)=HTTPREQ
+ . s @pivroot@("secid",secid,secien)=""
+ i $d(@pivroot@(secien,"DUZ")) S DUZ=$g(@pivroot@(secien,"DUZ"))
+ q
+ ;
+STOREDUZ()
+ Q:'$D(DUZ)
+ n pivroot s pivroot=$$setroot^%wd("piv-credentials")
+ i '$d(HTTPREQ("SECID")) D  ;
+ . I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP
+ n logien s logien=$o(@pivroot@("login"," "),-1)+1
+ m @pivroot@("login",logien)=HTTPREQ
+ n secid s secid=$g(HTTPREQ("SECID"))
+ q:secid=""
+ n secien
+ s secien=$o(@pivroot@("secid",secid,""))
+ q:secien=""
+ s @pivroot@(secien,"DUZ")=DUZ
+ Q  
+ ;
+TESTSETUP() ; setup test environment
+ S HTTPREQ("USER")="CN=VAPALS,USER"
+ I $D(K) S HTTPREQ("SECID")=$P(K,":",4)
+ Q
  ;
  ;
 EOR ; end of routine SAMISITE

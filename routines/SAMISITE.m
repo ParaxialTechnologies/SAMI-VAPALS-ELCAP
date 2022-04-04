@@ -85,6 +85,8 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
  ; $$SIGNON signon with access & verify code
  ; SUPER site selection page for super users
  ; UPGRADE init: convert to multi-tenancy
+ ; IDUSER Identify the user
+ ; STOREDUZ
  ;
  ;
  ;
@@ -352,7 +354,7 @@ IDUSER() ; Identify the user
  i $d(@pivroot@(secien,"DUZ")) S DUZ=$g(@pivroot@(secien,"DUZ"))
  q
  ;
-STOREDUZ()
+STOREDUZ() ;
  Q:'$D(DUZ)
  n pivroot s pivroot=$$setroot^%wd("piv-credentials")
  i '$d(HTTPREQ("SECID")) D  ;
@@ -365,7 +367,7 @@ STOREDUZ()
  s secien=$o(@pivroot@("secid",secid,""))
  q:secien=""
  s @pivroot@(secien,"DUZ")=DUZ
- Q  
+ Q
  ;
 TESTSETUP() ; setup test environment
  S HTTPREQ("USER")="CN=VAPALS,USER"

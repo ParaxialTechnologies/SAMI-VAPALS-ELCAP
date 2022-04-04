@@ -1,6 +1,6 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2022-01-17t23:29z
- ;;18.0;SAMI;**9,12,15,16**;2020-01
- ;18-15
+SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-04t23:26z
+ ;;18.0;SAMI;**9,12,15,16,17**;2020-01
+ ;18-17
  ;
  ; SAMIHOM3 contains subroutines for producing the ELCAP Home Page.
  ; SAMIHUL contains the development log for the SAMIHOM* routines.
@@ -22,7 +22,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2022-01-17t23:29z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-01-17t23:29z
+ ;@last-update 2022-04-04t23:26z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -251,7 +251,13 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2022-01-17t23:29z
  ; 2022-01-12 ven/lmry 18-15  bcef2106
  ;  SAMIHOM4 and SAMIHUL bumped versions and dates
  ;
- ; 2022-01-17 ven/lmry 18-16
+ ; 2022-01-17 ven/lmry 18-16  e69ca23e
+ ;  SAMIHOM4 and SAMIHUL bumped versions and dates
+ ;
+ ; 2022-04-04 ven/gpl 18-17   ec245b1e
+ ;  SAMIHOM4 change logout to accomodate single signon
+ ;
+ ; 2022-04-04 ven/lmry 18-17
  ;  SAMIHOM4 and SAMIHUL bumped versions and dates
  ;  
  ;

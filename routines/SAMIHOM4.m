@@ -421,7 +421,8 @@ WSVAPALS ; post vapals (main gateway)
  . s SAMIARG("sitetitle")="Unknown Site"
  . s SAMIARG("siteid")=""
  . s SAMIARG("errorMessage")=""
- . d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
+ . ;d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
  ;
  i route="newcase" d  q 0
  . m SAMIARG=vars

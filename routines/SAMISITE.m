@@ -55,20 +55,8 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
  ;  SAMISITE accept username and password as alternates to access and 
  ; verify for login
  ;
- ; 2021-10-06 ven/lmry 18.14   a0254939
+ ; 2021-10-06 ven/lmry 18.14
  ;  SAMISITE bump version & dates
- ;
- ; 2022-02-14 ven/gpl   2ea7f220,b47a5e01
- ;  add CRLF to site selection list for super users
- ;  add crlf for javascript at the end of the site selection page
- ;
- ; 2022-04-01 ven/gpl 18-17   7620d4ba
- ;  single signon prototype
- ;
- ; 2022-04-04 ven/lmry 18-17
- ;  update history, bump versions and dates
- ;
- ;
  ;
  ;@to-do
  ; Add label comments
@@ -343,13 +331,13 @@ UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
  ;
 IDUSER() ; Identify the user
  n pivroot s pivroot=$$setroot^%wd("piv-credentials")
- n secid s secid=$g(HTTPREQ("SECID"))
+ n secid s secid=$g(HTTPREQ("header","secid"))
  Q:secid=""
  n secien
  s secien=$o(@pivroot@("secid",secid,""))
  i secien="" d  q  ;
  . s secien=$o(@pivroot@(" "),-1)+1
- . m @pivroot@(secien)=HTTPREQ
+ . m @pivroot@(secien)=HTTPREQ("header")
  . s @pivroot@("secid",secid,secien)=""
  i $d(@pivroot@(secien,"DUZ")) S DUZ=$g(@pivroot@(secien,"DUZ"))
  q
@@ -357,21 +345,21 @@ IDUSER() ; Identify the user
 STOREDUZ() ;
  Q:'$D(DUZ)
  n pivroot s pivroot=$$setroot^%wd("piv-credentials")
- i '$d(HTTPREQ("SECID")) D  ;
+ i '$d(HTTPREQ("header","secid")) D  ;
  . I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP
  n logien s logien=$o(@pivroot@("login"," "),-1)+1
  m @pivroot@("login",logien)=HTTPREQ
- n secid s secid=$g(HTTPREQ("SECID"))
+ n secid s secid=$g(HTTPREQ("header","secid"))
  q:secid=""
  n secien
  s secien=$o(@pivroot@("secid",secid,""))
  q:secien=""
  s @pivroot@(secien,"DUZ")=DUZ
- Q
+ Q  
  ;
 TESTSETUP() ; setup test environment
  S HTTPREQ("USER")="CN=VAPALS,USER"
- I $D(K) S HTTPREQ("SECID")=$P(K,":",4)
+ I $D(K) S HTTPREQ("header","secid")=$P(K,":",4)
  Q
  ;
  ;

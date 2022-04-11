@@ -72,7 +72,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
  ;  updated single signon code thanks to Artit testing
  ;
  ; 2022-04-11 ven/lmry 18-17
- ;  add to history, bump dates
+ ;  add to history, bump dates, fix XINDEX blank at end of line
  ; 
  ;
  ;@to-do
@@ -372,7 +372,7 @@ STOREDUZ() ;
  s secien=$o(@pivroot@("secid",secid,""))
  q:secien=""
  s @pivroot@(secien,"DUZ")=DUZ
- Q  
+ Q
  ;
 TESTSETUP() ; setup test environment
  S HTTPREQ("USER")="CN=VAPALS,USER"

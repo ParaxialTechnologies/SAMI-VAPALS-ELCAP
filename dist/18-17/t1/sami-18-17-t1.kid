@@ -1,11 +1,11 @@
-KIDS Distribution saved on Apr 04, 2022@17:45:31
+KIDS Distribution saved on Apr 11, 2022@12:05:55
 Test release SAMI*18.0*17 SEQ #17 T1
 **KIDS**:SAMI*18.0*17^
 
 **INSTALL NAME**
 SAMI*18.0*17
 "BLD",11518,0)
-SAMI*18.0*17^SAMI^0^3220404^n
+SAMI*18.0*17^SAMI^0^3220411^n
 "BLD",11518,1,0)
 ^^1^1^3220404^
 "BLD",11518,1,1,0)
@@ -13,7 +13,7 @@ SAMI*18.0*17 T1
 "BLD",11518,4,0)
 ^9.64PA^^
 "BLD",11518,6.3)
-1
+2
 "BLD",11518,"ABPKG")
 n
 "BLD",11518,"INID")
@@ -53,13 +53,13 @@ POS1817^SAMIPAT
 "BLD",11518,"KRN",9.8,"NM",0)
 ^9.68A^4^4
 "BLD",11518,"KRN",9.8,"NM",1,0)
-SAMIHOM4^^0^B979586627
+SAMIHOM4^^0^B981810233
 "BLD",11518,"KRN",9.8,"NM",2,0)
 SAMIHUL^^0^B119254
 "BLD",11518,"KRN",9.8,"NM",3,0)
 SAMIPAT^^0^B10169332
 "BLD",11518,"KRN",9.8,"NM",4,0)
-SAMISITE^^0^B128376177
+SAMISITE^^0^B132434343
 "BLD",11518,"KRN",9.8,"NM","B","SAMIHOM4",1)
 
 "BLD",11518,"KRN",9.8,"NM","B","SAMIHUL",2)
@@ -173,9 +173,9 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-17^3220404
+17^3220411
 "PKG",230,22,1,"PAH",1,1,0)
-^^1^1^3220404
+^^1^1^3220411
 "PKG",230,22,1,"PAH",1,1,1,0)
 SAMI*18.0*17 T1
 "QUES","XPF1",0)
@@ -251,11 +251,11 @@ D XPZ2^XPDIQ
 "RTN")
 4
 "RTN","SAMIHOM4")
-0^1^B979586627
+0^1^B981810233
 "RTN","SAMIHOM4",1,0)
 SAMIHOM4 ;ven/gpl,arc - homepage web services ;;2022-04-04t23:19z
 "RTN","SAMIHOM4",2,0)
- ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17**;2020-01;Build 1
+ ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17**;2020-01;Build 2
 "RTN","SAMIHOM4",3,0)
  ;18-17
 "RTN","SAMIHOM4",4,0)
@@ -1099,1481 +1099,1483 @@ WSVAPALS ; post vapals (main gateway)
 "RTN","SAMIHOM4",423,0)
  . s SAMIARG("errorMessage")=""
 "RTN","SAMIHOM4",424,0)
- . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
+ . s SAMIARG("samiroute")="home"
 "RTN","SAMIHOM4",425,0)
- . ;d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
+ . d WSHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",426,0)
- ;
+ . ;d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
 "RTN","SAMIHOM4",427,0)
- i route="newcase" d  q 0
+ ;
 "RTN","SAMIHOM4",428,0)
- . m SAMIARG=vars
+ i route="newcase" d  q 0
 "RTN","SAMIHOM4",429,0)
- . d WSNEWCAS^SAMIHOM3(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",430,0)
- ;
+ . d WSNEWCAS^SAMIHOM3(.SAMIARG,.SAMIBODY,.SAMIRESULT)
 "RTN","SAMIHOM4",431,0)
- i route="casereview" d  q 0
+ ;
 "RTN","SAMIHOM4",432,0)
- . m SAMIARG=vars
+ i route="casereview" d  q 0
 "RTN","SAMIHOM4",433,0)
- . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",434,0)
- ;
+ . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",435,0)
- i route="nuform" d  q 0
+ ;
 "RTN","SAMIHOM4",436,0)
- . m SAMIARG=vars
+ i route="nuform" d  q 0
 "RTN","SAMIHOM4",437,0)
- . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",438,0)
- ;
+ . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",439,0)
- i route="addform" d  q 0
+ ;
 "RTN","SAMIHOM4",440,0)
- . m SAMIARG=vars
+ i route="addform" d  q 0
 "RTN","SAMIHOM4",441,0)
- . d WSNFPOST^SAMICASE(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",442,0)
- ;
+ . d WSNFPOST^SAMICASE(.SAMIARG,.SAMIBODY,.SAMIRESULT)
 "RTN","SAMIHOM4",443,0)
- i route="form" d  q 0
+ ;
 "RTN","SAMIHOM4",444,0)
- . m SAMIARG=vars
+ i route="form" d  q 0
 "RTN","SAMIHOM4",445,0)
- . d wsGetForm^%wf(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",446,0)
- ;
+ . d wsGetForm^%wf(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",447,0)
- i route="postform" d  q 0
+ ;
 "RTN","SAMIHOM4",448,0)
- . m SAMIARG=vars
+ i route="postform" d  q 0
 "RTN","SAMIHOM4",449,0)
- . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",450,0)
- . i $g(SAMIARG("form"))["siform" d  ;
+ . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
 "RTN","SAMIHOM4",451,0)
- . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
+ . i $g(SAMIARG("form"))["siform" d  ;
 "RTN","SAMIHOM4",452,0)
- . . ; returns the ien of the note that was created and should be sent
-"RTN","SAMIHOM4",453,0)
- . . s notr=$$NOTE^SAMINOT1(.SAMIARG)
-"RTN","SAMIHOM4",454,0)
- . . if +notr>0 d  ;
-"RTN","SAMIHOM4",455,0)
- . . . n SAMIFILTER
-"RTN","SAMIHOM4",456,0)
- . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
-"RTN","SAMIHOM4",457,0)
- . . . s SAMIFILTER("key")=$g(SAMIARG("form")) ;
-"RTN","SAMIHOM4",458,0)
- . . . n tiuien
-"RTN","SAMIHOM4",459,0)
- . . . s tiuien=+notr
-"RTN","SAMIHOM4",460,0)
- . . . s SAMIFILTER("notenmbr")=tiuien
-"RTN","SAMIHOM4",461,0)
- . . . n sendrslt
-"RTN","SAMIHOM4",462,0)
- . . . ;s sendrslt="1^MSG9239010"
-"RTN","SAMIHOM4",463,0)
- . . . s SAMIFILTER("sendprotocol")=SAMISITE_" ENROLL ORU EVN"
-"RTN","SAMIHOM4",464,0)
- . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
-"RTN","SAMIHOM4",465,0)
- . . . i +sendrslt>0 d  ; success
-"RTN","SAMIHOM4",466,0)
- . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
-"RTN","SAMIHOM4",467,0)
- . . . . ; post the id to the graph here
-"RTN","SAMIHOM4",468,0)
- . . . . n sid s sid=$G(SAMIARG("studyid"))
-"RTN","SAMIHOM4",469,0)
- . . . . n form s form=$G(SAMIARG("form"))
-"RTN","SAMIHOM4",470,0)
- . . . . n nien s nien=$$NTIEN^SAMINOT1(sid,form) ; latest note ien
-"RTN","SAMIHOM4",471,0)
- . . . . n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIHOM4",472,0)
- . . . . s @root@("graph",sid,form,"notes",nien,"hl7id")=rtnid
-"RTN","SAMIHOM4",473,0)
- . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
-"RTN","SAMIHOM4",474,0)
- . . . else  d  ;
-"RTN","SAMIHOM4",475,0)
- . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
-"RTN","SAMIHOM4",476,0)
- . . . . s SAMIARG("errorMessage")=rtnmsg
-"RTN","SAMIHOM4",477,0)
- . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
-"RTN","SAMIHOM4",478,0)
- . i $g(SAMIARG("form"))["fuform" d  ;
-"RTN","SAMIHOM4",479,0)
  . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
-"RTN","SAMIHOM4",480,0)
+"RTN","SAMIHOM4",453,0)
  . . ; returns the ien of the note that was created and should be sent
-"RTN","SAMIHOM4",481,0)
- . . s notr=$$NOTE^SAMINOT2(.SAMIARG)
-"RTN","SAMIHOM4",482,0)
+"RTN","SAMIHOM4",454,0)
+ . . s notr=$$NOTE^SAMINOT1(.SAMIARG)
+"RTN","SAMIHOM4",455,0)
  . . if +notr>0 d  ;
-"RTN","SAMIHOM4",483,0)
+"RTN","SAMIHOM4",456,0)
  . . . n SAMIFILTER
-"RTN","SAMIHOM4",484,0)
+"RTN","SAMIHOM4",457,0)
  . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
-"RTN","SAMIHOM4",485,0)
+"RTN","SAMIHOM4",458,0)
  . . . s SAMIFILTER("key")=$g(SAMIARG("form")) ;
-"RTN","SAMIHOM4",486,0)
+"RTN","SAMIHOM4",459,0)
  . . . n tiuien
-"RTN","SAMIHOM4",487,0)
+"RTN","SAMIHOM4",460,0)
  . . . s tiuien=+notr
-"RTN","SAMIHOM4",488,0)
+"RTN","SAMIHOM4",461,0)
  . . . s SAMIFILTER("notenmbr")=tiuien
-"RTN","SAMIHOM4",489,0)
+"RTN","SAMIHOM4",462,0)
  . . . n sendrslt
-"RTN","SAMIHOM4",490,0)
- . . . ;s sendrslt="0^Missing ORM Message"
-"RTN","SAMIHOM4",491,0)
+"RTN","SAMIHOM4",463,0)
+ . . . ;s sendrslt="1^MSG9239010"
+"RTN","SAMIHOM4",464,0)
  . . . s SAMIFILTER("sendprotocol")=SAMISITE_" ENROLL ORU EVN"
-"RTN","SAMIHOM4",492,0)
+"RTN","SAMIHOM4",465,0)
  . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
-"RTN","SAMIHOM4",493,0)
+"RTN","SAMIHOM4",466,0)
  . . . i +sendrslt>0 d  ; success
-"RTN","SAMIHOM4",494,0)
+"RTN","SAMIHOM4",467,0)
  . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
-"RTN","SAMIHOM4",495,0)
+"RTN","SAMIHOM4",468,0)
  . . . . ; post the id to the graph here
-"RTN","SAMIHOM4",496,0)
+"RTN","SAMIHOM4",469,0)
  . . . . n sid s sid=$G(SAMIARG("studyid"))
-"RTN","SAMIHOM4",497,0)
+"RTN","SAMIHOM4",470,0)
  . . . . n form s form=$G(SAMIARG("form"))
-"RTN","SAMIHOM4",498,0)
+"RTN","SAMIHOM4",471,0)
  . . . . n nien s nien=$$NTIEN^SAMINOT1(sid,form) ; latest note ien
-"RTN","SAMIHOM4",499,0)
+"RTN","SAMIHOM4",472,0)
  . . . . n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIHOM4",500,0)
+"RTN","SAMIHOM4",473,0)
  . . . . s @root@("graph",sid,form,"notes",nien,"hl7id")=rtnid
-"RTN","SAMIHOM4",501,0)
+"RTN","SAMIHOM4",474,0)
  . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
-"RTN","SAMIHOM4",502,0)
+"RTN","SAMIHOM4",475,0)
  . . . else  d  ;
-"RTN","SAMIHOM4",503,0)
+"RTN","SAMIHOM4",476,0)
  . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
-"RTN","SAMIHOM4",504,0)
- . . . . i $g(SAMIARG("errorMessage"))="" d  ;
-"RTN","SAMIHOM4",505,0)
- . . . . . s SAMIARG("errorMessage")=rtnmsg
-"RTN","SAMIHOM4",506,0)
+"RTN","SAMIHOM4",477,0)
+ . . . . s SAMIARG("errorMessage")=rtnmsg
+"RTN","SAMIHOM4",478,0)
  . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+"RTN","SAMIHOM4",479,0)
+ . i $g(SAMIARG("form"))["fuform" d  ;
+"RTN","SAMIHOM4",480,0)
+ . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
+"RTN","SAMIHOM4",481,0)
+ . . ; returns the ien of the note that was created and should be sent
+"RTN","SAMIHOM4",482,0)
+ . . s notr=$$NOTE^SAMINOT2(.SAMIARG)
+"RTN","SAMIHOM4",483,0)
+ . . if +notr>0 d  ;
+"RTN","SAMIHOM4",484,0)
+ . . . n SAMIFILTER
+"RTN","SAMIHOM4",485,0)
+ . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
+"RTN","SAMIHOM4",486,0)
+ . . . s SAMIFILTER("key")=$g(SAMIARG("form")) ;
+"RTN","SAMIHOM4",487,0)
+ . . . n tiuien
+"RTN","SAMIHOM4",488,0)
+ . . . s tiuien=+notr
+"RTN","SAMIHOM4",489,0)
+ . . . s SAMIFILTER("notenmbr")=tiuien
+"RTN","SAMIHOM4",490,0)
+ . . . n sendrslt
+"RTN","SAMIHOM4",491,0)
+ . . . ;s sendrslt="0^Missing ORM Message"
+"RTN","SAMIHOM4",492,0)
+ . . . s SAMIFILTER("sendprotocol")=SAMISITE_" ENROLL ORU EVN"
+"RTN","SAMIHOM4",493,0)
+ . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
+"RTN","SAMIHOM4",494,0)
+ . . . i +sendrslt>0 d  ; success
+"RTN","SAMIHOM4",495,0)
+ . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
+"RTN","SAMIHOM4",496,0)
+ . . . . ; post the id to the graph here
+"RTN","SAMIHOM4",497,0)
+ . . . . n sid s sid=$G(SAMIARG("studyid"))
+"RTN","SAMIHOM4",498,0)
+ . . . . n form s form=$G(SAMIARG("form"))
+"RTN","SAMIHOM4",499,0)
+ . . . . n nien s nien=$$NTIEN^SAMINOT1(sid,form) ; latest note ien
+"RTN","SAMIHOM4",500,0)
+ . . . . n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIHOM4",501,0)
+ . . . . s @root@("graph",sid,form,"notes",nien,"hl7id")=rtnid
+"RTN","SAMIHOM4",502,0)
+ . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
+"RTN","SAMIHOM4",503,0)
+ . . . else  d  ;
+"RTN","SAMIHOM4",504,0)
+ . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
+"RTN","SAMIHOM4",505,0)
+ . . . . i $g(SAMIARG("errorMessage"))="" d  ;
+"RTN","SAMIHOM4",506,0)
+ . . . . . s SAMIARG("errorMessage")=rtnmsg
 "RTN","SAMIHOM4",507,0)
- . . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",508,0)
- . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",509,0)
- ;
+ . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",510,0)
- i route="deleteform" d  q 0
+ ;
 "RTN","SAMIHOM4",511,0)
- . m SAMIARG=vars
+ i route="deleteform" d  q 0
 "RTN","SAMIHOM4",512,0)
- . d DELFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",513,0)
- ;
+ . d DELFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",514,0)
- i route="ctreport" d  q 0
+ ;
 "RTN","SAMIHOM4",515,0)
- . m SAMIARG=vars
+ i route="ctreport" d  q 0
 "RTN","SAMIHOM4",516,0)
- . n format s format="html"
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",517,0)
- . s format="text"
+ . n format s format="html"
 "RTN","SAMIHOM4",518,0)
- . i format="text" d WSNOTE^SAMINOT3(.SAMIRESULT,.SAMIARG) q  ;
+ . s format="text"
 "RTN","SAMIHOM4",519,0)
- . i format="html" d WSREPORT^SAMICTR0(.SAMIRESULT,.SAMIARG) q  ;
+ . i format="text" d WSNOTE^SAMINOT3(.SAMIRESULT,.SAMIARG) q  ;
 "RTN","SAMIHOM4",520,0)
- . ;d wsReport^SAMICTRT(.SAMIRESULT,.SAMIARG)
+ . i format="html" d WSREPORT^SAMICTR0(.SAMIRESULT,.SAMIARG) q  ;
 "RTN","SAMIHOM4",521,0)
- ;
+ . ;d wsReport^SAMICTRT(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",522,0)
- i route="note" d  q 0
+ ;
 "RTN","SAMIHOM4",523,0)
- . m SAMIARG=vars
+ i route="note" d  q 0
 "RTN","SAMIHOM4",524,0)
- . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",525,0)
- ;
+ . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",526,0)
- i route="report" d  q 0
+ ;
 "RTN","SAMIHOM4",527,0)
- . m SAMIARG=vars
+ i route="report" d  q 0
 "RTN","SAMIHOM4",528,0)
- . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",529,0)
- ;
+ . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
 "RTN","SAMIHOM4",530,0)
- i route="about" d  q 0
+ ;
 "RTN","SAMIHOM4",531,0)
- . m SAMIARG=vars
+ i route="about" d  q 0
 "RTN","SAMIHOM4",532,0)
- . n form
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",533,0)
- . s form="vapals:about"
-"RTN","SAMIHOM4",534,0)
- . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
-"RTN","SAMIHOM4",535,0)
- ;
-"RTN","SAMIHOM4",536,0)
- i route="addperson" d  q 0
-"RTN","SAMIHOM4",537,0)
- . m SAMIARG=vars
-"RTN","SAMIHOM4",538,0)
  . n form
+"RTN","SAMIHOM4",534,0)
+ . s form="vapals:about"
+"RTN","SAMIHOM4",535,0)
+ . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+"RTN","SAMIHOM4",536,0)
+ ;
+"RTN","SAMIHOM4",537,0)
+ i route="addperson" d  q 0
+"RTN","SAMIHOM4",538,0)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",539,0)
- . s form="vapals:addperson"
+ . n form
 "RTN","SAMIHOM4",540,0)
- . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+ . s form="vapals:addperson"
 "RTN","SAMIHOM4",541,0)
- ;
-"RTN","SAMIHOM4",542,0)
- i route="editperson" d  q 0
-"RTN","SAMIHOM4",543,0)
- . m SAMIARG=vars
-"RTN","SAMIHOM4",544,0)
- . n dfn s dfn=$g(vars("dfn")) ; must have a dfn
-"RTN","SAMIHOM4",545,0)
- . i dfn="" d  q  ;
-"RTN","SAMIHOM4",546,0)
- . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
-"RTN","SAMIHOM4",547,0)
- . n root s root=$$setroot^%wd("patient-lookup")
-"RTN","SAMIHOM4",548,0)
- . n sien s sien=$o(@root@("dfn",dfn,""))
-"RTN","SAMIHOM4",549,0)
- . i sien="" d  q  ;
-"RTN","SAMIHOM4",550,0)
- . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
-"RTN","SAMIHOM4",551,0)
- . s vars("name")=$g(@root@(sien,"saminame"))
-"RTN","SAMIHOM4",552,0)
- . s tdob=$g(@root@(sien,"dob"))
-"RTN","SAMIHOM4",553,0)
- . s vars("dob")=$p(tdob,"-",2)_"/"_$p(tdob,"-",3)_"/"_$p(tdob,"-",1)
-"RTN","SAMIHOM4",554,0)
- . s vars("sbdob")=$g(@root@(sien,"dob"))
-"RTN","SAMIHOM4",555,0)
- . s vars("gender")=$g(@root@(sien,"sex"))
-"RTN","SAMIHOM4",556,0)
- . ; s vars("icn")=$g(@root@(sien,"icn"))
-"RTN","SAMIHOM4",557,0)
- . n tssn s tssn=$g(@root@(sien,"ssn"))
-"RTN","SAMIHOM4",558,0)
- . s vars("ssn")=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
-"RTN","SAMIHOM4",559,0)
- . s vars("last5")=$g(@root@(sien,"last5"))
-"RTN","SAMIHOM4",560,0)
- . s vars("dfn")=$g(@root@(sien,"dfn"))
-"RTN","SAMIHOM4",561,0)
- . m SAMIARG=vars
-"RTN","SAMIHOM4",562,0)
- . n form,err,zhtml
-"RTN","SAMIHOM4",563,0)
- . s form="vapals:editparticipant"
-"RTN","SAMIHOM4",564,0)
  . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+"RTN","SAMIHOM4",542,0)
+ ;
+"RTN","SAMIHOM4",543,0)
+ i route="editperson" d  q 0
+"RTN","SAMIHOM4",544,0)
+ . m SAMIARG=vars
+"RTN","SAMIHOM4",545,0)
+ . n dfn s dfn=$g(vars("dfn")) ; must have a dfn
+"RTN","SAMIHOM4",546,0)
+ . i dfn="" d  q  ;
+"RTN","SAMIHOM4",547,0)
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+"RTN","SAMIHOM4",548,0)
+ . n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIHOM4",549,0)
+ . n sien s sien=$o(@root@("dfn",dfn,""))
+"RTN","SAMIHOM4",550,0)
+ . i sien="" d  q  ;
+"RTN","SAMIHOM4",551,0)
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+"RTN","SAMIHOM4",552,0)
+ . s vars("name")=$g(@root@(sien,"saminame"))
+"RTN","SAMIHOM4",553,0)
+ . s tdob=$g(@root@(sien,"dob"))
+"RTN","SAMIHOM4",554,0)
+ . s vars("dob")=$p(tdob,"-",2)_"/"_$p(tdob,"-",3)_"/"_$p(tdob,"-",1)
+"RTN","SAMIHOM4",555,0)
+ . s vars("sbdob")=$g(@root@(sien,"dob"))
+"RTN","SAMIHOM4",556,0)
+ . s vars("gender")=$g(@root@(sien,"sex"))
+"RTN","SAMIHOM4",557,0)
+ . ; s vars("icn")=$g(@root@(sien,"icn"))
+"RTN","SAMIHOM4",558,0)
+ . n tssn s tssn=$g(@root@(sien,"ssn"))
+"RTN","SAMIHOM4",559,0)
+ . s vars("ssn")=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+"RTN","SAMIHOM4",560,0)
+ . s vars("last5")=$g(@root@(sien,"last5"))
+"RTN","SAMIHOM4",561,0)
+ . s vars("dfn")=$g(@root@(sien,"dfn"))
+"RTN","SAMIHOM4",562,0)
+ . m SAMIARG=vars
+"RTN","SAMIHOM4",563,0)
+ . n form,err,zhtml
+"RTN","SAMIHOM4",564,0)
+ . s form="vapals:editparticipant"
 "RTN","SAMIHOM4",565,0)
- ;
+ . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
 "RTN","SAMIHOM4",566,0)
- i route="register" d  q 0
+ ;
 "RTN","SAMIHOM4",567,0)
- . m SAMIARG=vars
+ i route="register" d  q 0
 "RTN","SAMIHOM4",568,0)
- . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",569,0)
- ; 
+ . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",570,0)
- i route="editsave" d  q 0
+ ; 
 "RTN","SAMIHOM4",571,0)
- . m SAMIARG=vars
+ i route="editsave" d  q 0
 "RTN","SAMIHOM4",572,0)
- . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
-"RTN","SAMIHOM4",573,0)
- ;
-"RTN","SAMIHOM4",574,0)
- i route="merge" d  q 0
-"RTN","SAMIHOM4",575,0)
  . m SAMIARG=vars
+"RTN","SAMIHOM4",573,0)
+ . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+"RTN","SAMIHOM4",574,0)
+ ;
+"RTN","SAMIHOM4",575,0)
+ i route="merge" d  q 0
 "RTN","SAMIHOM4",576,0)
- . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ . m SAMIARG=vars
 "RTN","SAMIHOM4",577,0)
- ;
+ . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
 "RTN","SAMIHOM4",578,0)
- quit 0  ; end of wsi WSVAPALS^SAMIHOM3
-"RTN","SAMIHOM4",579,0)
  ;
+"RTN","SAMIHOM4",579,0)
+ quit 0  ; end of wsi WSVAPALS^SAMIHOM3
 "RTN","SAMIHOM4",580,0)
  ;
 "RTN","SAMIHOM4",581,0)
  ;
 "RTN","SAMIHOM4",582,0)
- ;@section 3 other
-"RTN","SAMIHOM4",583,0)
  ;
+"RTN","SAMIHOM4",583,0)
+ ;@section 3 other
 "RTN","SAMIHOM4",584,0)
  ;
 "RTN","SAMIHOM4",585,0)
  ;
 "RTN","SAMIHOM4",586,0)
-REG(SAMIRTN,SAMIARG) ; manual registration
+ ;
 "RTN","SAMIHOM4",587,0)
- ;
+REG(SAMIRTN,SAMIARG) ; manual registration
 "RTN","SAMIHOM4",588,0)
- n name s name=$g(SAMIARG("name"))
+ ;
 "RTN","SAMIHOM4",589,0)
- ;
+ n name s name=$g(SAMIARG("name"))
 "RTN","SAMIHOM4",590,0)
- m ^gpl("reg")=SAMIARG
+ ;
 "RTN","SAMIHOM4",591,0)
- n ssn s ssn=SAMIARG("ssn")
+ m ^gpl("reg")=SAMIARG
 "RTN","SAMIHOM4",592,0)
- s ssn=$tr(ssn,"-")
+ n ssn s ssn=SAMIARG("ssn")
 "RTN","SAMIHOM4",593,0)
- s SAMIARG("errorMessage")=""
+ s ssn=$tr(ssn,"-")
 "RTN","SAMIHOM4",594,0)
- s SAMIARG("errorField")=""
+ s SAMIARG("errorMessage")=""
 "RTN","SAMIHOM4",595,0)
- ; test for duplicate ssn
+ s SAMIARG("errorField")=""
 "RTN","SAMIHOM4",596,0)
- ;
+ ; test for duplicate ssn
 "RTN","SAMIHOM4",597,0)
- ;i $$DUPSSN(ssn) d  ;
+ ;
 "RTN","SAMIHOM4",598,0)
- ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ ;i $$DUPSSN(ssn) d  ;
 "RTN","SAMIHOM4",599,0)
- ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
 "RTN","SAMIHOM4",600,0)
- ;. s SAMIARG("errorField")="ssn"
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
 "RTN","SAMIHOM4",601,0)
- ;
+ ;. s SAMIARG("errorField")="ssn"
 "RTN","SAMIHOM4",602,0)
- ; test for duplicate icn
+ ;
 "RTN","SAMIHOM4",603,0)
- ;
+ ; test for duplicate icn
 "RTN","SAMIHOM4",604,0)
- ;n icn s icn=$g(SAMIARG("icn"))
+ ;
 "RTN","SAMIHOM4",605,0)
- ;i icn'="" i $$DUPICN(icn) d  ;
+ ;n icn s icn=$g(SAMIARG("icn"))
 "RTN","SAMIHOM4",606,0)
- ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
+ ;i icn'="" i $$DUPICN(icn) d  ;
 "RTN","SAMIHOM4",607,0)
- ;. s SAMIARG("errorField")="icn"
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
 "RTN","SAMIHOM4",608,0)
- ;;
-"RTN","SAMIHOM4",609,0)
- ;; test for wellformed ICN
-"RTN","SAMIHOM4",610,0)
- ;;
-"RTN","SAMIHOM4",611,0)
- ;i icn'="" i $$BADICN(icn) d  ;
-"RTN","SAMIHOM4",612,0)
- ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
-"RTN","SAMIHOM4",613,0)
  ;. s SAMIARG("errorField")="icn"
-"RTN","SAMIHOM4",614,0)
+"RTN","SAMIHOM4",609,0)
  ;;
+"RTN","SAMIHOM4",610,0)
+ ;; test for wellformed ICN
+"RTN","SAMIHOM4",611,0)
+ ;;
+"RTN","SAMIHOM4",612,0)
+ ;i icn'="" i $$BADICN(icn) d  ;
+"RTN","SAMIHOM4",613,0)
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
+"RTN","SAMIHOM4",614,0)
+ ;. s SAMIARG("errorField")="icn"
 "RTN","SAMIHOM4",615,0)
- ; if there is an error, send back to edit with error message
+ ;;
 "RTN","SAMIHOM4",616,0)
- i $g(SAMIARG("errorMessage"))'="" d  q  ;
+ ; if there is an error, send back to edit with error message
 "RTN","SAMIHOM4",617,0)
- . n form
+ i $g(SAMIARG("errorMessage"))'="" d  q  ;
 "RTN","SAMIHOM4",618,0)
- . s form="vapals:addperson"
+ . n form
 "RTN","SAMIHOM4",619,0)
- . d RTNERR(.SAMIRESULT,form,.SAMIARG)
+ . s form="vapals:addperson"
 "RTN","SAMIHOM4",620,0)
- ;
+ . d RTNERR(.SAMIRESULT,form,.SAMIARG)
 "RTN","SAMIHOM4",621,0)
- n root s root=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",622,0)
- n proot s proot=$$setroot^%wd("vapals-patients")
+ n root s root=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",623,0)
- n ptlkien s ptlkien=""
+ n proot s proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMIHOM4",624,0)
- n dfn s dfn=""
+ n ptlkien s ptlkien=""
 "RTN","SAMIHOM4",625,0)
- n sien s sien=""
+ n dfn s dfn=""
 "RTN","SAMIHOM4",626,0)
- i ptlkien="" s ptlkien=$o(@root@("AAAAAA"),-1)+1
+ n sien s sien=""
 "RTN","SAMIHOM4",627,0)
- n zm
+ i ptlkien="" s ptlkien=$o(@root@("AAAAAA"),-1)+1
 "RTN","SAMIHOM4",628,0)
- k SAMIARG("MATCHLOG")
+ n zm
 "RTN","SAMIHOM4",629,0)
- s zm=$$REMATCH(sien,.SAMIARG)
+ k SAMIARG("MATCHLOG")
 "RTN","SAMIHOM4",630,0)
- i zm>0 d  ;
+ s zm=$$REMATCH(sien,.SAMIARG)
 "RTN","SAMIHOM4",631,0)
- . s SAMIARG("MATCHLOG")=zm
+ i zm>0 d  ;
 "RTN","SAMIHOM4",632,0)
- d MKPTLK(ptlkien,.SAMIARG) ; make the patient-lookup record
+ . s SAMIARG("MATCHLOG")=zm
 "RTN","SAMIHOM4",633,0)
- ;
+ d MKPTLK(ptlkien,.SAMIARG) ; make the patient-lookup record
 "RTN","SAMIHOM4",634,0)
- s dfn=$o(@root@("dfn"," "),-1)+1
+ ;
 "RTN","SAMIHOM4",635,0)
- n pdfn
+ s dfn=$o(@root@("dfn"," "),-1)+1
 "RTN","SAMIHOM4",636,0)
- s pdfn=$o(@proot@("dfn"," "),-1)+1
+ n pdfn
 "RTN","SAMIHOM4",637,0)
- i pdfn>dfn s dfn=pdfn ; need a dfn that has not been used
+ s pdfn=$o(@proot@("dfn"," "),-1)+1
 "RTN","SAMIHOM4",638,0)
- i dfn<9000001 s dfn=9000001
+ i pdfn>dfn s dfn=pdfn ; need a dfn that has not been used
 "RTN","SAMIHOM4",639,0)
- s @root@(ptlkien,"dfn")=dfn
+ i dfn<9000001 s dfn=9000001
 "RTN","SAMIHOM4",640,0)
- s SAMIARG("dfn")=dfn ; pass the new dfn back to the caller
+ s @root@(ptlkien,"dfn")=dfn
 "RTN","SAMIHOM4",641,0)
- ; note: this is the only way to link to the new record via dfn
+ s SAMIARG("dfn")=dfn ; pass the new dfn back to the caller
 "RTN","SAMIHOM4",642,0)
- ; since nothing else is unique
+ ; note: this is the only way to link to the new record via dfn
 "RTN","SAMIHOM4",643,0)
- d INDXPTLK(ptlkien)
+ ; since nothing else is unique
 "RTN","SAMIHOM4",644,0)
- s SAMIFILTER("samiroute")="addperson"
+ d INDXPTLK(ptlkien)
 "RTN","SAMIHOM4",645,0)
- s SAMIFILTER("siteid")=$G(SAMIARG("siteid"))
+ s SAMIFILTER("samiroute")="addperson"
 "RTN","SAMIHOM4",646,0)
- s SAMIFILTER("sitetitle")=$G(SAMIARG("sitetitle"))
+ s SAMIFILTER("siteid")=$G(SAMIARG("siteid"))
 "RTN","SAMIHOM4",647,0)
- D  ; slight of hand for handing back SAMIARGS while also returning a form
+ s SAMIFILTER("sitetitle")=$G(SAMIARG("sitetitle"))
 "RTN","SAMIHOM4",648,0)
- . n SAMIARG ; return to a blank manual registration form
+ D  ; slight of hand for handing back SAMIARGS while also returning a form
 "RTN","SAMIHOM4",649,0)
- . s SAMIARG("siteid")=$G(SAMIFILTER("siteid"))
+ . n SAMIARG ; return to a blank manual registration form
 "RTN","SAMIHOM4",650,0)
- . s SAMIARG("sitetitle")=$G(SAMIFILTER("sitetitle"))
+ . s SAMIARG("siteid")=$G(SAMIFILTER("siteid"))
 "RTN","SAMIHOM4",651,0)
- . d SETINFO(.SAMIFILTER,name_" was successfully entered")
+ . s SAMIARG("sitetitle")=$G(SAMIFILTER("sitetitle"))
 "RTN","SAMIHOM4",652,0)
- . ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
+ . d SETINFO(.SAMIFILTER,name_" was successfully entered")
 "RTN","SAMIHOM4",653,0)
- . do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ . ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
 "RTN","SAMIHOM4",654,0)
- ;
+ . do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
 "RTN","SAMIHOM4",655,0)
- quit  ; end of REG
-"RTN","SAMIHOM4",656,0)
  ;
+"RTN","SAMIHOM4",656,0)
+ quit  ; end of REG
 "RTN","SAMIHOM4",657,0)
  ;
 "RTN","SAMIHOM4",658,0)
  ;
 "RTN","SAMIHOM4",659,0)
-MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
+ ;
 "RTN","SAMIHOM4",660,0)
- ;
+MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
 "RTN","SAMIHOM4",661,0)
- n ssn s ssn=SAMIARG("ssn")
+ ;
 "RTN","SAMIHOM4",662,0)
- s ssn=$tr(ssn,"-")
+ n ssn s ssn=SAMIARG("ssn")
 "RTN","SAMIHOM4",663,0)
- n name s name=$g(SAMIARG("name"))
+ s ssn=$tr(ssn,"-")
 "RTN","SAMIHOM4",664,0)
- n sinamef,sinamel
+ n name s name=$g(SAMIARG("name"))
 "RTN","SAMIHOM4",665,0)
- s sinamel=$p(name,","),sinamel=$$TRIM^XLFSTR(sinamel,"LR")
+ n sinamef,sinamel
 "RTN","SAMIHOM4",666,0)
- s sinamef=$p(name,",",2),sinamef=$$TRIM^XLFSTR(sinamef,"LR")
+ s sinamel=$p(name,","),sinamel=$$TRIM^XLFSTR(sinamel,"LR")
 "RTN","SAMIHOM4",667,0)
- s name=sinamel_","_sinamef
+ s sinamef=$p(name,",",2),sinamef=$$TRIM^XLFSTR(sinamef,"LR")
 "RTN","SAMIHOM4",668,0)
- n siteid s siteid=$g(SAMIARG("siteid"))
+ s name=sinamel_","_sinamef
 "RTN","SAMIHOM4",669,0)
- i siteid="" s siteid=$g(SAMIARG("site"))
+ n siteid s siteid=$g(SAMIARG("siteid"))
 "RTN","SAMIHOM4",670,0)
- ;
+ i siteid="" s siteid=$g(SAMIARG("site"))
 "RTN","SAMIHOM4",671,0)
- s @root@(ptlkien,"siteid")=siteid
+ ;
 "RTN","SAMIHOM4",672,0)
- s @root@(ptlkien,"saminame")=name
+ s @root@(ptlkien,"siteid")=siteid
 "RTN","SAMIHOM4",673,0)
- s @root@(ptlkien,"sinamef")=sinamef
+ s @root@(ptlkien,"saminame")=name
 "RTN","SAMIHOM4",674,0)
- s @root@(ptlkien,"sinamel")=sinamel
+ s @root@(ptlkien,"sinamef")=sinamef
 "RTN","SAMIHOM4",675,0)
- n dob s dob=$g(SAMIARG("dob"))
+ s @root@(ptlkien,"sinamel")=sinamel
 "RTN","SAMIHOM4",676,0)
- i dob="" s dob=$g(SAMIARG("sidob"))
+ n dob s dob=$g(SAMIARG("dob"))
 "RTN","SAMIHOM4",677,0)
- n fmdob s fmdob=$$FMDT^SAMIUR2(dob)
+ i dob="" s dob=$g(SAMIARG("sidob"))
 "RTN","SAMIHOM4",678,0)
- n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
+ n fmdob s fmdob=$$FMDT^SAMIUR2(dob)
 "RTN","SAMIHOM4",679,0)
- s ptlkdob=$TR(ptlkdob,"/","-")
+ n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
 "RTN","SAMIHOM4",680,0)
- s @root@(ptlkien,"dob")=ptlkdob
+ s ptlkdob=$TR(ptlkdob,"/","-")
 "RTN","SAMIHOM4",681,0)
- s @root@(ptlkien,"sbdob")=ptlkdob
+ s @root@(ptlkien,"dob")=ptlkdob
 "RTN","SAMIHOM4",682,0)
- n gender s gender=$g(SAMIARG("gender"))
+ s @root@(ptlkien,"sbdob")=ptlkdob
 "RTN","SAMIHOM4",683,0)
- i gender="" s gender=$g(SAMIARG("sex"))
+ n gender s gender=$g(SAMIARG("gender"))
 "RTN","SAMIHOM4",684,0)
- s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
+ i gender="" s gender=$g(SAMIARG("sex"))
 "RTN","SAMIHOM4",685,0)
- s @root@(ptlkien,"sex")=$g(SAMIARG("gender"))
+ s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
 "RTN","SAMIHOM4",686,0)
- ; s @root@(ptlkien,"icn")=SAMIARG("icn")
+ s @root@(ptlkien,"sex")=$g(SAMIARG("gender"))
 "RTN","SAMIHOM4",687,0)
- s @root@(ptlkien,"ssn")=ssn
+ ; s @root@(ptlkien,"icn")=SAMIARG("icn")
 "RTN","SAMIHOM4",688,0)
- n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
+ s @root@(ptlkien,"ssn")=ssn
 "RTN","SAMIHOM4",689,0)
- s @root@(ptlkien,"last5")=last5
+ n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
 "RTN","SAMIHOM4",690,0)
- n mymatch s mymatch=$g(SAMIARG("MATCHLOG"))
+ s @root@(ptlkien,"last5")=last5
 "RTN","SAMIHOM4",691,0)
- i mymatch'="" s @root@(ptlkien,"MATCHLOG")=mymatch
+ n mymatch s mymatch=$g(SAMIARG("MATCHLOG"))
 "RTN","SAMIHOM4",692,0)
- ;
+ i mymatch'="" s @root@(ptlkien,"MATCHLOG")=mymatch
 "RTN","SAMIHOM4",693,0)
- quit  ; end of MKPTLK
-"RTN","SAMIHOM4",694,0)
  ;
+"RTN","SAMIHOM4",694,0)
+ quit  ; end of MKPTLK
 "RTN","SAMIHOM4",695,0)
  ;
 "RTN","SAMIHOM4",696,0)
  ;
 "RTN","SAMIHOM4",697,0)
-UPDTFRMS(dfn) ; update demographics in all forms for patient
+ ;
 "RTN","SAMIHOM4",698,0)
- ;
+UPDTFRMS(dfn) ; update demographics in all forms for patient
 "RTN","SAMIHOM4",699,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",700,0)
- n proot s proot=$$setroot^%wd("vapals-patients")
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",701,0)
- n lien s lien=$o(@lroot@("dfn",dfn,""))
+ n proot s proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMIHOM4",702,0)
- q:lien=""
+ n lien s lien=$o(@lroot@("dfn",dfn,""))
 "RTN","SAMIHOM4",703,0)
- n pien s pien=$o(@proot@("dfn",dfn,""))
+ q:lien=""
 "RTN","SAMIHOM4",704,0)
- q:pien=""
+ n pien s pien=$o(@proot@("dfn",dfn,""))
 "RTN","SAMIHOM4",705,0)
- ; this patient has forms
+ q:pien=""
 "RTN","SAMIHOM4",706,0)
- m @proot@(pien)=@lroot@(lien) ; refresh the demos in the patient record
+ ; this patient has forms
 "RTN","SAMIHOM4",707,0)
- n ssn s ssn=$g(@proot@(pien,"ssn"))
+ m @proot@(pien)=@lroot@(lien) ; refresh the demos in the patient record
 "RTN","SAMIHOM4",708,0)
- s @proot@(pien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
+ n ssn s ssn=$g(@proot@(pien,"ssn"))
 "RTN","SAMIHOM4",709,0)
- n sid s sid=$g(@proot@("sisid")) ; studyid 
+ s @proot@(pien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
 "RTN","SAMIHOM4",710,0)
- q:sid=""  ; no studyid
+ n sid s sid=$g(@proot@("sisid")) ; studyid 
 "RTN","SAMIHOM4",711,0)
- n zi s zi=""
+ q:sid=""  ; no studyid
 "RTN","SAMIHOM4",712,0)
- f  s zi=$o(@proot@("graph",sid,zi)) q:zi=""  d  ; for each form
+ n zi s zi=""
 "RTN","SAMIHOM4",713,0)
- . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
+ f  s zi=$o(@proot@("graph",sid,zi)) q:zi=""  d  ; for each form
 "RTN","SAMIHOM4",714,0)
- ;
+ . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
 "RTN","SAMIHOM4",715,0)
- quit  ; end of UPDTFRMS
-"RTN","SAMIHOM4",716,0)
  ;
+"RTN","SAMIHOM4",716,0)
+ quit  ; end of UPDTFRMS
 "RTN","SAMIHOM4",717,0)
  ;
 "RTN","SAMIHOM4",718,0)
  ;
 "RTN","SAMIHOM4",719,0)
-MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
+ ;
 "RTN","SAMIHOM4",720,0)
- ;
+MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
 "RTN","SAMIHOM4",721,0)
- ; called from pressing the merge button on the unmatched report
+ ;
 "RTN","SAMIHOM4",722,0)
- ;
+ ; called from pressing the merge button on the unmatched report
 "RTN","SAMIHOM4",723,0)
- n toien s toien=$g(SAMIARGS("toien"))
+ ;
 "RTN","SAMIHOM4",724,0)
- i toien="" d  q  ;
+ n toien s toien=$g(SAMIARGS("toien"))
 "RTN","SAMIHOM4",725,0)
- . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ i toien="" d  q  ;
 "RTN","SAMIHOM4",726,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
 "RTN","SAMIHOM4",727,0)
- n fromien s fromien=$g(@lroot@(toien,"MATCHLOG"))
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",728,0)
- i fromien="" d  q  ;
+ n fromien s fromien=$g(@lroot@(toien,"MATCHLOG"))
 "RTN","SAMIHOM4",729,0)
- . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ i fromien="" d  q  ;
 "RTN","SAMIHOM4",730,0)
- ;
-"RTN","SAMIHOM4",731,0)
- ; test for remotedfn in from record - not valid if absent
-"RTN","SAMIHOM4",732,0)
- ;
-"RTN","SAMIHOM4",733,0)
- i $g(@lroot@(fromien,"remotedfn"))="" d  q  ;
-"RTN","SAMIHOM4",734,0)
  . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+"RTN","SAMIHOM4",731,0)
+ ;
+"RTN","SAMIHOM4",732,0)
+ ; test for remotedfn in from record - not valid if absent
+"RTN","SAMIHOM4",733,0)
+ ;
+"RTN","SAMIHOM4",734,0)
+ i $g(@lroot@(fromien,"remotedfn"))="" d  q  ;
 "RTN","SAMIHOM4",735,0)
- ;
+ . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
 "RTN","SAMIHOM4",736,0)
- ; remove index entries for from and to records
+ ;
 "RTN","SAMIHOM4",737,0)
- ;
+ ; remove index entries for from and to records
 "RTN","SAMIHOM4",738,0)
- d UNINDXPT(fromien) ; delete index entries
+ ;
 "RTN","SAMIHOM4",739,0)
- d UNINDXPT(toien)
+ d UNINDXPT(fromien) ; delete index entries
 "RTN","SAMIHOM4",740,0)
- ;
+ d UNINDXPT(toien)
 "RTN","SAMIHOM4",741,0)
- ; create changelog entry in to record - contains from record
+ ;
 "RTN","SAMIHOM4",742,0)
- ;
+ ; create changelog entry in to record - contains from record
 "RTN","SAMIHOM4",743,0)
- m @lroot@(toien,"changelog",$$FMTE^XLFDT($$NOW^XLFDT,5))=@lroot@(fromien)
+ ;
 "RTN","SAMIHOM4",744,0)
- ;
+ m @lroot@(toien,"changelog",$$FMTE^XLFDT($$NOW^XLFDT,5))=@lroot@(fromien)
 "RTN","SAMIHOM4",745,0)
- ; change the dfn in the from record to the to record dfn for merging
+ ;
 "RTN","SAMIHOM4",746,0)
- ;
+ ; change the dfn in the from record to the to record dfn for merging
 "RTN","SAMIHOM4",747,0)
- s @lroot@(fromien,"dfn")=@lroot@(toien,"dfn")
+ ;
 "RTN","SAMIHOM4",748,0)
- n dfn s dfn=@lroot@(toien,"dfn") ; for use in updating forms
+ s @lroot@(fromien,"dfn")=@lroot@(toien,"dfn")
 "RTN","SAMIHOM4",749,0)
- ;
+ n dfn s dfn=@lroot@(toien,"dfn") ; for use in updating forms
 "RTN","SAMIHOM4",750,0)
- ; merge the from record to the to record
+ ;
 "RTN","SAMIHOM4",751,0)
- ;
+ ; merge the from record to the to record
 "RTN","SAMIHOM4",752,0)
- m @lroot@(toien)=@lroot@(fromien)
+ ;
 "RTN","SAMIHOM4",753,0)
- ;
+ m @lroot@(toien)=@lroot@(fromien)
 "RTN","SAMIHOM4",754,0)
- ; delete the from record
+ ;
 "RTN","SAMIHOM4",755,0)
- ;
+ ; delete the from record
 "RTN","SAMIHOM4",756,0)
- k @lroot@(fromien)
+ ;
 "RTN","SAMIHOM4",757,0)
- ;
+ k @lroot@(fromien)
 "RTN","SAMIHOM4",758,0)
- ; reindex the to record
+ ;
 "RTN","SAMIHOM4",759,0)
- ;
+ ; reindex the to record
 "RTN","SAMIHOM4",760,0)
- d INDXPTLK(toien)
+ ;
 "RTN","SAMIHOM4",761,0)
- ;
+ d INDXPTLK(toien)
 "RTN","SAMIHOM4",762,0)
- ; propagate the updated from record to every form
+ ;
 "RTN","SAMIHOM4",763,0)
- ;
+ ; propagate the updated from record to every form
 "RTN","SAMIHOM4",764,0)
- d UPDTFRMS(dfn) ; updates the patient in the vapals-patient graph
+ ;
 "RTN","SAMIHOM4",765,0)
- ;
+ d UPDTFRMS(dfn) ; updates the patient in the vapals-patient graph
 "RTN","SAMIHOM4",766,0)
- ; leave and return to the unmatched report
+ ;
 "RTN","SAMIHOM4",767,0)
- ;   note that the form and to records will no longer be in the report
+ ; leave and return to the unmatched report
 "RTN","SAMIHOM4",768,0)
- ;
+ ;   note that the form and to records will no longer be in the report
 "RTN","SAMIHOM4",769,0)
- d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ ;
 "RTN","SAMIHOM4",770,0)
- ;
+ d WSUNMAT(.SAMIRESULT,.SAMIARGS)
 "RTN","SAMIHOM4",771,0)
- quit  ; end of MERGE
-"RTN","SAMIHOM4",772,0)
  ;
+"RTN","SAMIHOM4",772,0)
+ quit  ; end of MERGE
 "RTN","SAMIHOM4",773,0)
  ;
 "RTN","SAMIHOM4",774,0)
  ;
 "RTN","SAMIHOM4",775,0)
-ADDUNMAT ; adds unmatched report web service to system
+ ;
 "RTN","SAMIHOM4",776,0)
- ;
+ADDUNMAT ; adds unmatched report web service to system
 "RTN","SAMIHOM4",777,0)
- d addService^%webutils("GET","unmatched","WSUNMAT^SAMIHOM4")
+ ;
 "RTN","SAMIHOM4",778,0)
- ;
+ d addService^%webutils("GET","unmatched","WSUNMAT^SAMIHOM4")
 "RTN","SAMIHOM4",779,0)
- quit  ; end of ADDUNMAT
-"RTN","SAMIHOM4",780,0)
  ;
+"RTN","SAMIHOM4",780,0)
+ quit  ; end of ADDUNMAT
 "RTN","SAMIHOM4",781,0)
  ;
 "RTN","SAMIHOM4",782,0)
  ;
 "RTN","SAMIHOM4",783,0)
-DELUNMAT ; deletes unmatched web service
+ ;
 "RTN","SAMIHOM4",784,0)
- ;
+DELUNMAT ; deletes unmatched web service
 "RTN","SAMIHOM4",785,0)
- d deleteService^%webutils("GET","unmatched")
+ ;
 "RTN","SAMIHOM4",786,0)
- ;
+ d deleteService^%webutils("GET","unmatched")
 "RTN","SAMIHOM4",787,0)
- quit  ; end of DELUNMAT
-"RTN","SAMIHOM4",788,0)
  ;
+"RTN","SAMIHOM4",788,0)
+ quit  ; end of DELUNMAT
 "RTN","SAMIHOM4",789,0)
  ;
 "RTN","SAMIHOM4",790,0)
  ;
 "RTN","SAMIHOM4",791,0)
-WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
+ ;
 "RTN","SAMIHOM4",792,0)
- ; 
+WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
 "RTN","SAMIHOM4",793,0)
- n filter,bdy
+ ; 
 "RTN","SAMIHOM4",794,0)
- s bdy=""
+ n filter,bdy
 "RTN","SAMIHOM4",795,0)
- ;s filter("siteid")="PHX"
+ s bdy=""
 "RTN","SAMIHOM4",796,0)
- s filter("samiroute")="report"
+ ;s filter("siteid")="PHX"
 "RTN","SAMIHOM4",797,0)
- s filter("samireporttype")="unmatched"
+ s filter("samiroute")="report"
 "RTN","SAMIHOM4",798,0)
- d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
+ s filter("samireporttype")="unmatched"
 "RTN","SAMIHOM4",799,0)
- ;
+ d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
 "RTN","SAMIHOM4",800,0)
- quit  ; end of WSUNMAT
-"RTN","SAMIHOM4",801,0)
  ;
+"RTN","SAMIHOM4",801,0)
+ quit  ; end of WSUNMAT
 "RTN","SAMIHOM4",802,0)
  ;
 "RTN","SAMIHOM4",803,0)
  ;
 "RTN","SAMIHOM4",804,0)
-DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
+ ;
 "RTN","SAMIHOM4",805,0)
- ;
+DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
 "RTN","SAMIHOM4",806,0)
- n proot s proot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",807,0)
- i $d(@proot@("ssn",ssn)) q 1
+ n proot s proot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",808,0)
- ;
+ i $d(@proot@("ssn",ssn)) q 1
 "RTN","SAMIHOM4",809,0)
- quit 0 ; end of $$DUPSSN
-"RTN","SAMIHOM4",810,0)
  ;
+"RTN","SAMIHOM4",810,0)
+ quit 0 ; end of $$DUPSSN
 "RTN","SAMIHOM4",811,0)
  ;
 "RTN","SAMIHOM4",812,0)
  ;
 "RTN","SAMIHOM4",813,0)
-DUPICN(icn) ; extrinsic returns true if duplicate icn
+ ;
 "RTN","SAMIHOM4",814,0)
- ;
+DUPICN(icn) ; extrinsic returns true if duplicate icn
 "RTN","SAMIHOM4",815,0)
- n proot s proot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",816,0)
- n tmpicn s tmpicn=$p(icn,"V",1)
+ n proot s proot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",817,0)
- i $d(@proot@("icn",icn)) q 1
+ n tmpicn s tmpicn=$p(icn,"V",1)
 "RTN","SAMIHOM4",818,0)
- i $d(@proot@("icn",tmpicn)) q 1
+ i $d(@proot@("icn",icn)) q 1
 "RTN","SAMIHOM4",819,0)
- ;
+ i $d(@proot@("icn",tmpicn)) q 1
 "RTN","SAMIHOM4",820,0)
- quit 0 ; end of $$DUPICN
-"RTN","SAMIHOM4",821,0)
  ;
+"RTN","SAMIHOM4",821,0)
+ quit 0 ; end of $$DUPICN
 "RTN","SAMIHOM4",822,0)
  ;
 "RTN","SAMIHOM4",823,0)
  ;
 "RTN","SAMIHOM4",824,0)
-BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
+ ;
 "RTN","SAMIHOM4",825,0)
- ;
+BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
 "RTN","SAMIHOM4",826,0)
- n zchk s zchk=$p(icn,"V",2)
+ ;
 "RTN","SAMIHOM4",827,0)
- n zicn s zicn=$p(icn,"V",1)
+ n zchk s zchk=$p(icn,"V",2)
 "RTN","SAMIHOM4",828,0)
- q:zchk="" 1
+ n zicn s zicn=$p(icn,"V",1)
 "RTN","SAMIHOM4",829,0)
- i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
+ q:zchk="" 1
 "RTN","SAMIHOM4",830,0)
- ;
+ i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
 "RTN","SAMIHOM4",831,0)
- quit 0
-"RTN","SAMIHOM4",832,0)
  ;
+"RTN","SAMIHOM4",832,0)
+ quit 0
 "RTN","SAMIHOM4",833,0)
  ;
 "RTN","SAMIHOM4",834,0)
  ;
 "RTN","SAMIHOM4",835,0)
-SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
+ ;
 "RTN","SAMIHOM4",836,0)
- ;
+SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
 "RTN","SAMIHOM4",837,0)
- n dfn s dfn=$g(vars("dfn")) ; must have a dfn
+ ;
 "RTN","SAMIHOM4",838,0)
- i dfn="" d  q  ;
+ n dfn s dfn=$g(vars("dfn")) ; must have a dfn
 "RTN","SAMIHOM4",839,0)
- . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ i dfn="" d  q  ;
 "RTN","SAMIHOM4",840,0)
- n root s root=$$setroot^%wd("patient-lookup")
-"RTN","SAMIHOM4",841,0)
- n sien s sien=$o(@root@("dfn",dfn,""))
-"RTN","SAMIHOM4",842,0)
- i sien="" d  q  ;
-"RTN","SAMIHOM4",843,0)
  . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+"RTN","SAMIHOM4",841,0)
+ n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIHOM4",842,0)
+ n sien s sien=$o(@root@("dfn",dfn,""))
+"RTN","SAMIHOM4",843,0)
+ i sien="" d  q  ;
 "RTN","SAMIHOM4",844,0)
- d UNINDXPT(sien) ; remove old index entries
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
 "RTN","SAMIHOM4",845,0)
- n zm
+ d UNINDXPT(sien) ; remove old index entries
 "RTN","SAMIHOM4",846,0)
- k SAMIARG("MATCHLOG")
+ n zm
 "RTN","SAMIHOM4",847,0)
- s zm=$$REMATCH(sien,.SAMIARG)
+ k SAMIARG("MATCHLOG")
 "RTN","SAMIHOM4",848,0)
- i zm>0 d  ;
+ s zm=$$REMATCH(sien,.SAMIARG)
 "RTN","SAMIHOM4",849,0)
- . s SAMIARG("MATCHLOG")=zm
+ i zm>0 d  ;
 "RTN","SAMIHOM4",850,0)
- d MKPTLK(sien,.SAMIARG) ; add the updated fields
+ . s SAMIARG("MATCHLOG")=zm
 "RTN","SAMIHOM4",851,0)
- d INDXPTLK(sien) ; create new index entries
+ d MKPTLK(sien,.SAMIARG) ; add the updated fields
 "RTN","SAMIHOM4",852,0)
- d UPDTFRMS(dfn) ; update demographic info in all forms
+ d INDXPTLK(sien) ; create new index entries
 "RTN","SAMIHOM4",853,0)
- n filter,bdy
+ d UPDTFRMS(dfn) ; update demographic info in all forms
 "RTN","SAMIHOM4",854,0)
- s bdy=""
+ n filter,bdy
 "RTN","SAMIHOM4",855,0)
- m filter=SAMIARG
+ s bdy=""
 "RTN","SAMIHOM4",856,0)
- s filter("samiroute")="report"
+ m filter=SAMIARG
 "RTN","SAMIHOM4",857,0)
- s filter("samireporttype")="unmatched"
+ s filter("samiroute")="report"
 "RTN","SAMIHOM4",858,0)
- d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
+ s filter("samireporttype")="unmatched"
 "RTN","SAMIHOM4",859,0)
- ;
+ d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
 "RTN","SAMIHOM4",860,0)
- quit  ; end of SAVE
-"RTN","SAMIHOM4",861,0)
  ;
+"RTN","SAMIHOM4",861,0)
+ quit  ; end of SAVE
 "RTN","SAMIHOM4",862,0)
  ;
 "RTN","SAMIHOM4",863,0)
  ;
 "RTN","SAMIHOM4",864,0)
-REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
+ ;
 "RTN","SAMIHOM4",865,0)
- ;
+REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
 "RTN","SAMIHOM4",866,0)
- ; else zero
+ ;
 "RTN","SAMIHOM4",867,0)
- ;
+ ; else zero
 "RTN","SAMIHOM4",868,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",869,0)
- n ssn,name,icn,x,y
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",870,0)
- s ssn=$g(SAMIARG("ssn"))
+ n ssn,name,icn,x,y
 "RTN","SAMIHOM4",871,0)
- i ssn["-" s ssn=$tr(ssn,"-")
+ s ssn=$g(SAMIARG("ssn"))
 "RTN","SAMIHOM4",872,0)
- s name=$g(SAMIARG("saminame"))
+ i ssn["-" s ssn=$tr(ssn,"-")
 "RTN","SAMIHOM4",873,0)
- i name="" s name=$g(SAMIARG("name"))
+ s name=$g(SAMIARG("saminame"))
 "RTN","SAMIHOM4",874,0)
- s name=$$UCASE(name)
+ i name="" s name=$g(SAMIARG("name"))
 "RTN","SAMIHOM4",875,0)
- ; s icn=$g(SAMIARG("icn"))
+ s name=$$UCASE(name)
 "RTN","SAMIHOM4",876,0)
- s x=0
+ ; s icn=$g(SAMIARG("icn"))
 "RTN","SAMIHOM4",877,0)
- i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
+ s x=0
 "RTN","SAMIHOM4",878,0)
- i x=sien s x=$o(@lroot@("ssn",ssn,x))
+ i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
 "RTN","SAMIHOM4",879,0)
- i +x'=0 d  ;
+ i x=sien s x=$o(@lroot@("ssn",ssn,x))
 "RTN","SAMIHOM4",880,0)
- . s y=$g(@lroot@(x,"dfn"))
-"RTN","SAMIHOM4",881,0)
- . ;i y>9000000 s x=0
-"RTN","SAMIHOM4",882,0)
- i x>0 q x
-"RTN","SAMIHOM4",883,0)
- i name'="" s x=$o(@lroot@("name",name,""))
-"RTN","SAMIHOM4",884,0)
- i x=sien s x=$o(@lroot@("name",name,x))
-"RTN","SAMIHOM4",885,0)
  i +x'=0 d  ;
-"RTN","SAMIHOM4",886,0)
+"RTN","SAMIHOM4",881,0)
  . s y=$g(@lroot@(x,"dfn"))
-"RTN","SAMIHOM4",887,0)
+"RTN","SAMIHOM4",882,0)
  . ;i y>9000000 s x=0
-"RTN","SAMIHOM4",888,0)
+"RTN","SAMIHOM4",883,0)
  i x>0 q x
+"RTN","SAMIHOM4",884,0)
+ i name'="" s x=$o(@lroot@("name",name,""))
+"RTN","SAMIHOM4",885,0)
+ i x=sien s x=$o(@lroot@("name",name,x))
+"RTN","SAMIHOM4",886,0)
+ i +x'=0 d  ;
+"RTN","SAMIHOM4",887,0)
+ . s y=$g(@lroot@(x,"dfn"))
+"RTN","SAMIHOM4",888,0)
+ . ;i y>9000000 s x=0
 "RTN","SAMIHOM4",889,0)
- ;i icn'="" s x=$o(@lroot@("icn",icn,""))
+ i x>0 q x
 "RTN","SAMIHOM4",890,0)
- ;i x=sien s x=$o(@lroot@("icn",icn,x))
+ ;i icn'="" s x=$o(@lroot@("icn",icn,""))
 "RTN","SAMIHOM4",891,0)
- ;i +x'=0 d  ;
+ ;i x=sien s x=$o(@lroot@("icn",icn,x))
 "RTN","SAMIHOM4",892,0)
- ;. s y=$g(@lroot@(x,"dfn"))
+ ;i +x'=0 d  ;
 "RTN","SAMIHOM4",893,0)
- ;. i y>9000000 s x=0
+ ;. s y=$g(@lroot@(x,"dfn"))
 "RTN","SAMIHOM4",894,0)
- ;i x>0 q x
+ ;. i y>9000000 s x=0
 "RTN","SAMIHOM4",895,0)
- ;
+ ;i x>0 q x
 "RTN","SAMIHOM4",896,0)
- quit 0 ; end of $$REMATCH
-"RTN","SAMIHOM4",897,0)
  ;
+"RTN","SAMIHOM4",897,0)
+ quit 0 ; end of $$REMATCH
 "RTN","SAMIHOM4",898,0)
  ;
 "RTN","SAMIHOM4",899,0)
  ;
 "RTN","SAMIHOM4",900,0)
-SETINFO(vars,msg) ; set information message text
+ ;
 "RTN","SAMIHOM4",901,0)
- ;
+SETINFO(vars,msg) ; set information message text
 "RTN","SAMIHOM4",902,0)
- ; vars are the screen variables passed by reference
+ ;
 "RTN","SAMIHOM4",903,0)
- ;
+ ; vars are the screen variables passed by reference
 "RTN","SAMIHOM4",904,0)
- s vars("infoMessage")=msg
+ ;
 "RTN","SAMIHOM4",905,0)
- ;
+ s vars("infoMessage")=msg
 "RTN","SAMIHOM4",906,0)
- quit  ; end of SETINFO
-"RTN","SAMIHOM4",907,0)
  ;
+"RTN","SAMIHOM4",907,0)
+ quit  ; end of SETINFO
 "RTN","SAMIHOM4",908,0)
  ;
 "RTN","SAMIHOM4",909,0)
  ;
 "RTN","SAMIHOM4",910,0)
-SETWARN(vars,msg) ; set warning message text
+ ;
 "RTN","SAMIHOM4",911,0)
- ;
+SETWARN(vars,msg) ; set warning message text
 "RTN","SAMIHOM4",912,0)
- ; vars are the screen variables passed by reference
+ ;
 "RTN","SAMIHOM4",913,0)
- ;
+ ; vars are the screen variables passed by reference
 "RTN","SAMIHOM4",914,0)
- s vars("warnMessage")=msg
+ ;
 "RTN","SAMIHOM4",915,0)
- ;
+ s vars("warnMessage")=msg
 "RTN","SAMIHOM4",916,0)
- quit  ; end of SETWARN
-"RTN","SAMIHOM4",917,0)
  ;
+"RTN","SAMIHOM4",917,0)
+ quit  ; end of SETWARN
 "RTN","SAMIHOM4",918,0)
  ;
 "RTN","SAMIHOM4",919,0)
- ; 
+ ;
 "RTN","SAMIHOM4",920,0)
-RTNERR(rtn,form,vals,msg,fld) ; redisplay page w/error message
+ ; 
 "RTN","SAMIHOM4",921,0)
- ;
+RTNERR(rtn,form,vals,msg,fld) ; redisplay page w/error message
 "RTN","SAMIHOM4",922,0)
- ; rtn is the return array
+ ;
 "RTN","SAMIHOM4",923,0)
- ; form is the form the page requires
+ ; rtn is the return array
 "RTN","SAMIHOM4",924,0)
- ; vals are the values for the page. passed by reference
+ ; form is the form the page requires
 "RTN","SAMIHOM4",925,0)
- ; msg is the error message to be displayed
+ ; vals are the values for the page. passed by reference
 "RTN","SAMIHOM4",926,0)
- ; fld is the name of the field where the cursor should be put
+ ; msg is the error message to be displayed
 "RTN","SAMIHOM4",927,0)
- ;
+ ; fld is the name of the field where the cursor should be put
 "RTN","SAMIHOM4",928,0)
- n zhtml ; work area for the tempate
+ ;
 "RTN","SAMIHOM4",929,0)
- d SAMIHTM^%wf(.zhtml,form,.err)
+ n zhtml ; work area for the tempate
 "RTN","SAMIHOM4",930,0)
- d MERGEHTM^%wf(.zhtml,.vals,.err)
+ d SAMIHTM^%wf(.zhtml,form,.err)
 "RTN","SAMIHOM4",931,0)
- m rtn=zhtml
+ d MERGEHTM^%wf(.zhtml,.vals,.err)
 "RTN","SAMIHOM4",932,0)
- set HTTPRSP("mime")="text/html" ; set mime type
+ m rtn=zhtml
 "RTN","SAMIHOM4",933,0)
- ;
+ set HTTPRSP("mime")="text/html" ; set mime type
 "RTN","SAMIHOM4",934,0)
- quit  ; end of RTNERR
-"RTN","SAMIHOM4",935,0)
  ;
+"RTN","SAMIHOM4",935,0)
+ quit  ; end of RTNERR
 "RTN","SAMIHOM4",936,0)
  ;
 "RTN","SAMIHOM4",937,0)
  ;
 "RTN","SAMIHOM4",938,0)
-RTNPAGE(rtn,form,vals) ; display page
+ ;
 "RTN","SAMIHOM4",939,0)
- ;
+RTNPAGE(rtn,form,vals) ; display page
 "RTN","SAMIHOM4",940,0)
- ; rtn is the return array
+ ;
 "RTN","SAMIHOM4",941,0)
- ; form is the form the page requires
+ ; rtn is the return array
 "RTN","SAMIHOM4",942,0)
- ; vals are the values for the page. passed by reference
+ ; form is the form the page requires
 "RTN","SAMIHOM4",943,0)
- ;
+ ; vals are the values for the page. passed by reference
 "RTN","SAMIHOM4",944,0)
- n err
+ ;
 "RTN","SAMIHOM4",945,0)
- n zhtml ; work area for the tempate
+ n err
 "RTN","SAMIHOM4",946,0)
- d SAMIHTM^%wf(.zhtml,form,.err)
+ n zhtml ; work area for the tempate
 "RTN","SAMIHOM4",947,0)
- d MERGEHTM^%wf(.zhtml,.vals,.err)
+ d SAMIHTM^%wf(.zhtml,form,.err)
 "RTN","SAMIHOM4",948,0)
- m SAMIRESULT=zhtml
+ d MERGEHTM^%wf(.zhtml,.vals,.err)
 "RTN","SAMIHOM4",949,0)
- set HTTPRSP("mime")="text/html" ; set mime type
+ m SAMIRESULT=zhtml
 "RTN","SAMIHOM4",950,0)
- ;
+ set HTTPRSP("mime")="text/html" ; set mime type
 "RTN","SAMIHOM4",951,0)
- quit  ; end of RTNPAGE
-"RTN","SAMIHOM4",952,0)
  ;
+"RTN","SAMIHOM4",952,0)
+ quit  ; end of RTNPAGE
 "RTN","SAMIHOM4",953,0)
  ;
 "RTN","SAMIHOM4",954,0)
  ;
 "RTN","SAMIHOM4",955,0)
-REINDXPL ; reindex patient lookup
+ ;
 "RTN","SAMIHOM4",956,0)
- ;
+REINDXPL ; reindex patient lookup
 "RTN","SAMIHOM4",957,0)
- n root s root=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",958,0)
- n zi s zi=0
+ n root s root=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",959,0)
- k @root@("dfn")
+ n zi s zi=0
 "RTN","SAMIHOM4",960,0)
- k @root@("ssn")
+ k @root@("dfn")
 "RTN","SAMIHOM4",961,0)
- k @root@("name")
+ k @root@("ssn")
 "RTN","SAMIHOM4",962,0)
- k @root@("last5")
+ k @root@("name")
 "RTN","SAMIHOM4",963,0)
- k @root@("sinamef")
+ k @root@("last5")
 "RTN","SAMIHOM4",964,0)
- k @root@("sinamel")
+ k @root@("sinamef")
 "RTN","SAMIHOM4",965,0)
- ; k @root@("icn")
+ k @root@("sinamel")
 "RTN","SAMIHOM4",966,0)
- f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
+ ; k @root@("icn")
 "RTN","SAMIHOM4",967,0)
- . d INDXPTLK(zi)
+ f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
 "RTN","SAMIHOM4",968,0)
- ;
+ . d INDXPTLK(zi)
 "RTN","SAMIHOM4",969,0)
- quit  ; end of REINDXPL
-"RTN","SAMIHOM4",970,0)
  ;
+"RTN","SAMIHOM4",970,0)
+ quit  ; end of REINDXPL
 "RTN","SAMIHOM4",971,0)
  ;
 "RTN","SAMIHOM4",972,0)
  ;
 "RTN","SAMIHOM4",973,0)
-INDXPTLK(ien) ; generate index entries in patient-lookup graph
+ ;
 "RTN","SAMIHOM4",974,0)
- ;
+INDXPTLK(ien) ; generate index entries in patient-lookup graph
 "RTN","SAMIHOM4",975,0)
- ; for entry ien
+ ;
 "RTN","SAMIHOM4",976,0)
- ;
+ ; for entry ien
 "RTN","SAMIHOM4",977,0)
- n proot set proot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",978,0)
- n name s name=$g(@proot@(ien,"saminame"))
+ n proot set proot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",979,0)
- s @proot@("name",name,ien)=""
+ n name s name=$g(@proot@(ien,"saminame"))
 "RTN","SAMIHOM4",980,0)
- n ucname s ucname=$$UCASE(name)
+ s @proot@("name",name,ien)=""
 "RTN","SAMIHOM4",981,0)
- s @proot@("name",ucname,ien)=""
+ n ucname s ucname=$$UCASE(name)
 "RTN","SAMIHOM4",982,0)
- n x
+ s @proot@("name",ucname,ien)=""
 "RTN","SAMIHOM4",983,0)
- s x=$g(@proot@(ien,"dfn")) ;w !,x
+ n x
 "RTN","SAMIHOM4",984,0)
- i x="" d  ;
+ s x=$g(@proot@(ien,"dfn")) ;w !,x
 "RTN","SAMIHOM4",985,0)
- . s x=$o(@proot@("dfn","   "),-1)+1
+ i x="" d  ;
 "RTN","SAMIHOM4",986,0)
- . s @proot@(ien,"dfn")=x
+ . s x=$o(@proot@("dfn","   "),-1)+1
 "RTN","SAMIHOM4",987,0)
- s:x'="" @proot@("dfn",x,ien)=""
+ . s @proot@(ien,"dfn")=x
 "RTN","SAMIHOM4",988,0)
- s x=$g(@proot@(ien,"last5")) ;w !,x
+ s:x'="" @proot@("dfn",x,ien)=""
 "RTN","SAMIHOM4",989,0)
- s:x'="" @proot@("last5",x,ien)=""
+ s x=$g(@proot@(ien,"last5")) ;w !,x
 "RTN","SAMIHOM4",990,0)
- ;
+ s:x'="" @proot@("last5",x,ien)=""
 "RTN","SAMIHOM4",991,0)
- ; s x=$g(@proot@(ien,"icn")) ;w !,x
+ ;
 "RTN","SAMIHOM4",992,0)
- ; i x'["V" d  ;
+ ; s x=$g(@proot@(ien,"icn")) ;w !,x
 "RTN","SAMIHOM4",993,0)
- ; . i x="" q
+ ; i x'["V" d  ;
 "RTN","SAMIHOM4",994,0)
- ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ; . i x="" q
 "RTN","SAMIHOM4",995,0)
- ; . s @proot@(ien,"icn")=x_"V"_chk
+ ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
 "RTN","SAMIHOM4",996,0)
- ; . s x=x_"V"_chk
+ ; . s @proot@(ien,"icn")=x_"V"_chk
 "RTN","SAMIHOM4",997,0)
- ; s:x'="" @proot@("icn",x,ien)=""
+ ; . s x=x_"V"_chk
 "RTN","SAMIHOM4",998,0)
- ;
+ ; s:x'="" @proot@("icn",x,ien)=""
 "RTN","SAMIHOM4",999,0)
- s x=$g(@proot@(ien,"ssn")) ;w !,x
+ ;
 "RTN","SAMIHOM4",1000,0)
- s:x'="" @proot@("ssn",x,ien)=""
+ s x=$g(@proot@(ien,"ssn")) ;w !,x
 "RTN","SAMIHOM4",1001,0)
- s x=$g(@proot@(ien,"sinamef")) ;w !,x
+ s:x'="" @proot@("ssn",x,ien)=""
 "RTN","SAMIHOM4",1002,0)
- s:x'="" @proot@("sinamef",x,ien)=""
+ s x=$g(@proot@(ien,"sinamef")) ;w !,x
 "RTN","SAMIHOM4",1003,0)
- s x=$g(@proot@(ien,"sinamel")) ;w !,x
+ s:x'="" @proot@("sinamef",x,ien)=""
 "RTN","SAMIHOM4",1004,0)
- s:x'="" @proot@("sinamel",x,ien)=""
+ s x=$g(@proot@(ien,"sinamel")) ;w !,x
 "RTN","SAMIHOM4",1005,0)
- set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ s:x'="" @proot@("sinamel",x,ien)=""
 "RTN","SAMIHOM4",1006,0)
- ;
+ set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
 "RTN","SAMIHOM4",1007,0)
- quit  ; end of INDXPTLK
-"RTN","SAMIHOM4",1008,0)
  ;
+"RTN","SAMIHOM4",1008,0)
+ quit  ; end of INDXPTLK
 "RTN","SAMIHOM4",1009,0)
  ;
 "RTN","SAMIHOM4",1010,0)
  ;
 "RTN","SAMIHOM4",1011,0)
-UNINDXPT(ien) ; remove index entries from patient-lookup graph
+ ;
 "RTN","SAMIHOM4",1012,0)
- ;
+UNINDXPT(ien) ; remove index entries from patient-lookup graph
 "RTN","SAMIHOM4",1013,0)
- ; for entry ien
+ ;
 "RTN","SAMIHOM4",1014,0)
- ;
+ ; for entry ien
 "RTN","SAMIHOM4",1015,0)
- n proot set proot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIHOM4",1016,0)
- n name s name=$g(@proot@(ien,"saminame"))
+ n proot set proot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHOM4",1017,0)
- k @proot@("name",name,ien)
+ n name s name=$g(@proot@(ien,"saminame"))
 "RTN","SAMIHOM4",1018,0)
- n ucname s ucname=$$UCASE(name)
+ k @proot@("name",name,ien)
 "RTN","SAMIHOM4",1019,0)
- k @proot@("name",ucname,ien)
+ n ucname s ucname=$$UCASE(name)
 "RTN","SAMIHOM4",1020,0)
- n x
+ k @proot@("name",ucname,ien)
 "RTN","SAMIHOM4",1021,0)
- s x=$g(@proot@(ien,"dfn")) ;w !,x
+ n x
 "RTN","SAMIHOM4",1022,0)
- k:x'="" @proot@("dfn",x,ien)
+ s x=$g(@proot@(ien,"dfn")) ;w !,x
 "RTN","SAMIHOM4",1023,0)
- s x=$g(@proot@(ien,"last5")) ;w !,x
+ k:x'="" @proot@("dfn",x,ien)
 "RTN","SAMIHOM4",1024,0)
- k:x'="" @proot@("last5",x,ien)
+ s x=$g(@proot@(ien,"last5")) ;w !,x
 "RTN","SAMIHOM4",1025,0)
- ;
+ k:x'="" @proot@("last5",x,ien)
 "RTN","SAMIHOM4",1026,0)
- ; s x=$g(@proot@(ien,"icn")) ;w !,x
+ ;
 "RTN","SAMIHOM4",1027,0)
- ; i x'["V" d  ;
+ ; s x=$g(@proot@(ien,"icn")) ;w !,x
 "RTN","SAMIHOM4",1028,0)
- ; . i x="" q
+ ; i x'["V" d  ;
 "RTN","SAMIHOM4",1029,0)
- ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ; . i x="" q
 "RTN","SAMIHOM4",1030,0)
- ; . s @proot@(ien,"icn")=x_"V"_chk
+ ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
 "RTN","SAMIHOM4",1031,0)
- ; . s x=x_"V"_chk
+ ; . s @proot@(ien,"icn")=x_"V"_chk
 "RTN","SAMIHOM4",1032,0)
- ; k:x'="" @proot@("icn",x,ien)
+ ; . s x=x_"V"_chk
 "RTN","SAMIHOM4",1033,0)
- ;
+ ; k:x'="" @proot@("icn",x,ien)
 "RTN","SAMIHOM4",1034,0)
- s x=$g(@proot@(ien,"ssn")) ;w !,x
+ ;
 "RTN","SAMIHOM4",1035,0)
- k:x'="" @proot@("ssn",x,ien)
+ s x=$g(@proot@(ien,"ssn")) ;w !,x
 "RTN","SAMIHOM4",1036,0)
- s x=$g(@proot@(ien,"sinamef")) ;w !,x
+ k:x'="" @proot@("ssn",x,ien)
 "RTN","SAMIHOM4",1037,0)
- k:x'="" @proot@("sinamef",x,ien)
+ s x=$g(@proot@(ien,"sinamef")) ;w !,x
 "RTN","SAMIHOM4",1038,0)
- s x=$g(@proot@(ien,"sinamel")) w !,x
+ k:x'="" @proot@("sinamef",x,ien)
 "RTN","SAMIHOM4",1039,0)
- k:x'="" @proot@("sinamel",x,ien)
+ s x=$g(@proot@(ien,"sinamel")) w !,x
 "RTN","SAMIHOM4",1040,0)
- set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ k:x'="" @proot@("sinamel",x,ien)
 "RTN","SAMIHOM4",1041,0)
- ;
+ set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
 "RTN","SAMIHOM4",1042,0)
- quit  ; end of UNINDXPT
-"RTN","SAMIHOM4",1043,0)
  ;
+"RTN","SAMIHOM4",1043,0)
+ quit  ; end of UNINDXPT
 "RTN","SAMIHOM4",1044,0)
  ;
 "RTN","SAMIHOM4",1045,0)
  ;
 "RTN","SAMIHOM4",1046,0)
-UCASE(STR) ; extrinsic returns uppercase of STR
+ ;
 "RTN","SAMIHOM4",1047,0)
- ;
+UCASE(STR) ; extrinsic returns uppercase of STR
 "RTN","SAMIHOM4",1048,0)
- N X,Y
+ ;
 "RTN","SAMIHOM4",1049,0)
- S X=STR
+ N X,Y
 "RTN","SAMIHOM4",1050,0)
- X ^%ZOSF("UPPERCASE")
+ S X=STR
 "RTN","SAMIHOM4",1051,0)
- ;
+ X ^%ZOSF("UPPERCASE")
 "RTN","SAMIHOM4",1052,0)
- quit Y ; end of $$UCASE
-"RTN","SAMIHOM4",1053,0)
  ;
+"RTN","SAMIHOM4",1053,0)
+ quit Y ; end of $$UCASE
 "RTN","SAMIHOM4",1054,0)
  ;
 "RTN","SAMIHOM4",1055,0)
  ;
 "RTN","SAMIHOM4",1056,0)
- ;@wri-code WSNEWCAS^SAMIHOM3
+ ;
 "RTN","SAMIHOM4",1057,0)
-WSNEWCAS ; web route newcase (creates new case)
+ ;@wri-code WSNEWCAS^SAMIHOM3
 "RTN","SAMIHOM4",1058,0)
- ;
+WSNEWCAS ; web route newcase (creates new case)
 "RTN","SAMIHOM4",1059,0)
- ;@stanza 1 invocation, binding, & branching
+ ;
 "RTN","SAMIHOM4",1060,0)
- ;
+ ;@stanza 1 invocation, binding, & branching
 "RTN","SAMIHOM4",1061,0)
- ;ven/gpl;wri;procedure;
-"RTN","SAMIHOM4",1062,0)
- ;@signature
-"RTN","SAMIHOM4",1063,0)
- ; do WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT)
-"RTN","SAMIHOM4",1064,0)
- ;@branches-from
-"RTN","SAMIHOM4",1065,0)
- ; wri WSNEWCAS^SAMIHOM3 [wr newcase]
-"RTN","SAMIHOM4",1066,0)
- ;@wri-called-by
-"RTN","SAMIHOM4",1067,0)
- ; wsi WSVAPALS^SAMIHOM3 [ws post vapals]
-"RTN","SAMIHOM4",1068,0)
- ;@called-by none
-"RTN","SAMIHOM4",1069,0)
- ;@calls
-"RTN","SAMIHOM4",1070,0)
- ; parseBody^%wf
-"RTN","SAMIHOM4",1071,0)
- ; $$setroot^%wd
-"RTN","SAMIHOM4",1072,0)
- ;  $$VALDTNM [commented out]
-"RTN","SAMIHOM4",1073,0)
- ;  GETHOME [commented out]
-"RTN","SAMIHOM4",1074,0)
- ;  $$NEXTNUM [commented out]
-"RTN","SAMIHOM4",1075,0)
- ; $$GENSTDID^SAMIHOM3
-"RTN","SAMIHOM4",1076,0)
- ; $$NOW^XLFDT
-"RTN","SAMIHOM4",1077,0)
- ; $$KEYDATE^SAMIHOM3
-"RTN","SAMIHOM4",1078,0)
- ; PREFILL^SAMIHOM3
-"RTN","SAMIHOM4",1079,0)
- ;  makeSbform [commented out]
-"RTN","SAMIHOM4",1080,0)
- ; $$MKSIFORM^SAMIHOM3
-"RTN","SAMIHOM4",1081,0)
- ; wsGetForm^%wf
-"RTN","SAMIHOM4",1082,0)
- ;  WSCASE^SAMICASE [commented out]
-"RTN","SAMIHOM4",1083,0)
- ;@input
-"RTN","SAMIHOM4",1084,0)
- ;.ARGS =
-"RTN","SAMIHOM4",1085,0)
- ; BODY =
-"RTN","SAMIHOM4",1086,0)
- ;.RESULT =
-"RTN","SAMIHOM4",1087,0)
- ;@output: ?
-"RTN","SAMIHOM4",1088,0)
- ;@examples [tbd]
-"RTN","SAMIHOM4",1089,0)
- ;@tests [tbd]
-"RTN","SAMIHOM4",1090,0)
  ;
+"RTN","SAMIHOM4",1062,0)
+ ;ven/gpl;wri;procedure;
+"RTN","SAMIHOM4",1063,0)
+ ;@signature
+"RTN","SAMIHOM4",1064,0)
+ ; do WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT)
+"RTN","SAMIHOM4",1065,0)
+ ;@branches-from
+"RTN","SAMIHOM4",1066,0)
+ ; wri WSNEWCAS^SAMIHOM3 [wr newcase]
+"RTN","SAMIHOM4",1067,0)
+ ;@wri-called-by
+"RTN","SAMIHOM4",1068,0)
+ ; wsi WSVAPALS^SAMIHOM3 [ws post vapals]
+"RTN","SAMIHOM4",1069,0)
+ ;@called-by none
+"RTN","SAMIHOM4",1070,0)
+ ;@calls
+"RTN","SAMIHOM4",1071,0)
+ ; parseBody^%wf
+"RTN","SAMIHOM4",1072,0)
+ ; $$setroot^%wd
+"RTN","SAMIHOM4",1073,0)
+ ;  $$VALDTNM [commented out]
+"RTN","SAMIHOM4",1074,0)
+ ;  GETHOME [commented out]
+"RTN","SAMIHOM4",1075,0)
+ ;  $$NEXTNUM [commented out]
+"RTN","SAMIHOM4",1076,0)
+ ; $$GENSTDID^SAMIHOM3
+"RTN","SAMIHOM4",1077,0)
+ ; $$NOW^XLFDT
+"RTN","SAMIHOM4",1078,0)
+ ; $$KEYDATE^SAMIHOM3
+"RTN","SAMIHOM4",1079,0)
+ ; PREFILL^SAMIHOM3
+"RTN","SAMIHOM4",1080,0)
+ ;  makeSbform [commented out]
+"RTN","SAMIHOM4",1081,0)
+ ; $$MKSIFORM^SAMIHOM3
+"RTN","SAMIHOM4",1082,0)
+ ; wsGetForm^%wf
+"RTN","SAMIHOM4",1083,0)
+ ;  WSCASE^SAMICASE [commented out]
+"RTN","SAMIHOM4",1084,0)
+ ;@input
+"RTN","SAMIHOM4",1085,0)
+ ;.ARGS =
+"RTN","SAMIHOM4",1086,0)
+ ; BODY =
+"RTN","SAMIHOM4",1087,0)
+ ;.RESULT =
+"RTN","SAMIHOM4",1088,0)
+ ;@output: ?
+"RTN","SAMIHOM4",1089,0)
+ ;@examples [tbd]
+"RTN","SAMIHOM4",1090,0)
+ ;@tests [tbd]
 "RTN","SAMIHOM4",1091,0)
  ;
 "RTN","SAMIHOM4",1092,0)
- ;@stanza 2 create new case
+ ;
 "RTN","SAMIHOM4",1093,0)
- ;
+ ;@stanza 2 create new case
 "RTN","SAMIHOM4",1094,0)
- merge ^SAMIUL("newCase","ARGS")=SAMIARGS
+ ;
 "RTN","SAMIHOM4",1095,0)
- merge ^SAMIUL("newCase","BODY")=SAMIBODY
+ merge ^SAMIUL("newCase","ARGS")=SAMIARGS
 "RTN","SAMIHOM4",1096,0)
- ;
+ merge ^SAMIUL("newCase","BODY")=SAMIBODY
 "RTN","SAMIHOM4",1097,0)
- new vars,bdy
+ ;
 "RTN","SAMIHOM4",1098,0)
- set SAMIBDY=$get(SAMIBODY(1))
+ new vars,bdy
 "RTN","SAMIHOM4",1099,0)
- if SAMIBDY="" M vars=SAMIARGS
+ set SAMIBDY=$get(SAMIBODY(1))
 "RTN","SAMIHOM4",1100,0)
- else  do parseBody^%wf("vars",.SAMIBDY)
+ if SAMIBDY="" M vars=SAMIARGS
 "RTN","SAMIHOM4",1101,0)
- merge ^SAMIUL("newCase","vars")=vars
+ else  do parseBody^%wf("vars",.SAMIBDY)
 "RTN","SAMIHOM4",1102,0)
- ;
+ merge ^SAMIUL("newCase","vars")=vars
 "RTN","SAMIHOM4",1103,0)
- new root set root=$$setroot^%wd("vapals-patients")
+ ;
 "RTN","SAMIHOM4",1104,0)
- ;
+ new root set root=$$setroot^%wd("vapals-patients")
 "RTN","SAMIHOM4",1105,0)
- new saminame set saminame=$get(vars("name"))
+ ;
 "RTN","SAMIHOM4",1106,0)
- if saminame="" s saminame=$get(vars("saminame"))
+ new saminame set saminame=$get(vars("name"))
 "RTN","SAMIHOM4",1107,0)
- ;if $$VALDTNM(saminame,.ARGS)=-1 do  quit  ;
+ if saminame="" s saminame=$get(vars("saminame"))
 "RTN","SAMIHOM4",1108,0)
- ;. new r1
+ ;if $$VALDTNM(saminame,.ARGS)=-1 do  quit  ;
 "RTN","SAMIHOM4",1109,0)
- ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
-"RTN","SAMIHOM4",1110,0)
- ;. merge RESULT=r1
-"RTN","SAMIHOM4",1111,0)
- ;. quit
-"RTN","SAMIHOM4",1112,0)
- ;
-"RTN","SAMIHOM4",1113,0)
- new dfn s dfn=$get(vars("dfn"))
-"RTN","SAMIHOM4",1114,0)
- ;if dfn="" do  quit  ;
-"RTN","SAMIHOM4",1115,0)
  ;. new r1
-"RTN","SAMIHOM4",1116,0)
+"RTN","SAMIHOM4",1110,0)
  ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
-"RTN","SAMIHOM4",1117,0)
+"RTN","SAMIHOM4",1111,0)
  ;. merge RESULT=r1
-"RTN","SAMIHOM4",1118,0)
+"RTN","SAMIHOM4",1112,0)
  ;. quit
+"RTN","SAMIHOM4",1113,0)
+ ;
+"RTN","SAMIHOM4",1114,0)
+ new dfn s dfn=$get(vars("dfn"))
+"RTN","SAMIHOM4",1115,0)
+ ;if dfn="" do  quit  ;
+"RTN","SAMIHOM4",1116,0)
+ ;. new r1
+"RTN","SAMIHOM4",1117,0)
+ ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
+"RTN","SAMIHOM4",1118,0)
+ ;. merge RESULT=r1
 "RTN","SAMIHOM4",1119,0)
- ;
+ ;. quit
 "RTN","SAMIHOM4",1120,0)
- ; new gien set gien=$$NEXTNUM
+ ;
 "RTN","SAMIHOM4",1121,0)
- new gien set gien=dfn
+ ; new gien set gien=$$NEXTNUM
 "RTN","SAMIHOM4",1122,0)
- ;
+ new gien set gien=dfn
 "RTN","SAMIHOM4",1123,0)
- merge ^SAMIUL("newCase","G1")=root
+ ;
 "RTN","SAMIHOM4",1124,0)
- ; create dfn index
+ merge ^SAMIUL("newCase","G1")=root
 "RTN","SAMIHOM4",1125,0)
- set @root@("dfn",dfn,gien)=""
+ ; create dfn index
 "RTN","SAMIHOM4",1126,0)
- ;
+ set @root@("dfn",dfn,gien)=""
 "RTN","SAMIHOM4",1127,0)
- set @root@(gien,"saminum")=gien
+ ;
 "RTN","SAMIHOM4",1128,0)
- set @root@(gien,"saminame")=saminame
+ set @root@(gien,"saminum")=gien
 "RTN","SAMIHOM4",1129,0)
- ;
+ set @root@(gien,"saminame")=saminame
 "RTN","SAMIHOM4",1130,0)
- new studyid set studyid=$$GENSTDID^SAMIHOM3(gien,.SAMIARGS)
+ ;
 "RTN","SAMIHOM4",1131,0)
- set @root@(gien,"samistudyid")=studyid
+ new studyid set studyid=$$GENSTDID^SAMIHOM3(gien,.SAMIARGS)
 "RTN","SAMIHOM4",1132,0)
- set @root@("sid",studyid,gien)=""
+ set @root@(gien,"samistudyid")=studyid
 "RTN","SAMIHOM4",1133,0)
- ;
+ set @root@("sid",studyid,gien)=""
 "RTN","SAMIHOM4",1134,0)
- new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
+ ;
 "RTN","SAMIHOM4",1135,0)
- set @root@(gien,"samicreatedate")=datekey
+ new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
 "RTN","SAMIHOM4",1136,0)
- ;
+ set @root@(gien,"samicreatedate")=datekey
 "RTN","SAMIHOM4",1137,0)
- merge ^SAMIUL("newCase",gien)=@root@(gien)
-"RTN","SAMIHOM4",1138,0)
  ;
+"RTN","SAMIHOM4",1138,0)
+ merge ^SAMIUL("newCase",gien)=@root@(gien)
 "RTN","SAMIHOM4",1139,0)
  ;
 "RTN","SAMIHOM4",1140,0)
- do PREFILL^SAMIHOM3(dfn) ; prefills from the "patient-lookup" graph
+ ;
 "RTN","SAMIHOM4",1141,0)
- ;
+ do PREFILL^SAMIHOM3(dfn) ; prefills from the "patient-lookup" graph
 "RTN","SAMIHOM4",1142,0)
- new siformkey
+ ;
 "RTN","SAMIHOM4",1143,0)
- ; do makeSbform(gien) ; create background form for new patient
+ new siformkey
 "RTN","SAMIHOM4",1144,0)
- set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create intake for new patient
+ ; do makeSbform(gien) ; create background form for new patient
 "RTN","SAMIHOM4",1145,0)
- ;
+ set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create intake for new patient
 "RTN","SAMIHOM4",1146,0)
- set SAMIARGS("studyid")=studyid
-"RTN","SAMIHOM4",1147,0)
- set SAMIARGS("form")="vapals:"_siformkey
-"RTN","SAMIHOM4",1148,0)
- do wsGetForm^%wf(.SAMIRESULT,.SAMIARGS)
-"RTN","SAMIHOM4",1149,0)
- ; do WSCASE^SAMICASE(.SAMIRESULT,.SAMIARGS) ; navigate to case review page
-"RTN","SAMIHOM4",1150,0)
  ;
+"RTN","SAMIHOM4",1147,0)
+ set SAMIARGS("studyid")=studyid
+"RTN","SAMIHOM4",1148,0)
+ set SAMIARGS("form")="vapals:"_siformkey
+"RTN","SAMIHOM4",1149,0)
+ do wsGetForm^%wf(.SAMIRESULT,.SAMIARGS)
+"RTN","SAMIHOM4",1150,0)
+ ; do WSCASE^SAMICASE(.SAMIRESULT,.SAMIARGS) ; navigate to case review page
 "RTN","SAMIHOM4",1151,0)
  ;
 "RTN","SAMIHOM4",1152,0)
- ;@stanza 3 termination
+ ;
 "RTN","SAMIHOM4",1153,0)
- ;
+ ;@stanza 3 termination
 "RTN","SAMIHOM4",1154,0)
- quit  ; end of wri WSNEWCAS^SAMIHOM3
-"RTN","SAMIHOM4",1155,0)
  ;
+"RTN","SAMIHOM4",1155,0)
+ quit  ; end of wri WSNEWCAS^SAMIHOM3
 "RTN","SAMIHOM4",1156,0)
  ;
 "RTN","SAMIHOM4",1157,0)
  ;
 "RTN","SAMIHOM4",1158,0)
+ ;
+"RTN","SAMIHOM4",1159,0)
 EOR ; end of routine SAMIHOM4
 "RTN","SAMIHUL")
 0^2^B119254
 "RTN","SAMIHUL",1,0)
 SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-04t23:26z
 "RTN","SAMIHUL",2,0)
- ;;18.0;SAMI;**9,12,15,16,17**;2020-01;Build 1
+ ;;18.0;SAMI;**9,12,15,16,17**;2020-01;Build 2
 "RTN","SAMIHUL",3,0)
  ;18-17
 "RTN","SAMIHUL",4,0)
@@ -3121,7 +3123,7 @@ EOR ; end of routine SAMIHUL
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/toad - init subroutines ;2022-04-04t23:15z
 "RTN","SAMIPAT",2,0)
- ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 1
+ ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 2
 "RTN","SAMIPAT",3,0)
  ;;18-17
 "RTN","SAMIPAT",4,0)
@@ -3425,11 +3427,11 @@ POS1817 ; kids post-install for sami 18.17
 "RTN","SAMIPAT",153,0)
 EOR ; end of routine SAMIPAT
 "RTN","SAMISITE")
-0^4^B128376177
+0^4^B132434343
 "RTN","SAMISITE",1,0)
-SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
+SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
 "RTN","SAMISITE",2,0)
- ;;18.0;SAMI;**5,12,14,17**;2020-01;Build 1
+ ;;18.0;SAMI;**5,12,14,17**;2020-01;Build 2
 "RTN","SAMISITE",3,0)
  ;;18.17
 "RTN","SAMISITE",4,0)
@@ -3473,7 +3475,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
 "RTN","SAMISITE",23,0)
  ;
 "RTN","SAMISITE",24,0)
- ;@last-update 2022-04-04t23:39z
+ ;@last-update 2022-04-11t18:26z
 "RTN","SAMISITE",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMISITE",26,0)
@@ -3541,646 +3543,656 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
 "RTN","SAMISITE",57,0)
  ;
 "RTN","SAMISITE",58,0)
- ; 2021-10-06 ven/lmry 18.14   a0254939
+ ; 2021-10-06 ven/lmry 18.14
 "RTN","SAMISITE",59,0)
  ;  SAMISITE bump version & dates
 "RTN","SAMISITE",60,0)
  ;
 "RTN","SAMISITE",61,0)
- ; 2022-02-14 ven/gpl   2ea7f220,b47a5e01
+ ; 2022-02-14 ven/gpl  2ea7f220,b47a5e01
 "RTN","SAMISITE",62,0)
- ;  add CRLF to site selection list for super users
+ ;  add CRLF to site selection list for super users, add crlf for javascript
 "RTN","SAMISITE",63,0)
- ;  add crlf for javascript at the end of the site selection page
+ ; at the end of the site selection page
 "RTN","SAMISITE",64,0)
  ;
 "RTN","SAMISITE",65,0)
- ; 2022-04-01 ven/gpl 18-17   7620d4ba
+ ; 2022-04-01 ven/gpl 18-17 7620d4ba
 "RTN","SAMISITE",66,0)
  ;  single signon prototype
 "RTN","SAMISITE",67,0)
  ;
 "RTN","SAMISITE",68,0)
- ; 2022-04-04 ven/lmry 18-17
+ ; 2022-04-04 ven/lmry  18-17 258bc9269,b257e465
 "RTN","SAMISITE",69,0)
- ;  update history, bump versions and dates
+ ;  bump versions and dates, fix blank line and blank at end of line for XINDEX
 "RTN","SAMISITE",70,0)
  ;
 "RTN","SAMISITE",71,0)
- ;
+ ; 2022-04-08 ven/gpl  18-17  c08224b9
 "RTN","SAMISITE",72,0)
- ;
+ ;  updated single signon code thanks to Artit testing
 "RTN","SAMISITE",73,0)
- ;@to-do
+ ;
 "RTN","SAMISITE",74,0)
- ; Add label comments
+ ; 2022-04-11 ven/lmry 18-17
 "RTN","SAMISITE",75,0)
- ;
+ ;  add to history, bump dates, fix XINDEX blank at end of line
 "RTN","SAMISITE",76,0)
- ;@contents
+ ; 
 "RTN","SAMISITE",77,0)
- ; $$FINDSITE current site for user
+ ;
 "RTN","SAMISITE",78,0)
- ; $$USER ien of user accessing system
+ ;@to-do
 "RTN","SAMISITE",79,0)
- ; $$SITE ien of institution file entry for user's site
+ ; Add label comments
 "RTN","SAMISITE",80,0)
- ; $$SITEID symbol for site
+ ;
 "RTN","SAMISITE",81,0)
- ; $$SITEACTV is site active?
+ ;@contents
 "RTN","SAMISITE",82,0)
- ; $$SITENM site name from ien
+ ; $$FINDSITE current site for user
 "RTN","SAMISITE",83,0)
- ; $$SITENM2 site name from symbol
+ ; $$USER ien of user accessing system
 "RTN","SAMISITE",84,0)
- ; LOGIN login processing
+ ; $$SITE ien of institution file entry for user's site
 "RTN","SAMISITE",85,0)
- ; $$SIGNON signon with access & verify code
+ ; $$SITEID symbol for site
 "RTN","SAMISITE",86,0)
- ; SUPER site selection page for super users
+ ; $$SITEACTV is site active?
 "RTN","SAMISITE",87,0)
- ; UPGRADE init: convert to multi-tenancy
+ ; $$SITENM site name from ien
 "RTN","SAMISITE",88,0)
- ; IDUSER Identify the user
+ ; $$SITENM2 site name from symbol
 "RTN","SAMISITE",89,0)
- ; STOREDUZ
+ ; LOGIN login processing
 "RTN","SAMISITE",90,0)
- ;
+ ; $$SIGNON signon with access & verify code
 "RTN","SAMISITE",91,0)
- ;
+ ; SUPER site selection page for super users
 "RTN","SAMISITE",92,0)
- ;
+ ; UPGRADE init: convert to multi-tenancy
 "RTN","SAMISITE",93,0)
- ;@section 1 subroutines
+ ; IDUSER Identify the user
 "RTN","SAMISITE",94,0)
- ;
+ ; STOREDUZ
 "RTN","SAMISITE",95,0)
  ;
 "RTN","SAMISITE",96,0)
  ;
 "RTN","SAMISITE",97,0)
-FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
+ ;
 "RTN","SAMISITE",98,0)
- ; to be used by this user: ARGS("siteid")=siteid and
+ ;@section 1 subroutines
 "RTN","SAMISITE",99,0)
- ; ARGS("sitetitle")=sitename - siteid
+ ;
 "RTN","SAMISITE",100,0)
- ; 1 for success 
+ ;
 "RTN","SAMISITE",101,0)
- ; 0 for fail - exit; page to be displayed is in SAMIRETURN
+ ;
 "RTN","SAMISITE",102,0)
- ;
+FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
 "RTN","SAMISITE",103,0)
- ;d ^ZTER
+ ; to be used by this user: ARGS("siteid")=siteid and
 "RTN","SAMISITE",104,0)
- I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP()
+ ; ARGS("sitetitle")=sitename - siteid
 "RTN","SAMISITE",105,0)
- D IDUSER()
+ ; 1 for success 
 "RTN","SAMISITE",106,0)
- n user
+ ; 0 for fail - exit; page to be displayed is in SAMIRETURN
 "RTN","SAMISITE",107,0)
- s user=$$USER()
+ ;
 "RTN","SAMISITE",108,0)
- i user=-1 d  q 0
+ ;d ^ZTER
 "RTN","SAMISITE",109,0)
- . n vals
+ I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP()
 "RTN","SAMISITE",110,0)
- . s vals("siteid")=""
+ D IDUSER()
 "RTN","SAMISITE",111,0)
- . s vals("sitetitle")="Unknown Site"
+ n user
 "RTN","SAMISITE",112,0)
- . s vals("errorMessage")=""
+ s user=$$USER()
 "RTN","SAMISITE",113,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
+ i user=-1 d  q 0
 "RTN","SAMISITE",114,0)
- . ;s ARGS("errorMessage")="Error, user not found"
+ . n vals
 "RTN","SAMISITE",115,0)
- . ;d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . s vals("siteid")=""
 "RTN","SAMISITE",116,0)
- ;
+ . s vals("sitetitle")="Unknown Site"
 "RTN","SAMISITE",117,0)
- ;d  q 0
+ . s vals("errorMessage")=""
 "RTN","SAMISITE",118,0)
- ;. s ARGS("errorMessage")="User is found: "_user
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
 "RTN","SAMISITE",119,0)
- ;. d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . ;s ARGS("errorMessage")="Error, user not found"
 "RTN","SAMISITE",120,0)
- ;
+ . ;d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",121,0)
- n site,siteid,siteactv,sitenm
+ ;
 "RTN","SAMISITE",122,0)
- ;
+ ;d  q 0
 "RTN","SAMISITE",123,0)
- i $o(^SAMI(311.13,"B",user,""))'="" d  q 0 ; superuser
+ ;. s ARGS("errorMessage")="User is found: "_user
 "RTN","SAMISITE",124,0)
- . d SUPER("SAMIRETURN",.ARGS)
+ ;. d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",125,0)
- . s HTTPRSP("mime")="text/html"
+ ;
 "RTN","SAMISITE",126,0)
- ;
+ n site,siteid,siteactv,sitenm
 "RTN","SAMISITE",127,0)
- s site=$$SITE(user)
-"RTN","SAMISITE",128,0)
- i site<1 s site=-1
-"RTN","SAMISITE",129,0)
- i site=-1 d  q 0
-"RTN","SAMISITE",130,0)
- . s ARGS("errorMessage")="Site not found for user "_user
-"RTN","SAMISITE",131,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
-"RTN","SAMISITE",132,0)
  ;
+"RTN","SAMISITE",128,0)
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q 0 ; superuser
+"RTN","SAMISITE",129,0)
+ . d SUPER("SAMIRETURN",.ARGS)
+"RTN","SAMISITE",130,0)
+ . s HTTPRSP("mime")="text/html"
+"RTN","SAMISITE",131,0)
+ ;
+"RTN","SAMISITE",132,0)
+ s site=$$SITE(user)
 "RTN","SAMISITE",133,0)
- s siteid=$$SITEID(site)
+ i site<1 s site=-1
 "RTN","SAMISITE",134,0)
- i siteid=-1 d  q 0
+ i site=-1 d  q 0
 "RTN","SAMISITE",135,0)
- . s ARGS("errorMessage")="Site ID not found for site "_site
+ . s ARGS("errorMessage")="Site not found for user "_user
 "RTN","SAMISITE",136,0)
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",137,0)
  ;
 "RTN","SAMISITE",138,0)
- s siteactv=$$SITEACTV(site)
+ s siteid=$$SITEID(site)
 "RTN","SAMISITE",139,0)
- i siteactv<1 d  q 0
+ i siteid=-1 d  q 0
 "RTN","SAMISITE",140,0)
- . s ARGS("errorMessage")="Site not active: "_siteid
+ . s ARGS("errorMessage")="Site ID not found for site "_site
 "RTN","SAMISITE",141,0)
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",142,0)
  ;
 "RTN","SAMISITE",143,0)
- s sitenm=$$SITENM(site)
+ s siteactv=$$SITEACTV(site)
 "RTN","SAMISITE",144,0)
- i sitenm=-1 d  q 0
+ i siteactv<1 d  q 0
 "RTN","SAMISITE",145,0)
- . s ARGS("errorMessage")="Site name not found: "_siteid
+ . s ARGS("errorMessage")="Site not active: "_siteid
 "RTN","SAMISITE",146,0)
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",147,0)
  ;
 "RTN","SAMISITE",148,0)
- s ARGS("siteid")=siteid
+ s sitenm=$$SITENM(site)
 "RTN","SAMISITE",149,0)
- s ARGS("sitetitle")=$$SITENM(site)_" - "_siteid
+ i sitenm=-1 d  q 0
 "RTN","SAMISITE",150,0)
- q 1
+ . s ARGS("errorMessage")="Site name not found: "_siteid
 "RTN","SAMISITE",151,0)
- ;
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",152,0)
  ;
 "RTN","SAMISITE",153,0)
- ;
+ s ARGS("siteid")=siteid
 "RTN","SAMISITE",154,0)
-USER() ; extrinsic returns the DUZ of the user accessing the system
+ s ARGS("sitetitle")=$$SITENM(site)_" - "_siteid
 "RTN","SAMISITE",155,0)
- ; -1 means user not known
+ q 1
 "RTN","SAMISITE",156,0)
- n rtn s rtn=-1
+ ;
 "RTN","SAMISITE",157,0)
- s rtn=+$G(DUZ)
+ ;
 "RTN","SAMISITE",158,0)
- i rtn=0 s rtn=-1
+ ;
 "RTN","SAMISITE",159,0)
- q rtn
+USER() ; extrinsic returns the DUZ of the user accessing the system
 "RTN","SAMISITE",160,0)
- ;
+ ; -1 means user not known
 "RTN","SAMISITE",161,0)
- ;
+ n rtn s rtn=-1
 "RTN","SAMISITE",162,0)
- ;
+ s rtn=+$G(DUZ)
 "RTN","SAMISITE",163,0)
-SITE(USER) ; extrinsic returns the pointer to the Institution file
+ i rtn=0 s rtn=-1
 "RTN","SAMISITE",164,0)
- ; which is the site of the user
+ q rtn
 "RTN","SAMISITE",165,0)
- ; -1 means site not found
+ ;
 "RTN","SAMISITE",166,0)
- ; zero means site not active
+ ;
 "RTN","SAMISITE",167,0)
- n rtn
+ ;
 "RTN","SAMISITE",168,0)
- s rtn=$o(^VA(200,USER,2,0))
+SITE(USER) ; extrinsic returns the pointer to the Institution file
 "RTN","SAMISITE",169,0)
- i +rtn="" s rtn=-1
+ ; which is the site of the user
 "RTN","SAMISITE",170,0)
- q rtn
+ ; -1 means site not found
 "RTN","SAMISITE",171,0)
- ;
+ ; zero means site not active
 "RTN","SAMISITE",172,0)
- ;
+ n rtn
 "RTN","SAMISITE",173,0)
- ;
+ s rtn=$o(^VA(200,USER,2,0))
 "RTN","SAMISITE",174,0)
-SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
+ i +rtn="" s rtn=-1
 "RTN","SAMISITE",175,0)
- ; this is found in the SAMI SITE file
+ q rtn
 "RTN","SAMISITE",176,0)
- ; null means SITEID not found
+ ;
 "RTN","SAMISITE",177,0)
- n rtn s rtn=-1
+ ;
 "RTN","SAMISITE",178,0)
- n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
+ ;
 "RTN","SAMISITE",179,0)
- q:ien="" -1
+SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
 "RTN","SAMISITE",180,0)
- s rtn=$$GET1^DIQ(311.12,ien_",",.02)
+ ; this is found in the SAMI SITE file
 "RTN","SAMISITE",181,0)
- q rtn
+ ; null means SITEID not found
 "RTN","SAMISITE",182,0)
- ;
+ n rtn s rtn=-1
 "RTN","SAMISITE",183,0)
- ;
-"RTN","SAMISITE",184,0)
- ; 
-"RTN","SAMISITE",185,0)
-SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
-"RTN","SAMISITE",186,0)
- ; otherwise 0
-"RTN","SAMISITE",187,0)
- n rtn s rtn=-1
-"RTN","SAMISITE",188,0)
  n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
-"RTN","SAMISITE",189,0)
+"RTN","SAMISITE",184,0)
  q:ien="" -1
+"RTN","SAMISITE",185,0)
+ s rtn=$$GET1^DIQ(311.12,ien_",",.02)
+"RTN","SAMISITE",186,0)
+ q rtn
+"RTN","SAMISITE",187,0)
+ ;
+"RTN","SAMISITE",188,0)
+ ;
+"RTN","SAMISITE",189,0)
+ ; 
 "RTN","SAMISITE",190,0)
- s rtn=$$GET1^DIQ(311.12,ien_",",.03,"I")
+SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
 "RTN","SAMISITE",191,0)
- q rtn
+ ; otherwise 0
 "RTN","SAMISITE",192,0)
- ;
-"RTN","SAMISITE",193,0)
- ;
-"RTN","SAMISITE",194,0)
- ;
-"RTN","SAMISITE",195,0)
-SITENM(SITE) ; Extrinsic which returns the Site name
-"RTN","SAMISITE",196,0)
- ;
-"RTN","SAMISITE",197,0)
  n rtn s rtn=-1
-"RTN","SAMISITE",198,0)
- s rtn=$$GET1^DIQ(4,SITE_",",.01)
-"RTN","SAMISITE",199,0)
- i rtn="" s rtn=-1
-"RTN","SAMISITE",200,0)
+"RTN","SAMISITE",193,0)
+ n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
+"RTN","SAMISITE",194,0)
+ q:ien="" -1
+"RTN","SAMISITE",195,0)
+ s rtn=$$GET1^DIQ(311.12,ien_",",.03,"I")
+"RTN","SAMISITE",196,0)
  q rtn
+"RTN","SAMISITE",197,0)
+ ;
+"RTN","SAMISITE",198,0)
+ ;
+"RTN","SAMISITE",199,0)
+ ;
+"RTN","SAMISITE",200,0)
+SITENM(SITE) ; Extrinsic which returns the Site name
 "RTN","SAMISITE",201,0)
  ;
 "RTN","SAMISITE",202,0)
- ;
+ n rtn s rtn=-1
 "RTN","SAMISITE",203,0)
- ;
+ s rtn=$$GET1^DIQ(4,SITE_",",.01)
 "RTN","SAMISITE",204,0)
-SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
+ i rtn="" s rtn=-1
 "RTN","SAMISITE",205,0)
- ;
+ q rtn
 "RTN","SAMISITE",206,0)
- q:SITEID="" -1
+ ;
 "RTN","SAMISITE",207,0)
- n siteien
+ ;
 "RTN","SAMISITE",208,0)
- s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
+ ;
 "RTN","SAMISITE",209,0)
- n site
+SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
 "RTN","SAMISITE",210,0)
- q $$GET1^DIQ(311.12,siteien_",",.01,"E")
+ ;
 "RTN","SAMISITE",211,0)
- ;
+ q:SITEID="" -1
 "RTN","SAMISITE",212,0)
- ;
+ n siteien
 "RTN","SAMISITE",213,0)
- ;
+ s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
 "RTN","SAMISITE",214,0)
-LOGIN(RTN,VALS) ; login processing
+ n site
 "RTN","SAMISITE",215,0)
- ;
+ q $$GET1^DIQ(311.12,siteien_",",.01,"E")
 "RTN","SAMISITE",216,0)
- n access,verify
+ ;
 "RTN","SAMISITE",217,0)
- s access=$g(VALS("access"))
+ ;
 "RTN","SAMISITE",218,0)
- if access="" s access=$g(VALS("username"))
+ ;
 "RTN","SAMISITE",219,0)
- s verify=$g(VALS("verify"))
+LOGIN(RTN,VALS) ; login processing
 "RTN","SAMISITE",220,0)
- if verify="" s verify=$g(VALS("password"))
+ ;
 "RTN","SAMISITE",221,0)
- ;i verify="@demo123" s verify="@demo321"
+ n access,verify
 "RTN","SAMISITE",222,0)
- ;i verify="@demo123" s verify="$#happy10"
+ s access=$g(VALS("access"))
 "RTN","SAMISITE",223,0)
- ;i access="ZZZUSER1" s access="SUPER6"
+ if access="" s access=$g(VALS("username"))
 "RTN","SAMISITE",224,0)
- ;i access="" d  ;
+ s verify=$g(VALS("verify"))
 "RTN","SAMISITE",225,0)
- ;. s access="PHXNAV1"
+ if verify="" s verify=$g(VALS("password"))
 "RTN","SAMISITE",226,0)
- ;. s verify="$#happy6"
+ ;i verify="@demo123" s verify="@demo321"
 "RTN","SAMISITE",227,0)
- I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
+ ;i verify="@demo123" s verify="$#happy10"
 "RTN","SAMISITE",228,0)
- . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
+ ;i access="ZZZUSER1" s access="SUPER6"
 "RTN","SAMISITE",229,0)
- . I +DUZ=0 D  ;
+ ;i access="" d  ;
 "RTN","SAMISITE",230,0)
- . . S DUZ=$O(^SAMI(311.13,"B",""))
+ ;. s access="PHXNAV1"
 "RTN","SAMISITE",231,0)
- . s VALS("samiroute")=""
+ ;. s verify="$#happy6"
 "RTN","SAMISITE",232,0)
- . s VALS("siteid")=""
+ I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
 "RTN","SAMISITE",233,0)
- . d WSHOME^SAMIHOM3(.RTN,.VALS)
+ . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
 "RTN","SAMISITE",234,0)
- n ACVC s ACVC=access_";"_verify
+ . I +DUZ=0 D  ;
 "RTN","SAMISITE",235,0)
- i $$SIGNON(ACVC) D  Q  ;
+ . . S DUZ=$O(^SAMI(311.13,"B",""))
 "RTN","SAMISITE",236,0)
- . D STOREDUZ()
-"RTN","SAMISITE",237,0)
  . s VALS("samiroute")=""
-"RTN","SAMISITE",238,0)
+"RTN","SAMISITE",237,0)
  . s VALS("siteid")=""
-"RTN","SAMISITE",239,0)
+"RTN","SAMISITE",238,0)
  . d WSHOME^SAMIHOM3(.RTN,.VALS)
+"RTN","SAMISITE",239,0)
+ n ACVC s ACVC=access_";"_verify
 "RTN","SAMISITE",240,0)
- else  D  Q  ;
+ i $$SIGNON(ACVC) D  Q  ;
 "RTN","SAMISITE",241,0)
- . s VALS("errorMessage")="Invalid login"
+ . D STOREDUZ()
 "RTN","SAMISITE",242,0)
- . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
+ . s VALS("samiroute")=""
 "RTN","SAMISITE",243,0)
- q
+ . s VALS("siteid")=""
 "RTN","SAMISITE",244,0)
- ;
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
 "RTN","SAMISITE",245,0)
- ;
+ else  D  Q  ;
 "RTN","SAMISITE",246,0)
- ;
+ . s VALS("errorMessage")="Invalid login"
 "RTN","SAMISITE",247,0)
-SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
+ . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
 "RTN","SAMISITE",248,0)
- ; Sign-on
+ q
 "RTN","SAMISITE",249,0)
- N IO S IO=$P
+ ;
 "RTN","SAMISITE",250,0)
- D SETUP^XUSRB() ; Only partition set-up; No single sign-on or CAPRI
+ ;
 "RTN","SAMISITE",251,0)
- N RTN D VALIDAV^XUSRB(.RTN,$$ENCRYP^XUSRB1(ACVC)) ; sign-on call
+ ;
 "RTN","SAMISITE",252,0)
- I RTN(0)>0,'RTN(2) Q 1 ; Sign on successful!
+SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
 "RTN","SAMISITE",253,0)
- I RTN(0)=0,RTN(2) Q 0  ; Verify Code must be changed NOW!
+ ; Sign-on
 "RTN","SAMISITE",254,0)
- I $L(RTN(3)) Q 0  ; Error Message
+ N IO S IO=$P
 "RTN","SAMISITE",255,0)
- ;
+ D SETUP^XUSRB() ; Only partition set-up; No single sign-on or CAPRI
 "RTN","SAMISITE",256,0)
- q
+ N RTN D VALIDAV^XUSRB(.RTN,$$ENCRYP^XUSRB1(ACVC)) ; sign-on call
 "RTN","SAMISITE",257,0)
- ;
+ I RTN(0)>0,'RTN(2) Q 1 ; Sign on successful!
 "RTN","SAMISITE",258,0)
- ;
+ I RTN(0)=0,RTN(2) Q 0  ; Verify Code must be changed NOW!
 "RTN","SAMISITE",259,0)
- ;
+ I $L(RTN(3)) Q 0  ; Error Message
 "RTN","SAMISITE",260,0)
-SUPER(RTN,FILTER) ; returns site selection page for super users
+ ;
 "RTN","SAMISITE",261,0)
- ;
-"RTN","SAMISITE",262,0)
- n temp
-"RTN","SAMISITE",263,0)
- d getThis^%wd("temp","blank_no_nav.html")
-"RTN","SAMISITE",264,0)
- q:'$d(temp)
-"RTN","SAMISITE",265,0)
- n cnt s cnt=0
-"RTN","SAMISITE",266,0)
- n zj s zj=0
-"RTN","SAMISITE",267,0)
- f  s zj=$o(temp(zj)) q:temp(zj)["Insert"  q:+zj=0  d  ;
-"RTN","SAMISITE",268,0)
- . n ln s ln=temp(zj)
-"RTN","SAMISITE",269,0)
- . i ln["PAGE NAME" s ln="Site Selection"
-"RTN","SAMISITE",270,0)
- . d LOAD^SAMIFORM(.ln,"","")
-"RTN","SAMISITE",271,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",272,0)
- . s @RTN@(cnt)=ln
-"RTN","SAMISITE",273,0)
- s cnt=cnt+1
-"RTN","SAMISITE",274,0)
- s @RTN@(cnt)="<ul>"
-"RTN","SAMISITE",275,0)
- n gn s gn=$na(^SAMI(311.12,"B"))
-"RTN","SAMISITE",276,0)
- n zi s zi=0
-"RTN","SAMISITE",277,0)
- f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
-"RTN","SAMISITE",278,0)
- . n zien s zien=$o(@gn@(zi,""))
-"RTN","SAMISITE",279,0)
- . n active
-"RTN","SAMISITE",280,0)
- . s active=$$GET1^DIQ(311.12,zien_",",.03,"I")
-"RTN","SAMISITE",281,0)
- . q:active=0
-"RTN","SAMISITE",282,0)
- . n name
-"RTN","SAMISITE",283,0)
- . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
-"RTN","SAMISITE",284,0)
- . n link
-"RTN","SAMISITE",285,0)
- . s link="<li>"
-"RTN","SAMISITE",286,0)
- . s link=link_"<a class=""navigation"" data-method=""post"""
-"RTN","SAMISITE",287,0)
- . s link=link_" data-samiroute=""home"" data-siteid="""_$$SITEID(zi)_""""
-"RTN","SAMISITE",288,0)
- . ;s link=link_" data-site="""_$$SITEID(zi)_""""
-"RTN","SAMISITE",289,0)
- . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
-"RTN","SAMISITE",290,0)
- . s link=link_" href=""/vapals"">"_name
-"RTN","SAMISITE",291,0)
- . s link=link_"</a></li>"_$char(13,10)
-"RTN","SAMISITE",292,0)
- . ;n link
-"RTN","SAMISITE",293,0)
- . ;s link="<form method=POST action=""/vapals"">"
-"RTN","SAMISITE",294,0)
- . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
-"RTN","SAMISITE",295,0)
- . ;s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
-"RTN","SAMISITE",296,0)
- . ;s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
-"RTN","SAMISITE",297,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",298,0)
- . s @RTN@(cnt)=link
-"RTN","SAMISITE",299,0)
- s cnt=cnt+1
-"RTN","SAMISITE",300,0)
- s @RTN@(cnt)="</ul>"
-"RTN","SAMISITE",301,0)
- n zk s zk=zj+1
-"RTN","SAMISITE",302,0)
- f  s zk=$o(temp(zk)) q:+zk=0  d  ;
-"RTN","SAMISITE",303,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",304,0)
- . s @RTN@(cnt)=temp(zk)_$char(13,10)
-"RTN","SAMISITE",305,0)
  q
+"RTN","SAMISITE",262,0)
+ ;
+"RTN","SAMISITE",263,0)
+ ;
+"RTN","SAMISITE",264,0)
+ ;
+"RTN","SAMISITE",265,0)
+SUPER(RTN,FILTER) ; returns site selection page for super users
+"RTN","SAMISITE",266,0)
+ ;
+"RTN","SAMISITE",267,0)
+ n temp
+"RTN","SAMISITE",268,0)
+ d getThis^%wd("temp","blank_no_nav.html")
+"RTN","SAMISITE",269,0)
+ q:'$d(temp)
+"RTN","SAMISITE",270,0)
+ n cnt s cnt=0
+"RTN","SAMISITE",271,0)
+ n zj s zj=0
+"RTN","SAMISITE",272,0)
+ f  s zj=$o(temp(zj)) q:temp(zj)["Insert"  q:+zj=0  d  ;
+"RTN","SAMISITE",273,0)
+ . n ln s ln=temp(zj)
+"RTN","SAMISITE",274,0)
+ . i ln["PAGE NAME" s ln="Site Selection"
+"RTN","SAMISITE",275,0)
+ . d LOAD^SAMIFORM(.ln,"","")
+"RTN","SAMISITE",276,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",277,0)
+ . s @RTN@(cnt)=ln
+"RTN","SAMISITE",278,0)
+ s cnt=cnt+1
+"RTN","SAMISITE",279,0)
+ s @RTN@(cnt)="<ul>"
+"RTN","SAMISITE",280,0)
+ n gn s gn=$na(^SAMI(311.12,"B"))
+"RTN","SAMISITE",281,0)
+ n zi s zi=0
+"RTN","SAMISITE",282,0)
+ f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
+"RTN","SAMISITE",283,0)
+ . n zien s zien=$o(@gn@(zi,""))
+"RTN","SAMISITE",284,0)
+ . n active
+"RTN","SAMISITE",285,0)
+ . s active=$$GET1^DIQ(311.12,zien_",",.03,"I")
+"RTN","SAMISITE",286,0)
+ . q:active=0
+"RTN","SAMISITE",287,0)
+ . n name
+"RTN","SAMISITE",288,0)
+ . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
+"RTN","SAMISITE",289,0)
+ . n link
+"RTN","SAMISITE",290,0)
+ . s link="<li>"
+"RTN","SAMISITE",291,0)
+ . s link=link_"<a class=""navigation"" data-method=""post"""
+"RTN","SAMISITE",292,0)
+ . s link=link_" data-samiroute=""home"" data-siteid="""_$$SITEID(zi)_""""
+"RTN","SAMISITE",293,0)
+ . ;s link=link_" data-site="""_$$SITEID(zi)_""""
+"RTN","SAMISITE",294,0)
+ . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
+"RTN","SAMISITE",295,0)
+ . s link=link_" href=""/vapals"">"_name
+"RTN","SAMISITE",296,0)
+ . s link=link_"</a></li>"_$char(13,10)
+"RTN","SAMISITE",297,0)
+ . ;n link
+"RTN","SAMISITE",298,0)
+ . ;s link="<form method=POST action=""/vapals"">"
+"RTN","SAMISITE",299,0)
+ . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
+"RTN","SAMISITE",300,0)
+ . ;s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
+"RTN","SAMISITE",301,0)
+ . ;s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+"RTN","SAMISITE",302,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",303,0)
+ . s @RTN@(cnt)=link
+"RTN","SAMISITE",304,0)
+ s cnt=cnt+1
+"RTN","SAMISITE",305,0)
+ s @RTN@(cnt)="</ul>"
 "RTN","SAMISITE",306,0)
- ;
+ n zk s zk=zj+1
 "RTN","SAMISITE",307,0)
- ;
+ f  s zk=$o(temp(zk)) q:+zk=0  d  ;
 "RTN","SAMISITE",308,0)
- ;
+ . s cnt=cnt+1
 "RTN","SAMISITE",309,0)
-UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
+ . s @RTN@(cnt)=temp(zk)_$char(13,10)
 "RTN","SAMISITE",310,0)
- ; to all existing patients - runs one time as the Post Install 
+ q
 "RTN","SAMISITE",311,0)
- ; to the installation
+ ;
 "RTN","SAMISITE",312,0)
  ;
 "RTN","SAMISITE",313,0)
- n lroot,proot,lien,pien
+ ;
 "RTN","SAMISITE",314,0)
- s (lien,pien)=0
+UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
 "RTN","SAMISITE",315,0)
- s lroot=$$setroot^%wd("patient-lookup")
+ ; to all existing patients - runs one time as the Post Install 
 "RTN","SAMISITE",316,0)
- s proot=$$setroot^%wd("vapals-patients")
+ ; to the installation
 "RTN","SAMISITE",317,0)
- n site
+ ;
 "RTN","SAMISITE",318,0)
- s site=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ n lroot,proot,lien,pien
 "RTN","SAMISITE",319,0)
- i site="" d  q  ;
+ s (lien,pien)=0
 "RTN","SAMISITE",320,0)
- . D MES^XPDUTL("No default site returned by SAMI SID PREFIX parameter, exiting")
+ s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMISITE",321,0)
- n cnt s cnt=0
+ s proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMISITE",322,0)
- f  s lien=$o(@lroot@(lien)) q:+lien=0  d  ;
+ n site
 "RTN","SAMISITE",323,0)
- . q:$g(@lroot@(lien,"siteid"))'=""
+ s site=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
 "RTN","SAMISITE",324,0)
- . n nomatch s nomatch=0
+ i site="" d  q  ;
 "RTN","SAMISITE",325,0)
- . n dfn s dfn=$g(@lroot@(lien,"dfn"))
+ . D MES^XPDUTL("No default site returned by SAMI SID PREFIX parameter, exiting")
 "RTN","SAMISITE",326,0)
- . i dfn="" d  q  ;
+ n cnt s cnt=0
 "RTN","SAMISITE",327,0)
- . . D MES^XPDUTL("Error, no dfn found for lien "_lien)
+ f  s lien=$o(@lroot@(lien)) q:+lien=0  d  ;
 "RTN","SAMISITE",328,0)
- . s pien=$o(@proot@("dfn",dfn,""))
+ . q:$g(@lroot@(lien,"siteid"))'=""
 "RTN","SAMISITE",329,0)
- . ; make sure the first 3 chars of the studyid matches the site
+ . n nomatch s nomatch=0
 "RTN","SAMISITE",330,0)
- . i pien'="" d  q:nomatch
+ . n dfn s dfn=$g(@lroot@(lien,"dfn"))
 "RTN","SAMISITE",331,0)
- . . n psite,psid
+ . i dfn="" d  q  ;
 "RTN","SAMISITE",332,0)
- . . s psid=$g(@proot@(pien,"sisid"))
+ . . D MES^XPDUTL("Error, no dfn found for lien "_lien)
 "RTN","SAMISITE",333,0)
- . . i psid="" s nomatch=1 q  ;
+ . s pien=$o(@proot@("dfn",dfn,""))
 "RTN","SAMISITE",334,0)
- . . i $e(psid,1,3)'=site s nomatch=1 d  q  ;
+ . ; make sure the first 3 chars of the studyid matches the site
 "RTN","SAMISITE",335,0)
- . . . d MES^XPDUTL("skipping record - studyid "_psid_" does not match site "_site)
+ . i pien'="" d  q:nomatch
 "RTN","SAMISITE",336,0)
- . ;w !,"lien "_lien_" being set to "_site
+ . . n psite,psid
 "RTN","SAMISITE",337,0)
- . s cnt=cnt+1
+ . . s psid=$g(@proot@(pien,"sisid"))
 "RTN","SAMISITE",338,0)
- . s @lroot@(lien,"siteid")=site
+ . . i psid="" s nomatch=1 q  ;
 "RTN","SAMISITE",339,0)
- i cnt>0 d  ;
+ . . i $e(psid,1,3)'=site s nomatch=1 d  q  ;
 "RTN","SAMISITE",340,0)
- . d MES^XPDUTL("Multi-tenancy upgrade successful")
+ . . . d MES^XPDUTL("skipping record - studyid "_psid_" does not match site "_site)
 "RTN","SAMISITE",341,0)
- . d MES^XPDUTL(cnt_" patient records set to site "_site)
+ . ;w !,"lien "_lien_" being set to "_site
 "RTN","SAMISITE",342,0)
- q
+ . s cnt=cnt+1
 "RTN","SAMISITE",343,0)
- ;
+ . s @lroot@(lien,"siteid")=site
 "RTN","SAMISITE",344,0)
-IDUSER() ; Identify the user
+ i cnt>0 d  ;
 "RTN","SAMISITE",345,0)
- n pivroot s pivroot=$$setroot^%wd("piv-credentials")
+ . d MES^XPDUTL("Multi-tenancy upgrade successful")
 "RTN","SAMISITE",346,0)
- n secid s secid=$g(HTTPREQ("SECID"))
+ . d MES^XPDUTL(cnt_" patient records set to site "_site)
 "RTN","SAMISITE",347,0)
- Q:secid=""
-"RTN","SAMISITE",348,0)
- n secien
-"RTN","SAMISITE",349,0)
- s secien=$o(@pivroot@("secid",secid,""))
-"RTN","SAMISITE",350,0)
- i secien="" d  q  ;
-"RTN","SAMISITE",351,0)
- . s secien=$o(@pivroot@(" "),-1)+1
-"RTN","SAMISITE",352,0)
- . m @pivroot@(secien)=HTTPREQ
-"RTN","SAMISITE",353,0)
- . s @pivroot@("secid",secid,secien)=""
-"RTN","SAMISITE",354,0)
- i $d(@pivroot@(secien,"DUZ")) S DUZ=$g(@pivroot@(secien,"DUZ"))
-"RTN","SAMISITE",355,0)
  q
-"RTN","SAMISITE",356,0)
+"RTN","SAMISITE",348,0)
  ;
-"RTN","SAMISITE",357,0)
-STOREDUZ() ;
-"RTN","SAMISITE",358,0)
- Q:'$D(DUZ)
-"RTN","SAMISITE",359,0)
+"RTN","SAMISITE",349,0)
+IDUSER() ; Identify the user
+"RTN","SAMISITE",350,0)
  n pivroot s pivroot=$$setroot^%wd("piv-credentials")
-"RTN","SAMISITE",360,0)
- i '$d(HTTPREQ("SECID")) D  ;
-"RTN","SAMISITE",361,0)
- . I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP
-"RTN","SAMISITE",362,0)
- n logien s logien=$o(@pivroot@("login"," "),-1)+1
-"RTN","SAMISITE",363,0)
- m @pivroot@("login",logien)=HTTPREQ
-"RTN","SAMISITE",364,0)
- n secid s secid=$g(HTTPREQ("SECID"))
-"RTN","SAMISITE",365,0)
- q:secid=""
-"RTN","SAMISITE",366,0)
+"RTN","SAMISITE",351,0)
+ n secid s secid=$g(HTTPREQ("header","secid"))
+"RTN","SAMISITE",352,0)
+ Q:secid=""
+"RTN","SAMISITE",353,0)
  n secien
-"RTN","SAMISITE",367,0)
+"RTN","SAMISITE",354,0)
  s secien=$o(@pivroot@("secid",secid,""))
-"RTN","SAMISITE",368,0)
- q:secien=""
-"RTN","SAMISITE",369,0)
- s @pivroot@(secien,"DUZ")=DUZ
-"RTN","SAMISITE",370,0)
- Q
-"RTN","SAMISITE",371,0)
+"RTN","SAMISITE",355,0)
+ i secien="" d  q  ;
+"RTN","SAMISITE",356,0)
+ . s secien=$o(@pivroot@(" "),-1)+1
+"RTN","SAMISITE",357,0)
+ . m @pivroot@(secien)=HTTPREQ("header")
+"RTN","SAMISITE",358,0)
+ . s @pivroot@("secid",secid,secien)=""
+"RTN","SAMISITE",359,0)
+ i $d(@pivroot@(secien,"DUZ")) S DUZ=$g(@pivroot@(secien,"DUZ"))
+"RTN","SAMISITE",360,0)
+ q
+"RTN","SAMISITE",361,0)
  ;
+"RTN","SAMISITE",362,0)
+STOREDUZ() ;
+"RTN","SAMISITE",363,0)
+ Q:'$D(DUZ)
+"RTN","SAMISITE",364,0)
+ n pivroot s pivroot=$$setroot^%wd("piv-credentials")
+"RTN","SAMISITE",365,0)
+ i '$d(HTTPREQ("header","secid")) D  ;
+"RTN","SAMISITE",366,0)
+ . I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" D TESTSETUP
+"RTN","SAMISITE",367,0)
+ n logien s logien=$o(@pivroot@("login"," "),-1)+1
+"RTN","SAMISITE",368,0)
+ m @pivroot@("login",logien)=HTTPREQ
+"RTN","SAMISITE",369,0)
+ n secid s secid=$g(HTTPREQ("header","secid"))
+"RTN","SAMISITE",370,0)
+ q:secid=""
+"RTN","SAMISITE",371,0)
+ n secien
 "RTN","SAMISITE",372,0)
-TESTSETUP() ; setup test environment
+ s secien=$o(@pivroot@("secid",secid,""))
 "RTN","SAMISITE",373,0)
- S HTTPREQ("USER")="CN=VAPALS,USER"
+ q:secien=""
 "RTN","SAMISITE",374,0)
- I $D(K) S HTTPREQ("SECID")=$P(K,":",4)
+ s @pivroot@(secien,"DUZ")=DUZ
 "RTN","SAMISITE",375,0)
  Q
 "RTN","SAMISITE",376,0)
  ;
 "RTN","SAMISITE",377,0)
- ;
+TESTSETUP() ; setup test environment
 "RTN","SAMISITE",378,0)
+ S HTTPREQ("USER")="CN=VAPALS,USER"
+"RTN","SAMISITE",379,0)
+ I $D(K) S HTTPREQ("header","secid")=$P(K,":",4)
+"RTN","SAMISITE",380,0)
+ Q
+"RTN","SAMISITE",381,0)
+ ;
+"RTN","SAMISITE",382,0)
+ ;
+"RTN","SAMISITE",383,0)
 EOR ; end of routine SAMISITE
 "VER")
 8.0^22.2

@@ -1,4 +1,4 @@
-SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
+SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
  ;;18.0;SAMI;**5,12,14,17**;2020-01;Build 11
  ;;18.17
  ;
@@ -21,7 +21,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
  ;@copyright: 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-04-04t23:39z
+ ;@last-update 2022-04-11t18:26z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -57,6 +57,23 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-04t23:39z
  ;
  ; 2021-10-06 ven/lmry 18.14
  ;  SAMISITE bump version & dates
+ ;
+ ; 2022-02-14 ven/gpl  2ea7f220,b47a5e01
+ ;  add CRLF to site selection list for super users, add crlf for javascript
+ ; at the end of the site selection page
+ ;
+ ; 2022-04-01 ven/gpl 18-17 7620d4ba
+ ;  single signon prototype
+ ;
+ ; 2022-04-04 ven/lmry  18-17 258bc9269,b257e465
+ ;  bump versions and dates, fix blank line and blank at end of line for XINDEX
+ ;
+ ; 2022-04-08 ven/gpl  18-17  c08224b9
+ ;  updated single signon code thanks to Artit testing
+ ;
+ ; 2022-04-11 ven/lmry 18-17
+ ;  add to history, bump dates
+ ; 
  ;
  ;@to-do
  ; Add label comments

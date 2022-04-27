@@ -268,7 +268,16 @@ LOGOURL(ARGS) ;extrinsic which returns the logout url, if any
  I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" d  q url
  . s url="https://vistaexpertise.net/"
  ;
+ s url=$$GET1PARM^SAMIPARM("systemLogoutUrl")
  q url
+ ;
+SETVAURL() ; set the VA logout url
+ d SETLURL("https://ssologon.int.iam.va.gov/centrallogin/centrallanding.aspx?appID=VAPALSELCAP&target=https://vac10devpal400.pal.vaec.va.gov/vapals")
+ q
+ ;
+SETLURL(url) ; set the logout redirect url
+ D SETPARM^SAMIPARM("SYS","systemLogoutUrl",url)
+ q
  ;
 SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  ; Sign-on

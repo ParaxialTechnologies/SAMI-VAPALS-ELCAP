@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - homepage web services ;;2022-04-27t22:07z
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;;2022-04-27t22:44z
  ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17**;2020-01
  ;18-17
  ;
@@ -418,7 +418,7 @@ WSVAPALS ; post vapals (main gateway)
  . ;s SAMIARG("samiroute")="home"
  . ;do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  . ;Q
- . q:$$REDIRECT^SAMISITE(.SAMIRESULT,.SAMIARG) ; redirect to logout screen
+ . q:$$REDIRECT^SAMISITE(.SAMIRESULT,.SAMIARG)  ; redirect to logout screen
  . s SAMIARG("sitetitle")="Unknown Site"
  . s SAMIARG("siteid")=""
  . s SAMIARG("errorMessage")=""

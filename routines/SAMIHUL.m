@@ -264,7 +264,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-27t22:07z
  ;  SAMIHOM4 setup for logout redirect
  ;
  ; 2022-04-27 ven/lmry 18-17
- ;  SAMIHOM4 and SAMIHUL bumped dates
+ ;  SAMIHOM4 and SAMIHUL bumped dates, inserted space for XINDEX
  ;  
  ;
  ;@contents

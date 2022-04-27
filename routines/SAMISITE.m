@@ -247,7 +247,28 @@ LOGIN(RTN,VALS) ; login processing
  . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
  q
  ;
+REDIRECT(RTN,ARGS) ; extrinsic which issues redirect if any
+ ; returns if redirect exists
+ n reyn s reyn=0 ; default to no redirect
  ;
+ n url
+ s url=$$LOGOURL(.ARGS)
+ i url'="" d  ;
+ . s reyn=1
+ . s RTN(1)="<html><head>"
+ . s RTN(2)="<meta http-equiv=""refresh"" content=""0; url="_url_"""/>"
+ . s RTN(3)="</head><body><p></p></body></html>"
+ . s HTTPRSP("mime")="text/html"
+ ;
+ q reyn
+ ;
+LOGOURL(ARGS) ;extrinsic which returns the logout url, if any
+ ; returns the null string if none
+ n url s url=""
+ I $$GET1PARM^SAMIPARM("testingSingleSignon")="true" d  q url
+ . s url="https://vistaexpertise.net/"
+ ;
+ q url
  ;
 SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  ; Sign-on
@@ -376,7 +397,9 @@ STOREDUZ() ;
  ;
 TESTSETUP() ; setup test environment
  S HTTPREQ("USER")="CN=VAPALS,USER"
- I $D(K) S HTTPREQ("header","secid")=$P(K,":",4)
+ I $D(K) D  ;
+ . S HTTPREQ("header","secid")=$P(K,":",4)
+ . S HTTPREQ("header","K")=K
  Q
  ;
  ;

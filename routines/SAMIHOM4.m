@@ -418,10 +418,12 @@ WSVAPALS ; post vapals (main gateway)
  . ;s SAMIARG("samiroute")="home"
  . ;do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  . ;Q
+ . q:$$REDIRECT^SAMISITE(.SAMIRESULT,.SAMIARG) ; redirect to logout screen
  . s SAMIARG("sitetitle")="Unknown Site"
  . s SAMIARG("siteid")=""
  . s SAMIARG("errorMessage")=""
- . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
+ . s SAMIARG("samiroute")="home"
+ . d WSHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
  . ;d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
  ;
  i route="newcase" d  q 0

@@ -1,4 +1,4 @@
-SAMIPAT ;ven/toad - init subroutines ;2022-04-04t23:15z
+SAMIPAT ;ven/toad - init subroutines ;2022-04-27t21:34z
  ;;18.0;SAMI;**12,14,15,17**;2020-01;
  ;;18-17
  ;
@@ -21,7 +21,7 @@ SAMIPAT ;ven/toad - init subroutines ;2022-04-04t23:15z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-04-04t23:15z
+ ;@last-update 2022-04-27t21:34z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -66,8 +66,11 @@ SAMIPAT ;ven/toad - init subroutines ;2022-04-04t23:15z
  ; 2021-12-07 ven/lmry 18-15   75a19c5c
  ;  SAMIPAT  Update for final 18-15 patch
  ;
- ; 2022-04-04 ven/lmry 18-17
+ ; 2022-04-04 ven/lmry 18-17   258bc926
  ;  SAMIPAT  Update for 18-17-t1 patch
+ ;
+ ; 2022-04-27 ven/lmry 18-17
+ ;  SAMIPAT  Update for 18-17-t2 patch
  ;
  ;
  ;@contents
@@ -141,7 +144,7 @@ POS1815 ; kids post-install for sami 18.15
 POS1817 ; kids post-install for sami 18.17
  ;
  do STANDARD
- do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-t1")
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-t2")
  ;
  quit  ; end of kids-post POS1817^SAMIPAT
  ;

@@ -1,4 +1,4 @@
-SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
+SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-27t22:14z
  ;;18.0;SAMI;**5,12,14,17**;2020-01;Build 11
  ;;18.17
  ;
@@ -21,7 +21,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
  ;@copyright: 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-04-11t18:26z
+ ;@last-update 2022-04-27t22:14z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -71,8 +71,14 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-11t18:26z
  ; 2022-04-08 ven/gpl  18-17  c08224b9
  ;  updated single signon code thanks to Artit testing
  ;
- ; 2022-04-11 ven/lmry 18-17
+ ; 2022-04-11 ven/lmry 18-17  3bf9c56f
  ;  add to history, bump dates, fix XINDEX blank at end of line
+ ;
+ ; 2022-04-26 ven/gpl 18-17   89497ba8,3f6b6117
+ ;  logout redirection
+ ;
+ ; 2022-04-27	ven/lmry 18-17
+ ;  update history and date
  ; 
  ;
  ;@to-do

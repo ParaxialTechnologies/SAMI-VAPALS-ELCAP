@@ -1,16 +1,15 @@
-:doctitle: SAMI Patching Checklist for 18-17-t1
+:doctitle: SAMI Patching Checklist for 18-17-t2
 
 [role="h1 center"]
-SAMI Patching Checklist for 18-17-t1
+SAMI Patching Checklist for 18-17-t2
 
 -------------------------------------------------------------------------------
  0. Project discussion
   0.1. Which changes will be included
 	    Issues included 
-	    21-218 Single sign-on: Make login page not appear if user has already
-	    signed in at least once.
+	    Single sign-on: Send user to right page when logging off.
 
-  0.2. Timeline: Release goal 4/5/22, released 
+  0.2. Timeline: Release goal 4/27/22, released 
 
  1. Project set up
 X  1.1. git pull
@@ -18,12 +17,12 @@ X  1.2. prepare checklist
 X  1.3. prepare recipe doc
 X  1.4. prepare template.txt doc
 X  1.5. git pull/push
-X  1.6. add updated routines to BBEdit project
+N  1.6. add updated routines to BBEdit project
 		SAMIHOM4
 		SAMIPAT
 		SAMISITE
   
-X  1.7. add log routines to BBEdit project
+N  1.7. add log routines to BBEdit project
  	  SAMIHUL
 
 X  1.8. write change descriptions
@@ -34,25 +33,25 @@ N/A  1.12. Regrettable Bodge
 
  2. Update routines
 X  2.1. Update SAMIPAT for pre/post-install if needed
-      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-15-t1")
-X  2.2. convert to new short version ids, update dates & times in each routine
+      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-t2")
+X 2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
 X  2.3. update change log routines
-X  2.4. push to repo
+  2.4. push to repo
 
  3. Run XINDEX and ARJT
-X  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
-X  3.2. copy routines to ~/run/routine directory
-X  3.3. run XINDEX
-X  3.4. fix any bugs,
-X  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
-X  3.6. update recipe
+  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+  3.2. copy routines to ~/run/routine directory
+  3.3. run XINDEX
+  3.4. fix any bugs,
+  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
+  3.6. update recipe
   3.7. update dashboard (sami vers)
-X  3.8. git pull/push
+  3.8. git pull/push
 
  4. KIDS Build
   4.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github

@@ -6,4 +6,5 @@ copy_binaries(
   )
 
 do_subdir(
+  dist
   )

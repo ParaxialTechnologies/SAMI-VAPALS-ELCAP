@@ -1,35 +1,22 @@
-#:patchtitle: SSO Patch
-#:nmsp: SAMI
-#:lnmsp: sami
-#:appname: VAPALS-ELCAP
-#:version: 18-17-t1
-#:rversion: 18-17
-#:partialdir: 18-17/t1
-#:status: test release
-#:vista-version: SAMI*18.0*17 SEQ #17 T1
-#:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 1
-#:priority: high
-#:categories: routine, file
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-06-20t21:10z
 
-#>center: #{patchtitle}
-#>center: #{nmsp} (#{appname}) #{version}
-#>center: (#{vista-version})
+                              SSO Patch
+                     SAMI (VAPALS-ELCAP) 18-17-t1
+                      (SAMI*18.0*17 SEQ #17 T1)
 
-#>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
-#>center: & Frederick D. S. Marshall
-#>center: 2022-06-10
-// #{now-iso-ymd}
+           George P. Lilly, Dom DiNatale, Larry G. Carlson,
+                      & Frederick D. S. Marshall
+                              2022-06-10
 
 i. Front matter
 
- App         #{nmsp} (#{appname})
- Version     #{version}
- Vista ID    #{vista-version}
-             #{vista-longversion}
- Priority    #{priority}
- Categories  #{categories}
- Status      #{status}: #{nmsp}-#{version}.zip
+ App         SAMI (VAPALS-ELCAP)
+ Version     18-17-t1
+ Vista ID    SAMI*18.0*17 SEQ #17 T1
+             Version 18.0, Patch ID #17, Seq #17, Test 1
+ Priority    high
+ Categories  routine, file
+ Status      test release: SAMI-18-17-t1.zip
  Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
              SAMI 18-2 (SAMI*18.0*2 SEQ #2)
              SAMI 18-3 (SAMI*18.0*3 SEQ #3)
@@ -72,9 +59,9 @@ ii. Contents
 
 
 
-#. Description
+1. Description
 
- #{nmsp} #{version} adds 1 high-priority update in preparation for
+ SAMI 18-17-t1 adds 1 high-priority update in preparation for
  single sign on (SSO). Users will not be required to login again if
  they already logged in.
 
@@ -82,11 +69,11 @@ ii. Contents
  package distributions (including this one), and documentation - is at
  the following public Github repository:
 
- https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+ https:
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/
+ https:
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -95,14 +82,14 @@ ii. Contents
  The changes in this patch are:
 
 
- #.#. Login: Implement single sign-on
+ 1.1. Login: Implement single sign-on
 
 Require users to login only once when single sign on in use.
 
    issue 21-218 (high priority): When using single sign-on, user
    should not be prompted to log in to VAPALS-ELCAP separately.
    However, user must be matched to single sign-on SECID.
-   
+
    solution: Require user to sign in once using Access and Verify
    created by system administrator. This allows SECID to be captured
    and tied to user.  For this testing version, where we don't yet
@@ -114,16 +101,27 @@ Require users to login only once when single sign on in use.
    reported: 2021-03 by Lilly.
 
 
-#. Package elements
+2. Package elements
 
-#>include: .dtool/packelements.txt
+ File                      Change
+ ------------------------  ------
+ sami-18-17-t1-recipe.txt  new
+ sami-18-17-t1.kid         new
+ sami-18-17-t1.txt         new
+ upgrade-webapp            new
+ sami-18-17-t1.zip         new
 
-// File                     Number  Change
-// -----------------------  ------  ---------------
- 
+ Routine   Change
+ --------  --------
+ SAMIHOM4  modified
+ SAMIHUL   modified
+ SAMIPAT   new
+ SAMISITE  modified
 
 
-#. Prepare for installation
+
+
+3. Prepare for installation
 
  This involves creating a directory to work in, running a script to
  back up certain datafiles and web-application files, and then going
@@ -131,7 +129,7 @@ Require users to login only once when single sign on in use.
  patch.
 
 
- #.#. Assume the identity of your osehra Unix user
+ 3.1. Assume the identity of your osehra Unix user
 
    This step assumes you type a dzdo or sudo to do this; here the
    symbol $DEMAND will stand for whichever command you use. (Also, in
@@ -143,41 +141,46 @@ Require users to login only once when single sign on in use.
     $
 
 
- #.#. Prepare install directory
+ 3.2. Prepare install directory
 
    If this is your first time installling this, execute the following
    commands.  They create a shell variable, and then creates the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-17/t1
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-17/t1
     $ cd $INDIR
     $ rm -rf ./sami*.{txt,kid} ./*webapp*
 
 
- #.#. Download and prepare the archive file
+ 3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-#{version}.zip in
+   You may safely download the archive file sami-18-17-t1.zip in
    advance of the actual install. In the following text, "[now]"
    represents a time stamp representing your current time, and
    "[bits/sec]" is a data rate and "[time]" is how long the file took
    to transfer (both of which vary based on the user's network
    conditions).
 
-#>include: .dtool/wget-snippet.txt
+     $ wget --no-verbose 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t1/sami-18-17-t1.zip
+     {now} URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t1/sami-18-17-t1.zip [{size}/{size}] -> "sami-18-17-t1.zip" [1]
+     $ _
 
    Then unzip the archive file with the following command.
 
-#>include: .dtool/unzip-snippet.txt
+     $ unzip sami-18-17-t1.zip
+     Archive:  sami-18-17-t1.zip
+       ...
+     $ _
 
 
- #.#. Install web-application files
+ 3.4. Install web-application files
 
     At this point, the web-application files must be installed. This
     is done with a script that backs up the affected directories
@@ -217,7 +220,7 @@ Require users to login only once when single sign on in use.
      $ _
 
 
- #.#. Back up M routines
+ 3.5. Back up M routines
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
@@ -230,7 +233,7 @@ Require users to login only once when single sign on in use.
    to follow the correct dialog for your implementation.
 
 
-  #.#.#. Enter M
+  3.5.1. Enter M
 
     At the Unix prompt, enter the M environment in direct mode, using
     the 'csession' command on Cache or the 'mumps' command on
@@ -252,7 +255,7 @@ Require users to login only once when single sign on in use.
     >
 
 
-  #.#.#. Sign into Vista
+  3.5.2. Sign into Vista
 
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -271,17 +274,19 @@ Require users to login only once when single sign on in use.
     >
 
 
-  #.#.#. List of routines
+  3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
     Routine prompt, press return to indicate the list of routines is
     done.
 
-#>include: .dtool/routine-list.txt
+SAMIHOM4
+SAMIHUL
+SAMISITE
 
 
-  #.#.#. Run the backup
+  3.5.4. Run the backup
 
     Creating the routine backup file differs by implementation.
 
@@ -297,7 +302,22 @@ Require users to login only once when single sign on in use.
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
 
-#>include: .dtool/cache-ro-snippet.txt
+     >do ^%RO
+
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMIHOM4
+     Routine(s): SAMIHUL
+     Routine(s): SAMISITE
+     Routine(s):
+
+     Description: SAMI*18.0*17 SEQ #17 T1 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-17/t1/sami-18-17-t1-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMIHOM4.INT    SAMIHUL.INT     SAMISITE.INT
+     >_
 
     On YottaDB/GT.M
     ---------------
@@ -309,45 +329,180 @@ Require users to login only once when single sign on in use.
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
 
-#>include: .dtool/yotta-ro-snippet.txt
+     >do ^%RO
+
+     Routine Output - Save selected routines into RO file.
+
+     Routines: SAMIHOM4
+     SAMIHOM4
+     Current total of 1 routines.
+
+     Routines: SAMIHUL
+     SAMIHUL
+     Current total of 2 routines.
+
+     Routines: SAMISITE
+     SAMISITE
+     Current total of 3 routines.
+
+     Routine:
+
+     Output device <terminal>: /home/osehra/run/in/sami/18-17/t1/sami-18-17-t1-back.ro
+
+     Header Label: SAMI*18.0*17 SEQ #17 T1 routine backup
+     Strip comments <No>?: 
+     SAMIHOM4  SAMIHUL   SAMISITE
+
+     Total of 1753 lines in 3 routines.
+
+     >_
 
     You'll remain in the M environment for the next section.
 
 
-#. Main install instructions
+4. Main install instructions
 
  This consists of loading and installing the KIDS package, and
  activating the new web-application files.
 
 
- #.#. Installing the KIDS package
+ 4.1. Installing the KIDS package
 
    This installs the various M assets required by the application.
 
 
-  #.#.#. Enter the KIDS Installation menu
+  4.1.1. Enter the KIDS Installation menu
 
     At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
     Installation & Distribution System main menu, and at the Select
     ... Option prompt, select Installation:
 
-#>include: .dtool/enter-kids-snippet.txt
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
 
 
-  #.#.#. Load KIDS package
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.1.2. Load KIDS package
 
     Select option 1 and press return at the Continue prompt.
 
-#>include: .dtool/load-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-17/t1/sami-18-17-t1.kid
+
+     KIDS Distribution saved on Apr 11, 2022@12:05:55
+     Comment: Test release SAMI*18.0*17 SEQ #17 T1
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*17
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*17
+     Use INSTALL NAME: SAMI*18.0*17 to install this Distribution.
 
 
-  #.#.#. Install KIDS package
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.1.3. Install KIDS package
 
     Select option 6, enter the space bar at the INSTALL NAME prompt,
     and press return at the next three prompts. Note that '[now]'
     denotes the current time when you're doing the install.
 
-#>include: .dtool/install-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*17     Loaded from Distribution    [now]
+        => Test release SAMI*18.0*17 SEQ #17 T1  ;Created on Apr 11, 2022@12:05:55
+
+     This Distribution was loaded on [now] with header of
+        Test release SAMI*18.0*17 SEQ #17 T1  ;Created on Apr 11, 2022@12:05:55
+        It consisted of the following Install(s):
+        SAMI*18.0*17
+     Checking Install for Package SAMI*18.0*17
+
+     Install Questions for SAMI*18.0*17
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*17 :
+                    [now]
+
+     Build Distribution Date: Apr 11, 2022
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1817^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*17 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > halt
+     $ _
 
    You now have {appname} {version} ({vista-version})
    installed in your M environment. The install is now complete. We
@@ -356,24 +511,30 @@ Require users to login only once when single sign on in use.
    that {appname} is ready for their use.
 
 
-#. Optional backout instructions
+5. Optional backout instructions
 
  Should errors or other problems result from installing this package
  contact the {appname} development team for package-backout
  instructions.
 
 
-#. Routines
+6. Routines
 
  Lines 2 & 3 of each of these routines now look like:
-#>include: .dtool/routine-lines2-3.txt
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;18-x-17
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
-#>include: .dtool/checksums.txt
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  -------------------------
+ SAMIHOM4  B977083192       B979586627      **1,4,5,6,9,12,15,16,17**
+ SAMIHUL   B117874          B119254         **9,12,15,16,17**
+ SAMIPAT   ---              B10169332       **12,14,15,17**
+ SAMISITE  B95807248        B132434343      **5,12,14,17**
 
 
-#. Authors
+7. Authors
 
              Dates              By
  Developed   2022-04-01/04      George P. Lilly (ven)

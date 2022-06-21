@@ -1,4 +1,4 @@
-#:patchtitle: Single Signon
+#:patchtitle: SSO Patch
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
@@ -18,7 +18,8 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
 
 #>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
 #>center: & Frederick D. S. Marshall
-#>center: #{now-iso-ymd}
+#>center: 2022-04-27
+// #{now-iso-ymd}
 
 i. Front matter
 
@@ -70,14 +71,15 @@ ii. Contents
  Authors
 
 
-
 #. Description
 
- #{nmsp} #{version} adds 2 high-priority updates in preparation for single
- sign on. Users will not be required to login again if they already logged
- in. The definitive source for the VAPALS-ELCAP application - codebase, 
- package distributions (including this one), and documentation - is at the
- following public Github repository:
+ #{nmsp} #{version} adds 2 high-priority updates in preparation for
+ single sign on (SSO). Users will not be required to login again if
+ they already logged in.
+
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -97,34 +99,32 @@ ii. Contents
    issue 21-218 (high priority): When using single sign on, user should not
    be prompted to log in to VAPALS-ELCAP separately. However, user must be
    matched to single sign on SECID.
-   
+
    solution: Require user to sign in once using Access and Verify created by
    system administrator. This allows SECID to be captured and tied to user.
-   For this testing version, where we don't yet have access to SECID, IP 
+   For this testing version, where we don't yet have access to SECID, IP
    Address is used instead. Note: for testing, if user does not have a stable
-   IP Address they will be required to sign in with Access and Verify to 
+   IP Address they will be required to sign in with Access and Verify to
    update IP Address.
 
    reported: 2022-03 by Lilly.
-   
-#.#. Logout: When users sign out, they must be redirected to the correct web
-	  page.
+
+#.#. Logout: Upon sign-out, redirect to the correct web page
 
    issue 21-221 (high priority): Currently users are being directed to the home
    page of the clinical site they just logged out of.
-   
+
    solution: User is redirected to correct logout page.
 
-   reported: 2022-04 by Jirapatnakul.   
+   reported: 2022-04 by Jirapatnakul.
 
 
 #. Package elements
 
 #>include: .dtool/packelements.txt
 
- File                     Number  Change
- -----------------------  ------  ---------------
- 
+// File                     Number  Change
+// -----------------------  ------  ---------------
 
 
 #. Prepare for installation
@@ -186,15 +186,15 @@ ii. Contents
     with a script that backs up the affected directories before installing
     anything, then upgrades the web-application files.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
-     Updating from ./webapp-upgrade-files ...
+     Updating from ./auxfiles ...
      [... lists of files being updated ...]
      Done with install.
 
@@ -204,13 +204,13 @@ ii. Contents
     Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
     the official GitHub repository, and this script will have different output.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
      Found a valid Git repository; pulling updates ...
      [... output varies ...]

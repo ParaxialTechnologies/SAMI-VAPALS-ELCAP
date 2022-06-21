@@ -1,0 +1,687 @@
+:doctitle: SAMI 1.18.0.9-i9
+:numbered:
+
+// (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ~/bin/webmake publish newsite/project/vapals-elcap")))
+
+[role="h1 center"]
+SAMI 1.18.0.9-i9
+
+-------------------------------------------------------------------------------
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-18T17:05Z
+-------------------------------------------------------------------------------
+
+[role="center"]
+Form Fixes: CT Evaluation, Intervention, Followup, __et al__
+
+[role="center h1"]
+VAPALS-ELCAP 1.18.0.9-i9 +
+(SAMI*18.0*9 SEQ #9)
+
+[role="center"]
+George P. Lilly +
+_&_ Domenic DiNatale +
+_&_ Frederick D. S. Marshall +
+2021-03-18
+
+[[front]]
+[role="h2"]
+{zwj}i. Front matter
+
+[cols=">.<0v,<.<1v",grid="none",frame="none",width="1%"]
+|==============================================================================
+| App         | SAMI - VAPALS-ELCAP
+| Revision    | ††SAMI*18.0*9 SEQ #9††: Version 18.0, Patch ID #9, Seq #9
+| Priority    | regular
+| Categories  | Routine, File
+| Status      | released
+| Depends on  | SAMI 1.18.0.1-i1 (††SAMI*18.0*1 SEQ #1††) +
+                SAMI 1.18.0.3-i3 (††SAMI*18.0*3 SEQ #3††) +
+                SAMI 1.18.0.4-i4 (††SAMI*18.0*4 SEQ #4††) +
+                SAMI 1.18.0.5-i5 (††SAMI*18.0*5 SEQ #5††) +
+                SAMI 1.18.0.6-i6 (††SAMI*18.0*6 SEQ #6††)
+|==============================================================================
+
+[[toc]]
+[role="h2"]
+{zwj}ii. Contents
+
+[cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
+|==============================================================================
+|[options="compact"]
+* <<front,Front matter>>
+** <<toc,Contents>>
+* <<desc,Description>>
+* <<pkg-elements,Package elements>>
+* <<retrieval,Package-retrieval instructions>>
+** <<be-osehra,Assume the identity of your `osehra` Unix user>>
+** <<prep-archive,Prepare the archive file>>
+** <<expand,Expand the KIDS archive>>
+* <<pre-install,Pre-install instructions>>
+** <<enter-m,Enter M>>
+*** <<enter-m-cache,On Caché>>
+*** <<enter-m-yotta,On YottaDB/GT.M>>
+** <<signin,Sign into Vista>>
+** <<backup,Back up routines>>
+*** <<routine-list,List of routines>>
+*** <<backup-cache,On Caché>>
+*** <<backup-yotta,On YottaDB/GT.M>>
+** <<backup-www,Back up `www` files>>
+|[options="compact"]
+* <<install,Main install instructions>>
+** <<enter-menu,Enter Vista menu system>>
+** <<load-kids,Load KIDS package>>
+** <<install-kids,Install KIDS package>>
+** <<exit-m,Exit M>>
+** <<install-www,Install the `www` files>>
+* <<backout,Optional backout instructions>>
+* <<routines,Routines>>
+* <<authors,Authors>>
+|==============================================================================
+
+[[desc]]
+== Description
+
+††SAMI*18.0*9 SEQ #9†† fixes the following bugs in the ††CT Eval††,
+††Intervention††, ††Followup††, and other forms. It is the first patch to
+VAPALS-ELCAP{nbsp}v18.0 to include updates to the html templates and associated
+web files; in addition to routine updates and distribution files, it ships
+completely new contents for the `www/` directory. Bug fixes in this patch
+include:
+
+=== VAP-466: Intake Form field Pre-enrollment Comment
+
+[options="compact"]
+* __Problem__: Field is required, but should be optional
+* __Solution__: Field made optional
+
+=== VAP-469,472: CT Evaluation Form field Followup Date
+
+[options="compact"]
+* __Problem__: Validation forces date to be today or later. This interferes with
+  entering old data. Date calculation done from current date instead of scan
+  date.
+* __Solution__: Validation changed to be scan date or later.
+
+=== VAP-460: CT Evaluation Form copy forward
+
+[options="compact"]
+* __Problem__: Other Abnormalities not copied forward to later forms.
+* __Solution__: Now it is.
+
+=== VAP-467: CT Evaluation Form field CTDI
+
+[options="compact"]
+* __Problem__: CTDI (CT Dose Index) incorrectly labeled as CDTI.
+* __Solution__: Typo fixed.
+
+=== VAP-463: CT Evaluation Form three date fields
+
+[options="compact"]
+* __Problem__: Baseline CT Date should be filled in on subsequent CT Eval
+  forms. Most Recent Comparison CT Date should default to Previous CT Eval
+  Date. Previous CT Eval Date should be based on dates of all previous CT
+  forms.
+* __Solution__: Fixed
+
+=== VAP-460: Intervention Form copy forward
+
+[options="compact"]
+* __Problem__: Copy forward not working for Intervention Form.
+* __Solution__: Fixed.
+
+=== VAP-473: Followup Form ordering information fields
+
+[options="compact"]
+* __Problem__: Fields about ordering information, from Ordered By to Reported
+  Asympotomatic at Time of Order, should be removed.
+* __Solution__: Removed.
+
+=== Followup Form submission error
+
+[options="compact"]
+* __Problem__: When submitting Followup Form set to ``Followup on CT
+  communication,'' if no CT form exists, a JSON API error occurs.
+* __Solution__: A more helpful error message is displayed on a normal page.
+
+=== VAP-471: Enrollment and Activity Reports
+
+[options="compact"]
+* __Problem__: After changing the date range on the Enrollment and Activity
+  reports, hitting Submit button returns to Login Page.
+* __Solution__: Fixed to just refresh the report.
+
+[[pkg-elements]]
+== Package elements
+
+[cols="<.<1m,<.<0",options="header",role="small center",width="50%"]
+|==============================================================================
+| File                        | Change
+| sami-1.18.0.9-i9-recipe.txt | new
+| sami-1.18.0.9-i9.txt        | new
+| sami-1.18.0.9-i9.kid        | new
+| www/*                       | modified
+| sami-1.18.0.9-i9.zip        | new
+|==============================================================================
+
+[cols="<.<1m,<.<0",options="header",role="small center",width="1%"]
+|==============================================================================
+| Routine                | Change
+| SAMICAS2               | modified
+| SAMICAS3               | modified
+| SAMICUL                | modified
+| SAMIHOM4               | modified
+| SAMIHUL                | new
+| SAMINOT2               | modified
+| SAMINUL                | new
+| SAMIUL                 | modified
+|==============================================================================
+
+[[retrieval]]
+== Package-retrieval instructions
+
+The software for this patch is being released as KIDS package
+`sami-1.18.0.9-i9.zip` via Git or via direct file transfer. These instructions
+are for your Vista environment's sysadmin. As usual, please capture the
+complete dialog of your install and send it to your VAPALS-ELCAP support team.
+
+[[be-osehra]]
+=== Assume the identity of your +osehra+ Unix user
+
+This step assumes you type a `sudo` command to do this. If your configuration
+is different, please adjust this step to match your configuration:
+
+-------------------------------------------------------------------------------
+$ sudo su - osehra
+-------------------------------------------------------------------------------
+
+[[prep-archive]]
+=== Prepare the archive file
+
+Create install and backup directories:
+
+-------------------------------------------------------------------------------
+$ mkdir -p ~/run/in/sami/1.18.0.9/back/www/
+-------------------------------------------------------------------------------
+
+If using Git to receive packages, update your VAPALS-ELCAP Git repo, copy the
+`sami-1.18.0.9-i9.zip` file to your install directory, and change directories
+to that install directory:
+
+-------------------------------------------------------------------------------
+$ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
+$ git pull
+[...a successful git pull will result in a great deal of chatter...]
+$ cp dist/1.18.0.9/sami-1.18.0.9-i9.zip ~/run/in/sami/1.18.0.9/
+-------------------------------------------------------------------------------
+
+This Git method of receiving packages also completes half of the package
+install, because it updates all the `html` and associated web files, leaving
+only the KIDS package to be installed to complete the installation. If you are
+not prepared to proceed with the install, we recommend either waiting to
+retrieve the package via Git until you are ready to proceed, or using the
+non-Git method in advance and waiting to perform the [ttsp nowrap]##git pull##
+until the end of the pre-install steps.
+
+If _not_ using Git, you may obtain the archive here:
+https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/raw/master/dist/1.18.0.9/sami-1.18.0.9-i9.zip[††sami-1.18.0.9-i9.zip††]
+(\unit[2.4;MB] ZIP archive).
+
+As the identity of the sysadmin Unix user, follow your usual procedure to
+transfer archive file `sami-1.18.0.9-i9.zip` to one of the sysadmin user
+directories and change to that directory.
+
+Then move the archive file to the `osehra` user install directory, change
+ownership of the archive file to `osehra`, assume the `osehra` user identity,
+and change directories to that install directory:
+
+-------------------------------------------------------------------------------
+$ sudo mv sami-1.18.0.9-i9.zip /home/osehra/run/in/sami/1.18.0.9/
+$ sudo chown osehra:osehra /home/osehra/run/in/sami/1.18.0.9/sami-1.18.0.9-i9.zip
+$ sudo su - osehra
+-------------------------------------------------------------------------------
+
+[[expand]]
+=== Expand the KIDS archive
+
+Change directories to the install directory, and expand the archive file, using
+the Unix `unzip` command:
+
+-------------------------------------------------------------------------------
+$ cd ~/run/in/sami/1.18.0.9/
+$ unzip sami-1.18.0.9-i9.zip
+Archive:  sami-1.18.0.9-i9.zip
+  inflating: sami-1.18.0.9-i9-recipe.txt
+  inflating: sami-1.18.0.9-i9.kid
+  inflating: sami-1.18.0.9-i9.txt
+  inflating: www/… [9 MB of www files]
+$ cd
+$ _
+-------------------------------------------------------------------------------
+
+[[pre-install]]
+== Pre-install instructions
+
+It is important when installing packages to back up the existing package
+elements that are about to be changed, so that if anything goes wrong with the
+install, these package elements can be restored.  For this patch, it's
+M{nbsp}routines and `www` files we will back up.
+
+[[enter-m]]
+=== Enter M
+
+At the Unix prompt, enter the M environment in direct mode, using the
+`csession` command on Caché or the `mumps` command on YottaDB/GT.M:
+
+[[enter-m-cache]]
+==== On Caché
+
+-------------------------------------------------------------------------------
+$ csession vapals
+
+Node: vapalscache, Instance: VAPALS
+
+>_
+-------------------------------------------------------------------------------
+
+[[enter-m-yotta]]
+==== On YottaDB/GT.M
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
+[[signin]]
+=== Sign into Vista
+
+At the M prompt, call Vista's direct-mode interface, enter your access code,
+and then just press return at the [ttsp nowrap]##OPTION NAME## prompt to return
+to direct mode. This sets up your authentication variables. Here's a sample
+capture of this step:
+
+-------------------------------------------------------------------------------
+> do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME:
+>_
+-------------------------------------------------------------------------------
+
+[[backup]]
+=== Back up routines
+
+Back up existing VAPALS-ELCAP routines that will be overwritten by this
+install. Do this by calling direct-mode interface `^%RO` (routine out),
+selecting the list of routines to save, selecting +sami-1.18.0.9-i9-back.ro+ to
+save to, and answering any other additional prompts.
+
+The prompts vary between M implementations, so be sure to follow the correct
+dialog for yours. The routine names to save are listed below under each
+implementation; copy the list and paste it at the +Routine+ prompt. At the
+final +Routine+ prompt, press return to indicate the list of routines is done.
+
+[[routine-list]]
+==== List of routines
+
+-------------------------------------------------------------------------------
+SAMICAS2
+SAMICAS3
+SAMICUL
+SAMIHOM4
+SAMINOT2
+SAMIUL
+-------------------------------------------------------------------------------
+
+[[backup-cache]]
+==== On Caché
+
+In addition to naming the routines and routine-out file, we also provide a
++Description+ and press return at the +Parameters+ and [ttsp]##Printer Format##
+prompts to accept the defaults of +WNS+ and +No+, respectively:
+
+-------------------------------------------------------------------------------
+> do ^%RO
+
+Routine output (please use %ROMF for object code output)
+Routine(s): SAMICAS2
+Routine(s): SAMICAS3
+Routine(s): SAMICUL
+Routine(s): SAMIHOM4
+Routine(s): SAMINOT2
+Routine(s): SAMIUL
+Routine(s):
+
+Description: SAMI 1.18.0.9-i9 routine backup
+
+Output routines to
+Device: /home/osehra/run/in/sami/1.18.0.9/back/sami-1.18.0.9-i9-back.ro
+Parameters? ("WNS") =>
+Printer Format? No => No
+SAMICAS2.INT    SAMICAS3.INT    SAMICUL.INT     SAMIHOM4.INT
+SAMINOT2.INT    SAMIUL.INT
+>_
+-------------------------------------------------------------------------------
+
+[[backup-yotta]]
+=== On YottaDB/GT.M
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+-------------------------------------------------------------------------------
+> do ^%RO
+
+Routine Output - Save selected routines into RO file.
+
+Routine: SAMICAS2
+SAMICAS2
+Current total of 1 routine.
+
+Routine: SAMICAS3
+SAMICAS3
+Current total of 2 routines.
+
+Routine: SAMICUL
+SAMICUL
+Current total of 3 routines.
+
+Routine: SAMIHOM4
+SAMIHOM4
+Current total of 4 routines.
+
+Routine: SAMINOT2
+SAMINOT2
+Current total of 5 routines.
+
+Routine: SAMIUL
+SAMIUL
+Current total of 6 routines.
+
+Routine:
+
+Output device: <terminal>: /home/osehra/run/in/sami/1.18.0.9/back/sami-1.18.0.9-i9-back.ro
+
+Header Label: SAMI 1.18.0.9-i9 routine backup
+Strip comments <No>?:
+SAMICAS2  SAMICAS3  SAMICUL   SAMIHOM4  SAMINOT2  SAMIUL
+
+Total of 3452 lines in 6 routines.
+
+
+>_
+-------------------------------------------------------------------------------
+
+[[backup-www]]
+=== Back up `www` files
+
+Back up existing `www` files that will be overwritten by this install. Do this
+by exiting{nbsp}M and copying the `www` directory to the install backup
+directory:
+
+-------------------------------------------------------------------------------
+>halt
+$ cp -r ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/* \
+  ~/run/in/sami/1.18.0.9/back/www/
+$ _
+-------------------------------------------------------------------------------
+
+eval::[Section.setlevel(2)]
+
+Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
+1.18.0.9-i9 (††SAMI*18.0*9 SEQ #9††).
+
+[[install]]
+== Main install instructions
+
+This consists of entering the Vista menu system, loading and installing the
+KIDS package, exiting{nbsp}M, and installing the new `www` files.
+
+[[enter-menu]]
+=== Enter Vista menu system
+
+[[enter-m-2]]
+==== Enter M
+
+Repeat <<enter-m,step 4.1>> to enter M.
+
+[[signin-kids]]
+==== Sign in and select the KIDS Installation menu
+
+At the M prompt, call Vista's direct-mode interface, enter your access code, at
+the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
+[ttsp]##Kernel Installation & Distribution System## main menu, and at the
+[ttsp]##Select ... Option## prompt select +Installation+:
+
+-------------------------------------------------------------------------------
+> do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+
+
+      Edits and Distribution ...
+      Utilities ...
+      Installation ...
+      Patch Monitor Main Menu ...
+
+Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: installation
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[load-kids]]
+=== Load KIDS package
+
+Select option 1 and press return at the +Continue+ prompt.
+
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+Enter a Host File: /home/osehra/run/in/sami/1.18.0.9/sami-1.18.0.9-i9.kid
+
+KIDS Distribution saved on Mar 18, 2021@07:44:50
+Comment: Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)
+
+This Distribution contains Transport Globals for the following Package(s):
+  SAMI*18.0*9
+Distribution OK!
+
+Want to Continue with Load? YES//
+Loading Distribution...
+
+   SAMI*18.0*9
+Use INSTALL NAME: SAMI*18.0*9 to install this Distribution.
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[install-kids]]
+=== Install KIDS package
+
+Select option 6, enter the space bar at the [ttsp]##INSTALL NAME## prompt, and
+press return at the next three prompts.
+
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+Select INSTALL NAME:    SAMI*18.0*9     Loaded from Distribution    3/18/21@08:58:30
+     => Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)  ;Created on Mar 18, 2021@07
+
+This Distribution was loaded on Mar 18, 2021@08:58:30 with header of
+   Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)  ;Created on Mar 18, 2021@07:44:50
+   It consisted of the following Install(s):
+    SAMI*18.0*9
+Checking Install for Package SAMI*18.0*9
+
+Install Questions for SAMI*18.0*9
+
+
+
+Want KIDS to INHIBIT LOGONs during the install? NO//
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME//   VAX
+
+
+ Install Started for SAMI*18.0*9 :
+               Mar 18, 2021@08:59:38
+
+Build Distribution Date: Mar 18, 2021
+
+ Installing Routines:.........
+               Mar 18, 2021@08:59:38
+
+ Updating Routine file......
+
+ Updating KIDS files.......
+
+ SAMI*18.0*9 Installed.
+               Mar 18, 2021@08:59:38
+
+ NO Install Message sent
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[exit-m]]
+=== Exit M
+
+At the [ttsp]##Select ... Option## prompt, select the halt option, and at the M
+prompt enter the `halt` command.
+
+-------------------------------------------------------------------------------
+  Select Installation <TEST ACCOUNT> Option: halt
+
+  Logged out at Mar 18, 2021 9:00 am
+
+[...]
+$ _
+-------------------------------------------------------------------------------
+
+[[install-www]]
+=== Install the `www` files
+
+If you use the Git repo method of VAPALS-ELCAP package distribution, and during
+this install you have already run the [ttsp]##git pull## command to update your
+††sami†† repo clone, then the `www` files were installed when you did that.
+
+If you use the Git repo method but have not yet run [ttsp]##git pull##, then
+run the following commands:
+
+-------------------------------------------------------------------------------
+$ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
+$ git pull
+-------------------------------------------------------------------------------
+
+If you __do not__ use the Git repo distribution method, then instead run this
+command:
+
+-------------------------------------------------------------------------------
+$ cp -r ~/run/in/sami/1.18.0.9/back/www/* \
+  ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/
+-------------------------------------------------------------------------------
+
+eval::[Section.setlevel(2)]
+
+You now have VAPALS-ELCAP 1.18.0.9-i9 (††SAMI*18.0*9 SEQ #9††) installed in
+your M environment. The install is now complete. We recommend running tests of
+your VAPALS-ELCAP application to confirm the environment is operational and
+bug-free, before notifying users that VAPALS-ELCAP is ready for their use.
+
+[[backout]]
+== Optional backout instructions
+
+Should errors or other problems result from installing this package contact the
+VAPALS development team for package-backout instructions.
+
+[[routines]]
+== Routines
+
+Lines 2 & 3 of each of these routines now look like:
+
+-------------------------------------------------------------------------------
+  ;;18.0;SAMI;[Patch List];[optional Build #]
+  ;;1.18.0.9-i9
+-------------------------------------------------------------------------------
+
+The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
+
+[cols="<.<1m,<.<1m,<.<1m",options="header",width="50%"]
+|==============================================================================
+| Name        | Checksum after | Patch list
+| SAMICAS2    | B381191061     | `**1,5,9**`
+| SAMICAS3    | B264741233     | `**3,9**`
+| SAMICUL     | B127967        | `**9**`
+| SAMIHOM4    | B748605507     | `**1,4,5,6,9**`
+| SAMIHUL     | B94425         | `**9**`
+| SAMINOT2    | B463881449     | `**1,9**`
+| SAMINUL     | B82041         | `**9**`
+| SAMIUL      | B17740         | `**9**`
+|==============================================================================
+
+[[authors]]
+== Authors
+
+[cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
+|==============================================================================
+|           | Dates                 | By
+| Developed | 2020-11-12/2021-03-18 | George P. Lilly (VEN) +
+                                      Domenic DiNatale (PAR) +
+                                      Frederick D. S. Marshall (VEN)
+| Tested    | 2020-11-12/2021-03-18 | George P. Lilly (VEN) +
+                                      Domenic DiNatale (PAR) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Released  | 2021-03-02/2021-03-18 | Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN)
+|==============================================================================
+
+eval::[Section.setlevel(1)]
+
+-------------------------------------------------------------------------------
+$END TXT
+-------------------------------------------------------------------------------

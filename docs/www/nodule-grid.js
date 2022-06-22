@@ -13,9 +13,6 @@
  * @param {string|function} [options.availableNodules="10"] - number of nodules externally rendered in the grid. Depends on _nodule-grid.jinja2
  * @param {string|function|object} [options.getNoduleCount=fn()] - function used to get the number of visible nodules
  * @param {string|function|object} [options.setNoduleCount=fn(noduleCount)] - function used to set the number of visible nodules
-
-
- * @todo add github link, author, copyright, license information
  * @class noduleGrid
  * @memberof jQuery
  */
@@ -43,15 +40,15 @@
                 });
 
                 const currentIsItNewValue = $("#cect" + noduleId + "ch").val();
-                // console.log("setupNoduleEnabledState(noduleIndex=" + noduleId + "): currentIsItNewValue=" + currentIsItNewValue);
+                console.debug("setupNoduleEnabledState(noduleIndex=%s): currentIsItNewValue=%s", noduleId, currentIsItNewValue);
                 if (currentIsItNewValue !== '-') {
                     toggleFields(noduleId);
                 }
             }
 
             function toggleFields(noduleId) {
-                // const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
-                // console.log(logPrefix + 'entered');
+                const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
+                console.debug(logPrefix + 'entered');
 
                 // $fields is an array of fields related to this nodule with the exception of "is it new"
                 // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -63,13 +60,13 @@
                     return id !== "cect" + noduleId + "ch" && (regex.test(name) || regex.test(id));
                 });
                 let isItNewValue = $("#cect" + noduleId + "ch").val();
-                // console.log(logPrefix + 'isItNewValue=' + isItNewValue);
+                console.debug(logPrefix + 'isItNewValue=%s', isItNewValue);
                 // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
                 // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
                 // resected (pr)
                 // NB: For IE support, we must use indexOf() instead of .includes(...);
                 let noduleResolved = ['pw', 'px', 'pr'].indexOf(isItNewValue) > -1;
-                // console.log(logPrefix + 'noduleResolved=' + noduleResolved);
+                console.debug(logPrefix + 'noduleResolved=%s', noduleResolved);
                 if (noduleResolved) {
                     //reduce the list to exclude the fields: status (st) and likely location (ll)
                     $fields = $fields.filter(function () {
@@ -85,7 +82,7 @@
                 }
 
                 if (isItNewValue === "-" || noduleResolved) {
-                    // console.log(logPrefix + 'disabling fields');
+                    console.log(logPrefix + 'disabling fields');
                     //empty out values
                     $fields.filter("select").val("-");
                     $fields.filter(":radio, :checkbox").prop('checked', false);
@@ -108,7 +105,7 @@
                     //finally disable the fields
                     $fields.prop('disabled', true);
                 } else { //re-enable fields
-                    // console.log(logPrefix + 'enabling fields');
+                    console.debug(logPrefix + 'enabling fields');
                     $fields
                         .prop('disabled', false)
                         .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
@@ -120,11 +117,11 @@
                 if (isItNewValue === "pw") {
                     $("#cect" + noduleId + "st").val("re");
                 } else {
-                    if ($("#cect" + noduleId + "st").val() === "re" ) {
+                    if ($("#cect" + noduleId + "st").val() === "re") {
                         $("#cect" + noduleId + "st").val("-");
                     }
                 }
-                // console.log(logPrefix + 'exiting');
+                console.debug(logPrefix + 'exiting');
             }
 
             function mean(v1, v2) {
@@ -186,17 +183,47 @@
 
             }
 
+            function calculateVolumeError(noduleId) {
+                //See https://services.accumetra.com/NoduleCalculator.html
+                const volumeValue = parseFloat($("#cect" + noduleId + "sv").val());
+                let deviation = 0;
+                if (volumeValue >= 113.0 && volumeValue < 154.0)
+                    deviation = 0.29;
+                else if (volumeValue >= 154.0 && volumeValue < 268.0)
+                    deviation = 0.23;
+                else if (volumeValue >= 268.0 && volumeValue < 382.0)
+                    deviation = 0.19;
+                else if (volumeValue >= 382.0 && volumeValue < 524.0)
+                    deviation = 0.16;
+                else if (volumeValue >= 524.0 && volumeValue < 697.0)
+                    deviation = 0.14;
+                else if (volumeValue >= 697.0 && volumeValue < 905.0)
+                    deviation = 0.12;
+                else if (volumeValue > 905.0)
+                    deviation = 0.11;
+                //and the error percent = 1.96 x CV1 x V1
+                return Math.round(1.96 * volumeValue * deviation);
+            }
+
             function markNoduleVolumeManuallyEntered(noduleId, isManual) {
                 // console.log("markNoduleVolumeManuallyEntered() noduleId=" + noduleId + ", isManual=" + isManual)
+                const $messageContainer = $("#cect" + noduleId + "svovrrde-message").removeClass("invisible");
                 if (isManual) {
                     $("#cect" + noduleId + "sv").addClass("volumeOverride");
                     $("#cect" + noduleId + "svovrrde").val("true");
-                    $("#cect" + noduleId + "svovrrde-warn").removeClass("invisible");
+                    $messageContainer.find(".text-warning").text("Manually entered")
+                    $messageContainer.removeClass("invisible");
                 } else {
                     $("#cect" + noduleId + "sv").removeClass("volumeOverride");
-                    // set the manually overriden hidden field to false
+                    // set the manually override hidden field to false
                     $("#cect" + noduleId + "svovrrde").val("false");
-                    $("#cect" + noduleId + "svovrrde-warn").addClass("invisible");
+                    const errorPercent = calculateVolumeError(noduleId);
+                    if (!isNaN(errorPercent) && errorPercent > 0) {
+                        $messageContainer.find(".text-warning").html("+/- " + errorPercent + "mm<sup>3</sup> (QIBA SLN Profile)")
+                        $messageContainer.removeClass("invisible");
+                    } else {
+                        $messageContainer.addClass("invisible");
+                    }
                 }
             }
 
@@ -292,8 +319,7 @@
                     'ssl', 'ssw', 'ssd', 'ssd-val', 'se', 'ca', 'in', 'sp', 'pld', 'ac', 'co', 'pd'];
                 const selectorMap = []; //map of elements (i.e. arr['elementA'] = 'elementB' ) that needs to swap values.
                 //let x of suffixes won't wor in IE11
-                for (let i = 0; i < suffixes.length; ++i) {
-                    const suffix = suffixes[i];
+                for (const suffix of suffixes) {
                     selectorMap[prefix1 + suffix] = prefix2 + suffix;
                 }
 
@@ -377,6 +403,265 @@
                 $("#add-first-nodule").toggle(count === 0);
             }
 
+            function setUpImportDataOnChange() {
+                $("#nodule-table").find("[" + AI.IMPORT_ORIGINAL_VALUE_ATTR + "]").on('change', function () {
+                    let importValue = "";
+                    if ($(this).hasClass(AI.IMPORT_FIELD_CLASS)) {
+                        if ($(this).prop('type') === "checkbox") {
+                            if ($(this).attr(AI.IMPORT_VALUE_ATTR) === "false") {
+                                importValue = "unchecked";
+                            } else {
+                                importValue = "checked";
+                            }
+                        } else {
+                            if ($(this).prop('type') === "select-one") {
+                                const fieldSelectorWithVal = "#" + $(this).attr("name") + " option[value=\"" + $(this).attr(AI.IMPORT_VALUE_ATTR) + "\"]";
+                                importValue = $(fieldSelectorWithVal).text().trim();
+                            } else {
+                                importValue = $(this).attr(AI.IMPORT_VALUE_ATTR);
+                            }
+                        }
+                        AI.removeImportIcons();
+                        AI.createImportElement("#" + $(this).attr("name"), importValue).insertAfter($(this));
+                    }
+                });
+            }
+
+            function _revertData() {
+                $("#nodule-table").find("[" + AI.IMPORT_ORIGINAL_VALUE_ATTR + "]").each(function () {
+                    if ($(this).hasClass(AI.IMPORT_FIELD_CLASS)) {
+                        if ($(this).prop('type') === "checkbox") {
+                            if ($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR) === "false") {
+                                $(this).prop("checked", false);
+                            } else {
+                                $(this).prop("checked", true);
+                            }
+                        } else {
+                            $(this).val($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR));
+                        }
+                        $(this).removeAttr(AI.IMPORT_ORIGINAL_VALUE_ATTR);
+                        $(this).removeAttr(AI.IMPORT_VALUE_ATTR);
+                        $(this).removeClass(AI.IMPORT_FIELD_CLASS);
+                    }
+                });
+                $("#nodule-table").find("." + AI.IMPORT_FIELD_CLASS).each(function () {
+                    $(this).removeClass(AI.IMPORT_FIELD_CLASS);
+                });
+                $("#nodule-table").find("." + AI.IMPORT_DATA_PARENT_CLASS).each(function () {
+                    $(this).removeClass(AI.IMPORT_DATA_PARENT_CLASS);
+                });
+            }
+
+            function _importData(nodules, seriesNumber) {
+                // if current number of nodules shown is less than the number nodules provided, increase the number visible
+                if (settings.getNoduleCount() < nodules.length) {
+                    let noduleCount = nodules.length;
+                    _displayNodules(noduleCount);
+                    settings.setNoduleCount(noduleCount);
+                }
+
+                function applyTextValue(fieldNameSelector, value) {
+                    const $field = $(fieldNameSelector);
+                    if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                        $field.addClass(AI.IMPORT_FIELD_CLASS);
+                        const originalValue = $field.val();
+                        $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, originalValue);
+                        $field.attr(AI.IMPORT_VALUE_ATTR, value);
+                        $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS); //NB: used to fix wrapping of revert element
+                        AI.createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
+                    }
+                    $field.val(value);
+                }
+
+                let noduleId = 1;
+                let lungRads = "";
+
+                nodules.forEach(nodule => {
+                    Object.entries(nodule).forEach(([key, value]) => {
+                        // Need to work: “Finding”: “Pulmonary nodule”,
+
+                        // “Finding site” maps to the "Most likely location" field (cect1ll) of the form.
+                        if (key === "Finding site") {
+                            const fieldSelector = "#cect" + noduleId + "ll";
+                            const $field = $(fieldSelector);
+                            if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $field.addClass(AI.IMPORT_FIELD_CLASS);
+                                $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                                const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
+                                const originalValue = $(fieldSelectorWithVal).text().trim();
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                                $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS);
+                            }
+                            if (value.indexOf("Upper lobe of right lung") !== -1) {
+                                $field.val("rul");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rul");
+                            } else if (value.indexOf("Upper lobe of left lung") !== -1) {
+                                $field.val("lul");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "lul");
+                            } else if (value.indexOf("Lower lobe of right lung") !== -1) {
+                                $field.val("rll");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rll");
+                            } else if (value.indexOf("Lower lobe of left lung") !== -1) {
+                                $field.val("lll");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "lll");
+                            } else if (value.indexOf("Middle lobe of lung") !== -1) {
+                                $field.val("rml");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "rml");
+                            }
+                        }
+
+                        // Nodule seen in series #.
+                        if (!isNaN(parseFloat(seriesNumber))) {
+                            const fieldSelectorLow = "#cect" + noduleId + "sn";
+                            applyTextValue(fieldSelectorLow, seriesNumber);
+                        }
+
+                        // “Attenuation Characteristic” maps to the "Nodule consistency" field (cect1nt) of the form.
+                        if (key === "Attenuation Characteristic") {
+                            const fieldSelector = "#cect" + noduleId + "nt";
+                            const $field = $(fieldSelector);
+                            if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $field.addClass(AI.IMPORT_FIELD_CLASS);
+                                $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                                const fieldSelectorWithVal = fieldSelector + " option[value=\"" + $field.val() + "\"]";
+                                const originalValue = $(fieldSelectorWithVal).text().trim();
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                            }
+                            if (value.indexOf("PartSolid") !== -1) {
+                                $field.val("m");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "m");
+                            } else if (value.indexOf("NonSolid") !== -1) {
+                                $field.val("g");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "g");
+                            } else if (value.indexOf("Solid") !== -1) {
+                                $field.val("s");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "s");
+                            } else if (value.indexOf("Unknown") !== -1) {
+                                $field.val("o");
+                                $field.attr(AI.IMPORT_VALUE_ATTR, "o");
+                            }
+                        }
+
+                        // “Radiographic Lesion Margin” maps to the "Smooth edges" and "Spiculated" fields (cect1se and cect1sp) of the form.
+                        if (key === "Radiographic Lesion Margin") {
+                            const fieldSelectorSe = "#cect" + noduleId + "se";
+                            const $fieldSe = $(fieldSelectorSe);
+                            const fieldSelectorSp = "#cect" + noduleId + "sp";
+                            const $fieldSp = $(fieldSelectorSp);
+                            if (!$fieldSe.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $fieldSe.addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSe.parent().addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSe.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $fieldSe.prop("checked"));
+                                const originalValue = $fieldSe.prop("checked") ? "checked" : "unchecked";
+                                AI.createRevertElement(fieldSelectorSe, originalValue).insertAfter(fieldSelectorSe);
+                            }
+                            if (!$fieldSp.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                                $fieldSp.addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSp.parent().addClass(AI.IMPORT_FIELD_CLASS);
+                                $fieldSp.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $fieldSp.prop("checked"));
+                                const originalValue = $fieldSp.prop("checked") ? "checked" : "unchecked";
+                                AI.createRevertElement(fieldSelectorSp, originalValue).insertAfter(fieldSelectorSp);
+                            }
+                            if (value === "Lesion with circumscribed margin") { // smooth edges
+                                $fieldSe.prop("checked", true);
+                                $fieldSp.prop("checked", false);
+                                $fieldSe.attr(AI.IMPORT_VALUE_ATTR, true);
+                                $fieldSp.attr(AI.IMPORT_VALUE_ATTR, false);
+                            }
+                            if (value === "Lesion with spiculated margin") { // spiculated
+                                $fieldSp.prop("checked", true);
+                                $fieldSe.prop("checked", false);
+                                $fieldSp.attr(AI.IMPORT_VALUE_ATTR, true);
+                                $fieldSe.attr(AI.IMPORT_VALUE_ATTR, false);
+                            }
+                        }
+
+                        // “Maximum 2D diameter” maps to the "Length (mm)" field (cect1sl) of the form.
+                        if (key === "Maximum 2D diameter") {
+                            const fieldSelector = "#cect" + noduleId + "sl";
+                            applyTextValue(fieldSelector, value);
+                        }
+
+                        // “Maximum perpendicular 2D diameter” maps to the "Maximum width (mm)" field (cect1sw) of the form.
+                        if (key === "Maximum perpendicular 2D diameter") {
+                            const fieldSelector = "#cect" + noduleId + "sw";
+                            applyTextValue(fieldSelector, value);
+                        }
+
+                        // “Volume” maps to the "Volume (mm3)" field (cect1sv) of the form.
+                        if (key === "Volume") {
+                            const fieldSelector = "#cect" + noduleId + "sv";
+                            applyTextValue(fieldSelector, value);
+                        }
+
+                        if (key === "slice number of lesion epicenter") {
+                            const fieldSelectorLow = "#cect" + noduleId + "inl";
+                            applyTextValue(fieldSelectorLow, value);
+                            const fieldSelectorHigh = "#cect" + noduleId + "inh";
+                            applyTextValue(fieldSelectorHigh, value);
+                        }
+
+                        if (key === "Lung-RADS assessment") {
+                            let thisLungRads = "0";
+                            switch (value) {
+                                case "Lung-rads 1":
+                                    thisLungRads = "1";
+                                    break;
+                                case "Lung-rads 2":
+                                    thisLungRads = "2";
+                                    break;
+                                case "Lung-rads 3":
+                                    thisLungRads = "3";
+                                    break;
+                                case "Lung-rads 4a":
+                                    thisLungRads = "4A";
+                                    break;
+                                case "Lung-rads 4b":
+                                    thisLungRads = "4B";
+                                    break;
+                                case "Lung-rads 4x":
+                                    thisLungRads = "4X";
+                                    break;
+                            }
+                            lungRads = thisLungRads > lungRads ? thisLungRads : lungRads; //Update if more severe
+                        }
+
+                        // Image processing
+                        if (key === "Nodule") {
+                            const mimeType = value["mimeType"];
+                            const content = value["content"];
+                            const fileName = value["fileName"]
+                            if (mimeType && content) {
+                                const $img = $("<img width=\"175\" " +
+                                    "alt=\"" + fileName + "\" " +
+                                    "title=\"" + fileName + "\" " +
+                                    "class=\"ai\" " +
+                                    "src=\"data:" + mimeType + ";base64," + content + "\"/>");
+                                const $th = $("th[data-nodule-id=" + noduleId + "]");
+                                const $imgContainer = $th.find(".nodule-image-container")
+                                $th.find("img.ai").remove(); //remove previously imported image icons.
+                                $imgContainer.append($img);
+                            }
+                        }
+                    });
+
+                    noduleId++;
+                });
+                if (lungRads > "") {
+                    const $field = $("[name=celrad][value=" + lungRads + "]");
+                    const $wrapper = $field.parents(".form-group");
+                    $wrapper.addClass(AI.IMPORT_FIELD_CLASS);
+                    //TODO handle revert.
+                    // const originalValue = $("[name=celrad]:checked").val()
+                    // $wrapper.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, originalValue);
+                    // $wrapper.attr(AI.IMPORT_VALUE_ATTR, value);
+                    // $field.parent().addClass(AI.IMPORT_DATA_PARENT_CLASS); //NB: used to fix wrapping of revert element
+                    // createRevertElement(fieldNameSelector, originalValue).insertAfter(fieldNameSelector);
+                    $field.prop("checked", true);
+                }
+                setUpImportDataOnChange();
+            }
+
             function _addNodule() {
                 let noduleCount = settings.getNoduleCount();
 
@@ -418,9 +703,14 @@
                 }
 
                 _displayNodules(settings.getNoduleCount());
+
+
                 return {
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
+                    importData: _importData,
+                    // importDicomHeader: _importDicomHeader,
+                    revertData: _revertData,
                     removeNodule: _removeNodule,
                     sortData: _sortData
                 };
@@ -430,4 +720,3 @@
         }
     });
 }(jQuery));
-

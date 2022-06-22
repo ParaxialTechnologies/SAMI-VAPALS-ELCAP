@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.15" name="version"/>
+  <meta content="2022.02.14" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -64,17 +64,19 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.11.15">
+  <script src="jquery-conditonally-enable.js?v=2022.02.14">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.11.15">
+  <script src="jquery-conditonally-display.js?v=2022.02.14">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.11.15">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2022.02.14">
   </script>
-  <script src="vapals.js?v=2021.11.15">
+  <script src="vapals.js?v=2022.02.14">
   </script>
-  <script src="init.js?v=2021.11.15">
+  <script src="init.js?v=2022.02.14">
   </script>
-  <script src="nodule-grid.js?v=2021.11.15">
+  <script src="nodule-grid.js?v=2022.02.14">
+  </script>
+  <script src="ai.js?v=2022.02.14">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -93,8 +95,8 @@
       </span>
      </button>
      <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent_50x50.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
+      <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
+      <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -308,17 +310,28 @@
         </label>
         <label class="radio-inline">
          <input id="cetex" name="cetex" required="required" type="radio" value="a"/>
-         Annual
-                                repeat
+         Annual repeat
         </label>
         <label class="radio-inline">
          <input id="cetex" name="cetex" required="required" type="radio" value="d"/>
          Follow-up (not annual repeat)
         </label>
        </div>
+       <div>
+        <button class="btn btn-default import-data-button" style="display: none;" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Import AI+ Data
+        </button>
+        <button class="btn btn-default revert-data-button" style="display: none;" type="button">
+         <span aria-hidden="true" class="fa">
+         </span>
+         Revert AI+ Data
+        </button>
+       </div>
        <div class="alert alert-warning">
-        Only select Baseline if there is no prior CT or there is a prior CT scan more
-                            than 3 years ago
+        Only select Baseline if there is no prior CT or there is a prior CT scan more than 3 years
+                            ago
        </div>
       </div>
      </div>
@@ -415,8 +428,7 @@
      <div class="row">
       <div class="col-sm-4 form-group">
        <label class="control-label required" for="sidoe">
-        Baseline
-                            CT
+        Baseline CT
        </label>
        <div class="input-group datepicker">
         <input aria-describedby="sidoe-addon" class="form-control" data-restriction="past" id="sidoe" name="sidoe" required="required"/>
@@ -531,51 +543,71 @@
             Nodule 1
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="1" title="Remove nodule 1">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="2" style="display:none;">
             Nodule 2
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="2" title="Remove nodule 2">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="3" style="display:none;">
             Nodule 3
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="3" title="Remove nodule 3">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="4" style="display:none;">
             Nodule 4
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="4" title="Remove nodule 4">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="5" style="display:none;">
             Nodule 5
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="5" title="Remove nodule 5">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="6" style="display:none;">
             Nodule 6
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="6" title="Remove nodule 6">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="7" style="display:none;">
             Nodule 7
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="7" title="Remove nodule 7">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="8" style="display:none;">
             Nodule 8
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="8" title="Remove nodule 8">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="9" style="display:none;">
             Nodule 9
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="9" title="Remove nodule 9">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="10" style="display:none;">
             Nodule 10
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="10" title="Remove nodule 10">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
           </tr>
          </thead>
@@ -1940,7 +1972,7 @@
           <tr>
            <td style="white-space: nowrap;">
             <label class="control-label required">
-             Nodule seen in series
+             Nodule seen in series #
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
             </i>
@@ -1948,7 +1980,7 @@
            <td class="form-inline" data-nodule-id="1" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect1sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text"/>
             </div>
@@ -1956,7 +1988,7 @@
            <td class="form-inline" data-nodule-id="2" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect2sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect2sn" name="cect2sn" required="required" size="3" tabindex="205" type="text"/>
             </div>
@@ -1964,7 +1996,7 @@
            <td class="form-inline" data-nodule-id="3" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect3sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect3sn" name="cect3sn" required="required" size="3" tabindex="305" type="text"/>
             </div>
@@ -1972,7 +2004,7 @@
            <td class="form-inline" data-nodule-id="4" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect4sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect4sn" name="cect4sn" required="required" size="3" tabindex="405" type="text"/>
             </div>
@@ -1980,7 +2012,7 @@
            <td class="form-inline" data-nodule-id="5" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect5sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect5sn" name="cect5sn" required="required" size="3" tabindex="505" type="text"/>
             </div>
@@ -1988,7 +2020,7 @@
            <td class="form-inline" data-nodule-id="6" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect6sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect6sn" name="cect6sn" required="required" size="3" tabindex="605" type="text"/>
             </div>
@@ -1996,7 +2028,7 @@
            <td class="form-inline" data-nodule-id="7" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect7sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect7sn" name="cect7sn" required="required" size="3" tabindex="705" type="text"/>
             </div>
@@ -2004,7 +2036,7 @@
            <td class="form-inline" data-nodule-id="8" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect8sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect8sn" name="cect8sn" required="required" size="3" tabindex="805" type="text"/>
             </div>
@@ -2012,7 +2044,7 @@
            <td class="form-inline" data-nodule-id="9" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect9sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect9sn" name="cect9sn" required="required" size="3" tabindex="905" type="text"/>
             </div>
@@ -2020,7 +2052,7 @@
            <td class="form-inline" data-nodule-id="10" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect10sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect10sn" name="cect10sn" required="required" size="3" tabindex="1005" type="text"/>
             </div>
@@ -3405,7 +3437,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect1svovrrde-warn">
+            <div class="invisible" id="cect1svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3428,7 +3460,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect2svovrrde-warn">
+            <div class="invisible" id="cect2svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3451,7 +3483,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect3svovrrde-warn">
+            <div class="invisible" id="cect3svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3474,7 +3506,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect4svovrrde-warn">
+            <div class="invisible" id="cect4svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3497,7 +3529,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect5svovrrde-warn">
+            <div class="invisible" id="cect5svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3520,7 +3552,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect6svovrrde-warn">
+            <div class="invisible" id="cect6svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3543,7 +3575,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect7svovrrde-warn">
+            <div class="invisible" id="cect7svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3566,7 +3598,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect8svovrrde-warn">
+            <div class="invisible" id="cect8svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3589,7 +3621,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect9svovrrde-warn">
+            <div class="invisible" id="cect9svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3612,7 +3644,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect10svovrrde-warn">
+            <div class="invisible" id="cect10svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -5426,7 +5458,9 @@
      <input context="server" name="cennod" type="hidden" value="0"/>
      <input context="server" name="ceanod" type="hidden" value="n"/>
      <script>
-      function initNoduleGrid(fv) {
+      let j = {};
+
+        function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -5440,6 +5474,7 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
+
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
@@ -8865,6 +8900,37 @@
     </div>
    </form>
   </div>
+  <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title" id="dataImportModalLabel">
+       Import Data
+      </h4>
+     </div>
+     <div class="modal-body">
+      Select which data set to import.
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
+       Import DICOM Header
+                    Information
+      </button>
+      <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
+       Import AI Findings
+      </button>
+      <button class="btn btn-default" data-dismiss="modal" type="button">
+       Cancel
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
   <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
    <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -8917,7 +8983,8 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
-    const sysConfig = []
+    const timeoutMinutes = 60;
+    const sysConfig = [];
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
@@ -8941,7 +9008,7 @@
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
-            retrieveParams(siteId)
+            retrieveParams(siteId);
         } else {
             substituteParams(params);
         }
@@ -8969,7 +9036,7 @@
 
             $("[data-params-attr]").each(function () {
                 const $this = $(this);
-                const jsonText = $this.attr("data-params-attr")
+                const jsonText = $this.attr("data-params-attr");
                 const attrObject = JSON.parse(jsonText);
                 Object.keys(attrObject).forEach(function (attrName) {
                     const key = attrObject[attrName];
@@ -8981,17 +9048,30 @@
                     }
                 });
             });
+
+            //attempt to change logos
+            // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
+                "img/logo_transparent_50x50.png";
+            if (iconSrc) {
+                $("img.logo-icon").attr("src", iconSrc);
+            }
+
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
+                "img/logo_name_50x215.png";
+            if (iconText) {
+                $("img.logo-text").attr("src", iconText);
+            }
         }
     }
 
-    //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) {
         paramSubstitution(siteId);
 
         //Load system configuration with defaults favoring a VA site
         sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
-        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
-        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false)
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true);
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false);
 
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
@@ -9003,6 +9083,7 @@
         } else {
             $(".va-only").remove();
         }
+
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");
@@ -9019,17 +9100,16 @@
             .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
             .show();
         if (displayTimeMs > 0) {
-            $msg.delay(displayTimeMs)
-                .slideUp(200);
+            $msg.delay(displayTimeMs).slideUp(200);
         }
     }
 
     if (hasErrorMessage) {
-        displayStaticMessage(errorMessage, "alert-danger", 0)
+        displayStaticMessage(errorMessage, "alert-danger", 0);
     } else if (hasWarnMessage) {
-        displayStaticMessage(warnMessage, "alert-warning", 0)
+        displayStaticMessage(warnMessage, "alert-warning", 0);
     } else if (hasInfoMessage) {
-        displayStaticMessage(infoMessage, "alert-success", 3000)
+        displayStaticMessage(infoMessage, "alert-success", 3000);
     }
 
     $(function () {
@@ -9076,11 +9156,14 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
-        $(document).ready(function () {
-            $('table.datatables').DataTable();
-        });
+        $('table.datatables').DataTable();
 
-    })
+        if (!sysConfig.VETERAN_AFFAIRS_SITE) {
+            setTimeout(function () {
+                $("#logout-link").trigger("click");
+            }, timeoutMinutes * 1000 * 60);
+        }
+    });
   </script>
   <!--suppress Annotator -->
   <script>
@@ -9206,8 +9289,9 @@
             return fv;
         }
 
-        $(function () {
+        let $noduleGrid; //global accessor
 
+        $(function () {
             const fv = createFormValidator();
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
@@ -9224,13 +9308,25 @@
                 $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
+            let hasImportData = false;
             //type of exam
             $("[name=cetex]").on("change", function () {
-                const $sidoe = $("#sidoe");
-                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
+                let isBaseline = $("[name=cetex]:checked").val() === "b";
+                if (isBaseline) { // type of exam (tex) is baseline
+                    const $sidoe = $("#sidoe");
                     if (!$sidoe.val()) {
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
+                }
+                const showImport = isBaseline && hasImportData === true;
+                console.debug("cetex:change(): isBaseline=%s, hasImportData=%s, showImport=%s", isBaseline,
+                    hasImportData, showImport);
+                if (showImport === true) {
+                    $(".import-data-button").slideDown();
+                    $(".revert-data-button").slideDown();
+                } else {
+                    $(".import-data-button").hide();
+                    $(".revert-data-button").hide();
                 }
             });
 
@@ -9244,7 +9340,124 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             
-            const $noduleGrid = initNoduleGrid(fv);
+            $noduleGrid = initNoduleGrid(fv);
+
+            AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
+                hasImportData = true;
+
+                //trigger change event on type of exam to display import buttons now that data is set.
+                $("[name=cetex]").trigger('change');
+
+                // with data now available hookup click handlers of buttons to import data
+                $(".import-data-button").on('click', function () {
+                    AI.displayModal(function () {
+                        importDicomHeader(structuredReport);
+                    }, function () {
+                        importAllData(structuredReport)
+                    })
+                });
+            })
+
+            function importAllData(structuredReport) {
+                importDicomHeader(structuredReport);
+
+                const study = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY];
+                const seriesNumber = study["Series Number"]
+                const nodules = structuredReport[AI.SR_NODULES_KEY]
+                $noduleGrid.importData(nodules, seriesNumber);
+            }
+
+            function importDicomHeader(structuredReport) {
+                console.debug("importDicomHeader(): structuredReport=%o", structuredReport);
+                const patientData = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY]
+                console.debug("importDicomHeader(): patientData=%o", patientData)
+                Object.entries(patientData).forEach(([key, value]) => {
+                    if (key === "Study Date") {
+                        const fieldSelector = "#cedos";
+                        const $field = $(fieldSelector);
+
+                        //convert value to VAPALS format
+                        const studyDateMoment = moment(value);
+                        if (studyDateMoment.isValid()) {
+                            value = studyDateMoment.format(VAPALS.DATE_FORMAT);
+                        }
+
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
+
+                            AI.createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
+                        }
+                    }
+                    if (key === "Slice Thickness") {
+                        const fieldSelector = "#cectrst";
+                        const $field = $(fieldSelector);
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            if (!isNaN(value)) { //value is a valid number either as a string or Number
+                                if (value === 1) { //handle JSON conversion of 1.0 to 1 (back to 1.0)
+                                    value = '1.0';
+                                }
+                                const strValue = value.toString();
+                                $field.val(strValue);
+                                $field.attr(AI.IMPORT_VALUE_ATTR, strValue);
+                                if (value === "o") {
+                                    $("#cectrsto-container").show();
+                                } else {
+                                    $("#cectrsto-container").hide();
+                                }
+                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                            }
+
+                        }
+                    }
+                    if (key === "Specify") {
+                        const fieldSelector = "#cectrsto";
+                        const $field = $(fieldSelector);
+                        $("#cectrsto-container").show();
+                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
+                            $field.val(value);
+                        } else {
+                            $field.addClass(AI.IMPORT_FIELD_CLASS);
+                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
+                            const originalValue = $field.val();
+                            $field.val(value);
+                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
+                            AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
+                        }
+                    }
+                });
+            }
+
+            $(".revert-data-button").on('click', function () {
+                // for fields not in "#nodule-table"
+                $("." + AI.IMPORT_FIELD_CLASS).each(function () {
+                    $(this).val($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR));
+                    if ($(this).attr("id") === "cectrst") {
+                        if ($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR) == "o") {
+                            $("#cectrsto-container").show();
+                        } else {
+                            $("#cectrsto-container").hide();
+                        }
+                    }
+                    $(this).removeAttr(AI.IMPORT_ORIGINAL_VALUE_ATTR);
+                    $(this).removeAttr(AI.IMPORT_VALUE_ATTR);
+                    $(this).removeClass(AI.IMPORT_FIELD_CLASS);
+                });
+
+                $noduleGrid.revertData();
+
+                AI.removeImportIcons();
+            });
             initAbnormalities(fv);
             initEmphysema(fv);
             initFollowup(fv);
@@ -9267,5 +9480,6 @@
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
   </script>
+  )
  </body>
 </html>

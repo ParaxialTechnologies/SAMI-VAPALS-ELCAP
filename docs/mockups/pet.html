@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.11.15" name="version"/>
+  <meta content="2022.02.14" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: PET Evaluation Form
@@ -53,17 +53,19 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.11.15">
+  <script src="../www/jquery-conditonally-enable.js?v=2022.02.14">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.11.15">
+  <script src="../www/jquery-conditonally-display.js?v=2022.02.14">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.11.15">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2022.02.14">
   </script>
-  <script src="../www/vapals.js?v=2021.11.15">
+  <script src="../www/vapals.js?v=2022.02.14">
   </script>
-  <script src="../www/init.js?v=2021.11.15">
+  <script src="../www/init.js?v=2022.02.14">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.11.15">
+  <script src="../www/nodule-grid.js?v=2022.02.14">
+  </script>
+  <script src="../www/ai.js?v=2022.02.14">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -82,8 +84,8 @@
       </span>
      </button>
      <a class="text-nowrap navigation" data-method="get" data-samiroute="home" href="home.html" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="../www/img/logo_transparent_50x50.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" src="../www/img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
+      <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
+      <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -394,51 +396,71 @@
             Nodule 1
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="1" title="Remove nodule 1">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="2" style="display:none;">
             Nodule 2
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="2" title="Remove nodule 2">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="3" style="display:none;">
             Nodule 3
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="3" title="Remove nodule 3">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="4" style="display:none;">
             Nodule 4
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="4" title="Remove nodule 4">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="5" style="display:none;">
             Nodule 5
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="5" title="Remove nodule 5">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="6" style="display:none;">
             Nodule 6
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="6" title="Remove nodule 6">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="7" style="display:none;">
             Nodule 7
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="7" title="Remove nodule 7">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="8" style="display:none;">
             Nodule 8
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="8" title="Remove nodule 8">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="9" style="display:none;">
             Nodule 9
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="9" title="Remove nodule 9">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
            <th data-nodule-id="10" style="display:none;">
             Nodule 10
             <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="10" title="Remove nodule 10">
             </i>
+            <div class="nodule-image-container">
+            </div>
            </th>
           </tr>
          </thead>
@@ -1912,7 +1934,7 @@
           <tr>
            <td style="white-space: nowrap;">
             <label class="control-label required">
-             Nodule seen in series
+             Nodule seen in series #
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
             </i>
@@ -1920,7 +1942,7 @@
            <td class="form-inline" data-nodule-id="1" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect1sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text" value="1"/>
             </div>
@@ -1928,7 +1950,7 @@
            <td class="form-inline" data-nodule-id="2" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect2sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect2sn" name="cect2sn" required="required" size="3" tabindex="205" type="text"/>
             </div>
@@ -1936,7 +1958,7 @@
            <td class="form-inline" data-nodule-id="3" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect3sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect3sn" name="cect3sn" required="required" size="3" tabindex="305" type="text"/>
             </div>
@@ -1944,7 +1966,7 @@
            <td class="form-inline" data-nodule-id="4" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect4sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect4sn" name="cect4sn" required="required" size="3" tabindex="405" type="text"/>
             </div>
@@ -1952,7 +1974,7 @@
            <td class="form-inline" data-nodule-id="5" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect5sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect5sn" name="cect5sn" required="required" size="3" tabindex="505" type="text"/>
             </div>
@@ -1960,7 +1982,7 @@
            <td class="form-inline" data-nodule-id="6" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect6sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect6sn" name="cect6sn" required="required" size="3" tabindex="605" type="text"/>
             </div>
@@ -1968,7 +1990,7 @@
            <td class="form-inline" data-nodule-id="7" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect7sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect7sn" name="cect7sn" required="required" size="3" tabindex="705" type="text"/>
             </div>
@@ -1976,7 +1998,7 @@
            <td class="form-inline" data-nodule-id="8" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect8sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect8sn" name="cect8sn" required="required" size="3" tabindex="805" type="text"/>
             </div>
@@ -1984,7 +2006,7 @@
            <td class="form-inline" data-nodule-id="9" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect9sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect9sn" name="cect9sn" required="required" size="3" tabindex="905" type="text"/>
             </div>
@@ -1992,7 +2014,7 @@
            <td class="form-inline" data-nodule-id="10" style="display:none;">
             <div class="form-group form-group-sm">
              <label class="aria-hidden" for="cect10sn">
-              Nodule seen in series
+              Nodule seen in series #
              </label>
              <input class="form-control" id="cect10sn" name="cect10sn" required="required" size="3" tabindex="1005" type="text"/>
             </div>
@@ -3377,7 +3399,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect1svovrrde-warn">
+            <div class="invisible" id="cect1svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3400,7 +3422,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect2svovrrde-warn">
+            <div class="invisible" id="cect2svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3423,7 +3445,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect3svovrrde-warn">
+            <div class="invisible" id="cect3svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3446,7 +3468,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect4svovrrde-warn">
+            <div class="invisible" id="cect4svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3469,7 +3491,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect5svovrrde-warn">
+            <div class="invisible" id="cect5svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3492,7 +3514,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect6svovrrde-warn">
+            <div class="invisible" id="cect6svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3515,7 +3537,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect7svovrrde-warn">
+            <div class="invisible" id="cect7svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3538,7 +3560,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect8svovrrde-warn">
+            <div class="invisible" id="cect8svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3561,7 +3583,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect9svovrrde-warn">
+            <div class="invisible" id="cect9svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -3584,7 +3606,7 @@
               </button>
              </div>
             </div>
-            <div class="invisible" id="cect10svovrrde-warn">
+            <div class="invisible" id="cect10svovrrde-message">
              <div class="form-group form-group-sm">
               <small class="text-warning">
                Manually entered
@@ -5398,7 +5420,9 @@
      <input context="server" name="cennod" type="hidden" value="1"/>
      <input context="server" name="ceanod" type="hidden" value="y"/>
      <script>
-      function initNoduleGrid(fv) {
+      let j = {};
+
+        function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
             const $noduleGrid = $.noduleGrid({
                 availableNodules: noduleArrayLength,
@@ -5412,6 +5436,7 @@
             });
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
+
             $(".remove-nodule").on('click', $noduleGrid.removeNodule);
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
@@ -6367,7 +6392,8 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
-    const sysConfig = []
+    const timeoutMinutes = 60;
+    const sysConfig = [];
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
@@ -6391,7 +6417,7 @@
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
-            retrieveParams(siteId)
+            retrieveParams(siteId);
         } else {
             substituteParams(params);
         }
@@ -6419,7 +6445,7 @@
 
             $("[data-params-attr]").each(function () {
                 const $this = $(this);
-                const jsonText = $this.attr("data-params-attr")
+                const jsonText = $this.attr("data-params-attr");
                 const attrObject = JSON.parse(jsonText);
                 Object.keys(attrObject).forEach(function (attrName) {
                     const key = attrObject[attrName];
@@ -6431,17 +6457,30 @@
                     }
                 });
             });
+
+            //attempt to change logos
+            // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
+            const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
+                "../www/img/logo_transparent_50x50.png";
+            if (iconSrc) {
+                $("img.logo-icon").attr("src", iconSrc);
+            }
+
+            const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
+                "../www/img/logo_name_50x215.png";
+            if (iconText) {
+                $("img.logo-text").attr("src", iconText);
+            }
         }
     }
 
-    //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) {
         paramSubstitution(siteId);
 
         //Load system configuration with defaults favoring a VA site
         sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
-        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true)
-        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false)
+        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true);
+        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false);
 
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
@@ -6453,6 +6492,7 @@
         } else {
             $(".va-only").remove();
         }
+
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");
@@ -6469,17 +6509,16 @@
             .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
             .show();
         if (displayTimeMs > 0) {
-            $msg.delay(displayTimeMs)
-                .slideUp(200);
+            $msg.delay(displayTimeMs).slideUp(200);
         }
     }
 
     if (hasErrorMessage) {
-        displayStaticMessage(errorMessage, "alert-danger", 0)
+        displayStaticMessage(errorMessage, "alert-danger", 0);
     } else if (hasWarnMessage) {
-        displayStaticMessage(warnMessage, "alert-warning", 0)
+        displayStaticMessage(warnMessage, "alert-warning", 0);
     } else if (hasInfoMessage) {
-        displayStaticMessage(infoMessage, "alert-success", 3000)
+        displayStaticMessage(infoMessage, "alert-success", 3000);
     }
 
     $(function () {
@@ -6526,11 +6565,14 @@
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
-        $(document).ready(function () {
-            $('table.datatables').DataTable();
-        });
+        $('table.datatables').DataTable();
 
-    })
+        if (!sysConfig.VETERAN_AFFAIRS_SITE) {
+            setTimeout(function () {
+                $("#logout-link").trigger("click");
+            }, timeoutMinutes * 1000 * 60);
+        }
+    });
   </script>
   <script>
    function createFormValidator() {

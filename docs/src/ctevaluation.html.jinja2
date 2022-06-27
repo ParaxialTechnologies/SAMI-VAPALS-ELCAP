@@ -504,7 +504,14 @@
             {#NB: Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}
             $noduleGrid = initNoduleGrid(fv);
 
-            AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
+            let aiCallback = function (json) {
+                //find the result with the greatest study date field (most recent)
+                // TODO could prompt the user which one to use here.
+                const structuredReport = json.result.reduce(function (prev, current) {
+                    return (prev.patient_study_details["Study Date"] > current.patient_study_details["Study Date"]) ?
+                        prev : current
+                })
+
                 hasImportData = true;
 
                 //trigger change event on type of exam to display import buttons now that data is set.
@@ -518,7 +525,18 @@
                         importAllData(structuredReport)
                     })
                 });
-            })
+            };
+
+            {% if mockup %}
+                $.ajax(("../src/ai-sample.json"), {dataType: "json"})
+                    .done(function (json) {
+                        if (json.result !== undefined && json.result.length > 0) {
+                            aiCallback(json);
+                        }
+                    });
+            {%  else  %}
+                AI.queryStructuredReport(studyId, siteId, aiCallback)
+            {% endif %}
 
             function importAllData(structuredReport) {
                 importDicomHeader(structuredReport);

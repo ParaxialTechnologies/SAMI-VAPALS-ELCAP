@@ -69,6 +69,8 @@
                         </td>
                         {% for i in noduleArray %}
                             <td data-nodule-id="{{ i }}" style="display:none;">
+                                <input type="hidden" name="cect{{ i }}id" id="cect{{ i }}id"/>
+                                <input type="hidden" name="cect{{ i }}ai" id="cect{{ i }}ai"/>
                                 <div class="form-group form-group-sm">
                                     {# TODO What does newStat({{ i }}) do onchange?#}
                                     <label for="cect{{ i }}ch" class="aria-hidden">Is it new?</label>
@@ -239,6 +241,7 @@
                                         <option value="-"> -</option>
                                         <option value="un"{{ " selected" if (mockup and i==1) else "" }}>Unknown
                                         </option>
+                                        <option value="rj">Rejected</option>
                                         <option value="bc">Benign (Ca++)</option>
                                         <option value="pc">Prob benign, prob Ca++</option>
                                         <option value="re">Resolved</option>

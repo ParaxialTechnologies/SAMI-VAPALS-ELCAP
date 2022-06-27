@@ -46,6 +46,14 @@
                 }
             }
 
+            function autoGenerateInternalId(noduleId) {
+                let $idField = $("#cect" + noduleId + "id");
+                const currentId = $idField.val();
+                if (typeof currentId === "undefined" || currentId === "") {
+                    $idField.val(VAPALS.uuid())
+                }
+            }
+
             function toggleFields(noduleId) {
                 const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
                 console.debug(logPrefix + 'entered');
@@ -397,6 +405,7 @@
                 // NB: there is currently no support renumbering fields so removing from the middle is not an option
                 $(".remove-nodule").hide().filter(function () {
                     return $(this).data("nodule-id") === count;
+                    return $(this).data("nodule-id") === count;
                 }).show();
 
                 $("#nodule-table").toggle(count > 0);
@@ -477,8 +486,12 @@
                 let lungRads = "";
 
                 nodules.forEach(nodule => {
+                    console.debug("_importData(): nodule=%o", nodule)
                     Object.entries(nodule).forEach(([key, value]) => {
                         // Need to work: “Finding”: “Pulmonary nodule”,
+
+//TODO if key === nodule ID, set the AI nodule ID field (cect{}ai) value.
+//TODO determine the noduleId value based on any existing data that is on the form.
 
                         // “Finding site” maps to the "Most likely location" field (cect1ll) of the form.
                         if (key === "Finding site") {
@@ -700,6 +713,7 @@
                 for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
+                    autoGenerateInternalId(i);
                 }
 
                 _displayNodules(settings.getNoduleCount());

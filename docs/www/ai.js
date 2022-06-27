@@ -157,8 +157,7 @@ const AI = class {
         $.ajax(("/dcmquery/?studyId=" + studyId + "&siteId=" + siteId), {dataType: "json"})
             .done(function (json) {
                 if (json.result !== undefined && json.result.length > 0) {
-                    const sr = json.result[0]; //temporarily pick the first one. TODO: find one closest to study date.
-                    callback(sr)
+                    callback(json);
                 }
             });
     }

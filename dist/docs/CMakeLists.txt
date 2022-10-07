@@ -3,8 +3,8 @@ adoc_to_html(
   )
 
 copy_binaries(
-  )
+  *.html
+)
 
 do_subdir(
-  dist
   )

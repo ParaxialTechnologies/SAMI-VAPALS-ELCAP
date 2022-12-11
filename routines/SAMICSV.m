@@ -127,15 +127,21 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  ;
  N SAMIN S SAMIN=1
  N SAMIJJ s SAMIJJ=0
- N OFFSET S OFFSET=0
- I SAMIFORM="siform" d  ;
+ N OFFSET S OFFSET=1
+ d  ; start with last5 and name for all forms
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
  . S OFFSET=OFFSET+1
  . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
  . S OFFSET=OFFSET+1
+ ;
+ I SAMIFORM="siform" d  ;
+ . ;S OFFSET=OFFSET+1
+ . ;s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
+ . ;S OFFSET=OFFSET+1
  . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="ssn"
  . S OFFSET=OFFSET+1
- . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
- . S OFFSET=OFFSET+1
+ . ;s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
+ . ;S OFFSET=OFFSET+1
  . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sex"
  . S OFFSET=OFFSET+1
  . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sbdob"
@@ -156,17 +162,25 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . . s forms=forms+1
  . . n jj s jj=0
  . . s SAMIN=SAMIN+1
- . . S OFFSET=0
+ . . S OFFSET=1
+ . . n kk s kk=$o(@root@("sid",SAMII,""))
+ . . q:kk=""
+ . . ;S OFFSET=OFFSET+1
+ . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
+ . . S OFFSET=OFFSET+1
+ . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
+ . . S OFFSET=OFFSET+1
+ . . ;
  . . I SAMIFORM="siform" d  ;
- . . . n kk s kk=$o(@root@("sid",SAMII,""))
- . . . q:kk=""
- . . . S OFFSET=OFFSET+1
- . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
- . . . S OFFSET=OFFSET+1
+ . . . ;n kk s kk=$o(@root@("sid",SAMII,""))
+ . . . ;q:kk=""
+ . . . ;S OFFSET=OFFSET+1
+ . . . ;s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
+ . . . ;S OFFSET=OFFSET+1
  . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"ssn"))
  . . . S OFFSET=OFFSET+1
- . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
- . . . S OFFSET=OFFSET+1
+ . . . ;s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
+ . . . ;S OFFSET=OFFSET+1
  . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sex"))
  . . . S OFFSET=OFFSET+1
  . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sbdob"))

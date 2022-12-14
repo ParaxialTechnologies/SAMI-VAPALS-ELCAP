@@ -1,0 +1,162 @@
+:numbered:
+
+[role="h2"]
+Importing patient intake data to VAPALS-ELCAP
+
+For new VAPALS-ELCAP installations, the VAPALS-ELCAP project provides an
+link:intake.xlsx[intake spreadsheet] which is intended to collect intake data
+on patients enrolled in your lung-screening program in advance of your
+institution's rollout of the system. This document describes this process,
+which comes in two parts:
+
+[options="compact"]
+. Converting and importing the Excel data, then
+. verifying the data before form submission.
+
+For this process, we refer to a “VAPALS user,” who is the person overseeing the
+collection of intake data via the spreadsheet, and ensuring that what's in the
+VAPALS system is correct, and the “VAPALS system administrator,” who is
+responsible for importing the intake data and making it available for review by
+the VAPALS User before it actually gets submitted to the system.
+
+== Prior to the import
+
+The VAPALS system administrator may wish to familiarize themselves with the
+import process prior to importing the actual data. If so, you are strongly
+encouraged to do this on a test server.
+
+== For the VAPALS user
+
+When the VAPALS User is ready to have the spreadsheet imported, it should be
+made available to the VAPALS system administrator.
+
+== For the VAPALS system administrator
+
+{zwj}NOTE: If there are issues, please contact your VAPALS-ELCAP development
+team with as much data as possible for instruction and fixes.
+
+=== Export the data from Excel
+
+Open the spreadsheet in Excel, and export it in tab-delimited text
+format. (This will be referred to below as the “TSV file,” even if Excel wants
+to name it with a file extension of `.txt`.)
+
+(Note: If you are testing the import process on a test server, but don't have
+the import data yet, you may use the pre-exported data at
+link:intake-test-data-tab-del.txt[`intake-test-data-tab-del.txt`] to experiment
+with.)
+
+=== Copy it to the correct location
+
+The VAPALS system administrator should then copy the TSV file to the `www`
+directory at the top layer of the `osehra` directory on the VAPALS-ELCAP
+server. (In other words, it should be a file in the `/home/osehra/www`
+directory.)
+
+=== Check the environment
+
+Make sure the site is configured. If you aren't sure, check with the system
+administrator. If you are the system administrator, and you don't know, see the
+link:how-to-add-a-vapals-site.html[instructions for configuring a new site].
+
+=== Enter M
+
+Type [ttsp]##mumps -dir## at the Unix prompt to enter the M programmer's
+environment.
+
+=== Start the conversion program
+
+Type [ttsp]##DO LOAD^SAMILD2## at the M prompt to start the conversion program.
+
+=== Enter site code
+
+Enter your three-letter site code. (If you don't have one, see
+link:how-to-add-a-vapals-site.html[__How to add a VAPALS site__].)
+
+For this example, we will be using a dummy site, but you are expected to be
+using your own site or a test site.
+
+-------------------------------------------------------------------------------
+Select SAMI SITE: XXX  VISTA HEALTH CARE     XXX      6100
+-------------------------------------------------------------------------------
+
+=== Specify the correct directory
+
+Hit enter to accept the default directory (unless you had to put the TSV file
+somewhere else):
+
+-------------------------------------------------------------------------------
+File Directory: /home/osehra/www/// _
+-------------------------------------------------------------------------------
+
+=== Begin conversion
+
+After [ttsp]##Replace##, enter three periods (`...`) to accept replacing the
+whole file name, after "With" enter the file you want to use. Hit enter after
+the second "Replace" to let it know that you don't want to replace anything
+else.
+
+Example:
+
+-------------------------------------------------------------------------------
+Enter filename to load.: LCSV2_DATA_2021-06-29_REDCAP.tsv
+  Replace ... With intake-test-data-tab-del.txt  Replace 
+   intake-test-data-tab-del.txt
+-------------------------------------------------------------------------------
+
+Note: If you didn't put the TSV file in the right place, or something is
+misspelled, you'll see a error that looks something like this:
+
+-------------------------------------------------------------------------------
+%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+-------------------------------------------------------------------------------
+
+The output you _should_ see begins with something similar to this:
+
+-------------------------------------------------------------------------------
+keyrow is 3 ROW=saminame	ssn	last5	sigi	sex	sbdob ...
+-------------------------------------------------------------------------------
+
+The output could spout out for many pages and several minutes depending on how
+many lines of data you have in the TSV file. Don't worry if you see
+[ttsp]##`********` exception `**********`##---it's not a bad thing.
+
+=== Exit M
+
+Once the output stops, type `halt` at the prompt to go back out to the Unix level.
+
+The data should now be converted.
+
+== For the VAPALS user
+
+Start the VAPALS application using your web browser. (Check with your system
+administrator if you haven't been given the web address and your login
+credentials.)
+
+=== Reviewing the Intake forms before submitting changes
+
+The IT team and the medical expert team recommends that you review Intake Forms
+the first time you encounter the patient after moving the data over to
+VAPALS-ELCAP, instead of trying to do them all at once.
+
+For each patient, check these fields in particular:
+
+[options="compact"]
+[loweralpha]
+. ††Eligible based on chart review?††
+. ††Was a pre-enrollment discussion held?††
+. ††Primary address verified?††
+
+If you find a discrepancy on the patient's intake form, please check the
+spreadsheet to see if it was entered correctly there. If it was correct on the
+spreadsheet, but incorrect on the Intake Form, please let your VAPALS-ELCAP
+system administrator team know which field was incorrect, and as long as it
+isn't the name or MRN, let us know what the value was on the spreadsheet and on
+the intake form, and describe what the difference was as specifically as
+possible.
+
+If there is not a selection, please fill it in. It is most likely to be a `No`
+but could have been missed in the process of entering data in the spreadsheet.
+
+When everything looks good, hit ††*Submit*†† at the bottom of the form. You can
+choose ††Save for Later†† if you aren't ready to submit the form.

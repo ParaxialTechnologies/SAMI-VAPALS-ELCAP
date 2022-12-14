@@ -1,0 +1,2354 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block head %}
+    <style>
+        #wizard-bar.affix-top {
+            position: static;
+        }
+
+        #wizard-bar.affix {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr/>
+        {% include '_messages.jinja2' %}
+        {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
+        {% set tab_list = [("Treatment","treatment"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
+                            ("Other Abnormalities","abnormalities"), ("Follow-Up","follow-up")] -%}
+        <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
+             data-offset-bottom="70">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav navbar-nav">
+                        {% for tab_name,tab_id in tab_list -%}
+                            <li><a href="#{{ tab_id }}">{{ tab_name }}</a></li>
+                        {%- endfor %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+              class="validated" id="main-form">
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="site" value="@@SITE@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
+
+            {#BEGIN Treatement tab#}
+            <div id="treatment" style="padding-top:8px">
+                <h3>Treatment</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="rbcst8">Clinical TNM status
+                            <small>(8th edition)</small>
+                        </label>
+                        <div class="form-group form-inline">
+                            <label class="aria-hidden" for="rbcst8">T status</label>
+                            <select name="rbcst8" id="rbcst8" class="form-control">
+                                <option value="-"> -</option>
+                                <option value="0"> T0</option>
+                                <option value="is"> Tis</option>
+                                <option value="1am"> T1a mi</option>
+                                <option value="1as"> T1a SS</option>
+                                <option value="1a1"> T1a</option>
+                                <option value="1b"> T1b</option>
+                                <option value="1c"> T1c</option>
+                                <option value="2v"> T2 Visc Pl</option>
+                                <option value="2c"> T2 Centr</option>
+                                <option value="2a"> T2a</option>
+                                <option value="2b"> T2b</option>
+                                <option value="3"> T3</option>
+                                <option value="3i"> T3 Inv</option>
+                                <option value="3s"> T3 Satell</option>
+                                <option value="4"> T4</option>
+                                <option value="4i"> T4 Inv</option>
+                                <option value="4n"> T4 Ipsi Nod</option>
+                                <option value="x"> TX</option>
+                            </select>
+
+                            <label class="aria-hidden" for="rbcsn8">N status</label>
+                            <select name="rbcsn8" id="rbcsn8" class="form-control">
+                                <option value="-"> -</option>
+                                <option value="0"> N0</option>
+                                <option value="1"> N1</option>
+                                <option value="2"> N2</option>
+                                <option value="3"> N3</option>
+                                <option value="X"> NX</option>
+                            </select>
+
+                            <label class="aria-hidden" for="rbcsm8">M status</label>
+                            <select name="rbcsm8" id="rbcsm8" class="form-control">
+                                <option value="-"> -
+                                <option value="0"> M0</option>
+                                <option value="1ap"> M1a Pl Dissem</option>
+                                <option value="1ac"> M1a Contr Nod</option>
+                                <option value="1b"> M1b Single</option>
+                                <option value="1c"> M1c Multi</option>
+                                <option value="X"> MX</option>
+                            </select>
+                            {{ f.checkbox("rbcsx8", "y","Not applicable (specify)") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="rbcsx8-container">
+                        <div class="form-group">
+                            <label for="rbcsx8s">Specify</label>
+                            <input name="rbcsx8s" id="rbcsx8s" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="rbcsb">Clinical staging based on</label>
+                        <div class="form-group  form-inline">
+                            <label class="radio-inline">
+                                <input type="radio" name="rbcsb" id="rbcsb-c" value="c">&nbsp;only CT
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="rbcsb" id="rbcsb-p" value="p">&nbsp;only PET
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="rbcsb" id="rbcsb-b" value="b">&nbsp;both
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="rbcsb" id="rbcsb-o" value="o">&nbsp;other (specify)
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6" id="rbcsb-container">
+                        <div class="form-group">
+                            <label for="rbcsbos">Specify</label>
+                            <input type="text" name="rbcsbos" id="rbcsbos" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <label>Have you had a pulmonary function test?</label>
+                            <br/>
+                            {{ f.inlineRadioNY("sbahpft") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-2">
+                        <label for="sbfev1">FEV1 (L/s)</label>
+                        <input class="form-control input-sm numeric" type="text" name="sbfev1" id="sbfev1"
+                               size="4">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="sbfvc">FVC (L)</label>
+                        <input class="form-control input-sm numeric" type="text" name="sbfvc" id="sbfvc"
+                               size="4">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="sbfvc">FEV1/FVC</label>
+                        <div class="input-group">
+                            <input class="form-control input-sm whole-number" type="text" name="sbffr" id="sbffr"
+                                   size="3" maxlength="3">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" id="sbahpft-container">
+                        <div class="form-group">
+                            <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
+                            <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
+                                   size="4">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <label for="rbmd">Referring physician</label>
+                        <input type="text" name="rbmd" id="rbmd" class="form-control">
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                        <label for="rbmdp">Referring physician's phone</label>
+                        <input type="text" name="rbmdp" id="rbmdp" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                        <label for="rbmdf">Referring physician's fax</label>
+                        <input type="text" name="rbmdf" id="rbmdf" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                        <label for="rbsumd">Treating physician</label>
+                        <input type="text" name="rbsumd" id="rbsumd" class="form-control">
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                        <label for="rbsumdp">Treating physician's phone</label>
+                        <input type="text" name="rbsumdp" id="rbsumdp" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                        <label for="rbsumdf">Treating physician's fax</label>
+                        <input type="text" name="rbsumdf" id="rbsumdf" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="rbloc">Lesion site</label>
+                            <select name="rbloc" id="rbloc" class="form-control">
+                                <option value="-">-</option>
+                                <option value="lul">LUL</option>
+                                <option value="lll">LLL</option>
+                                <option value="rul">RUL</option>
+                                <option value="rml">RML</option>
+                                <option value="rll">RLL</option>
+                                <option value="e">Endobronchial</option>
+                                <option value="m">Mediastinum</option>
+                                <option value="p">Pleura</option>
+                                <option value="o">Other (specify)</option>
+                            </select>
+                            <span class="form-text text-muted">If multiple sites, select other and specify</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="rbloc-container">
+                        <div class="form-group">
+                            <label for="rblocs">Specify</label>
+                            <input name="rblocs" id="rblocs" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="rbtri">Indication for treatment</label>
+                            <select name="rbtri" id="rbtri" class="form-control">
+                                <option value="-"> -</option>
+                                <option value="f"> First Lung Cancer</option>
+                                <option value="r"> Recurrence</option>
+                                <option value="n"> New Primary Lung Cancer</option>
+                                <option value="o"> Other (specify)</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6" id="rbtri-container">
+                        <div class="form-group">
+                            <label for="rbtric">Specify/Comments</label>
+                            <input name="rbtric" id="rbtric" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="form-group col-md-3">
+                            <label for="rbto">Treatment option</label>
+                            <select id="rbto" name="rbto" class="form-control">
+                                <option value="-"> -</option>
+                                <option value="s"> Surgery</option>
+                                <option value="r"> Radiation Therapy</option>
+                                <option value="c"> Chemotherapy</option>
+                                <option value="w"> Watchful Waiting</option>
+                                <option value="o"> Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="rbsud">Treatment <span id="treatment-start-label">start </span>date</label>
+                            {{ f.datepicker("rbsud", "past") }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6" id="rbto-container">
+                        <div class="form-group">
+                            <label for="rbtos">Specify</label>
+                            <input name="rbtos" id="rbtos" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                {#Surgical Treatment#}
+                <div id="surgery" style="display: none;">
+                    <h2>Surgical Treatment Information</h2>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="form-group form-inline">
+                                <label>Was mediastinoscopy performed?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("rbmep") }}
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8" id="mediastinoscopy-alert">
+                            <div class="alert alert-warning">
+                                Add information to the <em>Lymph node status</em> grid below.<br>
+                                These should be in addition to any nodes resected during surgery, if performed.
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rbmep-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmed">Procedure date</label>
+                                        {{ f.datepicker("rbmed", "past") }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmspid">Specimen ID</label>
+                                        <input name="rbmspid" id="rbmspid" class="form-control" size="24">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rbmel">Location of procedure</label>
+                                    <input name="rbmel" id="rbmel" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rbmemd">Physician</label>
+                                    <input name="rbmemd" id="rbmemd" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmemdp">Physician's phone</label>
+                                        <input name="rbmemdp" id="rbmemdp" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmemdf">Physician's fax</label>
+                                        <input name="rbmemdf" id="rbmemdf" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Resection</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="required">Was resection performed?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrep", "rbrep-n", "n", "No", true) }}
+                                {{ f.inlineRadio("rbrep", "rbrep-y", "y", "Yes") }}
+                                {{ f.inlineRadio("rbrep", "rbrep-r", "r", "Refused") }}
+                                {{ f.inlineRadio("rbrep", "rbrep-a", "a", "Aborted due to positive mediastinoscopy or other reasons") }}
+                                {{ f.inlineRadio("rbrep", "rbrep-q", "q", "?") }}
+                            </div>
+                        </div>
+                        <div id="rbrep-container">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="rbsurd">If no or refused, give date</label>
+                                    {{ f.datepicker("rbsurd", "past", true) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="rbsurr">If no or refused, give reason</label>
+                                    <input name="rbsurr" id="rbsurr" class="form-control" size="24">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-6">
+                            <div class="form-group">
+                                <label for="rbsul">Location of procedure</label>
+                                <input name="rbsul" id="rbsul" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Type of surgery</label>
+                            <div class="form-group form-inline">
+                                {{ f.checkbox( "rbtosv", "v", "VAT") }}
+                                {{ f.checkbox( "rbtost", "t", "Thoracotomy") }}
+                                {{ f.checkbox( "rbtosr", "r", "Robotic-assisted") }}
+                                {{ f.checkbox( "rbtoso", "o", "Other") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="rbtoso-container">
+                            <div class="form-group">
+                                <label for="rbtosos">Other (specify)</label>
+                                <input name="rbtosos" id="rbtosos" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="rbexs">Extent of surgery</label>
+                                    <select name="rbexs" id="rbexs" class="form-control">
+                                        <option value="-"> -</option>
+                                        <option value="w"> Wedge resection</option>
+                                        <option value="s"> Segmentectomy</option>
+                                        <option value="l"> Lobectomy</option>
+                                        <option value="b"> Bilobectomy</option>
+                                        <option value="p"> Pneumonectomy</option>
+                                        <option value="o"> Other (specify)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-md-offset-3">
+                                <div class="form-group">
+                                    <label for="rbexss">Extent (specify)</label>
+                                    <input type="text" name="rbexss" id="rbexss" class="form-control" size="24">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Was there a conversion of VATS to open?</label>
+                            <div class="form-group form-inline">
+                                {{ f.inlineRadio("rbvto", "rbvto-n", "n", "No", true) }}
+                                {{ f.inlineRadio("rbvto", "rbvto-y", "y", "Yes", true) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrasc">Comments</label>
+                                <textarea name="rbvtoc" id="rbvtoc" class="form-control" rows="3"
+                                          cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning">
+                                <em>For all resections, please fill out the following questions on the resection
+                                    margin.</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbsrm">Distance to the resection margin (mm):</label>
+                                <input type="text" name="rbsrm" id="rbsrm" class="form-control" size="6">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Method of margin measurement:</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrmm", "rbrmm-g", "g", "Gross", true) }}
+                                {{ f.inlineRadio("rbrmm", "rbrmm-m", "m", "Micro", true) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Which margin?</label>
+                            <div class="form-group form-inline">
+                                {{ f.inlineRadio("rbwm", "rbwm-s", "s", "Staple Line", true) }}
+                                {{ f.inlineRadio("rbwm", "rbwm-b", "b", "Bronchial", true) }}
+                                {{ f.inlineRadio("rbwm", "rbwm-p", "p", "Parenchymal", true) }}
+                                {{ f.inlineRadio("rbwm", "rbwm-v", "v", "Vascular", true) }}
+                                {{ f.inlineRadio("rbwm", "rbwm-o", "o", "Other", true) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbwmc">Margin comments</label>
+                                <input name="rbwmc" id="rbwmc" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Margin measured with staples:</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrmws", "rbrmws-r", "r", "Removed", true) }}
+                                {{ f.inlineRadio("rbrmws", "rbrmws-i", "i", "Intact", true) }}
+                                {{ f.inlineRadio("rbrmws", "rbrmws-u", "u", "Unknown", true) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>If initial margin positive, was additional margin sent?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrmam", "rbrmam-n", "n", "No", true) }}
+                                {{ f.inlineRadio("rbrmam", "rbrmam-y", "y", "Yes", true) }}
+                                {{ f.inlineRadio("rbrmam", "rbrmam-q", "q", "N/A", true) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrmas">Additional specimens sent?</label>
+                                <input type="text" name="rbrmas" id="rbrmas" class="form-control" size="32">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbspid">Specimen ID</label>
+                                <input name="rbspid" id="rbspid" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Additional surgery for same lesion?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbras", "rbras-n", "n", "No", true) }}
+                                {{ f.inlineRadio("rbras", "rbras-y", "y", "Yes", true) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rbrasdt">Date</label>
+                                {{ f.datepicker("rbrasdt", "past") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrasc">Comments</label>
+                                <textarea name="rbrasc" id="rbrasc" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rbrdd">Discharge date</label>
+                                {{ f.datepicker("rbrdd", "past") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Readmit within 30 days of discharge?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrthd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Discharge location?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrdl", "rbrdl-h", "h", "Home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-s", "s", "Other hospital", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-t", "t", "Extended Care / Transitional Care Unit / Rehab", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-n", "n", "Nursing home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-p", "p", "Hospice", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-o", "o", "Other", true) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Complications during surgery?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrcs") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrcsc">Comments</label>
+                                <textarea name="rbrcsc" id="rbrcsc" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Complications during hospital stay?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrch") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrchc">Comments</label>
+                                <textarea name="rbrchc" id="rbrchc" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Discharged with home O&#8322;?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrdox") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Discharged with chest tube?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbdct") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rbctrd">Date of chest tube removal</label>
+                                {{ f.datepicker("rbctrd", "past") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rb60dvs">60-day vital status</label>
+                                <textarea name="rb60dvs" id="rb60dvs" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <label>Reviewed for QA?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrqa") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrqas">Specify</label>
+                                <textarea name="rbrqas" id="rbrqas" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Pathology tumor size (mm)</label>
+                            <div class="form-group form-inline">
+                                <label for="rbtsl">Length &nbsp;</label>
+                                <input name="rbtsl" id="rbtsl" class="form-control numeric" size="4">
+                                <label for="rbtsw">Width &nbsp;</label>
+                                <input name="rbtsw" id="rbtsw" class="form-control numeric" size="4">
+                                <label for="rbtsh">Height &nbsp;</label>
+                                <input name="rbtsh" id="rbtsh" class="form-control numeric" size="4">
+                                {{ f.inlineCheckbox("rbtsn", "y", "Not applicable (specify)") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="rbtsn-container">
+                            <div class="form-group">
+                                <label for="rbtsns">Specify</label>
+                                <input name="rbtsns" id="rbtsns" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Invasion of other structures</label>
+                            <div class="form-group form-inline">
+                                {{ f.inlineRadioNY("rbinv") }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Location</label>
+                                {{ f.checkbox("rbinvv","v", "Major vascular") }}
+                                {{ f.checkbox("rbinvp","p", "Pleura") }}
+                                {{ f.checkbox("rbinva","a", "Angiolymphatic") }}
+                                {{ f.checkbox("rbinvo","o", "Other (specify)") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="rbino-container">
+                            <div class="form-group">
+                                <label for="rbinvls">Specify</label>
+                                <input name="rbinvls" id="rbinvls" class="form-control" size="24">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h4>T Staging</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rbinvp">T2 Visc Pl:</label>
+                                {{ f.checkbox("rbinvp", "p","Visceral Pleura") }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rbinvt2b">T2 Cen:</label>
+                                {{ f.checkbox("rbinvt2b", "b","Main bronchus (not carina)") }}
+                                {{ f.checkbox("rbinvt2a", "a","Atelectasis to hilum") }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rbinvc">T3 Inv:</label>
+                                {{ f.checkbox("rbinvc", "c","Chest wall") }}
+                                {{ f.checkbox("rbinvt3p", "p","Pericardium") }}
+                                {{ f.checkbox("rbinvt3n", "p"," Phrenic nerve") }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rbinvm">T4 Inv:</label>
+                                {{ f.checkbox("rbinvm", "m","Mediastinum") }}
+                                {{ f.checkbox("rbinvt4d", "d","Diaphragm") }}
+                                {{ f.checkbox("rbinvt4h", "h","Heart") }}
+                                {{ f.checkbox("rbinvt4g", "g","Great vessels") }}
+                                {{ f.checkbox("rbinvt4r", "r","Recurrent laryngeal nerve") }}
+                                {{ f.checkbox("rbinvt4c", "c","Carina") }}
+                                {{ f.checkbox("rbinvt4t", "t","Trachea") }}
+                                {{ f.checkbox("rbinvt4e", "e","Esophagus") }}
+                                {{ f.checkbox("rbinvt4s", "s","Spine") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rbadhs">Adenocarcinoma Histology (Predominant)</label>
+                                <select name="rbadhs" id="rbadhs" class="form-control">
+                                    <option value="-">&mdash;</option>
+                                    <option value="nos">Adenocarcinoma NOS</option>
+                                    <option value="snm">Adenocarcinoma in situ, nonmucinous</option>
+                                    <option value="sm">Adenocarcinoma in situ, mucinous</option>
+                                    <option value="sinm">Adenocarcinoma in situ, indeterminate mucinous/nonmucinous</option>
+                                    <option value="mnm">Minimally invasive adenocarcinoma, nonmucinous</option>
+                                    <option value="mm">Minimally invasive adenocarcinoma, mucinous</option>
+                                    <option value="mmnm">Minimally invasive adenocarcinoma, Mixed nonmucinous and mucinous</option>
+                                    <option value="mim">Minimally invasive adenocarcinoma, indeterminate mucinous/nonmucinous</option>
+                                    <option value="ilp">Invasive adenocarcinoma, Lepidic predominant adenocarcinoma</option>
+                                    <option value="iap">Invasive adenocarcinoma, Acinar predominant adenocarcinoma</option>
+                                    <option value="ipp">Invasive adenocarcinoma, Papillary predominant adenocarcinoma</option>
+                                    <option value="imp">Invasive adenocarcinoma, Micropapillary predominant adenocarcinoma</option>
+                                    <option value="isp">Invasive adenocarcinoma, Solid predominant adenocarcinoma</option>
+                                    <option value="imdp">Invasive adenocarcinoma, multiple predominant patterns</option>
+                                    <option value="ipcd">Invasive adenocarcinoma, Predominant subtype cannot be determined</option>
+                                    <option value="im">Invasive mucinous adenocarcinoma</option>
+                                    <option value="m">Mixed invasive mucinous and nonmucinous adenocarcinoma</option>
+                                    <option value="fa">Fetal adenocarcinoma</option>
+                                    <option value="ea">Enteric adenocarcinoma</option>
+                                    <option value="ca">Colloid adenocarcinoma</option>
+                                    <option value="srf">Signet ring features</option>
+                                    <option value="ccf">Clear cell features</option>
+                                    <option value="nf">NSLC, favor adenocarcinoma</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <tr>
+                                            <td><label>Predominant features</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamds", "s", "solid") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamda", "a", "acinar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdp", "p", "papillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdmp", "m", "micropapillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdb", "b", "Lepidic /bronchioloalveolar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdo", "o", "other (specify)") }}
+                                                    <input name="pamdos" id="pamdos" class="form-control"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Percentages</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdsp" id="pamdsp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdap" id="pamdap" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdpp" id="pamdpp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdmpp" id="pamdmpp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdbp" id="pamdbp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdop" id="pamdop" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Secondary / Other features</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamas", "s", "solid") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamaa", "a", "acinar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamap", "p", "papillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamamp", "m", "micropapillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamab", "b", "Lepidic /bronchioloalveolar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamao", "o", "other (specify)") }}
+                                                    <input name="pamaos" id="pamaos" class="form-control"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Percentages</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamasp" id="pamasp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamaap" id="pamaap" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamapp" id="pamapp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamampp" id="pamampp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamabp" id="pamabp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamaop" id="pamaop" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Lymph nodes status (N)
+                        <small>AJCC Levels</small>
+                    </h3>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <td><label>Node</label></td>
+                                <td><label>N1</label></td>
+                                <td><label>N2R</label></td>
+                                <td><label>N2L</label></td>
+                                <td><label>N3</label></td>
+                                <td><label>N4R</label></td>
+                                <td><label>N4L</label></td>
+                                <td><label>N5</label></td>
+                                <td><label>N6</label></td>
+                                <td><label>N7</label></td>
+                                <td><label>N8</label></td>
+                                <td><label>N9</label></td>
+                                <td><label>&nbsp;</label></td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Resected</label></td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn1r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn2rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn2lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn3r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn4rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn4lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn5r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn6r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn7r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn8r") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn9r") }}</div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Number<br/>resected</label></td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn1t">N1 Number resected</label>
+                                        <input name="rbn1t" id="rbn1t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn2rt">N2R Number resected</label>
+                                        <input name="rbn2rt" id="rbn2rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn2lt">N2L Number resected</label>
+                                        <input name="rbn2lt" id="rbn2lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn3t">N3 Number resected</label>
+                                        <input name="rbn3t" id="rbn3t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn4rt">N4R Number resected</label>
+                                        <input name="rbn4rt" id="rbn4rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn4lt">N4L Number resected</label>
+                                        <input name="rbn4lt" id="rbn4lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn5t">N5 Number resected</label>
+                                        <input name="rbn5t" id="rbn5t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn6t">N6 Number resected</label>
+                                        <input name="rbn6t" id="rbn6t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn7t">N7 Number resected</label>
+                                        <input name="rbn7t" id="rbn7t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn8t">N8 Number resected</label>
+                                        <input name="rbn8t" id="rbn8t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn9t">N9 Number resected</label>
+                                        <input name="rbn9t" id="rbn9t" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Number<br/>positive</label></td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn1p">N1 number positive</label>
+                                        <input name="rbn1p" id="rbn1p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn2rp">N2R number positive</label>
+                                        <input name="rbn2rp" id="rbn2rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn2lp">N2L number positive</label>
+                                        <input name="rbn2lp" id="rbn2lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn3p">N3 number positive</label>
+                                        <input name="rbn3p" id="rbn3p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn4rp">N4R number positive</label>
+                                        <input name="rbn4rp" id="rbn4rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn4lp">N4L number positive</label>
+                                        <input name="rbn4lp" id="rbn4lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn5p">N5 number positive</label>
+                                        <input name="rbn5p" id="rbn5p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn6p">N6 number positive</label>
+                                        <input name="rbn6p" id="rbn6p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn7p">N7 number positive</label>
+                                        <input name="rbn7p" id="rbn7p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn8p">N8 number positive</label>
+                                        <input name="rbn8p" id="rbn8p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn9p">N9 number positive</label>
+                                        <input name="rbn9p" id="rbn9p" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="13">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Node</label></td>
+                                <td><label>N10R</label></td>
+                                <td><label>N10L</label></td>
+                                <td><label>N11R</label></td>
+                                <td><label>N11L</label></td>
+                                <td><label>N12R</label></td>
+                                <td><label>N12L</label></td>
+                                <td><label>N13R</label></td>
+                                <td><label>N13L</label></td>
+                                <td><label>N14R</label></td>
+                                <td><label>N14L</label></td>
+                                <td><label>Peribronchial<br/>lymph nodes</label></td>
+                                <td><label>Location<br/>unspecified</label></td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Resected</label></td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn10rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn10lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn11rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn11lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn12rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn12lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn13rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn13lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn14rr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbn14lr") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbnpb") }}</div>
+                                </td>
+                                <td>
+                                    <div class="form-group">{{ f.radioNY("rbnun") }}</div>
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td><label>Number<br/>resected</label></td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn10rt">N10R number positive</label>
+                                        <input name="rbn10rt" id="rbn10rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn10lt">N10L number positive</label>
+                                        <input name="rbn10lt" id="rbn10lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn11rt">N11R number positive</label>
+                                        <input name="rbn11rt" id="rbn11rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn11lt">N11L number positive</label>
+                                        <input name="rbn11lt" id="rbn11lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn12rt">N12R number positive</label>
+                                        <input name="rbn12rt" id="rbn12rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn12lt">N12L number positive</label>
+                                        <input name="rbn12lt" id="rbn12lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn13rt">N13R number positive</label>
+                                        <input name="rbn13rt" id="rbn13rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn13lt">N13L number positive</label>
+                                        <input name="rbn13lt" id="rbn13lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn14rt">N14R number positive</label>
+                                        <input name="rbn14rt" id="rbn14rt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn14lt">N14L number positive</label>
+                                        <input name="rbn14lt" id="rbn14lt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbnpbt">Peribronchial lymph nodes</label>
+                                        <input name="rbnpbt" id="rbnpbt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbnunt">Location unspecified</label>
+                                        <input name="rbnunt" id="rbnunt" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Number<br/>positive</label></td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn10rp">N10R number positive</label>
+                                        <input name="rbn10rp" id="rbn10rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn10lp">N10L number positive</label>
+                                        <input name="rbn10lp" id="rbn10lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn11rp">N11R number positive</label>
+                                        <input name="rbn11rp" id="rbn11rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn11lp">N11L number positive</label>
+                                        <input name="rbn11lp" id="rbn11lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn12rp">N12R number positive</label>
+                                        <input name="rbn12rp" id="rbn12rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn12lp">N12L number positive</label>
+                                        <input name="rbn12lp" id="rbn12lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn13rp">N13R number positive</label>
+                                        <input name="rbn13rp" id="rbn13rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn13lp">N13L number positive</label>
+                                        <input name="rbn13lp" id="rbn13lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn14rp">N14R number positive</label>
+                                        <input name="rbn14rp" id="rbn14rp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbn14lp">N14L number positive</label>
+                                        <input name="rbn14lp" id="rbn14lp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbnpbp">Peribronchial lymph nodes </label>
+                                        <input name="rbnpbp" id="rbnpbp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="aria-hidden" for="rbnunp">Location unspecified</label>
+                                        <input name="rbnunp" id="rbnunp" class="form-control numeric" size="2">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="13">
+                                    <label for="rbnuns">Specify location</label>
+                                    <input name="rbnuns" id="rbnuns" class="form-control" size="32">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Additional lesions</label>
+                                {{ f.inlineRadioNY("rbal") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-group-sm form-inline">
+                                <label for="rbaln">Number</label>
+                                <input name="rbaln" id="rbaln" class="form-control numeric" size="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th><label>Lesion</label></th>
+                                <th><label>Location</label></th>
+                                <th><label>Length<br/>(mm)</label></th>
+                                <th><label>Width<br/>(mm)</label></th>
+                                <th><label>Height<br/>(mm)</label></th>
+                                <th><label>Pathologic diagnosis</label></th>
+                                <th><label>Specify</label></th>
+                                <th><label>Seen on CT</label></th>
+                            </tr>
+                            </thead>
+
+
+                            {% for i in range(1,5) %}
+                                <tr>
+                                    <td><label for="rbal{{ i }}lo">{{ i }}</label></td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select name="rbal{{ i }}lo" id="rbal{{ i }}lo" class="form-control">
+                                                <option value="-"> -</option>
+                                                <option value="lul"> LUL</option>
+                                                <option value="lll"> LLL</option>
+                                                <option value="rul"> RUL</option>
+                                                <option value="rml"> RML</option>
+                                                <option value="rll"> RLL</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label class="aria-hidden" for="rbal{{ i }}l">Length</label>
+                                            <input name="rbal{{ i }}l" id="rbal{{ i }}l" class="form-control numeric"
+                                                   size="4">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label class="aria-hidden" for="rbal{{ i }}w">Width</label>
+                                            <input name="rbal{{ i }}w" id="rbal{{ i }}w" class="form-control numeric"
+                                                   size="4">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label class="aria-hidden" for="rbal{{ i }}h">Height</label>
+                                            <input name="rbal{{ i }}h" id="rbal{{ i }}h" class="form-control numeric"
+                                                   size="4">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label class="aria-hidden" for="rbal{{ i }}pd">Pathological
+                                                diagnosis</label>
+                                            <select name="rbal{{ i }}pd" id="rbal{{ i }}pd" class="form-control">
+                                                <option value="-"> -</option>
+                                                <option value="aa"> AAH</option>
+                                                <option value="ap"> Atyp bronch prolif</option>
+                                                <option value="ba"> BAC</option>
+                                                <option value="ns"> Unspec. non-small cell</option>
+                                                <option value="ad"> Adenocarcinoma</option>
+                                                <option value="as"> Adenosquamous</option>
+                                                <option value="la"> Large cell</option>
+                                                <option value="sq"> Squamous cell</option>
+                                                <option value="sm"> Small cell</option>
+                                                <option value="ct"> Carcinoid - typical</option>
+                                                <option value="ca"> Carcinoid - atypical</option>
+                                                <option value="be"> Not malignant</option>
+                                                <option value="bs"> Benign specific</option>
+                                                <option value="mf"> Multifocal (specify)</option>
+                                                <option value="os"> Other (specify)</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label class="aria-hidden" for="rbal{{ i }}ps">Seen on CT</label>
+                                        <input name="rbal{{ i }}ps" id="rbal{{ i }}ps" class="form-control">
+                                    </td>
+                                    <td class="text-nowrap">
+                                        {{ f.inlineRadioNYQ("rbal"+i|string) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="rbalt3">T3 Satell</label><br/>
+                            {{ f.yesCheckbox("rbalt3") }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="rbalt4">T4 Ipsi Nod</label><br/>
+                            {{ f.yesCheckbox("rbalt4") }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="rbem">Evidence of metastasis</label><br/>
+                            {{ f.inlineRadioNY("rbem") }}
+                        </div>
+                        <div class="form-group col-md-3" id="rbem-container">
+                            <label for="rbems">Specify</label>
+                            <input name="rbems" id="rbems" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="rbmst">M staging (8th edition)</label>
+                            <select name="rbmst" id="rbmst" class="form-control">
+                                <option value="-">-</option>
+                                <option value="M0">M0</option>
+                                <option value="M1ap">M1a Pl Dissem</option>
+                                <option value="M1an">M1a Contr Nod</option>
+                                <option value="M1b">M1b Single</option>
+                                <option value="M1c">M1c Multi</option>
+                                <option value="X">MX</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="rbpst8">Post-surgical TNM status (8th Edition)</label>
+                                <div class="form-inline">
+                                    <select name="rbpst8" id="rbpst8" class="form-control">
+                                        <option value="-"> -</option>
+                                        <option value="0"> T0</option>
+                                        <option value="is"> Tis</option>
+                                        <option value="1am"> T1a mi</option>
+                                        <option value="1as"> T1a SS</option>
+                                        <option value="1a1"> T1a</option>
+                                        <option value="1b"> T1b</option>
+                                        <option value="1c"> T1c</option>
+                                        <option value="2v"> T2 Visc Pl</option>
+                                        <option value="2c"> T2 Centr</option>
+                                        <option value="2a"> T2a</option>
+                                        <option value="2b"> T2b</option>
+                                        <option value="3"> T3</option>
+                                        <option value="3i"> T3 Inv</option>
+                                        <option value="3s"> T3 Satell</option>
+                                        <option value="4"> T4</option>
+                                        <option value="4i"> T4 Inv</option>
+                                        <option value="4n"> T4 Ipsi Nod</option>
+                                        <option value="x"> TX</option>
+                                    </select>
+
+                                    <label class="aria-hidden" for="rbpsn8">N Status</label>
+                                    <select name="rbpsn8" id="rbpsn8" class="form-control">
+                                        <option value="-"> -</option>
+                                        <option value="0"> N0</option>
+                                        <option value="1"> N1</option>
+                                        <option value="2"> N2</option>
+                                        <option value="3"> N3</option>
+                                        <option value="X"> NX</option>
+                                    </select>
+
+                                    <label class="aria-hidden" for="rbpsm8">M Status</label>
+                                    <select name="rbpsm8" id="rbpsm8" class="form-control">
+                                        <option value="-"> -</option>
+                                        <option value="0"> M0</option>
+                                        <option value="1ap"> M1a Pl Dissem</option>
+                                        <option value="1ac"> M1a Contr Nod</option>
+                                        <option value="1b"> M1b Single</option>
+                                        <option value="1c"> M1c Multi</option>
+                                        <option value="X"> MX</option>
+                                    </select>
+
+                                    {{ f.inlineCheckbox("rbpsx8","y", "not applicable") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5" id="rbpsx8-container">
+                            <div class="form-group">
+                                <label for="rbpsxs8">Specify</label>
+                                <input name="rbpsxs8" id="rbpsxs8" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="rbofc">Other findings / comments</label>
+                            <textarea name="rbofc" id="rbofc" rows="3" cols="64" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                {#Radiation Therapy Treatment#}
+                <div id="radiation" style="display: none;">
+                    <h2>Radiation Treatment Information</h2>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="rtron">Radiation oncologist name</label>
+                            <input name="rtron" id="rtron" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 form-group">
+                            <label for="rtfdot">First date of treatment</label>
+                            {{ f.datepicker("rtfdot","past") }}
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <label for="rtldot">Last date of treatment</label>
+                            {{ f.datepicker("rtldot","past") }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2 form-group">
+                            <label for="rbrttdor">Total dose of radiation</label>
+                            <div class="input-group">
+                                <input name="rbrttdor" id="rbrttdor" class="form-control numeric">
+                                <div class="input-group-addon">cGy</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-2 form-group">
+                            <label for="rbrtdpfr">Dose per fraction of radiation</label>
+                            <div class="input-group">
+                                <input name="rbrtdpfr" id="rbrtdpfr" class="form-control numeric">
+                                <div class="input-group-addon">cGy</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-2 form-group">
+                            <label for="rbrtnof">Number of fractions</label>
+                            <input name="rbrtnof" id="rbrtnof" class="form-control numeric">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 form-group">
+                            <label>Frequency of radiation</label><br/>
+                            {{ f.inlineRadio("rtfor","rtfor-d","d","daily") }}
+                            {{ f.inlineRadio("rtfor","rtfor-od","od","every other day") }}
+                            {{ f.inlineRadio("rtfor","rtfor-w","w","weekly") }}
+                            {{ f.inlineRadio("rtfor","rtfor-o","o","other") }}
+                        </div>
+                        <div class="col-md-4 form-group" id="rtfor-container">
+                            <label for="rtfors">Specify</label>
+                            <input name="rtfors" id="rtfors" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label for="rtloc">Lesion site</label>
+                            <select class="form-control" name="rtloc" id="rtloc">
+                                <option value="-"> -</option>
+                                <option value="lul"> LUL</option>
+                                <option value="lll"> LLL</option>
+                                <option value="rul"> RUL</option>
+                                <option value="rml"> RML</option>
+                                <option value="rll"> RLL</option>
+                                <option value="e"> Endobronchial</option>
+                                <option value="m"> Mediastinum</option>
+                                <option value="p"> Pleura</option>
+                                <option value="o"> Other (specify)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-lg-3 form-group" id="rtloc-container">
+                            <label for="rtlocs">Specify</label>
+                            <input name="rtlocs" id="rtlocs" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-2 form-group">
+                            <label for="rtsogtv">Size of gross tumor volume</label>
+                            <div class="input-group">
+                                <input name="rtsogtv" id="rtsogtv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-2 form-group">
+                            <label for="rtsoitv">Size of internal target volume</label>
+                            <div class="input-group">
+                                <input name="rtsoitv" id="rtsoitv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-2 form-group">
+                            <label for="rtsoptv">Size of planning target volume</label>
+                            <div class="input-group">
+                                <input name="rtsoptv" id="rtsoptv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 form-group">
+                            <label>Radiation dose delivery</label>
+                            <br/>
+                            {{ f.inlineRadio("rtrddt", "rtrddt-3d", "crt", "3D-CRT") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-imrt", "imrt", "<abbr title=\"Intensity-modulated radiotherapy\">IMRT</abbr>") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-vmat", "vmat", "<abbr title=\"Volumetric Arc Therapy\">VMAT</abbr>") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-carc", "carc", "conformal arc") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-c", "c", "cyberknife") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-t", "t", "tomotherapy") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-p", "p", "protons based") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-o", "o", "other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rtrddt-container">
+                            <label for="rtrddto">Specify</label>
+                            <input name="rtrddto" id="rtrddto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-md-9 form-group">
+                            <label>Tumor motion control</label>
+                            <br/>
+                            {{ f.inlineRadio("rttmct", "rttmct-n", "n", "none") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-s", "s", "4D-simulation and ITV") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-r", "r", "gated radiation") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-b", "b", "breath hold") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-o", "o","other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rttmct-container">
+                            <label for="rttmcto">Specify</label>
+                            <input name="rttmcto" id="rttmcto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label><abbr title="Stereotactic Body Radiation Therapy">SBRT</abbr></label>
+                            <br/>
+                            {{ f.inlineRadioNY("rtsbrt") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Patient positioning</label>
+                            <br/>
+                            {{ f.inlineRadio("rtpp", "rtpp-a", "a", "alphacradle") }}
+                            {{ f.inlineRadio("rtpp", "rtpp-s", "s", "stereotactic body frame") }}
+                            {{ f.inlineRadio("rtpp", "rtpp-o", "o","other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rtpp-container">
+                            <label for="rtppo">Specify</label>
+                            <input name="rtppo" id="rtppo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Treatment verification</label>
+                            <br/>
+                            {{ f.inlineRadio("rttv", "rttv-i", "i", "kv images") }}
+                            {{ f.inlineRadio("rttv", "rttv-c", "c", "cone beam CT") }}
+                            {{ f.inlineRadio("rttv", "rttv-o", "o","other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rttv-container">
+                            <label for="rttvo">Specify</label>
+                            <input name="rttvo" id="rttvo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtilp">V20 of ipsilateral lung (percentage)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtilp" id="rtilp" class="form-control numeric">
+                        </div>
+
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rttlp"> V20 of total lung (percentage)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rttlp" id="rttlp" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtcw">V30 of chest wall (cc)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+                            <input name="rtcw" id="rtcw" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmed">Maximum Esophageal Dose</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+                            <input name="rtmed" id="rtmed" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtmdbd">Maximum Distal Bronchus Dose</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmdbd" id="rtmdbd" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmmbd"> Maximum Mainstem Bronchus Dose</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmmbd" id="rtmmbd" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtptv">D95 of PTV (in Gray)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtptv" id="rtptv" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtbpm"> Brachial plexus max [32 Gy]</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtbpm" id="rtbpm" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rthpr">Heart/pericardium receiving 32Gy [15cc] </label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rthpr" id="rthpr" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmsd">Max skin dose < 32Gy</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmsd" id="rtmsd" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtrorx">Ration of Rx isodose vol to PTV < 1.5</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtrorx" id="rtrorx" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtv100">V100 %</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtv100" id="rtv100" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtdmax">Dmax %</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtdmax" id="rtdmax" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtd2cm">D2cm max%</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtd2cm" id="rtd2cm" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtribv30">V30 to rib</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtribv30" id="rtribv30" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtribmax">Highest dose to rib</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtribmax" id="rtribmax" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 form-group">
+                            <label>Was the entire dose delivered to the participant?</label>
+                            <br/>
+                            {{ f.inlineRadioNY("rtedd") }}
+                        </div>
+                        <div class="col-md-3" id="rtedd-container">
+                            <label for="rtedds">Specify</label>
+                            <input name="rtedds" id="rtedds" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Were there any unplanned interruptions or incomplete
+                                    fractions?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("rtcui") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="rtcui-container">
+                            <div class="form-group">
+                                <label for="rtcuis">Specify</label>
+                                <input name="rtcuis" id="rtcuis" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Side effects</label>
+                                <br/>
+                                {{ f.inlineRadio("rtse", "rtse-n", "n", "none") }}
+                                {{ f.inlineRadio("rtse", "rtse-mi", "mi", "minimal") }}
+                                {{ f.inlineRadio("rtse", "rtse-ma", "ma", "marked") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rtsec">Comments</label>
+                                <input name="rtsec" id="rtsec" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="small">Check all that apply</label>
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("rtsef", "f", "Fatigue") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsetc", "tc", "Tightness in chest") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsecwp", "cwp", "Chest wall pain") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtsecgh", "c", "Cough") }}
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            {{ f.checkbox("rtsesob", "sob", "Shortness of breath") }}
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("rtsed", "d", "Dyspnea") }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ f.checkbox("rtsedawl", "dawl", "Decreased appetite/weight loss") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsenv", "nv", "Nausea/vomiting") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtseda", "da", "Diarrhea") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtseo", "o", "Other") }}
+                        </div>
+                        <div class="col-md-5" id="rtseo-container">
+                            <div class="form-group">
+                                <label for="rtseos">Specify</label>
+                                <input name="rtseos" id="rtseos" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Chemotherapy Treatment #}
+                <div id="chemotherapy" style="display: none;">
+                    <h2>Chemotherapy Treatment Information</h2>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="chmd">Treating physician name</label>
+                            <input name="chmd" id="chmd" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chfdot">First date of treatment</label>
+                                    {{ f.datepicker("chfdot","past") }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chldot">Last date of treatment</label>
+                                    {{ f.datepicker("chldot","past") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="form-group">
+                                <label>Frequency of chemotherapy</label>
+                                <br/>
+                                {{ f.inlineRadio("chf", "chf-d", "d", "daily") }}
+                                {{ f.inlineRadio("chf", "chf-od", "od", "every other day") }}
+                                {{ f.inlineRadio("chf", "chf-w", "w", "weekly") }}
+                                {{ f.inlineRadio("chf", "chf-o", "o", "other") }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="form-group" id="chf-container">
+                                <label for="chfs">Specify</label>
+                                <input name="chfs" id="chfs" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label for="rbrtchls">Lesion Site</label>
+                            <select class="form-control" name="rbrtchls" id="rbrtchls">
+                                <option value="-"> -</option>
+                                <option value="lul"> LUL</option>
+                                <option value="lll"> LLL</option>
+                                <option value="rul"> RUL</option>
+                                <option value="rml"> RML</option>
+                                <option value="rll"> RLL</option>
+                                <option value="e"> Endobronchial</option>
+                                <option value="m"> Mediastinum</option>
+                                <option value="p"> Pleura</option>
+                                <option value="o"> Other (specify)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-lg-3 form-group" id="chemo-lesion-container">
+                            <label for="rbrtchlo">Specify</label>
+                            <input name="rbrtchlo" id="rbrtchlo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdt">Describe treatment</label>
+                            <input name="rbchdt" id="rbchdt" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchst">Subsequent treatments</label>
+                            <input name="rbchst" id="rbchst" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdr">Drugs used</label>
+                            <input name="rbchdr" id="rbchdr" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchnt">Number of rounds</label>
+                            <input name="rbchnt" id="rbchnt" class="form-control numeric">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Was the entire dose delivered to the participant?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chedd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chedds">Specify</label>
+                                <input name="chedds" id="chedds" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Were there complications associated with treatment?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chc") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="chc-container">
+                            <div class="form-group">
+                                <label for="chcs">Specify</label>
+                                <input name="chcs" id="chcs" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Side effects</label>
+                                <br/>
+                                {{ f.inlineRadio("chse", "chse-n", "n", "none") }}
+                                {{ f.inlineRadio("chse", "chse-mi", "mi", "minimal") }}
+                                {{ f.inlineRadio("chse", "chse-ma", "ma", "marked") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chsec">Comments</label>
+                                <input name="chsec" id="chsec" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="small">Check all that apply</label>
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsef", "f", "Fatigue") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsetc", "tc", "Tightness in chest") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsecwp", "cwp", "Chest wall pain") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chsecgh", "c", "Cough") }}
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            {{ f.checkbox("chsesob", "sob", "Shortness of breath") }}
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsed", "d", "Dyspnea") }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ f.checkbox("chsedawl", "dawl", "Decreased appetite/weight loss") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsenv", "nv", "Nausea/vomiting") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseda", "da", "Diarrhea") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseo", "o", "Other") }}
+                        </div>
+                        <div class="col-md-5" id="chseo-container">
+                            <div class="form-group">
+                                <label for="chseos">Specify</label>
+                                <input name="chseos" id="chseos" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            {#END Treatement tab#}
+
+            {#BEGIN Nodules tab#}
+            <div id="nodules" style="padding-top:8px">
+                <h3>Nodules</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="sidoe" class="control-label required">Baseline CT</label>
+                        {{ f.datepicker("sidoe", "past", true) }}
+                    </div>
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="cedos" class="control-label required">Most recent CT</label>
+                        {{ f.datepicker("cedos", "past", true) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-inline">
+                            <label for="cenncn">Total number of non-calcified nodules</label>
+                            <input id="cenncn" name="cenncn" class="form-control numeric" size="2">
+                            <small class="text-muted">(parenchymal and endobronchial)</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-warning">
+                    Update the Nodule Status,
+                    Action, and Pathologic Diagnosis for each of the nodules affected by
+                    this procedure.<br/>Enter any pathologic details given in the surgical
+                    pathology report in the Surgical Pathology Details field.
+                    <br/>Update the Follow-up section.
+                </div>
+
+
+                {% include '_nodule-grid.jinja2' %}
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="rbpdt">Surgical pathology details</label>
+                            <textarea name="rbpdt" id="rbpdt" rows="3" cols="64" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            {#END Nodules tab#}
+
+            {# BEGIN Emphysema tab#}
+            <div id="emphysema-coronary" style="padding-top: 1px;">
+                <h3>Emphysema/Coronary Calcifications</h3> {# will get hidden with affixed menu#}
+                {% include '_emphysema.jinja2' %}
+            </div>
+            <hr/>
+            {# END Emphysema tab #}
+
+            {# BEGIN Abnormalities tab#}
+            <div id="abnormalities" style="padding-top:8px;">
+                <h3>Other Abnormalities</h3> {# will get hidden with affixed menu#}
+                {% include '_abnormalities.jinja2' %}
+            </div>
+            <hr/>
+            {#  END Abnormalities tab#}
+
+            {# BEGIN Follow-up tab#}
+            <div id="follow-up" style="padding-top:8px;">
+                {% with formPage=formPage %}
+                    {% include '_followup.jinja2' %}
+                {% endwith %}
+            </div>
+            <hr/>
+            {# END Intervention tab#}
+
+            <div class="pull-left">
+                <input type="hidden" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+            <div class="pull-right">
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+            </div>
+
+        </form>
+    </div>
+
+    {{ f.deleteFormModal("intervention.html", mockup, formMethod) }}
+{% endblock %}
+
+{% block script %}
+    <script>
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
+            // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
+            // first control in that group
+            const multiInputValidators = ['followup'];
+
+            $form.formValidation({
+                    fields: {
+                        rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
+                        rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
+                        rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        sbffr: {validators: {lessThan: {max: 100, message: 'Value must be less than or equal to 100'}}},
+                        rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
+                        rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
+                        rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},
+                        rbsumdf: {validators: {phone: {message: 'Treating physician\'s fax is invalid', country: 'US'}}},
+                        rblocs: {validators: {notEmpty: {message: 'Lesion site is required.'}}},
+                        rbtos: {validators: {notEmpty: {message: 'Treatment option is required.'}}},
+                        //surgery
+                        rbmemdp: {validators: {phone: {message: 'Physician\'s phone is invalid', country: 'US'}}},
+                        rbmemdf: {validators: {phone: {message: 'Physician\'s fax is invalid', country: 'US'}}},
+                        rbsurd: {validators: {notEmpty: {message: 'Resection no/refusal date is required.'}}},
+                        rbsurr: {validators: {notEmpty: {message: 'Resection no/refusal reason is required.'}}},
+                        rbtosos: {validators: {notEmpty: {message: 'Type of surgery is required.'}}},
+                        rbexss: {validators: {notEmpty: {message: 'Extent of surgery is required.'}}},
+                        rbtsns: {validators: {notEmpty: {message: 'Tumor size required.'}}},
+
+                        //Nodules Section
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+
+                        //Nodules, emphysema, abnormality FV additions are done in their respective templates
+                        rbrep: {validators: {notEmpty: {message: 'Resection performed is required'}}},
+                        //Intervention; virtual fields don't work with fv.addField, so we have to add it here
+                        followup: {
+                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
+                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow-up option'}}
+                        },
+
+                    },
+                    plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $fg = $("#" + e.element.id).closest(".form-group");
+                                    $c = $fg.find(".fv-plugins-message-container");
+                                    if ($c.length == 1) {
+                                        $c.append(e.iconElement);
+                                    } else {
+                                        $fg.append(e.iconElement);
+                                    }
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+        $(function () {
+            const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
+
+            $("#rbcsx8").conditionallyEnable({enable: "#rbcsx8-container"});
+            $("[name=rbcsb]").conditionallyEnable({sourceValues: "o", enable: "#rbcsb-container"});
+            $("[name=rbloc]").conditionallyEnable({sourceValues: "o", enable: "#rbloc-container"});
+            $("[name=rbtri]").conditionallyEnable({sourceValues: "o", enable: "#rbtri-container"});
+            $("[name=rbto]").conditionallyEnable({sourceValues: "o", enable: "#rbto-container"});
+
+            //Surgical section
+            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
+            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert, #rbmep-container"});
+            $("[name=rbrep]").conditionallyEnable({sourceValues: "n,r", enable: "#rbrep-container"});
+            $("#rbtoso").conditionallyEnable({sourceValues: "o", enable: "#rbtoso-container"});
+            $("[name=rbvto]").conditionallyEnable({enable: "#rbvto-container"});
+            $("#rbtsn").conditionallyEnable({enable: "#rbtsn-container"});
+            $("#rbino").conditionallyEnable({sourceValues: "o", enable: "#rbino-container"});
+            $("[name=rbal]").conditionallyDisplay({enable: "#rbal-container"});
+            $("[name=rbem]").conditionallyEnable({enable: "#rbem-container"});
+            $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
+
+            //Radiation section
+            $("[name=rtfor]").conditionallyEnable({sourceValues: "o", enable: "#rtfor-container"});
+            $("#rtloc").conditionallyEnable({sourceValues: "o", enable: "#rtloc-container"});
+            $("[name=rtrddt]").conditionallyEnable({sourceValues: "o", enable: "#rtrddt-container"});
+            $("[name=rttmct]").conditionallyEnable({sourceValues: "o", enable: "#rttmct-container"});
+            $("[name=rtpp]").conditionallyEnable({sourceValues: "o", enable: "#rtpp-container"});
+            $("[name=rttv]").conditionallyEnable({sourceValues: "o", enable: "#rttv-container"});
+            $("[name=rtedd]").conditionallyEnable({enable: "#rtedd-container"});
+            $("[name=rtcui]").conditionallyEnable({enable: "#rtcui-container"});
+            $("#rtseo").conditionallyEnable({sourceValues: "o", enable: "#rtseo-container"});
+
+            //Chemotherapy section
+            $("#rbrtchls").conditionallyEnable({sourceValues: "o", enable: "#chemo-lesion-container"});
+            $("[name=chf]").conditionallyEnable({sourceValues: "o", enable: "#chf-container"});
+            $("[name=chc]").conditionallyEnable({enable: "#chc-container"});
+            $("#chseo").conditionallyEnable({sourceValues: "o", enable: "#chseo-container"});
+
+
+            //treatment type selection
+            $("#rbto").on('change', function () {
+                const val = $(this).val();
+                $("#surgery").toggle(val === 's');
+                $("#radiation").toggle(val === 'r');
+                $("#chemotherapy").toggle(val === 'c')
+                $("#treatment-start-label").toggle(val === 'r' || val === 'c')
+            }).trigger('change');
+
+            {# NB: Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}
+
+            initNoduleGrid(fv, null);
+            initAbnormalities(fv);
+            initEmphysema(fv);
+            initFollowup(fv);
+
+            $('#body').scrollspy({target: '#wizard-bar', offset: 10})
+
+        });
+    </script>
+
+{% endblock %}

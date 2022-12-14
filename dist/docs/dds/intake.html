@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>../form-fields/intake.tsv data dictionary</title>
+    <style><!--
+body {
+    font-family: "Verdana", "Helvetica", sans-serif;
+    font-size: 9pt;
+    line-height: 12pt;
+}
+table.dd {
+    border-collapse: collapse;
+    border: 1px solid grey;
+    max-width: 100%;
+}
+table.dd th, table.dd td {
+    text-align: left;
+    border: 1px solid grey;
+    white-space: nowrap;
+    padding: 2pt 5pt;
+    vertical-align: top;
+}
+table.dd tr.hl th, table.dd tr.hl td {
+    background-color: #e8e8e8;
+}
+table.dd td.fnum, table.dd th.fnum { text-align: right; }
+table.dd td.ques, table.dd td.lbls { white-space: normal; }
+    --></style>
+  </head>
+  <body>
+    <table class="dd">
+      <tr class="hl">
+        <th class="ques">Question</th>
+        <th class="fnum">#</th>
+        <th class="name">Name</th>
+        <th class="type">Type</th>
+        <th class="requ">Required</th>
+        <th class="plac">Placeholder</th>
+        <th class="vals">Values</th>
+        <th class="lbls">Labels</th>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="4">The participant was identified as a potential lung screening candidate by:</td>
+        <td class="fnum" rowspan="4">1</td>
+        <td class="name" rowspan="4">siceiden</td>
+        <td class="type" rowspan="4">radio</td>
+        <td class="requ" rowspan="4">Yes</td>
+        <td class="plac" rowspan="4"></td>
+        <td class="vals">referral</td>
+        <td class="lbls">Referral</td>
+      </tr>
+      <tr>
+        <td class="vals">ldct</td>
+        <td class="lbls">Low-dose CT placed directly by clinician</td>
+      </tr>
+      <tr>
+        <td class="vals">outreach</td>
+        <td class="lbls">Lung screening program outreach</td>
+      </tr>
+      <tr>
+        <td class="vals">self</td>
+        <td class="lbls">Self-referred</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Date of referral</td>
+        <td class="fnum">2</td>
+        <td class="name">sicerfdt</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Date of referral</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="8">Specialty of referring provider</td>
+        <td class="fnum">3</td>
+        <td class="name">sicerfpc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Primary Care</td>
+      </tr>
+      <tr>
+        <td class="fnum">4</td>
+        <td class="name">sicerfwh</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Women's Health</td>
+      </tr>
+      <tr>
+        <td class="fnum">5</td>
+        <td class="name">sicerfge</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Geriatrics</td>
+      </tr>
+      <tr>
+        <td class="fnum">6</td>
+        <td class="name">sicerfpu</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Pulmonology</td>
+      </tr>
+      <tr>
+        <td class="fnum">7</td>
+        <td class="name">sicerfon</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Oncology</td>
+      </tr>
+      <tr>
+        <td class="fnum">8</td>
+        <td class="name">sicerfsc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Smoking Cessation</td>
+      </tr>
+      <tr>
+        <td class="fnum">9</td>
+        <td class="name">sicerfot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr>
+        <td class="fnum">10</td>
+        <td class="name">sicerfoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac">Specify</td>
+        <td class="vals"></td>
+        <td class="lbls"></td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Eligible based on chart review?</td>
+        <td class="fnum" rowspan="2">11</td>
+        <td class="name" rowspan="2">sicechrt</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2">Yes</td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="4">Medical History</td>
+        <td class="fnum">12</td>
+        <td class="name">sicemhlc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">lung cancer</td>
+      </tr>
+      <tr>
+        <td class="fnum">13</td>
+        <td class="name">sicemhhs</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">health status</td>
+      </tr>
+      <tr>
+        <td class="fnum">14</td>
+        <td class="name">sicemhot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">other</td>
+      </tr>
+      <tr>
+        <td class="fnum">15</td>
+        <td class="name">sicemhoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac">specify</td>
+        <td class="vals"></td>
+        <td class="lbls"></td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="6">Receiving Care Elsewhere</td>
+        <td class="fnum">16</td>
+        <td class="name">sicecepc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">followed in pulmonary clinic</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">17</td>
+        <td class="name">sicecenc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">followed in nodule clinic</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">18</td>
+        <td class="name">siceceho</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">followed in hematology-oncology</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">19</td>
+        <td class="name">sicecepr</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">private care</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">20</td>
+        <td class="name">siceceot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">other</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">21</td>
+        <td class="name">siceceoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac">specify</td>
+        <td class="vals"></td>
+        <td class="lbls"></td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="5">Smoking History</td>
+        <td class="fnum">22</td>
+        <td class="name">siceshqd</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">quit date greater than 15 years</td>
+      </tr>
+      <tr>
+        <td class="fnum">23</td>
+        <td class="name">siceshpy</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">less than 30 pack years</td>
+      </tr>
+      <tr>
+        <td class="fnum">24</td>
+        <td class="name">siceshnc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">non-cigarette use (e.g. pipe, smokeless, vape, cannabis)</td>
+      </tr>
+      <tr>
+        <td class="fnum">25</td>
+        <td class="name">siceshot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">y</td>
+        <td class="lbls">other</td>
+      </tr>
+      <tr>
+        <td class="fnum">26</td>
+        <td class="name">siceshoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac">specify</td>
+        <td class="vals"></td>
+        <td class="lbls"></td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Was a pre-enrollment discussion held?</td>
+        <td class="fnum" rowspan="2">27</td>
+        <td class="name" rowspan="2">sipedisc</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2">Yes</td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="ques">Pre-Enrollment Discussion</td>
+        <td class="fnum">28</td>
+        <td class="name">sipedc</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Date of contact</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="8">The lung screening program reached the participant or was contacted via (check all that apply):</td>
+        <td class="fnum">29</td>
+        <td class="name">sipecnip</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">In person</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">30</td>
+        <td class="name">sipecnte</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Telephone</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">31</td>
+        <td class="name">sipecnth</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">TeleHealth</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">32</td>
+        <td class="name">sipecnml</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Mailed letter</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">33</td>
+        <td class="name">sipecnpp</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Message in Patient Portal</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">34</td>
+        <td class="name">sipecnvd</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Video-on-Demand (VOD)</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">35</td>
+        <td class="name">sipecnot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr class="hl">
+        <td class="fnum">36</td>
+        <td class="name">sipecnoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Other contact method</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="6">A pre-enrollment discussion with the participant resulted in:</td>
+        <td class="fnum" rowspan="5">37</td>
+        <td class="name" rowspan="5">siperslt</td>
+        <td class="type" rowspan="5">radio</td>
+        <td class="requ" rowspan="5">Yes</td>
+        <td class="plac" rowspan="5"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Participant is interested in discussing lung screening. The program will proceed with enrollment process.</td>
+      </tr>
+      <tr>
+        <td class="vals">u</td>
+        <td class="lbls">Participant is unsure of lung screening. Ok to contact in the future.</td>
+      </tr>
+      <tr>
+        <td class="vals">nn</td>
+        <td class="lbls">Participant is not interested in discussing lung screening at this time. Ok to contact in the future.</td>
+      </tr>
+      <tr>
+        <td class="vals">nf</td>
+        <td class="lbls">Participant is not interested in discussing lung screening in the future.</td>
+      </tr>
+      <tr>
+        <td class="vals">na</td>
+        <td class="lbls">Unable to reach participant at this time.</td>
+      </tr>
+      <tr>
+        <td class="fnum">38</td>
+        <td class="name">sipecmnt</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Comments</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Intake discussion</td>
+        <td class="fnum">39</td>
+        <td class="name">sidc</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Date of contact</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="8">The lung screening program reached the participant or was contacted via (check all that apply):</td>
+        <td class="fnum">40</td>
+        <td class="name">silnip</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">In person</td>
+      </tr>
+      <tr>
+        <td class="fnum">41</td>
+        <td class="name">silnph</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Telephone</td>
+      </tr>
+      <tr>
+        <td class="fnum">42</td>
+        <td class="name">silnth</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">TeleHealth</td>
+      </tr>
+      <tr>
+        <td class="fnum">43</td>
+        <td class="name">silnml</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Mailed letter</td>
+      </tr>
+      <tr>
+        <td class="fnum">44</td>
+        <td class="name">silnpp</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Message in Patient Portal</td>
+      </tr>
+      <tr>
+        <td class="fnum">45</td>
+        <td class="name">silnvd</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Video-on-Demand (VOD)</td>
+      </tr>
+      <tr>
+        <td class="fnum">46</td>
+        <td class="name">silnot</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr>
+        <td class="fnum">47</td>
+        <td class="name">silnoo</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Other contact method</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Primary address verified</td>
+        <td class="fnum" rowspan="2">48</td>
+        <td class="name" rowspan="2">sipav</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2">Yes</td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="ques">Preferred address</td>
+        <td class="fnum">49</td>
+        <td class="name">sipsa</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Preferred address</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Apt #</td>
+        <td class="fnum">50</td>
+        <td class="name">sipan</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Apt #</td>
+      </tr>
+      <tr>
+        <td class="ques">County</td>
+        <td class="fnum">51</td>
+        <td class="name">sipcn</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">County</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">City</td>
+        <td class="fnum">52</td>
+        <td class="name">sipc</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">City</td>
+      </tr>
+      <tr>
+        <td class="ques">State</td>
+        <td class="fnum">53</td>
+        <td class="name">sips</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">State</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Zip</td>
+        <td class="fnum">54</td>
+        <td class="name">sipz</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Zip</td>
+      </tr>
+      <tr>
+        <td class="ques">Country</td>
+        <td class="fnum">55</td>
+        <td class="name">sipcr</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Country</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Phone number</td>
+        <td class="fnum">56</td>
+        <td class="name">sippn</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Phone number</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Rural status</td>
+        <td class="fnum" rowspan="3">57</td>
+        <td class="name" rowspan="3">sirs</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3">Yes</td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">u</td>
+        <td class="lbls">Urban</td>
+      </tr>
+      <tr>
+        <td class="vals">r</td>
+        <td class="lbls">Rural</td>
+      </tr>
+      <tr>
+        <td class="vals">n</td>
+        <td class="lbls">Unknown</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Smoking History: Have you ever smoked</td>
+        <td class="fnum" rowspan="3">58</td>
+        <td class="name" rowspan="3">siesm</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">Never</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">p</td>
+        <td class="lbls">Past</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">c</td>
+        <td class="lbls">Current</td>
+      </tr>
+      <tr>
+        <td class="ques">Smoking History: Willing to quit</td>
+        <td class="fnum">59</td>
+        <td class="name">siesq</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">1</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Smoking History: Comments</td>
+        <td class="fnum">60</td>
+        <td class="name">sies</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Comments</td>
+      </tr>
+      <tr>
+        <td class="ques">Smoking History: How many cigarettes did you smoke per day?</td>
+        <td class="fnum">61</td>
+        <td class="name">sicpd</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">How many cigarettes did you smoke per day?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Smoking History: # of years</td>
+        <td class="fnum">62</td>
+        <td class="name">sisny</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls"># of years</td>
+      </tr>
+      <tr>
+        <td class="ques">Smoking History: Quit date</td>
+        <td class="fnum">63</td>
+        <td class="name">siq</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Quit</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Smoking cessation education provided</td>
+        <td class="fnum">64</td>
+        <td class="name">sicep</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Smoking cessation education provided</td>
+      </tr>
+      <tr>
+        <td class="ques">Lung CA Dx (if applicable): Date</td>
+        <td class="fnum">65</td>
+        <td class="name">sicadx</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">MM/DD/YYYY</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Lung CA Dx (if applicable): Location if not in VA</td>
+        <td class="fnum">66</td>
+        <td class="name">sicadxl</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Location if not in VA</td>
+      </tr>
+      <tr>
+        <td class="ques">Any prior CT: Date</td>
+        <td class="fnum">67</td>
+        <td class="name">siptct</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">MM/DD/YYYY</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Any prior CT: Location if not in VA</td>
+        <td class="fnum">68</td>
+        <td class="name">siptctl</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Location if not in VA</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Informed decision making</td>
+        <td class="fnum" rowspan="2">69</td>
+        <td class="name" rowspan="2">siidmdc</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2">Yes</td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">0</td>
+        <td class="lbls">Not applicable</td>
+      </tr>
+      <tr>
+        <td class="vals">1</td>
+        <td class="lbls">Discussion complete</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Based on this information, the candidate has opted to</td>
+        <td class="fnum" rowspan="3">70</td>
+        <td class="name" rowspan="3">sildct</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3">Yes</td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">Not enroll</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">l</td>
+        <td class="lbls">Not enroll at this time -- okay to contact in the future</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Enroll in the Lung Screening program and have an LDCT ordered. Coordination of care will be made by the LSS team</td>
+      </tr>
+      <tr>
+        <td class="ques">Clinical Indications for Initial Screening CT</td>
+        <td class="fnum">71</td>
+        <td class="name">siclin</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Clinical Indications for Initial Screening CT</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Participant communication record</td>
+        <td class="fnum">72</td>
+        <td class="name">sipcrn</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Participant communication record</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Enrollment</td>
+        <td class="fnum" rowspan="2">73</td>
+        <td class="name" rowspan="2">sistatus</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2">Yes</td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">active</td>
+        <td class="lbls">Active</td>
+      </tr>
+      <tr>
+        <td class="vals">inactive</td>
+        <td class="lbls">Not active</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">CT Appointment</td>
+        <td class="fnum">74</td>
+        <td class="name">sicectap</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">CT Appointment</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="17">Reason</td>
+        <td class="fnum" rowspan="17">75</td>
+        <td class="name" rowspan="17">sistachg</td>
+        <td class="type" rowspan="17">select-one</td>
+        <td class="requ" rowspan="17">Yes</td>
+        <td class="plac" rowspan="17"></td>
+        <td class="vals"></td>
+        <td class="lbls">-</td>
+      </tr>
+      <tr>
+        <td class="vals">transferred</td>
+        <td class="lbls">Transferred to another institution (specify)</td>
+      </tr>
+      <tr>
+        <td class="vals">medical</td>
+        <td class="lbls">Unable due to medical reason (specify)</td>
+      </tr>
+      <tr>
+        <td class="vals">unwilling</td>
+        <td class="lbls">Unwilling due to personal reason (specify)</td>
+      </tr>
+      <tr>
+        <td class="vals">refused</td>
+        <td class="lbls">Refused to continue</td>
+      </tr>
+      <tr>
+        <td class="vals">illadvised</td>
+        <td class="lbls">Physician advised against</td>
+      </tr>
+      <tr>
+        <td class="vals">radiation</td>
+        <td class="lbls">Concern about radiation</td>
+      </tr>
+      <tr>
+        <td class="vals">moved</td>
+        <td class="lbls">Moved and unable to return</td>
+      </tr>
+      <tr>
+        <td class="vals">insurance</td>
+        <td class="lbls">No insurance, can't have Dx CT</td>
+      </tr>
+      <tr>
+        <td class="vals">cost</td>
+        <td class="lbls">Burden of cost</td>
+      </tr>
+      <tr>
+        <td class="vals">deceased</td>
+        <td class="lbls">Deceased</td>
+      </tr>
+      <tr>
+        <td class="vals">other</td>
+        <td class="lbls">Other (specify)</td>
+      </tr>
+      <tr>
+        <td class="vals">excluded</td>
+        <td class="lbls">Excluded (specify)</td>
+      </tr>
+      <tr>
+        <td class="vals">complete</td>
+        <td class="lbls">Study complete</td>
+      </tr>
+      <tr>
+        <td class="vals">noresponse</td>
+        <td class="lbls">No response to 3 calls + 3 letters</td>
+      </tr>
+      <tr>
+        <td class="vals">nocontact</td>
+        <td class="lbls">Unable to contact</td>
+      </tr>
+      <tr>
+        <td class="vals">followed</td>
+        <td class="lbls">Being followed elsewhere (get results)</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Date of death</td>
+        <td class="fnum">76</td>
+        <td class="name">sidod</td>
+        <td class="type">text</td>
+        <td class="requ">Yes</td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Date of death</td>
+      </tr>
+      <tr>
+        <td class="ques">Explanation</td>
+        <td class="fnum">77</td>
+        <td class="name">sistreas</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Explanation</td>
+      </tr>
+    </table>
+  </body>
+</html>

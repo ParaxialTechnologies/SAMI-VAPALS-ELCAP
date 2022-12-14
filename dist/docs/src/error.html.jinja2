@@ -1,0 +1,27 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="alert alert-danger">
+                    <h4 class="alert-heading">System Error</h4>
+                    <p id="system-error-detail"></p>
+                    <p>Call your system administrator</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const systemErrorMessage = "@@ERROR_MESSAGE@@";
+        const hasSystemErrorMessage = systemErrorMessage !== "@@ERROR_" + "MESSAGE@@" && systemErrorMessage !== "";
+        if (hasSystemErrorMessage) {
+            $("#system-error-detail").text(systemErrorMessage);
+        }
+    </script>
+
+{% endblock %}

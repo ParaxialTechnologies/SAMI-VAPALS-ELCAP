@@ -1,0 +1,361 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title | escape }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr/>
+        {% include '_messages.jinja2' %}
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+              class="validated" id="main-form">
+
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="site" value="@@SITE@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
+
+            <div class="row">
+                <div class="col-sm-4 col-md-3 form-group">
+                    <label class="control-label required" for="ptdos">Study date</label>
+                    {{ f.datepicker("ptdos", "past", true) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label class="required" for="ptrad">Radiologist</label>
+                    <input type="text" class="form-control" id="ptrad" name="ptrad" required="required"/>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label for="ptradnpi">Radiologist NPI</label>
+                    <input type="text" class="form-control" id="ptradnpi" name="ptradnpi"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("ptofr-n", "PET scan performed at outside institution") }}
+                </div>
+                <div class="col-sm-3 form-group">
+                    {{ f.inlineRadio("ptofr", "ptofr-n", "n", "No") }}
+                    {{ f.inlineRadio("ptofr", "ptofr-y", "yes", "Yes") }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("sidoe", "Date of baseline CT", "required") }}
+                </div>
+                <div class="col-sm-3 form-group">
+                    {{ f.datepicker("sidoe", "past", true) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("cedos", "Date of most recent comparative study", "required") }}
+                </div>
+                <div class="col-sm-3 form-group">
+                    {{ f.datepicker("cedos", "past", true) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("ceanod-n", "Are there any nodules noted in the CT scan?") }}
+                </div>
+                <div class="col-sm-3 form-group">
+                    {{ f.inlineRadio("ceanod", "ceanod-n", "n", "No") }}
+                    {{ f.inlineRadio("ceanod", "ceanod-y", "yes", "Yes") }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("cenncnlt-n", "Are non-calcified nodules noted, all less than 6 mm?") }}
+                </div>
+                <div class="col-sm-3 form-group">
+                    {{ f.inlineRadio("cenncnlt", "cenncnlt-n", "n", "No") }}
+                    {{ f.inlineRadio("cenncnlt", "cenncnlt-y", "yes", "Yes") }}
+                </div>
+            </div>
+
+            {% with formPage=formPage %}
+                {% include '_nodule-grid.jinja2' %}
+            {% endwith %}
+
+            {% include "_lung-rads-fields.jinja2" %}
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="ptpdt">PET details - lung and nodules</label>
+                    <textarea name="ptpdt" id="ptpdt" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="ptpdtln">PET details - lymph nodes</label>
+                    <textarea name="ptpdtln" id="ptpdtln" class="form-control"></textarea>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ f.floatingLabel("ceaf-n", "Other clinically significant ancillary finding?") }}
+                </div>
+                <div class="col-sm-8 form-group">
+                    {{ f.inlineRadio("ceaf", "ceaf-n", "n", "No") }}
+                    {{ f.inlineRadio("ceaf", "ceaf-y", "yes", "Yes") }}
+                    {% set r =  [1,2] %}
+                    {% for i in r %}
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4 col-lg-3 form-group">
+                                <label for="ceafl{{ i }}">Organ/Location</label>
+                                <select name="ceafl{{ i }}" id="ceafl{{ i }}" class="form-control">
+                                    <option value="-">-
+                                    <option value="b">Breast
+                                    <option value="a">Abdomen
+                                    <option value="h">Head
+                                    <option value="n">Neck
+                                </select>
+                            </div>
+                            <div class="col-xs-6 col-md-8 col-lg-9 form-group">
+                                <label for="ceafo{{ i }}">Describe</label>
+                                <input type="text" name="ceafo{{ i }}" id="ceafo{{ i }}" class="form-control"/>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <label for="ceafmc">Comments</label>
+                        <textarea id="ceafmc" name="ceafmc" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="ceofo">Any other findings</label>
+                    <textarea name="ceofo" id="ceofo" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Follow-Up</h3>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="cefu">Follow-up</label>
+                    <select name="cefu" id="cefu" class="form-control" required="required">
+                        <option value="-"> -
+                        <option value="rs"> Annual repeat CT
+                        <option value="dx"> Follow-up CT
+                        <option value="af"> Abx + follow-up CT
+                        <option value="pe"> PET
+                        <option value="cc"> CT w contrast
+                        <option value="fn"> CT-guided biopsy
+                        <option value="br"> Bronchoscopy
+                        <option value="va"> VAT
+                        <option value="su"> Resection
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="cefud">When</label>
+                    {{ f.datepicker("cefud", "", true) }}
+                    <br/>
+                    {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-3m", "3m", "3 months") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-6m", "6m", "6 months") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-1y", "1y", "1 year") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-os", "os", "Other") }}
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Impression</h3>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label class="required">Nodules</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required"> No evidence
+                            of abnormal uptake. Follow-up as recommended above.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimn" id="ceimn-ro" value="ro" required="required"> Uptake as
+                            described above. Follow-up as recommended above.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimn" id="ceimn-ru" value="ru" required="required"> Nodule(s)
+                            unchanged, as described above. Follow-up as recommended above.
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label class="required">Other findings</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimo" id="ceimo-rs" value="rs" required="required"> No other
+                            abnormalities.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimo" id="ceimo-oa" value="oa" required="required"> Other
+                            abnormalities and suggested follow-up as described above.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ceimo" id="ceimo-da" value="da" required="required"> Diffuse
+                            abnormalities.
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="ceimre">Impression remarks</label>
+                    <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <hr/>
+            <div class="pull-left">
+                <input type="hidden" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+            <div class="pull-right">
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+            </div>
+        </form>
+    </div>
+
+    {{ f.deleteFormModal("pet.html", mockup, formMethod) }}
+{% endblock %}
+
+{% block script %}
+    <script>
+
+
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+            const multiInputValidators = ['ceimn', 'ceimo'];
+
+            $form.formValidation({
+                    fields: {
+                        ptdos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+                        ptrad: {validators: {notEmpty: {message: 'Radiologist is required'}}},
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
+                            }
+                        },
+                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
+                    },
+                    plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $fg = $("#" + e.element.id).closest(".form-group");
+                                    $c = $fg.find(".fv-plugins-message-container");
+                                    if ($c.length == 1) {
+                                        $c.append(e.iconElement);
+                                    } else {
+                                        $fg.append(e.iconElement);
+                                    }
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+        $(function () {
+
+            const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
+
+            //follow-up date calculator.
+            $("[name=cefuw]").on("change", function () {
+                const when = $("[name='cefuw']:checked").val();
+                switch (when) {
+                    case "nw":
+                        $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1m":
+                        $("#cefud").val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "3m":
+                        $("#cefud").val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "6m":
+                        $("#cefud").val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1y":
+                        $("#cefud").val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                        break;
+                    default:
+                        $("#cefud").val("").focus();
+                }
+
+                fv.revalidateField('cefud');
+            });
+
+            initNoduleGrid(fv);
+        });
+    </script>
+
+{% endblock %}

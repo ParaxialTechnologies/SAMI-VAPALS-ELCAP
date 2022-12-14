@@ -1,0 +1,42 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        {% include '_messages.jinja2' %}
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">New Form</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="post">
+                            <input type="hidden" name="samiroute" value="addform"/>
+                            <input type="hidden" name="sid" value="@@SID@@"/>
+                            <input type="hidden" name="site" value="@@SITE@@"/>
+                            <div class="form-group">
+                                <label for="form">
+                                    Please select the type of form to create
+                                </label>
+
+                                <select name="form" id="form" class="form-control">
+                                    <option value="sbform">Background</option>
+                                    <option value="fuform">Follow-up</option>
+                                    <option value="ceform">CT Evaluation</option>
+                                    <option value="ptform">PET Evaluation</option>
+                                    <option value="bxform">Biopsy</option>
+                                    <option value="itform">Intervention</option>
+                                </select>
+                            </div>
+                            <div class="pull-right">
+                                <input type="submit" value="Create New Form" class="btn btn-primary" id="submit-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

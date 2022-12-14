@@ -1,4 +1,4 @@
-#:patchtitle: Chenoweth’s Patch
+#:patchtitle: SSO Patch
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
@@ -18,7 +18,8 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
 
 #>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
 #>center: & Frederick D. S. Marshall
-#>center: #{now-iso-ymd}
+#>center: 2022-04-11
+// #{now-iso-ymd}
 
 i. Front matter
 
@@ -73,11 +74,13 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds 1 high-priority update in preparation for single
- sign on. Users will not be required to login again if they already logged
- in. The definitive source for the VAPALS-ELCAP application - codebase, 
- package distributions (including this one), and documentation - is at the
- following public Github repository:
+ #{nmsp} #{version} adds 1 high-priority update in preparation for
+ single sign on (SSO). Users will not be required to login again if
+ they already logged in.
+
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
 
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
 
@@ -92,18 +95,21 @@ ii. Contents
  The changes in this patch are:
 
 
- #.#. Login: Require users to login only once when single sign on in use.
+ #.#. Login: Implement single sign-on
 
-   issue 21-218 (high priority): When using single sign on, user should not
-   be prompted to log in to VAPALS-ELCAP separately. However, user must be
-   matched to single sign on SECID.
+Require users to login only once when single sign on in use.
+
+   issue 21-218 (high priority): When using single sign-on, user
+   should not be prompted to log in to VAPALS-ELCAP separately.
+   However, user must be matched to single sign-on SECID.
    
-   solution: Require user to sign in once using Access and Verify created by
-   system administrator. This allows SECID to be captured and tied to user.
-   For this testing version, where we don't yet have access to SECID, IP 
-   Address is used instead. Note: for testing, if user does not have a stable
-   IP Address they will be required to sign in with Access and Verify to 
-   update IP Address.
+   solution: Require user to sign in once using Access and Verify
+   created by system administrator. This allows SECID to be captured
+   and tied to user.  For this testing version, where we don't yet
+   have access to SECID, the IP address is used instead. Note: for
+   testing, if user does not have a stable IP address, they will be
+   required to sign in with Access and Verify to update the IP
+   address.
 
    reported: 2021-03 by Lilly.
 
@@ -112,8 +118,8 @@ ii. Contents
 
 #>include: .dtool/packelements.txt
 
- File                     Number  Change
- -----------------------  ------  ---------------
+// File                     Number  Change
+// -----------------------  ------  ---------------
  
 
 
@@ -157,11 +163,12 @@ ii. Contents
 
  #.#. Download and prepare the archive file
 
-   You may safely download the archive file sami-#{version}.zip in advance
-   of the actual install. In the following text, "[now]" represents a
-   time stamp representing your current time, and "[bits/sec]" is a
-   data rate and "[time]" is how long the file took to transfer (both
-   of which vary based on the user's network conditions).
+   You may safely download the archive file sami-#{version}.zip in
+   advance of the actual install. In the following text, "[now]"
+   represents a time stamp representing your current time, and
+   "[bits/sec]" is a data rate and "[time]" is how long the file took
+   to transfer (both of which vary based on the user's network
+   conditions).
 
 #>include: .dtool/wget-snippet.txt
 
@@ -172,35 +179,37 @@ ii. Contents
 
  #.#. Install web-application files
 
-    At this point, the web-application files must be installed. This is done
-    with a script that backs up the affected directories before installing
-    anything, then upgrades the web-application files.
+    At this point, the web-application files must be installed. This
+    is done with a script that backs up the affected directories
+    before installing anything, then upgrades the web-application
+    files.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
-     Updating from ./webapp-upgrade-files ...
+     Updating from ./auxfiles ...
      [... lists of files being updated ...]
      Done with install.
 
      You may now proceed with the KIDS installation.
      $ _
 
-    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
-    the official GitHub repository, and this script will have different output.
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
+    clones of the official GitHub repository, and this script will
+    have different output.
 
-     $ ./upgrade-webapp
-     Backing up files to ./.webapp-backup:
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
      [... lists of files backed up ...]
      Compressing the backup:
      [... lists of files being compressed ...]
      Cleaning up.
-     Done with backup of webapp files.
+     Done with backup of auxiliary files.
 
      Found a valid Git repository; pulling updates ...
      [... output varies ...]
@@ -223,7 +232,7 @@ ii. Contents
 
   #.#.#. Enter M
 
-    At the unix prompt, enter the M environment in direct mode, using
+    At the Unix prompt, enter the M environment in direct mode, using
     the 'csession' command on Cache or the 'mumps' command on
     YottaDB/GT.M:
 

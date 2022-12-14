@@ -1,0 +1,77 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs26 \cf0 \expnd0\expndtw0\kerning0
+David Wicksell <dlw@linux.com>\
+\
+- This is a list of the commands that you can use to install the Avicenna\
+  environment on a Linux server, which contains the VA-PALS application\
+- It is assumed that you will start from a user that has sudo privileges to become\
+  root, but if you are already root, you can skip the steps prefaced with <user>\
+- <user> represents the user logged in to, before you become root\
+- It is also assumed that you will install the VA-PALS application as the\
+  osehra user. If that isn't wanted, we can change the user later\
+- The commands you want to run start after the first $ or # on the line\
+- The package containing the VA-PALS application is vapals-osehra.tgz\
+- If there are any errors, at any step, let me know\
+\
+<user>   $ sudo mv vapals-osehra.tgz /root/\
+<user>   $ sudo -i\
+[root]   # useradd -m -U -c "osehra instance owner" osehra\
+[root]   # chown osehra.osehra vapals-osehra.tgz\
+[root]   # mv vapals-osehra.tgz /\
+[root]   # su - osehra\
+[osehra] $ cd /\
+[osehra] $ tar -xzf vapals-osehra.tgz\
+[osehra] $ cd ~\
+[osehra] $ ls\
+- Confirm that the environment looks like Avicenna\
+[osehra] $ exit\
+[root]   # cd /\
+[root]   # tar -xzf /home/osehra/yottadb-r122.tgz \
+[root]   # ls /usr/local/lib/yotta/r122/\
+- Confirm that YottaDB was installed in this directory\
+[root]   # cat /home/osehra/etc.sudoers \
+- Copy the output of the cat command\
+[root]   # visudo\
+- Paste the output of the cat command in to the file opened up by visudo, near\
+  the bottom of the file\
+[root]   # rm /home/osehra/etc.sudoers\
+[root]   # vigr\
+- Add any user on the system that needs access to the VA-PALS code as a\
+  comma-delimited list after the last colon of the line that begins with osehra\
+[root]   # vigr -s\
+- Do the same thing as the previous command, to keep it consistent\
+[root]   # mv /home/osehra/usr.local.bin.osehra /usr/local/bin/osehra\
+[root]   # cd /etc/xinetd.d/\
+[root]   # ln -s /home/osehra/etc/xinetd.d/vista-rpcbroker osehra-vista-rpcbroker\
+[root]   # ln -s /home/osehra/etc/xinetd.d/vista-vistalink osehra-vista-vistalink\
+[root]   # systemctl reload xinetd\
+[root]   # cd /etc/init.d/\
+[root]   # ln -s /home/osehra/etc/init.d/vista osehravista\
+[root]   # ln -s /home/osehra/etc/init.d/qewd osehravista-qewd\
+[root]   # systemctl enable osehravista\
+[root]   # systemctl enable osehravista-qewd\
+[root]   # exit\
+<user>   $ osehra\
+[osehra] $ start_vista.sh \
+[osehra] $ start_qewd.sh\
+[osehra] $ mumps -direct\
+vapals>  set DUZ=1 do ^XPAREDIT\
+- Choose ORWT TOOLS MENU\
+- Then choose Hospital\
+- Then edit the menu link from avicenna.vistaexpertise.net to the new address\
+vapals> halt\
+[osehra] $ exit\
+\
+If you have to fallback to using the docker container, here are the commands\
+<user>   $ osehra\
+[osehra] $ docker load va-pals.docker\
+[osehra] $ docker images\
+- Confirm that the osehra/va-pals docker container image is in the output\
+[osehra] $ exit}

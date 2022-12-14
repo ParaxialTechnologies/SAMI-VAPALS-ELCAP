@@ -1,6 +1,6 @@
-SAMICSV ;ven/gpl - csv export ;2021-05-21T20:47Z
- ;;18.0;SAMI;**7,11**;2020-01;Build 4
- ;;1.18.0.11+i11
+SAMICSV ;ven/gpl - csv export ;2022-12-13T02:38Z
+ ;;18.0;SAMI;**7,11,17**;2020-01;Build 4
+ ;;18-17
  ;
  ; SAMICSV contains a direct-mode interface to produce the VAPALS-
  ; ELCAP CSV export.
@@ -21,7 +21,7 @@ SAMICSV ;ven/gpl - csv export ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2022-12-13T02:38Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -73,6 +73,11 @@ SAMICSV ;ven/gpl - csv export ;2021-05-21T20:47Z
  ; 2021-05-21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMICSV: bump version, date.
  ;
+ ; 2022-12-11 ven/gpl 18-17-T3
+ ;  SAMICSV: include last5 and saminame in every csv file on every row
+ ;
+ ; 2022-12-13 ven/lmry  18-17-t3
+ ;	update log, bump date
  ;
  ;
  ;@contents

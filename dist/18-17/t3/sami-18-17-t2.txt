@@ -1,0 +1,562 @@
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-06-21t18:24z
+
+                              SSO Patch
+                     SAMI (VAPALS-ELCAP) 18-17-t2
+                      (SAMI*18.0*17 SEQ #17 T2)
+
+           George P. Lilly, Dom DiNatale, Larry G. Carlson,
+                      & Frederick D. S. Marshall
+                              2022-04-27
+
+i. Front matter
+
+ App         SAMI (VAPALS-ELCAP)
+ Version     18-17-t2
+ Vista ID    SAMI*18.0*17 SEQ #17 T2
+             Version 18.0, Patch ID #17, Seq #17, Test 2
+ Priority    high
+ Categories  routine, file
+ Status      test release: SAMI-18-17-t2.zip
+ Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
+             SAMI 18-2 (SAMI*18.0*2 SEQ #2)
+             SAMI 18-3 (SAMI*18.0*3 SEQ #3)
+             SAMI 18-4 (SAMI*18.0*4 SEQ #4)
+             SAMI 18-5 (SAMI*18.0*5 SEQ #5)
+             SAMI 18-6 (SAMI*18.0*6 SEQ #6)
+             SAMI 18-8 (SAMI*18.0*8 SEQ #8)
+             SAMI 18-9 (SAMI*18.0*9 SEQ #9)
+             SAMI 18-10 (SAMI*18.0*10 SEQ #10)
+             SAMI 18-11 (SAMI*18.0*11 SEQ #11)
+             SAMI 18-12 (SAMI*18.0*12 SEQ #12)
+             SAMI 18-13 (SAMI*18.0*13 SEQ #13)
+             SAMI 18-14 (SAMI*18.0*14 SEQ #14)
+             SAMI 18-15 (SAMI*18.0*15 SEQ #15)
+
+ii. Contents
+
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Prepare for installation
+  o Assume the identity of your osehra Unix user
+  o Prepare install directory
+  o Download and prepare the archive file
+  o Install web-application files
+  o Back up M routines
+    - Enter M
+    - Sign into Vista
+    - List of routines
+    - Run the backup
+ Main install instructions
+  o Installing the KIDS package
+    - Enter the KIDS installation menu
+    - Load KIDS package
+    - Install KIDS package
+ Optional backout instructions
+ Routines
+ Authors
+
+
+1. Description
+
+ SAMI 18-17-t2 adds 2 high-priority updates in preparation for
+ single sign on (SSO). Users will not be required to login again if
+ they already logged in.
+
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
+
+ https:
+
+ The most up-to-date and accurate version of this file can be found at
+
+ https:
+
+ These instructions are for your Vista environment’s sysadmin. As
+ usual, please capture the complete dialog of your install and send it
+ to your VAPALS-ELCAP support team.
+
+ The changes in this patch are:
+
+
+ 1.1. Login: Require users to login only once when single sign on in use.
+
+   issue 21-218 (high priority): When using single sign on, user should not
+   be prompted to log in to VAPALS-ELCAP separately. However, user must be
+   matched to single sign on SECID.
+
+   solution: Require user to sign in once using Access and Verify created by
+   system administrator. This allows SECID to be captured and tied to user.
+   For this testing version, where we don't yet have access to SECID, IP
+   Address is used instead. Note: for testing, if user does not have a stable
+   IP Address they will be required to sign in with Access and Verify to
+   update IP Address.
+
+   reported: 2022-03 by Lilly.
+
+1.2. Logout: Upon sign-out, redirect to the correct web page
+
+   issue 21-221 (high priority): Currently users are being directed to the home
+   page of the clinical site they just logged out of.
+
+   solution: User is redirected to correct logout page.
+
+   reported: 2022-04 by Jirapatnakul.
+
+
+2. Package elements
+
+ File                      Change
+ ------------------------  ------
+ sami-18-17-t1-recipe.txt  new
+ sami-18-17-t1.kid         new
+ sami-18-17-t1.txt         new
+ sami-18-17-t1.zip         new
+
+ Routine   Change
+ --------  --------
+ SAMIHOM4  modified
+ SAMIHUL   modified
+ SAMIPAT   modified
+ SAMISITE  modified
+
+
+
+3. Prepare for installation
+
+ This involves creating a directory to work in, running a script to
+ back up certain datafiles and web-application files, and then going
+ through steps to back up M routines that will be replaced by the
+ patch.
+
+
+ 3.1. Assume the identity of your osehra Unix user
+
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. (Also, in
+   all the command-line examples below, '$' simply means your
+   command-line prompt.) If your configuration is different, please
+   adjust this step to match your configuration:
+
+    $ $DEMAND su - osehra
+    $
+
+
+ 3.2. Prepare install directory
+
+   If this is your first time installling this, execute the following
+   commands.  They create a shell variable, and then creates the work
+   directory and sets it as your current directory.
+
+    $ INDIR=~/run/in/sami/18-17/t2
+    $ mkdir -p $INDIR
+    $ cd $INDIR
+
+   If you've already tried installing this once, you can use the
+   following commands instead:
+
+    $ INDIR=~/run/in/sami/18-17/t2
+    $ cd $INDIR
+    $ rm -rf ./sami*.{txt,kid} ./*webapp*
+
+
+ 3.3. Download and prepare the archive file
+
+   You may safely download the archive file sami-18-17-t2.zip in advance
+   of the actual install. In the following text, "[now]" represents a
+   time stamp representing your current time, and "[bits/sec]" is a
+   data rate and "[time]" is how long the file took to transfer (both
+   of which vary based on the user's network conditions).
+
+     $ wget --no-verbose 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t2/sami-18-17-t1.zip
+     {now} URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t2/sami-18-17-t1.zip [{size}/{size}] -> "sami-18-17-t1.zip" [1]
+     $ _
+
+   Then unzip the archive file with the following command.
+
+     $ unzip sami-18-17-t2.zip
+     Archive:  sami-18-17-t2.zip
+       ...
+     $ _
+
+
+ 3.4. Install web-application files
+
+    At this point, the web-application files must be installed. This is done
+    with a script that backs up the affected directories before installing
+    anything, then upgrades the web-application files.
+
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of auxiliary files.
+
+     Updating from ./auxfiles ...
+     [... lists of files being updated ...]
+     Done with install.
+
+     You may now proceed with the KIDS installation.
+     $ _
+
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
+    the official GitHub repository, and this script will have different output.
+
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of auxiliary files.
+
+     Found a valid Git repository; pulling updates ...
+     [... output varies ...]
+     Done with install.
+     $ _
+
+
+ 3.5. Back up M routines
+
+   Before the installation, we also need to back up existing
+   VAPALS-ELCAP routines that will be overwritten by this install. To
+   do this, you will have to start a Cache or YottaDB session
+   (depending on your particular installation), sign in to Vista, and
+   then call the direct-mode interface ^%RO ("routine out").
+
+   We have made efforts to display accurate instructions, but there
+   are likely to be minor differences between implementations. Be sure
+   to follow the correct dialog for your implementation.
+
+
+  3.5.1. Enter M
+
+    At the unix prompt, enter the M environment in direct mode, using
+    the 'csession' command on Cache or the 'mumps' command on
+    YottaDB/GT.M:
+
+    On Cache:
+    ---------
+    $ csession vapals
+
+    Node: vapalscache, Instance: VAPALS
+
+    >
+
+
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+
+    >
+
+
+  3.5.2. Sign into Vista
+
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+
+    > do ^XUP
+
+    Setting up programmer environment
+    This is a TEST account.
+
+    Access Code: *******
+    Terminal Type set to: C-VT100
+
+    Select OPTION NAME:
+    >
+
+
+  3.5.3. List of routines
+
+    The routine names to save are listed below; you may copy the list
+    and paste it at the appropriate Routine prompt. At the final
+    Routine prompt, press return to indicate the list of routines is
+    done.
+
+SAMIHOM4
+SAMIHUL
+SAMIPAT
+SAMISITE
+
+
+  3.5.4. Run the backup
+
+    Creating the routine backup file differs by implementation.
+
+    On Caché
+    --------
+    Note that routines that don't currently exist will result in a
+    warning message (specifically, the routine name will have '[???]'
+    after it, and the line [does not exist] after it). These messages
+    can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+
+     >do ^%RO
+
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMIHOM4
+     Routine(s): SAMIHUL
+     Routine(s): SAMIPAT
+     Routine(s): SAMISITE
+     Routine(s):
+
+     Description: SAMI*18.0*17 SEQ #17 T2 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-17/t2/sami-18-17-t2-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMIHOM4.INT    SAMIHUL.INT     SAMIPAT.INT     SAMISITE.INT
+     >_
+
+    On YottaDB/GT.M
+    ---------------
+    Note that routines that don't currently exist will result in the
+    routine name not appearing under the input line, and won't count
+    towards the number of routines. These can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+
+     >do ^%RO
+
+     Routine Output - Save selected routines into RO file.
+
+     Routines: SAMIHOM4
+     SAMIHOM4
+     Current total of 1 routines.
+
+     Routines: SAMIHUL
+     SAMIHUL
+     Current total of 2 routines.
+
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 3 routines.
+
+     Routines: SAMISITE
+     SAMISITE
+     Current total of 4 routines.
+
+     Routine:
+
+     Output device <terminal>: /home/osehra/run/in/sami/18-17/t2/sami-18-17-t2-back.ro
+
+     Header Label: SAMI*18.0*17 SEQ #17 T2 routine backup
+     Strip comments <No>?: 
+     SAMIHOM4  SAMIHUL   SAMIPAT   SAMISITE
+
+     Total of 1852 lines in 4 routines.
+
+     >_
+
+    You'll remain in the M environment for the next section.
+
+
+4. Main install instructions
+
+ This consists of loading and installing the KIDS package, and
+ activating the new web-application files.
+
+
+ 4.1. Installing the KIDS package
+
+   This installs the various M assets required by the application.
+
+
+  4.1.1. Enter the KIDS Installation menu
+
+    At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
+    Installation & Distribution System main menu, and at the Select
+    ... Option prompt, select Installation:
+
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
+
+
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.1.2. Load KIDS package
+
+    Select option 1 and press return at the Continue prompt.
+
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-17/t2/sami-18-17-t2.kid
+
+     KIDS Distribution saved on Apr 27, 2022@16:23:40
+     Comment: Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t2)
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*17
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*17
+     Use INSTALL NAME: SAMI*18.0*17 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.1.3. Install KIDS package
+
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that '[now]'
+    denotes the current time when you're doing the install.
+
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*17     Loaded from Distribution    [now]
+        => Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t2)  ;Created on Apr 27, 2022@16:23:40
+
+     This Distribution was loaded on [now] with header of
+        Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t2)  ;Created on Apr 27, 2022@16:23:40
+        It consisted of the following Install(s):
+        SAMI*18.0*17
+     Checking Install for Package SAMI*18.0*17
+
+     Install Questions for SAMI*18.0*17
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*17 :
+                    [now]
+
+     Build Distribution Date: Apr 27, 2022
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1817^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*17 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > halt
+     $ _
+
+   You now have {appname} {version} ({vista-version})
+   installed in your M environment. The install is now complete. We
+   recommend running tests of your {appname} app to confirm the
+   environment is operational and bug-free, before notifying users
+   that {appname} is ready for their use.
+
+
+5. Optional backout instructions
+
+ Should errors or other problems result from installing this package
+ contact the {appname} development team for package-backout
+ instructions.
+
+
+6. Routines
+
+ Lines 2 & 3 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;18-x-17
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  -------------------------
+ SAMIHOM4  B977083192       B985660773      **1,4,5,6,9,12,15,16,17**
+ SAMIHUL   B117874          B120634         **9,12,15,16,17**
+ SAMIPAT   B9183353         B10379723       **12,14,15,17**
+ SAMISITE  B95807248        B155824201      **5,12,14,17**
+
+
+7. Authors
+
+             Dates              By
+ Developed   2022-04-01/04      George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+ Tested      2022-04-01/05	    George P. Lilly (ven)
+                                Artit Jirapatnakul (va-pho)
+                                Linda M. R. Yaw (ven)
+
+ Released    2022-04-05         Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+
+$END TXT

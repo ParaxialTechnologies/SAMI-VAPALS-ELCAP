@@ -76,7 +76,7 @@ SAMICSV ;ven/gpl - csv export ;2022-12-13T02:38Z
  ; 2022-12-11 ven/gpl 18-17-T3
  ;  SAMICSV: include last5 and saminame in every csv file on every row
  ;
- ; 2022-12-13 ven/lmry  18-17-t3
+ ; 2022-12-13 ven/lmry  18-17-t3 test
  ;	update log, bump date
  ;
  ;

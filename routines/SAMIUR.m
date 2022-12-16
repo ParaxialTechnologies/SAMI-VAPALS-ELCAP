@@ -221,6 +221,8 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . . . set cnt=cnt+1
  . . . new XR,XRV
  . . . ; set XR=$get(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
+ . . . i $get(RPT(ir,"routine"))="" d  q
+ . . . . set SAMIRTN(cnt)="<td></td>"
  . . . set XR="set XRV="_$get(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
  . . . ; set XRV=@XR
  . . . xecute XR ; call report-field handlers in ^SAMIUR2
@@ -627,7 +629,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
  ;
  ;
-UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
+UNMAT2(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
  ;@called-by
  ; SELECT
@@ -671,6 +673,62 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
  quit  ; end of UNMAT
  ;
+ ;RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
+UNMAT(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
+ ; on entry for every ceform in the date range
+ ;@called-by
+ ; SELECT
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ set datephrase="CT Eval Recommendations"
+ new ERR k ^gpl("ERR")
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
+ new dfn set dfn=9000000
+ for  do  quit:'dfn  ;
+ . set dfn=$order(@lroot@("dfn",dfn))
+ . quit:'dfn
+ . ;
+ . new ien set ien=$order(@lroot@("dfn",dfn,""))
+ . quit:ien=""
+ . i $g(@lroot@(ien,"dfn"))'=dfn d  q  ;
+ . . s ERR(dfn)="dfn index error"
+ . . m ^gpl("ERR",dfn)=@lroot@(ien)
+ . ;
+ . i $g(@lroot@(ien,"siteid"))'[site q  ;
+ . ;
+ . n ceforms
+ . d CEFORMS(.ceforms,dfn)
+ . n cefdt s cefdt=""
+ . f  s cefdt=$o(ceforms(cefdt)) q:cefdt=""  d  ;
+ . . n efmdate
+ . . set efmdate=$$FMDT^SAMIUR2(cefdt)
+ . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien) 
+ . ;
+ . ;
+ ;
+ i $d(ERR) d ^ZTER
+ ;
+ quit  ; end of UNMAT
+ ;
+CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
+ new root set root=$$setroot^%wd("vapals-patients")
+ n sid
+ s sid=$g(@root@(DFN,"sisid"))
+ q:sid=""
+ new groot set groot=$name(@root@("graph",sid))
+ new items set items=""
+ do GETITEMS^SAMICASE("items",sid)
+ quit:'$data(items) ""
+ ;
+ new bdate set bdate=""
+ new bkey set bkey=""
+ for  set bkey=$order(items("type","vapals:ceform",bkey)) quit:bkey=""  do  ;
+ . set bdate=$piece(bkey,"ceform-",2)
+ . set bdate=$$KEY2DSPD^SAMICAS2(bdate)
+ . set ARY(bdate)=""
+ ;
+ q
  ;
  ;
 WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list

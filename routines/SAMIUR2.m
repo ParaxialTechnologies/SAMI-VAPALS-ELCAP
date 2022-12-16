@@ -244,13 +244,43 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(4,"routine")="$$SMHIS^SAMIUR2"
  . quit
  ;
- if TYPE="unmatched" do  ;
+ if TYPE="unmatched2" do  ;
  . set RPT(1,"header")="Unmatched Manual Entry"
  . set RPT(1,"routine")="$$MANPAT^SAMIUR2"
  . set RPT(2,"header")="Possible HL7 Match"
  . set RPT(2,"routine")="$$POSSIBLE^SAMIUR2"
  . set RPT(3,"header")="Match Control"
  . set RPT(3,"routine")="$$MATCH^SAMIUR2"
+ . quit
+ ;
+ if TYPE="unmatched" do  ;
+ . set RPT(1,"header")="Name"
+ . set RPT(1,"routine")="$$NAME^SAMIUR2"
+ . ;set RPT(2,"header")=$$SSNLABEL(SITE)
+ . ;set RPT(2,"routine")="$$SSN^SAMIUR2"
+ . set RPT(3,"header")="Last5"
+ . set RPT(3,"routine")=""
+ . set RPT(4,"header")="CT Eval Date"
+ . set RPT(4,"routine")=""
+ . set RPT(5,"header")="Antibiotics"
+ . set RPT(5,"routine")=""
+ . set RPT(6,"header")="Contrast CT"
+ . set RPT(6,"routine")=""
+ . set RPT(7,"header")="PET"
+ . set RPT(7,"routine")=""
+ . ;set RPT(8,"header")="Percutaneous biopsy"
+ . set RPT(8,"header")="Perc biopsy"
+ . set RPT(8,"routine")=""
+ . set RPT(9,"header")="Bronchoscopy"
+ . set RPT(9,"routine")=""
+ . ;set RPT(10,"header")="Pulmonary consultation"
+ . set RPT(10,"header")="Pulm consult"
+ . set RPT(10,"routine")=""
+ . ;set RPT(11,"header")="Refer to tumor board"
+ . set RPT(11,"header")="Tumor board"
+ . set RPT(11,"routine")=""
+ . ;set RPT(12,"header")="Other"
+ . ;set RPT(12,"routine")=""
  . quit
  ;
  if TYPE="worklist" do  quit  ;

@@ -262,22 +262,22 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(3,"routine")="$$LAST5^SAMIUR2"
  . set RPT(4,"header")="CT Eval Date"
  . set RPT(4,"routine")="$$ZDT^SAMIUR2"
- . set RPT(5,"header")="Antibiotics"
+ . set RPT(5,"header")="Antibiotics"_$$COUNTS("cefuaf")
  . set RPT(5,"routine")="$$RECANTI^SAMIUR2"
- . set RPT(6,"header")="Contrast CT"
+ . set RPT(6,"header")="Contrast CT"_$$COUNTS("cefucc")
  . set RPT(6,"routine")="$$RECCONT^SAMIUR2"
- . set RPT(7,"header")="PET"
+ . set RPT(7,"header")="PET"_$$COUNTS("cefupe")
  . set RPT(7,"routine")="$$RECPET^SAMIUR2"
  . ;set RPT(8,"header")="Percutaneous biopsy"
- . set RPT(8,"header")="Perc biopsy"
+ . set RPT(8,"header")="Perc biopsy"_$$COUNTS("cefufn")
  . set RPT(8,"routine")="$$RECBIOP^SAMIUR2"
- . set RPT(9,"header")="Bronchoscopy"
+ . set RPT(9,"header")="Bronchoscopy"_$$COUNTS("cefubr")
  . set RPT(9,"routine")="$$RECBRONC^SAMIUR2"
  . ;set RPT(10,"header")="Pulmonary consultation"
- . set RPT(10,"header")="Pulm consult"
+ . set RPT(10,"header")="Pulm consult"_$$COUNTS("cefupc")
  . set RPT(10,"routine")="$$RECPULM^SAMIUR2"
  . ;set RPT(11,"header")="Refer to tumor board"
- . set RPT(11,"header")="Tumor board"
+ . set RPT(11,"header")="Tumor board"_$$COUNTS("cefutb")
  . set RPT(11,"routine")="$$RECTUMOR^SAMIUR2"
  . ;set RPT(12,"header")="Other"
  . ;set RPT(12,"routine")=""
@@ -604,6 +604,15 @@ AGE(zdt,dfn,SAMIPATS) ; age
  ;
  quit age ; end of ppi $$AGE^SAMIUR2
  ;
+COUNTS(recvar) ; extrinsic returns (total_recommendations/total_patients)
+ ;
+ n n,d
+ s (n,d)=0
+ s n=$g(SAMIPATS("rcount",recvar))
+ s n=+n
+ s d=$g(SAMIPATS("pcount",recvar))
+ s d=+d
+ q "<br>("_n_"/"_d_")"
  ;
 RECANTI(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
  Q $S($get(SAMIPATS(zdt,dfn,"cefuaf"))="y":"X",1:"")

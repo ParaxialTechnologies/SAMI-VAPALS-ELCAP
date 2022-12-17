@@ -1,4 +1,4 @@
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-12-13t02:13z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-12-17t01:15z
 
                               SSO Patch
                      SAMI (VAPALS-ELCAP) 18-17-t3
@@ -29,7 +29,6 @@ i. Front matter
              SAMI 18-11 (SAMI*18.0*11 SEQ #11)
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
              SAMI 18-13 (SAMI*18.0*13 SEQ #13)
-             SAMI 18-14 (SAMI*18.0*14 SEQ #14)
              SAMI 18-15 (SAMI*18.0*15 SEQ #15)
 
 ii. Contents
@@ -60,8 +59,8 @@ ii. Contents
 
 1. Description
 
- SAMI 18-17-t3 adds 1 high-priority update to add name and last5 to
- a .csv report.
+ SAMI 18-17-t3 adds one high-priority update to add name and
+ last5 to a .csv report.
 
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is at
@@ -80,14 +79,14 @@ ii. Contents
  The changes in this patch are:
 
 
- 1.1. Include name and last5 in every csv file on every row.
+ 1.1. Include name and last5 in every csv file on every row
 
-   issue (high priority): A report is available to be run by the sysadmin
-   that outputs all patient data for statistical analysis. Lines did not
-   include patient ID.
+   unnumbered issue (high priority): A report is available to be run
+   by the sysadmin that outputs all patient data for statistical
+   analysis. Lines did not include patient ID.
 
-   solution: Add saminame (full patient name) and last5 (First letter of last
-   name and last four digits of SSN) in each line of report.
+   solution: Add saminame (full patient name) and last5 (First letter
+   of last name and last four digits of SSN) in each line of report.
 
    reported: 2022-12-09 by Henschke and Yip.
 
@@ -95,16 +94,19 @@ ii. Contents
 2. Package elements
 
  File                      Change
- ------------------------  ------
+ ------------------------  --------
  sami-18-17-t3-recipe.txt  new
  sami-18-17-t3.kid         new
  sami-18-17-t3.txt         new
  sami-18-17-t3.zip         new
+ docs/mockups/*            modified
+ docs/src/layout.jinja2    new
+ docs/www/*                modified
 
- Routine   Change
- --------  --------
- SAMICSV   modified
- SAMIPAT   modified
+ Routine  Change
+ -------  --------
+ SAMICSV  modified
+ SAMIPAT  modified
 
 
 
@@ -143,19 +145,20 @@ ii. Contents
 
     $ INDIR=~/run/in/sami/18-17/t3
     $ cd $INDIR
-    $ rm -rf ./sami*.{txt,kid} ./*webapp*
+    $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
  3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-18-17-t3.zip in advance
-   of the actual install. In the following text, "[now]" represents a
-   time stamp representing your current time, and "[bits/sec]" is a
-   data rate and "[time]" is how long the file took to transfer (both
-   of which vary based on the user's network conditions).
+   You may safely download the archive file sami-18-17-t3.zip in
+   advance of the actual install. In the following text, "[now]"
+   represents a time stamp representing your current time, and
+   "[bits/sec]" is a data rate and "[time]" is how long the file took
+   to transfer (both of which vary based on the user's network
+   conditions).
 
      $ wget --no-verbose 'https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t3/sami-18-17-t3.zip
-     {now} URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t3/sami-18-17-t3.zip [{size}/{size}] -> "sami-18-17-t3.zip" [1]
+     [now] URL:https://vistaexpertise.net/newsite/project/vapals-elcap/dist/18-17/t3/sami-18-17-t3.zip [size/size] -> "sami-18-17-t3.zip" [1]
      $ _
 
    Then unzip the archive file with the following command.
@@ -168,9 +171,10 @@ ii. Contents
 
  3.4. Install web-application files
 
-    At this point, the web-application files must be installed. This is done
-    with a script that backs up the affected directories before installing
-    anything, then upgrades the web-application files.
+    At this point, the web-application files must be installed. This
+    is done with a script that backs up the affected directories
+    before installing anything, then upgrades the web-application
+    files.
 
      $ ./upgrade-auxfiles
      Backing up files to ./.aux-backup:
@@ -187,8 +191,9 @@ ii. Contents
      You may now proceed with the KIDS installation.
      $ _
 
-    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
-    the official GitHub repository, and this script will have different output.
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
+    clones of the official GitHub repository, and this script will
+    have different output.
 
      $ ./upgrade-auxfiles
      Backing up files to ./.aux-backup:
@@ -229,14 +234,14 @@ ii. Contents
 
     Node: vapalscache, Instance: VAPALS
 
-    >
+    >_
 
 
     On YottaDB/GT.M:
     ----------------
     $ mumps -dir
 
-    >
+    >_
 
 
   3.5.2. Sign into Vista
@@ -255,7 +260,7 @@ ii. Contents
     Terminal Type set to: C-VT100
 
     Select OPTION NAME:
-    >
+    >_
 
 
   3.5.3. List of routines
@@ -266,6 +271,7 @@ ii. Contents
     done.
 
 SAMICSV
+SAMIPAT
 
 
   3.5.4. Run the backup
@@ -288,6 +294,7 @@ SAMICSV
 
      Routine output (please use %ROMF for object code output)
      Routine(s): SAMICSV
+     Routine(s): SAMIPAT
      Routine(s):
 
      Description: SAMI*18.0*17 SEQ #17 T3 routine backup
@@ -296,7 +303,7 @@ SAMICSV
      Device: /home/osehra/run/in/sami/18-17/t3/sami-18-17-t3-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMICSV.INT
+     SAMICSV.INT     SAMIPAT.INT
      >_
 
     On YottaDB/GT.M
@@ -316,9 +323,9 @@ SAMICSV
      Routines: SAMICSV
      SAMICSV
      Current total of 1 routines.
-     
-     Routines: SAMICSV
-     SAMICSV
+
+     Routines: SAMIPAT
+     SAMIPAT
      Current total of 2 routines.
 
      Routine:
@@ -327,10 +334,9 @@ SAMICSV
 
      Header Label: SAMI*18.0*17 SEQ #17 T3 routine backup
      Strip comments <No>?: 
-     SAMICSV
-     SAMIPAT
+     SAMICSV   SAMIPAT
 
-     Total of ??? lines in 2 routines.
+     Total of 425 lines in 2 routines.
 
      >_
 
@@ -386,7 +392,7 @@ SAMICSV
      Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
      Enter a Host File: /home/osehra/run/in/sami/18-17/t3/sami-18-17-t3.kid
 
-??     KIDS Distribution saved on Apr 27, 2022@16:23:40
+     KIDS Distribution saved on Dec 16, 2022@11:55:38
      Comment: Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t3)
 
      This Distribution contains Transport Globals for the following Package(s):
@@ -421,10 +427,10 @@ SAMICSV
 
      Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
      Select INSTALL NAME:    SAMI*18.0*17     Loaded from Distribution    [now]
-        => Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t3)  ;Created on Apr 27, 2022@16:23:40
+        => Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t3)  ;Created on Dec 16, 2022@11:55:38
 
      This Distribution was loaded on [now] with header of
-??        Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t3)  ;Created on Apr 27, 2022@16:23:40
+        Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t3)  ;Created on Dec 16, 2022@11:55:38
         It consisted of the following Install(s):
         SAMI*18.0*17
      Checking Install for Package SAMI*18.0*17
@@ -446,7 +452,7 @@ SAMICSV
       Install Started for SAMI*18.0*17 :
                     [now]
 
-??     Build Distribution Date: Apr 27, 2022
+     Build Distribution Date: Dec 16, 2022
 
       Installing Routines:.....
                     [now]
@@ -503,12 +509,10 @@ SAMICSV
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
- Name      Checksum before  Checksum after  Patch list
- --------  ---------------  --------------  -------------------------
-?? SAMIHOM4  B977083192       B985660773      **1,4,5,6,9,12,15,16,17**
- SAMIHUL   B117874          B120634         **9,12,15,16,17**
- SAMIPAT   B9183353         B10379723       **12,14,15,17**
- SAMISITE  B95807248        B155824201      **5,12,14,17**
+ Name     Checksum before  Checksum after  Patch list
+ -------  ---------------  --------------  ---------------
+ SAMICSV  B60401322        B70418745       **7,11,17**
+ SAMIPAT  B10379723        B10590120       **12,14,15,17**
 
 
 7. Authors
@@ -521,11 +525,11 @@ SAMICSV
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2022-12-15 	    George P. Lilly (ven)
+ Tested      2022-12-15	        George P. Lilly (ven)
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
-?? Released    2022-04-05         Frederick D. S. Marshall (ven)
+ Released    2022-12-16         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

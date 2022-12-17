@@ -1,11 +1,11 @@
 :numbered:
-:version: 18-17-t2
+:version: 18-17-t3
 :doctitle: VAPALS-ELCAP: SAMI {version}
-:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 2
+:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 3
 :nmsp: SAMI
 :lnmsp: sami
 :appname: VAPALS-ELCAP
-:va-version: {nmsp}*18.0*17 SEQ #17 T2
+:va-version: {nmsp}*18.0*17 SEQ #17 T3
 :priority: High
 :categories: Routine, File
 :status: Test Release
@@ -14,7 +14,7 @@
 
 // grep '\$TXT' sami-18-17-t2.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-06-21t18:24z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-12-13t02:13z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -30,7 +30,7 @@ George P. Lilly,
 Domenic DiNatale,
 Larry G. Carlson
 _&_ Frederick D. S. Marshall +
-2022-04-27
+2022-12-13
 
 [[front]]
 [role="h2"]
@@ -66,13 +66,15 @@ _&_ Frederick D. S. Marshall +
 
 [cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
 |==============================================================================
-|[options="compact"]
+|[options="compact",role="toc"]
 * <<front,Front matter>>
 ** <<toc,Contents>>
 * <<desc,Description>>
+** <<issue-21-218,Login: Implement single sign-on>>
+** <<"issue-21-221","Logout: Upon sign-out, redirect to the correct web page">>
 * <<pkg-elements,Package elements>>
 * <<prepare,Prepare for installation>>
-** <<be-osehra,Assume the identity of your `osehra` Unix user>>
+** <<be-osehra,Assume the identity of your +osehra+ Unix user>>
 ** <<prep-installdir,Prepare install directory>>
 ** <<prep-archive,Download and prepare the archive file>>
 ** <<install-www,Install web-application files>>
@@ -85,9 +87,9 @@ _&_ Frederick D. S. Marshall +
 *** <<run-ro,Run the backup>>
 **** <<backup-cache,On Caché>>
 **** <<backup-yotta,On YottaDB/GT.M>>
-|[options="compact"]
+|[options="compact",role="toc"]
 * <<install,Main install instructions>>
-** <<install-kids,Install the KIDS package>>
+** <<install-kids,Installing the KIDS package>>
 *** <<signin-kids,Enter the KIDS Installation menu>>
 *** <<load-pkg,Load KIDS package>>
 *** <<install-pkg,Install KIDS package>>
@@ -99,9 +101,8 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-{nmsp} {version} adds two high-priority updates in preparation for single
-sign-on (SSO). Users will not be required to login again if they already logged
-in.
+{nmsp} {version} adds one high-priority update to add _name_ and _last5_ to a
+`.csv` report.
 
 The definitive source for the VAPALS-ELCAP application---codebase, package
 distributions (including this one), and documentation---is a
@@ -114,34 +115,20 @@ support team.
 The changes in this patch is:
 
 [options="compact"]
-* Login (implement single sign-on): high priority: <<issue-21-218,21-218>>
-* Logout (webpage redirect): high priority: <<issue-21-221,21-221>>
+* Include `saminame` and `last5` in every `.csv` file on every row:
+  <<issue-a,??>>
 
-[[issue-21-218]]
-=== Login: Implement single sign-on
+[[issue-a]]
+=== Include `saminame` and `last5` in every `.csv` file on every row
 
-**Issue 21-218 (high priority):** When using single sign-on, user should not be
-prompted to log in to VAPALS-ELCAP separately.  However, user must be matched
-to single sign-on SECID.
+**Unnumbered Issue (high priority):** A report is available to be run by the
+system administrator that outputs all patient data for statistical
+analysis. Lines did not include patient{nbsp}ID.
 
-**Solution:** Require user to sign in once using Access and Verify created by
-system administrator. This allows SECID to be captured and tied to user. For
-this testing version, where we don't yet have access to SECID, the IP address
-is used instead. Note: for testing, if user does not have a stable IP address,
-they will be required to sign in with Access and Verify to update the IP
-address.
+**Solution:** Add `saminame` (full patient name) and `last5` (First letter of
+last name and last four digits of{nbsp}SSN) in each line of report.
 
-**Reported:** 2021-03 by Lilly.
-
-[[issue-21-221]]
-=== Logout: Upon sign-out, redirect to the correct web page
-
-**Issue 21-221 (high priority):** Currently users are being directed to the
-home page of the clinical site they just logged out of.
-
-**Solution:** User is redirected to correct logout page.
-
-**Reported:** 2021-04 by Jirapatnakul.
+**Reported:** 2022-12-09 by Henschke and Yip.
 
 [[pkg-elements]]
 == Package elements
@@ -191,7 +178,7 @@ They create a shell variable, and then creates the work directory and sets it
 as your current directory.
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-17/t2
+$ INDIR=~/run/in/sami/18-17/t3
 $ mkdir -p $INDIR
 $ cd $INDIR
 -------------------------------------------------------------------------------
@@ -200,7 +187,7 @@ If you've already tried installing this before, you can use the following
 commands instead:
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-17/t2
+$ INDIR=~/run/in/sami/18-17/t3
 $ cd $INDIR
 $ rm -rf ./sami*.{txt,kid} ./auxfiles
 -------------------------------------------------------------------------------
@@ -458,16 +445,16 @@ include::.dtool/checksums.adoi[]
 [cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
 |==============================================================================
 |           | Dates                 | By
-| Developed | 2022-04-01/04         | George P. Lilly (VEN) +
+| Developed | 2022-12-11            | George P. Lilly (VEN) +
                                       Dominic DiNatale (PAR) +
                                       Larry G. Carlson (VEN) +
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Tested    | 2022-04-01/05         | George P. Lilly (VEN) +
+| Tested    | 2022-12-15            | George P. Lilly (VEN) +
                                       Artit Jirapatnakul (VA-PHO) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2022-04-05            | Frederick D. S. Marshall (VEN) +
+| Released  | 2022-12-16            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

@@ -401,6 +401,9 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
  ; merge ^gpl("select")=filter
  new type set type=ztype
+ if type="recommend" do  quit  ;
+ . do RECOMEND(.SAMIPATS,ztype,.datephrase,.filter)
+ . quit
  if type="unmatched" do  quit  ;
  . do UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
  . quit
@@ -629,7 +632,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
  ;
  ;
-UNMAT2(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
+UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
  ;@called-by
  ; SELECT
@@ -673,13 +676,31 @@ UNMAT2(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
  quit  ; end of UNMAT
  ;
- ;RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
-UNMAT(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
+RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  ; on entry for every ceform in the date range
  ;@called-by
  ; SELECT
  ;@calls
  ; $$setroot^%wd
+ ;
+ ;
+ new strdt,enddt,fmstrdt,fmenddt
+ set strdt=$get(filter("start-date"))
+ ;set fmstrdt=$$KEY2FM^SAMICASE(strdt)
+ set fmstrdt=$$FMDT^SAMIUR2(strdt)
+ if fmstrdt=-1 do  ;
+ . set fmstrdt=2000101
+ . if type="followup" set fmstrdt=$$NOW^XLFDT
+ . if type="activity" set fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ . quit
+ if strdt="" set filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
+ ;
+ set enddt=$get(filter("end-date"))
+ ;set fmenddt=$$KEY2FM^SAMICASE(enddt)
+ set fmenddt=$$FMDT^SAMIUR2(enddt)
+ if fmenddt=-1 do  ;
+ . set fmenddt=$$NOW^XLFDT
+ if enddt="" set filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
  ;
  set datephrase="CT Eval Recommendations"
  new ERR k ^gpl("ERR")
@@ -698,7 +719,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . i $g(@lroot@(ien,"siteid"))'[site q  ;
  . ;
  . n ceforms
- . d CEFORMS(.ceforms,dfn)
+ . d CEFORMS(.ceforms,dfn,fmstrdt,fmenddt)
  . n cefdt s cefdt=""
  . f  s cefdt=$o(ceforms(cefdt)) q:+cefdt=0  d  ;
  . . n efmdate
@@ -727,9 +748,13 @@ CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
  ;
  new bdate set bdate=""
  new bkey set bkey=""
+ new bfmdate
  for  set bkey=$order(items("type","vapals:ceform",bkey)) quit:bkey=""  do  ;
  . set bdate=$piece(bkey,"ceform-",2)
  . set bdate=$$KEY2DSPD^SAMICAS2(bdate)
+ . set bfmdate=$$FMDT^SAMIUR2(bdate)
+ . quit:bfmdate<BEGDATE  ; before the start date
+ . quit:bfmdate>(ENDDATE+1)  ; after the end date
  . n zt
  . f zt="af","cc","pe","fn","br","pc","tb" d  ;
  . . n y

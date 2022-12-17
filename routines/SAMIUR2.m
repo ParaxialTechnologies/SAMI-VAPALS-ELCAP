@@ -244,7 +244,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(4,"routine")="$$SMHIS^SAMIUR2"
  . quit
  ;
- if TYPE="unmatched2" do  ;
+ if TYPE="unmatched" do  ;
  . set RPT(1,"header")="Unmatched Manual Entry"
  . set RPT(1,"routine")="$$MANPAT^SAMIUR2"
  . set RPT(2,"header")="Possible HL7 Match"
@@ -253,7 +253,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(3,"routine")="$$MATCH^SAMIUR2"
  . quit
  ;
- if TYPE="unmatched" do  ;
+ if TYPE="recommend" do  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . ;set RPT(2,"header")=$$SSNLABEL(SITE)

@@ -259,26 +259,26 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . ;set RPT(2,"header")=$$SSNLABEL(SITE)
  . ;set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="Last5"
- . set RPT(3,"routine")=""
+ . set RPT(3,"routine")="$$LAST5^SAMIUR2"
  . set RPT(4,"header")="CT Eval Date"
- . set RPT(4,"routine")=""
+ . set RPT(4,"routine")="$$ZDT^SAMIUR2"
  . set RPT(5,"header")="Antibiotics"
- . set RPT(5,"routine")=""
+ . set RPT(5,"routine")="$$RECANTI^SAMIUR2"
  . set RPT(6,"header")="Contrast CT"
- . set RPT(6,"routine")=""
+ . set RPT(6,"routine")="$$RECCONT^SAMIUR2"
  . set RPT(7,"header")="PET"
- . set RPT(7,"routine")=""
+ . set RPT(7,"routine")="$$RECPET^SAMIUR2"
  . ;set RPT(8,"header")="Percutaneous biopsy"
  . set RPT(8,"header")="Perc biopsy"
- . set RPT(8,"routine")=""
+ . set RPT(8,"routine")="$$RECBIOP^SAMIUR2"
  . set RPT(9,"header")="Bronchoscopy"
- . set RPT(9,"routine")=""
+ . set RPT(9,"routine")="$$RECBRONC^SAMIUR2"
  . ;set RPT(10,"header")="Pulmonary consultation"
  . set RPT(10,"header")="Pulm consult"
- . set RPT(10,"routine")=""
+ . set RPT(10,"routine")="$$RECPULM^SAMIUR2"
  . ;set RPT(11,"header")="Refer to tumor board"
  . set RPT(11,"header")="Tumor board"
- . set RPT(11,"routine")=""
+ . set RPT(11,"routine")="$$RECTUMOR^SAMIUR2"
  . ;set RPT(12,"header")="Other"
  . ;set RPT(12,"routine")=""
  . quit
@@ -605,6 +605,32 @@ AGE(zdt,dfn,SAMIPATS) ; age
  quit age ; end of ppi $$AGE^SAMIUR2
  ;
  ;
+RECANTI(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefuaf"))="y":"X",1:"")
+ ;
+RECCONT(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefucc"))="y":"X",1:"")
+ ;
+RECPET(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefupe"))="y":"X",1:"")
+ ;
+RECBIOP(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefufn"))="y":"X",1:"")
+ ;
+RECBRONC(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefubr"))="y":"X",1:"")
+ ;
+RECPULM(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefupc"))="y":"X",1:"")
+ ;
+RECTUMOR(zdt,dfn,SAMIPATS) ; returns X if recommendation was checked
+ Q $S($get(SAMIPATS(zdt,dfn,"cefutb"))="y":"X",1:"")
+ ;
+LAST5(zdt,dfn,SAMIPATS) ; return last5
+ Q $get(SAMIPATS(zdt,dfn,"last5"))
+ ;
+ZDT(zdt,dfn,SAMIPATS) ; insertable index date
+ Q $$TDDT(zdt)
  ;
 ENROLLDT(zdt,dfn,SAMIPATS) ; enrollment date
  ;

@@ -704,7 +704,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . . n efmdate
  . . set efmdate=$$FMDT^SAMIUR2(cefdt)
  . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien) 
- . ;
+ . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
  . ;
  ;
  i $d(ERR) d ^ZTER
@@ -727,6 +727,14 @@ CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
  . set bdate=$piece(bkey,"ceform-",2)
  . set bdate=$$KEY2DSPD^SAMICAS2(bdate)
  . set ARY(bdate)=""
+ . set ARY(bdate,"key")=bkey
+ . set ARY(bdate,"cefuaf")=$g(@groot@(bkey,"cefuaf"))
+ . set ARY(bdate,"cefucc")=$g(@groot@(bkey,"cefucc"))
+ . set ARY(bdate,"cefupe")=$g(@groot@(bkey,"cefupe"))
+ . set ARY(bdate,"cefufn")=$g(@groot@(bkey,"cefufn"))
+ . set ARY(bdate,"cefubr")=$g(@groot@(bkey,"cefubr"))
+ . set ARY(bdate,"cefupc")=$g(@groot@(bkey,"cefupc"))
+ . set ARY(bdate,"cefutb")=$g(@groot@(bkey,"cefutb"))
  ;
  q
  ;

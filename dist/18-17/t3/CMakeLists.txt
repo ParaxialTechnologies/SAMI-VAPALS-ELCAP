@@ -1,6 +1,6 @@
-adoc_to_html(
-  *.adoc
-  )
+# adoc_to_html(
+#   *.adoc
+#   )
 
 copy_binaries(
   sami*[0-9].zip

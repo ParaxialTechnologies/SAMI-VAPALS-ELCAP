@@ -1,6 +1,6 @@
-SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
- ;;18.0;SAMI;**12,14,15**;2020-01;
- ;;18-15
+SAMIURUL ;ven/gpl - user reports log 2022-12-31T00:48Z
+ ;;18.0;SAMI;**12,14,15,17**;2020-01;
+ ;;18-17
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,13 +21,13 @@ SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29T23:59Z
+ ;@last-update 2022-12-31T00:48Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-15
+ ;@version 18-17
  ;@release-date 2020-01
- ;@patch-list **12,14,15**
+ ;@patch-list **12,14,15,17**
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
@@ -202,6 +202,12 @@ SAMIURUL ;ven/gpl - user reports log 2021-10-29T23:59Z
  ;
  ; 2021-10-29 ven/lmry 18-15
  ;  SAMIUR remove blank at end of line for XINDEX
+ ;
+ ; 2022-12-15/17 ven/gpl 18-17
+ ;  SAMIUR, SAMIUR2 develop new CT Eval Recommendation report
+ ;
+ ; 2022-12-30 ven/lmry 18-17
+ ;  SAMIUR, SAMIUR2, SAMIURUL update history, bump dates and versions
  ;
  ;@contents
  ; SAMIUR user reports

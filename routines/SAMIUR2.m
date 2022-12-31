@@ -1,6 +1,6 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2021-10-29t20:32z
- ;;18.0;SAMI;**5,11,12,14,15**;2020-01;Build 11
- ;;18-15
+SAMIUR2 ;ven/gpl - user reports cont ;2022-12-31t00:45z
+ ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;Build 11
+ ;;18-17
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -21,13 +21,13 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-10-29t20:32z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t20:32z
+ ;@last-update 2022-12-31t00:45z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-15
+ ;@version 18-17
  ;@release-date 2020-01
- ;@patch-list **5,11,12,14,15**
+ ;@patch-list **5,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

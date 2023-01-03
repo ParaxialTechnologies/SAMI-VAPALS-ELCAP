@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2022-12-31t02:43z
- ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;Build 4
- ;;18-17
+SAMIUR ;ven/gpl - user reports ;2021-10-29t23:57z
+ ;;18.0;SAMI;**5,10,11,12,14,15**;2020-01;Build 4
+ ;;18-15
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2022-12-31t02:43z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-12-31t02:43z
+ ;@last-update 2021-10-29t23:57z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-17
+ ;@version 18-15
  ;@release-date 2020-01
- ;@patch-list **5,10,11,12,14,15,17**
+ ;@patch-list **5,10,11,12,14,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -705,7 +705,7 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  set datephrase="CT Eval Recommendations"
  new ERR k ^gpl("ERR")
  new lroot set lroot=$$setroot^%wd("patient-lookup")
- new dfn set dfn=9000000
+ new dfn set dfn=0
  for  do  quit:'dfn  ;
  . set dfn=$order(@lroot@("dfn",dfn))
  . quit:'dfn
@@ -724,7 +724,7 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . f  s cefdt=$o(ceforms(cefdt)) q:+cefdt=0  d  ;
  . . n efmdate
  . . set efmdate=$$FMDT^SAMIUR2(cefdt)
- . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien)
+ . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien) 
  . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
  . n rc s rc=""
  . f  set rc=$o(ceforms("count",rc)) q:rc=""  d  ;

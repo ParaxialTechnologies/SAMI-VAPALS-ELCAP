@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2022.12.16" name="version"/>
+  <meta content="2023.01.03" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Followup Form
@@ -53,664 +53,665 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2022.12.16">
+  <script src="jquery-conditonally-enable.js?v=2023.01.03">
   </script>
-  <script src="jquery-conditonally-display.js?v=2022.12.16">
+  <script src="jquery-conditonally-display.js?v=2023.01.03">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2022.12.16">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2023.01.03">
   </script>
-  <script src="vapals.js?v=2022.12.16">
+  <script src="vapals.js?v=2023.01.03">
   </script>
-  <script src="init.js?v=2022.12.16">
+  <script src="init.js?v=2023.01.03">
   </script>
-  <script src="nodule-grid.js?v=2022.12.16">
+  <script src="nodule-grid.js?v=2023.01.03">
   </script>
-  <script src="ai.js?v=2022.12.16">
+  <script src="ai.js?v=2023.01.03">
   </script>
-  <!--System Navigation-->
-  <nav class="navbar navbar-default" role="navigation">
-   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
-      <span class="sr-only">
-       Toggle navigation
-      </span>
-      <span class="icon-bar">
-      </span>
-      <span class="icon-bar">
-      </span>
-      <span class="icon-bar">
-      </span>
-     </button>
-     <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
-      <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
-      <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
-     </a>
-    </div>
-    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
-     <ul class="nav navbar-nav">
-      <li>
-       <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!">
-        Home
-       </a>
-      </li>
-      <li id="studyIdMenu" style="display:none;">
-       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
-        Case Review
-       </a>
-      </li>
-      <li class="dropdown">
-       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-        Reports
-        <span class="caret">
-        </span>
-       </a>
-       <ul class="dropdown-menu">
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
-          Enrollment
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
-          Activity
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
-          Participant Follow-up
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Intake But No CT Evaluation
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
-          Incomplete Form
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
-          Inactive
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="recommend" data-samiroute="report" href="#!">
-          CT Eval Recommendations
-         </a>
-        </li>
-        <li id="matchingReport">
-         <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
-          Matching Report
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="worklist" data-samiroute="report" href="#!">
-          Work List
-         </a>
-        </li>
-       </ul>
-      </li>
-      <li>
-       <a class="text-nowrap navigation" data-method="post" data-samiroute="about" href="#!">
-        About
-       </a>
-      </li>
-      <li>
-       <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
-        Logout
-       </a>
-      </li>
-     </ul>
-    </div>
-   </div>
-  </nav>
-  <div class="container-fluid" style="max-width:1550px">
-   <h1>
-    Sample, Sammy G
-    <small class="text-muted" title="Study ID">
-     ST0001
-    </small>
-   </h1>
-   <h2>
-    Followup Form
-    <small class="text-muted" title="Medical Record Number">
-     1234567890
-    </small>
-   </h2>
-   <hr/>
-   <div class="row">
-    <div class="col-md-12">
-     <div class="message-area-static" id="message-area-static">
-     </div>
-    </div>
-   </div>
-   <form action="/vapals" class="validated" id="main-form" method="post">
-    <input name="samiroute" type="hidden" value="postform"/>
-    <input name="studyid" type="hidden" value="@@SID@@"/>
-    <input name="site" type="hidden" value="@@SITE@@"/>
-    <input name="form" type="hidden" value="@@FORMKEY@@"/>
-    <div class="row">
-     <div class="form-group col-sm-12" id="interaction-type">
-      <label class="required" for="sidof">
-       This interaction is a
-      </label>
-      <div class="radio">
-       <label>
-        <input id="futype-other" name="futype" required="required" type="radio" value="other"/>
-        Other communication
-       </label>
-      </div>
-      <div class="radio">
-       <label>
-        <input id="futype-ct" name="futype" required="required" type="radio" value="ct"/>
-        CT visit and/or communication about CT results
-       </label>
-      </div>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label class="required" for="sidof">
-       Form date
-      </label>
-      <div class="input-group datepicker">
-       <input aria-describedby="sidof-addon" class="form-control" data-restriction="past" id="sidof" name="sidof" required="required"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sidof-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label class="required" for="sidoe">
-       Date of baseline CT
-      </label>
-      <div class="input-group datepicker">
-       <input aria-describedby="sidoe-addon" class="form-control" data-restriction="past" id="sidoe" name="sidoe" required="required"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sidoe-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="col-sm-4 col-md-3 form-group">
-      <label class="required" for="sico">
-       Coordinator
-      </label>
-      <input class="form-control" id="sico" name="sico" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-sm-4 col-md-3">
-      <div class="alert alert-info" id="sitsb-alert" style="display: none;">
-       Time since baseline:
-       <span id="sitsb-text">
-        0
+  <span id="url-prefix" src="">
+   <!--System Navigation-->
+   <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+     <!-- Brand and toggle get grouped for better mobile display -->
+     <div class="navbar-header">
+      <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+       <span class="sr-only">
+        Toggle navigation
        </span>
-       months
-      </div>
-      <input class="form-control" id="sitsb" name="sitsb" type="hidden"/>
+       <span class="icon-bar">
+       </span>
+       <span class="icon-bar">
+       </span>
+       <span class="icon-bar">
+       </span>
+      </button>
+      <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
+       <img alt="Logo" class="hidden-xs logo-icon" src="" title="Logo"/>
+       <img alt="Logo Text" class="logo-text" id="image-log-text" src="" title="Logo Text"/>
+      </a>
+     </div>
+     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+      <ul class="nav navbar-nav">
+       <li>
+        <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!">
+         Home
+        </a>
+       </li>
+       <li id="studyIdMenu" style="display:none;">
+        <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
+         Case Review
+        </a>
+       </li>
+       <li class="dropdown">
+        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+         Reports
+         <span class="caret">
+         </span>
+        </a>
+        <ul class="dropdown-menu">
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
+           Enrollment
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+           Activity
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+           Participant Follow-up
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+           Intake But No CT Evaluation
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+           Incomplete Form
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
+           Inactive
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="recommend" data-samiroute="report" href="#!">
+           CT Eval Recommendations
+          </a>
+         </li>
+         <li id="matchingReport">
+          <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
+           Matching Report
+          </a>
+         </li>
+         <li>
+          <a class="navigation" data-method="post" data-samireporttype="worklist" data-samiroute="report" href="#!">
+           Work List
+          </a>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <a class="text-nowrap navigation" data-method="post" data-samiroute="about" href="#!">
+         About
+        </a>
+       </li>
+       <li>
+        <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
+         Logout
+        </a>
+       </li>
+      </ul>
      </div>
     </div>
+   </nav>
+   <div class="container-fluid" style="max-width:1550px">
+    <h1>
+     Sample, Sammy G
+     <small class="text-muted" title="Study ID">
+      ST0001
+     </small>
+    </h1>
+    <h2>
+     Followup Form
+     <small class="text-muted" title="Medical Record Number">
+      1234567890
+     </small>
+    </h2>
+    <hr/>
     <div class="row">
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label for="cefud">
-       New CT follow-up date if needed
-      </label>
-      <div class="input-group datepicker">
-       <input aria-describedby="cefud-addon" class="form-control" data-restriction="" id="cefud" name="cefud" required="required"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="cefud-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
+     <div class="col-md-12">
+      <div class="message-area-static" id="message-area-static">
+      </div>
+     </div>
+    </div>
+    <form action="/vapals" class="validated" id="main-form" method="post">
+     <input name="samiroute" type="hidden" value="postform"/>
+     <input name="studyid" type="hidden" value="@@SID@@"/>
+     <input name="site" type="hidden" value="@@SITE@@"/>
+     <input name="form" type="hidden" value="@@FORMKEY@@"/>
+     <div class="row">
+      <div class="form-group col-sm-12" id="interaction-type">
+       <label class="required" for="sidof">
+        This interaction is a
+       </label>
+       <div class="radio">
+        <label>
+         <input id="futype-other" name="futype" required="required" type="radio" value="other"/>
+         Other communication
+        </label>
+       </div>
+       <div class="radio">
+        <label>
+         <input id="futype-ct" name="futype" required="required" type="radio" value="ct"/>
+         CT visit and/or communication about CT results
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="form-group col-sm-3 col-md-3 col-lg-2">
+       <label class="required" for="sidof">
+        Form date
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="sidof-addon" class="form-control" data-restriction="past" id="sidof" name="sidof" required="required"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sidof-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
         </div>
        </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
       </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
+      <div class="form-group col-sm-3 col-md-3 col-lg-2">
+       <label class="required" for="sidoe">
+        Date of baseline CT
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="sidoe-addon" class="form-control" data-restriction="past" id="sidoe" name="sidoe" required="required"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sidoe-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-sm-4 col-md-3 form-group">
+       <label class="required" for="sico">
+        Coordinator
+       </label>
+       <input class="form-control" id="sico" name="sico" required="required" type="text"/>
+      </div>
      </div>
-    </div>
-    <hr/>
-    <div class="followup-ct">
-     <h3>
-      Ordering Information
-     </h3>
      <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="fursnscn">
-        Reason for CT scan
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="fursnscn">
-        Reason for CT scan
-       </label>
+      <div class="col-sm-4 col-md-3">
+       <div class="alert alert-info" id="sitsb-alert" style="display: none;">
+        Time since baseline:
+        <span id="sitsb-text">
+         0
+        </span>
+        months
+       </div>
+       <input class="form-control" id="sitsb" name="sitsb" type="hidden"/>
       </div>
-      <div class="col-md-8 form-group">
-       <textarea class="form-control" id="fursnscn" name="fursnscn" required="required" rows="3"></textarea>
+     </div>
+     <div class="row">
+      <div class="form-group col-sm-3 col-md-3 col-lg-2">
+       <label for="cefud">
+        New CT follow-up date if needed
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="cefud-addon" class="form-control" data-restriction="" id="cefud" name="cefud" required="required"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="cefud-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
       </div>
      </div>
      <hr/>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="siabx-n">
-        Have you taken antibiotics since your last CT scan?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siabx-n">
-        Have you taken antibiotics since your last CT scan?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="siabx-n">
-        <input id="siabx-n" name="siabx" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="siabx-y">
-        <input id="siabx-y" name="siabx" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="siaex-n">
-        Is this an annual CT scan?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siaex-n">
-        Is this an annual CT scan?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="siaex-n">
-        <input id="siaex-n" name="siaex" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="siaex-y">
-        <input id="siaex-y" name="siaex" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-     </div>
-     <hr/>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siwc-b">
-        During the past year, have you experienced any of these symptoms?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siwc-b">
-        During the past year, have you experienced any of these symptoms?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <div class="checkbox">
-        <label>
-         <input name="siwcb" type="hidden" value=""/>
-         <input id="siwcb" name="siwcb" type="checkbox" value="b"/>
-         Cough producing bloody material
+     <div class="followup-ct">
+      <h3>
+       Ordering Information
+      </h3>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm required" for="fursnscn">
+         Reason for CT scan
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="fursnscn">
+         Reason for CT scan
         </label>
        </div>
-       <div class="checkbox">
-        <label>
-         <input name="siwcl" type="hidden" value=""/>
-         <input id="siwcl" name="siwcl" type="checkbox" value="l"/>
-         Unexplained weight loss greater than 20 lbs
+       <div class="col-md-8 form-group">
+        <textarea class="form-control" id="fursnscn" name="fursnscn" required="required" rows="3"></textarea>
+       </div>
+      </div>
+      <hr/>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm required" for="siabx-n">
+         Have you taken antibiotics since your last CT scan?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="siabx-n">
+         Have you taken antibiotics since your last CT scan?
         </label>
        </div>
-       <div class="checkbox">
-        <label>
-         <input name="siwch" type="hidden" value=""/>
-         <input id="siwch" name="siwch" type="checkbox" value="h"/>
-         Unexplained hoarseness
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="siabx-n">
+         <input id="siabx-n" name="siabx" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="siabx-y">
+         <input id="siabx-y" name="siabx" type="radio" value="y"/>
+         Yes
         </label>
        </div>
-       <div class="checkbox">
-        <label>
-         <input name="siwco" type="hidden" value=""/>
-         <input id="siwco" name="siwco" type="checkbox" value="o"/>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm required" for="siaex-n">
+         Is this an annual CT scan?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="siaex-n">
+         Is this an annual CT scan?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="siaex-n">
+         <input id="siaex-n" name="siaex" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="siaex-y">
+         <input id="siaex-y" name="siaex" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <hr/>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siwc-b">
+         During the past year, have you experienced any of these symptoms?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siwc-b">
+         During the past year, have you experienced any of these symptoms?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <div class="checkbox">
+         <label>
+          <input name="siwcb" type="hidden" value=""/>
+          <input id="siwcb" name="siwcb" type="checkbox" value="b"/>
+          Cough producing bloody material
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siwcl" type="hidden" value=""/>
+          <input id="siwcl" name="siwcl" type="checkbox" value="l"/>
+          Unexplained weight loss greater than 20 lbs
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siwch" type="hidden" value=""/>
+          <input id="siwch" name="siwch" type="checkbox" value="h"/>
+          Unexplained hoarseness
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siwco" type="hidden" value=""/>
+          <input id="siwco" name="siwco" type="checkbox" value="o"/>
+          Other
+         </label>
+        </div>
+        <label class="aria-hidden" for="siwcos">
          Other
         </label>
-       </div>
-       <label class="aria-hidden" for="siwcos">
-        Other
-       </label>
-       <input class="form-control input-sm" id="siwcos" name="siwcos" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siwcp-n">
-        If yes, have you seen a physician for this?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siwcp-n">
-        If yes, have you seen a physician for this?
-       </label>
-      </div>
-      <div class="col-md-2 form-group">
-       <label class="radio-inline" for="siwcp-n">
-        <input id="siwcp-n" name="siwcp" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="siwcp-y">
-        <input id="siwcp-y" name="siwcp" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-      <div class="col-md-6 form-group" id="siwcw-container">
-       <label class="control-label" for="siwcw">
-        Whom?
-       </label>
-       <input class="form-control" id="siwcw" name="siwcw" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siwcp-n">
-        If yes, are you now experiencing them?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siwcp-n">
-        If yes, are you now experiencing them?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="siwcn-n">
-        <input id="siwcn-n" name="siwcn" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="siwcn-y">
-        <input id="siwcn-y" name="siwcn" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siact">
-        When did you most recently have a chest CT?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siact">
-        When did you most recently have a chest CT?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <select class="form-control" id="siact" name="siact">
-        <option value="-">
-         -
-        </option>
-        <option value="a">
-         Less than 6 months ago
-        </option>
-        <option value="b">
-         6 months to 18 months ago
-        </option>
-        <option value="f">
-         18 months to 3 years ago
-        </option>
-        <option value="c">
-         3 years to 5 years ago
-        </option>
-        <option value="d">
-         Over 5 years ago
-        </option>
-        <option value="e">
-         Never
-        </option>
-       </select>
-      </div>
-     </div>
-     <hr/>
-     <div class="row">
-      <div class="col-md-4 col-lg-6">
-       <label class="visible-xs visible-sm required" for="siho-n">
-        Have you been hospitalized in the past year?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siho-n">
-        Have you been hospitalized in the past year?
-       </label>
-      </div>
-      <div class="col-md-2 form-group">
-       <label class="radio-inline" for="siho-n">
-        <input id="siho-n" name="siho" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="siho-y">
-        <input id="siho-y" name="siho" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-      <div class="col-md-6 col-lg-4" id="siho-container">
-       <div class="form-group">
-        <label class="control-label" for="sihow">
-         For what?
-        </label>
-        <input class="form-control" id="sihow" name="sihow" type="text"/>
-       </div>
-       <div class="form-group">
-        <label for="sihod">
-         When?
-        </label>
-        <input class="form-control numeric yearpicker" id="sihod" maxlength="4" name="sihod" placeholder="YYYY" size="5" title="" type="text"/>
-       </div>
-       <div class="form-group">
-        <label for="sihol">
-         Where?
-        </label>
-        <input class="form-control" id="sihol" name="sihol" type="text"/>
+        <input class="form-control input-sm" id="siwcos" name="siwcos" required="required" type="text"/>
        </div>
       </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4 col-lg-6">
-       <label class="visible-xs visible-sm required" for="sicd-n">
-        Have you had a diagnosis of cancer in the past year?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sicd-n">
-        Have you had a diagnosis of cancer in the past year?
-       </label>
-      </div>
-      <div class="col-md-2 form-group">
-       <label class="radio-inline" for="sicd-n">
-        <input id="sicd-n" name="sicd" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="sicd-y">
-        <input id="sicd-y" name="sicd" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-      <div class="col-md-6 col-lg-4" id="sicd-container">
-       <div class="form-group">
-        <label class="control-label" for="sicdl">
-         What part of the body?
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siwcp-n">
+         If yes, have you seen a physician for this?
         </label>
-        <select class="form-control" id="sicdl" name="sicdl">
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siwcp-n">
+         If yes, have you seen a physician for this?
+        </label>
+       </div>
+       <div class="col-md-2 form-group">
+        <label class="radio-inline" for="siwcp-n">
+         <input id="siwcp-n" name="siwcp" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="siwcp-y">
+         <input id="siwcp-y" name="siwcp" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+       <div class="col-md-6 form-group" id="siwcw-container">
+        <label class="control-label" for="siwcw">
+         Whom?
+        </label>
+        <input class="form-control" id="siwcw" name="siwcw" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siwcp-n">
+         If yes, are you now experiencing them?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siwcp-n">
+         If yes, are you now experiencing them?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="siwcn-n">
+         <input id="siwcn-n" name="siwcn" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="siwcn-y">
+         <input id="siwcn-y" name="siwcn" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siact">
+         When did you most recently have a chest CT?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siact">
+         When did you most recently have a chest CT?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <select class="form-control" id="siact" name="siact">
          <option value="-">
           -
          </option>
-         <option value="br">
-          Breast
+         <option value="a">
+          Less than 6 months ago
          </option>
-         <option value="co">
-          Colon / rectum
+         <option value="b">
+          6 months to 18 months ago
          </option>
-         <option value="li">
-          Liver
+         <option value="f">
+          18 months to 3 years ago
          </option>
-         <option value="lu">
-          Lung / bronchus
+         <option value="c">
+          3 years to 5 years ago
          </option>
-         <option value="ov">
-          Ovary
+         <option value="d">
+          Over 5 years ago
          </option>
-         <option value="pa">
-          Pancreas
-         </option>
-         <option value="pr">
-          Prostate
-         </option>
-         <option value="sk">
-          Skin
-         </option>
-         <option value="st">
-          Stomach
-         </option>
-         <option value="ut">
-          Uterus
-         </option>
-         <option value="os">
-          Other (specify)
+         <option value="e">
+          Never
          </option>
         </select>
        </div>
-       <div class="form-group">
-        <label for="sicdls">
-         Other?
+      </div>
+      <hr/>
+      <div class="row">
+       <div class="col-md-4 col-lg-6">
+        <label class="visible-xs visible-sm required" for="siho-n">
+         Have you been hospitalized in the past year?
         </label>
-        <input class="form-control input-sm" id="sicdls" name="sicdls" type="text"/>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="siho-n">
+         Have you been hospitalized in the past year?
+        </label>
        </div>
-       <div class="form-group">
-        <label for="sicdd">
-         When were you diagnosed?
+       <div class="col-md-2 form-group">
+        <label class="radio-inline" for="siho-n">
+         <input id="siho-n" name="siho" required="required" type="radio" value="n"/>
+         No
         </label>
-        <div class="input-group datepicker">
-         <input aria-describedby="sicdd-addon" class="form-control" data-restriction="past" id="sicdd" name="sicdd"/>
-         <div class="input-group-addon">
-          <div class="input-group-text" id="sicdd-addon">
-           <i aria-hidden="true" class="fa fa-calendar">
-           </i>
+        <label class="radio-inline" for="siho-y">
+         <input id="siho-y" name="siho" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+       <div class="col-md-6 col-lg-4" id="siho-container">
+        <div class="form-group">
+         <label class="control-label" for="sihow">
+          For what?
+         </label>
+         <input class="form-control" id="sihow" name="sihow" type="text"/>
+        </div>
+        <div class="form-group">
+         <label for="sihod">
+          When?
+         </label>
+         <input class="form-control numeric yearpicker" id="sihod" maxlength="4" name="sihod" placeholder="YYYY" size="5" title="" type="text"/>
+        </div>
+        <div class="form-group">
+         <label for="sihol">
+          Where?
+         </label>
+         <input class="form-control" id="sihol" name="sihol" type="text"/>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4 col-lg-6">
+        <label class="visible-xs visible-sm required" for="sicd-n">
+         Have you had a diagnosis of cancer in the past year?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="sicd-n">
+         Have you had a diagnosis of cancer in the past year?
+        </label>
+       </div>
+       <div class="col-md-2 form-group">
+        <label class="radio-inline" for="sicd-n">
+         <input id="sicd-n" name="sicd" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicd-y">
+         <input id="sicd-y" name="sicd" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+       <div class="col-md-6 col-lg-4" id="sicd-container">
+        <div class="form-group">
+         <label class="control-label" for="sicdl">
+          What part of the body?
+         </label>
+         <select class="form-control" id="sicdl" name="sicdl">
+          <option value="-">
+           -
+          </option>
+          <option value="br">
+           Breast
+          </option>
+          <option value="co">
+           Colon / rectum
+          </option>
+          <option value="li">
+           Liver
+          </option>
+          <option value="lu">
+           Lung / bronchus
+          </option>
+          <option value="ov">
+           Ovary
+          </option>
+          <option value="pa">
+           Pancreas
+          </option>
+          <option value="pr">
+           Prostate
+          </option>
+          <option value="sk">
+           Skin
+          </option>
+          <option value="st">
+           Stomach
+          </option>
+          <option value="ut">
+           Uterus
+          </option>
+          <option value="os">
+           Other (specify)
+          </option>
+         </select>
+        </div>
+        <div class="form-group">
+         <label for="sicdls">
+          Other?
+         </label>
+         <input class="form-control input-sm" id="sicdls" name="sicdls" type="text"/>
+        </div>
+        <div class="form-group">
+         <label for="sicdd">
+          When were you diagnosed?
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="sicdd-addon" class="form-control" data-restriction="past" id="sicdd" name="sicdd"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="sicdd-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
           </div>
          </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
         </div>
-        <small class="form-text text-muted">
-         MM/DD/YYYY
-        </small>
        </div>
       </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4 col-lg-6">
-       <label class="visible-xs visible-sm required" for="silcs-n">
-        If lung cancer has been diagnosed, have you had surgery?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="silcs-n">
-        If lung cancer has been diagnosed, have you had surgery?
-       </label>
-      </div>
-      <div class="col-md-2 form-group">
-       <label class="radio-inline" for="silcs-n">
-        <input id="silcs-n" name="silcs" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="silcs-y">
-        <input id="silcs-y" name="silcs" type="radio" value="y"/>
-        Yes
-       </label>
-       <label class="radio-inline" for="silcs-o">
-        <input id="silcs-o" name="silcs" type="radio" value="o"/>
-        N/A
-       </label>
-      </div>
-      <div class="col-md-6 col-lg-4" id="silcs-container">
-       <div class="form-group">
-        <label for="silcsd">
-         When?
+      <div class="row">
+       <div class="col-md-4 col-lg-6">
+        <label class="visible-xs visible-sm required" for="silcs-n">
+         If lung cancer has been diagnosed, have you had surgery?
         </label>
-        <div class="input-group datepicker">
-         <input aria-describedby="silcsd-addon" class="form-control" data-restriction="past" id="silcsd" name="silcsd"/>
-         <div class="input-group-addon">
-          <div class="input-group-text" id="silcsd-addon">
-           <i aria-hidden="true" class="fa fa-calendar">
-           </i>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="silcs-n">
+         If lung cancer has been diagnosed, have you had surgery?
+        </label>
+       </div>
+       <div class="col-md-2 form-group">
+        <label class="radio-inline" for="silcs-n">
+         <input id="silcs-n" name="silcs" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="silcs-y">
+         <input id="silcs-y" name="silcs" type="radio" value="y"/>
+         Yes
+        </label>
+        <label class="radio-inline" for="silcs-o">
+         <input id="silcs-o" name="silcs" type="radio" value="o"/>
+         N/A
+        </label>
+       </div>
+       <div class="col-md-6 col-lg-4" id="silcs-container">
+        <div class="form-group">
+         <label for="silcsd">
+          When?
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="silcsd-addon" class="form-control" data-restriction="past" id="silcsd" name="silcsd"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="silcsd-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
           </div>
          </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
         </div>
-        <small class="form-text text-muted">
-         MM/DD/YYYY
-        </small>
-       </div>
-       <div class="form-group">
-        <label for="silcsl">
-         Where?
-        </label>
-        <input class="form-control" id="silcsl" name="silcsl" type="text"/>
+        <div class="form-group">
+         <label for="silcsl">
+          Where?
+         </label>
+         <input class="form-control" id="silcsl" name="silcsl" type="text"/>
+        </div>
        </div>
       </div>
+      <div class="row">
+       <div class="col-md-4 col-lg-6">
+        <label class="visible-xs visible-sm required" for="sier-n">
+         If a lung cancer has been removed, is there evidence of recurrence?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="sier-n">
+         If a lung cancer has been removed, is there evidence of recurrence?
+        </label>
+       </div>
+       <div class="col-md-2 form-group">
+        <label class="radio-inline" for="sier-n">
+         <input id="sier-n" name="sier" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sier-y">
+         <input id="sier-y" name="sier" type="radio" value="y"/>
+         Yes
+        </label>
+        <label class="radio-inline" for="sier-o">
+         <input id="sier-o" name="sier" type="radio" value="o"/>
+         N/A
+        </label>
+       </div>
+       <div class="col-md-6 col-lg-4" id="sier-container">
+        <div class="form-group">
+         <label for="sierd">
+          Describe
+         </label>
+         <input class="form-control" id="sierd" name="sierd" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr/>
      </div>
+     <h3>
+      Smoking History
+     </h3>
      <div class="row">
-      <div class="col-md-4 col-lg-6">
-       <label class="visible-xs visible-sm required" for="sier-n">
-        If a lung cancer has been removed, is there evidence of recurrence?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sier-n">
-        If a lung cancer has been removed, is there evidence of recurrence?
-       </label>
-      </div>
-      <div class="col-md-2 form-group">
-       <label class="radio-inline" for="sier-n">
-        <input id="sier-n" name="sier" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="sier-y">
-        <input id="sier-y" name="sier" type="radio" value="y"/>
-        Yes
-       </label>
-       <label class="radio-inline" for="sier-o">
-        <input id="sier-o" name="sier" type="radio" value="o"/>
-        N/A
-       </label>
-      </div>
-      <div class="col-md-6 col-lg-4" id="sier-container">
-       <div class="form-group">
-        <label for="sierd">
-         Describe
-        </label>
-        <input class="form-control" id="sierd" name="sierd" type="text"/>
-       </div>
+      <div class="col-md-12">
+       <table class="table" id="pack-years-history">
+        <thead>
+         <tr>
+          <th>
+           Form
+          </th>
+          <th>
+           Reported Date
+          </th>
+          <th>
+           Pack Years
+          </th>
+          <th>
+           Cumulative
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+        </tbody>
+       </table>
       </div>
      </div>
-     <hr/>
-    </div>
-    <h3>
-     Smoking History
-    </h3>
-    <div class="row">
-     <div class="col-md-12">
-      <table class="table" id="pack-years-history">
-       <thead>
-        <tr>
-         <th>
-          Form
-         </th>
-         <th>
-          Reported Date
-         </th>
-         <th>
-          Pack Years
-         </th>
-         <th>
-          Cumulative
-         </th>
-        </tr>
-       </thead>
-       <tbody>
-       </tbody>
-      </table>
-     </div>
-    </div>
-    <script>
-     $(function () {
+     <script>
+      $(function () {
         /**
          * A helper function that modifies the pack years history datatable to visually indicate which row represents
          * the current form (based on the presence of the "data-current-form" attribute
@@ -760,575 +761,575 @@
         console.log("computeCumulativePackYears(): returning %f", cumulative);
         return cumulative;
     }
-    </script>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sisa-n">
-       Since your last follow-up, have you smoked cigarettes at all, even a puff?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sisa-n">
-       Since your last follow-up, have you smoked cigarettes at all, even a puff?
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <label class="radio-inline" for="sisa-n">
-       <input id="sisa-n" name="sisa" type="radio" value="n"/>
-       No
-      </label>
-      <label class="radio-inline" for="sisa-y">
-       <input id="sisa-y" name="sisa" type="radio" value="y"/>
-       Yes
-      </label>
-      <label class="radio-inline" for="sisa-o">
-       <input id="sisa-o" name="sisa" type="radio" value="o"/>
-       Never smoked
-      </label>
-     </div>
-    </div>
-    <div id="sisa-container">
-     <div class="row form-group">
+     </script>
+     <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sicpd">
-        On average, how many cigarettes did you smoke per day?
+       <label class="visible-xs visible-sm" for="sisa-n">
+        Since your last follow-up, have you smoked cigarettes at all, even a puff?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sicpd">
-        On average, how many cigarettes did you smoke per day?
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sisa-n">
+        Since your last follow-up, have you smoked cigarettes at all, even a puff?
        </label>
       </div>
-      <div class="col-sm-2">
-       <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" type="text"/>
+      <div class="col-md-8 form-group">
+       <label class="radio-inline" for="sisa-n">
+        <input id="sisa-n" name="sisa" type="radio" value="n"/>
+        No
+       </label>
+       <label class="radio-inline" for="sisa-y">
+        <input id="sisa-y" name="sisa" type="radio" value="y"/>
+        Yes
+       </label>
+       <label class="radio-inline" for="sisa-o">
+        <input id="sisa-o" name="sisa" type="radio" value="o"/>
+        Never smoked
+       </label>
       </div>
      </div>
-     <div class="row form-group">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siq">
-        Quit Date
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
-        Quit Date
-       </label>
+     <div id="sisa-container">
+      <div class="row form-group">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="sicpd">
+         On average, how many cigarettes did you smoke per day?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sicpd">
+         On average, how many cigarettes did you smoke per day?
+        </label>
+       </div>
+       <div class="col-sm-2">
+        <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" type="text"/>
+       </div>
       </div>
-      <div class="col-sm-4 col-md-3 col-lg-2">
-       <div class="input-group datepicker">
-        <input aria-describedby="siq-addon" class="form-control" data-restriction="past" id="siq" name="siq"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="siq-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
+      <div class="row form-group">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siq">
+         Quit Date
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
+         Quit Date
+        </label>
+       </div>
+       <div class="col-sm-4 col-md-3 col-lg-2">
+        <div class="input-group datepicker">
+         <input aria-describedby="siq-addon" class="form-control" data-restriction="past" id="siq" name="siq"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="siq-addon">
+           <i aria-hidden="true" class="fa fa-calendar">
+           </i>
+          </div>
          </div>
         </div>
-       </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
-      </div>
-     </div>
-     <div class="row form-group">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
-       </label>
-      </div>
-      <div class="col-sm-8">
-       <span id="sippd-val">
-       </span>
-      </div>
-      <input id="sippd" name="sippd" type="hidden"/>
-     </div>
-     <div class="row form-group">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sippy">
-        Reported pack years
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
-        Reported pack years
-       </label>
-      </div>
-      <div class="col-sm-8">
-       <span id="sippy-val">
-       </span>
-       <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none">
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
        </div>
       </div>
-      <input id="sippy" name="sippy" type="hidden"/>
-      <input id="sippycu" name="sippycu" title="Cumulative reported pack years" type="hidden"/>
+      <div class="row form-group">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="sippd">
+         How many
+         <em>
+          packs
+         </em>
+         of cigarettes did you smoke per day (PPD)?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
+         How many
+         <em>
+          packs
+         </em>
+         of cigarettes did you smoke per day (PPD)?
+        </label>
+       </div>
+       <div class="col-sm-8">
+        <span id="sippd-val">
+        </span>
+       </div>
+       <input id="sippd" name="sippd" type="hidden"/>
+      </div>
+      <div class="row form-group">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="sippy">
+         Reported pack years
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
+         Reported pack years
+        </label>
+       </div>
+       <div class="col-sm-8">
+        <span id="sippy-val">
+        </span>
+        <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none">
+        </div>
+       </div>
+       <input id="sippy" name="sippy" type="hidden"/>
+       <input id="sippycu" name="sippycu" title="Cumulative reported pack years" type="hidden"/>
+      </div>
      </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sittq-n">
-       Since we last asked, have you ever tried to quit smoking?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sittq-n">
-       Since we last asked, have you ever tried to quit smoking?
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <label class="radio-inline" for="sittq-n">
-       <input id="sittq-n" name="sittq" type="radio" value="n"/>
-       No
-      </label>
-      <label class="radio-inline" for="sittq-y">
-       <input id="sittq-y" name="sittq" type="radio" value="y"/>
-       Yes
-      </label>
-      <label class="radio-inline" for="sittq-o">
-       <input id="sittq-o" name="sittq" type="radio" value="o"/>
-       N/A
-      </label>
-     </div>
-    </div>
-    <div class="row" id="sittq-container">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sittqt">
-       How many times have you quit smoking for at least 24 hours?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sittqt">
-       How many times have you quit smoking for at least 24 hours?
-      </label>
-     </div>
-     <div class="col-md-1 form-group">
-      <input class="form-control numeric" id="sittqt" name="sittqt" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-sm-4">
-      <label class="visible-xs visible-sm radio-label">
-       Since we last asked what, if any, smoking cessation methods have you used?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm radio-label">
-       Since we last asked what, if any, smoking cessation methods have you used?
-      </label>
-     </div>
-     <div class="col-sm-8 form-group">
-      <div class="checkbox">
-       <label>
-        <input name="sisca" type="hidden" value=""/>
-        <input id="sisca" name="sisca" type="checkbox" value="a"/>
-        Have not tried to quit
+     <div class="row">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm" for="sittq-n">
+        Since we last asked, have you ever tried to quit smoking?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sittq-n">
+        Since we last asked, have you ever tried to quit smoking?
        </label>
       </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscb" type="hidden" value=""/>
-        <input id="siscb" name="siscb" type="checkbox" value="b"/>
-        "Cold Turkey" by completely stopping on your own with no other assistance
+      <div class="col-md-8 form-group">
+       <label class="radio-inline" for="sittq-n">
+        <input id="sittq-n" name="sittq" type="radio" value="n"/>
+        No
        </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscc" type="hidden" value=""/>
-        <input id="siscc" name="siscc" type="checkbox" value="c"/>
-        Tapering or reducing number of cigarettes smoked per day
+       <label class="radio-inline" for="sittq-y">
+        <input id="sittq-y" name="sittq" type="radio" value="y"/>
+        Yes
        </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscd" type="hidden" value=""/>
-        <input id="siscd" name="siscd" type="checkbox" value="d"/>
-        Self-help material (e.g., brochure, cessation website)
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="sisce" type="hidden" value=""/>
-        <input id="sisce" name="sisce" type="checkbox" value="e"/>
-        Individual consultation or cessation counseling
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscf" type="hidden" value=""/>
-        <input id="siscf" name="siscf" type="checkbox" value="f"/>
-        Telephone cessation counseling hotline
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscg" type="hidden" value=""/>
-        <input id="siscg" name="siscg" type="checkbox" value="g"/>
-        Peer support (e.g., Nicotine Anonymous)
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="sisch" type="hidden" value=""/>
-        <input id="sisch" name="sisch" type="checkbox" value="h"/>
-        Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="sisci" type="hidden" value=""/>
-        <input id="sisci" name="sisci" type="checkbox" value="i"/>
-        Zyban
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscj" type="hidden" value=""/>
-        <input id="siscj" name="siscj" type="checkbox" value="j"/>
-        Hypnosis
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="sisck" type="hidden" value=""/>
-        <input id="sisck" name="sisck" type="checkbox" value="k"/>
-        Acupuncture / acupressure
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siscl" type="hidden" value=""/>
-        <input id="siscl" name="siscl" type="checkbox" value="l"/>
-        Other (specify)
-       </label>
-      </div>
-      <label class="aria-hidden" for="siscos">
-       Other
-      </label>
-      <input class="form-control input-sm" id="siscos" name="siscos" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="siqst">
-       Are you seriously thinking of quitting smoking?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="siqst">
-       Are you seriously thinking of quitting smoking?
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <select class="form-control" id="siqst" name="siqst">
-       <option value="-">
-        -
-       </option>
-       <option value="y">
-        Yes, within the next 30 days
-       </option>
-       <option value="m">
-        Yes, within the next 6 months
-       </option>
-       <option value="n">
-        No, not thinking of quitting
-       </option>
-       <option value="o">
+       <label class="radio-inline" for="sittq-o">
+        <input id="sittq-o" name="sittq" type="radio" value="o"/>
         N/A
-       </option>
-      </select>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm radio-label" for="siscmd-d">
-       Tobacco cessation provided:
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm radio-label" for="siscmd-d">
-       Tobacco cessation provided:
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <div class="radio">
-       <label>
-        <input id="siscmd-d" name="siscmd" type="radio" value="d"/>
-        Declined
-       </label>
-      </div>
-      <div class="radio">
-       <label>
-        <input id="siscmd-a" name="siscmd" type="radio" value="a"/>
-        Advised to quit smoking; resources provided
-       </label>
-      </div>
-      <div class="radio">
-       <label>
-        <input id="siscmd-i" name="siscmd" type="radio" value="i"/>
-        Interested in tobacco cessation medication. Encouraged to talk to provider or pharmacist about which medication option is best for you.
        </label>
       </div>
      </div>
-    </div>
-    <div class="row followup-other">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm checkbox-label required" for="fucmotip">
-       Communications method:
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm checkbox-label required" for="fucmotip">
-       Communications method:
-      </label>
+     <div class="row" id="sittq-container">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm" for="sittqt">
+        How many times have you quit smoking for at least 24 hours?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sittqt">
+        How many times have you quit smoking for at least 24 hours?
+       </label>
+      </div>
+      <div class="col-md-1 form-group">
+       <input class="form-control numeric" id="sittqt" name="sittqt" type="text"/>
+      </div>
      </div>
-     <div class="col-md-8 form-group">
-      <div class="checkbox">
-       <label>
-        <input name="fucmotip" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotip" name="fucmotip" type="checkbox" value="1"/>
-        In person
+     <div class="row">
+      <div class="col-sm-4">
+       <label class="visible-xs visible-sm radio-label">
+        Since we last asked what, if any, smoking cessation methods have you used?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm radio-label">
+        Since we last asked what, if any, smoking cessation methods have you used?
        </label>
       </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotte" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotte" name="fucmotte" type="checkbox" value="1"/>
-        Telephone
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotth" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotth" name="fucmotth" type="checkbox" value="1"/>
-        TeleHealth
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotml" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotml" name="fucmotml" type="checkbox" value="1"/>
-        Mailed letter
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotpp" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotpp" name="fucmotpp" type="checkbox" value="1"/>
-        Message in Patient Portal
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotvd" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotvd" name="fucmotvd" type="checkbox" value="1"/>
-        Video-on-Demand (VOD)
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="fucmotot" type="hidden" value=""/>
-        <input group="other-communications-method" id="fucmotot" name="fucmotot" type="checkbox" value="1"/>
+      <div class="col-sm-8 form-group">
+       <div class="checkbox">
+        <label>
+         <input name="sisca" type="hidden" value=""/>
+         <input id="sisca" name="sisca" type="checkbox" value="a"/>
+         Have not tried to quit
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscb" type="hidden" value=""/>
+         <input id="siscb" name="siscb" type="checkbox" value="b"/>
+         "Cold Turkey" by completely stopping on your own with no other assistance
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscc" type="hidden" value=""/>
+         <input id="siscc" name="siscc" type="checkbox" value="c"/>
+         Tapering or reducing number of cigarettes smoked per day
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscd" type="hidden" value=""/>
+         <input id="siscd" name="siscd" type="checkbox" value="d"/>
+         Self-help material (e.g., brochure, cessation website)
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sisce" type="hidden" value=""/>
+         <input id="sisce" name="sisce" type="checkbox" value="e"/>
+         Individual consultation or cessation counseling
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscf" type="hidden" value=""/>
+         <input id="siscf" name="siscf" type="checkbox" value="f"/>
+         Telephone cessation counseling hotline
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscg" type="hidden" value=""/>
+         <input id="siscg" name="siscg" type="checkbox" value="g"/>
+         Peer support (e.g., Nicotine Anonymous)
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sisch" type="hidden" value=""/>
+         <input id="sisch" name="sisch" type="checkbox" value="h"/>
+         Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sisci" type="hidden" value=""/>
+         <input id="sisci" name="sisci" type="checkbox" value="i"/>
+         Zyban
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscj" type="hidden" value=""/>
+         <input id="siscj" name="siscj" type="checkbox" value="j"/>
+         Hypnosis
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sisck" type="hidden" value=""/>
+         <input id="sisck" name="sisck" type="checkbox" value="k"/>
+         Acupuncture / acupressure
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="siscl" type="hidden" value=""/>
+         <input id="siscl" name="siscl" type="checkbox" value="l"/>
+         Other (specify)
+        </label>
+       </div>
+       <label class="aria-hidden" for="siscos">
         Other
        </label>
+       <input class="form-control input-sm" id="siscos" name="siscos" required="required" type="text"/>
       </div>
-      <label class="aria-hidden" for="fucmotoo">
-       Other contact method
-      </label>
-      <input class="form-control input-sm" id="fucmotoo" name="fucmotoo" required="required" type="text"/>
      </div>
-     <div class="col-md-8 col-md-offset-4 form-group">
-      <textarea class="form-control" id="fucmotde" name="fucmotde" required="required" rows="3"></textarea>
-      <small class="help-block">
-       Additional details
-      </small>
-     </div>
-    </div>
-    <div class="followup-ct">
-     <h3>
-      Communication about results
-     </h3>
      <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="fulctdt">
-        Last CT date
+       <label class="visible-xs visible-sm" for="siqst">
+        Are you seriously thinking of quitting smoking?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="fulctdt">
-        Last CT date
+       <label class="text-right pull-right hidden-xs hidden-sm" for="siqst">
+        Are you seriously thinking of quitting smoking?
        </label>
       </div>
-      <div class="form-group col-sm-3 col-md-3 col-lg-2">
-       <div class="input-group datepicker">
-        <input aria-describedby="fulctdt-addon" class="form-control" data-restriction="past" id="fulctdt" name="fulctdt" required="required"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="fulctdt-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
-         </div>
-        </div>
+      <div class="col-md-8 form-group">
+       <select class="form-control" id="siqst" name="siqst">
+        <option value="-">
+         -
+        </option>
+        <option value="y">
+         Yes, within the next 30 days
+        </option>
+        <option value="m">
+         Yes, within the next 6 months
+        </option>
+        <option value="n">
+         No, not thinking of quitting
+        </option>
+        <option value="o">
+         N/A
+        </option>
+       </select>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm radio-label" for="siscmd-d">
+        Tobacco cessation provided:
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm radio-label" for="siscmd-d">
+        Tobacco cessation provided:
+       </label>
+      </div>
+      <div class="col-md-8 form-group">
+       <div class="radio">
+        <label>
+         <input id="siscmd-d" name="siscmd" type="radio" value="d"/>
+         Declined
+        </label>
        </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
+       <div class="radio">
+        <label>
+         <input id="siscmd-a" name="siscmd" type="radio" value="a"/>
+         Advised to quit smoking; resources provided
+        </label>
+       </div>
+       <div class="radio">
+        <label>
+         <input id="siscmd-i" name="siscmd" type="radio" value="i"/>
+         Interested in tobacco cessation medication. Encouraged to talk to provider or pharmacist about which medication option is best for you.
+        </label>
+       </div>
       </div>
      </div>
-     <div class="row">
+     <div class="row followup-other">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm checkbox-label required" for="fucmctip">
+       <label class="visible-xs visible-sm checkbox-label required" for="fucmotip">
         Communications method:
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm checkbox-label required" for="fucmctip">
+       <label class="text-right pull-right hidden-xs hidden-sm checkbox-label required" for="fucmotip">
         Communications method:
        </label>
       </div>
       <div class="col-md-8 form-group">
        <div class="checkbox">
         <label>
-         <input name="fucmctip" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctip" name="fucmctip" type="checkbox" value="1"/>
+         <input name="fucmotip" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotip" name="fucmotip" type="checkbox" value="1"/>
          In person
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctte" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctte" name="fucmctte" type="checkbox" value="1"/>
+         <input name="fucmotte" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotte" name="fucmotte" type="checkbox" value="1"/>
          Telephone
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctth" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctth" name="fucmctth" type="checkbox" value="1"/>
+         <input name="fucmotth" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotth" name="fucmotth" type="checkbox" value="1"/>
          TeleHealth
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctml" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctml" name="fucmctml" type="checkbox" value="1"/>
+         <input name="fucmotml" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotml" name="fucmotml" type="checkbox" value="1"/>
          Mailed letter
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctpp" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctpp" name="fucmctpp" type="checkbox" value="1"/>
+         <input name="fucmotpp" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotpp" name="fucmotpp" type="checkbox" value="1"/>
          Message in Patient Portal
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctvd" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctvd" name="fucmctvd" type="checkbox" value="1"/>
+         <input name="fucmotvd" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotvd" name="fucmotvd" type="checkbox" value="1"/>
          Video-on-Demand (VOD)
         </label>
        </div>
        <div class="checkbox">
         <label>
-         <input name="fucmctot" type="hidden" value=""/>
-         <input group="ct-communications-method" id="fucmctot" name="fucmctot" type="checkbox" value="1"/>
+         <input name="fucmotot" type="hidden" value=""/>
+         <input group="other-communications-method" id="fucmotot" name="fucmotot" type="checkbox" value="1"/>
          Other
         </label>
        </div>
-       <label class="aria-hidden" for="fucmctoo">
+       <label class="aria-hidden" for="fucmotoo">
         Other contact method
        </label>
-       <input class="form-control input-sm" id="fucmctoo" name="fucmctoo" required="required" type="text"/>
+       <input class="form-control input-sm" id="fucmotoo" name="fucmotoo" required="required" type="text"/>
       </div>
       <div class="col-md-8 col-md-offset-4 form-group">
-       <textarea class="form-control" id="fucmctde" name="fucmctde" required="required" rows="3"></textarea>
+       <textarea class="form-control" id="fucmotde" name="fucmotde" required="required" rows="3"></textarea>
        <small class="help-block">
         Additional details
        </small>
       </div>
      </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="funewct">
-        Has a new CT/LDCT been ordered?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="funewct">
-        Has a new CT/LDCT been ordered?
-       </label>
+     <div class="followup-ct">
+      <h3>
+       Communication about results
+      </h3>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm required" for="fulctdt">
+         Last CT date
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="fulctdt">
+         Last CT date
+        </label>
+       </div>
+       <div class="form-group col-sm-3 col-md-3 col-lg-2">
+        <div class="input-group datepicker">
+         <input aria-describedby="fulctdt-addon" class="form-control" data-restriction="past" id="fulctdt" name="fulctdt" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="fulctdt-addon">
+           <i aria-hidden="true" class="fa fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
       </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="funewct-n">
-        <input id="funewct-n" name="funewct" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="funewct-y">
-        <input id="funewct-y" name="funewct" required="required" type="radio" value="y"/>
-        Yes
-       </label>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm checkbox-label required" for="fucmctip">
+         Communications method:
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm checkbox-label required" for="fucmctip">
+         Communications method:
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <div class="checkbox">
+         <label>
+          <input name="fucmctip" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctip" name="fucmctip" type="checkbox" value="1"/>
+          In person
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctte" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctte" name="fucmctte" type="checkbox" value="1"/>
+          Telephone
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctth" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctth" name="fucmctth" type="checkbox" value="1"/>
+          TeleHealth
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctml" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctml" name="fucmctml" type="checkbox" value="1"/>
+          Mailed letter
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctpp" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctpp" name="fucmctpp" type="checkbox" value="1"/>
+          Message in Patient Portal
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctvd" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctvd" name="fucmctvd" type="checkbox" value="1"/>
+          Video-on-Demand (VOD)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="fucmctot" type="hidden" value=""/>
+          <input group="ct-communications-method" id="fucmctot" name="fucmctot" type="checkbox" value="1"/>
+          Other
+         </label>
+        </div>
+        <label class="aria-hidden" for="fucmctoo">
+         Other contact method
+        </label>
+        <input class="form-control input-sm" id="fucmctoo" name="fucmctoo" required="required" type="text"/>
+       </div>
+       <div class="col-md-8 col-md-offset-4 form-group">
+        <textarea class="form-control" id="fucmctde" name="fucmctde" required="required" rows="3"></textarea>
+        <small class="help-block">
+         Additional details
+        </small>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm required" for="funewct">
+         Has a new CT/LDCT been ordered?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm required" for="funewct">
+         Has a new CT/LDCT been ordered?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="funewct-n">
+         <input id="funewct-n" name="funewct" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="funewct-y">
+         <input id="funewct-y" name="funewct" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="fucompul">
+         Communication to pulmonary?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="fucompul">
+         Communication to pulmonary?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="fucompul-n">
+         <input id="fucompul-n" name="fucompul" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="fucompul-y">
+         <input id="fucompul-y" name="fucompul" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
       </div>
      </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="fucompul">
-        Communication to pulmonary?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="fucompul">
-        Communication to pulmonary?
-       </label>
+     <div class="pull-left">
+      <input name="samistatus" type="hidden" value=""/>
+      <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
+       Save for Later
+      </button>
+      <button class="btn btn-primary" id="submit-button" type="submit">
+       Submit
+      </button>
+     </div>
+     <div class="pull-right">
+      <a class="btn btn-danger" id="delete-form">
+       <span class="glyphicon glyphicon-trash">
+       </span>
+       Delete
+      </a>
+     </div>
+    </form>
+   </div>
+   <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">
+         ×
+        </span>
+       </button>
+       <h4 class="modal-title">
+        Warning
+       </h4>
       </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="fucompul-n">
-        <input id="fucompul-n" name="fucompul" type="radio" value="n"/>
+      <div class="modal-body">
+       <p>
+        Are you certain you want to delete this form?
+       </p>
+      </div>
+      <div class="modal-footer">
+       <a class="btn btn-primary" data-dismiss="modal" id="delete-form-cancel">
         No
-       </label>
-       <label class="radio-inline" for="fucompul-y">
-        <input id="fucompul-y" name="fucompul" type="radio" value="y"/>
+       </a>
+       <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="deleteform" href="#!" id="delete-form-btn">
         Yes
-       </label>
+       </a>
       </div>
      </div>
     </div>
-    <div class="pull-left">
-     <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
-      Save for Later
-     </button>
-     <button class="btn btn-primary" id="submit-button" type="submit">
-      Submit
-     </button>
-    </div>
-    <div class="pull-right">
-     <a class="btn btn-danger" id="delete-form">
-      <span class="glyphicon glyphicon-trash">
-      </span>
-      Delete
+   </div>
+   <footer>
+    <div class="container-fluid" style="max-width:1550px">
+     <hr/>
+     <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
+      Submit feedback
      </a>
     </div>
-   </form>
-  </div>
-  <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
-   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-     <div class="modal-header">
-      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-       <span aria-hidden="true">
-        ×
-       </span>
-      </button>
-      <h4 class="modal-title">
-       Warning
-      </h4>
-     </div>
-     <div class="modal-body">
-      <p>
-       Are you certain you want to delete this form?
-      </p>
-     </div>
-     <div class="modal-footer">
-      <a class="btn btn-primary" data-dismiss="modal" id="delete-form-cancel">
-       No
-      </a>
-      <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="deleteform" href="#!" id="delete-form-btn">
-       Yes
-      </a>
-     </div>
-    </div>
-   </div>
-  </div>
-  <footer>
-   <div class="container-fluid" style="max-width:1550px">
-    <hr/>
-    <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
-     Submit feedback
-    </a>
-   </div>
-  </footer>
-  <script>
-   const userId = "@@USER@@";
+   </footer>
+   <script>
+    const userId = "@@USER@@";
     const isLoggedIn = isSet(userId);
     const siteIdVal = "@@SITE@@";
     const siteId = isSet(siteIdVal) ? siteIdVal : 'SYS';
@@ -1411,13 +1412,13 @@
             //attempt to change logos
             // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
             const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
-                "img/logo_transparent_50x50.png";
+                $("#url-prefix").attr("src") + "img/logo_transparent_50x50.png";
             if (iconSrc) {
                 $("img.logo-icon").attr("src", iconSrc);
             }
 
             const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
-                "img/logo_name_50x215.png";
+                $("#url-prefix").attr("src") + "img/logo_name_50x215.png";
             if (iconText) {
                 $("img.logo-text").attr("src", iconText);
             }
@@ -1523,9 +1524,9 @@
             }, timeoutMinutes * 1000 * 60);
         }
     });
-  </script>
-  <script>
-   const interactionType = $("[name=futype]:checked").val();
+   </script>
+   <script>
+    const interactionType = $("[name=futype]:checked").val();
         if (interactionType === "ct" || interactionType === "other") {
             const humanMessage = "This interaction is for a <strong>" + (interactionType === "ct" ? "CT" : "non-CT") + "</strong> follow-up";
             $message = $("<div class=\"alert alert-info\">" + humanMessage + "</div>");
@@ -1758,6 +1759,7 @@
             const priorFormDate = VAPALS.toMoment(priorFormDateStr);
             return priorFormDate;
         }
-  </script>
+   </script>
+  </span>
  </body>
 </html>

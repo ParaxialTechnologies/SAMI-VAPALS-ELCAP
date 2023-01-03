@@ -1,20 +1,18 @@
 :numbered:
-:version: 18-17-t3
+:version: 18-17-t4
 :doctitle: VAPALS-ELCAP: SAMI {version}
-:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 3
+:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 4
 :nmsp: SAMI
 :lnmsp: sami
 :appname: VAPALS-ELCAP
-:va-version: {nmsp}*18.0*17 SEQ #17 T3
+:va-version: {nmsp}*18.0*17 SEQ #17 T4
 :priority: High
 :categories: Routine, File
 :status: Test Release
 
-// (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ./webmake publish newsite/project/vapals-elcap")))
-
-// grep '\$TXT' sami-18-17-t2.txt
+// grep '\$TXT' sami-18-17-t4.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-12-13t02:13z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2022-12-31t08:44z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -30,7 +28,7 @@ George P. Lilly,
 Domenic DiNatale,
 Larry G. Carlson
 _&_ Frederick D. S. Marshall +
-2022-12-13
+2022-12-31
 
 [[front]]
 [role="h2"]
@@ -56,7 +54,6 @@ _&_ Frederick D. S. Marshall +
                 SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
                 SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
                 link:../../18-13/[SAMI 18-13] (††SAMI*18.0*13 SEQ #13††) +
-                link:../../18-14/[SAMI 18-14] (††SAMI*18.0*14 SEQ #14††) +
                 link:../../18-15/[SAMI 18-15] (††SAMI*18.0*15 SEQ #15††) +
 |==============================================================================
 
@@ -67,8 +64,6 @@ _&_ Frederick D. S. Marshall +
 [cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
 |==============================================================================
 |[options="compact",role="toc"]
-* <<front,Front matter>>
-** <<toc,Contents>>
 * <<desc,Description>>
 ** <<issue-21-218,Login: Implement single sign-on>>
 ** <<"issue-21-221","Logout: Upon sign-out, redirect to the correct web page">>
@@ -101,8 +96,8 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-{nmsp} {version} adds one high-priority update to add _name_ and _last5_ to a
-`.csv` report.
+{nmsp} {version} adds one high-priority update to add a user report to show
+CT{nbsp}Eval recommendations.
 
 The definitive source for the VAPALS-ELCAP application---codebase, package
 distributions (including this one), and documentation---is a
@@ -112,23 +107,22 @@ These instructions are for your Vista environment's sysadmin. As usual, please
 capture the complete dialog of your install and send it to your VAPALS-ELCAP
 support team.
 
-The changes in this patch is:
+The change in this patch is:
 
-[options="compact"]
-* Include `saminame` and `last5` in every `.csv` file on every row:
-  <<issue-a,??>>
+// [options="compact"]
+// * Include `saminame` and `last5` in every `.csv` file on every row:
+//   <<issue-a,??>>
 
 [[issue-a]]
-=== Include `saminame` and `last5` in every `.csv` file on every row
+=== Add a user report to show CT Eval recommendations
 
-**Unnumbered Issue (high priority):** A report is available to be run by the
-system administrator that outputs all patient data for statistical
-analysis. Lines did not include patient{nbsp}ID.
+**Unnumbered Issue (high priority):** Develop a new user report that shows
+recommendations from completed CT{nbsp}Evaluations. Allow sorting by type of
+recommendation and put totals at top of columns.
 
-**Solution:** Add `saminame` (full patient name) and `last5` (First letter of
-last name and last four digits of{nbsp}SSN) in each line of report.
+**Solution:** Added report.
 
-**Reported:** 2022-12-09 by Henschke and Yip.
+**Reported:** 2022-12-09 by Henschke and Avila.
 
 [[pkg-elements]]
 == Package elements
@@ -178,7 +172,7 @@ They create a shell variable, and then creates the work directory and sets it
 as your current directory.
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-17/t3
+$ INDIR=~/run/in/sami/18-17/t4
 $ mkdir -p $INDIR
 $ cd $INDIR
 -------------------------------------------------------------------------------
@@ -187,7 +181,7 @@ If you've already tried installing this before, you can use the following
 commands instead:
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-17/t3
+$ INDIR=~/run/in/sami/18-17/t4
 $ cd $INDIR
 $ rm -rf ./sami*.{txt,kid} ./auxfiles
 -------------------------------------------------------------------------------
@@ -445,16 +439,16 @@ include::.dtool/checksums.adoi[]
 [cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
 |==============================================================================
 |           | Dates                 | By
-| Developed | 2022-12-11            | George P. Lilly (VEN) +
+| Developed | 2022-12-15/17         | George P. Lilly (VEN) +
                                       Dominic DiNatale (PAR) +
                                       Larry G. Carlson (VEN) +
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Tested    | 2022-12-15            | George P. Lilly (VEN) +
+| Tested    | 2022-12-28/30         | George P. Lilly (VEN) +
                                       Artit Jirapatnakul (VA-PHO) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2022-12-16            | Frederick D. S. Marshall (VEN) +
+| Released  | 2022-12-31            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

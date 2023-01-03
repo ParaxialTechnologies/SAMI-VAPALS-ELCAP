@@ -45,6 +45,7 @@
 <script src="{{ path }}init.js?v={{ version }}"></script>
 <script src="{{ path }}nodule-grid.js?v={{ version }}"></script>
 <script src="{{ path }}ai.js?v={{ version }}"></script>
+<span src="{{ path }}" id="url-prefix"/>
 
 
 {#Debug information for viewport#}
@@ -242,13 +243,13 @@
             //attempt to change logos
             // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
             const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
-                "{{ path }}img/logo_transparent_50x50.png";
+                $("#url-prefix").attr("src") + "img/logo_transparent_50x50.png";
             if (iconSrc) {
                 $("img.logo-icon").attr("src", iconSrc);
             }
 
             const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
-                "{{ path }}img/logo_name_50x215.png";
+                $("#url-prefix").attr("src") + "img/logo_name_50x215.png";
             if (iconText) {
                 $("img.logo-text").attr("src", iconText);
             }

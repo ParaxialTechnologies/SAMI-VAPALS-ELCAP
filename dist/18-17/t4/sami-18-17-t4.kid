@@ -1,11 +1,11 @@
-KIDS Distribution saved on Dec 30, 2022@19:30:53
+KIDS Distribution saved on Jan 03, 2023@16:35:15
 Test Release SAMI*18.0*17 SEQ #17 (sami-18-17-t4)
 **KIDS**:SAMI*18.0*17^
 
 **INSTALL NAME**
 SAMI*18.0*17
 "BLD",11518,0)
-SAMI*18.0*17^SAMI^0^3221230^n
+SAMI*18.0*17^SAMI^0^3230103^n
 "BLD",11518,1,0)
 ^^1^1^3220404^
 "BLD",11518,1,1,0)
@@ -13,7 +13,7 @@ SAMI*18.0*17 T1
 "BLD",11518,4,0)
 ^9.64PA^^
 "BLD",11518,6.3)
-5
+6
 "BLD",11518,"ABPKG")
 n
 "BLD",11518,"INID")
@@ -55,11 +55,11 @@ POS1817^SAMIPAT
 "BLD",11518,"KRN",9.8,"NM",3,0)
 SAMIPAT^^0^B10800523
 "BLD",11518,"KRN",9.8,"NM",4,0)
-SAMIUR^^0^B858538006
+SAMIUR^^0^B858346112
 "BLD",11518,"KRN",9.8,"NM",5,0)
 SAMIUR2^^0^B1518993181
 "BLD",11518,"KRN",9.8,"NM",6,0)
-SAMIURUL^^0^B109573
+SAMIURUL^^0^B110263
 "BLD",11518,"KRN",9.8,"NM","B","SAMIPAT",3)
 
 "BLD",11518,"KRN",9.8,"NM","B","SAMIUR",4)
@@ -169,9 +169,9 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-17^3221230
+17^3230103
 "PKG",230,22,1,"PAH",1,1,0)
-^^1^1^3221230
+^^1^1^3230103
 "PKG",230,22,1,"PAH",1,1,1,0)
 SAMI*18.0*17 T1
 "QUES","XPF1",0)
@@ -251,7 +251,7 @@ D XPZ2^XPDIQ
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/toad - init subroutines ;2022-12-28t06:00z
 "RTN","SAMIPAT",2,0)
- ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 5
+ ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 6
 "RTN","SAMIPAT",3,0)
  ;;18-17
 "RTN","SAMIPAT",4,0)
@@ -573,11 +573,11 @@ POS1817 ; kids post-install for sami 18.17
 "RTN","SAMIPAT",162,0)
 EOR ; end of routine SAMIPAT
 "RTN","SAMIUR")
-0^4^B858538006
+0^4^B858346112
 "RTN","SAMIUR",1,0)
-SAMIUR ;ven/gpl - user reports ;2022-12-31t02:43z
+SAMIUR ;ven/gpl - user reports ;2023-01-04T00:09Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;Build 5
+ ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;Build 6
 "RTN","SAMIUR",3,0)
  ;;18-17
 "RTN","SAMIUR",4,0)
@@ -621,7 +621,7 @@ SAMIUR ;ven/gpl - user reports ;2022-12-31t02:43z
 "RTN","SAMIUR",23,0)
  ;
 "RTN","SAMIUR",24,0)
- ;@last-update 2022-12-31t02:43z
+ ;@last-update 2023-01-04T00:09Z
 "RTN","SAMIUR",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIUR",26,0)
@@ -633,7 +633,7 @@ SAMIUR ;ven/gpl - user reports ;2022-12-31t02:43z
 "RTN","SAMIUR",29,0)
  ;@release-date 2020-01
 "RTN","SAMIUR",30,0)
- ;@patch-list **5,10,11,12,14,15,17**
+ ;@patch-list **5,10,11,12,14,15**
 "RTN","SAMIUR",31,0)
  ;
 "RTN","SAMIUR",32,0)
@@ -1989,7 +1989,7 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
 "RTN","SAMIUR",707,0)
  new lroot set lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",708,0)
- new dfn set dfn=9000000
+ new dfn set dfn=0
 "RTN","SAMIUR",709,0)
  for  do  quit:'dfn  ;
 "RTN","SAMIUR",710,0)
@@ -2027,7 +2027,7 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
 "RTN","SAMIUR",726,0)
  . . set efmdate=$$FMDT^SAMIUR2(cefdt)
 "RTN","SAMIUR",727,0)
- . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien)
+ . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien) 
 "RTN","SAMIUR",728,0)
  . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
 "RTN","SAMIUR",729,0)
@@ -2257,7 +2257,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - user reports cont ;2022-12-31t00:45z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;Build 5
+ ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;Build 6
 "RTN","SAMIUR2",3,0)
  ;;18-17
 "RTN","SAMIUR2",4,0)
@@ -4955,11 +4955,11 @@ WSVALS(RTN,FILTER) ; display form values from graph
 "RTN","SAMIUR2",1350,0)
 EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL")
-0^6^B109573
+0^6^B110263
 "RTN","SAMIURUL",1,0)
-SAMIURUL ;ven/gpl - user reports log 2022-12-31T02:46Z
+SAMIURUL ;ven/gpl - user reports log 2023-01-04T00:09Z
 "RTN","SAMIURUL",2,0)
- ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 5
+ ;;18.0;SAMI;**12,14,15,17**;2020-01;Build 6
 "RTN","SAMIURUL",3,0)
  ;;18-17
 "RTN","SAMIURUL",4,0)
@@ -5003,7 +5003,7 @@ SAMIURUL ;ven/gpl - user reports log 2022-12-31T02:46Z
 "RTN","SAMIURUL",23,0)
  ;
 "RTN","SAMIURUL",24,0)
- ;@last-update 2022-12-31T02:46Z
+ ;@last-update 2023-01-04T00:09Z
 "RTN","SAMIURUL",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIURUL",26,0)
@@ -5385,24 +5385,30 @@ SAMIURUL ;ven/gpl - user reports log 2022-12-31T02:46Z
 "RTN","SAMIURUL",214,0)
  ;
 "RTN","SAMIURUL",215,0)
- ;@contents
+ ; 2023-01-04 ven/gpl  18-17
 "RTN","SAMIURUL",216,0)
- ; SAMIUR user reports
+ ;  SAMIUR fix bug to make data appear in new report
 "RTN","SAMIURUL",217,0)
- ; SAMIUR2 user reports cont
+ ;
 "RTN","SAMIURUL",218,0)
- ; SAMIURUL user reports log
+ ;@contents
 "RTN","SAMIURUL",219,0)
- ;
+ ; SAMIUR user reports
 "RTN","SAMIURUL",220,0)
- ; SAMIUR1 [to be added]
+ ; SAMIUR2 user reports cont
 "RTN","SAMIURUL",221,0)
- ;
+ ; SAMIURUL user reports log
 "RTN","SAMIURUL",222,0)
  ;
 "RTN","SAMIURUL",223,0)
- ;
+ ; SAMIUR1 [to be added]
 "RTN","SAMIURUL",224,0)
+ ;
+"RTN","SAMIURUL",225,0)
+ ;
+"RTN","SAMIURUL",226,0)
+ ;
+"RTN","SAMIURUL",227,0)
 EOR ; end of SAMIURUL
 "VER")
 8.0^22.2

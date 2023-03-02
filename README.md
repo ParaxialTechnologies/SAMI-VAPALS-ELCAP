@@ -58,7 +58,7 @@ available [here](https://hub.docker.com/r/osehra/va-pals/)
     DO ^ZU
     Login with access code (e.g. SUPER6)
     Password (new password)
-    Prompts you to change password. If you
+    Prompts you to change password.
 
 ### Update site with HTML and M code
 
@@ -139,6 +139,24 @@ Create user
     If it doesn't show after save, enter ? to see it.
     Change verify code too.
     Go to command and enter SAVE, then exit
+
+Set user password to never expire
+    
+    VAPALS YottaDB> D Q^DI
+    VA FileMan 22.2
+
+    Select OPTION: ENTER OR EDIT FILE ENTRIES
+
+    Input to what File: NEW PERSON//          (87 entries)
+    EDIT WHICH FIELD: ALL// 7.2  VERIFY CODE never expires
+    THEN EDIT FIELD:
+     
+    Select NEW PERSON NAME: `1  USER,ONE     DBA       
+    VERIFY CODE never expires: ?
+    Only persons with the proper key can set this field.
+    Choose from:
+    1        Yes
+    VERIFY CODE never expires: 1  Yes
     
 Change pwd
 

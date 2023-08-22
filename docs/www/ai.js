@@ -93,7 +93,7 @@ const AI = class {
     }
 
     static createImportElement(fieldName, importValue) {
-        const html = "<i data-toggle=\"tooltip\" class=\"fa fa-repeat " + AI.IMPORT_ICON_CLASS + "\" title=\"Import '" +
+        const html = "<i data-toggle=\"tooltip\" class=\"fa-regular fa-rotate-right " + AI.IMPORT_ICON_CLASS + "\" title=\"Import '" +
             importValue + "'\"" + " onclick=\"AI.importField(this, '" + fieldName + "')\"></i>";
         const $importElement = $(html);
         $importElement.tooltip();
@@ -145,7 +145,7 @@ const AI = class {
     }
 
     static createRevertElement(fieldName, originalValue) {
-        const html = "<i data-toggle=\"tooltip\" class=\"fa fa-undo " + AI.REVERT_ICON_CLASS + "\" title=\"Revert to '" +
+        const html = "<i data-toggle=\"tooltip\" class=\"fa-regular fa-rotate-left " + AI.REVERT_ICON_CLASS + "\" title=\"Revert to '" +
             originalValue + "'\"" + " onclick=\"AI.revertField(this, '" + fieldName + "')\"></i>";
         const $revertElement = $(html);
         $revertElement.tooltip();

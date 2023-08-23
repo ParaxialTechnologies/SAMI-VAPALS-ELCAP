@@ -163,6 +163,7 @@ const AI = class {
             });
     }
 
+    //NB Not in use.
     static displayModal(importDicomCallback, importAICallback) {
         $("#dataImportModal")
             .on("click", ".importDICOM", importDicomCallback)

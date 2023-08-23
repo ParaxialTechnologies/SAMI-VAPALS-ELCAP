@@ -97,7 +97,12 @@
                             <br/>
                             <label class="radio-inline">
                                 <input type="radio" name="cetex" id="cetex" value="b" required="required">
-                                Baseline
+                                Baseline <i id="ai-imported" style="display: none;--fa-animation-duration: 0.5s;"
+                                            class="fa-regular fa-microchip-ai fa-flip fa-xl"
+                                            title="AI Imported"
+                                            data-toggle="popover"
+                                            data-container="body"
+                                            data-content="A structured report has been used to pre-fill some information on this form"></i>
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="cetex" id="cetex" value="a" required="required">
@@ -107,15 +112,6 @@
                                 <input type="radio" name="cetex" id="cetex" value="d" required="required">
                                 Follow-up (not annual repeat)
                             </label>
-                        </div>
-
-                        <div>
-                            <button type="button" class="btn btn-default import-data-button" style="display: none;">
-                                <span class="fa" aria-hidden="true"></span> Import AI+ Data
-                            </button>
-                            <button type="button" class="btn btn-default revert-data-button" style="display: none;">
-                                <span class="fa" aria-hidden="true"></span> Revert AI+ Data
-                            </button>
                         </div>
 
                         <div class="alert alert-warning">
@@ -470,25 +466,28 @@
                 $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
-            let hasImportData = false;
+            let hasImported = false;
+            let aiStructuredReport = null;
             //type of exam
             $("[name=cetex]").on("change", function () {
                 let isBaseline = $("[name=cetex]:checked").val() === "b";
+                console.debug("cetex:change(): isBaseline=%s, hasImported=%s, available=%s", isBaseline,
+                        hasImported, aiStructuredReport != null);
                 if (isBaseline) { // type of exam (tex) is baseline
                     const $sidoe = $("#sidoe");
                     if (!$sidoe.val()) {
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
-                }
-                const showImport = isBaseline && hasImportData === true;
-                console.debug("cetex:change(): isBaseline=%s, hasImportData=%s, showImport=%s", isBaseline,
-                    hasImportData, showImport);
-                if (showImport === true) {
-                    $(".import-data-button").slideDown();
-                    $(".revert-data-button").slideDown();
-                } else {
-                    $(".import-data-button").hide();
-                    $(".revert-data-button").hide();
+
+                    if (!hasImported && aiStructuredReport) {
+                        importAllData(aiStructuredReport);
+                        hasImported = true;
+                        const $ai = $("#ai-imported");
+                        $ai.show();
+                        setTimeout(function () {
+                            $ai.removeClass("fa-flip");
+                        }, 1000);
+                    }
                 }
             });
 
@@ -505,19 +504,10 @@
             $noduleGrid = initNoduleGrid(fv);
 
             AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
-                hasImportData = true;
+                aiStructuredReport = structuredReport
 
                 //trigger change event on type of exam to display import buttons now that data is set.
                 $("[name=cetex]").trigger('change');
-
-                // with data now available hookup click handlers of buttons to import data
-                $(".import-data-button").on('click', function () {
-                    AI.displayModal(function () {
-                        importDicomHeader(structuredReport);
-                    }, function () {
-                        importAllData(structuredReport)
-                    })
-                });
             })
 
             function importAllData(structuredReport) {

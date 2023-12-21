@@ -159,10 +159,10 @@
 {% endblock %}
 
 <script>
-    {# NB: Maunally override isLoggedIn and siteId for forms development testing #}
+    {# NB: Manually override isLoggedIn and siteId for forms development testing #}
     const userId = "@@USER@@";
     const isLoggedIn = isSet(userId);
-    const siteIdVal = "@@SITE@@";
+    const siteIdVal = "FOO";
     const siteId = isSet(siteIdVal) ? siteIdVal : 'SYS';
     const studyIdVal = "@@SID@@";
     const studyId = isSet(studyIdVal) ? studyIdVal : '';
@@ -199,16 +199,22 @@
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
+            console.log("retrieveParams")
             retrieveParams(siteId);
         } else {
+            console.log("paramSubstitution")
             substituteParams(params);
         }
 
         function retrieveParams(siteId) {
             $.ajax('/params', {data: {siteId: siteId}})
                 .done(function (data) {
+                    console.log("retrieveParams(done)")
                     sessionStorage.setItem(key, JSON.stringify(data));
                     substituteParams(data);
+                })
+                .fail(function () {
+                    substituteParams({});
                 });
         }
 
@@ -244,15 +250,11 @@
             // IF no options are set (VA) do nothing, else logo = defaultIfNull(site, system)
             const iconSrc = dataMap["siteLogoIcon"] || dataMap["systemLogoIcon"] ||
                 $("#url-prefix").attr("src") + "img/logo_transparent_50x50.png";
-            if (iconSrc) {
-                $("img.logo-icon").attr("src", iconSrc);
-            }
+            $("img.logo-icon").attr("src", iconSrc);
 
             const iconText = dataMap["siteLogoText"] || dataMap["systemLogoText"] ||
                 $("#url-prefix").attr("src") + "img/logo_name_50x215.png";
-            if (iconText) {
-                $("img.logo-text").attr("src", iconText);
-            }
+            $("img.logo-text").attr("src", iconText);
         }
     }
 

@@ -66,7 +66,7 @@ for base in bases:
             os.makedirs(mockupsPath, exist_ok=True)
             with open(mockupsPath + "/" + form['formPage'] + ".html", "wb") as fh:
                 html = env.get_template(form['template'] + ".html.jinja2").render(
-                    path="../www/",
+                    path="../../../www/",
                     mockup="true",
                     version=version,
                     title=form['title'],

@@ -1,5 +1,5 @@
 import datetime
-
+import os
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 
@@ -15,56 +15,69 @@ start = datetime.datetime.now()
 version = datetime.datetime.now().strftime('%Y.%m.%d')
 # version = datetime.datetime.now().strftime('%Y.%m.%d %H:%M:%S')
 
+bases = ["lungrads", "elcap"]
+sites = ["default", "sinai"]
+
 # map where key is the template file name and value is an object representing properties of the output
 forms = [
-    {"template": "about", "title": "About", "output": "about", "withNav": "false"},
-    {"template": "background", "title": "Background Form", "output": "background", "withNav": "true"},
-    {"template": "blank", "title": "", "output": "blank_no_nav", "withNav": "false"},
-    {"template": "intake", "title": "Lung Screening Intake Form", "output": "intake", "withNav": "true"},
-    {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation", "withNav": "true"},
-    {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation-elcap", "withNav": "true"},
-    {"template": "home", "title": "Home", "output": "home", "withNav": "true"},
-    {"template": "casereview", "title": "Case Review", "output": "casereview", "withNav": "true"},
-    {"template": "newform", "title": "New Form", "output": "newform", "withNav": "true"},
-    {"template": "followup", "title": "Followup Form", "output": "followup", "withNav": "true"},
-    {"template": "biopsy", "title": "Biopsy Form", "output": "biopsy", "withNav": "true"},
-    {"template": "pet", "title": "PET Evaluation Form", "output": "pet", "withNav": "true"},
-    {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention",
+    {"template": "about", "title": "About", "formPage": "about", "withNav": "false"},
+    {"template": "background", "title": "Background Form", "formPage": "background", "withNav": "true"},
+    {"template": "blank", "title": "", "formPage": "blank_no_nav", "withNav": "false"},
+    {"template": "intake", "title": "Lung Screening Intake Form", "formPage": "intake", "withNav": "true"},
+    {"template": "ctevaluation", "title": "CT Evaluation Form", "formPage": "ctevaluation", "withNav": "true"},
+    {"template": "home", "title": "Home", "formPage": "home", "withNav": "true"},
+    {"template": "casereview", "title": "Case Review", "formPage": "casereview", "withNav": "true"},
+    {"template": "newform", "title": "New Form", "formPage": "newform", "withNav": "true"},
+    {"template": "followup", "title": "Followup Form", "formPage": "followup", "withNav": "true"},
+    {"template": "biopsy", "title": "Biopsy Form", "formPage": "biopsy", "withNav": "true"},
+    {"template": "pet", "title": "PET Evaluation Form", "formPage": "pet", "withNav": "true"},
+    {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "formPage": "intervention",
      "withNav": "true"},
-    {"template": "report", "title": "", "output": "report", "withNav": "true"},
-    {"template": "table", "title": "", "output": "table", "withNav": "true"},
-    {"template": "upload", "title": "Upload New Patients", "output": "upload", "withNav": "true"},
-    {"template": "register", "title": "Register", "output": "register", "withNav": "true"},
-    {"template": "editparticipant", "title": "Edit Participant", "output": "editparticipant", "withNav": "true"},
-    {"template": "error", "title": "System Error", "output": "error", "withNav": "true"},
-    {"template": "login", "title": "Login", "output": "login", "withNav": "false"},
-    {"template": "login-demo", "title": "DEMO Login", "output": "login-demo", "withNav": "false"}
+    {"template": "report", "title": "", "formPage": "report", "withNav": "true"},
+    {"template": "table", "title": "", "formPage": "table", "withNav": "true"},
+    {"template": "upload", "title": "Upload New Patients", "formPage": "upload", "withNav": "true"},
+    {"template": "register", "title": "Register", "formPage": "register", "withNav": "true"},
+    {"template": "editparticipant", "title": "Edit Participant", "formPage": "editparticipant", "withNav": "true"},
+    {"template": "error", "title": "System Error", "formPage": "error", "withNav": "true"},
+    {"template": "login", "title": "Login", "formPage": "login", "withNav": "false"},
+    {"template": "login-demo", "title": "DEMO Login", "formPage": "login-demo", "withNav": "false"}
 ]
 
-for form in forms:
-    with open("../www/" + form['output'] + ".html", "wb") as fh:
-        html = env.get_template(form['template'] + ".html.jinja2").render(
-            path="",
-            version=version,
-            title=form['title'],
-            formPage=form['output'],
-            formMethod="post",
-            withNav=form['withNav'])
-        fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+for base in bases:
+    for site in sites:
+        print("building HTML for base '" + base + "' and site '" + site + "'")
+        for form in forms:
+            path = ("/" + base + "/" + site)
+            wwwPath = "../www" + path
+            os.makedirs(wwwPath, exist_ok=True)
+            with open(wwwPath + "/" + form['formPage'] + ".html", "wb") as fh:
+                html = env.get_template(form['template'] + ".html.jinja2").render(
+                    path="",
+                    version=version,
+                    title=form['title'],
+                    formPage=form['formPage'],
+                    formMethod="post",
+                    withNav=form['withNav'],
+                    base=base,
+                    site=site)
+                fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
-    with open("../mockups/" + form['output'] + ".html", "wb") as fh:
-        html = env.get_template(form['template'] + ".html.jinja2").render(
-            path="../www/",
-            mockup="true",
-            version=version,
-            title=form['title'],
-            formPage=form['output'],
-            formMethod="get",
-            withNav=form['withNav'])
-        fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+            mockupsPath = "../mockups" + path
+            os.makedirs(mockupsPath, exist_ok=True)
+            with open(mockupsPath + "/" + form['formPage'] + ".html", "wb") as fh:
+                html = env.get_template(form['template'] + ".html.jinja2").render(
+                    path="../www/",
+                    mockup="true",
+                    version=version,
+                    title=form['title'],
+                    formPage=form['formPage'],
+                    formMethod="get",
+                    withNav=form['withNav'],
+                    base=base,
+                    site=site)
+                fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
 elapsedMs = (datetime.datetime.now() - start).microseconds / 1000
 
-print
-"Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " in " + str(
-    elapsedMs) + "ms"
+print("Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " in " + str(
+    elapsedMs) + "ms")

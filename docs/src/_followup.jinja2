@@ -1,6 +1,6 @@
-{% set isLungRads = formPage == 'ctevaluation' %}
-{% set isElcap = formPage == 'ctevaluation-elcap' %}
-{% set isCT = isLungRads or isElcap %}
+{% set isCT = formPage=='ctevaluation' %}
+{% set isLungRads =  base == 'lungrads' %}
+{% set isElcap =  base == 'elcap' %}
 {% set elcapApproachValue = 'el' %}
 {% set lungRadsApproachValue = 'lr' %}
 
@@ -156,9 +156,9 @@
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
 
-        {% if (isLungRads) %}
+        {% if (isCT and isLungRads) %}
             moveLungRadsTop(fv);
-        {% elif (isElcap) %}
+        {% elif (isCT and isElcap) %}
             moveLungRadsBottom(fv);
         {% endif %}
     }

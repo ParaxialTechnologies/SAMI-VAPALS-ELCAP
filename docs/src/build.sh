@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+bases=(lungrads elcap)
+sites=(default sinai)
+
 echo "Checking dependencies..."
 pips=`pip3 freeze`
 
@@ -28,15 +31,28 @@ command -v npm >/dev/null 2>&1 || {
 #Check for JSDOC Installation
 command -v jsdoc >/dev/null 2>&1 || { npm install -g jsdoc; }
 
-
 # Compile forms
 echo "Compiling forms..."
+start=`date +%s`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-python3 "${DIR}/compile-forms.py"
 
-# Build Code documentation
+for b in "${bases[@]}"
+do
+   for s in "${sites[@]}"
+   do
+      python3 "${DIR}/compile-forms.py" $b $s
+   done
+done
+
+end=`date +%s`
+runtime=$( echo "$end - $start" | bc -l )
+echo "Finished compiling HTML at `date '+%Y-%m-%d %H:%M:%S'` in ${runtime} seconds"
+
+# Javascript documentation
 DOCS="${DIR}/doc"
 rm -rf "${DOCS}"
 jsdoc ${DIR}/../www/*.js --readme ${DIR}/../src/README.md -d "${DOCS}"
 
-python3 "${DIR}/tsv-dd-to-html.py"
+# Build Code documentation
+#redirect stderr to stdout and stdout to /dev/null in order to get only stderr on your terminal.
+python3 "${DIR}/tsv-dd-to-html.py" 2>&1 > /dev/null

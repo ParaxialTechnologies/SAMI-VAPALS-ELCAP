@@ -445,6 +445,32 @@
                             </td>
                         {% endfor %}
                     </tr>
+                    {% if site=='sinai' %}
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <label class="control-label">Pleural Tags</label>
+                            </td>
+                            {% for i in noduleArray %}
+                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                    <div class="form-group form-group-sm">
+                                        {{ f.yesCheckbox("cect" + i|string + "pt", {"tabindex":i|string+"19"}) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <label class="control-label">Parenchymal Abnormality within 1 cm</label>
+                            </td>
+                            {% for i in noduleArray %}
+                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                    <div class="form-group form-group-sm">
+                                        {{ f.yesCheckbox("cect" + i|string + "pa", {"tabindex":i|string+"20"}) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
                     <tr>
                         <td style="white-space: nowrap;">
                             <label class="control-label">Calcifications</label>
@@ -452,7 +478,7 @@
                         {% for i in noduleArray %}
                             <td data-nodule-id="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
-                                    {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"19"}) }}
+                                    {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"21"}) }}
                                 </div>
                             </td>
                         {% endfor %}
@@ -470,7 +496,7 @@
                                     {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
                                     <label for="cect{{ i }}in" class="aria-hidden">Index nodule</label>
                                     <input type="checkbox" class="radiocheckbox" name="cectin" id="cect{{ i }}in"
-                                           value="{{ i }}" tabindex="{{ i }}21">
+                                           value="{{ i }}" tabindex="{{ i }}22">
                                 </div>
                             </td>
                         {% endfor %}
@@ -487,7 +513,7 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}pld" class="aria-hidden">Distance</label>
                                     <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
-                                           class="numeric decimalformat" tabindex="{{ i }}21">
+                                           class="numeric decimalformat" tabindex="{{ i }}23">
                                 </div>
                             </td>
                         {% endfor %}
@@ -507,7 +533,7 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}ac" class="aria-hidden">Action</label>
                                     <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action" class="form-control"
-                                            tabindex="{{ i }}22">
+                                            tabindex="{{ i }}24">
                                         <option value="-"> -</option>
                                         <option value="s"{{ " selected" if (mockup and i==1) }}>Annual repeat CT
                                         </option>
@@ -535,7 +561,7 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}co" class="aria-hidden">Comment</label>
                                     <input type="text" name="cect{{ i }}co" id="cect{{ i }}co" size="20"
-                                           class="form-control" tabindex="{{ i }}23">
+                                           class="form-control" tabindex="{{ i }}25">
                                 </div>
                             </td>
                         {% endfor %}
@@ -555,7 +581,7 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}pd" class="aria-hidden">Pathologic diagnosis</label>
                                     <select name="cect{{ i }}pd" id="cect{{ i }}pd" class="form-control"
-                                            tabindex="{{ i }}24">
+                                            tabindex="{{ i }}26">
                                         <option value="-"> -For Pathology Use Only-</option>
                                         <option value="aa"> AAH</option>
                                         <option value="ap"> Atyp bronch prolif</option>
@@ -577,6 +603,48 @@
                             </td>
                         {% endfor %}
                     </tr>
+                    {% if site=='sinai' %}
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <label class="control-label">Identified by AI?</label>
+                            </td>
+                            {% for i in noduleArray %}
+                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                    <div class="form-group form-group-sm">
+                                        {{ f.yesCheckbox("cect" + i|string + "aif", {"tabindex":i|string+"27"}) }}
+                                        <input type="text" name="cect{{ i }}ail" id="cect{{ i }}ail" size="20"
+                                               class="form-control" tabindex="{{ i }}28" placeholder="If yes, AI label">
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <label class="control-label">Identified by radiologist?</label>
+                            </td>
+                            {% for i in noduleArray %}
+                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                    <div class="form-group form-group-sm">
+                                        {{ f.yesCheckbox("cect" + i|string + "mr", {"tabindex":i|string+"28"}) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <label class="control-label">AI Comment</label>
+                            </td>
+                            {% for i in noduleArray %}
+                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                    <div class="form-group form-group-sm">
+                                        <input type="text" name="cect{{ i }}aic" id="cect{{ i }}aic" size="20"
+                                               class="form-control" tabindex="{{ i }}29">
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+
                     </tbody>
                 </table>
                 <button type="button" class="btn btn-default btn-sm add-nodule" tabindex="1101">

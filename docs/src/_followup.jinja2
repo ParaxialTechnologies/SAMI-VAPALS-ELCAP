@@ -1,14 +1,29 @@
 {% set isCT = formPage=='ctevaluation' %}
-{% set isLungRads =  base == 'lungrads' %}
-{% set isElcap =  base == 'elcap' %}
+{% set isLungRads = base == 'lungrads' %}
+{% set isElcap = base == 'elcap' %}
 {% set elcapApproachValue = 'el' %}
 {% set lungRadsApproachValue = 'lr' %}
 
+
 <h3>Follow-Up
+    {% set helpText = "This section refers to the most immediate action that needs to be taken with respect to the
+        patient, whether the recommendation is based on findings pertaining to nodules or other abnormalities.<br/><br/>
+        It is important that on subsequent forms the physician updates the status and action fields corresponding to
+        each abnormality and selects the most important follow-up." %}
+    {% if isCT %}
+        {% set helpText = helpText + "<br/><br/>f/u CT includes both the limited and full
+           diagnostic CT scans which are done according to the ELCAP protocol for any follow-up CT except ones that will
+           occur on the anniversary/annual CT date." %}
+    {% endif %}
+
+    <i class="fa-regular fa-circle-question fa-2xs"
+       aria-hidden="true" data-toggle="popover" data-html="true" title="Help"
+       data-content="{{ helpText }}"></i>
     {% if not isCT %}
         <label class="small required">select one or more</label>
     {% endif %}
 </h3>
+
 
 {% if isCT %}
     <div class="row">

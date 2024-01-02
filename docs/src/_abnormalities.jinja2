@@ -78,7 +78,12 @@
                             {% endfor %}
                         </tr>
                         <tr>
-                            <td><label class="control-label">Scarring</label></td>
+                            <td><label class="control-label">Scarring</label>
+                                <i class="fa-regular fa-circle-question"
+                                   aria-hidden="true" data-toggle="popover" data-html="true"
+                                   title="Guidelines for entering scarring"
+                                   data-content="Right apical scarring:<br/> - Check both the apical unilateral box and the RUL box.<br/><br/>Left apical scarring:<br/> - Check both the apical unilateral box and the LUL box.<br/><br/>Biapical scarring: <br/> - Check the apical bilateral box and both the RUL and LUL boxes.<br/><br/>Bilateral basilar scarring:<br/> - Check the RLL and LLL boxes.<br/><br/>Bilateral scarring:<br/> - Check all of the boxes."></i>
+                            </td>
                             <td>
                                 <div class="form-group">
                                     {{ f.yesCheckbox("cescr") }}
@@ -371,12 +376,21 @@
                                 <div class="form-group">
                                     <label for="ceoppab">Additional comments on pleural
                                         abnormalities</label>
-                                    <textarea name="ceoppab" id="ceoppab"
-                                              class="form-control"></textarea>
+                                    <textarea name="ceoppab" id="ceoppab" class="form-control"></textarea>
                                     {{ f.inlineCheckbox("ceoppabi", "y", "Include in impression") }}
                                 </div>
                             </td>
                         </tr>
+                        {% if (site == 'sinai') %}
+                        <tr>
+                            <td colspan="7">
+                                <div class="form-group">
+                                    <label for="ceaippc">AI Parenchymal/Pleural Comments</label>
+                                    <textarea name="ceaippc" id="ceaippc" class="form-control"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -409,6 +423,20 @@
                         </select>
                     </div>
                 </div>
+                {% if site == 'sinai' %}
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                            <label class="control-label" for="ceavc">Aortic valve calcifications</label>
+                            <select name="ceavc" id="ceavc" class="form-control">
+                                <option value="-"> -</option>
+                                <option value="no"> None</option>
+                                <option value="mi"> Minimal < &frac13;</option>
+                                <option value="mo"> Moderate</option>
+                                <option value="ex"> Extensive > &frac23;</option>
+                            </select>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-sm-6 col-md-4 col-lg-3 form-group">
                         <label class="control-label" for="ceprevm">Pericardial effusion severity</label>
@@ -430,6 +458,16 @@
                         {{ f.inlineCheckbox("cecommcai", "y", "Include in impression") }}
                     </div>
                 </div>
+                {% if (site == 'sinai') %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="form-group">
+                                <label for="ceaicac">AI Cardiac Comments</label>
+                                <textarea name="ceaicac" id="ceaicac" class="form-control"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -515,7 +553,7 @@
                                 <br/>
                                 <a href="{{ path }}img/nodal_chart.gif" target="_blank" title="Click for larger image">
                                     <img src="{{ path }}img/nodal_chart.gif" title="Lymph node chart" class="hidden-xs"
-                                         alt="Lymph node chart" style="max-width: 675px;" />
+                                         alt="Lymph node chart" style="max-width: 675px;"/>
                                     <span class="visible-xs">View lymph node chart</span>
                                 </a>
                             </td>
@@ -770,6 +808,16 @@
                                 </div>
                             </td>
                         </tr>
+                        {% if (site == 'sinai') %}
+                            <tr>
+                                <td colspan="7">
+                                    <div class="form-group">
+                                        <label for="ceaibc">AI Bone Comments</label>
+                                        <textarea name="ceaibc" id="ceaibc" class="form-control"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -989,5 +1037,4 @@
             });
         }
     }
-
 </script>

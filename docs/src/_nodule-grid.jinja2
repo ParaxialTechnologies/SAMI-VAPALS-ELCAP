@@ -45,10 +45,11 @@
                     <tr>
                         <th>Nodule ID</th>
                         {% for i in noduleArray %}
-                            <th data-nodule-id="{{ i }}" style="display:none;">
+                            <th data-nodule-number="{{ i }}" style="display:none;">
                                 Nodule {{ i }}
-                                <i class="remove-nodule fa fa-trash-o pull-right remove-nodule"
-                                   title="Remove nodule {{ i }}" data-nodule-id="{{ i }}"></i>
+                                <i class="remove-nodule fa-light fa-trash-can pull-right"
+                                   title="Remove nodule {{ i }}" data-nodule-number="{{ i }}"
+                                   style="margin-right:10px"></i>
                                 <div class="nodule-image-container"/>
                             </th>
                         {% endfor %}
@@ -68,7 +69,9 @@
                             </label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
+                                {# flag for draft nodules, which may be removed #}
+                                <input type="hidden" name="cect{{ i }}dr" id="cect{{ i }}dr">
                                 <div class="form-group form-group-sm">
                                     {# TODO What does newStat({{ i }}) do onchange?#}
                                     <label for="cect{{ i }}ch" class="aria-hidden">Is it new?</label>
@@ -108,7 +111,7 @@
                             </label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}en" class="aria-hidden">Endobronchial?</label>
                                     <select name="cect{{ i }}en" id="cect{{ i }}en" class="form-control"
@@ -141,7 +144,7 @@
                             </label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}ll" class="aria-hidden"> Most likely location?</label>
                                     <select name="cect{{ i }}ll" id="cect{{ i }}ll" class="form-control"
@@ -166,7 +169,7 @@
                                         title="Standard Update Value">SUV</abbr></label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                     <div class="form-group form-group-sm">
                                         <label for="cect{{ i }}su" class="aria-hidden">
                                             <abbr title="Standard Update Value">SUV</abbr>
@@ -186,7 +189,7 @@
                                data-content="Indicate the CT series number in which the nodule appears."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sn" class="aria-hidden">Nodule seen in series #</label>
                                     <input type="text" name="cect{{ i }}sn" id="cect{{ i }}sn" size="3"
@@ -203,7 +206,7 @@
                                data-content="Indicate the CT image number in which the nodule appears."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}inl" class="aria-hidden"> Nodule seen in image (Low)</label>
                                     <input type="text" name="cect{{ i }}inl" id="cect{{ i }}inl" size="3"
@@ -231,7 +234,7 @@
                                consistency for data entry across institutions."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}st" class="aria-hidden">Nodule status</label>
                                     <select name="cect{{ i }}st" id="cect{{ i }}st" class="form-control"
@@ -269,7 +272,7 @@
                                and nonsolid components"></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}nt" class="aria-hidden">Nodule consistency</label>
                                     <select name="cect{{ i }}nt" id="cect{{ i }}nt" class="form-control"
@@ -292,7 +295,7 @@
                                measurement is always millimeters."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sl" class="aria-hidden">length (mm)</label>
                                     <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl" size="4"
@@ -311,7 +314,7 @@
                                of the nodule.  The unit of measurement is always millimeters."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sw" class="aria-hidden">Maximum width</label>
                                     <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw" size="4"
@@ -328,7 +331,7 @@
                                data-content="Calculated mean diameter."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label id="cect{{ i }}sd-val" title="Mean diameter" class="numeric">-</label>
                                 </div>
@@ -340,7 +343,7 @@
                             <label class="control-label">Height (mm)</label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sh" class="aria-hidden">Height</label>
                                     <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh" size="4"
@@ -355,7 +358,7 @@
                             <label class="control-label">Volume (mm<sup>3</sup>)</label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="row">
                                     <div class="form-group form-group-sm col-sm-6">
                                         <label for="cect{{ i }}sv" class="aria-hidden">Volume</label>
@@ -385,7 +388,7 @@
                             <label class="control-label required">Solid comp. of part-solid</label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div id="cect{{ i }}-container">
                                     <div class="form-group form-group-sm">
                                         <label for="cect{{ i }}ssl" class="aria-hidden">Solid comp. length</label>
@@ -411,7 +414,7 @@
                                data-content="Solid calculated mean diameter."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label id="cect{{ i }}ssd-val" title="Solid mean diameter" class="numeric">-</label>
                                 </div>
@@ -426,7 +429,7 @@
                                further if needed in the comments section below."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     {{ f.yesCheckbox("cect" + i|string + "se", {"tabindex":i|string+"17"}) }}
                                 </div>
@@ -438,7 +441,7 @@
                             <label class="control-label">Spiculated</label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"18"}) }}
                                 </div>
@@ -451,7 +454,7 @@
                                 <label class="control-label">Pleural Tags</label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                <td data-nodule-number="{{ i }}" style="display:none;">
                                     <div class="form-group form-group-sm">
                                         {{ f.yesCheckbox("cect" + i|string + "pt", {"tabindex":i|string+"19"}) }}
                                     </div>
@@ -463,7 +466,7 @@
                                 <label class="control-label">Parenchymal Abnormality within 1 cm</label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                <td data-nodule-number="{{ i }}" style="display:none;">
                                     <div class="form-group form-group-sm">
                                         {{ f.yesCheckbox("cect" + i|string + "pa", {"tabindex":i|string+"20"}) }}
                                     </div>
@@ -476,7 +479,7 @@
                             <label class="control-label">Calcifications</label>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"21"}) }}
                                 </div>
@@ -491,7 +494,7 @@
                                index nodule."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
                                     <label for="cect{{ i }}in" class="aria-hidden">Index nodule</label>
@@ -509,7 +512,7 @@
                                measured in millimeters."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <td data-nodule-number="{{ i }}" style="display:none;" class="form-inline">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}pld" class="aria-hidden">Distance</label>
                                     <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
@@ -529,7 +532,7 @@
                                'bronchoscopy', or 'resection'."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}ac" class="aria-hidden">Action</label>
                                     <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action" class="form-control"
@@ -557,7 +560,7 @@
                                seen nodule is found to be something other than a nodule, note it here."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}co" class="aria-hidden">Comment</label>
                                     <input type="text" name="cect{{ i }}co" id="cect{{ i }}co" size="20"
@@ -577,7 +580,7 @@
                                and it pops up on the CT evaluation form, it CANNOT be changed."></i>
                         </td>
                         {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
+                            <td data-nodule-number="{{ i }}" style="display:none;">
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}pd" class="aria-hidden">Pathologic diagnosis</label>
                                     <select name="cect{{ i }}pd" id="cect{{ i }}pd" class="form-control"
@@ -609,7 +612,7 @@
                                 <label class="control-label">Identified by AI?</label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                <td data-nodule-number="{{ i }}" style="display:none;">
                                     <div class="form-group form-group-sm">
                                         {{ f.yesCheckbox("cect" + i|string + "aif", {"tabindex":i|string+"27"}) }}
                                         <input type="text" name="cect{{ i }}ail" id="cect{{ i }}ail" size="20"
@@ -623,7 +626,7 @@
                                 <label class="control-label">Identified by radiologist?</label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                <td data-nodule-number="{{ i }}" style="display:none;">
                                     <div class="form-group form-group-sm">
                                         {{ f.yesCheckbox("cect" + i|string + "mr", {"tabindex":i|string+"28"}) }}
                                     </div>
@@ -635,7 +638,7 @@
                                 <label class="control-label">AI Comment</label>
                             </td>
                             {% for i in noduleArray %}
-                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                <td data-nodule-number="{{ i }}" style="display:none;">
                                     <div class="form-group form-group-sm">
                                         <input type="text" name="cect{{ i }}aic" id="cect{{ i }}aic" size="20"
                                                class="form-control" tabindex="{{ i }}29">
@@ -678,7 +681,10 @@
 
             $(".add-nodule").on('click', $noduleGrid.addNodule);
 
-            $(".remove-nodule").on('click', $noduleGrid.removeNodule);
+            $(".remove-nodule").on('click', function(){
+                const noduleNumber = $(this).data('nodule-number');
+                $noduleGrid.removeNodule(noduleNumber);
+            });
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
             if (fv) {

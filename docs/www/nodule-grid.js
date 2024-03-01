@@ -29,37 +29,37 @@
                 },
             }, options);
 
-            function setupNoduleEnabledState(noduleId) {
-                $("#cect" + noduleId + "nt").conditionallyEnable({
+            function setupNoduleEnabledState(noduleNumber) {
+                $("#cect" + noduleNumber + "nt").conditionallyEnable({
                     sourceValues: "m",
-                    enable: "#cect" + noduleId + "-container"
+                    enable: "#cect" + noduleNumber + "-container"
                 });
 
-                $("#cect" + noduleId + "ch").on('change.cteval', function () {
-                    toggleFields(noduleId);
+                $("#cect" + noduleNumber + "ch").on('change.cteval', function () {
+                    toggleFields(noduleNumber);
                 });
 
-                const currentIsItNewValue = $("#cect" + noduleId + "ch").val();
-                console.debug("setupNoduleEnabledState(noduleIndex=%s): currentIsItNewValue=%s", noduleId, currentIsItNewValue);
+                const currentIsItNewValue = $("#cect" + noduleNumber + "ch").val();
+                console.debug("setupNoduleEnabledState(noduleIndex=%s): currentIsItNewValue=%s", noduleNumber, currentIsItNewValue);
                 if (currentIsItNewValue !== '-') {
-                    toggleFields(noduleId);
+                    toggleFields(noduleNumber);
                 }
             }
 
-            function toggleFields(noduleId) {
-                const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
+            function toggleFields(noduleNumber) {
+                const logPrefix = 'toggleFields(noduleIndex=' + noduleNumber + '): ';
                 console.debug(logPrefix + 'entered');
 
                 // $fields is an array of fields related to this nodule with the exception of "is it new"
                 // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
                 // nodule 10 would match cect1*
-                const regex = new RegExp("cect" + noduleId + "[a-z]");
+                const regex = new RegExp("cect" + noduleNumber + "[a-z]");
                 let $fields = $('input,select').filter(function () {
                     const name = $(this).attr('name');
                     const id = $(this).attr('id');
-                    return id !== "cect" + noduleId + "ch" && (regex.test(name) || regex.test(id));
+                    return id !== "cect" + noduleNumber + "ch" && (regex.test(name) || regex.test(id));
                 });
-                let isItNewValue = $("#cect" + noduleId + "ch").val();
+                let isItNewValue = $("#cect" + noduleNumber + "ch").val();
                 console.debug(logPrefix + 'isItNewValue=%s', isItNewValue);
                 // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
                 // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
@@ -72,9 +72,9 @@
                     $fields = $fields.filter(function () {
                         const id = $(this).attr('id');
                         const idsToMatch = [
-                            'cect' + noduleId + 'll', // likely location
-                            'cect' + noduleId + 'st', // nodule status
-                            'cect' + noduleId + 'pd', // pathological diagnosis
+                            'cect' + noduleNumber + 'll', // likely location
+                            'cect' + noduleNumber + 'st', // nodule status
+                            'cect' + noduleNumber + 'pd', // pathological diagnosis
                         ];
                         // NB: For IE support, we must use indexOf() instead of !idsToMatch.includes(...);
                         return idsToMatch.indexOf(id) === -1;
@@ -112,13 +112,13 @@
 
                     // fixes a bug where L & W fields were required when nodule was solid and "is it new" was
                     // changed from "-" to anything else; which occurs on subsequent scans.
-                    $("#cect" + noduleId + "nt").trigger('change');
+                    $("#cect" + noduleNumber + "nt").trigger('change');
                 }
                 if (isItNewValue === "pw") {
-                    $("#cect" + noduleId + "st").val("re");
+                    $("#cect" + noduleNumber + "st").val("re");
                 } else {
-                    if ($("#cect" + noduleId + "st").val() === "re") {
-                        $("#cect" + noduleId + "st").val("-");
+                    if ($("#cect" + noduleNumber + "st").val() === "re") {
+                        $("#cect" + noduleNumber + "st").val("-");
                     }
                 }
                 console.debug(logPrefix + 'exiting');
@@ -139,10 +139,10 @@
                 const lengthFields = $("[name^=cect][name$=" + lengthFieldSuffix + "],[name^=cect][name$=" + widthFieldSuffix + "]");
                 lengthFields.on('keyup change', function (e) {
                     const targetField = $(e.target);
-                    const noduleId = targetField.closest("td").attr("data-nodule-id");
-                    const noduleDiamLabel = $("#cect" + noduleId + labelSuffix);
-                    const widthValue = $("#cect" + noduleId + widthFieldSuffix).val();
-                    const lengthValue = $("#cect" + noduleId + lengthFieldSuffix).val();
+                    const noduleNumber = targetField.closest("td").attr("data-nodule-number");
+                    const noduleDiamLabel = $("#cect" + noduleNumber + labelSuffix);
+                    const widthValue = $("#cect" + noduleNumber + widthFieldSuffix).val();
+                    const lengthValue = $("#cect" + noduleNumber + lengthFieldSuffix).val();
                     const m = mean(widthValue, lengthValue);
 
                     if (m > 0) {
@@ -183,9 +183,9 @@
 
             }
 
-            function calculateVolumeError(noduleId) {
+            function calculateVolumeError(noduleNumber) {
                 //See https://services.accumetra.com/NoduleCalculator.html
-                const volumeValue = parseFloat($("#cect" + noduleId + "sv").val());
+                const volumeValue = parseFloat($("#cect" + noduleNumber + "sv").val());
                 let deviation = 0;
                 if (volumeValue >= 113.0 && volumeValue < 154.0)
                     deviation = 0.29;
@@ -205,19 +205,19 @@
                 return Math.round(1.96 * volumeValue * deviation);
             }
 
-            function markNoduleVolumeManuallyEntered(noduleId, isManual) {
-                // console.log("markNoduleVolumeManuallyEntered() noduleId=" + noduleId + ", isManual=" + isManual)
-                const $messageContainer = $("#cect" + noduleId + "svovrrde-message").removeClass("invisible");
+            function markNoduleVolumeManuallyEntered(noduleNumber, isManual) {
+                // console.log("markNoduleVolumeManuallyEntered() noduleNumber=" + noduleNumber + ", isManual=" + isManual)
+                const $messageContainer = $("#cect" + noduleNumber + "svovrrde-message").removeClass("invisible");
                 if (isManual) {
-                    $("#cect" + noduleId + "sv").addClass("volumeOverride");
-                    $("#cect" + noduleId + "svovrrde").val("true");
+                    $("#cect" + noduleNumber + "sv").addClass("volumeOverride");
+                    $("#cect" + noduleNumber + "svovrrde").val("true");
                     $messageContainer.find(".text-warning").text("Manually entered")
                     $messageContainer.removeClass("invisible");
                 } else {
-                    $("#cect" + noduleId + "sv").removeClass("volumeOverride");
+                    $("#cect" + noduleNumber + "sv").removeClass("volumeOverride");
                     // set the manually override hidden field to false
-                    $("#cect" + noduleId + "svovrrde").val("false");
-                    const errorPercent = calculateVolumeError(noduleId);
+                    $("#cect" + noduleNumber + "svovrrde").val("false");
+                    const errorPercent = calculateVolumeError(noduleNumber);
                     if (!isNaN(errorPercent) && errorPercent > 0) {
                         $messageContainer.find(".text-warning").html("+/- " + errorPercent + "mm<sup>3</sup> (QIBA SLN Profile)")
                         $messageContainer.removeClass("invisible");
@@ -227,8 +227,8 @@
                 }
             }
 
-            function setupNoduleVolumeCalculations(noduleId) {
-                const lenWidthHeightFields = $("#cect" + noduleId + "sl, #cect" + noduleId + "sw, #cect" + noduleId + "sh");
+            function setupNoduleVolumeCalculations(noduleNumber) {
+                const lenWidthHeightFields = $("#cect" + noduleNumber + "sl, #cect" + noduleNumber + "sw, #cect" + noduleNumber + "sh");
                 lenWidthHeightFields.on("keyup", function () {
                     let allFilled = true;
 
@@ -239,7 +239,7 @@
                         }
                     });
 
-                    const btnElem = $("#cect" + noduleId + "svb");
+                    const btnElem = $("#cect" + noduleNumber + "svb");
                     if (allFilled) {
                         btnElem.attr("disabled", false);
                     } else {
@@ -247,25 +247,25 @@
                     }
                 }).first().trigger("keyup");
 
-                $("#cect" + noduleId + "svb").on('click', function () {
-                    const l = $("#cect" + noduleId + "sl").val() || 0;
-                    const w = $("#cect" + noduleId + "sw").val() || 0;
-                    const h = $("#cect" + noduleId + "sh").val() || 0;
+                $("#cect" + noduleNumber + "svb").on('click', function () {
+                    const l = $("#cect" + noduleNumber + "sl").val() || 0;
+                    const w = $("#cect" + noduleNumber + "sw").val() || 0;
+                    const h = $("#cect" + noduleNumber + "sh").val() || 0;
 
                     const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
-                    $("#cect" + noduleId + "sv").val(v.toFixed(1));
-                    markNoduleVolumeManuallyEntered(noduleId, false);
+                    $("#cect" + noduleNumber + "sv").val(v.toFixed(1));
+                    markNoduleVolumeManuallyEntered(noduleNumber, false);
                     //temporarily disabled
                     // checkConsistentVolumeCalculations();
                     return false;
                 });
 
 
-                $("#cect" + noduleId + "sv").on('change', function () {
+                $("#cect" + noduleNumber + "sv").on('change', function () {
                     // manually overriding the volume calculation
                     if ($(this).val() !== "") {
-                        markNoduleVolumeManuallyEntered(noduleId, true);
+                        markNoduleVolumeManuallyEntered(noduleNumber, true);
                         //temporarily disabled
                         //checkConsistentVolumeCalculations();
                     }
@@ -355,19 +355,19 @@
             }
 
             function getNoduleSizeForSorting(tableColumnIndex) {
-                const noduleId = tableColumnIndex + 1;
+                const noduleNumber = tableColumnIndex + 1;
                 let v1 = 0;
                 let v2 = 0;
-                const consistencyType = $("#cect" + noduleId + "nt").val();
+                const consistencyType = $("#cect" + noduleNumber + "nt").val();
                 if (consistencyType === 'm') { //part solid
-                    v1 = $("#cect" + noduleId + "ssl").val();
-                    v2 = $("#cect" + noduleId + "ssw").val();
+                    v1 = $("#cect" + noduleNumber + "ssl").val();
+                    v2 = $("#cect" + noduleNumber + "ssw").val();
                 } else {
-                    v1 = $("#cect" + noduleId + "sl").val();
-                    v2 = $("#cect" + noduleId + "sw").val();
+                    v1 = $("#cect" + noduleNumber + "sl").val();
+                    v2 = $("#cect" + noduleNumber + "sw").val();
                 }
                 let m = mean(v1, v2);
-                //console.log("nodule size of nodule" + noduleId + " is: " + m);
+                //console.log("nodule size of nodule" + noduleNumber + " is: " + m);
 
 
                 //Subtract 100000 to make nodules with no solid component sorted after those with a solid component
@@ -379,7 +379,7 @@
                 //Subtract 200000 to make calcified nodules sort after non-calcified.
                 // Calcified nodules are those with a status of Benign (Ca++) or Prob benign, prob Ca++. All other
                 // statuses, including blank are considered "non-calcified".
-                const noduleStatus = $("#cect" + noduleId + "st").val();
+                const noduleStatus = $("#cect" + noduleNumber + "st").val();
                 const calcified = noduleStatus === 'bc' || noduleStatus === 'pc';
                 if (calcified === true) {
                     m -= 200000; //insane number that would never be a real nodule size (100 meters)
@@ -389,14 +389,8 @@
             }
 
             function _displayNodules(count) {
-                $("[data-nodule-id]").hide().filter(function () {
-                    return $(this).data("nodule-id") <= count;
-                }).show();
-
-                // Only show the delete icon on the last (rightmost) nodule;
-                // NB: there is currently no support renumbering fields so removing from the middle is not an option
-                $(".remove-nodule").hide().filter(function () {
-                    return $(this).data("nodule-id") === count;
+                $("[data-nodule-number]").hide().filter(function () {
+                    return $(this).data("nodule-number") <= count;
                 }).show();
 
                 $("#nodule-table").toggle(count > 0);
@@ -473,7 +467,7 @@
                     $field.val(value);
                 }
 
-                let noduleId = 1;
+                let noduleNumberF = 1;
                 let lungRads = "";
 
                 nodules.forEach(nodule => {
@@ -482,7 +476,7 @@
 
                         // “Finding site” maps to the "Most likely location" field (cect1ll) of the form.
                         if (key === "Finding site") {
-                            const fieldSelector = "#cect" + noduleId + "ll";
+                            const fieldSelector = "#cect" + noduleNumber + "ll";
                             const $field = $(fieldSelector);
                             if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
                                 $field.addClass(AI.IMPORT_FIELD_CLASS);
@@ -512,13 +506,13 @@
 
                         // Nodule seen in series #.
                         if (!isNaN(parseFloat(seriesNumber))) {
-                            const fieldSelectorLow = "#cect" + noduleId + "sn";
+                            const fieldSelectorLow = "#cect" + noduleNumber + "sn";
                             applyTextValue(fieldSelectorLow, seriesNumber);
                         }
 
                         // “Attenuation Characteristic” maps to the "Nodule consistency" field (cect1nt) of the form.
                         if (key === "Attenuation Characteristic") {
-                            const fieldSelector = "#cect" + noduleId + "nt";
+                            const fieldSelector = "#cect" + noduleNumber + "nt";
                             const $field = $(fieldSelector);
                             if (!$field.hasClass(AI.IMPORT_FIELD_CLASS)) {
                                 $field.addClass(AI.IMPORT_FIELD_CLASS);
@@ -544,9 +538,9 @@
 
                         // “Radiographic Lesion Margin” maps to the "Smooth edges" and "Spiculated" fields (cect1se and cect1sp) of the form.
                         if (key === "Radiographic Lesion Margin") {
-                            const fieldSelectorSe = "#cect" + noduleId + "se";
+                            const fieldSelectorSe = "#cect" + noduleNumber + "se";
                             const $fieldSe = $(fieldSelectorSe);
-                            const fieldSelectorSp = "#cect" + noduleId + "sp";
+                            const fieldSelectorSp = "#cect" + noduleNumber + "sp";
                             const $fieldSp = $(fieldSelectorSp);
                             if (!$fieldSe.hasClass(AI.IMPORT_FIELD_CLASS)) {
                                 $fieldSe.addClass(AI.IMPORT_FIELD_CLASS);
@@ -578,26 +572,26 @@
 
                         // “Maximum 2D diameter” maps to the "Length (mm)" field (cect1sl) of the form.
                         if (key === "Maximum 2D diameter") {
-                            const fieldSelector = "#cect" + noduleId + "sl";
+                            const fieldSelector = "#cect" + noduleNumber + "sl";
                             applyTextValue(fieldSelector, value);
                         }
 
                         // “Maximum perpendicular 2D diameter” maps to the "Maximum width (mm)" field (cect1sw) of the form.
                         if (key === "Maximum perpendicular 2D diameter") {
-                            const fieldSelector = "#cect" + noduleId + "sw";
+                            const fieldSelector = "#cect" + noduleNumber + "sw";
                             applyTextValue(fieldSelector, value);
                         }
 
                         // “Volume” maps to the "Volume (mm3)" field (cect1sv) of the form.
                         if (key === "Volume") {
-                            const fieldSelector = "#cect" + noduleId + "sv";
+                            const fieldSelector = "#cect" + noduleNumber + "sv";
                             applyTextValue(fieldSelector, value);
                         }
 
                         if (key === "slice number of lesion epicenter") {
-                            const fieldSelectorLow = "#cect" + noduleId + "inl";
+                            const fieldSelectorLow = "#cect" + noduleNumber + "inl";
                             applyTextValue(fieldSelectorLow, value);
-                            const fieldSelectorHigh = "#cect" + noduleId + "inh";
+                            const fieldSelectorHigh = "#cect" + noduleNumber + "inh";
                             applyTextValue(fieldSelectorHigh, value);
                         }
 
@@ -637,7 +631,7 @@
                                     "title=\"" + fileName + "\" " +
                                     "class=\"ai\" " +
                                     "src=\"data:" + mimeType + ";base64," + content + "\"/>");
-                                const $th = $("th[data-nodule-id=" + noduleId + "]");
+                                const $th = $("th[data-nodule-number=" + noduleNumber + "]");
                                 const $imgContainer = $th.find(".nodule-image-container")
                                 $th.find("img.ai").remove(); //remove previously imported image icons.
                                 $imgContainer.append($img);
@@ -645,7 +639,7 @@
                         }
                     });
 
-                    noduleId++;
+                    noduleNumber++;
                 });
                 if (lungRads > "") {
                     const $field = $("[name=celrad][value=" + lungRads + "]");
@@ -680,8 +674,32 @@
                 }
             }
 
-            function _removeNodule() {
+            function _removeNodule(noduleNumber) {
                 let noduleCount = settings.getNoduleCount();
+
+                // copy nodules at the right to the left
+                for (let i = noduleNumber; i < noduleCount; i++) {
+                    const sourceNodule = i + 1;
+                    const targetNodule = i;
+                    $("[name^='cect" + sourceNodule + "']:input").each(function () {
+                        const $sourceInput = $(this);
+                        const elementType = ($sourceInput.attr("type") || this.tagName).toLowerCase();
+                        const sourceName = $sourceInput.attr("name");
+                        const suffix = sourceName.replace("cect" + sourceNodule, "");
+                        const targetName = "cect" + targetNodule + suffix;
+                        const $targetInput = $("[name='" + targetName + "']");
+
+                        if (["hidden", "text", "textarea", "select"].includes(elementType)) {
+                            $targetInput.val($sourceInput.val());
+                        } else if (elementType === "checkbox") {
+                            $targetInput.prop("checked", $sourceInput.prop("checked"));
+                        } else {
+                            console.log("Unsupported elementType=%s, sourceName=%s", elementType, sourceName);
+                        }
+                        $targetInput.trigger('change.cteval');
+                    })
+                }
+
                 if (noduleCount > 0) {
                     $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
                     _displayNodules(--noduleCount);
@@ -700,6 +718,14 @@
                 for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
+
+                    const draftValue = $("#cect" + i + "dr").val();
+                    const isDraft = draftValue === "true" || draftValue === "";
+                    console.log("_init(): nodule='" + i + "', draftValue='" + draftValue + "', isDraft='" + isDraft + "'");
+                    if (!isDraft) {
+                        console.log("init(): nodule='" + i + "', removing delete link")
+                        $("th[data-nodule-number=" + i + "]").find(".remove-nodule").remove();
+                    }
                 }
 
                 _displayNodules(settings.getNoduleCount());

@@ -467,7 +467,7 @@
                     $field.val(value);
                 }
 
-                let noduleNumberF = 1;
+                let noduleNumber = 1;
                 let lungRads = "";
 
                 nodules.forEach(nodule => {

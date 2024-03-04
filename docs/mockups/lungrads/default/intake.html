@@ -1368,7 +1368,7 @@
       </div>
       <hr/>
       <div class="pull-left">
-       <input name="samistatus" type="hidden" value=""/>
+       <input id="samistatus" name="samistatus" type="hidden" value=""/>
        <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
         Save for Later
        </button>
@@ -2012,7 +2012,7 @@
 
             validateSection(fv, $("#chart-eligibility")).then(function (valid) {
                 if (valid) {
-                    $("[name=samistatus]").val("chart-eligibility");
+                    $("#samistatus").val("chart-eligibility");
                     $("form").trigger("submit");
                 }
             });
@@ -2024,7 +2024,7 @@
 
             validateSection(fv, $("#pre-enrollment-discussion")).then(function (valid) {
                 if (valid) {
-                    $("[name=samistatus]").val("pre-enrollment-discussion");
+                    $("#samistatus").val("pre-enrollment-discussion");
                     $("form").trigger("submit");
                 }
             });

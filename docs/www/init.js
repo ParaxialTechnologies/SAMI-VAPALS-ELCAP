@@ -145,11 +145,11 @@ $(function () {
     $('[data-toggle="popover"]').popover();
 
     $("#save-for-later-button").on('click', function () {
-        $("input[name=samistatus]").val(VAPALS.INCOMPLETE);
+        $("#samistatus").val(VAPALS.INCOMPLETE);
     });
 
     $("#submit-button").on('click', function () {
-        $("input[name=samistatus]").val(VAPALS.COMPLETE);
+        $("#samistatus").val(VAPALS.COMPLETE);
         if (typeof $noduleGrid !== "undefined") {
             $noduleGrid.markVisibleComplete();
         }

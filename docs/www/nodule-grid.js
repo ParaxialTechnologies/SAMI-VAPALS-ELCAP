@@ -722,7 +722,7 @@
                 // solid mean diameter calculation
                 setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
-                const ctComplete = $("#samistatus").val() === VAPALS.COMPLETE;
+                const ctComplete = $("[name='samistatus']").val() === VAPALS.COMPLETE;
                 for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);

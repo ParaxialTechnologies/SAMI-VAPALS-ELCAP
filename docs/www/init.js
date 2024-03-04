@@ -145,11 +145,14 @@ $(function () {
     $('[data-toggle="popover"]').popover();
 
     $("#save-for-later-button").on('click', function () {
-        $("input[name=samistatus]").val("incomplete");
+        $("input[name=samistatus]").val(VAPALS.INCOMPLETE);
     });
 
     $("#submit-button").on('click', function () {
-        $("input[name=samistatus]").val("complete");
+        $("input[name=samistatus]").val(VAPALS.COMPLETE);
+        if (typeof $noduleGrid !== "undefined") {
+            $noduleGrid.markVisibleComplete();
+        }
     });
 
     /** Handling of the delete form modal */

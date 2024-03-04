@@ -674,6 +674,13 @@
                 }
             }
 
+            function _markVisibleComplete() {
+                let noduleCount = settings.getNoduleCount();
+                for (let i = noduleNumber; i < noduleCount; i++) {
+                    $("[name^='cect" + i + "dr']").val("false")
+                }
+            }
+
             function _removeNodule(noduleNumber) {
                 let noduleCount = settings.getNoduleCount();
 
@@ -715,12 +722,13 @@
                 // solid mean diameter calculation
                 setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
+                const ctComplete = $("#samistatus").val() === VAPALS.COMPLETE;
                 for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
 
                     const draftValue = $("#cect" + i + "dr").val();
-                    const isDraft = draftValue === "true" || draftValue === "";
+                    const isDraft = !ctComplete && (draftValue === "true" || draftValue === "");
                     console.log("_init(): nodule='" + i + "', draftValue='" + draftValue + "', isDraft='" + isDraft + "'");
                     if (!isDraft) {
                         console.log("init(): nodule='" + i + "', removing delete link")
@@ -738,7 +746,8 @@
                     // importDicomHeader: _importDicomHeader,
                     revertData: _revertData,
                     removeNodule: _removeNodule,
-                    sortData: _sortData
+                    sortData: _sortData,
+                    markVisibleComplete: _markVisibleComplete
                 };
             }
 

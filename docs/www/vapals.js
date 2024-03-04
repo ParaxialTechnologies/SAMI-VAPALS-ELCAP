@@ -7,6 +7,8 @@
  * @class
  */
 VAPALS = new function () {
+    this.COMPLETE = "complete";
+    this.INCOMPLETE = "incomplete";
     this.DATE_FORMAT = "MM/DD/YYYY";
 
     this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";

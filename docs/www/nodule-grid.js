@@ -677,10 +677,15 @@
 
             function _markVisibleComplete() {
                 let noduleCount = settings.getNoduleCount();
-                console.log("markVisibleComplete: noduleCount=%s", noduleCount);
                 for (let i = 1; i <= noduleCount; i++) {
                     $("[name^='cect" + i + "dr']").val("false")
-                    console.log("Marking nodule " + i + " complete.");
+                }
+            }
+
+            function _markVisibleIncomplete() {
+                let noduleCount = settings.getNoduleCount();
+                for (let i = 1; i <= noduleCount; i++) {
+                    $("[name^='cect" + i + "dr']").val("true")
                 }
             }
 
@@ -755,7 +760,8 @@
                     revertData: _revertData,
                     removeNodule: _removeNodule,
                     sortData: _sortData,
-                    markVisibleComplete: _markVisibleComplete
+                    markVisibleComplete: _markVisibleComplete,
+                    markVisibleIncomplete: _markVisibleIncomplete
                 };
             }
 

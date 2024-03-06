@@ -709,7 +709,7 @@
                         $targetInput.trigger('change.cteval');
                     })
                     // remove the AI image if present
-                    $("th[data-nodule-number="+noduleNumber+"]").find(".ai").remove();
+                    $("th[data-nodule-number=" + i + "]").find(".ai").remove();
                 }
 
                 if (noduleCount > 0) {

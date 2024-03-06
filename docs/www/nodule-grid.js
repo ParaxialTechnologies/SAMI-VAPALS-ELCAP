@@ -138,7 +138,7 @@
 
             function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, labelSuffix) {
                 const lengthFields = $("[name^=cect][name$=" + lengthFieldSuffix + "],[name^=cect][name$=" + widthFieldSuffix + "]");
-                lengthFields.on('keyup change', function (e) {
+                lengthFields.on('keyup change change.cteval', function (e) {
                     const targetField = $(e.target);
                     const noduleNumber = targetField.closest("td").attr("data-nodule-number");
                     const noduleDiamLabel = $("#cect" + noduleNumber + labelSuffix);
@@ -699,8 +699,10 @@
 
                         if (["hidden", "text", "textarea", "select"].includes(elementType)) {
                             $targetInput.val($sourceInput.val());
+                            $sourceInput.val("")
                         } else if (elementType === "checkbox") {
                             $targetInput.prop("checked", $sourceInput.prop("checked"));
+                            $sourceInput.prop("checked", false);
                         } else {
                             console.log("Unsupported elementType=%s, sourceName=%s", elementType, sourceName);
                         }
@@ -724,7 +726,8 @@
                 setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
                 const ctComplete = settings.frozen === "true";
-                for (let i = 1; i < settings.availableNodules; i++) {
+                const initalNoduleCount = settings.getNoduleCount();
+                for (let i = 1; i < initalNoduleCount + 1; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
 
@@ -737,7 +740,7 @@
                     }
                 }
 
-                _displayNodules(settings.getNoduleCount());
+                _displayNodules(initalNoduleCount);
 
 
                 return {

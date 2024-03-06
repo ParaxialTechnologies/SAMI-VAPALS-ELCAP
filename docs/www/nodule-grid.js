@@ -21,6 +21,7 @@
         noduleGrid: function (options) {
             const settings = $.extend({
                 availableNodules: 10,
+                frozen: "",
                 getNoduleCount: function () {
                     return 0;
                 },
@@ -722,7 +723,7 @@
                 // solid mean diameter calculation
                 setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
-                const ctComplete = $("#samistatus").val() === VAPALS.COMPLETE;
+                const ctComplete = settings.frozen === "true";
                 for (let i = 1; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);

@@ -677,7 +677,8 @@
 
             function _markVisibleComplete() {
                 let noduleCount = settings.getNoduleCount();
-                for (let i = 1; i < noduleCount; i++) {
+                console.log("markVisibleComplete: noduleCount=%s", noduleCount);
+                for (let i = 1; i <= noduleCount; i++) {
                     $("[name^='cect" + i + "dr']").val("false")
                     console.log("Marking nodule " + i + " complete.");
                 }

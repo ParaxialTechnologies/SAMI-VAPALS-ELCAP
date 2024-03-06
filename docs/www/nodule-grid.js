@@ -677,7 +677,7 @@
 
             function _markVisibleComplete() {
                 let noduleCount = settings.getNoduleCount();
-                for (let i = noduleNumber; i < noduleCount; i++) {
+                for (let i = 1; i < noduleCount; i++) {
                     $("[name^='cect" + i + "dr']").val("false")
                 }
             }

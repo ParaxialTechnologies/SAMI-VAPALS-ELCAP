@@ -151,6 +151,7 @@ $(function () {
     $("#submit-button").on('click', function () {
         $("#samistatus").val(VAPALS.COMPLETE);
         if (typeof $noduleGrid !== "undefined") {
+            console.log("marking visible complete")
             $noduleGrid.markVisibleComplete();
         }
     });

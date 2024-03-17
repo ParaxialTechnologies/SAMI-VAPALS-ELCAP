@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="lungrads" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.03.06" name="version"/>
+  <meta content="2024.03.17" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening Intake Form
@@ -66,19 +66,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.03.06">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.03.17">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.03.06">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.03.17">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.03.06">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.03.17">
   </script>
-  <script src="../../../www/vapals.js?v=2024.03.06">
+  <script src="../../../www/vapals.js?v=2024.03.17">
   </script>
-  <script src="../../../www/init.js?v=2024.03.06">
+  <script src="../../../www/init.js?v=2024.03.17">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.03.06">
+  <script src="../../../www/nodule-grid.js?v=2024.03.17">
   </script>
-  <script src="../../../www/ai.js?v=2024.03.06">
+  <script src="../../../www/ai.js?v=2024.03.17">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -627,6 +627,1172 @@
       <hr/>
      </div>
      <div id="intake">
+      <h3>
+       Intake Form
+      </h3>
+      <div class="row">
+       <div class="col-md-3 form-group">
+        <label class="required" for="sinamel">
+         Patient Name (Last)
+        </label>
+        <input class="form-control input-sm" id="sinamel" name="sinamel" required="required" title="Other contact method" type="text"/>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label class="req" for="sinamef">
+         Patient Name (First)
+        </label>
+        <input class="form-control" name="sinamef" required="required" type="text"/>
+       </div>
+       <div class="col-sm-2 form-group">
+        <label for="sisid">
+         Study ID
+        </label>
+        <input class="form-control" id="sisid" name="sisid" type="text"/>
+       </div>
+       <div class="col-sm-2 form-group">
+        <label for="sifsid">
+         Former Study ID
+        </label>
+        <input class="form-control" id="sifsid" name="sifsid" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="sidoe">
+         Date of Baseline CT
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sidoe-addon" class="form-control" data-restriction="past" id="sidoe" name="sidoe"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sidoe-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-3 col-md-2 form-group">
+        <label for="simrn">
+         Medical Record Number
+        </label>
+        <input class="form-control" name="simrn" type="text"/>
+       </div>
+       <div class="col-sm-3 col-md-2 form-group">
+        <label class="req" for="sidob">
+         Date of Birth
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sidob-addon" class="form-control" data-restriction="past" id="sidob" name="sidob" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sidob-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label class="req" for="sisloc">
+         Scanning Location
+        </label>
+        <select class="form-control" name="sisloc">
+         <option value="-">
+          -
+         </option>
+         <option value="MSH">
+          Mount Sinai Medical Center
+         </option>
+         <option value="MSW">
+          Mount Sinai West
+         </option>
+         <option value="MSL">
+          Mount Sinai Morningside
+         </option>
+         <option value="MSB">
+          Brooklyn Heights
+         </option>
+         <option value="MSK">
+          Kings Highway
+         </option>
+         <option value="HU">
+          Huntington/Greenlawn
+         </option>
+         <option value="MSDUS">
+          Union Square / Beth Israel
+         </option>
+         <option value="MSDC">
+          Chelsea
+         </option>
+         <option value="MS34">
+          34th St
+         </option>
+         <option value="MSQ">
+          Queens
+         </option>
+         <option value="e">
+          Followed Elsewhere
+         </option>
+        </select>
+       </div>
+       <div class="col-sm-5 form-group">
+        <div class="checkbox-inline">
+         <label for="sisa">
+          <input id="sisa" name="sisa" type="checkbox" value="y"/>
+          Special Attention
+         </label>
+        </div>
+        <div class="checkbox-inline">
+         <label for="sivip">
+          <input id="sivip" name="sivip" type="checkbox" value="vip"/>
+          VIP
+         </label>
+        </div>
+        <div class="checkbox-inline">
+         <label for="sirs">
+          <input id="sirs" name="sirs" type="checkbox" value="y"/>
+          Attending radiologist read
+         </label>
+        </div>
+        <div class="row">
+         <div class="col-sm-12 form-group">
+          <label for="sisao">
+           Comments
+          </label>
+          <input class="form-control" id="sisao" name="sisao" type="text"/>
+         </div>
+        </div>
+       </div>
+       <div class="col-sm-4 form-group">
+        <label for="sipl">
+         Primary Language (if not English)
+        </label>
+        <input class="form-control" name="sipl" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="sirp">
+         Research Protocol
+        </label>
+        <br/>
+        <label class="radio-inline" for="sirp-y">
+         <input id="sirp-y" name="sirp" type="radio" value="y"/>
+         Yes
+        </label>
+        <label class="radio-inline" for="sirp-n">
+         <input id="sirp-n" name="sirp" type="radio" value="n"/>
+         No
+        </label>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="sihap">
+         How did you hear about our program?
+        </label>
+        <select class="form-control" name="sihap">
+         <option value="-">
+          -
+         </option>
+         <option value="br">
+          brochure
+         </option>
+         <option value="md">
+          doctor referral
+         </option>
+         <option value="fp">
+          friend in program
+         </option>
+         <option value="in">
+          internet
+         </option>
+         <option value="ls">
+          lung screening program
+         </option>
+         <option value="ar">
+          medical journal articles
+         </option>
+         <option value="np">
+          newspaper
+         </option>
+         <option value="ra">
+          radio
+         </option>
+         <option value="at">
+          TV
+         </option>
+         <option value="wm">
+          word of mouth
+         </option>
+         <option value="ot">
+          other
+         </option>
+        </select>
+        <div class="row" id="sihap-container">
+         <div class="col-sm-12">
+          <input class="form-control" name="sihapo" placeholder="Specify" type="text"/>
+         </div>
+        </div>
+       </div>
+      </div>
+      <hr/>
+      <h3>
+       Insurance Information
+      </h3>
+      <div class="row">
+       <div class="col-sm-12 form-group">
+        <label for="siinm">
+         Medicare
+        </label>
+        <br/>
+        <label class="radio-inline" for="siinm-y">
+         <input id="siinm-y" name="siinm" type="radio" value="y"/>
+         Yes
+        </label>
+        <label class="radio-inline" for="siinm-n">
+         <input id="siinm-n" name="siinm" type="radio" value="n"/>
+         No
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="siin1">
+         Insurance 1
+        </label>
+        <input class="form-control ins-info" name="siin1" type="text"/>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="siinmid1">
+         Insurance 1 Member ID
+        </label>
+        <input class="form-control ins-info" name="siinmid1" type="text"/>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="siingn1">
+         Insurance 1 Group Num
+        </label>
+        <input class="form-control ins-info" name="siingn1" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="siin2">
+         Insurance 2
+        </label>
+        <input class="form-control ins-info" name="siin2" type="text"/>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="siinmid2">
+         Insurance 2 Member ID
+        </label>
+        <input class="form-control ins-info" name="siinmid2" type="text"/>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="siingn2">
+         Insurance 2 Group Num
+        </label>
+        <input class="form-control ins-info" name="siingn2" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 form-group">
+        <label for="siinc">
+         Insurance Comments
+        </label>
+        <textarea class="form-control ins-info" name="siinc" rows="2"></textarea>
+       </div>
+      </div>
+      <hr/>
+      <div>
+       <h3>
+        Physician Contact Information
+       </h3>
+      </div>
+      <div class="row">
+       <div class="col-sm-5">
+        <div class="row">
+         <div class="col-sm-12">
+          <h4>
+           Physician 1
+          </h4>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-12 form-group">
+          <input class="phys-1" name="simdpid" type="hidden"/>
+          <label for="simdn">
+           Name
+          </label>
+          <input class="form-control phys-info phys-1" name="simdn" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-8 form-group">
+          <label for="simdsa">
+           Street Address
+          </label>
+          <input class="form-control phys-info phys-1" name="simdsa" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdc">
+           City
+          </label>
+          <input class="form-control phys-info phys-1" name="simdc" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-4 form-group">
+          <label for="simds">
+           State
+          </label>
+          <input class="form-control phys-info phys-1" name="simds" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdz">
+           Zip Code
+          </label>
+          <input class="form-control phys-info phys-1" name="simdz" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdcr">
+           Country
+          </label>
+          <input class="form-control phys-info phys-1" name="simdcr" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-6 form-group">
+          <label for="simdp">
+           Direct Phone
+          </label>
+          <input class="form-control phys-info phys-1" name="simdp" type="text"/>
+         </div>
+         <div class="col-sm-6 form-group">
+          <label for="simdph">
+           Office Phone
+          </label>
+          <input class="form-control phys-info phys-1" name="simdph" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-6 form-group">
+          <label for="simdf">
+           Fax
+          </label>
+          <input class="form-control phys-info phys-1" name="simdf" type="text"/>
+         </div>
+         <div class="col-sm-6 form-group">
+          <label for="simde">
+           Email
+          </label>
+          <input class="form-control phys-info phys-1" name="simde" type="text"/>
+         </div>
+        </div>
+       </div>
+       <div class="col-sm-1">
+       </div>
+       <div class="col-sm-5">
+        <div class="row">
+         <div class="col-sm-12">
+          <h4>
+           Physician 2
+          </h4>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-12 form-group">
+          <input class="phys-2" name="simdpid2" type="hidden"/>
+          <label for="simdn2">
+           Name
+          </label>
+          <input class="form-control phys-info phys-2" name="simdn2" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-8 form-group">
+          <label for="simdsa2">
+           Street Address
+          </label>
+          <input class="form-control phys-info phys-2" name="simdsa2" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdc2">
+           City
+          </label>
+          <input class="form-control phys-info phys-2" name="simdc2" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-4 form-group">
+          <label for="simds2">
+           State
+          </label>
+          <input class="form-control phys-info phys-2" name="simds2" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdz2">
+           Zip Code
+          </label>
+          <input class="form-control phys-info phys-2" name="simdz2" type="text"/>
+         </div>
+         <div class="col-sm-4 form-group">
+          <label for="simdcr2">
+           Country
+          </label>
+          <input class="form-control phys-info phys-2" name="simdcr2" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-6 form-group">
+          <label for="simdp2">
+           Direct Phone
+          </label>
+          <input class="form-control phys-info phys-2" name="simdp2" type="text"/>
+         </div>
+         <div class="col-sm-6 form-group">
+          <label for="simdph2">
+           Office Phone
+          </label>
+          <input class="form-control phys-info phys-2" name="simdph2" type="text"/>
+         </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-6 form-group">
+          <label for="simdf2">
+           Fax
+          </label>
+          <input class="form-control phys-info phys-2" name="simdf2" type="text"/>
+         </div>
+         <div class="col-sm-6 form-group">
+          <label for="simde2">
+           Email
+          </label>
+          <input \="" class="form-control phys-info phys-2" name="simde2" type="text"/>
+         </div>
+        </div>
+       </div>
+      </div>
+      <hr/>
+      <div>
+       <h3>
+        CT Orders and Authorization
+       </h3>
+      </div>
+      <div class="row">
+       <div class="col-sm-4 form-group">
+        <label for="sipt">
+         Order Type
+        </label>
+        <select class="form-control ct-info" name="sipt">
+         <option value="-">
+          -
+         </option>
+         <option value="eo">
+          EPIC Order
+         </option>
+         <option value="or">
+          Outside Rx
+         </option>
+        </select>
+       </div>
+       <div class="col-sm-4 form-group">
+        <div class="row">
+         <label class="col-sm-6" for="sisbr">
+          Scheduled by RA (Add-On)
+         </label>
+         <div class="col-sm-6">
+          <label class="radio-inline" for="sisbr-y">
+           <input id="sisbr-y" name="sisbr" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+          <label class="radio-inline" for="sisbr-n">
+           <input id="sisbr-n" name="sisbr" required="required" type="radio" value="n"/>
+           No
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="col-sm-4 form-group">
+        <div class="row">
+         <label class="col-sm-4" for="silsorq">
+          LSO Required
+         </label>
+         <div class="col-sm-4">
+          <label class="radio-inline" for="silsorq-y">
+           <input id="silsorq-y" name="silsorq" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+          <label class="radio-inline" for="silsorq-n">
+           <input id="silsorq-n" name="silsorq" required="required" type="radio" value="n"/>
+           No
+          </label>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-4 form-group">
+        <label for="sicc">
+         CPT Code
+        </label>
+        <select class="form-control ct-info" name="sicc">
+         <option value="-">
+          -
+         </option>
+         <option value="g0">
+          G0297 / 71271
+         </option>
+         <option value="71">
+          71250
+         </option>
+        </select>
+       </div>
+       <div class="col-sm-4">
+        <div class="row form-group">
+         <label class="col-sm-6" for="siar">
+          Authorization Required
+         </label>
+         <div class="col-sm-6">
+          <label class="radio-inline" for="siar-y">
+           <input id="siar-y" name="siar" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+          <label class="radio-inline" for="siar-n">
+           <input id="siar-n" name="siar" required="required" type="radio" value="n"/>
+           No
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="col-sm-4">
+        <div class="row form-group">
+         <label class="col-sm-4" for="silsore">
+          LSO Received
+         </label>
+         <div class="col-sm-4">
+          <label class="checkbox-inline">
+           <input name="silsore" type="hidden" value=""/>
+           <input id="silsore" name="silsore" type="checkbox" value="y"/>
+           yes
+          </label>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-4 form-group">
+        <label for="sipod">
+         Order Date
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sipod-addon" class="form-control" data-restriction="" id="sipod" name="sipod"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sipod-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-4 form-group">
+        <label for="sian">
+         Authorization Number
+        </label>
+        <input class="form-control ct-info" name="sian" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-4 form-group">
+        <label for="siped">
+         Order Expiration Date
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="siped-addon" class="form-control" data-restriction="" id="siped" name="siped"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="siped-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-4">
+        <label for="siaed">
+         Authorization Expiration Date
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="siaed-addon" class="form-control" data-restriction="" id="siaed" name="siaed"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="siaed-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+      </div>
+      <hr/>
+      <h3>
+       SDM Information
+      </h3>
+      <div class="row">
+       <div class="col-sm-6 col-md-4" id="sdm-col-1">
+        <div class="row form-group">
+         <label class="col-sm-6" for="sisdmr">
+          SDM Required
+         </label>
+         <div class="col-sm-6">
+          <label class="radio-inline" for="sisdmr-y">
+           <input id="sisdmr-y" name="sisdmr" type="radio" value="y"/>
+           Yes
+          </label>
+          <label class="radio-inline" for="sisdmr-n">
+           <input id="sisdmr-n" name="sisdmr" type="radio" value="n"/>
+           No
+          </label>
+         </div>
+        </div>
+        <div class="row form-group">
+         <label class="col-sm-6" for="sisdmdoc">
+          SDM Documentation Completed
+         </label>
+         <div class="col-sm-6">
+          <label class="checkbox-inline">
+           <input name="sisdmdoc" type="hidden" value=""/>
+           <input id="sisdmdoc" name="sisdmdoc" type="checkbox" value="y"/>
+           yes
+          </label>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="sies">
+         Patient Status
+        </label>
+        <select class="form-control" id="sies" name="sies">
+         <option value="ac">
+          active
+         </option>
+         <option value="tr">
+          transferred to another institution (specify)
+         </option>
+         <option value="mr">
+          unable due to medical reason (specify)
+         </option>
+         <option value="pr">
+          unwilling due to personal reason (specify)
+         </option>
+         <option value="rf">
+          refused to continue
+         </option>
+         <option value="pa">
+          physician advised against
+         </option>
+         <option value="ra">
+          concern about radiation
+         </option>
+         <option value="mv">
+          moved and unable to return
+         </option>
+         <option value="in">
+          no insurance, can't have Dx CT
+         </option>
+         <option value="bc">
+          burden of cost
+         </option>
+         <option value="os">
+          other (specify)
+         </option>
+         <option value="es">
+          excluded (specify)
+         </option>
+         <option value="sc">
+          study complete
+         </option>
+         <option value="nr">
+          no response to 3 calls + 3 letters
+         </option>
+         <option value="nc">
+          unable to contact
+         </option>
+         <option value="fe">
+          being followed elsewhere (get results)
+         </option>
+         <option value="ex">
+          expired (record date / cause)
+         </option>
+        </select>
+       </div>
+       <div class="col-sm-4 form-group" id="sies-os-container">
+        <label for="sieso">
+         Specify
+        </label>
+        <input class="form-control" name="sieso" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 form-group">
+        <label for="sixdate">
+         Date of Exit
+         <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
+                                    active in the study.  It signifies the date on which they change to a non-active status." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
+         </i>
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sixdate-addon" class="form-control" data-restriction="past" id="sixdate" name="sixdate" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sixdate-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-3 form-group">
+        <label for="sidod">
+         Date of Death
+         <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Date of Death (DOD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
+         </i>
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sidod-addon" class="form-control" data-restriction="past" id="sidod" name="sidod" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sidod-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-4 form-group">
+        <label for="sicod">
+         Cause of Death
+         <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Cause of Death (COD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
+         </i>
+        </label>
+        <input class="form-control" name="sicod" type="text"/>
+       </div>
+      </div>
+      <hr/>
+      <h3>
+       Consent Information
+      </h3>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicfe">
+         Emailed consent form
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7 form-group">
+        <label class="checkbox-inline">
+         <input name="sicfe" type="hidden" value=""/>
+         <input id="sicfe" name="sicfe" type="checkbox" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicfs">
+         Has the participant signed the consent form?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7 form-group">
+        <label class="radio-inline" for="sicfs_n">
+         <input id="sicfs_n" name="sicfs" type="radio" value="n"/>
+         no [INELIGIBLE]
+        </label>
+        <label class="radio-inline" for="sicfs_y">
+         <input id="sicfs_y" name="sicfs" type="radio" value="y"/>
+         yes
+        </label>
+        <div id="sicfs-n-container">
+         <label class="col-sm-1" for="sicfsnco">
+          Reason:
+         </label>
+         <div class="col-sm-2">
+          <input class="form-control" name="sicfsnco" type="text"/>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sidoc">
+         Date informed consent signed
+        </label>
+       </div>
+       <div class="col-sm-4 col-lg-2 form-group">
+        <div class="input-group datepicker">
+         <input aria-describedby="sidoc-addon" class="form-control" data-restriction="" id="sidoc" name="sidoc"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sidoc-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="siioc">
+         Name of individual obtaining consent
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7 form-group">
+        <input class="form-control" name="siioc" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="siiwc">
+         Name of witness to consent
+        </label>
+       </div>
+       <div class="col-sm-3">
+        <input class="form-control" name="siiwc" type="text"/>
+       </div>
+       <label class="col-sm-1" for="siiwcd">
+        Witness date
+       </label>
+       <div class="col-sm-2">
+        <div class="input-group datepicker">
+         <input aria-describedby="siiwcd-addon" class="form-control" data-restriction="" id="siiwcd" name="siiwcd"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="siiwcd-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="siiwcs">
+         Witness comment
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <textarea class="form-control" name="siiwcs" rows="2"></textarea>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicfp">
+         Have you given a copy of the consent form to the participant?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <label class="radio-inline" for="sicfp-n">
+         <input id="sicfp-n" name="sicfp" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicfp-y">
+         <input id="sicfp-y" name="sicfp" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicrd">
+         Did patient allow storage of information for use in future research
+                                studies?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <label class="radio-inline" for="sicrd-n">
+         <input id="sicrd-n" name="sicrd" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicrd-y">
+         <input id="sicrd-y" name="sicrd" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row" id="sicrd-ydd-container">
+       <div class="col-sm-6">
+        <label for="sicrdd">
+         Did patient allow use of information for DIRECTLY RELATED
+                                studies?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <label class="radio-inline" for="sicrdd-n">
+         <input id="sicrdd-n" name="sicrdd" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicrdd-y">
+         <input id="sicrdd-y" name="sicrdd" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row" id="sicrd-ydn-container">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicrdn">
+         Did patient allow use of information for UNRELATED studies?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <label class="radio-inline" for="sicrdn-n">
+         <input id="sicrdn-n" name="sicrdn" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicrdn-y">
+         <input id="sicrdn-y" name="sicrdn" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6 col-lg-5">
+        <label for="sicrs">
+         Would patient like to be contacted about further related studies?
+        </label>
+       </div>
+       <div class="col-sm-6 col-lg-7">
+        <label class="radio-inline" for="sicrs-n">
+         <input id="sicrs-n" name="sicrs" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="sicrs-y">
+         <input id="sicrs-y" name="sicrs" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+      <h4>
+       Consented for the following projects
+      </h4>
+      <div class="row">
+       <div class="col-sm-3 col-md-2">
+        <label class="checkbox-inline">
+         <input name="sicmrb" type="hidden" value=""/>
+         <input id="sicmrb" name="sicmrb" type="checkbox" value="y"/>
+         MR Blood
+        </label>
+       </div>
+       <div id="sicmrb-y-container">
+        <div class="col-sm-4 col-md-2 form-group">
+         <label for="sicmrbdoc">
+          Date
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="sicmrbdoc-addon" class="form-control" data-restriction="" id="sicmrbdoc" name="sicmrbdoc"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="sicmrbdoc-addon">
+            <i aria-hidden="true" class="fa-regular fa-calendar">
+            </i>
+           </div>
+          </div>
+         </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
+        </div>
+        <div class="col-sm-2">
+         <label for="sicmrbid">
+          ID
+         </label>
+         <input class="form-control" name="sicmrbid" type="text"/>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-3 col-md-2">
+        <label class="checkbox-inline">
+         <input name="sicu54" type="hidden" value=""/>
+         <input id="sicu54" name="sicu54" type="checkbox" value="y"/>
+         U54 Control
+        </label>
+       </div>
+       <div class="col-sm-9 col-md-8" id="sicu54-y-container">
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54doc">
+           Initial Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54doc-addon" class="form-control" data-restriction="" id="sicu54doc" name="sicu54doc"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54doc-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id" type="text"/>
+         </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54dos3">
+           3 Month Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54dos3-addon" class="form-control" data-restriction="" id="sicu54dos3" name="sicu54dos3"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54dos3-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id3">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id3" type="text"/>
+         </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54dos6">
+           6 Month Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54dos6-addon" class="form-control" data-restriction="" id="sicu54dos6" name="sicu54dos6"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54dos6-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id6">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id6" type="text"/>
+         </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54dos12">
+           12 Month Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54dos12-addon" class="form-control" data-restriction="" id="sicu54dos12" name="sicu54dos12"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54dos12-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id12">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id12" type="text"/>
+         </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54dos18">
+           18 Month Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54dos18-addon" class="form-control" data-restriction="" id="sicu54dos18" name="sicu54dos18"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54dos18-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id18">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id18" type="text"/>
+         </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-4">
+          <label for="sicu54dos24">
+           24 Month Date
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="sicu54dos24-addon" class="form-control" data-restriction="" id="sicu54dos24" name="sicu54dos24"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="sicu54dos24-addon">
+             <i aria-hidden="true" class="fa-regular fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+         <div class="col-sm-3">
+          <label for="sicu54id24">
+           ID
+          </label>
+          <input class="form-control" name="sicu54id24" type="text"/>
+         </div>
+        </div>
+       </div>
+      </div>
       <h3>
        Intake discussion
       </h3>
@@ -1894,6 +3060,14 @@
             } else {
                 $("#rural-status-container").remove();
             }
+
+            // SINAI INTAKE SECTION
+            $("[name=sihap]").conditionallyDisplay({sourceValues: "ot", enable: "#sihap-container"});
+            $("[name=sies]").conditionallyDisplay({sourceValues: "os", enable: "#sies-os-container"});
+            $("[name=sicfs]").conditionallyDisplay({sourceValues: "n", enable: "#sicfs-n-container"});
+            $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
+            $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
+            $("[name=sicu54]").conditionallyDisplay({enable: "#sicu54-y-container"});
 
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});

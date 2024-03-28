@@ -28,22 +28,6 @@
         <hr/>
         {% include '_messages.jinja2' %}
 
-        {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
-        {% set tab_list = [("Chart Eligibility","chart-eligibility"), ("Intake", "intake")] -%}
-        <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
-             data-offset-bottom="70">
-            <div class="row">
-                <div class="col-sm-12">
-                    <ul class="nav navbar-nav">
-                        {% for tab_name,tab_id in tab_list -%}
-                            <li><a href="#{{ tab_id }}" id="{{ tab_id }}-tab">{{ tab_name }}</a></li>
-                        {%- endfor %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
               id="main-form">
             <input type="hidden" name="samiroute" value="postform"/>
@@ -51,1149 +35,1155 @@
             <input type="hidden" name="site" value="@@SITE@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
 
-            <div id="chart-eligibility">
+            {% if site=='sinai' %}
                 <div class="row">
-                    <div class="col-md-12">
-                        <p class="required lead">
-                            The participant was identified as a potential lung screening candidate by:
-                        </p>
+                    <div class="col-md-3 form-group">
+                        <label for="sinamel" class="required">Patient Name (Last)</label>
+                        <input class="form-control input-sm" type="text" name="sinamel"
+                               id="sinamel" title="Other contact method" required="required">
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            {{ f.radio('siceiden', 'siceiden-referral', 'referral', 'Referral', true) }}
-                            {{ f.radio('siceiden', 'siceiden-ldct', 'ldct', 'Low-dose CT placed directly by clinician', true) }}
-                            {{ f.radio('siceiden', 'siceiden-lspo', 'outreach', 'Lung screening program outreach', true) }}
-                            {{ f.radio('siceiden', 'siceiden-self', 'self', 'Self-referred', true) }}
-                        </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sinamef" class="req">Patient Name (First)</label>
+                        <input type=text name="sinamef" class="form-control" required="required">
                     </div>
-                    <div class="col-sm-6" id="referral-container" style="display: none;">
-                        <div class="form-group">
-                            <label for="sicerfdt" class="required">Date of referral</label>
-                            {{ f.datepicker('sicerfdt', 'past', true) }}
-                        </div>
-                        <div class="form-group">
-                            <label class="required doc-heading">Specialty of referring provider</label>
-                            <br/>
-                            {{ f.checkbox('sicerfpc', 'y', 'Primary Care') }}
-                            {{ f.checkbox('sicerfwh', 'y', 'Women\'s Health') }}
-                            {{ f.checkbox('sicerfge', 'y', 'Geriatrics') }}
-                            {{ f.checkbox('sicerfpu', 'y', 'Pulmonology') }}
-                            {{ f.checkbox('sicerfon', 'y', 'Oncology') }}
-                            {{ f.checkbox('sicerfsc', 'y', 'Smoking Cessation') }}
-                            {{ f.checkbox('sicerfot', 'y', 'Other') }}
-                            <label class="aria-hidden" for="sicerfoo">Specify</label>
-                            <input class="form-control form-inline" type="text" name="sicerfoo" id="sicerfoo"
-                                   placeholder="specify" required="required">
-                        </div>
+                    <div class="col-sm-2 form-group">
+                        <label for="sisid">Study ID</label>
+                        <input type=text name="sisid" class="form-control" id="sisid">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                        <p class="required lead">Eligible based on chart review?</p>
-                    </div>
-                    <div class="col-sm-6 col-md-8 form-group">
-                        {{ f.inlineRadioYN("sicechrt", true) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="alert alert-info" id="sicechrt-y-alert" style="display:none;">
-                            Complete the remainder of the form; an intake note will be generated.
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default" id="reason-container" style="display:none;">
-                            <div class="alert alert-warning"
-                                 style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-                                Indicate one or more reasons why the participant is not eligible for lung screening. No
-                                intake note will be generated.
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group form-group-sm form-inline">
-                                    <label for="sicemhlc">Medical History</label><br/>
-                                    {{ f.inlineCheckbox("sicemhlc","y", "lung cancer", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("sicemhhs","y", "health status", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("sicemhot","y", "other", {'group':'ineligible-reason'}) }}
-                                    <label class="aria-hidden" for="sicemhoo">Specify</label>
-                                    <input class="form-control" type="text" name="sicemhoo" id="sicemhoo"
-                                           placeholder="specify" required="required">
-                                    <br/>
-                                    <br/>
-
-                                    <label>Receiving Care Elsewhere</label><br/>
-                                    {{ f.inlineCheckbox("sicecepc","y", "followed in pulmonary clinic", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("sicecenc","y", "followed in nodule clinic", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("siceceho","y", "followed in hematology-oncology", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("sicecepr","y", "private care", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("siceceot","y", "other", {'group':'ineligible-reason'}) }}
-                                    <label class="aria-hidden" for="siceceoo">Specify</label>
-                                    <input class="form-control" type="text" name="siceceoo" id="siceceoo"
-                                           placeholder="specify" required="required">
-                                    <br/>
-                                    <br/>
-
-                                    <label>Smoking History</label><br/>
-                                    {{ f.inlineCheckbox("siceshqd","y", "quit date greater than 15 years", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("siceshpy","y", "less than 30 pack years", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("siceshnc","y", "non-cigarette use (e.g. pipe, smokeless, vape, cannabis)", {'group':'ineligible-reason'}) }}
-                                    {{ f.inlineCheckbox("siceshot","y", "other", {'group':'ineligible-reason'}) }}
-                                    <label class="aria-hidden" for="siceshoo">Specify</label>
-                                    <input class="form-control" type="text" name="siceshoo" id="siceshoo"
-                                           placeholder="specify" required="required">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" id="save-chart-eligibility">Submit Chart Eligibility
-                </button>
-                <hr/>
-            </div>
-            <div id="pre-enrollment-discussion">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p class="required lead">Was a pre-enrollment discussion held?</p>
+                    <div class="col-sm-2 form-group">
+                        <label for="sifsid">Former Study ID</label>
+                        <input type=text name="sifsid" class="form-control" id="sifsid">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-3 form-group">
-                        {{ f.inlineRadioYN("sipedisc", true) }}
+                        <label for="sidoe">Date of Baseline CT</label>
+                        {{ f.datepicker("sidoe", "past", false) }}
+                    </div>
+                    <div class="col-sm-3 col-md-2 form-group">
+                        <label for="simrn">Medical Record Number</label>
+                        <input type=text name="simrn" class="form-control">
+                    </div>
+                    <div class="col-sm-3 col-md-2 form-group">
+                        <label for="sidob" class="req">Date of Birth</label>
+                        {{ f.datepicker("sidob", "past", true) }}
                     </div>
                 </div>
-                <div id="discussion-container">
-                    <h4>Pre-Enrollment Discussion</h4>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sisloc" class="req">Scanning Location</label>
+                        <select name="sisloc" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="MSH"> Mount Sinai Medical Center</option>
+                            <option value="MSW"> Mount Sinai West</option>
+                            <option value="MSL"> Mount Sinai Morningside</option>
+                            <option value="MSB"> Brooklyn Heights</option>
+                            <option value="MSK"> Kings Highway</option>
+                            <option value="HU"> Huntington/Greenlawn</option>
+                            <option value="MSDUS"> Union Square / Beth Israel</option>
+                            <option value="MSDC"> Chelsea</option>
+                            <option value="MS34"> 34th St</option>
+                            <option value="MSQ"> Queens</option>
+                            <option value="e"> Followed Elsewhere</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5 form-group">
+                        <div class="checkbox-inline">
+                            <label for="sisa">
+                                <input type="checkbox" name="sisa" value="y" id="sisa">Special Attention
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label for="sivip">
+                                <input type="checkbox" name="sivip" value="vip" id="sivip">VIP
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label for="sirs">
+                                <input type="checkbox" name="sirs" value="y" id="sirs">Attending radiologist read
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="sisao">Comments</label>
+                                <input type=text name="sisao" class="form-control" id="sisao">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="sipl">Primary Language (if not English)</label>
+                        <input type=text name="sipl" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sirp">Research Protocol</label><br/>
+                        {{ f.inlineRadioYN("sirp") }}
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sihap">How did you hear about our program?</label>
+                        <select name="sihap" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="br"> brochure</option>
+                            <option value="md"> doctor referral</option>
+                            <option value="fp"> friend in program</option>
+                            <option value="in"> internet</option>
+                            <option value="ls"> lung screening program</option>
+                            <option value="ar"> medical journal articles</option>
+                            <option value="np"> newspaper</option>
+                            <option value="ra"> radio</option>
+                            <option value="at"> TV</option>
+                            <option value="wm"> word of mouth</option>
+                            <option value="ot"> other</option>
+                        </select>
+                        <div class="row" id="sihap-container">
+                            <div class="col-sm-12">
+                                <input type=text name="sihapo" class="form-control" placeholder="Specify">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+
+                <h3>Insurance Information</h3>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="siinm">Medicare</label><br/>
+                        {{ f.inlineRadioYN("siinm", false) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="siin1">Insurance 1</label>
+                        <input type=text class="form-control ins-info" name="siin1">
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="siinmid1">Insurance 1 Member ID</label>
+                        <input type=text class="form-control ins-info" name="siinmid1">
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="siingn1">Insurance 1 Group Num</label>
+                        <input type=text class="form-control ins-info" name="siingn1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="siin2">Insurance 2</label>
+                        <input type=text class="form-control ins-info" name="siin2">
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="siinmid2">Insurance 2 Member ID</label>
+                        <input type=text class="form-control ins-info" name="siinmid2">
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="siingn2">Insurance 2 Group Num</label>
+                        <input type=text class="form-control ins-info" name="siingn2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="siinc">Insurance Comments</label>
+                        <textarea name="siinc" class="form-control ins-info" rows=2></textarea>
+                    </div>
+                </div>
+                <hr/>
+
+                <h3>Physician Contact Information</h3>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Physician 1</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <input type=hidden name="simdpid" class="phys-1">
+                                <label for="simdn">Name</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdn">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 form-group">
+                                <label for="simdsa">Street Address</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdsa">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdc">City</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdc">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label for="simds">State</label>
+                                <input type=text class="form-control phys-info phys-1" name="simds">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdz">Zip Code</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdz">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdcr">Country</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdcr">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="simdp">Direct Phone</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdp">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="simdph">Office Phone</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdph">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="simdf">Fax</label>
+                                <input type=text class="form-control phys-info phys-1" name="simdf">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="simde">Email</label>
+                                <input type=text class="form-control phys-info phys-1" name="simde">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Physician 2</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <input type=hidden name="simdpid2" class="phys-2">
+                                <label for="simdn2">Name</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdn2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 form-group">
+                                <label for="simdsa2">Street Address</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdsa2">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdc2">City</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdc2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label for="simds2">State</label>
+                                <input type=text class="form-control phys-info phys-2" name="simds2">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdz2">Zip Code</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdz2">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label for="simdcr2">Country</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdcr2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="simdp2">Direct Phone</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdp2">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="simdph2">Office Phone</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdph2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="simdf2">Fax</label>
+                                <input type=text class="form-control phys-info phys-2" name="simdf2">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="simde2">Email</label>
+                                <input type=text class="form-control phys-info phys-2" name="simde2" \>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+
+                <h3>CT Orders and Authorization</h3>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label for="sipt">Order Type</label>
+                        <select class="form-control ct-info" name="sipt">
+                            <option value="-"> -</option>
+                            <option value="eo"> EPIC Order</option>
+                            <option value="or"> Outside Rx</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <div class="row">
+                            <label class="col-sm-6" for="sisbr">Scheduled by RA (Add-On)</label>
+                            <div class="col-sm-6">
+                                {{ f.inlineRadioYN("sisbr", true) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <div class="row">
+                            <label class="col-sm-4" for="silsorq">LSO Required</label>
+                            <div class="col-sm-4">
+                                {{ f.inlineRadioYN("silsorq", true) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label for="sicc">CPT Code</label>
+                        <select class="form-control ct-info" name="sicc">
+                            <option value="-"> -</option>
+                            <option value="g0"> G0297 / 71271</option>
+                            <option value="71"> 71250</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row form-group">
+                            <label class="col-sm-6" for="siar">Authorization Required</label>
+                            <div class="col-sm-6">
+                                {{ f.inlineRadioYN("siar", true) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row form-group">
+                            <label class="col-sm-4" for="silsore">LSO Received</label>
+                            <div class="col-sm-4">
+                                {{ f.inlineCheckbox("silsore", "y", "yes") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label for="sipod">Order Date</label>
+                        {{ f.datepicker("sipod") }}
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="sian">Authorization Number</label>
+                        <input type=text name="sian" class="form-control ct-info">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label for="siped">Order Expiration Date</label>
+                        {{ f.datepicker("siped") }}
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="siaed">Authorization Expiration Date</label>
+                        {{ f.datepicker("siaed") }}
+                    </div>
+                </div>
+                <hr/>
+
+                <h3>SDM Information</h3>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" id="sdm-col-1">
+                        <div class="row form-group">
+                            <label class="col-sm-6" for="sisdmr">SDM Required</label>
+                            <div class="col-sm-6">
+                                {{ f.inlineRadioYN("sisdmr") }}
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-sm-6" for="sisdmdoc">SDM Documentation Completed</label>
+                            <div class="col-sm-6">
+                                {{ f.inlineCheckbox("sisdmdoc", "y", "yes") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sies">Patient Status</label>
+                        <select name="sies" class="form-control" id="sies">
+                            <option value="ac"> active</option>
+                            <option value="tr"> transferred to another institution (specify)</option>
+                            <option value="mr"> unable due to medical reason (specify)</option>
+                            <option value="pr"> unwilling due to personal reason (specify)</option>
+                            <option value="rf"> refused to continue</option>
+                            <option value="pa"> physician advised against</option>
+                            <option value="ra"> concern about radiation</option>
+                            <option value="mv"> moved and unable to return</option>
+                            <option value="in"> no insurance, can't have Dx CT</option>
+                            <option value="bc"> burden of cost</option>
+                            <option value="os"> other (specify)</option>
+                            <option value="es"> excluded (specify)</option>
+                            <option value="sc"> study complete</option>
+                            <option value="nr"> no response to 3 calls + 3 letters</option>
+                            <option value="nc"> unable to contact</option>
+                            <option value="fe"> being followed elsewhere (get results)</option>
+                            <option value="ex"> expired (record date / cause)</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group" id="sies-os-container">
+                        <label for="sieso">Specify</label>
+                        <input type=text name="sieso" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sixdate">Date of Exit
+                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                               tabindex="0" role="button" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
+                                    active in the study.  It signifies the date on which they change to a non-active status."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.datepicker("sixdate", "past", true) }}
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sidod">Date of Death
+                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                               tabindex="0" role="button" data-container="body"
+                               data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.datepicker("sidod", "past", true) }}
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="sicod">Cause of Death
+                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                               tabindex="0" role="button" data-container="body"
+                               data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        <input type=text name="sicod" class="form-control">
+                    </div>
+                </div>
+                <hr>
+
+                <h3>Consent Information</h3>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicfe">Emailed consent form</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7 form-group">
+                        {{ f.inlineCheckbox("sicfe", "y", "Yes") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicfs">Has the participant signed the consent form?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7 form-group">
+                        <label class="radio-inline" for="sicfs_n">
+                            <input type=radio name="sicfs" id="sicfs_n" value="n"> no [INELIGIBLE]
+                        </label>
+                        <label class="radio-inline" for="sicfs_y">
+                            <input type=radio name="sicfs" id="sicfs_y" value="y"> yes
+                        </label>
+                        <div id="sicfs-n-container">
+                            <label class="col-sm-1" for="sicfsnco">Reason: </label>
+                            <div class="col-sm-2">
+                                <input type=text name="sicfsnco" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sidoc">Date informed consent signed</label>
+                    </div>
+                    <div class="col-sm-4 col-lg-2 form-group">
+                        {{ f.datepicker("sidoc") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="siioc">Name of individual obtaining consent</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7 form-group">
+                        <input type=text name="siioc" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="siiwc">Name of witness to consent</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type=text name="siiwc" class="form-control">
+                    </div>
+                    <label class="col-sm-1" for="siiwcd">Witness date</label>
+                    <div class="col-sm-2">
+                        {{ f.datepicker("siiwcd") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="siiwcs">Witness comment</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        <textarea name="siiwcs" class="form-control" rows=2></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicfp">Have you given a copy of the consent form to the participant?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        {{ f.inlineRadioNY("sicfp") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicrd">Did patient allow storage of information for use in future research
+                            studies?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        {{ f.inlineRadioNY("sicrd") }}
+                    </div>
+                </div>
+                <div class="row" id="sicrd-ydd-container">
+                    <div class="col-sm-6">
+                        <label for="sicrdd">Did patient allow use of information for DIRECTLY RELATED
+                            studies?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        {{ f.inlineRadioNY("sicrdd") }}
+                    </div>
+                </div>
+                <div class="row" id="sicrd-ydn-container">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicrdn">Did patient allow use of information for UNRELATED studies?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        {{ f.inlineRadioNY("sicrdn") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
+                        <label for="sicrs">Would patient like to be contacted about further related studies?</label>
+                    </div>
+                    <div class="col-sm-6 col-lg-7">
+                        {{ f.inlineRadioNY("sicrs") }}
+                    </div>
+                </div>
+                <h4>Consented for the following projects</h4>
+                <div class="row">
+                    <div class="col-sm-3 col-md-2">
+                        {{ f.inlineCheckbox("sicmrb", "y", "MR Blood") }}
+                    </div>
+                    <div id="sicmrb-y-container">
+                        <div class="col-sm-4 col-md-2 form-group">
+                            <label for="sicmrbdoc">Date</label>
+                            {{ f.datepicker("sicmrbdoc") }}
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="sicmrbid">ID</label>
+                            <input type="text" name="sicmrbid" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-md-2">
+                        {{ f.inlineCheckbox("sicu54", "y", "U54 Control") }}
+                    </div>
+                    <div class="col-sm-9 col-md-8" id="sicu54-y-container">
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54doc">Initial Date</label>
+                                {{ f.datepicker("sicu54doc") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id">ID</label>
+                                <input type="text" name="sicu54id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54dos3">3 Month Date</label>
+                                {{ f.datepicker("sicu54dos3") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id3">ID</label>
+                                <input type="text" name="sicu54id3" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54dos6">6 Month Date</label>
+                                {{ f.datepicker("sicu54dos6") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id6">ID</label>
+                                <input type="text" name="sicu54id6" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54dos12">12 Month Date</label>
+                                {{ f.datepicker("sicu54dos12") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id12">ID</label>
+                                <input type="text" name="sicu54id12" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54dos18">18 Month Date</label>
+                                {{ f.datepicker("sicu54dos18") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id18">ID</label>
+                                <input type="text" name="sicu54id18" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="sicu54dos24">24 Month Date</label>
+                                {{ f.datepicker("sicu54dos24") }}
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="sicu54id24">ID</label>
+                                <input type="text" name="sicu54id24" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
+                {% set tab_list = [("Chart Eligibility","chart-eligibility"), ("Intake", "intake")] -%}
+                <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
+                     data-offset-bottom="70">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="nav navbar-nav">
+                                {% for tab_name,tab_id in tab_list -%}
+                                    <li><a href="#{{ tab_id }}" id="{{ tab_id }}-tab">{{ tab_name }}</a></li>
+                                {%- endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div id="chart-eligibility">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="required lead">
+                                The participant was identified as a potential lung screening candidate by:
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="form-group">
+                                {{ f.radio('siceiden', 'siceiden-referral', 'referral', 'Referral', true) }}
+                                {{ f.radio('siceiden', 'siceiden-ldct', 'ldct', 'Low-dose CT placed directly by clinician', true) }}
+                                {{ f.radio('siceiden', 'siceiden-lspo', 'outreach', 'Lung screening program outreach', true) }}
+                                {{ f.radio('siceiden', 'siceiden-self', 'self', 'Self-referred', true) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6" id="referral-container" style="display: none;">
+                            <div class="form-group">
+                                <label for="sicerfdt" class="required">Date of referral</label>
+                                {{ f.datepicker('sicerfdt', 'past', true) }}
+                            </div>
+                            <div class="form-group">
+                                <label class="required doc-heading">Specialty of referring provider</label>
+                                <br/>
+                                {{ f.checkbox('sicerfpc', 'y', 'Primary Care') }}
+                                {{ f.checkbox('sicerfwh', 'y', 'Women\'s Health') }}
+                                {{ f.checkbox('sicerfge', 'y', 'Geriatrics') }}
+                                {{ f.checkbox('sicerfpu', 'y', 'Pulmonology') }}
+                                {{ f.checkbox('sicerfon', 'y', 'Oncology') }}
+                                {{ f.checkbox('sicerfsc', 'y', 'Smoking Cessation') }}
+                                {{ f.checkbox('sicerfot', 'y', 'Other') }}
+                                <label class="aria-hidden" for="sicerfoo">Specify</label>
+                                <input class="form-control form-inline" type="text" name="sicerfoo" id="sicerfoo"
+                                       placeholder="specify" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <p class="required lead">Eligible based on chart review?</p>
+                        </div>
+                        <div class="col-sm-6 col-md-8 form-group">
+                            {{ f.inlineRadioYN("sicechrt", true) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-info" id="sicechrt-y-alert" style="display:none;">
+                                Complete the remainder of the form; an intake note will be generated.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default" id="reason-container" style="display:none;">
+                                <div class="alert alert-warning"
+                                     style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+                                    Indicate one or more reasons why the participant is not eligible for lung screening.
+                                    No
+                                    intake note will be generated.
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group form-group-sm form-inline">
+                                        <label for="sicemhlc">Medical History</label><br/>
+                                        {{ f.inlineCheckbox("sicemhlc","y", "lung cancer", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("sicemhhs","y", "health status", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("sicemhot","y", "other", {'group':'ineligible-reason'}) }}
+                                        <label class="aria-hidden" for="sicemhoo">Specify</label>
+                                        <input class="form-control" type="text" name="sicemhoo" id="sicemhoo"
+                                               placeholder="specify" required="required">
+                                        <br/>
+                                        <br/>
+
+                                        <label>Receiving Care Elsewhere</label><br/>
+                                        {{ f.inlineCheckbox("sicecepc","y", "followed in pulmonary clinic", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("sicecenc","y", "followed in nodule clinic", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("siceceho","y", "followed in hematology-oncology", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("sicecepr","y", "private care", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("siceceot","y", "other", {'group':'ineligible-reason'}) }}
+                                        <label class="aria-hidden" for="siceceoo">Specify</label>
+                                        <input class="form-control" type="text" name="siceceoo" id="siceceoo"
+                                               placeholder="specify" required="required">
+                                        <br/>
+                                        <br/>
+
+                                        <label>Smoking History</label><br/>
+                                        {{ f.inlineCheckbox("siceshqd","y", "quit date greater than 15 years", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("siceshpy","y", "less than 30 pack years", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("siceshnc","y", "non-cigarette use (e.g. pipe, smokeless, vape, cannabis)", {'group':'ineligible-reason'}) }}
+                                        {{ f.inlineCheckbox("siceshot","y", "other", {'group':'ineligible-reason'}) }}
+                                        <label class="aria-hidden" for="siceshoo">Specify</label>
+                                        <input class="form-control" type="text" name="siceshoo" id="siceshoo"
+                                               placeholder="specify" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="save-chart-eligibility">Submit Chart Eligibility
+                    </button>
+                    <hr/>
+                </div>
+                <div id="pre-enrollment-discussion">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="required lead">Was a pre-enrollment discussion held?</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            {{ f.inlineRadioYN("sipedisc", true) }}
+                        </div>
+                    </div>
+                    <div id="discussion-container">
+                        <h4>Pre-Enrollment Discussion</h4>
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3 form-group">
+                                <label for="sipedc" class="required">Date of contact</label>
+                                {{ f.datepicker("sipedc", "past", true) }}
+                            </div>
+
+                            <div class="col-sm-8 col-md-9 form-group">
+                                <label class="required">The lung screening program reached the participant or was
+                                    contacted
+                                    via
+                                    (check all that apply)?</label>
+                                {{ f.checkbox("sipecnip", "1", "In person", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnte", "1", "Telephone", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnth", "1", "TeleHealth", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnml", "1", "Mailed letter", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnpp", "1", "Message in Patient Portal", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnvd", "1", "Video-on-Demand (VOD)", {'group':'discussion-contact'}) }}
+                                {{ f.checkbox("sipecnot", "1", "Other", {'group':'discussion-contact'}) }}
+                                <label class="aria-hidden" for="sipecnoo">Other contact method</label>
+                                <input class="form-control input-sm" type="text" name="sipecnoo" id="sipecnoo"
+                                       required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <p class="lead required">A pre-enrollment discussion with the participant resulted
+                                    in:</p>
+                                <div class="form-group">
+                                    {{ f.radio("siperslt","siperslt-y","y", "Participant is interested in discussing lung screening. The program will proceed with enrollment process.", true ) }}
+                                    {{ f.radio("siperslt","siperslt-u","u", "Participant is unsure of lung screening. Ok to contact in the future.", true ) }}
+                                    {{ f.radio("siperslt","siperslt-nn","nn", "Participant is not interested in discussing lung screening at this time. Ok to contact in the future.", true ) }}
+                                    {{ f.radio("siperslt","siperslt-nf","nf", "Participant is not interested in discussing lung screening in the future.", true ) }}
+                                    {{ f.radio("siperslt","siperslt-na","na", "Unable to reach participant at this time.", true ) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sipecmnt">Comments</label>
+                                    <textarea id="sipecmnt" name="sipecmnt" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="save-pre-enrollment-discussion">
+                            Submit Pre-Enrollment Discussion
+                        </button>
+                    </div>
+                    <hr/>
+                </div>
+                <div id="intake">
+                    <h3>Intake discussion</h3>
                     <div class="row">
                         <div class="col-sm-4 col-md-3 form-group">
-                            <label for="sipedc" class="required">Date of contact</label>
-                            {{ f.datepicker("sipedc", "past", true) }}
+                            <label for="sidc" class="required">Date of contact</label>
+                            {{ f.datepicker("sidc", "past", true) }}
                         </div>
 
                         <div class="col-sm-8 col-md-9 form-group">
-                            <label class="required">The lung screening program reached the participant or was contacted
-                                via
-                                (check all that apply)?</label>
-                            {{ f.checkbox("sipecnip", "1", "In person", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnte", "1", "Telephone", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnth", "1", "TeleHealth", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnml", "1", "Mailed letter", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnpp", "1", "Message in Patient Portal", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnvd", "1", "Video-on-Demand (VOD)", {'group':'discussion-contact'}) }}
-                            {{ f.checkbox("sipecnot", "1", "Other", {'group':'discussion-contact'}) }}
-                            <label class="aria-hidden" for="sipecnoo">Other contact method</label>
-                            <input class="form-control input-sm" type="text" name="sipecnoo" id="sipecnoo"
+                            <label class="doc-heading required">The lung screening program reached the participant or
+                                was
+                                contacted via (check all that apply):</label>
+                            {{ f.checkbox("silnip", "1", "In person", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnph", "1", "Telephone", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnth", "1", "TeleHealth", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnml", "1", "Mailed letter", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnpp", "1", "Message in Patient Portal", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnvd", "1", "Video-on-Demand (VOD)", {'group':'intake-contact'}) }}
+                            {{ f.checkbox("silnot", "1", "Other", {'group':'intake-contact'}) }}
+                            <label class="aria-hidden" for="silnoo">Other contact method</label>
+                            <input class="form-control input-sm" type="text" name="silnoo"
+                                   id="silnoo" title="Other contact method" required="required">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="required">Primary address verified</label>
+                            {{ f.inlineRadio("sipav", "sipav-y","y","Yes", true) }}
+                            {{ f.inlineRadio("sipav", "sipav-n","n","No") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6 ">
+                            <label for="sipsa">Preferred address</label>
+                            <input type="text" name="sipsa" id="sipsa" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="sipan">Apt # </label>
+                            <input type="text" name="sipan" id="sipan" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="sipcn">County</label>
+                            <input type="text" name="sipcn" id="sipcn" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="sipc">City </label>
+                            <input type="text" name="sipc" id="sipc" class="form-control">
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="sips">State </label>
+                            <input type="text" name="sips" id="sips" class="form-control">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="sipz">Zip </label>
+                            <input type="text" name="sipz" id="sipz" class="form-control">
+                            <small class="text-muted" id="rural-text"></small>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="sipcr">Country </label>
+                            <input type="text" name="sipcr" id="sipcr" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6 ">
+                            <label for="sippn">Phone number</label>
+                            <input type="text" name="sippn" id="sippn" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row" id="rural-status-container">
+                        <div class="col-md-12 form-group">
+                            <label class="required">Rural status</label>
+                            {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
+                            {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
+                            {{ f.inlineRadio("sirs", "sirs-n","n","Unknown") }}
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <h3>Smoking History</h3>
+                    {% include '_pack-year-history.jinja2' %}
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6 form-group">
+                            <label>Have you ever smoked</label>
+                            <br/>
+                            {{ f.inlineRadio("siesm", "siesm-n", "n", "Never") }}
+                            {{ f.inlineRadio("siesm", "siesm-p", "p", "Past") }}
+                            {{ f.inlineRadio("siesm", "siesm-c", "c", "Current") }}
+                            {{ f.inlineCheckbox("siesq","1", "Willing to quit") }}
+                        </div>
+                        <div class="col-lg-8 col-md-6 col-sm-6 form-group">
+                            <label for="sies">Comments</label>
+                            <input type="text" name="sies" id="sies" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?', "required") }}
+                        </div>
+                        <div class="col-sm-2">
+                            <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4"
                                    required="required">
                         </div>
                     </div>
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p class="lead required">A pre-enrollment discussion with the participant resulted in:</p>
-                            <div class="form-group">
-                                {{ f.radio("siperslt","siperslt-y","y", "Participant is interested in discussing lung screening. The program will proceed with enrollment process.", true ) }}
-                                {{ f.radio("siperslt","siperslt-u","u", "Participant is unsure of lung screening. Ok to contact in the future.", true ) }}
-                                {{ f.radio("siperslt","siperslt-nn","nn", "Participant is not interested in discussing lung screening at this time. Ok to contact in the future.", true ) }}
-                                {{ f.radio("siperslt","siperslt-nf","nf", "Participant is not interested in discussing lung screening in the future.", true ) }}
-                                {{ f.radio("siperslt","siperslt-na","na", "Unable to reach participant at this time.", true ) }}
-                            </div>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sippd', 'How many <em>packs</em> of cigarettes did you smoke per day (PPD)?') }}
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="sipecmnt">Comments</label>
-                                <textarea id="sipecmnt" name="sipecmnt" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="save-pre-enrollment-discussion">
-                        Submit Pre-Enrollment Discussion
-                    </button>
-                </div>
-                <hr/>
-            </div>
-            <div id="intake">
-                {% if site=='sinai' %}
-                    <h3>Intake Form</h3>
-                    <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="sinamel" class="required">Patient Name (Last)</label>
-                            <input class="form-control input-sm" type="text" name="sinamel"
-                                   id="sinamel" title="Other contact method" required="required">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="sinamef" class="req">Patient Name (First)</label>
-                            <input type=text name="sinamef" class="form-control" required="required">
-                        </div>
-                        <div class="col-sm-2 form-group">
-                            <label for="sisid">Study ID</label>
-                            <input type=text name="sisid" class="form-control" id="sisid">
-                        </div>
-                        <div class="col-sm-2 form-group">
-                            <label for="sifsid">Former Study ID</label>
-                            <input type=text name="sifsid" class="form-control" id="sifsid">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="sidoe">Date of Baseline CT</label>
-                            {{ f.datepicker("sidoe", "past", false) }}
-                        </div>
-                        <div class="col-sm-3 col-md-2 form-group">
-                            <label for="simrn">Medical Record Number</label>
-                            <input type=text name="simrn" class="form-control">
-                        </div>
-                        <div class="col-sm-3 col-md-2 form-group">
-                            <label for="sidob" class="req">Date of Birth</label>
-                            {{ f.datepicker("sidob", "past", true) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="sisloc" class="req">Scanning Location</label>
-                            <select name="sisloc" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="MSH"> Mount Sinai Medical Center</option>
-                                <option value="MSW"> Mount Sinai West</option>
-                                <option value="MSL"> Mount Sinai Morningside</option>
-                                <option value="MSB"> Brooklyn Heights</option>
-                                <option value="MSK"> Kings Highway</option>
-                                <option value="HU"> Huntington/Greenlawn</option>
-                                <option value="MSDUS"> Union Square / Beth Israel</option>
-                                <option value="MSDC"> Chelsea</option>
-                                <option value="MS34"> 34th St</option>
-                                <option value="MSQ"> Queens</option>
-                                <option value="e"> Followed Elsewhere</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-5 form-group">
-                            <div class="checkbox-inline">
-                                <label for="sisa">
-                                    <input type="checkbox" name="sisa" value="y" id="sisa">Special Attention
-                                </label>
-                            </div>
-                            <div class="checkbox-inline">
-                                <label for="sivip">
-                                    <input type="checkbox" name="sivip" value="vip" id="sivip">VIP
-                                </label>
-                            </div>
-                            <div class="checkbox-inline">
-                                <label for="sirs">
-                                    <input type="checkbox" name="sirs" value="y" id="sirs">Attending radiologist read
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 form-group">
-                                    <label for="sisao">Comments</label>
-                                    <input type=text name="sisao" class="form-control" id="sisao">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label for="sipl">Primary Language (if not English)</label>
-                            <input type=text name="sipl" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="sirp">Research Protocol</label><br/>
-                            {{ f.inlineRadioYN("sirp") }}
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="sihap">How did you hear about our program?</label>
-                            <select name="sihap" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="br"> brochure</option>
-                                <option value="md"> doctor referral</option>
-                                <option value="fp"> friend in program</option>
-                                <option value="in"> internet</option>
-                                <option value="ls"> lung screening program</option>
-                                <option value="ar"> medical journal articles</option>
-                                <option value="np"> newspaper</option>
-                                <option value="ra"> radio</option>
-                                <option value="at"> TV</option>
-                                <option value="wm"> word of mouth</option>
-                                <option value="ot"> other</option>
-                            </select>
-                            <div class="row" id="sihap-container">
-                                <div class="col-sm-12">
-                                    <input type=text name="sihapo" class="form-control" placeholder="Specify">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <h3>Insurance Information</h3>
-                    <div class="row">
-                        <div class="col-sm-12 form-group">
-                            <label for="siinm">Medicare</label><br/>
-                            {{ f.inlineRadioYN("siinm", false) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="siin1">Insurance 1</label>
-                            <input type=text class="form-control ins-info" name="siin1">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="siinmid1">Insurance 1 Member ID</label>
-                            <input type=text class="form-control ins-info" name="siinmid1">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="siingn1">Insurance 1 Group Num</label>
-                            <input type=text class="form-control ins-info" name="siingn1">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="siin2">Insurance 2</label>
-                            <input type=text class="form-control ins-info" name="siin2">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="siinmid2">Insurance 2 Member ID</label>
-                            <input type=text class="form-control ins-info" name="siinmid2">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="siingn2">Insurance 2 Group Num</label>
-                            <input type=text class="form-control ins-info" name="siingn2">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 form-group">
-                            <label for="siinc">Insurance Comments</label>
-                            <textarea name="siinc" class="form-control ins-info" rows=2></textarea>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div>
-                        <h3>
-                            Physician Contact Information
-                        </h3>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4>Physician 1</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 form-group">
-                                    <input type=hidden name="simdpid" class="phys-1">
-                                    <label for="simdn">Name</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdn">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 form-group">
-                                    <label for="simdsa">Street Address</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdsa">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdc">City</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdc">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label for="simds">State</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simds">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdz">Zip Code</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdz">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdcr">Country</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdcr">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdp">Direct Phone</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdp">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdph">Office Phone</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdph">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdf">Fax</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simdf">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="simde">Email</label>
-                                    <input type=text class="form-control phys-info phys-1" name="simde">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4>Physician 2</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 form-group">
-                                    <input type=hidden name="simdpid2" class="phys-2">
-                                    <label for="simdn2">Name</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdn2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 form-group">
-                                    <label for="simdsa2">Street Address</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdsa2">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdc2">City</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdc2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label for="simds2">State</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simds2">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdz2">Zip Code</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdz2">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="simdcr2">Country</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdcr2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdp2">Direct Phone</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdp2">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdph2">Office Phone</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdph2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="simdf2">Fax</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simdf2">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="simde2">Email</label>
-                                    <input type=text class="form-control phys-info phys-2" name="simde2" \>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div>
-                        <h3>CT Orders and Authorization</h3>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 form-group">
-                            <label for="sipt">Order Type</label>
-                            <select class="form-control ct-info" name="sipt">
-                                <option value="-"> -</option>
-                                <option value="eo"> EPIC Order</option>
-                                <option value="or"> Outside Rx</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <div class="row">
-                                <label class="col-sm-6" for="sisbr">Scheduled by RA (Add-On)</label>
-                                <div class="col-sm-6">
-                                    {{ f.inlineRadioYN("sisbr", true) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <div class="row">
-                                <label class="col-sm-4" for="silsorq">LSO Required</label>
-                                <div class="col-sm-4">
-                                    {{ f.inlineRadioYN("silsorq", true) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 form-group">
-                            <label for="sicc">CPT Code</label>
-                            <select class="form-control ct-info" name="sicc">
-                                <option value="-"> -</option>
-                                <option value="g0"> G0297 / 71271</option>
-                                <option value="71"> 71250</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="row form-group">
-                                <label class="col-sm-6" for="siar">Authorization Required</label>
-                                <div class="col-sm-6">
-                                    {{ f.inlineRadioYN("siar", true) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="row form-group">
-                                <label class="col-sm-4" for="silsore">LSO Received</label>
-                                <div class="col-sm-4">
-                                    {{ f.inlineCheckbox("silsore", "y", "yes") }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 form-group">
-                            <label for="sipod">Order Date</label>
-                            {{ f.datepicker("sipod") }}
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label for="sian">Authorization Number</label>
-                            <input type=text name="sian" class="form-control ct-info">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 form-group">
-                            <label for="siped">Order Expiration Date</label>
-                            {{ f.datepicker("siped") }}
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="siaed">Authorization Expiration Date</label>
-                            {{ f.datepicker("siaed") }}
-                        </div>
-                    </div>
-                    <hr/>
-
-                    <h3>SDM Information</h3>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-4" id="sdm-col-1">
-                            <div class="row form-group">
-                                <label class="col-sm-6" for="sisdmr">SDM Required</label>
-                                <div class="col-sm-6">
-                                    {{ f.inlineRadioYN("sisdmr") }}
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <label class="col-sm-6" for="sisdmdoc">SDM Documentation Completed</label>
-                                <div class="col-sm-6">
-                                    {{ f.inlineCheckbox("sisdmdoc", "y", "yes") }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="sies">Patient Status</label>
-                            <select name="sies" class="form-control" id="sies">
-                                <option value="ac"> active</option>
-                                <option value="tr"> transferred to another institution (specify)</option>
-                                <option value="mr"> unable due to medical reason (specify)</option>
-                                <option value="pr"> unwilling due to personal reason (specify)</option>
-                                <option value="rf"> refused to continue</option>
-                                <option value="pa"> physician advised against</option>
-                                <option value="ra"> concern about radiation</option>
-                                <option value="mv"> moved and unable to return</option>
-                                <option value="in"> no insurance, can't have Dx CT</option>
-                                <option value="bc"> burden of cost</option>
-                                <option value="os"> other (specify)</option>
-                                <option value="es"> excluded (specify)</option>
-                                <option value="sc"> study complete</option>
-                                <option value="nr"> no response to 3 calls + 3 letters</option>
-                                <option value="nc"> unable to contact</option>
-                                <option value="fe"> being followed elsewhere (get results)</option>
-                                <option value="ex"> expired (record date / cause)</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4 form-group" id="sies-os-container">
-                            <label for="sieso">Specify</label>
-                            <input type=text name="sieso" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="sixdate">Date of Exit
-                                <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
-                                   tabindex="0" role="button" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
-                                    active in the study.  It signifies the date on which they change to a non-active status."
-                                   aria-hidden="true" title="Help"></i>
-                            </label>
-                            {{ f.datepicker("sixdate", "past", true) }}
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="sidod">Date of Death
-                                <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
-                                   tabindex="0" role="button" data-container="body"
-                                   data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
-                                   aria-hidden="true" title="Help"></i>
-                            </label>
-                            {{ f.datepicker("sidod", "past", true) }}
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label for="sicod">Cause of Death
-                                <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
-                                   tabindex="0" role="button" data-container="body"
-                                   data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."
-                                   aria-hidden="true" title="Help"></i>
-                            </label>
-                            <input type=text name="sicod" class="form-control">
-                        </div>
-                    </div>
-                    <hr>
-
-                    <h3>Consent Information</h3>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicfe">Emailed consent form</label>
-                        </div>
-                        <div class="col-sm-6 col-lg-7 form-group">
-                            {{ f.inlineCheckbox("sicfe", "y", "Yes") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicfs">Has the participant signed the consent form?</label>
-                        </div>
-                        <div class="col-sm-6 col-lg-7 form-group">
-                            <label class="radio-inline" for="sicfs_n">
-                                <input type=radio name="sicfs" id="sicfs_n" value="n"> no [INELIGIBLE]
-                            </label>
-                            <label class="radio-inline" for="sicfs_y">
-                                <input type=radio name="sicfs" id="sicfs_y" value="y"> yes
-                            </label>
-                            <div id="sicfs-n-container">
-                                <label class="col-sm-1" for="sicfsnco">Reason: </label>
-                                <div class="col-sm-2">
-                                    <input type=text name="sicfsnco" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sidoc">Date informed consent signed</label>
-                        </div>
-                        <div class="col-sm-4 col-lg-2 form-group">
-                            {{ f.datepicker("sidoc") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="siioc">Name of individual obtaining consent</label>
-                        </div>
-                        <div class="col-sm-6 col-lg-7 form-group">
-                            <input type=text name="siioc" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="siiwc">Name of witness to consent</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type=text name="siiwc" class="form-control">
-                        </div>
-                        <label class="col-sm-1" for="siiwcd">Witness date</label>
                         <div class="col-sm-2">
-                            {{ f.datepicker("siiwcd") }}
+                            <span id="sippd-val" class="control-label"></span>
+                        </div>
+                        <input type="hidden" name="sippd" id="sippd"/>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sisny', '# of years', "required") }}
+                        </div>
+                        <div class="col-sm-2">
+                            <input class="form-control numeric decimalformat" type="text" name="sisny" id="sisny"
+                                   required="required" maxlength="4">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="siiwcs">Witness comment</label>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sippy', 'Reported pack years') }}
                         </div>
-                        <div class="col-sm-6 col-lg-7">
-                            <textarea name="siiwcs" class="form-control" rows=2></textarea>
+                        <div class="col-sm-8">
+                            <span id="sippy-val"></span>
+                            <div class="alert alert-info" id="cumulative-pack-years-message"
+                                 style="display: none"></div>
                         </div>
+                        <input type="hidden" name="sippy" id="sippy"/>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicfp">Have you given a copy of the consent form to the participant?</label>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('siq', 'Quit Date') }}
                         </div>
-                        <div class="col-sm-6 col-lg-7">
-                            {{ f.inlineRadioNY("sicfp") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicrd">Did patient allow storage of information for use in future research
-                                studies?</label>
-                        </div>
-                        <div class="col-sm-6 col-lg-7">
-                            {{ f.inlineRadioNY("sicrd") }}
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            {{ f.datepicker ("siq", "past") }}
                         </div>
                     </div>
-                    <div class="row" id="sicrd-ydd-container">
-                        <div class="col-sm-6">
-                            <label for="sicrdd">Did patient allow use of information for DIRECTLY RELATED
-                                studies?</label>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sicep', 'Smoking cessation education provided') }}
                         </div>
-                        <div class="col-sm-6 col-lg-7">
-                            {{ f.inlineRadioNY("sicrdd") }}
-                        </div>
-                    </div>
-                    <div class="row" id="sicrd-ydn-container">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicrdn">Did patient allow use of information for UNRELATED studies?</label>
-                        </div>
-                        <div class="col-sm-6 col-lg-7">
-                            {{ f.inlineRadioNY("sicrdn") }}
+                        <div class="col-md-8">
+                            <textarea class="form-control" type="text" name="sicep" id="sicep"></textarea>
+                            <p class="help-block">Additional information can be provided on the background form</p>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <label for="sicrs">Would patient like to be contacted about further related studies?</label>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('sicadx', 'Lung CA Dx (if applicable)') }}
                         </div>
-                        <div class="col-sm-6 col-lg-7">
-                            {{ f.inlineRadioNY("sicrs") }}
+                        <div class="col-md-4">
+                            {{ f.datepicker ("sicadx", "past") }}
                         </div>
-                    </div>
-
-                    <h4>Consented for the following projects</h4>
-                    <div class="row">
-                        <div class="col-sm-3 col-md-2">
-                            {{ f.inlineCheckbox("sicmrb", "y", "MR Blood") }}
-                        </div>
-                        <div id="sicmrb-y-container">
-                            <div class="col-sm-4 col-md-2 form-group">
-                                <label for="sicmrbdoc">Date</label>
-                                {{ f.datepicker("sicmrbdoc") }}
-                            </div>
-                            <div class="col-sm-2">
-                                <label for="sicmrbid">ID</label>
-                                <input type="text" name="sicmrbid" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 col-md-2">
-                            {{ f.inlineCheckbox("sicu54", "y", "U54 Control") }}
-                        </div>
-                        <div class="col-sm-9 col-md-8" id="sicu54-y-container">
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54doc">Initial Date</label>
-                                    {{ f.datepicker("sicu54doc") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id">ID</label>
-                                    <input type="text" name="sicu54id" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54dos3">3 Month Date</label>
-                                    {{ f.datepicker("sicu54dos3") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id3">ID</label>
-                                    <input type="text" name="sicu54id3" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54dos6">6 Month Date</label>
-                                    {{ f.datepicker("sicu54dos6") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id6">ID</label>
-                                    <input type="text" name="sicu54id6" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54dos12">12 Month Date</label>
-                                    {{ f.datepicker("sicu54dos12") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id12">ID</label>
-                                    <input type="text" name="sicu54id12" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54dos18">18 Month Date</label>
-                                    {{ f.datepicker("sicu54dos18") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id18">ID</label>
-                                    <input type="text" name="sicu54id18" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label for="sicu54dos24">24 Month Date</label>
-                                    {{ f.datepicker("sicu54dos24") }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label for="sicu54id24">ID</label>
-                                    <input type="text" name="sicu54id24" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                {% endif %}
-                <h3>Intake discussion</h3>
-                <div class="row">
-                    <div class="col-sm-4 col-md-3 form-group">
-                        <label for="sidc" class="required">Date of contact</label>
-                        {{ f.datepicker("sidc", "past", true) }}
-                    </div>
-
-                    <div class="col-sm-8 col-md-9 form-group">
-                        <label class="doc-heading required">The lung screening program reached the participant or was
-                            contacted via (check all that apply):</label>
-                        {{ f.checkbox("silnip", "1", "In person", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnph", "1", "Telephone", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnth", "1", "TeleHealth", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnml", "1", "Mailed letter", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnpp", "1", "Message in Patient Portal", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnvd", "1", "Video-on-Demand (VOD)", {'group':'intake-contact'}) }}
-                        {{ f.checkbox("silnot", "1", "Other", {'group':'intake-contact'}) }}
-                        <label class="aria-hidden" for="silnoo">Other contact method</label>
-                        <input class="form-control input-sm" type="text" name="silnoo"
-                               id="silnoo" title="Other contact method" required="required">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="required">Primary address verified</label>
-                        {{ f.inlineRadio("sipav", "sipav-y","y","Yes", true) }}
-                        {{ f.inlineRadio("sipav", "sipav-n","n","No") }}
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="form-group col-sm-6 ">
-                        <label for="sipsa">Preferred address</label>
-                        <input type="text" name="sipsa" id="sipsa" class="form-control">
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="sipan">Apt # </label>
-                        <input type="text" name="sipan" id="sipan" class="form-control">
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="sipcn">County</label>
-                        <input type="text" name="sipcn" id="sipcn" class="form-control">
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="sipc">City </label>
-                        <input type="text" name="sipc" id="sipc" class="form-control">
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="sips">State </label>
-                        <input type="text" name="sips" id="sips" class="form-control">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="sipz">Zip </label>
-                        <input type="text" name="sipz" id="sipz" class="form-control">
-                        <small class="text-muted" id="rural-text"></small>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="sipcr">Country </label>
-                        <input type="text" name="sipcr" id="sipcr" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-sm-6 ">
-                        <label for="sippn">Phone number</label>
-                        <input type="text" name="sippn" id="sippn" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row" id="rural-status-container">
-                    <div class="col-md-12 form-group">
-                        <label class="required">Rural status</label>
-                        {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
-                        {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
-                        {{ f.inlineRadio("sirs", "sirs-n","n","Unknown") }}
-                    </div>
-                </div>
-
-                <hr/>
-
-                <h3>Smoking History</h3>
-
-                {% include '_pack-year-history.jinja2' %}
-
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 form-group">
-                        <label>Have you ever smoked</label>
-                        <br/>
-                        {{ f.inlineRadio("siesm", "siesm-n", "n", "Never") }}
-                        {{ f.inlineRadio("siesm", "siesm-p", "p", "Past") }}
-                        {{ f.inlineRadio("siesm", "siesm-c", "c", "Current") }}
-                        {{ f.inlineCheckbox("siesq","1", "Willing to quit") }}
-                    </div>
-                    <div class="col-lg-8 col-md-6 col-sm-6 form-group">
-                        <label for="sies">Comments</label>
-                        <input type="text" name="sies" id="sies" class="form-control"/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?', "required") }}
-                    </div>
-                    <div class="col-sm-2">
-                        <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4"
-                               required="required">
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sippd', 'How many <em>packs</em> of cigarettes did you smoke per day (PPD)?') }}
-                    </div>
-                    <div class="col-sm-2">
-                        <span id="sippd-val" class="control-label"></span>
-                    </div>
-                    <input type="hidden" name="sippd" id="sippd"/>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sisny', '# of years', "required") }}
-                    </div>
-                    <div class="col-sm-2">
-                        <input class="form-control numeric decimalformat" type="text" name="sisny" id="sisny"
-                               required="required" maxlength="4">
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sippy', 'Reported pack years') }}
-                    </div>
-                    <div class="col-sm-8">
-                        <span id="sippy-val"></span>
-                        <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none"></div>
-                    </div>
-                    <input type="hidden" name="sippy" id="sippy"/>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('siq', 'Quit Date') }}
-                    </div>
-                    <div class="col-sm-4 col-md-3 col-lg-2">
-                        {{ f.datepicker ("siq", "past") }}
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sicep', 'Smoking cessation education provided') }}
-                    </div>
-                    <div class="col-md-8">
-                        <textarea class="form-control" type="text" name="sicep" id="sicep"></textarea>
-                        <p class="help-block">Additional information can be provided on the background form</p>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sicadx', 'Lung CA Dx (if applicable)') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ f.datepicker ("sicadx", "past") }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label class="aria-hidden" for="sicadxl">Lung CA Dx location</label>
-                        <input class="form-control" type="text" name="sicadxl" id="sicadxl"/>
-                        <span class="help-block">Location<span class="va-only"> if not in VA</span></span>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('siptct', 'Any prior CT') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ f.datepicker ("siptct", "past") }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label class="aria-hidden" for="siptctl">Location CT</label>
-                        <input class="form-control" type="text" name="siptctl" id="siptctl"/>
-                        <span class="help-block">Location<span class="va-only"> if not in VA</span></span>
-                    </div>
-                </div>
-                <hr/>
-                <div id="enrollment-container">
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label class="required">Informed decision making</label>
-                            <br/>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="siidmdc" id="siidmdc-n" value="0" required="required">
-                                    Not applicable
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="siidmdc" id="siidmdc-y" value="1" required="required">
-                                    Discussion complete
-                                </label>
-                                <p class="alert alert-warning" id="siidmdc-affirmation">
-                                    Candidate is of age and exposure to cigarette smoke as described above, and without
-                                    a current diagnosis or obvious symptoms suggestive of lung cancer, has been
-                                    educated today about the estimated risk for lung cancer, the possibility of a cure
-                                    or life prolonging if an early lung cancer were to be found during screening, the
-                                    possibility of imaging abnormalities not being lung cancer, the possibility of
-                                    complications from additional diagnostic procedures, and the approximate amount of
-                                    radiation exposure associated with each screening procedure. In addition, the
-                                    candidate has been educated today about the importance of adhering to annual lung
-                                    screening, the possible impact of other medical conditions on the overall health
-                                    status, the importance of avoiding exposure to cigarette smoke, available tobacco
-                                    cessation programs and available lung screening services at this facility.
-                                    Education material was provided to the candidate.
-                                    <br/>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label class="required">Based on this information, the candidate has opted to</label>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
-                                    Not enroll
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="sildct" id="sildct-l" value="l">
-                                    Not enroll at this time, okay to contact in the future
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="sildct" id="sildct-y" value="y">
-                                    Enroll in the Lung Screening program and have an LDCT ordered.
-                                    Coordination of care will be made by the team
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label for="siclin" class="control-label">Clinical Indications for Initial Screening CT</label>
-                        <textarea class="form-control" id="siclin" name="siclin" rows="3"></textarea>
-                    </div>
-                </div>
-
-                <hr/>
-                <h3>Participant Communication Record</h3>
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="aria-hidden">Participant communication record</label>
-                        <textarea class="form-control" name="sipcrn" id="sipcrn" rows="3"></textarea>
-                        <span class="help-block">Free-form notes to track communications with the participant</span>
-                    </div>
-                </div>
-                <div class="row" id="communication-log-container">
-                    <div class="col-sm-12">
-                        <h4>Communication Log</h4>
-                        <pre class="prettyprint source linenums"
-                             id="commlog">{{ "2018-10-31 12:00 PM - {USERNAME}: {TEXT HERE}" if mockup else "" }}</pre>
-                    </div>
-                </div>
-
-                <hr/>
-                <h3>Current Status</h3>
-                <div class="row">
-                    <div class="col-md-3 col-lg-2 form-group">
-                        <label for="sistatus" class="required">Enrollment</label><br/>
-                        {{ f.inlineRadio("sistatus", "sistatus-active", "active", "Active", true) }}
-                        {{ f.inlineRadio("sistatus", "sistatus-inactive", "inactive", "Not active") }}
-                    </div>
-                    <div class="col-md-3 col-lg-2" id="ctappt-container">
-                        <div class="form-group">
-                            <label for="sicectap">CT Appointment</label>
-                            {{ f.datepicker('sicectap', '', true) }}
-                        </div>
-                    </div>
-                </div>
-
-                <div id="reason-for-change-container" style="display: none;">
-                    <hr/>
-                    <h3>Reason for change</h3>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label for="sistachg" class="required">Reason</label><br/>
-                            <select id="sistachg" name="sistachg" required="required" class="form-control">
-                                <option value="">-</option>
-                                <option value="transferred">Transferred to another institution (specify)</option>
-                                <option value="medical">Unable due to medical reason (specify)</option>
-                                <option value="unwilling">Unwilling due to personal reason (specify)</option>
-                                <option value="refused">Refused to continue</option>
-                                <option value="illadvised">Physician advised against</option>
-                                <option value="radiation">Concern about radiation</option>
-                                <option value="moved">Moved and unable to return</option>
-                                <option value="insurance">No insurance, can't have Dx CT</option>
-                                <option value="cost">Burden of cost</option>
-                                <option value="deceased">Deceased</option>
-                                <option value="other">Other (specify)</option>
-                                <option value="excluded">Excluded (specify)</option>
-                                <option value="complete">Study complete</option>
-                                <option value="noresponse">No response to 3 calls + 3 letters</option>
-                                <option value="nocontact">Unable to contact</option>
-                                <option value="followed">Being followed elsewhere (get results)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row" id="date-of-death-container">
                         <div class="col-md-4 form-group">
-                            <label for="sidod" class="required">Date of death</label>
-                            {{ f.datepicker('sidod', 'past', true) }}
+                            <label class="aria-hidden" for="sicadxl">Lung CA Dx location</label>
+                            <input class="form-control" type="text" name="sicadxl" id="sicadxl"/>
+                            <span class="help-block">Location<span class="va-only"> if not in VA</span></span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            {{ f.floatingLabel('siptct', 'Any prior CT') }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ f.datepicker ("siptct", "past") }}
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="aria-hidden" for="siptctl">Location CT</label>
+                            <input class="form-control" type="text" name="siptctl" id="siptctl"/>
+                            <span class="help-block">Location<span class="va-only"> if not in VA</span></span>
                         </div>
                     </div>
 
+                    <hr/>
+                    <div id="enrollment-container">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label class="required">Informed decision making</label>
+                                <br/>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="siidmdc" id="siidmdc-n" value="0" required="required">
+                                        Not applicable
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="siidmdc" id="siidmdc-y" value="1" required="required">
+                                        Discussion complete
+                                    </label>
+                                    <p class="alert alert-warning" id="siidmdc-affirmation">
+                                        Candidate is of age and exposure to cigarette smoke as described above, and
+                                        without
+                                        a current diagnosis or obvious symptoms suggestive of lung cancer, has been
+                                        educated today about the estimated risk for lung cancer, the possibility of a
+                                        cure
+                                        or life prolonging if an early lung cancer were to be found during screening,
+                                        the
+                                        possibility of imaging abnormalities not being lung cancer, the possibility of
+                                        complications from additional diagnostic procedures, and the approximate amount
+                                        of
+                                        radiation exposure associated with each screening procedure. In addition, the
+                                        candidate has been educated today about the importance of adhering to annual
+                                        lung
+                                        screening, the possible impact of other medical conditions on the overall health
+                                        status, the importance of avoiding exposure to cigarette smoke, available
+                                        tobacco
+                                        cessation programs and available lung screening services at this facility.
+                                        Education material was provided to the candidate.
+                                        <br/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label class="required">Based on this information, the candidate has opted to</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
+                                        Not enroll
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sildct" id="sildct-l" value="l">
+                                        Not enroll at this time, okay to contact in the future
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sildct" id="sildct-y" value="y">
+                                        Enroll in the Lung Screening program and have an LDCT ordered.
+                                        Coordination of care will be made by the team
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-md-8 form-group">
-                            <label for="sistreas" class="required">Explanation</label><br/>
-                            <textarea class="form-control" type="text" name="sistreas" id="sistreas"></textarea>
+                        <div class="col-md-12 form-group">
+                            <label for="siclin" class="control-label">Clinical Indications for Initial Screening
+                                CT</label>
+                            <textarea class="form-control" id="siclin" name="siclin" rows="3"></textarea>
                         </div>
                     </div>
 
-                </div>
+                    <hr/>
+                    <h3>Participant Communication Record</h3>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="aria-hidden">Participant communication record</label>
+                            <textarea class="form-control" name="sipcrn" id="sipcrn" rows="3"></textarea>
+                            <span class="help-block">Free-form notes to track communications with the participant</span>
+                        </div>
+                    </div>
+                    <div class="row" id="communication-log-container">
+                        <div class="col-sm-12">
+                            <h4>Communication Log</h4>
+                            <pre class="prettyprint source linenums"
+                                 id="commlog">{{ "2018-10-31 12:00 PM - {USERNAME}: {TEXT HERE}" if mockup else "" }}</pre>
+                        </div>
+                    </div>
 
-                <div class="row" id="change-log-container">
-                    <div class="col-sm-12">
-                        <h4>Change Log</h4>
-                        <pre class="prettyprint source linenums"
-                             id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
+                    <hr/>
+                    <h3>Current Status</h3>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2 form-group">
+                            <label for="sistatus" class="required">Enrollment</label><br/>
+                            {{ f.inlineRadio("sistatus", "sistatus-active", "active", "Active", true) }}
+                            {{ f.inlineRadio("sistatus", "sistatus-inactive", "inactive", "Not active") }}
+                        </div>
+                        <div class="col-md-3 col-lg-2" id="ctappt-container">
+                            <div class="form-group">
+                                <label for="sicectap">CT Appointment</label>
+                                {{ f.datepicker('sicectap', '', true) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reason-for-change-container" style="display: none;">
+                        <hr/>
+                        <h3>Reason for change</h3>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="sistachg" class="required">Reason</label><br/>
+                                <select id="sistachg" name="sistachg" required="required" class="form-control">
+                                    <option value="">-</option>
+                                    <option value="transferred">Transferred to another institution (specify)</option>
+                                    <option value="medical">Unable due to medical reason (specify)</option>
+                                    <option value="unwilling">Unwilling due to personal reason (specify)</option>
+                                    <option value="refused">Refused to continue</option>
+                                    <option value="illadvised">Physician advised against</option>
+                                    <option value="radiation">Concern about radiation</option>
+                                    <option value="moved">Moved and unable to return</option>
+                                    <option value="insurance">No insurance, can't have Dx CT</option>
+                                    <option value="cost">Burden of cost</option>
+                                    <option value="deceased">Deceased</option>
+                                    <option value="other">Other (specify)</option>
+                                    <option value="excluded">Excluded (specify)</option>
+                                    <option value="complete">Study complete</option>
+                                    <option value="noresponse">No response to 3 calls + 3 letters</option>
+                                    <option value="nocontact">Unable to contact</option>
+                                    <option value="followed">Being followed elsewhere (get results)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" id="date-of-death-container">
+                            <div class="col-md-4 form-group">
+                                <label for="sidod" class="required">Date of death</label>
+                                {{ f.datepicker('sidod', 'past', true) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for="sistreas" class="required">Explanation</label><br/>
+                                <textarea class="form-control" type="text" name="sistreas" id="sistreas"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" id="change-log-container">
+                        <div class="col-sm-12">
+                            <h4>Change Log</h4>
+                            <pre class="prettyprint source linenums"
+                                 id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
+                        </div>
                     </div>
                 </div>
+            {% endif %}
 
-                <hr/>
-                <div class="pull-left">
-                    <input type="hidden" id="samistatus" name="samistatus" value=""/>
-                    <button type="submit" class="btn btn-default" id="save-for-later-button"
-                            formnovalidate="formnovalidate">Save for Later
-                    </button>
-                    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
-                </div>
-                <div class="pull-right">
-                    <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
-                </div>
+            <hr/>
+            <div class="pull-left">
+                <input type="hidden" id="samistatus" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+            <div class="pull-right">
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
         </form>
     </div>
 
     {{ f.deleteFormModal("intake.html", mockup, formMethod) }}
-
-
 {% endblock %}
 
 {% block script %}

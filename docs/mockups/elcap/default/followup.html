@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="elcap" name="base"/>
   <meta content="default" name="site"/>
-  <meta content="2024.03.27" name="version"/>
+  <meta content="2024.04.15" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Followup Form
@@ -55,19 +55,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.03.27">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.04.15">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.03.27">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.04.15">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.03.27">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.04.15">
   </script>
-  <script src="../../../www/vapals.js?v=2024.03.27">
+  <script src="../../../www/vapals.js?v=2024.04.15">
   </script>
-  <script src="../../../www/init.js?v=2024.03.27">
+  <script src="../../../www/init.js?v=2024.04.15">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.03.27">
+  <script src="../../../www/nodule-grid.js?v=2024.04.15">
   </script>
-  <script src="../../../www/ai.js?v=2024.03.27">
+  <script src="../../../www/ai.js?v=2024.04.15">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -316,7 +316,7 @@
          Have you taken antibiotics since your last CT scan?
         </label>
        </div>
-       <div class="col-md-8 form-group">
+       <div class="col-md-2 form-group">
         <label class="radio-inline" for="siabx-n">
          <input id="siabx-n" name="siabx" required="required" type="radio" value="n"/>
          No
@@ -358,38 +358,48 @@
         </label>
        </div>
        <div class="col-md-8 form-group">
-        <div class="checkbox">
-         <label>
-          <input name="siwcb" type="hidden" value=""/>
-          <input id="siwcb" name="siwcb" type="checkbox" value="b"/>
-          Cough producing bloody material
-         </label>
-        </div>
-        <div class="checkbox">
-         <label>
-          <input name="siwcl" type="hidden" value=""/>
-          <input id="siwcl" name="siwcl" type="checkbox" value="l"/>
-          Unexplained weight loss greater than 20 lbs
-         </label>
-        </div>
-        <div class="checkbox">
-         <label>
-          <input name="siwch" type="hidden" value=""/>
-          <input id="siwch" name="siwch" type="checkbox" value="h"/>
-          Unexplained hoarseness
-         </label>
-        </div>
-        <div class="checkbox">
-         <label>
-          <input name="siwco" type="hidden" value=""/>
-          <input id="siwco" name="siwco" type="checkbox" value="o"/>
+        <label class="radio-inline" for="siwc-n">
+         <input id="siwc-n" name="siwc" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="siwc-y">
+         <input id="siwc-y" name="siwc" type="radio" value="y"/>
+         Yes
+        </label>
+        <div id="siwc-y-container">
+         <div class="checkbox">
+          <label>
+           <input name="siwcb" type="hidden" value=""/>
+           <input id="siwcb" name="siwcb" type="checkbox" value="b"/>
+           Cough producing bloody material
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input name="siwcl" type="hidden" value=""/>
+           <input id="siwcl" name="siwcl" type="checkbox" value="l"/>
+           Unexplained weight loss greater than 20 lbs
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input name="siwch" type="hidden" value=""/>
+           <input id="siwch" name="siwch" type="checkbox" value="h"/>
+           Unexplained hoarseness
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input name="siwco" type="hidden" value=""/>
+           <input id="siwco" name="siwco" type="checkbox" value="o"/>
+           Other
+          </label>
+         </div>
+         <label class="aria-hidden" for="siwcos">
           Other
          </label>
+         <input class="form-control input-sm" id="siwcos" name="siwcos" required="required" type="text"/>
         </div>
-        <label class="aria-hidden" for="siwcos">
-         Other
-        </label>
-        <input class="form-control input-sm" id="siwcos" name="siwcos" required="required" type="text"/>
        </div>
       </div>
       <div class="row">
@@ -909,200 +919,200 @@
        <input id="sippy" name="sippy" type="hidden"/>
        <input id="sippycu" name="sippycu" title="Cumulative reported pack years" type="hidden"/>
       </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sittq-n">
-        Since we last asked, have you ever tried to quit smoking?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sittq-n">
-        Since we last asked, have you ever tried to quit smoking?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="sittq-n">
-        <input id="sittq-n" name="sittq" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="sittq-y">
-        <input id="sittq-y" name="sittq" type="radio" value="y"/>
-        Yes
-       </label>
-       <label class="radio-inline" for="sittq-o">
-        <input id="sittq-o" name="sittq" type="radio" value="o"/>
-        N/A
-       </label>
-      </div>
-     </div>
-     <div class="row" id="sittq-container">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sittqt">
-        How many times have you quit smoking for at least 24 hours?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sittqt">
-        How many times have you quit smoking for at least 24 hours?
-       </label>
-      </div>
-      <div class="col-md-1 form-group">
-       <input class="form-control numeric" id="sittqt" name="sittqt" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-sm-4">
-       <label class="visible-xs visible-sm radio-label">
-        Since we last asked what, if any, smoking cessation methods have you used?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm radio-label">
-        Since we last asked what, if any, smoking cessation methods have you used?
-       </label>
-      </div>
-      <div class="col-sm-8 form-group">
-       <div class="checkbox">
-        <label>
-         <input name="sisca" type="hidden" value=""/>
-         <input id="sisca" name="sisca" type="checkbox" value="a"/>
-         Have not tried to quit
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="sittq">
+         Since we last asked, have you ever tried to quit smoking?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sittq">
+         Since we last asked, have you ever tried to quit smoking?
         </label>
        </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscb" type="hidden" value=""/>
-         <input id="siscb" name="siscb" type="checkbox" value="b"/>
-         "Cold Turkey" by completely stopping on your own with no other assistance
+       <div class="col-md-8 form-group">
+        <label class="radio-inline" for="sittq-n">
+         <input id="sittq-n" name="sittq" type="radio" value="n"/>
+         No
         </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscc" type="hidden" value=""/>
-         <input id="siscc" name="siscc" type="checkbox" value="c"/>
-         Tapering or reducing number of cigarettes smoked per day
+        <label class="radio-inline" for="sittq-y">
+         <input id="sittq-y" name="sittq" type="radio" value="y"/>
+         Yes
         </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscd" type="hidden" value=""/>
-         <input id="siscd" name="siscd" type="checkbox" value="d"/>
-         Self-help material (e.g., brochure, cessation website)
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="sisce" type="hidden" value=""/>
-         <input id="sisce" name="sisce" type="checkbox" value="e"/>
-         Individual consultation or cessation counseling
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscf" type="hidden" value=""/>
-         <input id="siscf" name="siscf" type="checkbox" value="f"/>
-         Telephone cessation counseling hotline
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscg" type="hidden" value=""/>
-         <input id="siscg" name="siscg" type="checkbox" value="g"/>
-         Peer support (e.g., Nicotine Anonymous)
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="sisch" type="hidden" value=""/>
-         <input id="sisch" name="sisch" type="checkbox" value="h"/>
-         Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="sisci" type="hidden" value=""/>
-         <input id="sisci" name="sisci" type="checkbox" value="i"/>
-         Zyban
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscj" type="hidden" value=""/>
-         <input id="siscj" name="siscj" type="checkbox" value="j"/>
-         Hypnosis
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="sisck" type="hidden" value=""/>
-         <input id="sisck" name="sisck" type="checkbox" value="k"/>
-         Acupuncture / acupressure
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="siscl" type="hidden" value=""/>
-         <input id="siscl" name="siscl" type="checkbox" value="l"/>
-         Other (specify)
-        </label>
-       </div>
-       <label class="aria-hidden" for="siscos">
-        Other
-       </label>
-       <input class="form-control input-sm" id="siscos" name="siscos" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siqst">
-        Are you seriously thinking of quitting smoking?
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siqst">
-        Are you seriously thinking of quitting smoking?
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <select class="form-control" id="siqst" name="siqst">
-        <option value="-">
-         -
-        </option>
-        <option value="y">
-         Yes, within the next 30 days
-        </option>
-        <option value="m">
-         Yes, within the next 6 months
-        </option>
-        <option value="n">
-         No, not thinking of quitting
-        </option>
-        <option value="o">
+        <label class="radio-inline" for="sittq-o">
+         <input id="sittq-o" name="sittq" type="radio" value="o"/>
          N/A
-        </option>
-       </select>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm radio-label" for="siscmd-d">
-        Tobacco cessation provided:
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm radio-label" for="siscmd-d">
-        Tobacco cessation provided:
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <div class="radio">
-        <label>
-         <input id="siscmd-d" name="siscmd" type="radio" value="d"/>
-         Declined
         </label>
        </div>
-       <div class="radio">
-        <label>
-         <input id="siscmd-a" name="siscmd" type="radio" value="a"/>
-         Advised to quit smoking; resources provided
+      </div>
+      <div class="row" id="sittq-container">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="sittqt">
+         How many times have you quit smoking for at least 24 hours?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sittqt">
+         How many times have you quit smoking for at least 24 hours?
         </label>
        </div>
-       <div class="radio">
-        <label>
-         <input id="siscmd-i" name="siscmd" type="radio" value="i"/>
-         Interested in tobacco cessation medication. Encouraged to talk to provider or pharmacist about which medication option is best for you.
+       <div class="col-md-1 form-group">
+        <input class="form-control numeric" id="sittqt" name="sittqt" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-4">
+        <label class="visible-xs visible-sm radio-label">
+         Since we last asked what, if any, smoking cessation methods have you used?
         </label>
+        <label class="text-right pull-right hidden-xs hidden-sm radio-label">
+         Since we last asked what, if any, smoking cessation methods have you used?
+        </label>
+       </div>
+       <div class="col-sm-8 form-group">
+        <div class="checkbox">
+         <label>
+          <input name="sisca" type="hidden" value=""/>
+          <input id="sisca" name="sisca" type="checkbox" value="a"/>
+          Have not tried to quit
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscb" type="hidden" value=""/>
+          <input id="siscb" name="siscb" type="checkbox" value="b"/>
+          "Cold Turkey" by completely stopping on your own with no other assistance
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscc" type="hidden" value=""/>
+          <input id="siscc" name="siscc" type="checkbox" value="c"/>
+          Tapering or reducing number of cigarettes smoked per day
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscd" type="hidden" value=""/>
+          <input id="siscd" name="siscd" type="checkbox" value="d"/>
+          Self-help material (e.g., brochure, cessation website)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sisce" type="hidden" value=""/>
+          <input id="sisce" name="sisce" type="checkbox" value="e"/>
+          Individual consultation or cessation counseling
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscf" type="hidden" value=""/>
+          <input id="siscf" name="siscf" type="checkbox" value="f"/>
+          Telephone cessation counseling hotline
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscg" type="hidden" value=""/>
+          <input id="siscg" name="siscg" type="checkbox" value="g"/>
+          Peer support (e.g., Nicotine Anonymous)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sisch" type="hidden" value=""/>
+          <input id="sisch" name="sisch" type="checkbox" value="h"/>
+          Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sisci" type="hidden" value=""/>
+          <input id="sisci" name="sisci" type="checkbox" value="i"/>
+          Zyban
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscj" type="hidden" value=""/>
+          <input id="siscj" name="siscj" type="checkbox" value="j"/>
+          Hypnosis
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sisck" type="hidden" value=""/>
+          <input id="sisck" name="sisck" type="checkbox" value="k"/>
+          Acupuncture / acupressure
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="siscl" type="hidden" value=""/>
+          <input id="siscl" name="siscl" type="checkbox" value="l"/>
+          Other (specify)
+         </label>
+        </div>
+        <label class="aria-hidden" for="siscos">
+         Other
+        </label>
+        <input class="form-control input-sm" id="siscos" name="siscos" required="required" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm" for="siqst">
+         Are you seriously thinking of quitting smoking?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siqst">
+         Are you seriously thinking of quitting smoking?
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <select class="form-control" id="siqst" name="siqst">
+         <option value="-">
+          -
+         </option>
+         <option value="y">
+          Yes, within the next 30 days
+         </option>
+         <option value="m">
+          Yes, within the next 6 months
+         </option>
+         <option value="n">
+          No, not thinking of quitting
+         </option>
+         <option value="o">
+          N/A
+         </option>
+        </select>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <label class="visible-xs visible-sm radio-label" for="siscmd-d">
+         Tobacco cessation provided:
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm radio-label" for="siscmd-d">
+         Tobacco cessation provided:
+        </label>
+       </div>
+       <div class="col-md-8 form-group">
+        <div class="radio">
+         <label>
+          <input id="siscmd-d" name="siscmd" type="radio" value="d"/>
+          Declined
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siscmd-a" name="siscmd" type="radio" value="a"/>
+          Advised to quit smoking; resources provided
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siscmd-i" name="siscmd" type="radio" value="i"/>
+          Interested in tobacco cessation medication. Encouraged to talk to provider or pharmacist about which medication option is best for you.
+         </label>
+        </div>
        </div>
       </div>
      </div>
@@ -1748,6 +1758,20 @@
                 return $(this).val();
             }).first().trigger("dp.change"); //trigger on page load for existing data;
 
+            //Mount Sinai fields
+            $("[name=simeq]").conditionallyDisplay({enable: "#order-container"});
+            $("[name=sidsd]").conditionallyDisplay({enable: "#sidsdp-container"});
+            $("[name=siabx]").conditionallyEnable({enable: "#siabxd-container"});
+            $("[name=siwc]").conditionallyEnable({enable: "#siwc-y-container,#siwc-y-container2"});
+            $("[name=siact]").conditionallyEnable({sourceValues: "a,b,f,c,d", enable: "#siahcl-container"});
+            // COVID Vaccination
+            $("[name=sbcvm]").conditionallyDisplay({sourceValues: "o", enable: "#sbcvm-container"});
+            $("[name=sbcvv]").conditionallyDisplay({enable: "#sbcvv-container"});
+            $("[name=sbcvm]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmo"})
+            $("[name=sbcvm2]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos2"})
+            $("[name=sbcvm3]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos3"})
+
+
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
             $("[name=siho]").conditionallyDisplay({enable: "#siho-container"});
@@ -1755,7 +1779,7 @@
             $("[name=sicd]").conditionallyDisplay({enable: "#sicd-container"});
             $("[name=silcs]").conditionallyDisplay({enable: "#silcs-container"});
             $("[name=sier]").conditionallyDisplay({enable: "#sier-container"});
-            $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container"});
+            $("[name=sisa],[name=sisav]").conditionallyDisplay({enable: "#sisa-container"});
             $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
             $("#fucmotot").conditionallyEnable({sourceValues: "1", enable: "#fucmotoo"}); // other contact method
@@ -1794,6 +1818,27 @@
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
             $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
             calculateCumulativePackYears();
+
+            // Determine which health survey to show based on the data that is present
+            function showSF() {
+                // 1. Data present for SF-12 -> show SF-12
+                // 2. Data present for both SF-12 and SF-8 -> show SF-12
+                // 3. Data present for only SF-8 -> show SF-8
+                // 4. Data present for neither -> show SF-12
+
+                var sf12data = $("[name=sisf1]").val();
+                var sf8data = $("[name=sisfb1]").val();
+
+                if (sf12data) {
+                    document.getElementById('sf8').style.display = "none";
+                } else if (sf8data) {
+                    document.getElementById('sf12').style.display = "none";
+                } else {
+                    document.getElementById('sf8').style.display = "none";
+                }
+            }
+
+            showSF();
         });
 
         /**

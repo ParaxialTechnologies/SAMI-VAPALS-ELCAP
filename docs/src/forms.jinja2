@@ -8,6 +8,15 @@
             class="text-right pull-right hidden-xs hidden-sm{{ (" " + extraClasses) if extraClasses else "" }}">{{ text }}</label>
 {%- endmacro %}
 
+{% macro floatingLeftLabel(for, text, extraClasses) -%}
+    <label
+            {{ " for=\""+ for + "\"" if for else "" }}
+            class="visible-xs visible-sm{{ (" " + extraClasses) if extraClasses else "" }}">{{ text }}</label>
+    <label
+            {{ " for=\""+ for + "\"" if for else "" }}
+            class="hidden-xs hidden-sm{{ (" " + extraClasses) if extraClasses else "" }}">{{ text }}</label>
+{%- endmacro %}
+
 {% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex, title) -%}
     <label class="radio-inline" for="{{ id }}">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
@@ -21,6 +30,12 @@
     </label>
 {%- endmacro %}
 
+{% macro inlineRadioOptions(groupName, values, required, tabindex) -%}
+    {% for value in values %}
+        {% set index=loop.index %}
+        {{ inlineRadio(groupName, groupName+"-"+index|string, index, value, required, false, null, tabindex) }}
+    {% endfor %}
+{%- endmacro %}
 
 {% macro inlineRadioNY(groupName, required, tabindex) -%}
     {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}

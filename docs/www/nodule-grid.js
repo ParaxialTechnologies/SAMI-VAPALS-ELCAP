@@ -736,7 +736,7 @@
 
                 const ctComplete = settings.frozen === "true";
                 const initalNoduleCount = settings.getNoduleCount();
-                for (let i = 1; i < initalNoduleCount + 1; i++) {
+                for (let i = 1; i <=  settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
                     setupNoduleEnabledState(i);
 

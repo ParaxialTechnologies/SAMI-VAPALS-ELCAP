@@ -293,23 +293,24 @@
         return val == null ? defaultValue : val;
     }
 
-    function paramSubstitution(siteId) {
+    function paramSubstitution(siteId, onRetrieveCallback) {
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
             console.log("retrieveParams")
-            retrieveParams(siteId);
+            retrieveParams(siteId, onRetrieveCallback);
         } else {
             console.log("paramSubstitution")
             substituteParams(params);
         }
 
-        function retrieveParams(siteId) {
+        function retrieveParams(siteId, onRetrieveCallback) {
             $.ajax('/params', {data: {siteId: siteId}})
                 .done(function (data) {
                     console.log("retrieveParams(done)")
                     sessionStorage.setItem(key, JSON.stringify(data));
                     substituteParams(data);
+                    onRetrieveCallback();
                 })
                 .fail(function () {
                     substituteParams({});
@@ -357,24 +358,23 @@
     }
 
     if (isSet(siteId)) {
-        paramSubstitution(siteId);
-
-        //Load system configuration with defaults favoring a VA site
-        sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
-        sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true);
-        sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false);
-
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
-        $("#matchingReport").toggle(sysConfig["MATCHING_REPORT_ENABLED"]);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
-        if (sysConfig.VETERAN_AFFAIRS_SITE) {
-            $("footer").remove();
-        } else {
-            $(".va-only").remove();
-        }
 
+        paramSubstitution(siteId, function(){
+            //Load system configuration with defaults favoring a VA site
+            sysConfig["VETERAN_AFFAIRS_SITE"] = getBooleanParameter("veteransAffairsSite", true);
+            sysConfig["RURAL_URBAN_CHART_ENABLED"] = getBooleanParameter("ruralUrbanChartEnabled", true);
+            sysConfig["MATCHING_REPORT_ENABLED"] = getBooleanParameter("matchingReportEnabled", false);
+            $("#matchingReport").toggle(sysConfig["MATCHING_REPORT_ENABLED"]);
+            if (sysConfig.VETERAN_AFFAIRS_SITE) {
+                $("footer").remove();
+            } else {
+                $(".va-only").remove();
+            }
+        });
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");

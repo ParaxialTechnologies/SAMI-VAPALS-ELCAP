@@ -88,21 +88,9 @@
                         </select>
                     </div>
                     <div class="col-sm-5 form-group">
-                        <div class="checkbox-inline">
-                            <label for="sisa">
-                                <input type="checkbox" name="sisa" value="y" id="sisa">Special Attention
-                            </label>
-                        </div>
-                        <div class="checkbox-inline">
-                            <label for="sivip">
-                                <input type="checkbox" name="sivip" value="vip" id="sivip">VIP
-                            </label>
-                        </div>
-                        <div class="checkbox-inline">
-                            <label for="sirs">
-                                <input type="checkbox" name="sirs" value="y" id="sirs">Attending radiologist read
-                            </label>
-                        </div>
+                        {{ f.inlineCheckbox("sisa", "y", "Special Attention") }}
+                        {{ f.inlineCheckbox("sivip", "y", "VIP") }}
+                        {{ f.inlineCheckbox("sirr", "y", "Attending radiologist read") }}
                         <div class="row">
                             <div class="col-sm-12 form-group">
                                 <label for="sisao">Comments</label>
@@ -434,7 +422,7 @@
                 <div class="row">
                     <div class="col-sm-3 form-group">
                         <label for="sixdate">Date of Exit
-                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
                                tabindex="0" role="button" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
                                     active in the study.  It signifies the date on which they change to a non-active status."
                                aria-hidden="true" title="Help"></i>
@@ -443,7 +431,7 @@
                     </div>
                     <div class="col-sm-3 form-group">
                         <label for="sidod">Date of Death
-                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
                                tabindex="0" role="button" data-container="body"
                                data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
                                aria-hidden="true" title="Help"></i>
@@ -452,7 +440,7 @@
                     </div>
                     <div class="col-sm-4 form-group">
                         <label for="sicod">Cause of Death
-                            <i class="fa fa-question-circle-o" data-toggle="popover" data-trigger="focus"
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
                                tabindex="0" role="button" data-container="body"
                                data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."
                                aria-hidden="true" title="Help"></i>
@@ -476,12 +464,8 @@
                         <label for="sicfs">Has the participant signed the consent form?</label>
                     </div>
                     <div class="col-sm-6 col-lg-7 form-group">
-                        <label class="radio-inline" for="sicfs_n">
-                            <input type=radio name="sicfs" id="sicfs_n" value="n"> no [INELIGIBLE]
-                        </label>
-                        <label class="radio-inline" for="sicfs_y">
-                            <input type=radio name="sicfs" id="sicfs_y" value="y"> yes
-                        </label>
+                        {{ f.inlineRadio("sicfs", "sicfs-n", "n", "no [INELIGIBLE]") }}
+                        {{ f.inlineRadio("sicfs", "sicfs-y", "y", "yes") }}
                         <div id="sicfs-n-container">
                             <label class="col-sm-1" for="sicfsnco">Reason: </label>
                             <div class="col-sm-2">
@@ -1105,7 +1089,7 @@
                     <h3>Current Status</h3>
                     <div class="row">
                         <div class="col-md-3 col-lg-2 form-group">
-                            <label for="sistatus" class="required">Enrollment</label><br/>
+                            <label for="sistatus-active" class="required">Enrollment</label><br/>
                             {{ f.inlineRadio("sistatus", "sistatus-active", "active", "Active", true) }}
                             {{ f.inlineRadio("sistatus", "sistatus-inactive", "inactive", "Not active") }}
                         </div>
@@ -1270,7 +1254,8 @@
 
             const $form = $('#main-form');
             const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sipav', 'sirs', 'sistatus'];
-
+            const isSinai = "{{ site == 'sinai'}}".toLowerCase() === "true";
+            console.log("isSinai: " + isSinai)
             $form.formValidation({
                     fields: {
                         //Intake section only here
@@ -1288,7 +1273,12 @@
                         sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
                         //TODO: shouldn't address be required?
                         sippn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
-                        sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
+                        sirs: {
+                            validators: {
+                                notEmpty: {message: 'Rural status is required'},
+                                enabled: !isSinai
+                            }
+                        },
                         sicpd: {
                             validators: {
                                 notEmpty: {message: 'Packs per day is required'},
@@ -1397,7 +1387,6 @@
         }
 
         $(function () {
-
             const fv = createFormValidator();
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
@@ -1467,7 +1456,11 @@
             $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
             $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
             $("[name=sicu54]").conditionallyDisplay({enable: "#sicu54-y-container"});
-
+            $("#sivip").on("change", function(){
+                if(this.checked) {
+                    $("#sirr").prop("checked", true);
+                }
+            });
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
             $("#sicerfot").conditionallyDisplay({enable: "#sicerfoo"});

@@ -76,6 +76,27 @@
     </div>
 {%- endmacro %} %}
 
+{% macro inputText(name, labelText, attributes, required) %}
+    {% set attributes = attributes|default({}) %}
+    {% if attributes['id'] == null %}
+        {{ "" if attributes.update(id=name) else "" }}
+    {% endif %}
+    {% if attributes['class'] == null %}
+        {{ "" if attributes.update(class='form-control') else "" }}
+    {% endif %}
+    {% if required %}
+        {{ "" if attributes.update(required='required') else "" }}
+    {% endif %}
+
+    {% if labelText %}
+        <label for="{{ name }}" class="control-label {{ "required" if required else "" }}">{{ labelText }}</label>
+    {% endif %}
+    <input type="text" name="{{ name }}"
+    {% for k,v in attributes.items() %}
+        {{ k }}="{{ v }}"
+    {% endfor %}
+    >
+{%- endmacro %}
 
 {% macro checkbox(name, value, labelText, attributes, required) -%}
     {% set attributes = attributes|default({}) %}

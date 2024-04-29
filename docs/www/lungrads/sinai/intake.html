@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="lungrads" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.04.15" name="version"/>
+  <meta content="2024.04.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening Intake Form
@@ -66,19 +66,19 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2024.04.15">
+  <script src="jquery-conditonally-enable.js?v=2024.04.28">
   </script>
-  <script src="jquery-conditonally-display.js?v=2024.04.15">
+  <script src="jquery-conditonally-display.js?v=2024.04.28">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.04.15">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.04.28">
   </script>
-  <script src="vapals.js?v=2024.04.15">
+  <script src="vapals.js?v=2024.04.28">
   </script>
-  <script src="init.js?v=2024.04.15">
+  <script src="init.js?v=2024.04.28">
   </script>
-  <script src="nodule-grid.js?v=2024.04.15">
+  <script src="nodule-grid.js?v=2024.04.28">
   </script>
-  <script src="ai.js?v=2024.04.15">
+  <script src="ai.js?v=2024.04.28">
   </script>
   <span id="url-prefix" src="">
    <!--System Navigation-->
@@ -320,24 +320,21 @@
        </select>
       </div>
       <div class="col-sm-5 form-group">
-       <div class="checkbox-inline">
-        <label for="sisa">
-         <input id="sisa" name="sisa" type="checkbox" value="y"/>
-         Special Attention
-        </label>
-       </div>
-       <div class="checkbox-inline">
-        <label for="sivip">
-         <input id="sivip" name="sivip" type="checkbox" value="vip"/>
-         VIP
-        </label>
-       </div>
-       <div class="checkbox-inline">
-        <label for="sirs">
-         <input id="sirs" name="sirs" type="checkbox" value="y"/>
-         Attending radiologist read
-        </label>
-       </div>
+       <label class="checkbox-inline">
+        <input name="sisa" type="hidden" value=""/>
+        <input id="sisa" name="sisa" type="checkbox" value="y"/>
+        Special Attention
+       </label>
+       <label class="checkbox-inline">
+        <input name="sivip" type="hidden" value=""/>
+        <input id="sivip" name="sivip" type="checkbox" value="y"/>
+        VIP
+       </label>
+       <label class="checkbox-inline">
+        <input name="sirr" type="hidden" value=""/>
+        <input id="sirr" name="sirr" type="checkbox" value="y"/>
+        Attending radiologist read
+       </label>
        <div class="row">
         <div class="col-sm-12 form-group">
          <label for="sisao">
@@ -925,7 +922,7 @@
       <div class="col-sm-3 form-group">
        <label for="sixdate">
         Date of Exit
-        <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
+        <i aria-hidden="true" class="fa-regular fa-circle-question" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
                                     active in the study.  It signifies the date on which they change to a non-active status." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
         </i>
        </label>
@@ -945,7 +942,7 @@
       <div class="col-sm-3 form-group">
        <label for="sidod">
         Date of Death
-        <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Date of Death (DOD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
+        <i aria-hidden="true" class="fa-regular fa-circle-question" data-container="body" data-content="The Date of Death (DOD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
         </i>
        </label>
        <div class="input-group datepicker">
@@ -964,7 +961,7 @@
       <div class="col-sm-4 form-group">
        <label for="sicod">
         Cause of Death
-        <i aria-hidden="true" class="fa fa-question-circle-o" data-container="body" data-content="The Cause of Death (COD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
+        <i aria-hidden="true" class="fa-regular fa-circle-question" data-container="body" data-content="The Cause of Death (COD) should be recorded for all subjects who have expired." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
         </i>
        </label>
        <input class="form-control" name="sicod" type="text"/>
@@ -995,12 +992,12 @@
        </label>
       </div>
       <div class="col-sm-6 col-lg-7 form-group">
-       <label class="radio-inline" for="sicfs_n">
-        <input id="sicfs_n" name="sicfs" type="radio" value="n"/>
+       <label class="radio-inline" for="sicfs-n">
+        <input id="sicfs-n" name="sicfs" type="radio" value="n"/>
         no [INELIGIBLE]
        </label>
-       <label class="radio-inline" for="sicfs_y">
-        <input id="sicfs_y" name="sicfs" type="radio" value="y"/>
+       <label class="radio-inline" for="sicfs-y">
+        <input id="sicfs-y" name="sicfs" type="radio" value="y"/>
         yes
        </label>
        <div id="sicfs-n-container">
@@ -1704,7 +1701,8 @@
 
             const $form = $('#main-form');
             const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sipav', 'sirs', 'sistatus'];
-
+            const isSinai = "True".toLowerCase() === "true";
+            console.log("isSinai: " + isSinai)
             $form.formValidation({
                     fields: {
                         //Intake section only here
@@ -1722,7 +1720,12 @@
                         sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
                         //TODO: shouldn't address be required?
                         sippn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
-                        sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
+                        sirs: {
+                            validators: {
+                                notEmpty: {message: 'Rural status is required'},
+                                enabled: !isSinai
+                            }
+                        },
                         sicpd: {
                             validators: {
                                 notEmpty: {message: 'Packs per day is required'},
@@ -1831,7 +1834,6 @@
         }
 
         $(function () {
-
             const fv = createFormValidator();
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
@@ -1901,7 +1903,11 @@
             $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
             $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
             $("[name=sicu54]").conditionallyDisplay({enable: "#sicu54-y-container"});
-
+            $("#sivip").on("change", function(){
+                if(this.checked) {
+                    $("#sirr").prop("checked", true);
+                }
+            });
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
             $("#sicerfot").conditionallyDisplay({enable: "#sicerfoo"});

@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="elcap" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.04.15" name="version"/>
+  <meta content="2024.04.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Followup Form
@@ -55,19 +55,19 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2024.04.15">
+  <script src="jquery-conditonally-enable.js?v=2024.04.28">
   </script>
-  <script src="jquery-conditonally-display.js?v=2024.04.15">
+  <script src="jquery-conditonally-display.js?v=2024.04.28">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.04.15">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.04.28">
   </script>
-  <script src="vapals.js?v=2024.04.15">
+  <script src="vapals.js?v=2024.04.28">
   </script>
-  <script src="init.js?v=2024.04.15">
+  <script src="init.js?v=2024.04.28">
   </script>
-  <script src="nodule-grid.js?v=2024.04.15">
+  <script src="nodule-grid.js?v=2024.04.28">
   </script>
-  <script src="ai.js?v=2024.04.15">
+  <script src="ai.js?v=2024.04.28">
   </script>
   <span id="url-prefix" src="">
    <!--System Navigation-->
@@ -298,13 +298,13 @@
             </label>
            </div>
            <div class="col-md-4 form-group">
-            <input class="form-control" id="siopfn" name="siopfn" type="text" value=""/>
+            <input class="form-control" id="siopfn" name="siopfn" type="text"/>
             <span class="help-block small">
              First Name
             </span>
            </div>
            <div class="col-md-4 form-group">
-            <input class="form-control" id="siopln" name="siopln" title="Last name" type="text" value=""/>
+            <input class="form-control" id="siopln" name="siopln" title="Last name" type="text"/>
             <span class="help-block small">
              Last Name
             </span>
@@ -320,7 +320,7 @@
             </label>
            </div>
            <div class="col-sm-2 form-group">
-            <input class="form-control" id="siopnpi" name="siopnpi" type="text" value=""/>
+            <input class="form-control" id="siopnpi" name="siopnpi" type="text"/>
            </div>
            <div class="col-sm-2 form-group">
             <a class="btn btn-default" href="#" id="npi-search" role="button">
@@ -405,7 +405,7 @@
             </label>
            </div>
            <div class="col-md-2 form-group">
-            <input class="form-control" id="sioppy" name="sioppy" type="text" value=""/>
+            <input class="form-control" id="sioppy" name="sioppy" type="text"/>
            </div>
           </div>
           <div class="row">
@@ -419,7 +419,7 @@
              </label>
             </div>
             <div class="col-md-2 form-group">
-             <input class="form-control" id="siopqy" name="siopqy" type="text" value=""/>
+             <input class="form-control" id="siopqy" name="siopqy" type="text"/>
              <p class="help-block small">
               (only required for former smokers)
              </p>
@@ -531,13 +531,13 @@
         </label>
        </div>
        <div class="col-md-2 form-group">
-        <input class="form-control" id="sirffn" name="sirffn" type="text" value=""/>
+        <input class="form-control" id="sirffn" name="sirffn" type="text"/>
         <span class="help-block small">
          First Name
         </span>
        </div>
        <div class="col-md-2 form-group">
-        <input class="form-control" id="sirfln" name="sirfln" title="Last name" type="text" value=""/>
+        <input class="form-control" id="sirfln" name="sirfln" title="Last name" type="text"/>
         <span class="help-block small">
          Last Name
         </span>
@@ -606,10 +606,10 @@
       <hr/>
       <div class="row">
        <div class="col-md-4">
-        <label class="visible-xs visible-sm" for="siwc-b">
+        <label class="visible-xs visible-sm" for="siwc-n">
          During the past year, have you experienced any of these symptoms?
         </label>
-        <label class="text-right pull-right hidden-xs hidden-sm" for="siwc-b">
+        <label class="text-right pull-right hidden-xs hidden-sm" for="siwc-n">
          During the past year, have you experienced any of these symptoms?
         </label>
        </div>
@@ -761,7 +761,7 @@
         <label for="sbcsts">
          COVID-19 Testing Status
         </label>
-        <select class="form-control" name="sbcsts">
+        <select class="form-control" id="sbcsts" name="sbcsts">
          <option value="-">
           -
          </option>
@@ -803,7 +803,7 @@
         <label for="sbcsl">
          Where?
         </label>
-        <input class="form-control" name="sbcsl" type="text" value=""/>
+        <input class="form-control" id="sbcsl" name="sbcsl" type="text"/>
        </div>
       </div>
       <div class="row">
@@ -811,7 +811,7 @@
         <label for="sbcsse">
          COVID-19 Serology
         </label>
-        <select class="form-control" name="sbcsse">
+        <select class="form-control" id="sbcsse" name="sbcsse">
          <option value="-">
           -
          </option>
@@ -837,9 +837,9 @@
          Date of Test
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="sbcdos-addon" class="form-control" data-restriction="past" id="sbcdos" name="sbcdos"/>
+         <input aria-describedby="sbcsdos-addon" class="form-control" data-restriction="past" id="sbcsdos" name="sbcsdos"/>
          <div class="input-group-addon">
-          <div class="input-group-text" id="sbcdos-addon">
+          <div class="input-group-text" id="sbcsdos-addon">
            <i aria-hidden="true" class="fa-regular fa-calendar">
            </i>
           </div>
@@ -853,7 +853,7 @@
         <label for="sbcssl">
          Where?
         </label>
-        <input class="form-control" name="sbcssl" type="text" value=""/>
+        <input class="form-control" id="sbcssl" name="sbcssl" type="text"/>
        </div>
       </div>
       <hr/>
@@ -1029,6 +1029,15 @@
         </div>
        </div>
       </div>
+      <script>
+       $(function () {
+        // COVID Vaccination
+        $("[name=sbcvv]").conditionallyDisplay({enable: "#sbcvv-container"});
+        $("[name=sbcvm]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmo"})
+        $("[name=sbcvm2]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos2"})
+        $("[name=sbcvm3]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos3"})
+    });
+      </script>
       <hr/>
       <div class="row">
        <div class="col-md-4 col-lg-6">
@@ -1279,7 +1288,7 @@
         </label>
        </div>
        <div class="col-md-1 form-group">
-        <input class="form-control" id="sidpw" name="sidpw" type="text" value=""/>
+        <input class="form-control" id="sidpw" name="sidpw" type="text"/>
        </div>
       </div>
       <div class="row">
@@ -1292,7 +1301,7 @@
         </label>
        </div>
        <div class="col-md-1 form-group">
-        <input class="form-control" id="sippd" name="sippd" type="text" value=""/>
+        <input class="form-control" id="sippd" name="sippd" type="text"/>
        </div>
       </div>
       <div class="row">
@@ -1452,7 +1461,7 @@
          </span>
         </div>
         <div class="form-group" style="float:left;">
-         <input class="form-control input-sm" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text" value=""/>
+         <input class="form-control input-sm" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text"/>
          <small class="help-block">
           Year
          </small>
@@ -1501,10 +1510,10 @@
       </div>
       <div class="row">
        <div class="col-md-4">
-        <label class="visible-xs visible-sm" for="sittq">
+        <label class="visible-xs visible-sm" for="sittq-n">
          Since your prior CT scan, have you ever tried to quit smoking?
         </label>
-        <label class="text-right pull-right hidden-xs hidden-sm" for="sittq">
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sittq-n">
          Since your prior CT scan, have you ever tried to quit smoking?
         </label>
        </div>
@@ -1754,7 +1763,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb2">
@@ -1797,7 +1806,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb3">
@@ -1840,7 +1849,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb4">
@@ -1889,7 +1898,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb5">
@@ -1930,7 +1939,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb6">
@@ -1973,7 +1982,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb7">
@@ -2026,7 +2035,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisfb8">
@@ -2105,7 +2114,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12 form-group">
         <label class="visible-xs visible-sm" for="sisf2">
@@ -2194,7 +2203,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12 form-group">
         <label class="visible-xs visible-sm">
@@ -2303,7 +2312,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm">
@@ -2408,7 +2417,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisf8">
@@ -2459,7 +2468,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12 form-group">
         <label class="visible-xs visible-sm" for="sisf9">
@@ -2584,7 +2593,7 @@
         </label>
        </div>
       </div>
-      <hr class="hs-br"/>
+      <hr/>
       <div class="row">
        <div class="col-md-12">
         <label class="visible-xs visible-sm" for="sisf12">
@@ -2638,6 +2647,25 @@
        </div>
       </div>
      </div>
+     <script>
+      $(function () {
+        // Determine which health survey to show based on the data that is present
+        // 1. Data present for SF-12 -> show SF-12
+        // 2. Data present for both SF-12 and SF-8 -> show SF-12
+        // 3. Data present for only SF-8 -> show SF-8
+        // 4. Data present for neither -> show SF-12
+        const sf12data = $("[name=sisf1]").val();
+        const sf8data = $("[name=sisfb1]").val();
+
+        if (sf12data) {
+            $("#sf8").hide();
+        } else if (sf8data) {
+            $("#sf12").hide();
+        } else {
+            $("#sf8").hide();
+        }
+    });
+     </script>
      <hr/>
      <div class="pull-left">
       <input id="samistatus" name="samistatus" type="hidden" value=""/>
@@ -3072,13 +3100,6 @@
             $("[name=siabx]").conditionallyEnable({enable: "#siabxd-container"});
             $("[name=siwc]").conditionallyEnable({enable: "#siwc-y-container,#siwc-y-container2"});
             $("[name=siact]").conditionallyEnable({sourceValues: "a,b,f,c,d", enable: "#siahcl-container"});
-            // COVID Vaccination
-            $("[name=sbcvm]").conditionallyDisplay({sourceValues: "o", enable: "#sbcvm-container"});
-            $("[name=sbcvv]").conditionallyDisplay({enable: "#sbcvv-container"});
-            $("[name=sbcvm]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmo"})
-            $("[name=sbcvm2]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos2"})
-            $("[name=sbcvm3]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos3"})
-
 
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
@@ -3126,27 +3147,6 @@
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
             $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
             calculateCumulativePackYears();
-
-            // Determine which health survey to show based on the data that is present
-            function showSF() {
-                // 1. Data present for SF-12 -> show SF-12
-                // 2. Data present for both SF-12 and SF-8 -> show SF-12
-                // 3. Data present for only SF-8 -> show SF-8
-                // 4. Data present for neither -> show SF-12
-
-                var sf12data = $("[name=sisf1]").val();
-                var sf8data = $("[name=sisfb1]").val();
-
-                if (sf12data) {
-                    document.getElementById('sf8').style.display = "none";
-                } else if (sf8data) {
-                    document.getElementById('sf12').style.display = "none";
-                } else {
-                    document.getElementById('sf8').style.display = "none";
-                }
-            }
-
-            showSF();
         });
 
         /**

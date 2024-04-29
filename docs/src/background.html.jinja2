@@ -20,7 +20,761 @@
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="site" value="@@SITE@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
+            {% if site=='sinai' %}
+                <div class="row">
+                    <div class="col-md-3 col-lg-2 form-group">
+                        <label for="sbdop">Visit Date
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                               tabindex="0"
+                               role="button" data-container="body"
+                               data-content="The visit date should be the actual date of the patient's baseline CT exam"
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.datepicker("sbdop") }}
+                    </div>
+                    <div class="col-md-3 col-lg-2 form-group">
+                        <label for="sbdob">Date of Birth</label>
+                        {{ f.datepicker("sbdob", "past") }}
+                    </div>
+                    <div class="col-md-3 col-lg-1 form-group">
+                        {{ f.inputText("sbage", "Age", {'readonly':'readonly'}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-3 form-group">
+                        <label for="sbocc">Occupation
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                               tabindex="0"
+                               role="button" data-container="body"
+                               data-content="If retired, please include the previous occupation along with the retired status (e.g. 'retired, teacher')."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.inputText("sbocc") }}
+                        <span class="help-block small">If retired, also indicate previous occupation</span>
+                    </div>
+                    <div class="col-md-4 col-lg-3 form-group">
+                        <label for="sboccc">Occupation Code
+                            <i class="fa-regular fa-circle-question" aria-hidden="true" data-trigger="focus"
+                               tabindex="0"
+                               role="button" title="Help" data-toggle="popover" data-container="body" data-html="true"
+                               data-content="Please code the participant's occupation by matching it to one
+                  of the categories below and selecting the code from the pulldown menu. <br /> <br />
+                   - Higher executives, large proprietor, major professionals (e.g.
+                    Judges, CEOs, Accountants (CPA), Architects, Engineers, Lawyers
+                    Physicians, University professors). <br /> <br />
 
+                   - Business managers. proprietors of medium sized businesses, lesser
+                    professionals (e.g. Advertising directors, Office managers, Police
+                    Chief. Sales Managers, Accountants (not CPA), Chiropractors,
+                    Correction Officers, Librarians, Military/Comissioned Officers,
+                    Musicians (Symphony Orchestra), Nurses, Pharmacists, Social Workers,
+                    Teachers (Elementary/High)). <br /> <br />
+
+                   - Administrative personnel, small independant businesses, and minor
+                    professionals (e.g. Insurance adjusters, Advertising agents. Credit
+                    Managers. Insurance Agents, Sales representatives, store managers,
+                    actors, Appraisers, Interior decorators, Court Interpreters,
+                    Landscape planners, Photographers, Piano Teachers, Radio/TV/Newspaper
+                    reporters, Oral hygienists, Travel Agents). <br /> <br />
+
+                   - Clerical/Sales workers, Technicians, and Owners of Little Businesses
+                    (e.g. Bank Clerks and Tellers, Bill Collectors, Bookkeepers,
+                    Clerical, Storekeeper Factory Supervision, Sales Clerksm Shipping
+                    Clerks, Dental Technicians, Lab Technicians, Truck Dispatchers). <br /> <br />
+
+                   - Skilled Manual Employees (e.g. Bakers, Barbers, Blacksmiths,
+                    Boilermakers, Carpenters, Chefs, Electricians, Exterminators,
+                    Firemen, Gardeners, Trained Machinists, Masons, Painters, Piano
+                    Tuners, Plumbers, Policemen, Postmen, Printers). <br /> <br />
+
+                   - Machine Operators and Semi-Skilled Employees (e.g. Hospital Aides,
+                    Apprentices, Bartenders, Building Superintendents, Bus Drivers,
+                    Dressmakers, Elevator Operators, Garage/Gas Station Assistants,
+                    Guard/Doorkeepers/Watchmen, Hairdressers, Housekeepers, Roofers,
+                    Unskilled Steelworkers, Taxi Drivers, Waiters). <br /> <br />
+
+                   - Unskilled Employees (e.g. Parking Lot Attendants, Cafeteria Workers,
+                    Dairy Workers, Deck hands, Domestics, Fishermen, Garbage Collectors,
+                    Janitors, Construction Laborers, Laundry Workers, Messengers,
+                    Peddlers, Porters, Shoe Shiners, Street Cleaners, Unskilled Factory
+                    Workers). <br /> <br />
+
+                   - Unemployed"></i>
+                        </label>
+                        <select name="sboccc" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="1"> Higher executives</option>
+                            <option value="2"> Business managers</option>
+                            <option value="3"> Administrative Personnel</option>
+                            <option value="4"> Clerical/Sales workers</option>
+                            <option value="5"> Skilled Manual Employees</option>
+                            <option value="6"> Machine Operators</option>
+                            <option value="7"> Unskilled Employees</option>
+                            <option value="8"> Unemployed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-md-2 form-group">
+                        <label for="sbsex">Sex</label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ f.inlineRadio("sbsex","sbsex-m","m", "male") }}
+                                {{ f.inlineRadio("sbsex","sbsex-f","f", "female") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 col-md-2 col-lg-1 form-group">
+                        <label for="sbph">Height
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                               tabindex="0"
+                               role="button" data-container="body"
+                               data-content="The height and weight are those values self-reported by the subject and may be entered in imperial or metric units."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.inputText("sbph") }}
+                    </div>
+                    <div class="col-xs-1 col-md-1 form-group">
+                        {{ f.radio("sbphu","sbphu-i","i", "in") }}
+                        {{ f.radio("sbphu","sbphu-c","c", "cm") }}
+                    </div>
+                    <div class="col-xs-2 col-md-2 col-lg-1 form-group">
+                        {{ f.inputText("sbpw", "Weight") }}
+                    </div>
+                    <div class="col-xs-1 col-md-1 form-group">
+                        {{ f.radio("sbpwu","sbpwu-p","p", "lbs") }}
+                        {{ f.radio("sbpwu","sbpwu-k","k", "kg") }}
+                    </div>
+                    <div class="col-xs-2 col-md-1 form-group">
+                        <label for="sbbmi">BMI
+                            <i class="fa-regular fa-circle-question" tabindex="0" data-trigger="focus" role="button"
+                               data-toggle="popover" data-container="body"
+                               data-content="The body mass index (BMI) is automatically calculated once the height and weight are entered."
+                               aria-hidden="true" title="Help"></i>
+                        </label>
+                        {{ f.inputText("sbbmi", "",{'readonly':'readonly'}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="sbet">Ethnicity</label>
+                        <select name="sbet" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="y"> Hispanic or Latino</option>
+                            <option value="n"> Not Hispanic or Latino</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="sbrc">Race
+                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                               tabindex="0"
+                               role="button" data-container="body" data-html="true" data-content="The race of the subject should be selected from one of the following: <br/> <br/>
+                  - American Indian: A person having origins in any
+                  of the original peoples of North America, and who maintains
+                  cultural identification through tribal affiliation or community
+                  recognition.<br/><br/>
+
+                  - Alaskan Native: A person having origins in any of the indigenous
+                  peoples of Alaska, and who maintains cultural identification
+                  through tribal affiliation or community recognition.<br/><br/>
+
+                  - Asian: A person having origins in any of the original peoples
+                  original peoples of the Far East, Southeast Asia, or the Indian
+                  subcontinent.  This area includes, for example, China, India,
+                   Japan, Korea, and the Philippine Islands.<br/><br/>
+
+                  - Native Hawaiian or Other Pacific Islander: A person having origins
+                  in any of the original peoples of Hawaii or the Pacific Islands.
+                  This area includes, for example, Hawaii, Polynesia, Melanesia,
+                  and Micronesia.<br/><br/>
+
+                  - Black or African American: A person having origins in any of
+                  the black racial groups of Africa.<br/><br/>
+
+                  - White: A person having origins in any of the original peoples
+                  of Europe, North Africa, or the Middle East.<br/><br/>
+
+                  - Two or more: A person self-identifying as multiracial.<br/><br/>
+
+                  - Other (specify): Any other race reported that doesn't fit the above
+                  categories.  If this category is chosen, a specification must be
+                  made in the Other (specify) field to the right of the pull-down
+                  menu." aria-hidden="true" title="Help"></i>
+                        </label>
+                        <select name="sbrc" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="i"> American Indian</option>
+                            <option value="k"> Alaska Native</option>
+                            <option value="a"> Asian</option>
+                            <option value="p"> Native Hawaiian or Other Pacific Islander</option>
+                            <option value="b"> Black or African American</option>
+                            <option value="w"> White</option>
+                            <option value="t"> Two or more</option>
+                            <option value="o"> Other (Specify)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group" id="sbrcs-container" style="display:none">
+                        {{ f.inputText("sbrcs", "Other (specify)") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="sbed">Level of Education</label>
+                        <select name="sbed" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="n"> did not complete high school</option>
+                            <option value="hs"> completed high school</option>
+                            <option value="sc"> started college</option>
+                            <option value="ts"> completed trade school</option>
+                            <option value="ad"> completed 2-year college degree</option>
+                            <option value="bd"> completed 4-year college degree</option>
+                            <option value="gd"> advanced degree (e.g. Master's, J.D., M.D., Ph.D.)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="sbmly">Served in the Military</label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ f.inlineRadioYN("sbmly") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 form-group" id="sbmlyo-container" style="display:none">
+                        {{ f.inputText("sbmlyo", "If yes, what branch") }}
+                    </div>
+                </div>
+                <hr>
+
+                <h3>Ordering Information</h3>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="alert alert-warning" role="alert">
+                            Ordering information is required for all patients undergoing a screening exam using the
+                            G0297 code.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-xs-6 col-md-5" for="sbmeq">
+                        Was a CT lung screening scan ordered for this patient ? (CPT code G0297)
+                    </label>
+
+                    <div class="form-group col-xs-2 col-md-7">
+                        <div>
+                            {{ f.inlineRadioNY("sbmeq") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="order-container" style="display:none">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="panel panel-default" id="order-panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <label class="col-xs-2 col-md-2" for="sbopfn">
+                                        Ordered by
+                                    </label>
+                                    <div class="col-xs-3 col-md-3 form-group">
+                                        {{ f.inputText("sbopfn") }}
+                                        <span class="help-block small">First Name</span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        {{ f.inputText("sbopln") }}
+                                        <span class="help-block small">Last Name</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xs-4 col-md-2" for="sbopnpi">
+                                        National provider ID (NPI)
+                                    </label>
+                                    <div class="col-md-2 form-group">
+                                        {{ f.inputText("sbopnpi") }}
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <a class="btn btn-default" href="#" role="button" id="npi-search">NPI Search</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xs-12 col-md-3" for="sbdsd-n">
+                                        Documentation of shared decision making
+                                    </label>
+                                    <div class="col-md-8 form-group">
+                                        {{ f.inlineRadioNY("sbdsd") }}
+                                        <p class="help-block small">
+                                            (shared decision making is required for reimbursement for G0297 exams on
+                                            baseline <strong>only</strong>)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row" id="sbdsdp-container">
+                                    <label class="col-xs-10 col-md-3" for="sbdsdp">
+                                        Shared decision making performed by
+                                    </label>
+                                    <div class="col-md-8 form-group">
+                                        {{ f.inlineRadio("sbdsdp", "sbdsdp-e", "e", "ELCAP") }}
+                                        {{ f.inlineRadio("sbdsdp", "sbdsdp-o", "o", "Other") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xs-6 col-md-3" for="sbopss">
+                                        Reported smoking status at time of order
+                                    </label>
+                                    <div class="col-xs-4 col-md-8 form-group">
+                                        {{ f.inlineRadio("sbopss", "sbopss-c", "c", "Current") }}
+                                        {{ f.inlineRadio("sbopss", "sbopss-f", "f", "Former") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xs-6 col-md-3" for="sboppy">
+                                        Reported pack years at time of order
+                                    </label>
+                                    <div class="col-xs-4 col-md-2 form-group">
+                                        {{ f.inputText("sboppy") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="sbopqy-container">
+                                        <label class="col-xs-6 col-md-3" for="sbopqy">
+                                            Reported years since quit at time of order
+                                        </label>
+                                        <div class="col-xs-4 col-md-2 form-group">
+                                            {{ f.inputText("sbopqy") }}
+                                            <p class="help-block small">(only required for former smokers)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3" for="sboas">
+                                        Reported asymptomatic for lung cancer at time of order
+                                    </label>
+                                    <div class="col-md-8 form-group">
+                                        {{ f.inlineRadioNY("sboas") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="sbopci" class="col-xs-12 col-md-2">
+                        Clinical Information
+                    </label>
+                    <div class="col-xs-8 col-sm-10 col-md-5">
+                        <textarea class="form-control" id="sbopci" name="sbopci"></textarea>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-xs-4 col-md-2" for="sbsloc">
+                        Scanning Location
+                    </label>
+                    <div class="col-xs-4 col-md-3">
+                        <select name="sbsloc" id="sbsloc" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="MSH"> Mount Sinai Medical Center</option>
+                            <option value="MSW"> Mount Sinai West</option>
+                            <option value="MSL"> Mount Sinai St Luke's</option>
+                            <option value="MSB"> Brooklyn Heights</option>
+                            <option value="MSK"> Kings Highway</option>
+                            <option value="HU">Huntington</option>
+                            <option value="MSDUS"> Beth Israel/ Union Square</option>
+                            <option value="MSDC"> Chelsea</option>
+                            <option value="MS34"> 34th St</option>
+                            <option value="MSQ"> Queens</option>
+                            <option value="fe"> Being followed elsewhere</option>
+                        </select>
+                    </div>
+                </div>
+                <h4> Referring Physician </h4>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="alert alert-info" role="alert">
+                            Referring physician is required for all exams regardless of the information above. This
+                            should be the"attending physician", which may be different that the individual ordering the
+                            exam. Only enter one physician, and do not use suffixes.
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2" for="sbrfln">Referring Physician Last</label>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbrfln") }}
+                    </div>
+
+                    <div class="col-md-1"></div>
+
+                    <label class="col-md-2" for="sbrffn">Referring Physician First</label>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbrffn") }}
+                    </div>
+                </div>
+                <hr>
+
+                <h3> Medical Conditions <i class="fa-regular fa-circle-question" tabindex="0" data-trigger="focus"
+                                           role="button" data-toggle="popover" data-container="body"
+                                           data-content="Please ask these questions to obtain the subject's general medical history."
+                                           aria-hidden="true" title="Help"></i></h3>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default" id="med-cond-panel">
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <label class="col-md-2" for="sbfc-n"> Family history of lung cancer </label>
+                                    <div class="col-md-3">
+                                        {{ f.inlineRadioNYQ("sbfc") }}
+                                    </div>
+
+                                    <div class="col-xs-6 col-md-3" id="sbfc-y-container" style="display:none">
+                                        <div class="row">
+                                            <label class="col-xs-6 col-md-4" for="sbfcf-n"> Father </label>
+                                            <div class="col-xs-6 col-md-8">
+                                                {{ f.inlineRadioNY("sbfcf") }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-xs-6 col-md-4" for="sbfcm-m"> Mother </label>
+                                            <div class="col-xs-6 col-md-8">
+                                                {{ f.inlineRadioNY("sbfcm") }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-xs-6 col-md-4" for="sbfcs-n"> Sibling </label>
+                                            <div class="col-xs-6 col-md-8">
+                                                {{ f.inlineRadioNY("sbfcs") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbhco-n"> Any Cancer </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbhco") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbhco-y-container" style="display:none">
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                <label for="sbhcdod" class="control-label">When?</label>
+                                                {{ f.yearpicker("sbhcdod") }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbhcpbo", "Primary Site") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpa-n"> Asthma </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpa") }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5" id="sbmpa-y-container" style="display:none">
+                                        <div class="row">
+                                            <label class="col-md-5" for="sbmpat-n">Under current treatment? </label>
+                                            <div class="col-md-7">
+                                                {{ f.inlineRadioNY("sbmpat") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpc-n"> Emphysema or Chronic Bronchitis ? <small
+                                            class="text-muted"> (COPD) </small> </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpc") }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 form-inline" id="sbmpc-y-container" style="display:none">
+                                        <div class="form-group">
+                                            <label for="sbmpcw" class="control-label">When?</label>
+                                            {{ f.yearpicker("sbmpcw") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpht-n"> High Blood Pressure </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpht") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmpht-y-container" style="display:none">
+                                        <label class="col-md-1" for="sbmphtt-n"> Treated? </label>
+                                        <div class="col-md-2">
+                                            {{ f.inlineRadioNY("sbmphtt") }}
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="sbmphtsw" class="control-label">Since When</label>
+                                                {{ f.yearpicker("sbmphtsw") }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbmphthv", "Highest Value?", {'class': 'form-control input-sm numeric'}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmphc-n"> High Cholesterol </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmphc") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmphc-y-container" style="display:none">
+                                        <label class="col-xs-12 col-md-1" for="sbmpct-n"> Treated? </label>
+                                        <div class="col-xs-12 col-md-2">
+                                            {{ f.inlineRadioNY("sbmpct") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpas-n"> Had an angioplasty or Stent? </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpas") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmpas-y-container" style="display:none">
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                <label for="sbmpasw" class="control-label">When?</label>
+                                                {{ f.yearpicker("sbmpasw") }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbmpast", "Where treated?") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpmi-n"> MI </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpmi") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmpmi-y-container" style="display:none">
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                <label for="sbmpmid" class="control-label">When?</label>
+                                                {{ f.yearpicker("sbmpmid") }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbmpmiw", "Where treated?") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmps-n"> Stroke </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmps") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmps-y-container" style="display:none">
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                <label for="sbmpsd" class="control-label">When?</label>
+                                                {{ f.yearpicker("sbmpsd") }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-inline">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbmpsw", "Where treated?") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmppv-n"> Peripheral Vascular Disease <small
+                                            class="text-muted"> (Poor Circulation) </small> </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmppv") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpd-n"> Diabetes </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpd") }}
+                                        </div>
+                                    </div>
+
+                                    <div id="sbmpd-y-container" style="display:none">
+                                        <label class="col-md-1" for="sbmpdt-n"> Treated? </label>
+                                        <div class="col-md-2">
+                                            {{ f.inlineRadioNY("sbmpdt") }}
+                                        </div>
+
+                                        <div class="col-md-4 form-inline">
+                                            <div class="form-group">
+                                                {{ f.inputText("sbmpdw", "Starting at what age?", {'class': 'form-control input-sm numeric'}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmpld-n"> Liver Disease </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmpld") }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" id="sbmpld-y-container" style="display:none">
+                                        {{ f.inlineRadio("sbmplds", "sbmplds-m", "m", "Mild") }}
+                                        {{ f.inlineRadio("sbmplds", "sbmplds-s", "s", "Moderate/Severe") }}
+                                    </div>
+                                </div>
+
+                                <hr class="med-cond-hr">
+
+                                <div class="row">
+                                    <label class="col-md-2" for="sbmprd-n"> Kidney (Renal) Disease </label>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNYQ("sbmprd") }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" id="sbmprd-y-container" style="display:none">
+                                        {{ f.inlineRadio("sbmprds", "sbmprds-m", "m", "Mild") }}
+                                        {{ f.inlineRadio("sbmprds", "sbmprds-s", "s", "Moderate/Severe") }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-xs-6 col-md-4" for="sblcs"> Have you experienced any symptoms indicative of lung
+                        cancer? </label>
+                    <div class="col-xs-5 col-md-3 form-group">
+                        {{ f.inlineRadio("sblcs", "sblcs-n", "n", "no") }}
+                        {{ f.inlineRadio("sblcs", "sblcs-y", "y", "yes <small class=\"text-muted\"> (check all that apply) </small>") }}
+
+                        <div class="row" id="sblcs-y-container">
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="sbwcb" value="b"> cough producing bloody material
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="sbwcl" value="l"> unexplained weight loss greater
+                                        than 20 lbs.
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="sbwch" value="h"> unexplained hoarseness
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="sbwco" value="o"> other (specify)
+                                    </label>
+                                </div>
+                                {{ f.inputText("sbwcos") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="sbact"> When did you most recently have a chest CT? </label>
+                            <select class="form-control" name="sbact">
+                                <option value="-"> -</option>
+                                <option value="a"> less than 6 months ago</option>
+                                <option value="b"> 6-18 months ago</option>
+                                <option value="f"> 18 months to 3 years ago</option>
+                                <option value="c"> 3 years to 5 years ago</option>
+                                <option value="d"> over 5 years ago</option>
+                                <option value="e"> never</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group" id="sbahcl-container">
+                        {{ f.inputText("sbahcl", "If so, where was the test done?", {'class':'form-control input-sm'}) }}
+                    </div>
+                </div>
+
+                {% include '_covid.jinja2' %}
+
+                <hr/>
+                <h4>Pulmonary Function Test Data</h4>
+
+            {% else %}
             <h3>Self-report of Comorbidities and Exposures</h3>
 
             <div class="row">
@@ -41,67 +795,68 @@
                         {{ f.checkbox("sbahaog", "g", "Nuclear industry") }}
                         {{ f.checkbox("sbahaoc", "c", "Ship construction/repair") }}
                         {{ f.checkbox("sbahaoo", "o", "Other") }}
-                        <label for="sbahas" class="aria-hidden">Other work</label>
-                        <input class="form-control input-sm" type="text" name="sbahas" id="sbahas"/>
+
+                        {{ f.inputText("sbahas", "Other work", {'class':'form-control input-sm'}) }}
                     </div>
                 </div>
             </div>
             <hr class="visible-xs-block visible-sm-block"/>
+            {% endif %}
+
+            {% if site!='sinai' %}
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <label>Have you experienced any symptoms indicative of lung cancer?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadio("sblcs","sblcs-n","n", "No") }}
+                            {{ f.inlineRadio("sblcs","sblcs-y","y", "Yes") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5 col-lg-6" id="sblcs-container" style="display: none;">
+                        <div class="form-group">
+                            <p><em>Check all that apply</em></p>
+                            {{ f.checkbox("sbwcb", "b", "Cough producing bloody material") }}
+                            {{ f.checkbox("sbwcl", "l", "Unexplained weight loss greater than 20 lbs.") }}
+                            {{ f.checkbox("sbwch", "h", "Unexplained hoarseness") }}
+                            {{ f.checkbox("sbwco", "o", "Other") }}
+                            {{ f.inputText("sbwcos", "Other symptom", {'class':'form-control input-sm'}) }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <label for="sbact" class="control-label">When did you most recently have a chest CT?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            <select id="sbact" name="sbact" class="form-control input-sm">
+                                <option value="-">&mdash;</option>
+                                <option value="a">Less than 6 months ago</option>
+                                <option value="b">6–18 months ago</option>
+                                <option value="f">18 months to 3 years ago</option>
+                                <option value="c">3 years to 5 years ago</option>
+                                <option value="d">Over 5 years ago</option>
+                                <option value="e">Never</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5 col-lg-6 form-inline" id="sbact-container" style="display: none;">
+                        <div class="form-group">
+                            {{ f.inputText("sbahcl", "Where was the test done?", {'class':'form-control input-sm'}) }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+            {% endif %}
 
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-4">
-                    <label>Have you experienced any symptoms indicative of lung cancer?</label>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="form-group">
-                        {{ f.inlineRadio("sblcs","sblcs-n","n", "No") }}
-                        {{ f.inlineRadio("sblcs","sblcs-y","y", "Yes") }}
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-5 col-lg-6" id="sblcs-container" style="display: none;">
-                    <div class="form-group">
-                        <p><em>Check all that apply</em></p>
-                        {{ f.checkbox("sbwcb", "b", "Cough producing bloody material") }}
-                        {{ f.checkbox("sbwcl", "l", "Unexplained weight loss greater than 20 lbs.") }}
-                        {{ f.checkbox("sbwch", "h", "Unexplained hoarseness") }}
-                        {{ f.checkbox("sbwco", "o", "Other") }}
-                        <label for="sbwcos" class="aria-hidden">Other symptom</label>
-                        <input class="form-control input-sm" type="text" name="sbwcos" id="sbwcos"/>
-                    </div>
-                </div>
-            </div>
-            <hr class="visible-xs-block visible-sm-block"/>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-4">
-                    <label for="sbact" class="control-label">When did you most recently have a chest CT?</label>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="form-group">
-                        <select id="sbact" name="sbact" class="form-control input-sm">
-                            <option value="-">&mdash;</option>
-                            <option value="a">Less than 6 months ago</option>
-                            <option value="b">6–18 months ago</option>
-                            <option value="f">18 months to 3 years ago</option>
-                            <option value="c">3 years to 5 years ago</option>
-                            <option value="d">Over 5 years ago</option>
-                            <option value="e">Never</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-5 col-lg-6 form-inline" id="sbact-container" style="display: none;">
-                    <div class="form-group">
-                        <label for="sbahcl" class="control-label">Where was the test done?</label>
-                        <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm"/>
-                    </div>
-
-                </div>
-            </div>
-            <hr class="visible-xs-block visible-sm-block"/>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-4">
-                    <label class="control-label">Have you had a pulmonary function test within the last five
+                    <label class="control-label" for="sbahpft-y">Have you had a pulmonary function test within the last
+                        five
                         years?</label>
                 </div>
                 <div class="col-sm-6 col-md-3 col-lg-2">
@@ -112,16 +867,13 @@
 
                 <div class="col-sm-12 col-md-5 col-lg-6 form-inline" id="sbahpft-container" style="display: none;">
                     <div class="form-group">
-                        <label for="sbfev1">FEV1 (L/s)</label>
-                        <input class="form-control input-sm" type="text" name="sbfev1" id="sbfev1" size="4">
+                        {{ f.inputText("sbfev1", "FEV1 (L/s)", {'size':'4', 'class':'form-control input-sm'}) }}
                     </div>
                     <div class="form-group">
-                        <label for="sbfvc">FVC (L)</label>
-                        <input class="form-control input-sm" type="text" name="sbfvc" id="sbfvc" size="4">
+                        {{ f.inputText("sbfvc", "FVC (L)", {'size':'4', 'class':'form-control input-sm'}) }}
                     </div>
                     <div class="form-group">
-                        <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
-                        <input class="form-control input-sm" type="text" name="sbcop" id="sbcop" size="4">
+                        {{ f.inputText("sbcop", "Diffusion capacity (mL/min/mm Hg)", {'size':'4', 'class':'form-control input-sm'}) }}
                     </div>
                     <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
                         FEV1/FVC (%) is <strong><span id="ffr-value"></span></strong>
@@ -131,608 +883,1249 @@
             </div>
             <hr class="visible-xs-block visible-sm-block"/>
 
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-4">
-                    <label for="sbqtatt" class="control-label">If you currently smoke, how many times have you attempted
-                        to quit in the last 12 months?</label>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <input class="form-control input-sm numeric" type="text" name="sbqtatt" id="sbqtatt"
-                               size="4" maxlength="4">
+            {% if site!='sinai' %}
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <label for="sbqtatt" class="control-label">If you currently smoke, how many times have you
+                            attempted
+                            to quit in the last 12 months?</label>
                     </div>
-                </div>
-            </div>
-            <hr class="visible-xs-block visible-sm-block"/>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-4">
-                    <label class="control-label">Have you been provided with smoking cessation services?</label>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="form-group">
-                        {{ f.inlineRadioNY("sbscs") }}
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="sbscs-container">
-                <div class="col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-3">
-                            <div class="form-group">
-                                <label for="sbscsw">When?</label>
-                                {{ f.datepicker("sbscsw","past") }}
-                            </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            {{ f.inputText("sbqtatt", "", {'size':'4', 'maxlength':'4', 'class':'form-control input-sm numeric'}) }}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="sbscsmv">Have you used any of the following medications?</label>
-                                <em>Check all that apply</em>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <label class="control-label">Have you been provided with smoking cessation services?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNY("sbscs") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="sbscs-container">
+                    <div class="col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-3">
                                 <div class="form-group">
-                                    {{ f.checkbox("sbscsmv", "v", "Varenicline") }}
-                                    {{ f.checkbox("sbscsmb", "b", "Buproprion") }}
-                                    {{ f.checkbox("sbscsmp", "p", "Patch") }}
-                                    {{ f.checkbox("sbscsml", "l", "Lozenges") }}
-                                    {{ f.checkbox("sbscsmg", "g", "Gum") }}
-                                    {{ f.checkbox("sbscsmo", "o", "Other") }}
-                                    <label for="sbscsmoo" class="aria-hidden">Other medication</label>
-                                    <input class="form-control input-sm" type="text" name="sbscsmoo" id="sbscsmoo"/>
+                                    <label for="sbscsw">When?</label>
+                                    {{ f.datepicker("sbscsw","past") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sbscsmv">Have you used any of the following medications?</label>
+                                    <em>Check all that apply</em>
+                                    <div class="form-group">
+                                        {{ f.checkbox("sbscsmv", "v", "Varenicline") }}
+                                        {{ f.checkbox("sbscsmb", "b", "Buproprion") }}
+                                        {{ f.checkbox("sbscsmp", "p", "Patch") }}
+                                        {{ f.checkbox("sbscsml", "l", "Lozenges") }}
+                                        {{ f.checkbox("sbscsmg", "g", "Gum") }}
+                                        {{ f.checkbox("sbscsmo", "o", "Other") }}
+                                        {{ f.inputText("sbscsmoo", "Other medication", {'class':'form-control input-sm'}) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Have you been counseled on the 5 A’s (Ask, Assess, Advise,
+                                        Assist, Arrange)?</label><br/>
+                                    {{ f.inlineRadioNY("sbscs5a") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Have you been referred for smoking cessation services?</label><br/>
+                                    {{ f.inlineRadioNY("sbscsref") }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Have you been counseled on the 5 A’s (Ask, Assess, Advise,
-                                    Assist, Arrange)?</label><br/>
-                                {{ f.inlineRadioNY("sbscs5a") }}
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <label>Do you know if you have had any of the following?</label>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Cancers</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbfc-n', 'Family history of lung cancer') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbfc") }}
+                                </div>
+                            </div>
+                            <div id="sbfc-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label">Father?</label><br/>
+                                    {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No") }}
+                                    {{ f.inlineRadio("sbfcf","sbfcf-y","y", "Yes") }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label">Mother?</label><br/>
+                                    {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No") }}
+                                    {{ f.inlineRadio("sbfcm","sbfcm-y","y", "Yes") }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label">Siblings?</label><br/>
+                                    {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No") }}
+                                    {{ f.inlineRadio("sbfcs","sbfcs-y","y", "Yes") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbhlc-n', 'Lung cancer') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbhlc") }}
+                                </div>
+                            </div>
+                            <div id="sbhlc-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbhlcdt">Year</label>
+                                    {{ f.yearpicker("sbhlcdt", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbhme-n', 'Melanoma') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbhme") }}
+                                </div>
+                            </div>
+                            <div id="sbhme-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbhmedt">Year</label>
+                                    {{ f.yearpicker("sbhmedt", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbhba-n', 'Basal/squamous-cell skin cancer') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbhba") }}
+                                </div>
+                            </div>
+                            <div id="sbhba-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbhbadt">Year</label>
+                                    {{ f.yearpicker("sbhbadt", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbhle-n', 'Leukemia') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbhle") }}
+                                </div>
+                            </div>
+                            <div id="sbhle-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbhledt">Year</label>
+                                    {{ f.yearpicker("sbhledt", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbhly-n', 'Lymphoma') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbhly") }}
+                                </div>
+                            </div>
+                            <div id="sbhly-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbhlydt">Year</label>
+                                    {{ f.yearpicker("sbhlydt", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbaoc-n', 'Any other cancer') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbaoc") }}
+                                </div>
+                            </div>
+                            <div id="sbaoc-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    {{ f.inputText("sbaocsp", "Specify", {'class':'form-control input-sm'}) }}
+                                </div>
+
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbaocyr">Year</label>
+                                    {{ f.yearpicker("sbaocyr", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbaocps", "Primary site", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Pulmonary Problems</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpa-n', 'Asthma') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpa") }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpa-container" style="display: none;">
+                                <div class="form-group">
+                                    <label>Under current treatment?</label><br/>
+                                    {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No") }}
+                                    {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpc-n', 'COPD/Emphysema/Chronic bronchitis') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpc") }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label" for="sbmpcw">Year</label>
+                                    {{ f.yearpicker("sbmpcw", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpn-n', 'Childhood pneumonia') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpn") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Cardiac Diseases</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpmi-n', 'Myocardial Infarction (MI)') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpmi") }}
+                                </div>
+                            </div>
+                            <div id="sbmpmi-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmpmid">Year</label>
+                                    {{ f.yearpicker("sbmpmid", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2">
+                                    {{ f.inputText("sbmpmiw", "Where treated", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpas-n', 'Angiostents') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpas") }}
+                                </div>
+                            </div>
+                            <div id="sbmpas-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmpasw">Year</label>
+                                    {{ f.yearpicker("sbmpasw", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbmpast", "Where treated", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpcabg-n', '<abbr title="coronary artery bypass grafting">CABG<abbr>') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpcabg") }}
+                                </div>
+                            </div>
+                            <div id="sbmpcabg-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmpcaby">Year</label>
+                                    {{ f.yearpicker("sbmpcaby", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbmpcawt", "Where treated", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpangi-n', 'Angina') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpangi") }}
+                                </div>
+                            </div>
+                            <div id="sbmpangi-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmpangy">Year</label>
+                                    {{ f.yearpicker("sbmpangy", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbmpanwt", "Where treated", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmphf-n', 'Heart failure') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmphf") }}
+                                </div>
+                            </div>
+                            <div id="sbmphf-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmphfy">Year</label>
+                                    {{ f.yearpicker("sbmphfy", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbmphfwt", "Where treated", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmphc-n', 'High cholesterol') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmphc") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Vascular Diseases</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmps-n', 'Stroke') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmps") }}
+                                </div>
+                            </div>
+                            <div id="sbmps-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmpsd">Year</label>
+                                    {{ f.yearpicker("sbmpsd", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmppv-n', 'Peripheral vascular disease') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmppv") }}
+                                </div>
+                            </div>
+                            <div id="sbmppv-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2">
+                                    <label class="control-label" for="sbmppvd">Year</label>
+                                    {{ f.yearpicker("sbmppvd", false, true) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpht-n', 'Hypertension') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpht") }}
+                                </div>
+                            </div>
+                            <div id="sbmpht-container" style="display: none;">
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    <label class="form-check-inline">Treated?</label><br/>
+                                    {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No") }}
+                                    {{ f.inlineRadio("sbmphtt", "sbmphtt-y", "y", "Yes") }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    <label class="control-label" for="sbmphtsw">Year</label>
+                                    {{ f.yearpicker("sbmphtsw", false, true) }}
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                                    {{ f.inputText("sbmphthv", "Highest value", {'class':'form-control input-sm numeric'}) }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Other Diseases</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpd-n', 'Diabetes') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpd") }}
+                                </div>
+                            </div>
+                            <div id="sbmpd-container" style="display: none;">
+                                <div class=" col-sm-4 col-md-2 form-group">
+                                    {{ f.inputText("sbmpdw", "Starting at what age?", {'size':'4', 'maxlength':'4', 'class':'form-control input-sm numeric'}) }}
+                                </div>
+
+                                <div class=" col-sm-4 col-md-2 form-group">
+                                    <label class="control-label">Treated?</label><br/>
+                                    {{ f.inlineRadioNY("sbmpdt") }}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpct-n', 'Connective tissue diseases') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpct") }}
+                                </div>
+                            </div>
+                            <div id="sbmpct-container" style="display: none;">
+                                <div class="form-group col-sm-12 col-md-6 col-lg-7">
+                                    {{ f.inputText("sbmpctsp", "Specify", {'class':'form-control input-sm'}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpulce-n', 'Ulcer') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpulce") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpld-n', 'Liver disease') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpld") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmprd-n', 'Renal disease') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmprd") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                {{ f.floatingLabel('sbmpoth-n', 'Other') }}
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    {{ f.inlineRadioNYQ("sbmpoth") }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
+                                <div class="form-group">
+                                    {{ f.inputText("sbmpod", "Specify") }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="sbcmnt">Comments</label>
+                            <textarea name="sbcmnt" id="sbcmnt" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+            {% endif %}
+
+            {% if site=='sinai' %}
+                <h3>Occupational Exposure</h3>
+
+                <div class="row form-group">
+                    <label class="col-md-4" for="sbaha"> To your knowledge, have you been exposed to asbestos?
+                        <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus" tabindex="0"
+                           role="button" data-container="body"
+                           data-content="It is known that asbestos increases one's risk of development of lung cancer.  Thus, it is important to obtain this information.  A 'yes' response (exposure to asbestos) most likely would refer to one of the occupations listed in the next question.  Please check all occupations that apply and enter the year the person was first exposed.."
+                           aria-hidden="true" title="Help"></i>
+                    </label>
+                    <div class="col-md-3">
+                        {{ f.inlineRadioNY("sbaha") }}
+                    </div>
+                </div>
+
+                <div class="row form-group" id="sbaha-y-container">
+                    <label class="col-md-3"> Have you ever worked in any of the following? </label>
+                    <div class="col-md-4 form-group">
+                        {{ f.checkbox("sbahaoi", "i", "Asbestos product manufacturing") }}
+                        {{ f.checkbox("sbahaoj", "j", "Auto repair") }}
+                        {{ f.checkbox("sbahaoh", "h", "Building maintenance") }}
+                        {{ f.checkbox("sbahaof", "f", "Chemical industry/foundry/refinery") }}
+                        {{ f.checkbox("sbahaoa", "a", "Construction/demolition") }}
+                        {{ f.checkbox("sbahaoe", "e", "Mining") }}
+                        {{ f.checkbox("sbahaog", "g", "Nuclear industry") }}
+                        {{ f.checkbox("sbahaoc", "c", "Ship construction/repair") }}
+                        {{ f.checkbox("sbahaoo", "o", "Other (e.g. clean up, toxic waste, chemical/radiation exposure)") }}
+                        {{ f.inputText("sbahas", "Other work", {'class':'form-control input-sm'}) }}
+                    </div>
+                </div>
+                <hr>
+
+                <h3>Tobacco Use <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                   tabindex="0" role="button" data-container="body"
+                                   data-content="The smoking history and quitting history is critical. This information must be asked very carefully and the subject should be made aware that their cooperation in answering the questions as truthfully as possible is very important."
+                                   aria-hidden="true" title="Help"></i></h3>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbsru"> Have you smoked at least 100 cigarettes in your lifetime?
+                        <small class="text-muted"> (100 cigarettes = 5 packs) </small> <i
+                                class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                tabindex="0"
+                                role="button" data-container="body"
+                                data-content="Is this a smoker or non-smoker: A 'no' response indicates that this person is either a non-smoker or very light smoker and would not meet the 30 pack-year requirement for Medicare reimbursement."
+                                aria-hidden="true" title="Help"></i> </label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbsru") }}
+                    </div>
+                </div>
+                <div class="row form-group" id="sbsru-n-container">
+                    <div class="col-md-5">
+                        <label class="form-group pull-right" for="sbsruyn-n">If no, were you exposed to secondhand
+                            smoke?</label>
+                    </div>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbsruyn") }}
+                    </div>
+                </div>
+                <div class="row" id="sbsru-y-container">
+                    <div class="col-md-8">
+                        <div class="row form-group">
+                            <label class="col-md-7" for="sbsas"> About how old were you when you first started smoking
+                                cigarettes regularly? </label>
+                            <div class="col-md-2">
+                                <input type="text" name="sbsas" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-7" for="sbshsa-n"> Over the past month, have you smoked at all, even
+                                one
+                                cigarette?
+                                <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                   tabindex="0" role="button" data-container="body"
+                                   data-content="This question determines if the participant is a current or former smoker."
+                                   aria-hidden="true" title="Help"></i>
+                            </label>
+                            <div class="col-md-2">
+                                {{ f.inlineRadioNY("sbshsa") }}
+                            </div>
+                        </div>
+                        <div id="sbshsa-n-container">
+                            <div class="row">
+                                <label class="col-md-4 form-group"> When was your last cigarette?
+                                    <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                       tabindex="0" role="button" data-container="body" data-content="For this question, please use the pull-down menus for DD (date) and
+                      Mmm (month) if the subject knows the exact date and month they quit
+                      smoking cigarettes.  If they cannot remember exactly the date and/or
+                      month in which they quit, a '-' (dash) may be inserted for the DD
+                      (date) and/or Mmm (month) only.  The YYYY (year) is a required field
+                      and must be entered." aria-hidden="true" title="Help"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div style="float:left;" class="form-group">
+                                        <select class="form-control" id="sbsdlcd" name="sbsdlcd"
+                                                title="Last cigarette day">
+                                            <option value="-">-</option>
+                                            {% for i in range(1,32) %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="small text-muted">Day</span>
+                                    </div>
+                                    <div style="float:left;" class="form-group">
+                                        <select class="form-control" id="sbsdlcm" name="sbsdlcm"
+                                                title="Last cigarette month">
+                                            <option value="-">-</option>
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                            <option value="4">Apr</option>
+                                            <option value="5">May</option>
+                                            <option value="6">Jun</option>
+                                            <option value="7">Jul</option>
+                                            <option value="8">Aug</option>
+                                            <option value="9">Sep</option>
+                                            <option value="10">Oct</option>
+                                            <option value="11">Nov</option>
+                                            <option value="12">Dec</option>
+                                        </select>
+                                        <span class="small text-muted">Month</span>
+                                    </div>
+                                    <div style="float:left;" class="form-group">
+                                        {{ f.yearpicker("sbsdlcy", false, false, "Year") }}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <small class="text-muted">
+                                                <span id="sbsdysq-text">_</span> number of years since quit
+                                            </small>
+                                            <input class="form-control" id="sbsdysq" name="sbsdysq" type="hidden"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="former-smoker-container">
+                            <h4 style="color:rgb(194, 169, 129);"> Former Cigarette Smoker <i
+                                    class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                    tabindex="0" role="button" data-container="body"
+                                    data-content="Former smokers are defined as anyone who has not smoked cigarettes in the past month.  Omit these questions if the patient has smoked in the past month."
+                                    aria-hidden="true" title="Help"></i></h4>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbfdpw"> When you were a smoker, on approximately how many
+                                    days per week did you smoke cigarettes? </label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbfdpw") }}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbfppd"> On the days that you did smoke, approximately how
+                                    many packs of cigarettes did you smoke per day?
+                                    <small class="text-muted"> (PPD) </small>
+                                </label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbfppd") }}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbfdur"> For approximately how many years did you smoke
+                                    this amount?</label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbfdur") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="current-smoker-container">
+                            <h4 style="color:rgb(129, 144, 194);"> Current Cigarette Smoker <i
+                                    class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                    tabindex="0" role="button" data-container="body"
+                                    data-content="Current smokers are defined as anyone who has smoked cigarettes in the past month.  Omit these questions if the patient has not smoked in the past month."
+                                    aria-hidden="true" title="Help"></i></h4>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbcdpw"> On average, on how many days per week do you (or
+                                    did you) smoke cigarettes? </label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbcdpw") }}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbcppd"> On average, how many packs of cigarettes do you
+                                    (or did you) smoke per day?
+                                    <small class="text-muted"> (PPD) </small>
+                                </label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbcppd") }}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbcdur"> For approximately how many years did you smoke
+                                    this amount? </label>
+                                <div class="col-md-2">
+                                    {{ f.inputText("sbcdur") }}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-6" for="sbcpas-n"> Since the start of the pandemic has the amount
+                                    of
+                                    cigarettes smoked per day changed?</label>
+                                <div class="col-md-2">
+                                    {{ f.inlineRadioNY("sbcpas") }}
+                                </div>
+                                <div id="sbcpas-y-container">
+                                    <div class="col-md-4">
+                                        <div class="row form-group">
+                                            <label class="col-md-3">
+                                                If yes
+                                            </label>
+                                            <div class="col-md-9">
+                                                {{ f.inlineRadio("sbcpasy", "sbcpasy-i", "i", "increase") }}
+                                                {{ f.inlineRadio("sbcpasy", "sbcpasy-d", "d", "decrease") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-5" for="sbqttq"> Have you ever tried to quit smoking?
+                                    <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                       tabindex="0" role="button" data-container="body" data-content="This question refers to the lifetime smoking history of the patient.
+                      If they have tried to quit smoking at all during the time they smoked,
+                      answer 'yes'; if they NEVER tried, answer 'no'.  If they did try to
+                      quit at least one time, please select the total number of times they
+                      can remember trying to quit from the pull-down menu." aria-hidden="true" title="Help"></i>
+                                </label>
+                                <div class="col-md-2">
+                                    {{ f.inlineRadioNY("sbqttq") }}
+                                </div>
+                                <div id="sbqttq-y-container">
+                                    <div class="col-md-5">
+                                        <div class="row form-group">
+                                            <label class="col-md-8" for="sbqttqtb"> If yes, how many times?</label>
+                                            <div class="col-md-4">
+                                                <select name="sbqttqtb" id="sbqttqtb" class="form-control">
+                                                    <option value="-"> -</option>
+                                                    <option value="a"> 1</option>
+                                                    <option value="b"> 2-5</option>
+                                                    <option value="c"> 6-10</option>
+                                                    <option value="d"> 10+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-md-8">In the last 12 months, how many times have you quit
+                                                smoking for at least 24 hours?</label>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="sbqly2" id="sbqly2">
+                                                    <option value="-"> -</option>
+                                                    <option value="e"> 0</option>
+                                                    <option value="a"> 1</option>
+                                                    <option value="b"> 2-5</option>
+                                                    <option value="c"> 6-10</option>
+                                                    <option value="d"> 10+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-5" for="sbqst">Are you seriously thinking of quitting smoking?
+                                    <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                       tabindex="0" role="button" data-container="body" data-content="This question is to determine at what stage of quitting the
+                    participant is.  Please ask if they are seriously thinking of quitting
+                    smoking and if yes, find out exactly when they plan to do so.  Select
+                    the value in the pull-down menu that best matches the participant's
+                    response." aria-hidden="true" title="Help"></i>
+                                </label>
+                                <div class="col-md-4">
+                                    <select name="sbqst" class="form-control">
+                                        <option value="-"> -</option>
+                                        <option value="y"> yes, within the next 30 days</option>
+                                        <option value="m"> yes, within the next 6 months</option>
+                                        <option value="n"> no, not thinking of quitting</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-5" for="sbcpd-n">Smoking cessation information or counselling was
+                                    offered to subject
+                                    <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                       tabindex="0" role="button" data-container="body"
+                                       data-content="This question is to record whether smoking cessation information has been given to the participant. If your institution does not distribute such information to patients, click 'no'."
+                                       aria-hidden="true" title="Help"></i>
+                                </label>
+                                <div class="col-md-3">
+                                    {{ f.inlineRadioNY("sbcpd") }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Have you been referred for smoking cessation services?</label><br/>
-                                {{ f.inlineRadioNY("sbscsref") }}
+                    <div class="col-sm-8 col-md-4">
+                        <div class="panel panel-primary" id="pack-yrs-panel">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6">
+                                        Packs/Day (PPD)
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6">
+                                        Total Pack-Years
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6">
+                                        1 cig / day = 0.05<BR>
+                                        2-3 cig / day = 0.10<BR>
+                                        4 cig / day = 0.20<BR>
+                                        5 cig / day = 0.25<BR>
+                                        10 cig / day = 0.50<BR>
+                                        15 cig / day = 0.75<BR>
+                                        20 cig / day = 1.00<BR>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <div id="sbntpy-container">
+                                                <span id="sbntpy-text">0</span> Pack Years
+                                            </div>
+                                            {{ f.inputText("sbntpy", "", {'hidden':'hidden'}) }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr class="visible-xs-block visible-sm-block"/>
-
-            <label>Do you know if you have had any of the following?</label>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Cancers</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbfc-n', 'Family history of lung cancer') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbfc") }}
-                            </div>
-                        </div>
-                        <div id="sbfc-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label">Father?</label><br/>
-                                {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No") }}
-                                {{ f.inlineRadio("sbfcf","sbfcf-y","y", "Yes") }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label">Mother?</label><br/>
-                                {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No") }}
-                                {{ f.inlineRadio("sbfcm","sbfcm-y","y", "Yes") }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label">Siblings?</label><br/>
-                                {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No") }}
-                                {{ f.inlineRadio("sbfcs","sbfcs-y","y", "Yes") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbhlc-n', 'Lung cancer') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbhlc") }}
-                            </div>
-                        </div>
-                        <div id="sbhlc-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbhlcdt">Year</label>
-                                {{ f.yearpicker("sbhlcdt", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbhme-n', 'Melanoma') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbhme") }}
-                            </div>
-                        </div>
-                        <div id="sbhme-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbhmedt">Year</label>
-                                {{ f.yearpicker("sbhmedt", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbhba-n', 'Basal/squamous-cell skin cancer') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbhba") }}
-                            </div>
-                        </div>
-                        <div id="sbhba-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbhbadt">Year</label>
-                                {{ f.yearpicker("sbhbadt", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbhle-n', 'Leukemia') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbhle") }}
-                            </div>
-                        </div>
-                        <div id="sbhle-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbhledt">Year</label>
-                                {{ f.yearpicker("sbhledt", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbhly-n', 'Lymphoma') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbhly") }}
-                            </div>
-                        </div>
-                        <div id="sbhly-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbhlydt">Year</label>
-                                {{ f.yearpicker("sbhlydt", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbaoc', 'Any other cancer') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbaoc") }}
-                            </div>
-                        </div>
-                        <div id="sbaoc-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbaocsp">Specify</label>
-                                <input type="text" name="sbaocsp" id="sbaocsp" class="form-control input-sm"/>
-                            </div>
-
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbaocyr">Year</label>
-                                {{ f.yearpicker("sbaocyr", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbaocps">Primary site</label>
-                                <input class="form-control input-sm" type="text" name="sbaocps"
-                                       id="sbaocps"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Pulmonary Problems</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpa-n', 'Asthma') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpa") }}
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpa-container" style="display: none;">
-                            <div class="form-group">
-                                <label>Under current treatment?</label><br/>
-                                {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No") }}
-                                {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpc-n', 'COPD/Emphysema/Chronic bronchitis') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpc") }}
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
-                            <div class="form-group">
-                                <label class="control-label" for="sbmpcw">Year</label>
-                                {{ f.yearpicker("sbmpcw", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpn-n', 'Childhood pneumonia') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpn") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Cardiac Diseases</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpmi-n', 'Myocardial Infarction (MI)') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpmi") }}
-                            </div>
-                        </div>
-                        <div id="sbmpmi-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpmid">Year</label>
-                                {{ f.yearpicker("sbmpmid", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpmiw">Where treated</label>
-                                <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpas-n', 'Angiostents') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpas") }}
-                            </div>
-                        </div>
-                        <div id="sbmpas-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpasw">Year</label>
-                                {{ f.yearpicker("sbmpasw", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbmpast">Where treated</label>
-                                <input class="form-control input-sm" type="text" name="sbmpast" id="sbmpast"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpcabg-n', '<abbr title="coronary artery bypass grafting">CABG<abbr>') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpcabg") }}
-                            </div>
-                        </div>
-                        <div id="sbmpcabg-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpcaby">Year</label>
-                                {{ f.yearpicker("sbmpcaby", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbmpcawt">Where treated</label>
-                                <input class="form-control input-sm" type="text" name="sbmpcawt" id="sbmpcawt"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpangi-n', 'Angina') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpangi") }}
-                            </div>
-                        </div>
-                        <div id="sbmpangi-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpangy">Year</label>
-                                {{ f.yearpicker("sbmpangy", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbmpanwt">Where treated</label>
-                                <input class="form-control input-sm" type="text" name="sbmpanwt" id="sbmpanwt"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmphf-n', 'Heart failure') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmphf") }}
-                            </div>
-                        </div>
-                        <div id="sbmphf-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmphfy">Year</label>
-                                {{ f.yearpicker("sbmphfy", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbmphfwt">Where treated</label>
-                                <input class="form-control input-sm" type="text" name="sbmphfwt" id="sbmphfwt">
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmphc-n', 'High cholesterol') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmphc") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Vascular Diseases</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmps-n', 'Stroke') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmps") }}
-                            </div>
-                        </div>
-                        <div id="sbmps-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmpsd">Year</label>
-                                {{ f.yearpicker("sbmpsd", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmppv-n', 'Peripheral vascular disease') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmppv") }}
-                            </div>
-                        </div>
-                        <div id="sbmppv-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2">
-                                <label class="control-label" for="sbmppvd">Year</label>
-                                {{ f.yearpicker("sbmppvd", false, true) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpht-n', 'Hypertension') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpht") }}
-                            </div>
-                        </div>
-                        <div id="sbmpht-container" style="display: none;">
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="form-check-inline">Treated?</label><br/>
-                                {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No") }}
-                                {{ f.inlineRadio("sbmphtt", "sbmphtt-y", "y", "Yes") }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label" for="sbmphtsw">Year</label>
-                                {{ f.yearpicker("sbmphtsw", false, true) }}
-                            </div>
-                            <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                                <label class="control-label numeric" for="sbmphthv">Highest value</label>
-                                <input class="form-control input-sm" type="text" name="sbmphthv"
-                                       id="sbmphthv"/>
-                            </div>
-
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Other Diseases</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpd-n', 'Diabetes') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpd") }}
-                            </div>
-                        </div>
-                        <div id="sbmpd-container" style="display: none;">
-                            <div class=" col-sm-4 col-md-2 form-group">
-                                <label class="control-label" for="sbmpdw">Starting at what age?</label>
-                                <input class="form-control input-sm numeric" type="text" name="sbmpdw" id="sbmpdw"
-                                       size="4" maxlength="4">
-                            </div>
-
-                            <div class=" col-sm-4 col-md-2 form-group">
-                                <label class="control-label">Treated?</label><br/>
-                                {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No") }}
-                                {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpct-n', 'Connective tissue diseases') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpct") }}
-                            </div>
-                        </div>
-                        <div id="sbmpct-container" style="display: none;">
-                            <div class="form-group col-sm-12 col-md-6 col-lg-7">
-                                <label class="control-label" for="sbmpctsp">Specify</label>
-                                <input type="text" name="sbmpctsp" id="sbmpctsp" class="form-control input-sm"/>
-                            </div>
-                        </div>
-
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpulce-n', 'Ulcer') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpulce") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpld-n', 'Liver disease') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpld") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmprd-n', 'Renal disease') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmprd") }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpoth-n', 'Other') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpoth") }}
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
-                            <div class="form-group">
-                                <label class="control-label" for="sbmpod">Specify</label><br/>
-                                <input class="form-control" type="text" name="sbmpod" id="sbmpod">
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="sbcmnt">Comments</label>
-                        <textarea name="sbcmnt" id="sbcmnt" class="form-control"></textarea>
+                <hr/>
+                <h3>Secondhand Tobacco Smoke Exposure / Occupation</h3>
+                <div class="row form-group">
+                    <label class="col-md-7" for="sbsews">After age 18, did you work for more than one year in a worksite
+                        where smoking was allowed?</label>
+                    <div class="col-md-3">
+                        {{ f.inlineRadioNY("sbsews") }}
                     </div>
                 </div>
-            </div>
+                <div class="row form-group">
+                    <label class="col-md-7" for="sbsehs">Did you ever work for more than one year in a job where you
+                        were exposed to other people's tobacco smoke?</label>
+                    <div class="col-md-3">
+                        {{ f.inlineRadioNY("sbsehs") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default" id="sbsews-y-panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-3 sh-label">
+                                        <label>Age Range <small class="text-muted"> (from Most Recent) </small></label>
+                                    </div>
+                                    <div class="col-md-3 sh-label">
+                                        <label> Job </label>
+                                    </div>
+                                    <div class="col-md-3 sh-label">
+                                        <label>Smoking</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsa1") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsj1") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            {{ f.inlineRadio("sbsehsr1", "sbsehsr1-n", "n", "not permitted") }}
+                                            {{ f.inlineRadio("sbsehsr1", "sbsehsr1-r", "r", "restricted") }}
+                                            {{ f.inlineRadio("sbsehsr1", "sbsehsr1-y", "y", "allowed anywhere") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsa2") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsj2") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            {{ f.inlineRadio("sbsehsr2", "sbsehsr2-n", "n", "not permitted") }}
+                                            {{ f.inlineRadio("sbsehsr2", "sbsehsr2-r", "r", "restricted") }}
+                                            {{ f.inlineRadio("sbsehsr2", "sbsehsr2-y", "y", "allowed anywhere") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsa3") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsj3") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr3-n", "n", "not permitted") }}
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr3-r", "r", "restricted") }}
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr3-y", "y", "allowed anywhere") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsa4") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {{ f.inputText("sbsehsj4") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr4-n", "n", "not permitted") }}
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr4-r", "r", "restricted") }}
+                                            {{ f.inlineRadio("sbsehsr3", "sbsehsr4-y", "y", "allowed anywhere") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-7" for="sbahfa-n">Did you ever work as a flight attendant?</label>
+                    <div class="col-md-3">
+                        {{ f.inlineRadioNY("sbahfa") }}
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-md-7" for="sbahfay">If yes, During what years? </label>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbahfay") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-7" for="sbahfaal"> What airline(s)? </label>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbahfaal") }}
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-md-7"> What ages did you fly different aircraft?</label>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        {{ f.inputText("sbahfaa", "Age") }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbahfaat", "Aircraft Type") }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ f.inputText("sbahfafh", "How many flight hours per month?") }}
+                    </div>
+                </div>
+
+                <hr/>
+                <h3>Secondhand Tobacco Smoke Exposure / Household</h3>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbhsy">Did anyone in your house smoke in the home when you were under
+                        18?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbhsy") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-3" for="sbhsyh">Was smoking allowed inside the house?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadio("sbhsyh", "sbhsyh-n", "n", "not permitted") }}
+                        {{ f.inlineRadio("sbhsyh", "sbhsyh-r", "r", "restricted") }}
+                        {{ f.inlineRadio("sbhsyh", "sbhsyh-y", "y", "allowed anywhere") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbmsy">Did your mother/primary care giver smoke when you were under age
+                        7?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbmsy") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbmst">Did your mother/primary care giver smoke when you were ages
+                        7-18?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbmst") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbosy">Did anyone else beside your mother/primary care giver smoke in
+                        the home when you were under 18?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbosy") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbslws">Do you currently live with a smoker?
+                        <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus" tabindex="0"
+                           role="button" data-container="body"
+                           data-content="These questions aim to discover the level of second hand smoke to which the participant has been exposed."
+                           aria-hidden="true" title="Help"></i>
+                    </label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbslws") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-5" for="sbhso">After age 18, did you live with someone for more than one year
+                        who smoked in your presence?</label>
+                    <div class="col-md-4">
+                        {{ f.inlineRadioNY("sbhso") }}
+                    </div>
+                </div>
+                <div class="row form-group" id="sbhso-y-container">
+                    <label class="col-md-12">At what ages did you live with someone who smoked around you and how much
+                        did they smoke?</label>
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-3 sh-label">
+                                        <label>Age Range <small class="text-muted"> (from Most Recent) </small></label>
+                                    </div>
+                                    <div class="col-md-3 sh-label">
+                                        <label> Amount </label>
+                                    </div>
+                                    <div class="col-md-3 sh-label">
+                                        <label>Smoking</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ f.inputText("sbhsa1") }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="sbhsas1" class="form-control">
+                                            <option value="-"> -</option>
+                                            <option value="a"> 1-14 Cigarettes per day</option>
+                                            <option value="b"> 15-24 Cigarettes per day</option>
+                                            <option value="c"> 25+ Cigarettes per day</option>
+                                            <option value="d"> Don't Know</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ f.inlineRadio("sbhsasr1", "sbhsasr1-n", "n", "not permitted") }}
+                                        {{ f.inlineRadio("sbhsasr1", "sbhsasr1-r", "r", "restricted") }}
+                                        {{ f.inlineRadio("sbhsasr1", "sbhsasr1-y", "y", "allowed anywhere") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ f.inputText("sbhsa2") }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="sbhsas2" class="form-control">
+                                            <option value="-"> -</option>
+                                            <option value="a"> 1-14 Cigarettes per day</option>
+                                            <option value="b"> 15-24 Cigarettes per day</option>
+                                            <option value="c"> 25+ Cigarettes per day</option>
+                                            <option value="d"> Don't Know</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ f.inlineRadio("sbhsasr2", "sbhsasr2-n", "n", "not permitted") }}
+                                        {{ f.inlineRadio("sbhsasr2", "sbhsasr2-r", "r", "restricted") }}
+                                        {{ f.inlineRadio("sbhsasr2", "sbhsasr2-y", "y", "allowed anywhere") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ f.inputText("sbhsa3") }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="sbhsas3" class="form-control">
+                                            <option value="-"> -</option>
+                                            <option value="a"> 1-14 Cigarettes per day</option>
+                                            <option value="b"> 15-24 Cigarettes per day</option>
+                                            <option value="c"> 25+ Cigarettes per day</option>
+                                            <option value="d"> Don't Know</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ f.inlineRadio("sbhsasr3", "sbhsasr3-n", "n", "not permitted") }}
+                                        {{ f.inlineRadio("sbhsasr3", "sbhsasr3-r", "r", "restricted") }}
+                                        {{ f.inlineRadio("sbhsasr3", "sbhsasr3-y", "y", "allowed anywhere") }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ f.inputText("sbhsa4") }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="sbhsas4" class="form-control">
+                                            <option value="-"> -</option>
+                                            <option value="a"> 1-14 Cigarettes per day</option>
+                                            <option value="b"> 15-24 Cigarettes per day</option>
+                                            <option value="c"> 25+ Cigarettes per day</option>
+                                            <option value="d"> Don't Know</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ f.inlineRadio("sbhsasr4", "sbhsasr4-n", "n", "not permitted") }}
+                                        {{ f.inlineRadio("sbhsasr4", "sbhsasr4-r", "r", "restricted") }}
+                                        {{ f.inlineRadio("sbhsasr4", "sbhsasr4-y", "y", "allowed anywhere") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3> Your Health in General <i class="fa-regular fa-circle-question" data-toggle="popover"
+                                               data-trigger="focus" tabindex="0" role="button" data-container="body"
+                                               data-content="This is an abbreviated version of the SF-36(tm) Health Survey.  The
+            ELCAP has received permission to use it as part of our data
+            collection.  It is a short, 1-page, 2-minute survey form that has been
+            shown to yield summary physical and mental health outcome scores that
+            are inter-changeable with those from the SF-36(r) in both general and
+            specific populations.  This short-form, the SF-12(r), which was
+            published in early 1995, is already one of the most widely used
+            surveys of its kind.
+
+            The coordinator may choose to ask these questions face-to-face, or
+            give the participant a copy to complete after they have signed consent
+            and answered all questions preceding this section.
+
+            If you allow the participant to complete the form on their own, please
+            make sure they have filled in a bubble for each item.
+
+            If the participant refuses to answer the survey, click the checkbox
+            labeled 'RTA' following the instructions to indicate their refusal." aria-hidden="true" title="Help"></i>
+                </h3>
+
+                {% with prefix="sb" %}
+                    {% include '_sfhealthsurvey.jinja2' %}
+                {% endwith %}
+                <hr class="visible-xs-block visible-sm-block"/>
+            {% endif %}
 
             <div class="pull-left">
                 <input type="hidden" id="samistatus" name="samistatus" value=""/>
@@ -753,9 +2146,7 @@
 
 {% block script %}
     <script>
-
         function createFormValidator() {
-
             const $form = $('#main-form');
             const multiInputValidators = ['sbfcf', 'sbfcm', 'sbfcs'];
             const thisYear = VAPALS.todaysYear();
@@ -805,7 +2196,7 @@
                                 if (multiInputValidators.indexOf(e.field) > -1) {
                                     $fg = $("#" + e.element.id).closest(".form-group");
                                     $c = $fg.find(".fv-plugins-message-container");
-                                    if ($c.length == 1) {
+                                    if ($c.length === 1) {
                                         $c.append(e.iconElement);
                                     } else {
                                         $fg.append(e.iconElement);
@@ -825,7 +2216,6 @@
         }
 
         $(function () {
-
             const fv = createFormValidator();
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
@@ -852,19 +2242,18 @@
                 "sblcs",                                                        // lung cancer indicative
                 "sbahpft",                                                      // pulmonary function test
                 "sbscs", "sbscs5a", "sbscsref",                                 // smoking cessation
-                "sbfc", "sbhlc", "sbhme", "sbhba", "sbhle", "sbhly", "sbaoc",   //cancers
-                "sbmpa", "sbmpc",                                               //pulmonary
-                "sbmpd",                                                        //diabetes
-                "sbmpmi", "sbmpas", "sbmpcabg", "sbmpangi", "sbmphf",           //cardiac
-                "sbmps", "sbmppv", "sbmpht",                                    //vascular
-                "sbmpct", "sbmpoth",                                            //Other disease
+                "sbfc", "sbhlc", "sbhme", "sbhba", "sbhle", "sbhly", "sbaoc",   // cancers
+                "sbmpa", "sbmpc",                                               // pulmonary
+                "sbmpd",                                                        // diabetes
+                "sbmpmi", "sbmpas", "sbmpcabg", "sbmpangi", "sbmphf",           // cardiac
+                "sbmps", "sbmppv", "sbmpht",                                    // vascular
+                "sbmpct", "sbmpoth",                                            // Other disease
             );
 
             $.each(uncheckableRadioFieldNames, function (idx, name) {
                 $("[name=" + name + "]").conditionallyDisplay({enable: "#" + name + "-container"});
                 uncheckableRadio("[name='" + name + "']", "div.form-group");
             });
-
 
             $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"}); //41
             $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"}); //64
@@ -875,8 +2264,260 @@
             });
 
             $("#sbscsmo").conditionallyDisplay({sourceValues: "o", enable: "#sbscsmoo"}); //163
-
         });
-
     </script>
+    {% if site=='sinai' %}
+        <script>
+            //NB: all code contained within is written and maintained by Mount Sinai
+
+            function calcAge() {
+                if ($("#sbdob").val() && $("#sbdop").val()) {
+                    const visit_date = moment($('#sbdop').val());
+                    const birth_date = moment($('#sbdob').val());
+                    let age = visit_date.year() - birth_date.year(); //FIXME: MS This needs to look at complete date
+
+                    // similar to old background form, if age > 90, just change it to 90
+                    if (age > 90) {
+                        age = 90;
+                    }
+
+                    $("#sbage").val(age);
+                } else {
+                    $("#sbage").val('');
+                }
+            }
+
+            function calcQuitYears() {
+                var quitYear = $('[name=sbsdlcy]').val();
+                var quitMonth = $('[name=sbsdlcm]').val();
+                var quitDay = $('[name=sbsdlcd]').val();
+                let visitDate = $('#sbdop').val();
+                let visitDateObj = new Date(visitDate);
+
+                if (!(visitDate && visitDateObj instanceof Date)) {
+                    $('[name=sbsdysq]').val("");
+                    return;
+                }
+
+                let visitYear = visitDateObj.getFullYear();
+                let visitMonth = visitDateObj.getMonth();
+                let visitDay = visitDateObj.getDate();
+                let diffYears = visitYear - quitYear;
+
+                if (quitYear.length > 0) {
+                    if (quitMonth.length > 0) {
+                        if (visitMonth < quitMonth - 1) {
+                            diffYears--;
+                        }
+
+                        if (quitDay.length > 0) {
+                            if (quitMonth - 1 == visitMonth && visitDay < quitDay) {
+                                diffYears--;
+                            }
+                        }
+                    }
+
+                    $('[name=sbsdysq]').val(diffYears);
+                    $('#sbsdysq-text').text(diffYears);
+                } else {
+                    $('[name=sbsdysq]').val("");
+                    $('#sbsdysq-text').text("_");
+                }
+            }
+
+            // calculate BMI
+            function calcBMI() {
+                //make sure all fields are filled
+                let height_txt = $("#sbph").val();
+                let weight_txt = $("#sbpw").val();
+                let height_unit = $("[name=sbphu]:checked").val();
+                let weight_unit = $("[name=sbpwu]:checked").val();
+                let height, weight, bmi;
+
+                if (height_txt && weight_txt && height_unit && weight_unit) {
+                    if (height_unit == 'i') height = 0.0254 * height_txt;
+                    else if (height_unit == 'c') height = 0.01 * height_txt;
+
+                    if (weight_unit == 'p') weight = 0.4536 * weight_txt;
+                    else if (weight_unit == 'k') weight = weight_txt;
+
+                    bmi = weight / (height * height);
+                    bmi = (Math.round(10.0 * bmi) / 10.0);
+
+                    $("#sbbmi").val(bmi);
+                } else {
+                    $("#sbbmi").val("");
+                }
+            }
+
+            // calculate pack years (FIXME: MS to compare to VAPALS.calculatePackYears)
+            function calcNPY() {
+                var py = 0.0;
+
+                var tppd = 0.0;
+                var tdur = 0.0;
+
+                if ($(this).attr('name') === 'sbfppd' || $(this).attr('name') === 'sbfdur') {
+                    tppd = $("#sbfppd").val();
+                    tdur = $("#sbfdur").val();
+                } else {
+                    tppd = $("#sbcppd").val();
+                    tdur = $("#sbcdur").val();
+                }
+
+                if (!(tppd && tdur)) {
+                    $("#sbntpy").val("0");
+                    $("#sbntpy-text").text("0");
+                    return;
+                }
+
+                py = (tppd * tdur);
+                py = (Math.round(100.0 * py) / 100.0);
+
+                $("#sbntpy").val(py.toString());
+                $("#sbntpy-text").text(py.toString());
+
+                // validator will check to see if greater than max total pack years
+            }
+
+            $(function () {
+                // initialize popovers (NB: REMOVED, automatically attached by popover plugin)
+
+                // validator (FIXME: disabled, does not exist in this project yet)
+                //const validator = $.validatorMS().validator;
+
+                $("[name=sbmly]").conditionallyDisplay({enable: "#sbmlyo-container"});
+
+                $("[name=sbmeq]").conditionallyDisplay({enable: "#order-container"});
+                $("[name=sbopss]").conditionallyEnable({sourceValues: "f", enable: "#sbopqy-container"})
+                $("[name=sbdsd]").conditionallyDisplay({enable: "#sbdsdp-container"});
+                $("[name=sbrc]").conditionallyDisplay({sourceValues: "o", enable: "#sbrcs-container"});
+                $("[name=sbfc]").conditionallyDisplay({enable: "#sbfc-y-container"});
+                $("[name=sbhco]").conditionallyDisplay({enable: "#sbhco-y-container"});
+                $("[name=sbmpa]").conditionallyDisplay({enable: "#sbmpa-y-container"});
+                $("[name=sbmpc]").conditionallyDisplay({enable: "#sbmpc-y-container"});
+                $("[name=sbmpht]").conditionallyDisplay({enable: "#sbmpht-y-container"});
+                $("[name=sbmphc]").conditionallyDisplay({enable: "#sbmphc-y-container"});
+                $("[name=sbmpas]").conditionallyDisplay({enable: "#sbmpas-y-container"});
+                $("[name=sbmpmi]").conditionallyDisplay({enable: "#sbmpmi-y-container"});
+                $("[name=sbmps]").conditionallyDisplay({enable: "#sbmps-y-container"});
+                $("[name=sbmpd]").conditionallyDisplay({enable: "#sbmpd-y-container"});
+                $("[name=sbmpld]").conditionallyDisplay({enable: "#sbmpld-y-container"});
+                $("[name=sbmprd]").conditionallyDisplay({enable: "#sbmprd-y-container"});
+                $("[name=sblcs]").conditionallyDisplay({enable: "#sblcs-y-container"});
+                $("[name=sbact]").conditionallyDisplay({sourceValues: "a,b,c,d,f", enable: "#sbahcl-container"});
+                $("[name=sbahpft]").conditionallyDisplay({enable: "#sbahpft-y-container"});
+                $("[name=sbaha]").conditionallyDisplay({enable: "#sbaha-y-container"});
+
+                // COVID Vaccination (NB: REMOVED; built into _covid include
+
+                // smoking
+                $("[name=sbsru]").conditionallyDisplay({sourceValues: "n", enable: "#sbsru-n-container"});
+                $("[name=sbsru]").conditionallyDisplay({enable: "#sbsru-y-container"});
+                $("[name=sbshsa]").conditionallyDisplay({
+                    sourceValues: "n",
+                    enable: "#sbshsa-n-container,#former-smoker-container"
+                });
+                $("[name=sbshsa]").conditionallyDisplay({enable: "#current-smoker-container"});
+                $("[name=sbshsa]").conditionallyDisplay({sourceValues: "y,n", enable: "#pack-yrs-panel"});
+                $("[name=sbqttq]").conditionallyDisplay({enable: "#sbqttq-y-container"});
+                $("[name=sbsews]").conditionallyDisplay({enable: "#sbsews-y-panel"});
+                $("[name=sbhso]").conditionallyDisplay({enable: "#sbhso-y-container"});
+                $("[name=sbcpas]").conditionallyDisplay({enable: "#sbcpas-y-container"});
+
+                // NPI search (TODO: not expected to function until URL is available)
+                function openPopUpWindow() {
+                    var inst = document.getElementsByName('fginst')[0].value;
+                    var token_id = document.getElementsByName('fguid')[0].value;
+                    var w = window.open('https://' + window.location.hostname + '/physicians/search?source=sbform' + '&fginst=' + inst + '&fguid=' + token_id, 'search_popup', 'width=400,height=400,scrollbars=1');
+                    // pass the targetField to the pop up window
+                    //        w.nameField = nameField;
+                    //        w.npiField = npiField;
+                    w.focus();
+                }
+
+                $("#npi-search").on("click", openPopUpWindow);
+
+                // this function is called by the pop up window
+                // NB: FIXME: MS use a callback or move this into the popup window code; better yet DO NOT use popups
+                setSearchResult = function (firstName, lastName, npiValue) {
+                    $('[name=sbopfn]').val(firstName);
+                    $('[name=sbopln]').val(lastName);
+                    $('[name=sbopnpi]').val(npiValue);
+                    window.focus();
+                }
+
+                //NB: original MS code did not work with datepicker, reworked
+                $("#sbdob,#sbdop").each(function () {
+                    $(this).closest(".datepicker") // latch onto datetimepicker change events
+                        .on("dp.change", function () {
+                            calcAge();
+                            calcQuitYears()
+                        }).trigger("dp.change");
+                })
+
+
+                $("[name=sbsdlcy], [name=sbsdlcm], [name=sbsdlcd]").on("change", calcQuitYears);
+
+                // load stored years since quit value into the formatted text display
+                if ($('[name=sbsdysq]').val()) {
+                    $('#sbsdysq-text').text($('[name=sbsdysq]').val());
+                }
+
+                // calculate sbffr (NB: REMOVED, built into all forms)
+
+                // order criteria must be met before submission
+                function chkOrderCriteria() {
+                    let ordFlag = false;
+
+                    if ($("[name=sbmeq]:checked").val() == 'y' && ($("[name=sbopqy]").val() > 15 || $("[name=sboppy]").val() < 20 || $("[name=sboas]:checked").val() == 'n')) {
+                        ordFlag = true;
+                    }
+
+                    // if user does not have valid ordering criteria (ordFlag = true) & a reason was never stored
+                    if (ordFlag && !$('[name=sboruc]').val()) {
+                        let reason = prompt("Patient is undergoing a G0297 scan, but criteria are not met. Please enter a reason below (also add to clinical information) and continue, or hit cancel to return");
+                        $('[name=sboruc]').val(reason);
+                        //user clicked cancel or clicked ok but entered nothing
+                        if (reason === null || reason == "") {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+
+                $("#sbph,#sbpw,[name=sbphu],[name=sbpwu]").on('change', calcBMI).trigger('change');
+
+
+                // determine which health survey to display (NB: REMOVED: built into _sfhealthsurvey
+
+
+                $("#sbfppd,#sbfdur,#sbcppd,#sbcdur").on('change', calcNPY);
+                // trigger change for field depending on 'over the past month have you had a cigarette'
+                if ($('[name=sbshsa]:checked').val() === 'n') {
+                    $('#sbfppd').trigger('change');
+                } else {
+                    $('#sbcppd').trigger('change');
+                }
+
+                // functions needed for submission
+                errorCheck = function () {
+                    if (validator.form() && chkOrderCriteria()) {
+                        $("[name=fppend]").val("0");
+                        $("#dataform").submit();
+                    } else {
+                        VAPALS.autoScrollToErrorField();
+                    }
+                }
+
+                // FIXME: MS this is unused
+                subPend = function () {
+                    $("[name=fppend]").val("1");
+                    validator.destroy();
+                    $("#dataform").submit();
+                }
+            });
+        </script>
+    {% endif %}
 {% endblock %}

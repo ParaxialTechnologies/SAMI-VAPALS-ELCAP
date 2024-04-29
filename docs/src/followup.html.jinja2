@@ -89,11 +89,11 @@
                                             {{ f.floatingLabel("siopfn", "Ordered by") }}
                                         </div>
                                         <div class="col-md-4 form-group">
-                                            <input value="" class="form-control" id="siopfn" name="siopfn" type="text"/>
+                                            <input class="form-control" id="siopfn" name="siopfn" type="text"/>
                                             <span class="help-block small">First Name</span>
                                         </div>
                                         <div class="col-md-4 form-group">
-                                            <input value="" class="form-control" id="siopln" name="siopln"
+                                            <input class="form-control" id="siopln" name="siopln"
                                                    title="Last name" type="text"/>
                                             <span class="help-block small">Last Name</span>
                                         </div>
@@ -103,7 +103,7 @@
                                             {{ f.floatingLabel("siopnpi", "National provider ID (NPI)", "required") }}
                                         </div>
                                         <div class="col-sm-2 form-group">
-                                            <input value="" class="form-control" id="siopnpi" name="siopnpi"
+                                            <input class="form-control" id="siopnpi" name="siopnpi"
                                                    type="text"/>
                                         </div>
                                         <div class="col-sm-2 form-group">
@@ -146,7 +146,7 @@
                                             {{ f.floatingLabel("sioppy", "Reported pack years at time of order", "required") }}
                                         </div>
                                         <div class="col-md-2 form-group">
-                                            <input value="" class="form-control" id="sioppy" name="sioppy" type="text"/>
+                                            <input class="form-control" id="sioppy" name="sioppy" type="text"/>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -155,7 +155,7 @@
                                                 {{ f.floatingLabel("siopqy", "Reported years since quit at time of order", "required") }}
                                             </div>
                                             <div class="col-md-2 form-group">
-                                                <input value="" class="form-control" id="siopqy" name="siopqy"
+                                                <input class="form-control" id="siopqy" name="siopqy"
                                                        type="text"/>
                                                 <p class="help-block small">(only required for former smokers)</p>
                                             </div>
@@ -215,11 +215,11 @@
                             {{ f.floatingLabel("sirffn", "Referring Physician Name") }}
                         </div>
                         <div class="col-md-2 form-group">
-                            <input value="" class="form-control" id="sirffn" name="sirffn" type="text"/>
+                            <input class="form-control" id="sirffn" name="sirffn" type="text"/>
                             <span class="help-block small">First Name</span>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input value="" class="form-control" id="sirfln" name="sirfln" title="Last name"
+                            <input class="form-control" id="sirfln" name="sirfln" title="Last name"
                                    type="text"/>
                             <span class="help-block small">Last Name</span>
                         </div>
@@ -266,10 +266,9 @@
                 </div>
                 <hr/>
 
-
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siwc-b', 'During the past year, have you experienced any of these symptoms?') }}
+                        {{ f.floatingLabel('siwc-n', 'During the past year, have you experienced any of these symptoms?') }}
                     </div>
                     <div class="col-md-8 form-group">
                         {{ f.inlineRadioNY("siwc") }}
@@ -339,131 +338,7 @@
                 {% endif %}
 
                 {% if site=='sinai' %}
-                    <hr/>
-                    <h4>COVID Status</h4>
-
-                    <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="sbcsts">COVID-19 Testing Status</label>
-                            <select class="form-control" name="sbcsts">
-                                <option value="-">-</option>
-                                <option value="pos">tested: positive</option>
-                                <option value="neg">tested: negative</option>
-                                <option value="inc">tested: inconclusive</option>
-                                <option value="nt">not tested</option>
-                                <option value="unk">unknown</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label for="sbcsdot">Date of Test</label>
-                            {{ f.datepicker("sbcsdot", "past") }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label for="sbcsl">Where?</label>
-                            <input type=text class="form-control" name="sbcsl" value="">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="sbcsse"> COVID-19 Serology</label>
-                            <select class="form-control" name="sbcsse">
-                                <option value="-">-</option>
-                                <option value="pos">tested: positive</option>
-                                <option value="neg">tested: negative</option>
-                                <option value="inc">tested: inconclusive</option>
-                                <option value="nt">not tested</option>
-                                <option value="unk">unknown</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label for="sbcsdos">Date of Test</label>
-                            {{ f.datepicker("sbcdos", "past") }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label for="sbcssl">Where?</label>
-                            <input type=text class="form-control" name="sbcssl" value="">
-                        </div>
-                    </div>
-
-                    <hr>
-                    <h4 class="form-group">COVID-19 Vaccination Record</h4>
-
-                    <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="sbcvv">Have you received the COVID-19 vaccine?</label>
-                        </div>
-                        <div class="col-md-9 form-group">
-                            {{ f.inlineRadioNY("sbcvv") }}
-                        </div>
-                    </div>
-
-                    <div id="sbcvv-container">
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvdd1">Date of 1st dose</label>
-                                {{ f.datepicker("sbcvdd1", "past") }}
-                            </div>
-
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvm">Manufacturer</label>
-                                <select class="form-control" name="sbcvm">
-                                    <option value="-">-</option>
-                                    <option value="p">Pfizer/BioNTech</option>
-                                    <option value="m">Moderna</option>
-                                    <option value="a">AstraZeneca</option>
-                                    <option value="j">Johnson & Johnson</option>
-                                    <option value="o">Other (specify)</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvmo">Specify</label>
-                                <input type="text" class="form-control" id="sbcvmo" name="sbcvmo">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvdd2">Date of 2nd dose</label>
-                                {{ f.datepicker("sbcvdd2", "past") }}
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvm2">Manufacturer</label>
-                                <select class="form-control" name="sbcvm2">
-                                    <option value="-">-</option>
-                                    <option value="p">Pfizer/BioNTech</option>
-                                    <option value="m">Moderna</option>
-                                    <option value="a">AstraZeneca</option>
-                                    <option value="j">Johnson & Johnson</option>
-                                    <option value="o">Other (specify)</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvmos2">Specify</label>
-                                <input type="text" class="form-control" id="sbcvmos2" name="sbcvmos2">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvdd3">Date of 3rd dose</label>
-                                {{ f.datepicker("sbcvdd3", "past") }}
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvm3">Manufacturer</label>
-                                <select class="form-control" name="sbcvm3">
-                                    <option value="-">-</option>
-                                    <option value="p">Pfizer/BioNTech</option>
-                                    <option value="m">Moderna</option>
-                                    <option value="a">AstraZeneca</option>
-                                    <option value="j">Johnson & Johnson</option>
-                                    <option value="o">Other (specify)</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="sbcvmos3">Specify</label>
-                                <input type="text" class="form-control" id="sbcvmos3" name="sbcvmos3">
-                            </div>
-                        </div>
-                    </div>
+                    {% include '_covid.jinja2' %}
                 {% endif %}
 
                 <hr/>
@@ -607,7 +482,7 @@
                             {{ f.floatingLabel("sidpw", "On average, on how many days per week are you currently smoking cigarettes?") }}
                         </div>
                         <div class="col-md-1 form-group">
-                            <input value="" class="form-control" id="sidpw" name="sidpw" type="text"/>
+                            <input class="form-control" id="sidpw" name="sidpw" type="text"/>
                         </div>
                     </div>
                     <div class="row">
@@ -615,7 +490,7 @@
                             {{ f.floatingLabel("sippd", "On average, on the days that you are smoking cigarettes, how many packs of cigarettes are you currently smoking per day (PPD)?", "required") }}
                         </div>
                         <div class="col-md-1 form-group">
-                            <input value="" class="form-control" id="sippd" name="sippd" type="text"/>
+                            <input class="form-control" id="sippd" name="sippd" type="text"/>
                         </div>
                     </div>
                     <div class="row">
@@ -654,7 +529,7 @@
                                 <span class="small text-muted">Month</span>
                             </div>
                             <div class="form-group" style="float:left;">
-                                <input value="" class="form-control input-sm" id="sidlcy" maxlength="4" name="sidlcy"
+                                <input class="form-control input-sm" id="sidlcy" maxlength="4" name="sidlcy"
                                        placeholder="YYYY" size="5" title="" type="text"/>
                                 <small class="help-block">
                                     Year
@@ -722,9 +597,9 @@
                 <div class="row">
                     <div class="col-md-4">
                         {% if site=='sinai' %}
-                            {{ f.floatingLabel('sittq', 'Since your prior CT scan, have you ever tried to quit smoking?') }}
+                            {{ f.floatingLabel('sittq-n', 'Since your prior CT scan, have you ever tried to quit smoking?') }}
                         {% else %}
-                            {{ f.floatingLabel('sittq', 'Since we last asked, have you ever tried to quit smoking?') }}
+                            {{ f.floatingLabel('sittq-n', 'Since we last asked, have you ever tried to quit smoking?') }}
                         {% endif %}
                     </div>
                     <div class="col-md-8 form-group">
@@ -866,7 +741,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 ">
-                        {{ f.floatingLabel('funewct', 'Has a new CT/LDCT been ordered?', 'required') }}
+                        {{ f.floatingLabel('funewct-n', 'Has a new CT/LDCT been ordered?', 'required') }}
                     </div>
                     <div class="col-md-8 form-group">
                         {{ f.inlineRadioNY('funewct',true) }}
@@ -874,7 +749,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 ">
-                        {{ f.floatingLabel('fucompul', 'Communication to pulmonary?') }}
+                        {{ f.floatingLabel('fucompul-n', 'Communication to pulmonary?') }}
                     </div>
                     <div class="col-md-8 form-group">
                         {{ f.inlineRadioNY('fucompul') }}
@@ -899,236 +774,9 @@
                         {{ f.checkbox("sisfr", "r", "RTA") }}
                     </div>
                 </div>
-                <div id="sf8">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb1", "1. Overall, how would you rate your health during the
-                                <U>past 4 weeks</U>") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb1", ["Excellent","Very Good","Good","Fair","Poor","Very Poor"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb2", "2. During the
-                                <U>past 4 weeks</U>, how much did physical health problems limit your usual physical
-                                activities(such as walking or climbing stairs)") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb2", ["Not at all","Very little","Somewhat","Quite a lot","Could not do physical activities"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb3", "3.During the
-                                <U>past 4 weeks</U>, how much difficulty did you have doing your daily work, both at
-                                home and away from home, because of your physical health?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb3", ["None at all","A little bit","Some","Quite a lot","Could not do daily work"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb4", "4. How much
-                                <U>bodily</U> pain have you had during the
-                                <U>past 4 weeks</U>?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb4", ["None","Very mild","Mild","Moderate","Very Severe"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb5", "5. During the
-                                <U>past 4 weeks</U>, how much energy did you have?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb5", ["Very much","Quite a lot","Some","A little","None"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb6", "6. During the
-                                <U>past 4 weeks</U>, how much did your physical health or emotional problems limit your
-                                usual social activities with family or friends?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb6", ["None at all","Very little","Somewhat","Quite a lot","Could not do social activities"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb7", "7. During the
-                                <U>past 4 weeks</U>, how much have you been bothered by
-                                <B><U>emotional problems</U></B>(such as feeling anxious, depressed or irritable)?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb7", ["Not at all","Slightly","Moderately","Quite a lot","Extremely"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisfb8", "8. During the
-                                <U>past 4 weeks</U>, how much did personal or emotional problems keep you from doing
-                                your usual work, school or other daily activities?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisfb8", ["Not at all","Very little","Somewhat","Quite a lot","Could not do daily activities"]) }}
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Deprecated SF8 Health Survey -->
-
-                <!-- SF12 Health Survey -->
-                <div id="sf12">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisf1", "1. In general, would you say your health is:") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf1", ["Excellent","Very good","Good","Fair","Poor"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            {{ f.floatingLeftLabel("sisf2", "2. The following questions are about activities you might do
-                            during a typical day. Does <em>your health now limit you</em> in these activities? If so,
-                            how much?") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "a) <U>Moderate activities</U>, such as moving a table, pushing a
-                            vacuum cleaner, bowling, or playing golf") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf2", ["Yes, limited a lot","Yes, limited a little","No, not limited at all"]) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "b) Climbing <U>several</U> flights of stairs") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf3", ["Yes, limited a lot","Yes, limited a little","No, not limited at all"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            {{ f.floatingLeftLabel("", "3. During the
-                                <U>past 4 weeks</U>, how much of the time have you had any of the following problems
-                                with your work or other regular daily activities
-                                <U>as a result of your physical health</U>?") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "a) <U>Accomplished less</U> than you would like") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf4", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "b) Were limited in the
-                                <U>kind</U> of work or other activities") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf5", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "4. During the <U>past 4 weeks</U>, how much of the time have you had any of the following problems with your work or other regular daily activities <U>as a result of any emotional problems</U> (such as feeling depressed or anxious)?") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "a) <U>Accomplished less</U> than you would like") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf6", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "b) Did work or other activities
-                                <U>less carefully than usual</U>") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf7", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisf8", "5. During the
-                                <U>past 4 weeks</U>, how much did
-                                <U>pain</U> interfere with your normal work (including both work outside the home and
-                                housework)?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf8", ["Not at all","A little bid","Moderately", "Quite a bit", "Extremely"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            {{ f.floatingLeftLabel("sisf9", "6. These questions are about how you feel and how things have been with you during the
-                                <U>past 4 weeks</U>. For each question, please give the one answer that comes closest to
-                                the way you have been feeling. How much of the time during the
-                                <U>past 4 weeks</U>...") }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "a) have you felt calm and peaceful?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf9", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "b) did you have a lot of energy?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf10", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("", "c) have you felt downhearted and depressed?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf11", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                    <hr class="hs-br"/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ f.floatingLeftLabel("sisf12", "7. During the <U>past 4 weeks</U>, how much of the time
-                            has your <U>physical health or emotional problems</U> interfered with your social activities
-                            (like visiting friends, relatives, etc.)?") }}
-                        </div>
-                        <div class="col-md-12 form-group">
-                            {{ f.inlineRadioOptions("sisf12", ["All of the time","Most of the time","Some of the time", "A little of the time", "None of the time"]) }}
-                        </div>
-                    </div>
-                </div>
+                {% with prefix="si" %}
+                    {% include '_sfhealthsurvey.jinja2' %}
+                {% endwith %}
                 <hr/>
             {% endif %}
 
@@ -1333,13 +981,6 @@
             $("[name=siabx]").conditionallyEnable({enable: "#siabxd-container"});
             $("[name=siwc]").conditionallyEnable({enable: "#siwc-y-container,#siwc-y-container2"});
             $("[name=siact]").conditionallyEnable({sourceValues: "a,b,f,c,d", enable: "#siahcl-container"});
-            // COVID Vaccination
-            $("[name=sbcvm]").conditionallyDisplay({sourceValues: "o", enable: "#sbcvm-container"});
-            $("[name=sbcvv]").conditionallyDisplay({enable: "#sbcvv-container"});
-            $("[name=sbcvm]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmo"})
-            $("[name=sbcvm2]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos2"})
-            $("[name=sbcvm3]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos3"})
-
 
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
@@ -1387,27 +1028,6 @@
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
             $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
             calculateCumulativePackYears();
-
-            // Determine which health survey to show based on the data that is present
-            function showSF() {
-                // 1. Data present for SF-12 -> show SF-12
-                // 2. Data present for both SF-12 and SF-8 -> show SF-12
-                // 3. Data present for only SF-8 -> show SF-8
-                // 4. Data present for neither -> show SF-12
-
-                var sf12data = $("[name=sisf1]").val();
-                var sf8data = $("[name=sisfb1]").val();
-
-                if (sf12data) {
-                    document.getElementById('sf8').style.display = "none";
-                } else if (sf8data) {
-                    document.getElementById('sf12').style.display = "none";
-                } else {
-                    document.getElementById('sf8').style.display = "none";
-                }
-            }
-
-            showSF();
         });
 
         /**

@@ -1,0 +1,135 @@
+<hr/>
+<h4>COVID Status</h4>
+
+<div class="row">
+    <div class="col-md-3 form-group">
+        <label for="sbcsts">COVID-19 Testing Status</label>
+        <select class="form-control" name="sbcsts" id="sbcsts">
+            <option value="-">-</option>
+            <option value="pos">tested: positive</option>
+            <option value="neg">tested: negative</option>
+            <option value="inc">tested: inconclusive</option>
+            <option value="nt">not tested</option>
+            <option value="unk">unknown</option>
+        </select>
+    </div>
+    <div class="col-md-3 form-group">
+        <label for="sbcsdot">Date of Test</label>
+        {{ f.datepicker("sbcsdot", "past") }}
+    </div>
+    <div class="col-md-3 form-group">
+        <label for="sbcsl">Where?</label>
+        <input type=text class="form-control" name="sbcsl" id="sbcsl">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 form-group">
+        <label for="sbcsse"> COVID-19 Serology</label>
+        <select class="form-control" name="sbcsse" id="sbcsse">
+            <option value="-">-</option>
+            <option value="pos">tested: positive</option>
+            <option value="neg">tested: negative</option>
+            <option value="inc">tested: inconclusive</option>
+            <option value="nt">not tested</option>
+            <option value="unk">unknown</option>
+        </select>
+    </div>
+    <div class="col-md-3 form-group">
+        <label for="sbcsdos">Date of Test</label>
+        {{ f.datepicker("sbcsdos", "past") }}
+    </div>
+    <div class="col-md-3 form-group">
+        <label for="sbcssl">Where?</label>
+        <input type=text class="form-control" name="sbcssl" id="sbcssl">
+    </div>
+</div>
+
+<hr>
+<h4 class="form-group">COVID-19 Vaccination Record</h4>
+
+<div class="row">
+    <div class="col-md-3 form-group">
+        <label for="sbcvv">Have you received the COVID-19 vaccine?</label>
+    </div>
+    <div class="col-md-9 form-group">
+        {{ f.inlineRadioNY("sbcvv") }}
+    </div>
+</div>
+
+<div id="sbcvv-container">
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label for="sbcvdd1">Date of 1st dose</label>
+            {{ f.datepicker("sbcvdd1", "past") }}
+        </div>
+
+        <div class="col-md-3 form-group">
+            <label for="sbcvm">Manufacturer</label>
+            <select class="form-control" name="sbcvm">
+                <option value="-">-</option>
+                <option value="p">Pfizer/BioNTech</option>
+                <option value="m">Moderna</option>
+                <option value="a">AstraZeneca</option>
+                <option value="j">Johnson & Johnson</option>
+                <option value="o">Other (specify)</option>
+            </select>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="sbcvmo">Specify</label>
+            <input type="text" class="form-control" id="sbcvmo" name="sbcvmo">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label for="sbcvdd2">Date of 2nd dose</label>
+            {{ f.datepicker("sbcvdd2", "past") }}
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="sbcvm2">Manufacturer</label>
+            <select class="form-control" name="sbcvm2">
+                <option value="-">-</option>
+                <option value="p">Pfizer/BioNTech</option>
+                <option value="m">Moderna</option>
+                <option value="a">AstraZeneca</option>
+                <option value="j">Johnson & Johnson</option>
+                <option value="o">Other (specify)</option>
+            </select>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="sbcvmos2">Specify</label>
+            <input type="text" class="form-control" id="sbcvmos2" name="sbcvmos2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label for="sbcvdd3">Date of 3rd dose</label>
+            {{ f.datepicker("sbcvdd3", "past") }}
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="sbcvm3">Manufacturer</label>
+            <select class="form-control" name="sbcvm3">
+                <option value="-">-</option>
+                <option value="p">Pfizer/BioNTech</option>
+                <option value="m">Moderna</option>
+                <option value="a">AstraZeneca</option>
+                <option value="j">Johnson & Johnson</option>
+                <option value="o">Other (specify)</option>
+            </select>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="sbcvmos3">Specify</label>
+            <input type="text" class="form-control" id="sbcvmos3" name="sbcvmos3">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // COVID Vaccination
+        $("[name=sbcvv]").conditionallyDisplay({enable: "#sbcvv-container"});
+        $("[name=sbcvm]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmo"})
+        $("[name=sbcvm2]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos2"})
+        $("[name=sbcvm3]").conditionallyEnable({sourceValues: "o", enable: "#sbcvmos3"})
+    });
+</script>

@@ -3,23 +3,26 @@
 bases=(lungrads elcap)
 sites=(default sinai)
 
-echo "Checking dependencies..."
-pips=`pip3 freeze`
+python3 -m venv .venv
+source .venv/bin/activate
 
-function pip_install {
-    printf "%20s: " "$1"
-    if [[ ${pips} == *"$1"* ]]; then
-        printf "OK\n";
-    else
-        printf "Not Installed\n"
-        echo "Installing $1..."
-        pip3 install $1 --ignore-installed six
-    fi
-}
+#echo "Checking dependencies..."
+#pips=`pip3 freeze`
 
-pip_install "Jinja2"
-pip_install "beautifulsoup4"
-pip_install "html5lib"
+#function pip_install {
+#    printf "%20s: " "$1"
+#    if [[ ${pips} == *"$1"* ]]; then
+#        printf "OK\n";
+#    else
+#        printf "Not Installed\n"
+#        echo "Installing $1..."
+#        pip3 install $1 --ignore-installed six
+#    fi
+#}
+#
+#pip_install "Jinja2"
+#pip_install "beautifulsoup4"
+#pip_install "html5lib"
 
 #Check for Node.js installation (needed to install jsdoc)
 command -v npm >/dev/null 2>&1 || {

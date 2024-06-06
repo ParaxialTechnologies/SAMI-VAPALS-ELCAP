@@ -436,7 +436,7 @@
                                data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
                                aria-hidden="true" title="Help"></i>
                         </label>
-                        {{ f.datepicker("sidod", "past", true) }}
+                        {{ f.datepicker("sidod", "past") }}
                     </div>
                     <div class="col-sm-4 form-group">
                         <label for="sicod">Cause of Death
@@ -1131,7 +1131,7 @@
                         <div class="row" id="date-of-death-container">
                             <div class="col-md-4 form-group">
                                 <label for="sidod" class="required">Date of death</label>
-                                {{ f.datepicker('sidod', 'past', true) }}
+                                {{ f.datepicker('sidod', 'past') }}
                             </div>
                         </div>
 
@@ -1374,7 +1374,6 @@
                 fv.addField('sildct', {validators: {notEmpty: {message: 'Candidate option is required'}}});
                 fv.addField('sidod', {
                     validators: {
-                        notEmpty: {message: 'Date of death is required'},
                         date: {max: VAPALS.todaysDate(), message: 'Date of death may not be in the future'}
                     }
                 });

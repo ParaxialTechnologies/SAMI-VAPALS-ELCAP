@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="elcap" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.04.28" name="version"/>
+  <meta content="2024.06.06" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Background Form
@@ -55,19 +55,19 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2024.04.28">
+  <script src="jquery-conditonally-enable.js?v=2024.06.06">
   </script>
-  <script src="jquery-conditonally-display.js?v=2024.04.28">
+  <script src="jquery-conditonally-display.js?v=2024.06.06">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.04.28">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2024.06.06">
   </script>
-  <script src="vapals.js?v=2024.04.28">
+  <script src="vapals.js?v=2024.06.06">
   </script>
-  <script src="init.js?v=2024.04.28">
+  <script src="init.js?v=2024.06.06">
   </script>
-  <script src="nodule-grid.js?v=2024.04.28">
+  <script src="nodule-grid.js?v=2024.06.06">
   </script>
-  <script src="ai.js?v=2024.04.28">
+  <script src="ai.js?v=2024.06.06">
   </script>
   <span id="url-prefix" src="">
    <!--System Navigation-->
@@ -204,7 +204,7 @@
         </i>
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="sbdop-addon" class="form-control" data-restriction="" id="sbdop" name="sbdop"/>
+        <input aria-describedby="sbdop-addon" class="form-control" data-restriction="" id="sbdop" name="sbdop" required="required"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="sbdop-addon">
           <i aria-hidden="true" class="fa-regular fa-calendar">
@@ -221,7 +221,7 @@
         Date of Birth
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="sbdob-addon" class="form-control" data-restriction="past" id="sbdob" name="sbdob"/>
+        <input aria-describedby="sbdob-addon" class="form-control" data-restriction="past" id="sbdob" name="sbdob" required="required"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="sbdob-addon">
           <i aria-hidden="true" class="fa-regular fa-calendar">
@@ -339,11 +339,11 @@
        <div class="row">
         <div class="col-md-12">
          <label class="radio-inline" for="sbsex-m">
-          <input id="sbsex-m" name="sbsex" type="radio" value="m"/>
+          <input id="sbsex-m" name="sbsex" required="required" type="radio" value="m"/>
           male
          </label>
          <label class="radio-inline" for="sbsex-f">
-          <input id="sbsex-f" name="sbsex" type="radio" value="f"/>
+          <input id="sbsex-f" name="sbsex" required="required" type="radio" value="f"/>
           female
          </label>
         </div>
@@ -355,7 +355,7 @@
         <i aria-hidden="true" class="fa-regular fa-circle-question" data-container="body" data-content="The height and weight are those values self-reported by the subject and may be entered in imperial or metric units." data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
         </i>
        </label>
-       <input class="form-control" id="sbph" name="sbph" type="text"/>
+       <input class="form-control" id="sbph" name="sbph" required="required" type="text"/>
       </div>
       <div class="col-xs-1 col-md-1 form-group">
        <div class="radio">
@@ -372,10 +372,10 @@
        </div>
       </div>
       <div class="col-xs-2 col-md-2 col-lg-1 form-group">
-       <label class="control-label" for="sbpw">
+       <label class="control-label required" for="sbpw">
         Weight
        </label>
-       <input class="form-control" id="sbpw" name="sbpw" type="text"/>
+       <input class="form-control" id="sbpw" name="sbpw" required="required" type="text"/>
       </div>
       <div class="col-xs-1 col-md-1 form-group">
        <div class="radio">
@@ -454,7 +454,7 @@
                   menu." data-html="true" data-toggle="popover" data-trigger="focus" role="button" tabindex="0" title="Help">
         </i>
        </label>
-       <select class="form-control" name="sbrc">
+       <select class="form-control" name="sbrc" required="required">
         <option value="-">
          -
         </option>

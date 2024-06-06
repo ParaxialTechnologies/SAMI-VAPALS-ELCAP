@@ -30,11 +30,11 @@
                                data-content="The visit date should be the actual date of the patient's baseline CT exam"
                                aria-hidden="true" title="Help"></i>
                         </label>
-                        {{ f.datepicker("sbdop") }}
+                        {{ f.datepicker("sbdop", "", true) }}
                     </div>
                     <div class="col-md-3 col-lg-2 form-group">
                         <label for="sbdob">Date of Birth</label>
-                        {{ f.datepicker("sbdob", "past") }}
+                        {{ f.datepicker("sbdob", "past", true) }}
                     </div>
                     <div class="col-md-3 col-lg-1 form-group">
                         {{ f.inputText("sbage", "Age", {'readonly':'readonly'}) }}
@@ -119,8 +119,8 @@
                         <label for="sbsex">Sex</label>
                         <div class="row">
                             <div class="col-md-12">
-                                {{ f.inlineRadio("sbsex","sbsex-m","m", "male") }}
-                                {{ f.inlineRadio("sbsex","sbsex-f","f", "female") }}
+                                {{ f.inlineRadio("sbsex","sbsex-m","m", "male", true) }}
+                                {{ f.inlineRadio("sbsex","sbsex-f","f", "female", true) }}
                             </div>
                         </div>
                     </div>
@@ -132,14 +132,14 @@
                                data-content="The height and weight are those values self-reported by the subject and may be entered in imperial or metric units."
                                aria-hidden="true" title="Help"></i>
                         </label>
-                        {{ f.inputText("sbph") }}
+                        {{ f.inputText("sbph", "", {}, true) }}
                     </div>
                     <div class="col-xs-1 col-md-1 form-group">
                         {{ f.radio("sbphu","sbphu-i","i", "in") }}
                         {{ f.radio("sbphu","sbphu-c","c", "cm") }}
                     </div>
                     <div class="col-xs-2 col-md-2 col-lg-1 form-group">
-                        {{ f.inputText("sbpw", "Weight") }}
+                        {{ f.inputText("sbpw", "Weight", {}, true) }}
                     </div>
                     <div class="col-xs-1 col-md-1 form-group">
                         {{ f.radio("sbpwu","sbpwu-p","p", "lbs") }}
@@ -201,7 +201,7 @@
                   made in the Other (specify) field to the right of the pull-down
                   menu." aria-hidden="true" title="Help"></i>
                         </label>
-                        <select name="sbrc" class="form-control">
+                        <select name="sbrc" class="form-control" required="required">
                             <option value="-"> -</option>
                             <option value="i"> American Indian</option>
                             <option value="k"> Alaska Native</option>

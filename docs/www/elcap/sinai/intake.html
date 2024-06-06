@@ -1821,6 +1821,7 @@
                 fv.addField('sildct', {validators: {notEmpty: {message: 'Candidate option is required'}}});
                 fv.addField('sidod', {
                     validators: {
+                        notEmpty: {message: 'Date of death is required'},
                         date: {max: VAPALS.todaysDate(), message: 'Date of death may not be in the future'}
                     }
                 });
@@ -1907,6 +1908,8 @@
                     $("#sirr").prop("checked", true);
                 }
             });
+            $("[name=sies]").conditionallyEnable({sourceValues: "ex", enable: "#sidod"})
+            //enabled : $("#sistachg").val() === "deceased" || $("sies").val() === "ex",
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
             $("#sicerfot").conditionallyDisplay({enable: "#sicerfoo"});

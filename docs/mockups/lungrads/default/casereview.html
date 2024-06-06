@@ -225,9 +225,9 @@
          </a>
         </td>
         <td>
-         <a class="navigation" data-method="get" data-samiroute="form" href="newform.html">
-          Intake
-         </a>
+         <input name="samiroute" type="hidden" value="nuform"/>
+         <input name="studyid" type="hidden" value="XXX9000090"/>
+         <input class="btn label label-warning" role="link" type="submit" value="New Form"/>
         </td>
        </tr>
        <tr>
@@ -281,6 +281,19 @@
      </table>
     </div>
    </div>
+   <script>
+    $(function(){
+        const caseReviewSchedulerUrl = getParameter("caseReviewSchedulerUrl");
+        const studyId = $("[name=studyid]").val();
+        if (caseReviewSchedulerUrl) {
+            $("input[value='New Form']").after("<br/>" +
+                "<a href=\"" + caseReviewSchedulerUrl + studyId + "\"" +
+                " target=\"_blank\"" +
+                " class=\"btn label label-warning\"" +
+                " role=\"link\">Scheduler</a>");
+        }
+    })
+   </script>
    <footer>
     <div class="container-fluid" style="max-width:1550px">
      <hr/>

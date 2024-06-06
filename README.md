@@ -230,6 +230,9 @@ Re-enter Fileman and update indexes
     Do you want to re-build the 'D' cross reference? YES
       ...DONE!
 
+# Special Site Parameters
+`caseReviewSchedulerUrl`: Adds a button next to each of the "add form" links on the case review page. The studyId will be appended to this link. e.g. "https://www.timeanddate.com/?studyId=". Link will open into a new tab
+
 
 ##Resources
 1. [OSEHRA Jira Project](https://issues.osehra.org/secure/RapidBoard.jspa?projectKey=VAP) - This project uses Jira to
@@ -238,3 +241,6 @@ Re-enter Fileman and update indexes
    read blog posts and subscribe to events.
 
 George will provide a command to create a new parameter for SYS or a certain site. Also for default values? Needed for logo
+
+
+

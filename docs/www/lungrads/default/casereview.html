@@ -209,6 +209,19 @@
      </table>
     </div>
    </div>
+   <script>
+    $(function(){
+        const caseReviewSchedulerUrl = getParameter("caseReviewSchedulerUrl");
+        const studyId = $("[name=studyid]").val();
+        if (caseReviewSchedulerUrl) {
+            $("input[value='New Form']").after("<br/>" +
+                "<a href=\"" + caseReviewSchedulerUrl + studyId + "\"" +
+                " target=\"_blank\"" +
+                " class=\"btn label label-warning\"" +
+                " role=\"link\">Scheduler</a>");
+        }
+    })
+   </script>
    <footer>
     <div class="container-fluid" style="max-width:1550px">
      <hr/>

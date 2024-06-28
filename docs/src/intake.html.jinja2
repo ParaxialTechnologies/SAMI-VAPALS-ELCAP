@@ -480,12 +480,12 @@
                     </div>
                     <div class="col-sm-3 form-group">
                         <label for="siccac">Coordinator</label>
-                        <input type=text oninput="consentAttemptDate()" name="siccac" class="form-control" value="">
+                        <input type=text oninput="consentAttemptDate()" id="siccac" name="siccac" class="form-control" value="">
                     </div>
 
                     <div class="col-sm-3 form-group">
                         <label for="siccac">Date </label>
-                        {{ f.datepicker('siccac', 'past') }}
+                        {{ f.datepicker('siccad', 'past') }}
                     </div>
 
                     <div class="col-sm-offset-6 col-lg-offset-5 col-sm-3 form-group">
@@ -1282,7 +1282,6 @@
         }
 
         function createFormValidator() {
-
             const $form = $('#main-form');
             const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sipav', 'sirs', 'sistatus'];
             const isSinai = "{{ site == 'sinai'}}".toLowerCase() === "true";
@@ -1415,6 +1414,14 @@
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 
             return fv;
+        }
+
+        function consentAttemptDate() {
+            const coordinatorField = $('#siccac');
+            const dateField = $('#siccad');
+            if (coordinatorField.val().length > 0 && dateField.val().length === 0) {
+                dateField.val(moment().format(VAPALS.DATE_FORMAT));
+            }
         }
 
         $(function () {

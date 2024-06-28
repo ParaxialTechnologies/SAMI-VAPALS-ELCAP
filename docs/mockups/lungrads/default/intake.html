@@ -1713,7 +1713,6 @@
         }
 
         function createFormValidator() {
-
             const $form = $('#main-form');
             const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sipav', 'sirs', 'sistatus'];
             const isSinai = "False".toLowerCase() === "true";
@@ -1846,6 +1845,14 @@
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 
             return fv;
+        }
+
+        function consentAttemptDate() {
+            const coordinatorField = $('#siccac');
+            const dateField = $('#siccad');
+            if (coordinatorField.val().length > 0 && dateField.val().length === 0) {
+                dateField.val(moment().format(VAPALS.DATE_FORMAT));
+            }
         }
 
         $(function () {

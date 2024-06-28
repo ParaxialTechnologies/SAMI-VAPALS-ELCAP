@@ -1020,16 +1020,16 @@
        <label for="siccac">
         Coordinator
        </label>
-       <input class="form-control" name="siccac" oninput="consentAttemptDate()" type="text" value=""/>
+       <input class="form-control" id="siccac" name="siccac" oninput="consentAttemptDate()" type="text" value=""/>
       </div>
       <div class="col-sm-3 form-group">
        <label for="siccac">
         Date
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="siccac-addon" class="form-control" data-restriction="past" id="siccac" name="siccac"/>
+        <input aria-describedby="siccad-addon" class="form-control" data-restriction="past" id="siccad" name="siccad"/>
         <div class="input-group-addon">
-         <div class="input-group-text" id="siccac-addon">
+         <div class="input-group-text" id="siccad-addon">
           <i aria-hidden="true" class="fa-regular fa-calendar">
           </i>
          </div>
@@ -1759,7 +1759,6 @@
         }
 
         function createFormValidator() {
-
             const $form = $('#main-form');
             const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sipav', 'sirs', 'sistatus'];
             const isSinai = "True".toLowerCase() === "true";
@@ -1892,6 +1891,14 @@
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 
             return fv;
+        }
+
+        function consentAttemptDate() {
+            const coordinatorField = $('#siccac');
+            const dateField = $('#siccad');
+            if (coordinatorField.val().length > 0 && dateField.val().length === 0) {
+                dateField.val(moment().format(VAPALS.DATE_FORMAT));
+            }
         }
 
         $(function () {

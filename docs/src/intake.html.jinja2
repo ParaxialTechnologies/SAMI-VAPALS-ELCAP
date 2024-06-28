@@ -476,6 +476,37 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-lg-5">
+                        <label for="siccac">Attempted to contact (could not consent)</label>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="siccac">Coordinator</label>
+                        <input type=text oninput="consentAttemptDate()" name="siccac" class="form-control" value="">
+                    </div>
+
+                    <div class="col-sm-3 form-group">
+                        <label for="siccac">Date </label>
+                        {{ f.datepicker('siccac', 'past') }}
+                    </div>
+
+                    <div class="col-sm-offset-6 col-lg-offset-5 col-sm-3 form-group">
+                        <label for="siccar">Reason</label>
+                        <select name="siccar" id="siccar" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="na"> No answer</option>
+                            <option value="pd"> Phone disconnected</option>
+                            <option value="wn"> Wrong number</option>
+                            <option value="nmt"> Need more time to consider</option>
+                            <option value="ot"> Other (specify)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-3 form-group" id="siccaro-container">
+                        <label for="siccaro">Specify</label>
+                        <input type=text name="siccaro" id="siccaro" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-5">
                         <label for="sidoc">Date informed consent signed</label>
                     </div>
                     <div class="col-sm-4 col-lg-2 form-group">
@@ -1482,6 +1513,7 @@
             $("#sicemhot").conditionallyDisplay({enable: "#sicemhoo"}); //other medical history
             $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
             $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
+            $("#siccar").conditionallyDisplay({enable: "#siccaro-container", sourceValues: "ot"})
 
             // start the page by hiding the pre-enrollment discussion and intake sections if the current value for
             // eligible based on chart review was not answered or was answered NO

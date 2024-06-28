@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="elcap" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.06.12" name="version"/>
+  <meta content="2024.06.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening Intake Form
@@ -66,19 +66,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.06.12">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.06.28">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.06.12">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.06.28">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.06.12">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.06.28">
   </script>
-  <script src="../../../www/vapals.js?v=2024.06.12">
+  <script src="../../../www/vapals.js?v=2024.06.28">
   </script>
-  <script src="../../../www/init.js?v=2024.06.12">
+  <script src="../../../www/init.js?v=2024.06.28">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.06.12">
+  <script src="../../../www/nodule-grid.js?v=2024.06.28">
   </script>
-  <script src="../../../www/ai.js?v=2024.06.12">
+  <script src="../../../www/ai.js?v=2024.06.28">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -1012,6 +1012,67 @@
      </div>
      <div class="row">
       <div class="col-sm-6 col-lg-5">
+       <label for="siccac">
+        Attempted to contact (could not consent)
+       </label>
+      </div>
+      <div class="col-sm-3 form-group">
+       <label for="siccac">
+        Coordinator
+       </label>
+       <input class="form-control" name="siccac" oninput="consentAttemptDate()" type="text" value=""/>
+      </div>
+      <div class="col-sm-3 form-group">
+       <label for="siccac">
+        Date
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="siccac-addon" class="form-control" data-restriction="past" id="siccac" name="siccac"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="siccac-addon">
+          <i aria-hidden="true" class="fa-regular fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-sm-offset-6 col-lg-offset-5 col-sm-3 form-group">
+       <label for="siccar">
+        Reason
+       </label>
+       <select class="form-control" id="siccar" name="siccar">
+        <option value="-">
+         -
+        </option>
+        <option value="na">
+         No answer
+        </option>
+        <option value="pd">
+         Phone disconnected
+        </option>
+        <option value="wn">
+         Wrong number
+        </option>
+        <option value="nmt">
+         Need more time to consider
+        </option>
+        <option value="ot">
+         Other (specify)
+        </option>
+       </select>
+      </div>
+      <div class="col-sm-3 form-group" id="siccaro-container">
+       <label for="siccaro">
+        Specify
+       </label>
+       <input class="form-control" id="siccaro" name="siccaro" type="text"/>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-6 col-lg-5">
        <label for="sidoc">
         Date informed consent signed
        </label>
@@ -1929,6 +1990,7 @@
             $("#sicemhot").conditionallyDisplay({enable: "#sicemhoo"}); //other medical history
             $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
             $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
+            $("#siccar").conditionallyDisplay({enable: "#siccaro-container", sourceValues: "ot"})
 
             // start the page by hiding the pre-enrollment discussion and intake sections if the current value for
             // eligible based on chart review was not answered or was answered NO

@@ -2027,16 +2027,16 @@
         });
 
         $("button[type='submit']").on("click", function () {
+            console.log('foobar');
             // copy free-text comments to previous comments
             const $freeComment = $("#siadcomna");
-            const freeCommentValue = $trim($freeComment.val());
+            const freeCommentValue = $.trim($freeComment.val());
             if (freeCommentValue) {
                 const $previousComment = $("#siadcom");
                 const ts = moment().format(VAPALS.DATE_TIME_FORMAT);
                 $previousComment.val(ts + ": " + freeCommentValue + "\n\n" + $previousComment.val());
                 $freeComment.val("");
             }
-            return true;
         })
 
         /**

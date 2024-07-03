@@ -2068,16 +2068,15 @@
             });
         });
 
-        $("form").on("submit", function () {
+        $("button[type='submit']").on("click", function () {
             // copy free-text comments to previous comments
             const $freeComment = $("#siadcomna");
-            const freeCommentValue = $freeComment.val();
+            const freeCommentValue = $trim($freeComment.val());
             if (freeCommentValue) {
                 const $previousComment = $("#siadcom");
                 const ts = moment().format(VAPALS.DATE_TIME_FORMAT);
                 $previousComment.val(ts + ": " + freeCommentValue + "\n\n" + $previousComment.val());
                 $freeComment.val("");
-                console.log("onSubmit(): free: " + freeCommentValue)
             }
             return true;
         })

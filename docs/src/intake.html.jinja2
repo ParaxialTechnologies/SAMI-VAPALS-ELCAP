@@ -138,6 +138,11 @@
                         <textarea name="siadcomna" id="siadcomna" class="form-control hidden-print" rows="5"
                                   placeholder="Type here..."></textarea>
                     </div>
+                    <div class="col-sm-8">
+                        <label for="siadcom">Previous Comments</label>
+                        <textarea name="siadcom" id="siadcom" rows="18" class="form-control" readonly="readonly"
+                                  placeholder="Previous notes..."> </textarea>
+                    </div>
                 </div>
                 <hr/>
 
@@ -1645,6 +1650,18 @@
             });
         });
 
+        $("form").on("submit", function () {
+            // copy free-text comments to previous comments
+            const $freeComment = $("#siadcomna");
+            const freeCommentValue = $freeComment.val();
+            if (freeCommentValue) {
+                const $previousComment = $("#siadcom");
+                const ts = moment().format(VAPALS.DATE_TIME_FORMAT);
+                $previousComment.val(ts + ": " + freeCommentValue + "\n\n" + $previousComment.val());
+                console.log("onSubmit(): free: " + freeCommentValue)
+            }
+            return false;
+        })
 
         /**
          * Validates all visible input fields within a section of the page using the provided formValidation instance

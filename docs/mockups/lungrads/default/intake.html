@@ -2068,6 +2068,18 @@
             });
         });
 
+        $("form").on("submit", function () {
+            // copy free-text comments to previous comments
+            const $freeComment = $("#siadcomna");
+            const freeCommentValue = $freeComment.val();
+            if (freeCommentValue) {
+                const $previousComment = $("#siadcom");
+                const ts = moment().format(VAPALS.DATE_TIME_FORMAT);
+                $previousComment.val(ts + ": " + freeCommentValue + "\n\n" + $previousComment.val());
+                console.log("onSubmit(): free: " + freeCommentValue)
+            }
+            return false;
+        })
 
         /**
          * Validates all visible input fields within a section of the page using the provided formValidation instance

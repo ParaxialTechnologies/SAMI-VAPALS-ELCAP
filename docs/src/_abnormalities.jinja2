@@ -928,16 +928,6 @@
                                 </div>
                             </td>
                         </tr>
-                        {% if (site == 'sinai') %}
-                            <tr>
-                                <td colspan="7">
-                                    <div class="form-group">
-                                        <label for="ceaibc">AI Bone Comments</label>
-                                        <textarea name="ceaibc" id="ceaibc" class="form-control"></textarea>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -965,6 +955,14 @@
                         {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
                     </div>
                 </div>
+                {% if (site == 'sinai') %}
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label for="ceaibc">AI Bone Comments</label>
+                            <textarea name="ceaibc" id="ceaibc" class="form-control"></textarea>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

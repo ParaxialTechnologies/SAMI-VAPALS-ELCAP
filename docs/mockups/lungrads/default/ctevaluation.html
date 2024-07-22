@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="lungrads" name="base"/>
   <meta content="default" name="site"/>
-  <meta content="2024.07.03" name="version"/>
+  <meta content="2024.07.22" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -66,19 +66,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.07.03">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.07.22">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.07.03">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.07.22">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.07.03">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.07.22">
   </script>
-  <script src="../../../www/vapals.js?v=2024.07.03">
+  <script src="../../../www/vapals.js?v=2024.07.22">
   </script>
-  <script src="../../../www/init.js?v=2024.07.03">
+  <script src="../../../www/init.js?v=2024.07.22">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.07.03">
+  <script src="../../../www/nodule-grid.js?v=2024.07.22">
   </script>
-  <script src="../../../www/ai.js?v=2024.07.03">
+  <script src="../../../www/ai.js?v=2024.07.22">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -6030,7 +6030,7 @@
      </div>
      <div id="emphysema-coronary" style="padding-top: 1px;">
       <h3>
-       Emphysema/Coronary Calcifications
+       Emphysema
       </h3>
       <div class="row">
        <div class="col-sm-12 form-group">
@@ -6068,108 +6068,6 @@
         </label>
        </div>
       </div>
-      <div class="form-group">
-       <label class="control-label">
-        Coronary calcifications
-       </label>
-       <br/>
-       <label class="radio-inline" for="ceccv-n">
-        <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
-        None
-       </label>
-       <label class="radio-inline" for="ceccv-r">
-        <input id="ceccv-r" name="ceccv" type="radio" value="nr"/>
-        Not reported
-       </label>
-       <label class="radio-inline" for="ceccv-m">
-        <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
-        Mild
-       </label>
-       <label class="radio-inline" for="ceccv-d">
-        <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
-        Moderate
-       </label>
-       <label class="radio-inline" for="ceccv-s">
-        <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
-        Severe
-       </label>
-      </div>
-      <div class="row">
-       <div class="col-sm-4 form-group">
-        <label class="control-label" for="cepaw">
-         Pulmonary artery width (mm)
-        </label>
-        <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
-       </div>
-       <div class="col-sm-4 form-group">
-        <label class="control-label" for="ceaow">
-         Ascending aorta width (mm)
-        </label>
-        <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
-       </div>
-       <div class="col-sm-4 form-group">
-        <label class="control-label" for="cepar">
-         Pulmonary artery/aorta ratio
-        </label>
-        <small>
-         (calculated)
-        </small>
-        <br/>
-        <span id="cepar-text">
-        </span>
-        <input id="cepar" name="cepar" type="hidden"/>
-       </div>
-      </div>
-      <script>
-       function initEmphysema(fv) {
-        function calculateVisualCacScore() {
-            const $ccm = $("#cecclm");
-            if ($ccm.length > 0) { //does not exist on LungRads page
-                let cal1 = $("#cecclm")[0].selectedIndex;
-                let cal2 = $("#ceccld")[0].selectedIndex;
-                let cal3 = $("#cecccf")[0].selectedIndex;
-                let cal4 = $("#ceccrc")[0].selectedIndex;
-                if (cal1 > 0) cal1 = cal1 - 1;
-                if (cal2 > 0) cal2 = cal2 - 1;
-                if (cal3 > 0) cal3 = cal3 - 1;
-                if (cal4 > 0) cal4 = cal4 - 1;
-                const res = cal1 + cal2 + cal3 + cal4;
-                $("#cecccac").val(res);
-                $("#cecccac-text").text(res);
-            }
-        }
-
-        $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
-        calculateVisualCacScore();
-
-        function calculatePulmonaryArteryAortaRatio() {
-            let res = 0;
-            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-            if (ceaow > 0) {
-                res = (cepaw / ceaow).toFixed(1);
-                $("#cepar-text").text(res);
-                $("#cepar").val(res);
-            } else {
-                $("#cepar-text").text("");
-                $("#cepar").val("");
-            }
-        }
-
-        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-        calculatePulmonaryArteryAortaRatio();
-
-        //Add validations after all other anonymous functions have run and fv is bound.
-        if (fv) {
-            fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('ceccld', {validators: {notEmpty: {message: 'LAD is required'}}});
-            fv.addField('cecccf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
-            fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
-        }
-
-        //Hide CAC score table if not-reported is selected
-        $("#ceccv").conditionallyDisplay({sourceValues: "nr", disable: "#ceccv-container"});
-    }
-      </script>
      </div>
      <div id="abnormalities" style="padding-top:8px;">
       <h3>
@@ -7272,6 +7170,166 @@
         <div class="panel-collapse collapse" id="cardiac-container" role="tabpanel">
          <div class="panel-body">
           <input name="ceca" type="hidden"/>
+          <div class="row">
+           <div class="col-md-12">
+            <label class="control-label">
+             Coronary calcifications
+            </label>
+            <div class="checkbox">
+             <label>
+              <input name="ceccv" type="hidden" value=""/>
+              <input id="ceccv" name="ceccv" type="checkbox" value="nr"/>
+              Not reported
+             </label>
+            </div>
+            <div class="table-responsive" id="ceccv-container">
+             <table class="table">
+              <tbody>
+               <tr>
+                <td>
+                 <div class="form-group">
+                  <label class="required" for="cecclm">
+                   Left main
+                  </label>
+                  <select class="form-control" id="cecclm" name="cecclm" required="required">
+                   <option value="">
+                    -
+                   </option>
+                   <option value="no">
+                    None
+                   </option>
+                   <option value="mi">
+                    Minimal &lt; ⅓
+                   </option>
+                   <option value="mo">
+                    Moderate
+                   </option>
+                   <option value="ex">
+                    Extensive &gt; ⅔
+                   </option>
+                  </select>
+                 </div>
+                </td>
+                <td>
+                 <div class="form-group">
+                  <label class="required" for="ceccld">
+                   LAD
+                  </label>
+                  <select class="form-control" id="ceccld" name="ceccld" required="required">
+                   <option value="">
+                    -
+                   </option>
+                   <option value="no">
+                    None
+                   </option>
+                   <option value="mi">
+                    Minimal &lt; ⅓
+                   </option>
+                   <option value="mo">
+                    Moderate
+                   </option>
+                   <option value="ex">
+                    Extensive &gt; ⅔
+                   </option>
+                  </select>
+                 </div>
+                </td>
+                <td>
+                 <div class="form-group">
+                  <label class="required" for="cecccf">
+                   Circumflex
+                  </label>
+                  <select class="form-control" id="cecccf" name="cecccf" required="required">
+                   <option value="">
+                    -
+                   </option>
+                   <option value="no">
+                    None
+                   </option>
+                   <option value="mi">
+                    Minimal &lt; ⅓
+                   </option>
+                   <option value="mo">
+                    Moderate
+                   </option>
+                   <option value="ex">
+                    Extensive &gt; ⅔
+                   </option>
+                  </select>
+                 </div>
+                </td>
+                <td>
+                 <div class="form-group">
+                  <label class="required" for="ceccrc">
+                   RCA
+                  </label>
+                  <select class="form-control" id="ceccrc" name="ceccrc" required="required">
+                   <option value="">
+                    -
+                   </option>
+                   <option value="no">
+                    None
+                   </option>
+                   <option value="mi">
+                    Minimal &lt; ⅓
+                   </option>
+                   <option value="mo">
+                    Moderate
+                   </option>
+                   <option value="ex">
+                    Extensive &gt; ⅔
+                   </option>
+                  </select>
+                 </div>
+                </td>
+               </tr>
+               <tr>
+                <td>
+                 <label class="control-label" for="cecccac">
+                  Visual
+                  <abbr title="Coronary Artery Calcium">
+                   CAC
+                  </abbr>
+                  score
+                 </label>
+                </td>
+                <td colspan="5">
+                 <span id="cecccac-text">
+                 </span>
+                 <input id="cecccac" name="cecccac" type="hidden"/>
+                </td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+           </div>
+          </div>
+          <div class="row">
+           <div class="col-sm-4 form-group">
+            <label class="control-label" for="cepaw">
+             Pulmonary artery width (mm)
+            </label>
+            <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
+           </div>
+           <div class="col-sm-4 form-group">
+            <label class="control-label" for="ceaow">
+             Ascending aorta width (mm)
+            </label>
+            <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
+           </div>
+           <div class="col-sm-4 form-group">
+            <label class="control-label" for="cepar">
+             Pulmonary artery/aorta ratio
+            </label>
+            <small>
+             (calculated)
+            </small>
+            <br/>
+            <span id="cepar-text">
+            </span>
+            <input id="cepar" name="cepar" type="hidden"/>
+           </div>
+          </div>
           <div class="row">
            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
             <label class="control-label" for="cecca">
@@ -8482,6 +8540,43 @@
       </div>
       <script>
        function initAbnormalities(fv) {
+        //Cardiac
+        function calculateVisualCacScore() {
+            const $ccm = $("#cecclm");
+            if ($ccm.length > 0) { //does not exist on LungRads page
+                let cal1 = $("#cecclm")[0].selectedIndex;
+                let cal2 = $("#ceccld")[0].selectedIndex;
+                let cal3 = $("#cecccf")[0].selectedIndex;
+                let cal4 = $("#ceccrc")[0].selectedIndex;
+                if (cal1 > 0) cal1 = cal1 - 1;
+                if (cal2 > 0) cal2 = cal2 - 1;
+                if (cal3 > 0) cal3 = cal3 - 1;
+                if (cal4 > 0) cal4 = cal4 - 1;
+                const res = cal1 + cal2 + cal3 + cal4;
+                $("#cecccac").val(res);
+                $("#cecccac-text").text(res);
+            }
+        }
+
+        $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+        calculateVisualCacScore();
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            } else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
+
         //Neck and mediastinal
         $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
         $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
@@ -8503,6 +8598,11 @@
 
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
+            fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
+            fv.addField('ceccld', {validators: {notEmpty: {message: 'LAD is required'}}});
+            fv.addField('cecccf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
+            fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
+
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
 
             //lymph nodes; use a real element name for the field so conditional plugins can toggle the field
@@ -8511,6 +8611,9 @@
                 validators: {choice: {min: 1, message: 'Select one or more classification'}}
             });
         }
+
+        //Hide CAC score table if not-reported is selected
+        $("#ceccv").conditionallyDisplay({sourceValues: "nr", disable: "#ceccv-container"});
     }
       </script>
      </div>

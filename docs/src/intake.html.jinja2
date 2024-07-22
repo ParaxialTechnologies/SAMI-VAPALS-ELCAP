@@ -60,10 +60,22 @@
                         <label for="sidoe">Date of Baseline CT</label>
                         {{ f.datepicker("sidoe", "past", false) }}
                     </div>
-                    <div class="col-sm-3 col-md-2 form-group">
-                        <label for="simrn">Medical Record Number</label>
-                        <input type=text name="simrn" class="form-control">
+
+                    <div class="col-sm-6 col-md-3 form-group">
+                        <label class="required">
+                            <abbr title="Social Security Number" data-params-attr='{"title":"socialSecurityNumber"}'>
+                                <span data-params-text="socialSecurityNumber.short">SSN</span>
+                            </abbr>
+                        </label>
+                        <input class="form-control" type="text" id="ssn" name="ssn" required="required"
+                               data-fv-not-empty="true"
+                               data-fv-not-empty___message="Value is required"
+                               data-params-attr='{"placeholder":"socialSecurityNumber.mask", "pattern": "socialSecurityNumber.pattern"}'
+                               placeholder="000-00-0000"
+                               pattern="^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+                               data-fv-regexp___message="Value is invalid"/>
                     </div>
+
                     <div class="col-sm-3 col-md-2 form-group">
                         <label for="sidob" class="req">Date of Birth</label>
                         {{ f.datepicker("sidob", "past", true) }}

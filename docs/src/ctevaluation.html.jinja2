@@ -30,7 +30,7 @@
         <hr/>
         {% include '_messages.jinja2' %}
         {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
-        {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
+        {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema","emphysema"),
                             ("Other Abnormalities","abnormalities"), ("Impression & Follow-Up","impression")] -%}
         <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
              data-offset-bottom="70">
@@ -220,7 +220,7 @@
             {# END Nodules tab#}
 
             {# BEGIN Emphysema tab#}
-            <div id="emphysema-coronary" style="padding-top: 1px;">
+            <div id="emphysema" style="padding-top: 1px;">
                 <h3>Emphysema</h3> {# will get hidden with affixed menu#}
                 {% include '_emphysema.jinja2' %}
             </div>

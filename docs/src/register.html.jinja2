@@ -33,6 +33,12 @@
                 </div>
             </div>
             <div class="row">
+                {% if site=='sinai' %}
+                    <div class="col-sm-3 col-md-2 form-group">
+                        <label class="required" for="simrn">Medical Record Number</label>
+                        <input type=text name="simrn" class="form-control required">
+                    </div>
+                {% else %}
                 <div class="col-sm-6 col-md-3 form-group">
                     <label class="required">
                         <abbr title="Social Security Number" data-params-attr='{"title":"socialSecurityNumber"}'>
@@ -47,6 +53,7 @@
                            pattern="^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                            data-fv-regexp___message="Value is invalid"/>
                 </div>
+                {% endif %}
             </div>
             <hr/>
             <div class="pull-right">

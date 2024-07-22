@@ -371,10 +371,29 @@ AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  ;
  new sex set sex=$get(@root@(ien,"sex"))
  ;
- new rtn set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
+ new simrn
+ set simrn=$$GETMRN(sid)
+ ;
+ new rtn set rtn=""
+ if simrn'="" do  ;
+ . set rtn=simrn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
+ else  do  ;
+ . set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  ;
  quit rtn ; end of $$GETHDR-AGE
  ;
+GETMRN(sid) ; get the MRN, which supercedes the ssn as the patient identifier
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new ien set ien=$order(@root@("sid",sid,""))
+ new simrn
+ set simrn=$get(@root@(ien,"simrn"))
+ if simrn="" d  ;
+ . new siform
+ . set siform=$order(@root@("graph",sid,"siform"))
+ . quit:siform=""
+ . set simrn=$get(@root@("graph",sid,siform,"simrn"))
+ quit simrn
  ;
  ;
  ;@section 2 code for ppis $$GETLAST5^SAMIFORM,FIXSRC^SAMIFORM,FIXHREF^SAMIFORM
@@ -405,7 +424,7 @@ GETLAST5 ; last5 for patient sid
  new ien set ien=$order(@root@("sid",sid,""))
  quit:ien=""
  ;
- quit $g(@root@(ien,"last5")) ; end of ppi $$GETLAST5^SAMIFORM
+ quit $get(@root@(ien,"last5")) ; end of ppi $$GETLAST5^SAMIFORM
  ;
  ;
  ;

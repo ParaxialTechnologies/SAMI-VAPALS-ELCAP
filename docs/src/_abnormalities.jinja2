@@ -935,38 +935,6 @@
         </div>
     </div>
 
-    {# Bone Abnormalities #}
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" data-toggle="collapse" href="#bone-container" aria-expanded="true"
-             aria-controls="bone-container" data-field-name="ceaba" style="cursor:pointer;">
-            <h4 class="panel-title">
-                <i class="fa-regular fa-chevron-down"></i>
-                <i class="fa-regular fa-chevron-up" style="display: none;"></i>
-                Bone
-            </h4>
-        </div>
-        <div id="bone-container" class="panel-collapse collapse" role="tabpanel">
-            <div class="panel-body">
-                <input type="hidden" name="ceaba"/>
-                <div class="row">
-                    <div class="form-group col-sm-12">
-                        <label for="ceaoabb">Specify bone abnormalities</label>
-                        <textarea name="ceaoabb" id="ceaoabb" class="form-control"></textarea>
-                        {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
-                    </div>
-                </div>
-                {% if (site == 'sinai') %}
-                    <div class="row">
-                        <div class="form-group col-sm-12">
-                            <label for="ceaibc">AI Bone Comments</label>
-                            <textarea name="ceaibc" id="ceaibc" class="form-control"></textarea>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
     {# Abdominal Abnormalities #}
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" data-toggle="collapse" href="#abdominal-container"
@@ -1118,6 +1086,38 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {# Bone Abnormalities #}
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" data-toggle="collapse" href="#bone-container" aria-expanded="true"
+             aria-controls="bone-container" data-field-name="ceaba" style="cursor:pointer;">
+            <h4 class="panel-title">
+                <i class="fa-regular fa-chevron-down"></i>
+                <i class="fa-regular fa-chevron-up" style="display: none;"></i>
+                Bone
+            </h4>
+        </div>
+        <div id="bone-container" class="panel-collapse collapse" role="tabpanel">
+            <div class="panel-body">
+                <input type="hidden" name="ceaba"/>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label for="ceaoabb">Specify bone abnormalities</label>
+                        <textarea name="ceaoabb" id="ceaoabb" class="form-control"></textarea>
+                        {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
+                    </div>
+                </div>
+                {% if (site == 'sinai') %}
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label for="ceaibc">AI Bone Comments</label>
+                            <textarea name="ceaibc" id="ceaibc" class="form-control"></textarea>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

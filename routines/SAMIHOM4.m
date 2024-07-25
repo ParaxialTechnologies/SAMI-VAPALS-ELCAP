@@ -590,8 +590,8 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  n name s name=$g(SAMIARG("name"))
  ;
  m ^gpl("reg")=SAMIARG
- n ssn s ssn=SAMIARG("ssn")
- s ssn=$tr(ssn,"-")
+ n ssn s ssn=$g(SAMIARG("ssn"))
+ i ssn'="" s ssn=$tr(ssn,"-")
  s SAMIARG("errorMessage")=""
  s SAMIARG("errorField")=""
  ; test for duplicate ssn
@@ -660,8 +660,8 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  ;
 MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  ;
- n ssn s ssn=SAMIARG("ssn")
- s ssn=$tr(ssn,"-")
+ n ssn s ssn=$g(SAMIARG("ssn"))
+ i ssn'="" s ssn=$tr(ssn,"-")
  n name s name=$g(SAMIARG("name"))
  n sinamef,sinamel
  s sinamel=$p(name,","),sinamel=$$TRIM^XLFSTR(sinamel,"LR")
@@ -687,7 +687,9 @@ MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  s @root@(ptlkien,"sex")=$g(SAMIARG("gender"))
  ; s @root@(ptlkien,"icn")=SAMIARG("icn")
  s @root@(ptlkien,"ssn")=ssn
- n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
+ s @root@(ptlkien,"simrn")=$g(SAMIARG("simrn"))
+ n last5 s last5=""
+ i ssn'="" s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
  n mymatch s mymatch=$g(SAMIARG("MATCHLOG"))
  i mymatch'="" s @root@(ptlkien,"MATCHLOG")=mymatch

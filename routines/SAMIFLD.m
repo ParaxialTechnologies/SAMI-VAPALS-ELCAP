@@ -344,16 +344,18 @@ GETHDR(sid) ; header string for patient sid
  if $get(@root@(ien,"ssn"))="" do PREFILL^SAMIHOM3(dfn) ; update from Vista
  if $get(@root@(ien,"sbdob"))=-1 do PREFILL^SAMIHOM3(dfn) ; update from Vista
  ;
- if $get(@root@(ien,"ssn"))="" quit "" ; patient info not available
- new pssn set pssn=$get(@root@(ien,"sissn"))
- if pssn["sta" set pssn=""
- if pssn="" do  ;
- . new orgssn
- . set orgssn=$get(@root@(ien,"ssn"))
- . quit:orgssn=""
- . set pssn=$extract(orgssn,1,3)_"-"_$extract(orgssn,4,5)_"-"_$extract(orgssn,6,9)
- . set @root@(ien,"sissn")=pssn
- . quit
+ n pssn s pssn="" ; will be ssn with dashes
+ ; if $get(@root@(ien,"ssn"))="" quit "" ; patient info not available
+ if $get(@root@(ien,"ssn"))'="" do  ;
+ . set pssn=$get(@root@(ien,"sissn"))
+ . if pssn["sta" set pssn=""
+ . if pssn="" do  ;
+ . . new orgssn
+ . . set orgssn=$get(@root@(ien,"ssn"))
+ . . quit:orgssn=""
+ . . set pssn=$extract(orgssn,1,3)_"-"_$extract(orgssn,4,5)_"-"_$extract(orgssn,6,9)
+ . . set @root@(ien,"sissn")=pssn
+ . . quit
  ;
 AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  i dob["-" s dob=$e(dob,6,7)_"/"_$e(dob,9,10)_"/"_$e(dob,1,4)
@@ -371,28 +373,37 @@ AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  ;
  new sex set sex=$get(@root@(ien,"sex"))
  ;
- new simrn
- set simrn=$$GETMRN(sid)
+ new simrn,sipid
+ set simrn=$$GETMRN(sid,.sipid)
+ ;set sipid=$g(@root@(ien,"sipid"))
  ;
  new rtn set rtn=""
  if simrn'="" do  ;
- . set rtn=simrn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
+ . set rtn=sipid_" "_simrn_" DOB: "_dob_" GENDER: "_sex
  else  do  ;
  . set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  ;
  quit rtn ; end of $$GETHDR-AGE
  ;
-GETMRN(sid) ; get the MRN, which supercedes the ssn as the patient identifier
+GETMRN(sid,pid) ; get the MRN, which supercedes the ssn as the patient identifier
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new ien set ien=$order(@root@("sid",sid,""))
- new simrn
- set simrn=$get(@root@(ien,"simrn"))
+ new simrn,sipid
+ ;set simrn=$get(@root@(ien,"simrn"))
+ ;set sipid=$get(@root@(ien,"sipid"))
+ set (simrn,sipid)=""
  if simrn="" d  ;
  . new siform
  . set siform=$order(@root@("graph",sid,"siform"))
  . quit:siform=""
  . set simrn=$get(@root@("graph",sid,siform,"simrn"))
+ if sipid="" d  ;
+ . new siform
+ . set siform=$order(@root@("graph",sid,"siform"))
+ . quit:siform=""
+ . set sipid=$get(@root@("graph",sid,siform,"sipid"))
+ . set pid=sipid
  quit simrn
  ;
  ;

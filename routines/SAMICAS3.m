@@ -525,8 +525,10 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . set @root@("graph",sid,key,"sidoe")=basedt
  . set @root@("graph",sid,key,"cedcs")=lastdt
  . set @root@("graph",sid,key,"cedps")=priordt
+ . ;
+ . ; set clinical information line for billing
+ . set @root@("graph",sid,key,"ceclin")=$$CLINSUM^SAMICAS4(sid)
  . quit
- ;
  ;
  ;@stanza 3 termination
  ;

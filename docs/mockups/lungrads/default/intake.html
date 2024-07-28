@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="lungrads" name="base"/>
   <meta content="default" name="site"/>
-  <meta content="2024.07.22" name="version"/>
+  <meta content="2024.07.27" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening Intake Form
@@ -66,19 +66,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.07.22">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.07.27">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.07.22">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.07.27">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.07.22">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.07.27">
   </script>
-  <script src="../../../www/vapals.js?v=2024.07.22">
+  <script src="../../../www/vapals.js?v=2024.07.27">
   </script>
-  <script src="../../../www/init.js?v=2024.07.22">
+  <script src="../../../www/init.js?v=2024.07.27">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.07.22">
+  <script src="../../../www/nodule-grid.js?v=2024.07.27">
   </script>
-  <script src="../../../www/ai.js?v=2024.07.22">
+  <script src="../../../www/ai.js?v=2024.07.27">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -1921,6 +1921,7 @@
             // SINAI INTAKE SECTION
             $("[name=sihap]").conditionallyDisplay({sourceValues: "ot", enable: "#sihap-container"});
             $("[name=sies]").conditionallyDisplay({sourceValues: "os", enable: "#sies-os-container"});
+            $("[name=sies]").conditionallyDisplay({sourceValues: "ex", enable: "#sies-ex-container"});
             $("[name=sicfs]").conditionallyDisplay({sourceValues: "n", enable: "#sicfs-n-container"});
             $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
             $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
@@ -1930,7 +1931,7 @@
                     $("#sirr").prop("checked", true);
                 }
             });
-            $("[name=sies]").conditionallyEnable({sourceValues: "ex", enable: "#sidod"})
+            
             //enabled : $("#sistachg").val() === "deceased" || $("sies").val() === "ex",
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
@@ -1979,7 +1980,8 @@
             }
 
             //INTAKE
-            $("#silnot").conditionallyEnable({sourceValues: "1", enable: "#silnoo"});
+            $("#silnot").conditionallyDisplay({sourceValues: "1", enable: "#silnoo"});
+            $("#sirn").conditionallyDisplay({sourceValues: "os", enable: "#sirns"});
             $("#sistachg").conditionallyDisplay({sourceValues: "deceased", enable: "#date-of-death-container"})
             $("#sicpd").on('keyup change', function () {
                 const cigsPerDay = $("#sicpd").val();

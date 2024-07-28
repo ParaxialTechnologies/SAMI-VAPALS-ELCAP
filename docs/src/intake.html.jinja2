@@ -52,6 +52,10 @@
                         <label for="sidoe">Date of Baseline CT</label>
                         {{ f.datepicker("sidoe", "past", false) }}
                     </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sidc" class="required">Date of contact</label>
+                        {{ f.datepicker("sidc", "past", true) }}
+                    </div>
                     <div class="col-sm-3 col-md-2 form-group">
                         <label for="simrn" class="required">Medical Record Number</label>
                         <input type=text name="simrn" class="form-control required">
@@ -127,7 +131,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-6 col-sm-12 form-group">
                         <label for="siadcomna">Comments</label>
@@ -143,6 +146,83 @@
                     </div>
                 </div>
                 <hr/>
+                <h3>Contact Information</h3>
+                <div class="row">
+                    <div class="form-group col-sm-6 ">
+                        <label for="sipsa">Address Line 1</label>
+                        <input type="text" name="sipsa" id="sipsa" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="sipan">Address Line 2</label>
+                        <input type="text" name="sipan" id="sipan" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="sipc">City</label>
+                        <input type="text" name="sipc" id="sipc" class="form-control">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="sips">State </label>
+                        <input type="text" name="sips" id="sips" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="sipz">Zip</label>
+                        <input type="text" name="sipz" id="sipz" class="form-control">
+                        <small class="text-muted" id="rural-text"></small>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="sipcr">Country</label>
+                        <input type="text" name="sipcr" id="sipcr" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3 col-sm-2">
+                        <label for="sipw">Phone (work)</label>
+                        <input type="text" name="sipw" id="sipw" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-2">
+                        <label for="siph">Phone (Home)</label>
+                        <input type="text" name="siph" id="siph" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-2">
+                        <label for="sipm">Phone (mobile)</label>
+                        <input type="text" name="sipm" id="sipm" class="form-control">
+                    </div>
+                </div>
+                <h3>Scheduling and Follow-up Calls and Letters</h3>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4 form-group">
+                        <label for="sicnc">Phone Calls</label>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{ f.inlineRadio("sicnc", "sicnc-0", "0", "0") }}
+                                {{ f.inlineRadio("sicnc", "sicnc-1", "1", "1") }}
+                                {{ f.inlineRadio("sicnc", "sicnc-2", "2", "2") }}
+                                {{ f.inlineRadio("sicnc", "sicnc-3", "3", "3") }}
+                                {{ f.inlineRadio("sicnc", "sicnc-x", "x", "X") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label for="sicnl">Letters</label>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{ f.inlineRadio("sicnl", "sicnl-0", "0", "0") }}
+                                {{ f.inlineRadio("sicnl", "sicnl-1", "1", "1") }}
+                                {{ f.inlineRadio("sicnl", "sicnl-2", "2", "2") }}
+                                {{ f.inlineRadio("sicnl", "sicnl-3", "3", "3") }}
+                                {{ f.inlineRadio("sicnl", "sicnl-x", "x", "X") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-6">
+                        <label for="sipci">Phone Call/Letter Information</label>
+                        <textarea name="sipci" class="form-control" rows=2></textarea>
+                    </div>
+                </div>
 
                 <h3>Insurance Information</h3>
                 <div class="row">
@@ -387,24 +467,32 @@
 
                 <h3>SDM Information</h3>
                 <div class="row">
-                    <div class="col-sm-6 col-md-4" id="sdm-col-1">
-                        <div class="row form-group">
-                            <label class="col-sm-6" for="sisdmr">SDM Required</label>
-                            <div class="col-sm-6">
-                                {{ f.inlineRadioYN("sisdmr") }}
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label class="col-sm-6" for="sisdmdoc">SDM Documentation Completed</label>
-                            <div class="col-sm-6">
-                                {{ f.inlineCheckbox("sisdmdoc", "y", "yes") }}
-                            </div>
-                        </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sisdmr">Required</label><br/>
+                        {{ f.inlineRadioYN("sisdmr") }}
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sisdmdoc">Documentation Completed</label><br/>
+                        {{ f.inlineRadioYN("sisdmdoc") }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-3 form-group">
-                        <label for="sies">Patient Status</label>
+                        <label for="sisdmpb">Performed By</label><br/>
+                        <input type=text class="form-control" name="sisdmpb" id="sisdmpb">
+                    </div>
+
+                    <div class="col-sm-3 form-group">
+                        <label for="sisdmdc">Date Completed</label>
+                        {{ f.datepicker("sisdmdc") }}
+                    </div>
+                </div>
+                <hr/>
+
+                <h3>Patient Status</h3>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sies">Status</label>
                         <select name="sies" class="form-control" id="sies">
                             <option value="ac"> active</option>
                             <option value="tr"> transferred to another institution (specify)</option>
@@ -429,9 +517,30 @@
                         <label for="sieso">Specify</label>
                         <input type=text name="sieso" class="form-control">
                     </div>
+                    <div id="sies-ex-container">
+                        <div class="col-sm-4 form-group">
+                            <label for="sidod">Date of Death
+                                <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                   tabindex="0" role="button" data-container="body"
+                                   data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
+                                   aria-hidden="true" title="Help"></i>
+                            </label>
+                            {{ f.datepicker("sidod", "past") }}
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label for="sicod">Cause of Death
+                                <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
+                                   tabindex="0" role="button" data-container="body"
+                                   data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."
+                                   aria-hidden="true" title="Help"></i>
+                            </label>
+                            <input type=text name="sicod" class="form-control">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 form-group">
+                    <div class="col-sm-4 form-group">
                         <label for="sixdate">Date of Exit
                             <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
                                tabindex="0" role="button" data-container="body" data-content="The Date of Exit should be recorded for all subjects who are no longer
@@ -440,23 +549,52 @@
                         </label>
                         {{ f.datepicker("sixdate", "past", true) }}
                     </div>
+                </div>
+                <hr>
+
+                <h3>Correspondence</h3>
+                <div class="row">
                     <div class="col-sm-3 form-group">
-                        <label for="sidod">Date of Death
-                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
-                               tabindex="0" role="button" data-container="body"
-                               data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."
-                               aria-hidden="true" title="Help"></i>
-                        </label>
-                        {{ f.datepicker("sidod", "past") }}
+                        <label for="sircd">Correspondence Date</label>
+                        {{ f.datepicker("sircd", "past") }}
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sired">Date of Exam</label>
+                        {{ f.datepicker("sired", "past") }}
                     </div>
                     <div class="col-sm-4 form-group">
-                        <label for="sicod">Cause of Death
-                            <i class="fa-regular fa-circle-question" data-toggle="popover" data-trigger="focus"
-                               tabindex="0" role="button" data-container="body"
-                               data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."
-                               aria-hidden="true" title="Help"></i>
-                        </label>
-                        <input type=text name="sicod" class="form-control">
+                        {{ f.inputText("sirc", "Coordinator") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label for="sirr">Recipient</label><br/>
+                        {{ f.inlineRadio("sirr", "sirr-s", "s", "patient") }}
+                        {{ f.inlineRadio("sirr", "sirr-m", "m", "physician") }}
+
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label for="sirn">Nature</label>
+                        <select class="form-control corr-info" id="sirn" name="sirn">
+                            <option value="-"> - </option>
+                            <option value="fr"> faxed report </option>
+                            <option value="mr"> mailed report </option>
+                            <option value="pr"> called to give results </option>
+                            <option value="ab"> Abx discussed with physician </option>
+                            <option value="bx"> Bx discussed with physician </option>
+                            <option value="mc"> Pt. has MyChart </option>
+                            <option value="ep"> Mt. Sinai MD has EPIC access </option>
+                            <option value="me"> Pt. has MyChart/MD has EPIC </option>
+                            <option value="os"> other (specify) </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        {{ f.inputText("sirns", "Specify", {}, true) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        {{ f.inputText("sirmd", "Physician Name (if recipient)") }}
                     </div>
                 </div>
                 <hr>
@@ -1501,6 +1639,7 @@
             // SINAI INTAKE SECTION
             $("[name=sihap]").conditionallyDisplay({sourceValues: "ot", enable: "#sihap-container"});
             $("[name=sies]").conditionallyDisplay({sourceValues: "os", enable: "#sies-os-container"});
+            $("[name=sies]").conditionallyDisplay({sourceValues: "ex", enable: "#sies-ex-container"});
             $("[name=sicfs]").conditionallyDisplay({sourceValues: "n", enable: "#sicfs-n-container"});
             $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
             $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
@@ -1510,7 +1649,7 @@
                     $("#sirr").prop("checked", true);
                 }
             });
-            $("[name=sies]").conditionallyEnable({sourceValues: "ex", enable: "#sidod"})
+            {#$("[name=sies]").conditionallyDisplay({sourceValues: "ex", enable: "#sidod"})#}
             //enabled : $("#sistachg").val() === "deceased" || $("sies").val() === "ex",
             //PRE-ENROLLMENT CHART ELIGIBILITY
             $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
@@ -1559,7 +1698,8 @@
             }
 
             //INTAKE
-            $("#silnot").conditionallyEnable({sourceValues: "1", enable: "#silnoo"});
+            $("#silnot").conditionallyDisplay({sourceValues: "1", enable: "#silnoo"});
+            $("#sirn").conditionallyDisplay({sourceValues: "os", enable: "#sirns"});
             $("#sistachg").conditionallyDisplay({sourceValues: "deceased", enable: "#date-of-death-container"})
             $("#sicpd").on('keyup change', function () {
                 const cigsPerDay = $("#sicpd").val();

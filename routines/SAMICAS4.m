@@ -47,6 +47,14 @@ CLINSUM(sid) ; extrinsic returns a one line clinical summary
  . . i smoker="f" d  ; current smoker
  . . . s clinstr=""
  . . . s $p(clinstr,";",3)="Former Smoker"
+ . . . n sbopqy s sbopqy=$g(@sbvars@("sbopqy"))
+ . . . i +sbopqy>0 s $p(clinstr,";",5)=sbopqy
+ . . i clinstr[";" d  ;
+ . . . n pkyrs s pkyrs=$g(@sbvars@("sbntpy"))
+ . . . i +pkyrs>0 s $p(clinstr,";",4)=pkyrs_" Pack Years"
+ . i clinstr[";" d  ; 
+ . . n aflc s aflc="Asymptomatic for lung cancer"
+ . . i $g(@sbvars@("sblcs"))="n" s $p(clinstr,";",2)=aflc
  ;
  s $p(clinstr,";",1)="Age: "_age
  Q clinstr

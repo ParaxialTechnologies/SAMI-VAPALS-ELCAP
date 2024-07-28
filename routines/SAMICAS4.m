@@ -18,6 +18,47 @@ CLINSUM(sid) ; extrinsic returns a one line clinical summary
  new clinstr ; the one line result
  set clinstr="[CHECK BACKGROUND - AGE/SMOKING HISTORY]" ; default if we fail
  ;
+ n root,gn,ien,dob,age,fufail,smoker
+ s smoker=""
+ s root=$$setroot^%wd("vapals-patients")
+ s ien=$o(@root@("sid",sid,""))
+ q:ien="" clinstr
+ s dob=@root@(ien,"dob")
+ s age=$$AGE^SAMICAS4(dob)
+ s fufail=1 ; default no followup forms found
+ s gn=$na(@root@("graph",sid))
+ ;
+ ; this is where we will look for followup forms
+ ;
+ if fufail do  ; if no followup forms were found, use the background form
+ . n sbform
+ . s sbform=$o(@gn@("sbform")) ; key to form
+ . n sbvars s sbvars=$na(@gn@(sbform))
+ . i @sbvars@("sbsru")="n" d  ; never smoker
+ . . s smoker="n"
+ . . s clinstr=""
+ . . s $p(clinstr,";",3)="Never Smoker"
+ . i @sbvars@("sbsru")="y" d  ; smoker
+ . . i @sbvars@("sbshsa")="y" s smoker="c" ; current smoker
+ . . i @sbvars@("sbshsa")="n" s smoker="f" ; former smoker
+ . . i smoker="c" d  ; current smoker
+ . . . s clinstr=""
+ . . . s $p(clinstr,";",3)="Current Smoker"
+ . . i smoker="f" d  ; current smoker
+ . . . s clinstr=""
+ . . . s $p(clinstr,";",3)="Former Smoker"
+ ;
+ s $p(clinstr,";",1)="Age: "_age
  Q clinstr
  ;
- 
+AGE(dob) ; extrinsic derives the age from the dob
+ i dob["-" s dob=$e(dob,6,7)_"/"_$e(dob,9,10)_"/"_$e(dob,1,4)
+ i dob'["/" s dob=$e(dob,5,6)_"/"_$e(dob,7,8)_"/"_$e(dob,1,4)
+ new X set X=dob
+ new Y
+ do ^%DT
+ ;
+ new age s age=$$age^%th(Y)
+ ;
+ quit age
+ ;

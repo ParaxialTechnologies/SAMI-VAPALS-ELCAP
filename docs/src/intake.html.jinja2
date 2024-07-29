@@ -105,6 +105,18 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-3 form-group">
+                        <label for="sipapr-s">Participant Program</label><br/>
+                        {{ f.inlineRadio("sipapr", "sipapr-s", "s", "Screening") }}
+                        {{ f.inlineRadio("sipapr", "sipapr-o", "o", "Other") }}
+                        <div id="sipapr-o-container">
+                            <label class="aria-hidden" for="sipapro">Specify</label>
+                            <input class="form-control" type="text" name="sipapro" id="sipapro"
+                                   placeholder="specify">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
                         <label for="sirp">Research Protocol</label><br/>
                         {{ f.inlineRadioYN("sirp") }}
                     </div>
@@ -1641,6 +1653,7 @@
             $("[name=sies]").conditionallyDisplay({sourceValues: "os", enable: "#sies-os-container"});
             $("[name=sies]").conditionallyDisplay({sourceValues: "ex", enable: "#sies-ex-container"});
             $("[name=sicfs]").conditionallyDisplay({sourceValues: "n", enable: "#sicfs-n-container"});
+            $("[name=sipapr]").conditionallyDisplay({sourceValues: "o", enable: "#sipapr-o-container"});
             $("[name=sicrd]").conditionallyDisplay({enable: "#sicrd-ydd-container, #sicrd-ydn-container"});
             $("[name=sicmrb]").conditionallyDisplay({enable: "#sicmrb-y-container"});
             $("[name=sicu54]").conditionallyDisplay({enable: "#sicu54-y-container"});

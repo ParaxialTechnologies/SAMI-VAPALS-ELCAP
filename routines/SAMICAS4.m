@@ -47,8 +47,12 @@ CLINSUM(sid) ; extrinsic returns a one line clinical summary
  . . i smoker="f" d  ; current smoker
  . . . s clinstr=""
  . . . s $p(clinstr,";",3)="Former Smoker"
- . . . n sbopqy s sbopqy=$g(@sbvars@("sbopqy"))
- . . . i +sbopqy>0 s $p(clinstr,";",5)=sbopqy
+ . . . n sbsdlcd,sbsdlcm,sbsdlcy
+ . . . s sbsdlcd=$g(@sbvars@("sbsdlcd"))
+ . . . s sbsdlcm=$g(@sbvars@("sbsdlcm"))
+ . . . s sbsdlcy=$g(@sbvars@("sbsdlcy"))
+ . . . n sbopqy s sbopqy=$$YRSAGO(sbsdlcm,sbsdlcd,sbsdlcy)
+ . . . s:sbopqy $p(clinstr,";",5)="Quit "_sbopqy_" years ago"
  . . i clinstr[";" d  ;
  . . . n pkyrs s pkyrs=$g(@sbvars@("sbntpy"))
  . . . i +pkyrs>0 s $p(clinstr,";",4)=pkyrs_" Pack Years"
@@ -69,4 +73,18 @@ AGE(dob) ; extrinsic derives the age from the dob
  new age s age=$$age^%th(Y)
  ;
  quit age
+ ;
+YRSAGO(mo,da,yr) ; extrinsic which returns how many years ago was a date
+ ;
+ n dtdt,umo,uda,diff
+ s:'mo mo=1
+ s:'da da=1
+ s dtdt=mo_"/"_da_"/"_yr
+ n X,Y
+ s X=dtdt
+ d ^%DT
+ ;w !,Y
+ S diff=$$FMDIFF^XLFDT($$NOW^XLFDT,Y,1)/365
+ S diff=$p(diff,".")
+ Q diff
  ;

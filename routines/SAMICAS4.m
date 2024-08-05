@@ -37,27 +37,27 @@ CLINSUM(sid) ; extrinsic returns a one line clinical summary
  . i @sbvars@("sbsru")="n" d  ; never smoker
  . . s smoker="n"
  . . s clinstr=""
- . . s $p(clinstr,";",3)="Never Smoker"
+ . . s $p(clinstr,";",3)=" Never Smoker"
  . i @sbvars@("sbsru")="y" d  ; smoker
  . . i @sbvars@("sbshsa")="y" s smoker="c" ; current smoker
  . . i @sbvars@("sbshsa")="n" s smoker="f" ; former smoker
  . . i smoker="c" d  ; current smoker
  . . . s clinstr=""
- . . . s $p(clinstr,";",3)="Current Smoker"
+ . . . s $p(clinstr,";",3)=" Current Smoker"
  . . i smoker="f" d  ; current smoker
  . . . s clinstr=""
- . . . s $p(clinstr,";",3)="Former Smoker"
+ . . . s $p(clinstr,";",3)=" Former Smoker"
  . . . n sbsdlcd,sbsdlcm,sbsdlcy
  . . . s sbsdlcd=$g(@sbvars@("sbsdlcd"))
  . . . s sbsdlcm=$g(@sbvars@("sbsdlcm"))
  . . . s sbsdlcy=$g(@sbvars@("sbsdlcy"))
  . . . n sbopqy s sbopqy=$$YRSAGO(sbsdlcm,sbsdlcd,sbsdlcy)
- . . . s:sbopqy $p(clinstr,";",5)="Quit "_sbopqy_" years ago"
+ . . . s:sbopqy $p(clinstr,";",5)=" Quit "_sbopqy_" years ago"
  . . i clinstr[";" d  ;
  . . . n pkyrs s pkyrs=$g(@sbvars@("sbntpy"))
- . . . i +pkyrs>0 s $p(clinstr,";",4)=pkyrs_" Pack Years"
+ . . . i +pkyrs>0 s $p(clinstr,";",4)=" "_pkyrs_" Pack Years"
  . i clinstr[";" d  ; 
- . . n aflc s aflc="Asymptomatic for lung cancer"
+ . . n aflc s aflc=" Asymptomatic for lung cancer"
  . . i $g(@sbvars@("sblcs"))="n" s $p(clinstr,";",2)=aflc
  ;
  s $p(clinstr,";",1)="Age: "_age

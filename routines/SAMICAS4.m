@@ -59,8 +59,13 @@ CLINSUM(sid) ; extrinsic returns a one line clinical summary
  . i clinstr[";" d  ; 
  . . n aflc s aflc=" Asymptomatic for lung cancer"
  . . i $g(@sbvars@("sblcs"))="n" s $p(clinstr,";",2)=aflc
+ . ;
+ . ; carry over the Clinical information text from the background form
+ . n savtxt s savtxt=$g(@sbvars@("sbopci"))
+ . i savtxt'="" s clinstr=clinstr_$CHAR(13)_savtxt
  ;
  s $p(clinstr,";",1)="Age: "_age
+ ;
  Q clinstr
  ;
 AGE(dob) ; extrinsic derives the age from the dob

@@ -316,6 +316,9 @@ WSDCMKIL(return,filter) ; kill all but the first entry in dcm-intake
  ;
 MKSVC() ; create the web services
  ;
+ d deleteService^%webutils("POST","dcmimgin")
+ d addService^%webutils("POST","dcmimgin","WSDCMIN^SAMIDCM1")
+ ;
  d deleteService^%webutils("POST","dcmin")
  d addService^%webutils("POST","dcmin","WSDCMIN^SAMIDCM1")
  ;

@@ -76,6 +76,8 @@ WSDCMIN(ARGS,BODY,RESULT,ien)    ; recieve from addpatient
  i '$d(@gp) d  ;
  . s gp=$na(@root@(ien,"patient_details"))
  . q:$d(@gp)
+ . s gp=$na(@root@(ien,"json"))
+ . q:$d(@gp@("PatientName"))
  . s return("error")="Missing patient study details"
  ;
  ;patient_study_details 
@@ -100,6 +102,7 @@ WSDCMIN(ARGS,BODY,RESULT,ien)    ; recieve from addpatient
  d  ; Extract Identifying information
  . n vars
  . n name s name=$g(@gp@("Patient's Name"))
+ . i name="" s name=$g(@gp@("PatientName"))
  . i name="" s vars("name")=name
  . e  s vars("name")=$$normaliz(name)
  . n dob s dob=$g(@gp@("Patient's Birth Date"))
@@ -188,6 +191,8 @@ MATCH(vars) ; extrinsic which tries to match the message with an
 normaliz(name) ; extrinsic which tries to normalize the name
  ;
  n znam s znam=name
+ i name["^" d  q znam  ;; if name has Dicom separator
+ . s znam=$tr(znam,"^",",")
  i name'["," d  ; if no comma, then try a space
  . i $l(name," ")>0 d  ;
  . . n fnam,lnam

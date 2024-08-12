@@ -1,6 +1,6 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-27t22:07z
- ;;18.0;SAMI;**9,12,15,16,17**;2020-01
- ;18-17
+SAMIHUL ;ven/gpl - ielcap: home page log ;2024-08-12t23:19z
+ ;;18.0;SAMI;**9,12,15,16,17**;2024-08
+ ;18-18
  ;
  ; SAMIHOM3 contains subroutines for producing the ELCAP Home Page.
  ; SAMIHUL contains the development log for the SAMIHOM* routines.
@@ -22,12 +22,12 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-27t22:07z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-04-27t22:07z
+ ;@last-update 2024-08-12t23:19z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-15
- ;@release-date 2020-01
+ ;@version 18-18
+ ;@release-date 2024-08
  ;@patch-list **9,12,15,16**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
@@ -265,6 +265,13 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2022-04-27t22:07z
  ;
  ; 2022-04-27 ven/lmry 18-17
  ;  SAMIHOM4 and SAMIHUL bumped dates, inserted space for XINDEX
+ ;
+ ; 2024-07-24 ven/gpl 18.18 8d86b80
+ ;  SAMIHOM4: copy simrn to the vapals-patient record after entry
+ ;
+ ; 2024-08-12 ven/lmry 18.18
+ ;  SAMIHOM4: bump version and date
+ ;  SAMIHUL: add history, bump version and date
  ;  
  ;
  ;@contents

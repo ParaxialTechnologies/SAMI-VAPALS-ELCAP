@@ -1,6 +1,6 @@
-SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
- ;;18.0;SAMI;**16**;2020-01;Build 2
- ;18-16
+SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2024-08-12t22:41z
+ ;;18.0;SAMI;**16**;2024-08;
+ ;18-18
  ;
  ;@license: see routine SAMIUL
  ;
@@ -13,15 +13,15 @@ SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
  ; gpl@vistaexpertise.net
  ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-01-18t00:42z
+ ;@last-update 2024-08-12t22:41z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-16
- ;@release-date 2020-01
+ ;@version 18-18
+ ;@release-date 2024-08
  ;@patch-list **16**
  ;
  ;
@@ -42,7 +42,16 @@ SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
+ ; to-do enter complete module log
  ;
+ ;2024-08-07 ven/gpl b0b3044
+ ; SAMIDCM1 added web service for sending image transactions
+ ;
+ ;2024-08-10 ven/gpl dd7c219
+ ; SAMIDCM1 changes to accept the image json format
+ ;
+ ;2024-08-12 ven/lmry
+ ; SAMIDCM1 start module-log, update version and dates
  ;
  ;
  Q

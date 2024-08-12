@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - case review log ;2021-10-29t02:24z
- ;;18.0;SAMI;**9,11,12,14,15**;2020-01;
- ;;18.15
+SAMICUL ;ven/gpl - case review log ;2024-08-12t22:10z
+ ;;18.0;SAMI;**9,11,12,14,15**;2024-08;
+ ;;18.18
  ;
  ; SAMICUL contains the development log for the VAPALS-IELCAP Case
  ; Review Page (SAMICA* routines).
@@ -19,15 +19,15 @@ SAMICUL ;ven/gpl - case review log ;2021-10-29t02:24z
  ; gpl@vistaexpertise.net
  ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-10-29t02:24z
+ ;@last-update 2024-08-12t22:10z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.15
- ;@release-date 2020-01
+ ;@version 18.18
+ ;@release-date 2022-08
  ;@patch-list **9,11,12,14,15**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
@@ -321,6 +321,37 @@ SAMICUL ;ven/gpl - case review log ;2021-10-29t02:24z
  ; 2021-10-26 ven/gpl 18.15 23e68f40
  ;  SAMICAS3 initialize last comparitive and prior scan fields to blank if
  ;  there were none
+ ;
+ ; 2024-07-24 ven/gpl 18.18 fefbf29
+ ;  SAMICAS3 changes for Mt. Sinai MRN and STUDYID
+ ;
+ ; 2024-07-25 ven/gpl 18.18 21f8aa1
+ ;  SAMICAS4 start new routine to generate Mt. Sinai clinical information line
+ ;   to carry over to CTEVAL from Background form
+ ;
+ ; 2024-07-25 ven/gpl 18.18  2e91afbf
+ ;  SAMICAS4 progress on clinical information for the cteval form
+ ;
+ ; 2024-07-28 ven/gpl 18.18   386103d
+ ; SAMICAS4 background form clinic information text extract for cteval form
+ ;  complete
+ ;
+ ; 2024-08-03 ven/gpl 18.18 2524afd
+ ; SAMICAS4 added number of years since quitting to the Clinical Information
+ ;  string
+ ;
+ ; 2024-08-05 ven/gpl 18.18 b92768b
+ ; SAMICAS4 added a space afte the ';' in the clinical information text
+ ;  of the CT form
+ ;
+ ; 2024-08-06 ven/gpl 18.18 8e2a78f
+ ; SAMICAS4 preserve the clinical information from the background form to
+ ;  CTEVAL
+ ;
+ ; 2024-08-12 ven/lmry 18.18 
+ ; SAMICAS3, SAMICAS4, SAMICUL update history in SAMICUL, bump dates and 
+ ;  versions in all
+ ;
  ;
  ;@contents
  ; SAMICASE case review

@@ -1,6 +1,6 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review ;2021-03-21T23:51Z
- ;;18.0;SAMI;**10**;2020-01;Build 11
- ;;1.18.0.10-i10
+SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-12t22:46z
+ ;;18.0;SAMI;**10**;2024-08;
+ ;;18.18
  ;
  ; SAMIFLD contains subroutines for processing ELCAP forms, loading
  ; JSON data into the graphstore for each line. Since three of those
@@ -8,6 +8,7 @@ SAMIFLD ;ven/gpl - elcap: form load & case review ;2021-03-21T23:51Z
  ; additional subroutines are included that are not part of the LOAD
  ; opus but are called by WSCASE^SAMICASE.
  ; SAMIFLD contains no public entry points (see SAMIFORM).
+ ; see SAMIFUL for module-log
  ;
  quit  ; no entry from top
  ;
@@ -22,17 +23,16 @@ SAMIFLD ;ven/gpl - elcap: form load & case review ;2021-03-21T23:51Z
  ; gpl@vistaexpertise.net
  ;@primary-dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-03-21T23:51Z
+ ;@last-updated 2024-08-12t22:46z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - VAPALS-ELCAP (SAMI)
- ;@version 1.18.0.10-i10
- ;@release-date 2020-01
+ ;@version 18.18
+ ;@release-date 2024-08
  ;@patch-list **10**
- ;@build 11
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

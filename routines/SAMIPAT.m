@@ -1,6 +1,6 @@
-SAMIPAT ;ven/toad - init subroutines ;2022-12-28t06:00z
+SAMIPAT ;ven/toad - init subroutines ;2024-08-11t21:26z
  ;;18.0;SAMI;**12,14,15,17**;2020-01;
- ;;18-17
+ ;;18-18
  ;
  ; Routine SAMIPAT contains VAPALS-ELCAP initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -18,15 +18,15 @@ SAMIPAT ;ven/toad - init subroutines ;2022-12-28t06:00z
  ; toad@vistaexpertise.net
  ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2021, toad, all rights reserved
+ ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-12-28t06:00z
+ ;@last-update 2024-08-11t21:26z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18.17
- ;@release-date 2020-01
+ ;@version 18.18
+ ;@release-date 2024-08
  ;@patch-list **12,14,15,17**
  ;
  ;@dev-add Kenneth W. McGlothlen (mcglk)
@@ -69,14 +69,17 @@ SAMIPAT ;ven/toad - init subroutines ;2022-12-28t06:00z
  ; 2022-04-04 ven/lmry 18-17   258bc926
  ;  SAMIPAT  Update for 18-17-t1 patch
  ;
- ; 2022-04-27 ven/lmry 18-17
+ ; 2022-04-27 ven/lmry 18-17   03b87fe
  ;  SAMIPAT  Update for 18-17-t2 patch
  ;
- ; 2022-12-13 ven/lmry 18-17
+ ; 2022-12-13 ven/lmry 18-17   1ebd6e6
  ;  SAMIPAT: Update for 18-17-t3 patch
  ;
- ; 2022-12-28 ven/lmry 18-17
+ ; 2022-12-28 ven/lmry 18-17   956e2716
  ;  SAMIPAT: Update for 18-17-t4 patch
+ ;
+ ; 2024-08-12 ven/lmry
+ ;  SAMIPAT: Update for 18-18-t1 patch
  ;
  ;
  ;@contents
@@ -85,7 +88,7 @@ SAMIPAT ;ven/toad - init subroutines ;2022-12-28t06:00z
  ; POS1814 kids post-install for sami 18.14
  ; POS1815 kids post-install for sami 18.15
  ; POS1817 kids post-install for sami 18.17
- ;
+ ; POS1818 kids post-install for sami 18.18
  ;
  ;
  ;@section 1 subroutine for most patches
@@ -154,7 +157,16 @@ POS1817 ; kids post-install for sami 18.17
  ;
  quit  ; end of kids-post POS1817^SAMIPAT
  ;
+ ;@section 6 subroutines for SAMI 18.18
  ;
+ ;@kids-post POST1818^SAMIPAT
+POS1818 ; kids post-install for sami 18.18
+ ;
+ do STANDARD
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-18-t1")
+ ;
+ quit  ; end of kids-post POS1818^SAMIPAT
+
  ;@section X subroutines for future versions...
  ;
  ;

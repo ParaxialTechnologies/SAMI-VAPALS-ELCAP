@@ -1,9 +1,9 @@
-SAMIFUL ;ven/gpl - vapals-elcap: form log ;2021-03-21T23:32Z
- ;;18.0;SAMI;**10**;2020-01;
- ;;1.18.0.10-i10
+SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-12t23:08z
+ ;;18.0;SAMI;**10**;2024-08;
+ ;;18.18
  ;
  ; SAMIFUL contains routine & module info & the primary development
- ; log for VAPALS-ELCAP's Form module, SAMIF.
+ ; log for VAPALS-ELCAP's Form modules, SAMIF*.
  ; It contains no public interfaces or executable code.
  ;
  quit  ; no entry from top
@@ -19,15 +19,15 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ;2021-03-21T23:32Z
  ; gpl@vistaexpertise.net
  ;@primary-dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-03-21T23:32Z
+ ;@last-updated 2024-08-12t23:08z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
- ;@version 1.18.0.10-i10
- ;@release-date 2020-01
+ ;@version 18.18
+ ;@release-date 2024-08
  ;@patch-list **10**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
@@ -257,6 +257,16 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ;2021-03-21T23:32Z
  ;
  ; 2021-03-21 ven/toad 1.18.0.10-i10
  ;  SAMIFLD: bump date & version, lt refactor.
+ ;
+ ; 2024-07-22 ven/gpl 18.18	233ae5d
+ ;  SAMIFLD: use the MRN if available as the patient identifier in the header
+ ;
+ ; 2024-07-24 ven/gpl 18.18  fefbf29
+ ; SAMIFLD: changes for Mt. Sinai MRN and STUDYID
+ ;
+ ; 2024-08-12 ven/lmry 18.18
+ ;  SAMIFLD: bump versions and dates
+ ;  SAMIFUL: add history, bump versions and dates
  ;
  ;
  ;

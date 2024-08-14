@@ -1,13 +1,13 @@
-#:patchtitle: CT Eval Recommendation Report
+#:patchtitle: Mt. Sinai Changes Patch 1
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
-#:version: 18-17-t4
-#:rversion: 18-17
-#:partialdir: 18-17/t4
+#:version: 18-18-t1
+#:rversion: 18-18
+#:partialdir: 18-18/t1
 #:status: test release
-#:vista-version: SAMI*18.0*17 SEQ #17 T4
-#:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Test 4
+#:vista-version: SAMI*18.0*18 SEQ #18 T1
+#:vista-longversion: Version 18.0, Patch ID #18, Seq #18, Test 1
 #:priority: high
 #:categories: routine, file
 $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
@@ -43,6 +43,7 @@ i. Front matter
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
              SAMI 18-13 (SAMI*18.0*13 SEQ #13)
              SAMI 18-15 (SAMI*18.0*15 SEQ #15)
+             SAMI 18-17 (SAMI*18.0*17 SEQ #17)
 
 ii. Contents
 
@@ -72,14 +73,14 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds one high-priority update to add a user report to show
- CT Eval recommendations.
+ #{nmsp} #{version} adds two high-priority updates to accomodate Mt. Sinai's
+ workflow
 
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is at
  the following public Github repository:
 
- https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+ https://github.com/ParaxialTechnologies/SAMI-VAPALS-ELCAP
 
  The most up-to-date and accurate version of this file can be found at
 
@@ -87,20 +88,31 @@ ii. Contents
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
- to your VAPALS-ELCAP support team.
+ to your Screening+ support team.
 
  The changes in this patch are:
 
 
- #.#. Add a user report to show CT Eval recommendations
+ #.#. Insert clinical information string in CT Eval form
 
-   unnumbered issue (high priority): Develop a new user report that
-   shows recommendations from completed CT Evaluations. Allow sorting by
-   type of recommendation and put totals at top of columns.
+   1a (high priority): Clinical information field on the CT Eval form to be auto
+   filled based on responses to questions in the background form 
 
-   solution: Added report.
+   solution: Developed clinical information string from background form and
+   inserted into new CT Eval form
 
-   reported: 2022-12-09 by Henschke and Avila.
+   reported: 2024-07-11 by iELCAP team
+   
+  #.#. Support MRN and StudyID use
+
+   2, 3 (high priority): iELCAP uses the Epic MRN and Study ID instead of 
+   Social Security Number to identify patients. Screening+ needs to support the
+   use of these patient IDs in the correct places.
+    
+   solution: Changed graphstore and forms to support the use of alternate
+   patient IDs
+
+   reported: 2024-07-11 by iELCAP team  
 
 
 #. Package elements
@@ -364,18 +376,18 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2022-12-15/17      George P. Lilly (ven)
+ Developed   2024-07-01/08-10   George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2022-12-28/30      George P. Lilly (ven)
+ Tested      2024-08-06/14      George P. Lilly (ven)
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
- Released    2022-12-31         Frederick D. S. Marshall (ven)
+ Released    2024-08-14         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

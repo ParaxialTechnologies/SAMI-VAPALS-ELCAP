@@ -1,90 +1,96 @@
-:doctitle: SAMI Patching Checklist for 18-18-t1
-
-This version was changed to 18-17-b5 and abandoned before finishing 
+:doctitle: SAMI Patching Checklist for 18-17-b6 
 
 [role="h1 center"]
-SAMI Patching Checklist for 18-18-t1
+SAMI Patching Checklist for 18-17-b6
 
 -------------------------------------------------------------------------------
  0. Project discussion
-X  0.1. Which changes will be included
+  0.1. Which changes will be included
 	    Issues included 
 	   A. Move to use of MRN and Study ID instead of SSN.
 	   B. Clinical information field on CT Eval to be 
 	   auto filled based on background form 
 
-X  0.2. Timeline: Release goal 8/9/24, Actual release
+  0.2. Timeline: Release goal 8/9/24, Actual release
 
  1. Project set up
 X  1.1. git pull
 X  1.2. prepare checklist
 X  1.3. prepare recipe doc
-x  1.4. prepare template.txt doc
-X  1.5. git pull/push
-X  1.6. list updated routines
-		SAMICAS3  x
-		SAMICAS4  x
-		SAMIDCM1  x
-		SAMIFLD   x
-		SAMIHOM4  x
-		SAMIPAT   x
+X  1.4. prepare template.txt doc
+  1.5. git pull/push
+  1.6. list updated routines
+		SAMICSV
+		SAMICAS3  
+		SAMICAS4  
+		SAMIDCM1  
+		SAMIFLD   
+		SAMIHOM4  
+		SAMIPAT
+		SAMISITE
+		SAMIUR
+		SAMIUR2  
   
-X  1.7. list log routines
-        SAMICUL   x
-        SAMIFUL   x
-        SAMIHUL   x
+  1.7. list log routines
+        SAMICUL   
+        SAMIFUL   
+        SAMIHUL  
+        SAMIURUL 
 
-X  1.8. write change descriptions for template.txt
-X  1.9. update template.txt doc  
-  1.10. update dashboard (Google Drive) (sami pax)
-X  1.11. Regrettable Bodge script
+  1.8. write change descriptions for template.txt
+  1.9. update template.txt doc  
+  1.10. update dashboard (Google Drive)
+     https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
+     (sami pax) use pax^ARJTXRW	to determine dependencies
+  1.11. Regrettable Bodge script
   		run within docs/www
   		../regrettablebodge.py
   		then commit
 
  2. Update routines
-X  2.1. Update SAMIPAT for pre/post-install if needed
+  2.1. Update SAMIPAT for pre/post-install if needed
       do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-18-t1")
-X 2.2. convert to new short version ids, update dates & times in each routine
+ 2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-X  2.3. update routines including second line
-X  2.4. push to repo/pull to vapalsyotta
+  2.3. update routines including second line
+  2.4. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
-X  3.0. update recipe with before checksums -- do recipe^ARJTXRW
-X  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
+  3.0. update recipe with before checksums -- do recipe^ARJTXRW
+  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
 		do bash compare2.sh in routines before copying routines to make sure no 
 		changed routines were missed. This compares the routines with those in
 		~/run/routines/
-X  3.2. copy routines to ~/run/routines directory
+  3.2. copy routines to ~/run/routines directory
   		cp -v ROUTINE.m ~/run/routines/
-X  3.3. run XINDEX
-N  3.4. fix any bugs,
-X  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
-X  3.6. update recipe
-  3.7. update dashboard (sami vers)
-X  3.8. git pull/push
+  3.3. run XINDEX
+  3.4. fix any bugs,
+  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
+  3.6. update recipe with after information
+  3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173
+      (sami vers) use dash^ARJTXRW for dates and checksums
+  3.8. git pull/push
 
- 4. KIDS Build
-X  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions)
+ 4. KIDS Build (Need to flesh out)
+  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions)
   		BUILD NAME SAMI*18.0*18
   		BUILD PACKAGE FILE LINK: SAMI
   		BUILD TYPE: SINGLE PACKAGE//0
   		BUILD TRACK PACKAGE NATIONALLY: YES// N
   		SAMI 18.0T05 -- don't include SAMI*18.0*7 or SAMI*18.0*14 in required builds
-X  4.4. export to out dock (Transport distribution) 
+  4.4. export to out dock (Transport distribution) 
 		HF: /home/osehra/run/out/sami/18-18/t1/sami-18-18-b5.kid
 		Header: Released SAMI*18.0*18 SEQ# 18
-X  4.5. copy to personal repo scp 'vapalsyotta:/home/osehra/run/out/sami/18-18/t1/*.kid' ./
-X  4.6. push to sami repo
+  4.5. copy to personal repo scp 'vapalsyotta:/home/osehra/run/out/sami/18-18/t1/*.kid' ./
+  4.6. push to sami repo
 
  5. Finish draft documents
-X  5.1. Review recipe and make any needed changes
-X  5.2. Review template.txt and make any needed changes
+  5.1. Review recipe and make any needed changes
+  5.2. Review template.txt and make any needed changes
   5.3. Make {version}.adoc and {version}.tx doc from template.txt
        ../../dtool --textfile
   5.4. Review {version}.adoc and {version}.tx doc and make any needed updates

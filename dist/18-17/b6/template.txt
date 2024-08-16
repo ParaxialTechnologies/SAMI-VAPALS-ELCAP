@@ -74,8 +74,8 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds two high-priority updates to accomodate Mt. Sinai's
- workflow
+ #{nmsp} #{version} adds six high-priority updates to accomodate Mt. Sinai's
+ workflow or to allow single sign-on or to improve output of reports.
 
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is at
@@ -96,7 +96,7 @@ ii. Contents
 
  #.#. Insert clinical information string in CT Eval form
 
-   1a (high priority): Clinical information field on the CT Eval form to be auto
+   request 1a (high priority): Clinical information field on the CT Eval form to be auto
    filled based on responses to questions in the background form 
 
    solution: Developed clinical information string from background form and
@@ -106,7 +106,7 @@ ii. Contents
    
   #.#. Support MRN and StudyID use
 
-   2, 3 (high priority): iELCAP uses the Epic MRN and Study ID instead of 
+   requests 2, 3 (high priority): iELCAP uses the Epic MRN and Study ID instead of 
    Social Security Number to identify patients. Screening+ needs to support the
    use of these patient IDs in the correct places.
     
@@ -115,6 +115,53 @@ ii. Contents
 
    reported: 2024-07-11 by iELCAP team  
 
+ #.#. Login: Implement single sign-on
+
+   Require users to login only once when single sign on in use.
+
+   issue 21-218 (high priority): When using single sign-on, user
+   should not be prompted to log in to VAPALS-ELCAP separately.
+   However, user must be matched to single sign-on SECID.
+   
+   solution: Require user to sign in once using Access and Verify
+   created by system administrator. This allows SECID to be captured
+   and tied to user.  For this testing version, where we don't yet
+   have access to SECID, the IP address is used instead. Note: for
+   testing, if user does not have a stable IP address, they will be
+   required to sign in with Access and Verify to update the IP
+   address.
+
+   reported: 2021-03 by Lilly.
+
+#.#. Logout: Upon sign-out, redirect to the correct web page
+
+   issue 21-221 (high priority): Currently users are being directed to the home
+   page of the clinical site they just logged out of.
+
+   solution: User is redirected to correct logout page.
+
+   reported: 2022-04 by Jirapatnakul.
+   
+ #.#. Include name and last5 in every csv file on every row
+
+   unnumbered issue (high priority): A report is available to be run
+   by the sysadmin that outputs all patient data for statistical
+   analysis. Lines did not include patient ID.
+
+   solution: Add saminame (full patient name) and last5 (First letter
+   of last name and last four digits of SSN) in each line of report.
+
+   reported: 2022-12-09 by Henschke and Yip.
+   
+ #.#. Add a user report to show CT Eval recommendations
+
+   unnumbered issue (high priority): Develop a new user report that
+   shows recommendations from completed CT Evaluations. Allow sorting by
+   type of recommendation and put totals at top of columns.
+
+   solution: Added report.
+
+   reported: 2022-12-09 by Henschke and Avila.
 
 #. Package elements
 

@@ -725,7 +725,7 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . n cefdt s cefdt=""
  . f  s cefdt=$o(ceforms(cefdt)) q:+cefdt=0  d  ;
  . . n efmdate
- . . set efmdate=$$FMDT^SAMIUR2(cefdt)  
+ . . set efmdate=$$FMDT^SAMIUR2(cefdt)
  . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien)
  . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
  . n rc s rc=""

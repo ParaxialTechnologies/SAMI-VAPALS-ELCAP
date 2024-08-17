@@ -1,5 +1,5 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2022-12-31t00:45z
- ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;Build 11
+SAMIUR2 ;ven/gpl - user reports cont ;2024-08-17t00:56z
+ ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;
  ;;18-17
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
@@ -21,12 +21,12 @@ SAMIUR2 ;ven/gpl - user reports cont ;2022-12-31t00:45z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-12-31t00:45z
+ ;@last-update 2024-08-17t00:56z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18-17
- ;@release-date 2020-01
+ ;@release-date 2024-08
  ;@patch-list **5,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)

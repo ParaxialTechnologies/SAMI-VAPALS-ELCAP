@@ -1,5 +1,6 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 4/23/19 10:07am
+SAMIUR1 ;ven/gpl - sami user reports ; 2024-08-17t00:55z
  ;;18.0;SAM;;
+ ;18-17
  ;
  ;@license: see routine SAMIUL
  ;

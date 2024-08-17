@@ -1,5 +1,5 @@
-SAMICSV ;ven/gpl - csv export ;2022-12-13T02:38Z
- ;;18.0;SAMI;**7,11,17**;2020-01;Build 4
+SAMICSV ;ven/gpl - csv export ;2024-08-17T00:32Z
+ ;;18.0;SAMI;**7,11,17**;2020-01;
  ;;18-17
  ;
  ; SAMICSV contains a direct-mode interface to produce the VAPALS-
@@ -21,7 +21,7 @@ SAMICSV ;ven/gpl - csv export ;2022-12-13T02:38Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2022-12-13T02:38Z
+ ;@last-updated 2024-08-17T00:32Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -77,7 +77,10 @@ SAMICSV ;ven/gpl - csv export ;2022-12-13T02:38Z
  ;  SAMICSV: include last5 and saminame in every csv file on every row
  ;
  ; 2022-12-13 ven/lmry  18-17-t3
- ;  update log, bump date
+ ;  SAMICSV: update log, bump date
+ ;
+ ; 2024-08-17 ven/lmry 18-17-B6
+ ;  SAMICSV: bump version, date.
  ;
  ;@contents
  ; EN entry point to generate csv files from forms for a site

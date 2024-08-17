@@ -1,6 +1,6 @@
-SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-12t23:08z
- ;;18.0;SAMI;**10**;2024-08;
- ;;18.18
+SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-17t00:44z
+ ;;18.0;SAMI;**10,17**;2024-08;
+ ;;18.17
  ;
  ; SAMIFUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's Form modules, SAMIF*.
@@ -23,7 +23,7 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-12t23:08z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2024-08-12t23:08z
+ ;@last-updated 2024-08-17t00:44z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@version 18.18
@@ -268,6 +268,9 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-12t23:08z
  ;  SAMIFLD: bump versions and dates
  ;  SAMIFUL: add history, bump versions and dates
  ;
+ ; 2024-08-17 ven/lmry 18-17
+ ;  SAMIFLD: regress version, bump dates
+ ;  SAMIFUL: add history, bump versions and dates
  ;
  ;
  ;@contents

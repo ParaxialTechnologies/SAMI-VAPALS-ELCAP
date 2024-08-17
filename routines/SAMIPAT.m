@@ -1,6 +1,6 @@
-SAMIPAT ;ven/toad - init subroutines ;2024-08-11t21:26z
+SAMIPAT ;ven/toad - init subroutines ;2024-08-17t00:09z
  ;;18.0;SAMI;**12,14,15,17**;2020-01;
- ;;18-18
+ ;;18-17
  ;
  ; Routine SAMIPAT contains VAPALS-ELCAP initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -21,7 +21,7 @@ SAMIPAT ;ven/toad - init subroutines ;2024-08-11t21:26z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2024-08-11t21:26z
+ ;@last-update 2024-08-17t00:09z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -80,6 +80,9 @@ SAMIPAT ;ven/toad - init subroutines ;2024-08-11t21:26z
  ;
  ; 2024-08-12 ven/lmry
  ;  SAMIPAT: Update for 18-18-t1 patch
+ ;
+ ; 2024-08-16 ven/lmry
+ ;  SAMIPAT: Patch 18-18-t1 is now 18-17-b6 corrected POS1817
  ;
  ;
  ;@contents
@@ -153,7 +156,7 @@ POS1815 ; kids post-install for sami 18.15
 POS1817 ; kids post-install for sami 18.17
  ;
  do STANDARD
- do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-t4")
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-b6")
  ;
  quit  ; end of kids-post POS1817^SAMIPAT
  ;

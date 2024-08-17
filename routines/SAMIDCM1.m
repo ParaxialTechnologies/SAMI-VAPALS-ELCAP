@@ -1,6 +1,6 @@
-SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2024-08-12t22:41z
- ;;18.0;SAMI;**16**;2024-08;
- ;18-18
+SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2024-08-17t00:38z
+ ;;18.0;SAMI;**16,17**;2024-08;
+ ;18-17
  ;
  ;@license: see routine SAMIUL
  ;
@@ -16,7 +16,7 @@ SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2024-08-12t22:41z
  ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2024-08-12t22:41z
+ ;@last-update 2024-08-17t00:38z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -52,6 +52,9 @@ SAMIDCM1 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2024-08-12t22:41z
  ;
  ;2024-08-12 ven/lmry
  ; SAMIDCM1 start module-log, update version and dates
+ ;
+ ; 2024-08-17 ven/lmry 18-17-b6
+ ;   correct version, bump date
  ;
  ;
  Q

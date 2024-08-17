@@ -1,6 +1,6 @@
-SAMICAS4 ;ven/gpl - case review cont ;2024-08-12t22:19z
- ;;18.0;SAMI;**3,9,11,12,15**;2024-08;
- ;;18-18
+SAMICAS4 ;ven/gpl - case review cont ;2024-08-17t00:18z
+ ;;18.0;SAMI;**17**;2024-08;
+ ;;18-17
  ;
  ; SAMICAS4 contains ppis and other subroutines to support processing
  ; of the VAPALS-IELCAP case review page.

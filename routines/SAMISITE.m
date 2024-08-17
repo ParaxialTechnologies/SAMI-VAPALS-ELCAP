@@ -1,5 +1,5 @@
-SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-27t22:47z
- ;;18.0;SAMI;**5,12,14,17**;2020-01;Build 11
+SAMISITE ;ven/gpl&arc - signon & site access ;2024-08-17t00:53z
+ ;;18.0;SAMI;**5,12,14,17**;2020-01;
  ;;18.17
  ;
  ; Routine SAMISITE contains subroutines for implementing the VAPALS-
@@ -21,12 +21,12 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-27t22:47z
  ;@copyright: 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-04-27t22:47z
+ ;@last-update 2024-08-17t00:53z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.14
- ;@release-date 2020-01
+ ;@release-date 2024-08
  ;@patch-list **5,12,14,17**
  ;
  ;@dev-add: Alexis Carlson (arc)
@@ -79,6 +79,9 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2022-04-27t22:47z
  ;
  ; 2022-04-27 ven/lmry 18-17
  ;  update history and date
+ ;
+ ; 2022-08-17 ven/lmry 18-17
+ ;  SAMISITE: update history and date
  ; 
  ;
  ;@to-do

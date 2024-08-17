@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - case review log ;2024-08-12t22:10z
- ;;18.0;SAMI;**9,11,12,14,15**;2024-08;
- ;;18.18
+SAMICUL ;ven/gpl - case review log ;2024-08-17t00:27z
+ ;;18.0;SAMI;**9,11,12,14,15,17**;2024-08;
+ ;;18.17
  ;
  ; SAMICUL contains the development log for the VAPALS-IELCAP Case
  ; Review Page (SAMICA* routines).
@@ -22,13 +22,13 @@ SAMICUL ;ven/gpl - case review log ;2024-08-12t22:10z
  ;@copyright 2017/2021/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2024-08-12t22:10z
+ ;@last-update 2024-08-17t00:27z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.18
  ;@release-date 2022-08
- ;@patch-list **9,11,12,14,15**
+ ;@patch-list **9,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -352,11 +352,15 @@ SAMICUL ;ven/gpl - case review log ;2024-08-12t22:10z
  ; SAMICAS3, SAMICAS4, SAMICUL update history in SAMICUL, bump dates and 
  ;  versions in all
  ;
+ ; 2024-08-17 ven/lmry	18.17
+ ;SAMICAS3, SAMICAS4, SAMICUL update history in SAMICUL, bump dates and 
+ ;  versions in all, regress 18-18-t1 to 18-17-b6
  ;
  ;@contents
  ; SAMICASE case review
  ; SAMICAS2 case review continued
  ; SAMICAS3 case review continued
+ ; SAMICAS4 case for Mt. Sinai needs
  ; SAMICUL case review log
  ;
  ;

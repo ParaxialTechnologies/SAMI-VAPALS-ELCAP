@@ -1,6 +1,6 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-12t22:46z
- ;;18.0;SAMI;**10**;2024-08;
- ;;18.18
+SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-17t00:39z
+ ;;18.0;SAMI;**10,17**;2024-08;
+ ;;18.17
  ;
  ; SAMIFLD contains subroutines for processing ELCAP forms, loading
  ; JSON data into the graphstore for each line. Since three of those
@@ -27,7 +27,7 @@ SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-12t22:46z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2024-08-12t22:46z
+ ;@last-updated 2024-08-17t00:39z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - VAPALS-ELCAP (SAMI)
  ;@version 18.18

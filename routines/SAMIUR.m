@@ -1,5 +1,5 @@
-SAMIUR ;ven/gpl - user reports ;2023-01-04T00:09Z
- ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;Build 4
+SAMIUR ;ven/gpl - user reports ;2024-08-17T03:07Z
+ ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;
  ;;18-17
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2023-01-04T00:09Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2023-01-04T00:09Z
+ ;@last-update 2024-08-17T03:07Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18-17
- ;@release-date 2020-01
- ;@patch-list **5,10,11,12,14,15**
+ ;@release-date 2024-08
+ ;@patch-list **5,10,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -50,9 +50,11 @@ SAMIUR ;ven/gpl - user reports ;2023-01-04T00:09Z
  ; SORT sort patients by name
  ; NUHREF create nuhref link to casereview for all patients
  ; PNAME page name for report
- ;
  ; SELECT select patients for report
  ; UNMAT build unmatched persons list
+ ; RECOMEND build recommendations persons list on entry for every ceform 
+ ;  in the date range
+ ; CEFORMS all ceforms for patient dfn in date range
  ; WKLIST build work list
  ;
  ;
@@ -723,8 +725,8 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . n cefdt s cefdt=""
  . f  s cefdt=$o(ceforms(cefdt)) q:+cefdt=0  d  ;
  . . n efmdate
- . . set efmdate=$$FMDT^SAMIUR2(cefdt)
- . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien) 
+ . . set efmdate=$$FMDT^SAMIUR2(cefdt)  
+ . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien)
  . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
  . n rc s rc=""
  . f  set rc=$o(ceforms("count",rc)) q:rc=""  d  ;

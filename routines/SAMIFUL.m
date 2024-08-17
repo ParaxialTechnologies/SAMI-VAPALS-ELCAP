@@ -258,7 +258,7 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ;2024-08-17t00:44z
  ; 2021-03-21 ven/toad 1.18.0.10-i10
  ;  SAMIFLD: bump date & version, lt refactor.
  ;
- ; 2024-07-22 ven/gpl 18.18	233ae5d
+ ; 2024-07-22 ven/gpl 18.18  233ae5d
  ;  SAMIFLD: use the MRN if available as the patient identifier in the header
  ;
  ; 2024-07-24 ven/gpl 18.18  fefbf29

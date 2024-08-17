@@ -20,9 +20,9 @@ X  1.3. prepare recipe doc
 X  1.4. prepare template.txt doc
 X  1.5. git pull/push
 X  1.6. list updated routines
-		SAMICSV
 		SAMICAS3  
-		SAMICAS4  
+		SAMICAS4
+		SAMICSV  
 		SAMIDCM1  
 		SAMIFLD   
 		SAMIHOM4  
@@ -48,26 +48,26 @@ X  1.10. update dashboard (Google Drive)
   		then commit
 
  2. Update routines
-  2.1. Update SAMIPAT for pre/post-install if needed
+X  2.1. Update SAMIPAT for pre/post-install if needed
       do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-b6")
- 2.2. convert to new short version ids, update dates & times in each routine
+X 2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-  2.3. update routines including second line
-  2.4. push to repo/pull to vapalsyotta
+X  2.3. update routines including second line
+X  2.4. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
-  3.0. update recipe with before checksums -- do recipe^ARJTXRW
-  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
+X  3.0. update recipe with before checksums -- do recipe^ARJTXRW
+X  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
 		do bash compare2.sh in routines before copying routines to make sure no 
 		changed routines were missed. This compares the routines with those in
 		~/run/routines/
-  3.2. copy routines to ~/run/routines directory
+X  3.2. copy routines to ~/run/routines directory
   		cp -v ROUTINE.m ~/run/routines/
-  3.3. run XINDEX
+X  3.3. run XINDEX
   3.4. fix any bugs,
   3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools)
   3.6. update recipe with after information

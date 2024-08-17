@@ -352,7 +352,7 @@ SAMICUL ;ven/gpl - case review log ;2024-08-17t00:27z
  ; SAMICAS3, SAMICAS4, SAMICUL update history in SAMICUL, bump dates and 
  ;  versions in all
  ;
- ; 2024-08-17 ven/lmry	18.17
+ ; 2024-18-17 ven/lmry 18-17
  ;SAMICAS3, SAMICAS4, SAMICUL update history in SAMICUL, bump dates and 
  ;  versions in all, regress 18-18-t1 to 18-17-b6
  ;

@@ -169,7 +169,7 @@ POS1818 ; kids post-install for sami 18.18
  do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-18-t1")
  ;
  quit  ; end of kids-post POS1818^SAMIPAT
-
+ ;
  ;@section X subroutines for future versions...
  ;
  ;

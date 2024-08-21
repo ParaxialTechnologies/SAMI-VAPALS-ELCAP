@@ -32,6 +32,7 @@ forms = [
     {"template": "report", "title": "", "formPage": "report", "withNav": "true"},
     {"template": "table", "title": "", "formPage": "table", "withNav": "true"},
     {"template": "upload", "title": "Upload New Patients", "formPage": "upload", "withNav": "true"},
+    {"template": "fileupload", "title": "File Upload", "formPage": "fileupload", "withNav": "true"},
     {"template": "register", "title": "Register", "formPage": "register", "withNav": "true"},
     {"template": "editparticipant", "title": "Edit Participant", "formPage": "editparticipant", "withNav": "true"},
     {"template": "error", "title": "System Error", "formPage": "error", "withNav": "true"},

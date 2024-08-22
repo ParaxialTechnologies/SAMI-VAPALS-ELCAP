@@ -38,5 +38,24 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">File Upload</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="post">
+                            <input type="hidden" name="samiroute" value="filepreview"/>
+                            <input type="hidden" name="sid" value="@@SID@@"/>
+                            <input type="hidden" name="site" value="@@SITE@@"/>
+                            <div class="pull-right">
+                                <input type="submit" value="File Upload" class="btn btn-primary" id="submit-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

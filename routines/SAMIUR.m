@@ -1,11 +1,13 @@
-SAMIUR ;ven/gpl - user reports ;2024-08-17T03:07Z
- ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01;
- ;;18-17
+SAMIUR ;ven/gpl - user reports; 2024-08-22t21:19z
+ ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01-17;
+ ;mdc-e1;SAMIUR-20240822-E01Ltf0C;SAMI-18-17-b6
+ ;mdc-v7;B1025197513;SAMI*18.0*17 SEQ #17
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
- ; VAPALS-ELCAP user reports.
+ ; ScreeningPlus user reports.
  ;
  quit  ; no entry from top
+ ;
  ;
  ;
  ;
@@ -13,21 +15,24 @@ SAMIUR ;ven/gpl - user reports ;2024-08-17T03:07Z
  ;
  ;
  ;
+ ;
  ;@routine-credits
- ;@dev-main George P. Lilly (gpl)
+ ;
+ ;@dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@dev-org-main Vista Expertise Network (ven)
+ ;@dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2024-08-17T03:07Z
- ;@application Screening Applications Management (SAM)
- ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@update 2024-08-22t21:19z
+ ;@app-suite Screening Applications Management - SAM
+ ;@app ScreeningPlus (SAM-IELCAP) - SAMI
+ ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-17
- ;@release-date 2024-08
- ;@patch-list **5,10,11,12,14,15,17**
+ ;@release 18-17
+ ;@edition-date 2024-08
+ ;@patches **5,10,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -40,16 +45,20 @@ SAMIUR ;ven/gpl - user reports ;2024-08-17T03:07Z
  ;@dev-add Linda M. R. Yaw (lmry)
  ; lmry@vistaexpertise.net
  ;
- ;@module-credits see SAMIHUL
+ ;@module-credits see SAMIURUL
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ; see SAMIURUL
  ;
  ;@contents
+ ;
+ ;  1. web-route service WSREPORT^SAMIUR & subroutines
  ; WSREPORT generate report based on params in filter
  ; SORT sort patients by name
  ; NUHREF create nuhref link to casereview for all patients
  ; PNAME page name for report
+ ;
+ ;  2. select subroutines
  ; SELECT select patients for report
  ; UNMAT build unmatched persons list
  ; RECOMEND build recommendations persons list on entry for every ceform 
@@ -59,31 +68,43 @@ SAMIUR ;ven/gpl - user reports ;2024-08-17T03:07Z
  ;
  ;
  ;
- ;@section 1 wsreport subroutines
+ ;
+ ;@section 1 web-route service WSREPORT^SAMIUR & subroutines
  ;
  ;
  ;
-WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  ;
+ ;@wrs-code WSREPORT^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wrs;procedure;clean?;silent;sac?;??% tests;port?
  ;@called-by
  ; WSVAPALS^SAMIHOM4
  ; WSREPORT^SAMIUR1
  ;@calls
  ; GETHOME^SAMIHOM3
+ ; $$GET1PARM^SAMIPARM
  ; getThis^%wd
- ; SELECT
+ ; SELECT^SAMIUR
  ; LOAD^SAMIFORM
- ; $$PNAME
+ ; $$PNAME^SAMIUR
  ; findReplace^%ts
  ; RPTTBL^SAMIUR2
- ; NUHREF
- ; SORT
+ ; NUHREF^SAMIUR
+ ; SORT^SAMIUR
+ ;@input
+ ; SAMIRTN =
+ ; filter =
+ ;@output
  ; @RPT(ir,"routine"): [from report def table from RPTTBL^SAMIUR2]
  ;  format = $$<tag>^SAMIUR2, where tag =
  ;  AGE       BLINEDT   CONTACT   CTPROT   DOB      FUDATE    GENDER
  ;  IFORM     LASTEXM   MANPAT    MATCH    NAME     PACKYRS   POSSIBLE
  ;  RECOM     RURAL     SID       SMHIS    SMKSTAT  SSN       STUDYDT
  ;  STUDYTYP  VALS      WHEN      WORKPAT
+ ;@tests
+ ; UTWSRPT^SAMIUTUR
  ;
  ; here are the user reports that are defined:
  ;  1. followup
@@ -94,6 +115,9 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  ;  6. enrollment
  ;  7. worklist
  ; the report to generate is passed in parameter samireporttype
+ ;
+ ;
+WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  ;
  new debug set debug=0
  if $get(filter("debug"))=1 set debug=1
@@ -121,7 +145,7 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  new SAMIPATS
  ; set pats=""
  new datephrase
- do SELECT(.SAMIPATS,type,.datephrase,.filter) ; select pats for report
+ do SELECT^SAMIUR(.SAMIPATS,type,.datephrase,.filter) ; select pats for report
  ; quit:'$data(SAMIPATS)
  ;
  new ln,cnt,ii
@@ -140,7 +164,7 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . ; . do findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
  . ; . quit
  . if ln["PAGE NAME" do
- . . do findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
+ . . do findReplace^%ts(.ln,"PAGE NAME",$$PNAME^SAMIUR(type,""))
  . . quit
  . if ln["CRITERIA" do
  . . do findReplace^%ts(.ln,"CRITERIA",datephrase)
@@ -184,14 +208,14 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  set cnt=cnt+1 set SAMIRTN(cnt)="<tbody>"
  ;
  if type'="worklist" do  ;
- . do NUHREF(.SAMIPATS) ; create the nuhref link for all patients
+ . do NUHREF^SAMIUR(.SAMIPATS) ; create the nuhref link for all patients
  . quit
  ;
  new SRT set SRT=""
  if $get(filter("sort"))="" d  ; what kind of sort
  . set filter("sort")="name"
  . i type="missingct" s filter("sort")="cdate" ;sort by latest contact
- do SORT(.SRT,.SAMIPATS,.filter)
+ do SORT^SAMIUR(.SRT,.SAMIPATS,.filter)
  ; zwrite SRT
  ;
  ; set ij=0
@@ -260,22 +284,43 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . set SAMIRTN(cnt)=ln
  . quit
  ;
- quit  ; end of WSREPORT
+ quit  ; end of WSREPORT^SAMIUR
+ ;
+ ;
+ ;
+ ;
+ ;@proc-code SORT^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$UPCASE^XLFMSMT
+ ; $$LDOC^SAMIUR2
+ ; $$FMDT^SAMIUR2
+ ;@input
+ ; SRTN =
+ ; SAMIPATS =
+ ; FILTER =
+ ;@output [tbd]
+ ;@tests [tbd]
  ;
  ;
 SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  ;
- ;@called-by
- ; WSREPORT
- ;@calls
- ; $$UPCASE^XLFMSMT
+ ;@stanza 2 init vars
  ;
  new typ set typ=$get(FILTER("sort"))
- ;
  if typ="" set typ="name"
+ ;
  new iz,dt,dfn,nm,cdate
  set (dt,dfn,nm)="" ; note: should dfn be initialized inside loop?
  set iz=0
+ ;
+ ;
+ ;@stanza 3 ??
  ;
  new indx
  for  do  quit:'dt  ;
@@ -298,6 +343,9 @@ SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  . . quit
  . quit
  ;
+ ;
+ ;@stanza 4 ??
+ ;
  new iiz set iiz=""
  set (dt,dfn)="" ; note: here, too, should inits be inside loops?
  for  do  quit:iiz=""  ;
@@ -315,21 +363,36 @@ SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  . . quit
  . quit
  ;
- quit  ; end of SORT
+ ;@stanza 5 termination
  ;
+ quit  ; end of SORT^SAMIUR
+ ;
+ ;
+ ;
+ ;
+ ;@proc-code NUHREF^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ; $$GETSSN^SAMIFORM
+ ;@input
+ ; SAMIPATS =
+ ;@output [tbd]
+ ;@tests [tbd]
  ;
  ;
 NUHREF(SAMIPATS) ; create nuhref link to casereview for all patients
  ;
- ;@called-by
- ; WSREPORT
- ;@calls
- ; $$setroot^%wd
- ; $$GETSSN^SAMIFORM
+ ;@stanza 2 create it
  ;
- new ij
  new root set root=$$setroot^%wd("vapals-patients")
- set ij=0
+ ;
+ new ij set ij=0
  for  do  quit:'ij  ;
  . set ij=$order(SAMIPATS(ij))
  . quit:'ij
@@ -357,15 +420,32 @@ NUHREF(SAMIPATS) ; create nuhref link to casereview for all patients
  . . quit
  . quit
  ;
- quit  ; end of NUHREF
+ ;@stanza 3 termination
  ;
+ quit  ; end of NUHREF^SAMIUR
+ ;
+ ;
+ ;
+ ;
+ ;@func-code PNAME^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean?;silent;sac?;??% tests;port?
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls none
+ ;@input
+ ; type =
+ ; phrase =
+ ;@output [tbd]
+ ;@tests
+ ; UTPNAME^SAMIUTUR
  ;
  ;
 PNAME(type,phrase) ; page name for report
  ;
- ;@called-by
- ; WSREPORT
- ;@calls none
+ ;@stanza 2 return page name if recognized
  ;
  ; extrinsic returns the PAGE NAME for the report
  ;
@@ -379,7 +459,10 @@ PNAME(type,phrase) ; page name for report
  if type="enrollment" quit "Enrollment"_$get(phrase)
  if type="inactive" quit "Inactive"_$get(phrase)
  ;
- quit "" ; end of $$PNAME
+ ;@stanza 3 return empty if not recognized
+ ;
+ quit "" ; end of $$PNAME^SAMIUR
+ ;
  ;
  ;
  ;
@@ -387,30 +470,48 @@ PNAME(type,phrase) ; page name for report
  ;
  ;
  ;
-SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
+ ;@proc-code SELECT^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
  ;@called-by
- ; WSREPORT
+ ; WSREPORT^SAMIUR
  ;@calls
- ; UNMAT
- ; WKLIST
- ; $$KEY2FM^SAMICASE
+ ; RECOMEND^SAMIUR
+ ; UNMAT^SAMIUR
+ ; WKLIST^SAMIUR
+ ; $$KEY2FM^SAMICASE [commented out]
+ ; $$FMDT^SAMIUR2
  ; $$NOW^XLFDT
  ; $$FMADD^XLFDT
  ; $$VAPALSDT^SAMICASE
  ; $$setroot^%wd
  ; GETITEMS^SAMICASE
+ ; $$BASELNDT^SAMICAS4
+ ;@input
+ ; SAMIPATS =
+ ; ztype =
+ ; datephrase =
+ ; filter =
+ ;@output [tbd]
+ ;@tests
+ ; UTSELCT^SAMIUTUR
+ ;
+ ;
+SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
  ; merge ^gpl("select")=filter
  new type set type=ztype
  if type="recommend" do  quit  ;
- . do RECOMEND(.SAMIPATS,ztype,.datephrase,.filter)
+ . do RECOMEND^SAMIUR(.SAMIPATS,ztype,.datephrase,.filter)
  . quit
  if type="unmatched" do  quit  ;
- . do UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
+ . do UNMAT^SAMIUR(.SAMIPATS,ztype,.datephrase,.filter)
  . quit
  if type="worklist" do  quit  ;
- . do WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
+ . do WKLIST^SAMIUR(.SAMIPATS,ztype,.datephrase,.filter)
  . quit
  if $get(type)="" set type="enrollment"
  if type="cumpy" set type="enrollment"
@@ -478,7 +579,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . ;. quit
  . ;if $$FMDT^SAMIUR2($p(lastce,"ceform-",2))<sifm set lastce=""
  . ;
- . set baseline=$$BASELNDT^SAMICAS3(sid)
+ . set baseline=$$BASELNDT^SAMICAS4(sid)
  . set edate=$get(@root@("graph",sid,siform,"sidc"))
  . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
  . set efmdate=$$FMDT^SAMIUR2(edate)
@@ -630,19 +731,34 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  . quit
  ;
- quit  ; end of SELECT
+ quit  ; end of SELECT^SAMIUR
  ;
+ ;
+ ;
+ ;
+ ;@proc-code UNMAT^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
+ ;@called-by
+ ; SELECT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ; ^ZTER
+ ;@input
+ ; SAMIPATS =
+ ; ztype =
+ ; datephrase =
+ ; filter =
+ ;@output [tbd]
+ ;@tests [tbd]
  ;
  ;
 UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
- ;@called-by
- ; SELECT
- ;@calls
- ; $$setroot^%wd
- ;
  set datephrase="Unmatched Persons"
- new ERR k ^gpl("ERR")
+ new ERR ; k ^gpl("ERR")
  new lroot set lroot=$$setroot^%wd("patient-lookup")
  new dfn set dfn=9000000
  for  do  quit:'dfn  ;
@@ -653,7 +769,8 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . quit:ien=""
  . i $g(@lroot@(ien,"dfn"))'=dfn d  q  ;
  . . s ERR(dfn)="dfn index error"
- . . m ^gpl("ERR",dfn)=@lroot@(ien)
+ . . ; m ^gpl("ERR",dfn)=@lroot@(ien)
+ . . q
  . n ordern
  . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
  . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
@@ -676,15 +793,40 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  ;
  i $d(ERR) d ^ZTER
  ;
- quit  ; end of UNMAT
+ quit  ; end of UNMAT^SAMIUR
  ;
-RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
- ; on entry for every ceform in the date range
+ ;
+ ;
+ ;
+ ;@proc-code RECOMEND^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
  ;@called-by
- ; SELECT
+ ; SELECT^SAMIUR
  ;@calls
+ ; $$KEY2FM^SAMICASE [commented out]
+ ; $$FMDT^SAMIUR2
+ ; $$NOW^XLFDT
+ ; $$FMADD^XLFDT
+ ; $$VAPALSDT^SAMICASE
  ; $$setroot^%wd
+ ; CEFORMS^SAMIUR
+ ; ^ZTER
+ ;@input
+ ; SAMIPATS =
+ ; ztype =
+ ; datephrase =
+ ; filter =
+ ;@output [tbd]
+ ;@tests [tbd]
  ;
+ ;
+RECOMEND(SAMIPATS,ztype,datephrase,filter) ; recommendations persons
+ ;
+ ; build recommendations persons list on entry for every ceform in
+ ; date range
  ;
  new strdt,enddt,fmstrdt,fmenddt
  set strdt=$get(filter("start-date"))
@@ -702,10 +844,11 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  set fmenddt=$$FMDT^SAMIUR2(enddt)
  if fmenddt=-1 do  ;
  . set fmenddt=$$NOW^XLFDT
+ . q
  if enddt="" set filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
  ;
  set datephrase="CT Eval Recommendations"
- new ERR k ^gpl("ERR")
+ new ERR ; k ^gpl("ERR")
  new lroot set lroot=$$setroot^%wd("patient-lookup")
  new dfn set dfn=0
  for  do  quit:'dfn  ;
@@ -716,29 +859,60 @@ RECOMEND(SAMIPATS,ztype,datephrase,filter) ; build recommendations persons list
  . quit:ien=""
  . i $g(@lroot@(ien,"dfn"))'=dfn d  q  ;
  . . s ERR(dfn)="dfn index error"
- . . m ^gpl("ERR",dfn)=@lroot@(ien)
+ . . ; m ^gpl("ERR",dfn)=@lroot@(ien)
+ . . q
  . ;
  . i $g(@lroot@(ien,"siteid"))'[site q  ;
  . ;
  . n ceforms
- . d CEFORMS(.ceforms,dfn,fmstrdt,fmenddt)
+ . d CEFORMS^SAMIUR(.ceforms,dfn,fmstrdt,fmenddt)
  . n cefdt s cefdt=""
  . f  s cefdt=$o(ceforms(cefdt)) q:+cefdt=0  d  ;
  . . n efmdate
  . . set efmdate=$$FMDT^SAMIUR2(cefdt)
  . . merge SAMIPATS(efmdate,dfn)=@lroot@(ien)
  . . merge SAMIPATS(efmdate,dfn)=ceforms(cefdt)
+ . . q
  . n rc s rc=""
  . f  set rc=$o(ceforms("count",rc)) q:rc=""  d  ;
  . . set SAMIPATS("rcount",rc)=$g(SAMIPATS("rcount",rc))+ceforms("count",rc)
  . . set SAMIPATS("pcount",rc)=$g(SAMIPATS("pcount",rc))+1
+ . . q
+ . q
  . ;
  ;
  i $d(ERR) d ^ZTER
  ;
- quit  ; end of UNMAT
+ quit  ; end of RECOMEND^SAMIUR
  ;
-CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
+ ;
+ ;
+ ;
+ ;@proc-code CEFORMS^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
+ ;@called-by
+ ; RECOMEND^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ; GETITEMS^SAMICASE
+ ; $$KEY2DSPD^SAMICAS2
+ ; $$FMDT^SAMIUR2
+ ;@input
+ ; ARY =
+ ; DFN =
+ ; BEGDATE =
+ ; ENDDATE =
+ ;@output [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; patient ce forms
+ ;
+ ; all ceforms for patient dfn in date range
+ ;
  new root set root=$$setroot^%wd("vapals-patients")
  n sid
  s sid=$g(@root@(DFN,"sisid"))
@@ -764,8 +938,14 @@ CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
  . . set ARY(bdate,"cefu"_zt)=y
  . . i y="y" set ARY("count","cefu"_zt)=$g(ARY("count","cefu"_zt))+1
  ;
- q
+ quit  ; end of CEFORMS
  ;
+ ;
+ ;
+ ;
+ ; stray code:
+ ;
+ do
  . set ARY(bdate)=""
  . set ARY(bdate,"key")=bkey
  . set ARY(bdate,"cefuaf")=$g(@groot@(bkey,"cefuaf"))
@@ -779,19 +959,35 @@ CEFORMS(ARY,DFN,BEGDATE,ENDDATE) ; all ceforms for patient dfn in date range
  q
  ;
  ;
-WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  ;
+ ;
+ ;@proc-code WKLIST^SAMIUR
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
  ;@called-by
- ; SELECT
+ ; SELECT^SAMIUR
  ;@calls
  ; $$setroot^%wd
+ ; ^ZTER [commented out]
+ ;@input
+ ; SAMIPATS =
+ ; ztype =
+ ; datephrase =
+ ; filter =
+ ;@output [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  ;
  ; add site
  ; add compare to vapals-patients
  ; add navigation to enrollment
  ;
- kill ^gpl("worklist")
- merge ^gpl("worklist")=filter
+ ; kill ^gpl("worklist")
+ ; merge ^gpl("worklist")=filter
  new site
  set site=$get(filter("siteid"))
  quit:site=""
@@ -813,7 +1009,7 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . ;
  . quit:$get(@lroot@(ien,"siteid"))'=site
  . ;
- . merge ^gpl("worklist","lroot",ien)=@lroot@(ien)
+ . ; merge ^gpl("worklist","lroot",ien)=@lroot@(ien)
  . merge SAMIPATS(ien,dfn)=@lroot@(ien)
  . ;zwr SAMIPATS
  . ;i dfn=9000166 B
@@ -832,9 +1028,9 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . set SAMIPATS(ien,dfn,"workref")=nuhref
  . quit
  ;
- merge ^gpl("worklist","pats")=SAMIPATS
+ ; merge ^gpl("worklist","pats")=SAMIPATS
  ;
- quit  ; end of WKLIST
+ quit  ; end of WKLIST^SAMIUR
  ;
  ;
  ;

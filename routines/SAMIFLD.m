@@ -1,16 +1,17 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-17t00:39z
- ;;18.0;SAMI;**10,17**;2024-08;
- ;;18.17
+SAMIFLD ;ven/gpl - form load & case review; 2024-08-22t21:09z
+ ;;18.0;SAMI;**10,17**;2020-01-17;
+ ;mdc-e1;SAMIFLD-20240822-E01FO7Mr;SAMI-18-17-b6
+ ;mdc-v7;B288543997;SAMI*18.0*17 SEQ #17
  ;
- ; SAMIFLD contains subroutines for processing ELCAP forms, loading
- ; JSON data into the graphstore for each line. Since three of those
- ; subroutines are also code for ppis called by WSCASE^SAMICASE, two
- ; additional subroutines are included that are not part of the LOAD
- ; opus but are called by WSCASE^SAMICASE.
+ ; SAMIFLD contains subroutines for processing ScreeningPlus forms,
+ ; loading JSON data into the graphstore for each line. Since three of
+ ; those subroutines are also code for ppses called by
+ ; WSCASE^SAMICASE, two additional subroutines are included that are
+ ; not part of the LOAD opus but are called by WSCASE^SAMICASE.
  ; SAMIFLD contains no public entry points (see SAMIFORM).
- ; see SAMIFUL for module-log
  ;
  quit  ; no entry from top
+ ;
  ;
  ;
  ;
@@ -18,80 +19,110 @@ SAMIFLD ;ven/gpl - elcap: form load & case review ;2024-08-17t00:39z
  ;
  ;
  ;
+ ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;
+ ;@dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021/2024, gpl, all rights reserved
+ ;@copyright 2017/2024, gpl, all rights reserved
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2024-08-17t00:39z
- ;@application Screening Applications Management (SAM)
- ;@module Screening Applications Management - VAPALS-ELCAP (SAMI)
- ;@version 18.18
- ;@release-date 2024-08
- ;@patch-list **10**
+ ;@update 2024-08-22t21:09z
+ ;@app-suite Screening Applications Management - SAM
+ ;@app ScreeningPlus (SAM-IELCAP) - SAMI
+ ;@module Forms - SAMIF
+ ;@release 18-17
+ ;@edition-date 2020-01-21
+ ;@patches **10,17**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Larry G. Carlson (lgc)
+ ;@dev-add Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
- ;@additional-dev Alexis Carlson (arc)
+ ;@dev-add Alexis Carlson (arc)
  ; alexis.carlson@vistaexpertise.net
- ;@additional-dev Domenic DiNatale (dom)
+ ;@dev-add Domenic DiNatale (dom)
  ; domenic.dinatale@paraxialtech.com
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@dev-add Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
- ;@module-credits [see SAMIFUL]
+ ;@module-credits see SAMIFUL
  ;
  ;@contents
- ; LOAD: code for ppi LOAD^SAMIFORM
+ ;
+ ;  1. code for ppses LOAD^SAMIFRM & $$GETHDR^SAMIFLD
+ ; LOAD code for pps LOAD^SAMIFORM
  ;  process html line, e.g., load json data into graph
+ ; $$XPAND expand # to 8 digits
+ ; $$GETHDR pps GETHDR^SAMIFLD
+ ;  header string for patient sid
+ ; $$GETMRN get MRN, which supercedes ssn as patient id
  ;
- ; $$xpand = expand # to 8 digits
- ; $$GETHDR-AGE = header string for patient sid
- ;
- ; GETLAST5 = code for ppi $$GETLAST5^SAMIFORM
+ ;  2. code for ppses $$GETLAST5^SAMIFORM, FIXSRC^SAMIFORM, and
+ ;     FIXHREF^SAMIFORM
+ ; GETLAST5 code for pps $$GETLAST5^SAMIFORM
  ;  last5 for patient sid
- ; FIXSRC: code for ppi FIXSRC^SAMIFORM
+ ; FIXSRC code for pps FIXSRC^SAMIFORM
  ;  fix html src lines to use resources in see/
- ; FIXHREF: code for ppi FIXHREF^SAMIFORM
+ ; FIXHREF code for pps FIXHREF^SAMIFORM
  ;  fix html href lines to use resources in see/
  ;
- ; GETNAME = code for ppi $$GETNAME^SAMIFORM
+ ;  3 code for ppses $$GETNAME^SAMIFORM, $$GETSSN^SAMIFORM, and
+ ;    $$GETPRFX^SAMIFORM
+ ; GETNAME code for pps $$GETNAME^SAMIFORM
  ;  name for patient sid
- ; GETSSN = code for ppi $$GETSSN^SAMIFORM
+ ; GETSSN code for pps $$GETSSN^SAMIFORM
  ;  ssn for patient sid
- ; GETPRFX = code for ppi $$GETPRFX^SAMIFORM [deprecated]
+ ; GETPRFX code for pps $$GETPRFX^SAMIFORM [deprecated]
  ;  retrieve study id prefix from parameter file
  ;
  ;
  ;
- ;@section 1 code for ppi LOAD^SAMIFRM
+ ;
+ ;@section 1 code for ppses LOAD^SAMIFRM & $$GETHDR^SAMIFLD
  ;
  ;
  ;
- ;@ppi-code LOAD^SAMIFORM
-LOAD ; process html line, e.g., load json data into graph
  ;
+ ;@pps-code LOAD^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;procedure;clean?;silent;sac?;tests?;port?
  ;@signature
  ; do LOAD^SAMIFORM(.SAMILINE,form,sid,.SAMIFILTER,.SAMILNUM,.SAMIHTML,.SAMIVALS)
  ;@branches-from
  ; LOAD^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; wsGetForm^%wf
+ ; WSNOTE^SAMINOT1
+ ; WSNOTE^SAMINOT2
+ ; WSNOTE^SAMINOT3
  ; WSNOTE^SAMINOTI
+ ; SUPER^SAMISITE
+ ; WSREPORT^SAMIUR
  ; WSREPORT^SAMIUR1
- ;@called-by: none
+ ;@called-by none
  ;@calls
- ; $$GETHDR
+ ; $$GETHDR^SAMIFLD
+ ; $$setroot^%wd
  ; $$GETLAST5^SAMIFORM
  ; findReplace^%ts
- ; findReplaceAll^%ts
- ; $$xpand
+ ; $$GET^XPAR
  ; FIXSRC^SAMIFORM
  ; FIXHREF^SAMIFORM
+ ; $$GETNAME^SAMIFORM
+ ; findReplaceAll^%ts
+ ; $$EXISTCE^SAMINOT1
+ ; $$EXISTPRE^SAMINOT1
+ ; $$EXISTINT^SAMINOT1
+ ; $$XPAND
+ ; $$SHDET^SAMIUR2
  ;@thruput
  ;.SAMILINE = line of html
  ; SAMILINE("low") = lowercase line for easier checks
@@ -112,9 +143,12 @@ LOAD ; process html line, e.g., load json data into graph
  ; SAMIVALS("samistatus")
  ; SAMIVALS("samifirsttime")
  ;@tests
- ; UTSSUB2^SAMIUTF2: used for Dom's new style forms
+ ; UTLOAD^SAMIUTF used for Dom's new style forms
  ;
  ; This line processor/data loader can modify any line in the html as needed.
+ ;
+ ;
+LOAD ; process html line, e.g., load json data into graph
  ;
  new touched set touched=0
  ;
@@ -241,9 +275,9 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
+ . . new zien set zien=SAMILNUM_"."_$$XPAND(zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
+ . set zhtml(SAMILNUM_"."_$$XPAND($order(@clog@(""),-1)+1))="</pre>"
  ;
  if SAMILINE["commlog" d  ;
  . new root set root=$$setroot^%wd("vapals-patients")
@@ -252,9 +286,9 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
+ . . new zien set zien=SAMILNUM_"."_$$XPAND(zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
+ . set zhtml(SAMILNUM_"."_$$XPAND($order(@clog@(""),-1)+1))="</pre>"
  ;
  ;if form["fuform" d  ;
  i SAMILINE["pack-years-history" d  ;
@@ -287,22 +321,27 @@ LOAD ; process html line, e.g., load json data into graph
  . if warnMsg="" q  ; no message
  . do findReplace^%ts(.SAMILINE,"@@WARN_MESSAGE@@",warnMsg)
  ;
- quit  ; end of ppi LOAD^SAMIFORM
+ quit  ; end of pps LOAD^SAMIFORM
  ;
  ;
  ;
-xpand(zi) ; expand # to 8 digits
+ ;
+ ;@func $$XPAND
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;function;clean;silent;sac;0% tests
+ ;ven/gpl;private;function;clean;silent;sac;tests?;port
  ;@called-by
  ; LOAD
  ;@calls none
  ;@input
- ; zi = # to expand
+ ; zi = # to pad
  ;@output = # expanded to 8 digits by prefixing 0 & appending 1 so 10,
  ; 20, etc. collate properly
+ ;@tests [tbd]
+ ;
+ ;
+XPAND(zi) ; expand # to 8 digits
  ;
  ;@stanza 2 algorithm
  ;
@@ -312,16 +351,21 @@ xpand(zi) ; expand # to 8 digits
  ;
  ;@stanza 3 termination
  ;
- quit g3 ; end of $$xpand
+ quit g3 ; end of $$XPAND
  ;
  ;
  ;
-GETHDR(sid) ; header string for patient sid
  ;
+ ;@pps $$GETHDR^SAMIFLD
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;function;clean;silent;sac;tests?;port
  ;@signature
- ; $$GETHDR^SAMIFORM(sid)
+ ; $$GETHDR^SAMIFLD(sid)
  ;@called-by
- ; LOAD
+ ; LOAD^SAMIFLD
+ ; WSREPORT^SAMIUR1
  ;@calls
  ; $$setroot^%wd
  ; PREFILL^SAMIHOM3
@@ -332,7 +376,14 @@ GETHDR(sid) ; header string for patient sid
  ; sid = patient study id
  ;@output = header string (patient id dob age gender)
  ;@tests
- ; UTGETHDR^SAMIUTF2: header string for patient sid
+ ; UTGETHDR^SAMIUTF hdr string for patient sid
+ ;@to-do
+ ;  convert to pps GETHDR^SAMIFORM
+ ;
+ ;
+GETHDR(sid) ; header string for patient sid
+ ;
+ ;@stanza 2 find patient
  ;
  quit:$get(sid)="" ""
  new root set root=$$setroot^%wd("vapals-patients")
@@ -340,9 +391,15 @@ GETHDR(sid) ; header string for patient sid
  new dfn set dfn=@root@(ien,"dfn")
  quit:ien=""
  ;
+ ;
+ ;@stanza 3 prefill with vista data
+ ;
  ; do PREFILL^SAMIHOM3(dfn) ; update from Vista
  if $get(@root@(ien,"ssn"))="" do PREFILL^SAMIHOM3(dfn) ; update from Vista
  if $get(@root@(ien,"sbdob"))=-1 do PREFILL^SAMIHOM3(dfn) ; update from Vista
+ ;
+ ;
+ ;@stanza 4 ssn
  ;
  n pssn s pssn="" ; will be ssn with dashes
  ; if $get(@root@(ien,"ssn"))="" quit "" ; patient info not available
@@ -356,20 +413,28 @@ GETHDR(sid) ; header string for patient sid
  . . set pssn=$extract(orgssn,1,3)_"-"_$extract(orgssn,4,5)_"-"_$extract(orgssn,6,9)
  . . set @root@(ien,"sissn")=pssn
  . . quit
+ . . q
+ . q
  ;
-AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
+ ;
+ ;@stanza 5 age
+ ;
+ new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  i dob["-" s dob=$e(dob,6,7)_"/"_$e(dob,9,10)_"/"_$e(dob,1,4)
  i dob'["/" s dob=$e(dob,5,6)_"/"_$e(dob,7,8)_"/"_$e(dob,1,4)
  new X set X=dob
  new Y
  do ^%DT
  ;
- ; change ven/lgc 20190628 - calculate age with MASH 
- ;
+ ; change ven/lgc 20190628 - calculate age with Mash
  ;new age set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
  new age s age=$$age^%th(Y)
+ ; look for similar constructs throughout SMAI to convert to Mash
  ;
  set @root@(ien,"age")=age
+ ;
+ ;
+ ;@stanza 6 sex, mrn, pid, assemble header
  ;
  new sex set sex=$get(@root@(ien,"sex"))
  ;
@@ -383,9 +448,36 @@ AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  else  do  ;
  . set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  ;
- quit rtn ; end of $$GETHDR-AGE
  ;
-GETMRN(sid,pid) ; get the MRN, which supercedes the ssn as the patient identifier
+ ;@stanza 7 termination
+ ;
+ quit rtn ; end of pps $$GETHDR^SAMIFLD
+ ;
+ ;
+ ;
+ ;
+ ;@func $$GETMRN
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;tests?;port
+ ;@called-by
+ ; $$GETHDR^SAMIFLD
+ ;@calls
+ ; $$setroot^%wd
+ ;@input
+ ; sid = patient study id
+ ;@output = medical record #
+ ;.pid = patient id
+ ;@tests
+ ; UTGETHDR^SAMIUTF hdr string for patient sid
+ ;@to-do
+ ;  convert to pps GETHDR^SAMIFORM
+ ;
+ ;
+GETMRN(sid,pid) ; get MRN, which supercedes ssn as patient id
+ ;
+ ;@stanza 2 calculate mrn & pid
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new ien set ien=$order(@root@("sid",sid,""))
@@ -393,69 +485,98 @@ GETMRN(sid,pid) ; get the MRN, which supercedes the ssn as the patient identifie
  ;set simrn=$get(@root@(ien,"simrn"))
  ;set sipid=$get(@root@(ien,"sipid"))
  set (simrn,sipid)=""
+ ;
  if simrn="" d  ;
  . new siform
  . set siform=$order(@root@("graph",sid,"siform"))
  . quit:siform=""
  . set simrn=$get(@root@("graph",sid,siform,"simrn"))
+ . q
+ ;
  if sipid="" d  ;
  . new siform
  . set siform=$order(@root@("graph",sid,"siform"))
  . quit:siform=""
  . set sipid=$get(@root@("graph",sid,siform,"sipid"))
  . set pid=sipid
- quit simrn
+ . q
  ;
  ;
- ;@section 2 code for ppis $$GETLAST5^SAMIFORM,FIXSRC^SAMIFORM,FIXHREF^SAMIFORM
+ ;@stanza 3 termination
+ ;
+ quit simrn ; end of $$GETMRN
  ;
  ;
  ;
- ;@ppi-code $$GETLAST5^SAMIFORM
-GETLAST5 ; last5 for patient sid
  ;
+ ;@section 2 code for ppses $$GETLAST5^SAMIFORM, FIXSRC^SAMIFORM, and
+ ; FIXHREF^SAMIFORM
+ ;
+ ;
+ ;
+ ;
+ ;@pps-code $$GETLAST5^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;function;clean?;silent;sac?;tests?;port?
  ;@signature
- ; $$GETHDR^SAMIFORM(sid)
+ ; $$GETLAST5^SAMIFORM(sid)
  ;@branches-from
  ; GETLAST5^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; WSCASE^SAMICAS2
  ; LOAD
- ;@called-by: none
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
  ; sid = patient study id
  ;@output = patient's BS5 (first initial of last name, last 4 of ssn)
  ;@tests
- ; UTGLST5^SAMIUTF2: last5 for patient sid
+ ; UTGLST5^SAMIUTF2 last5 for patient sid
+ ;
+ ;
+GETLAST5 ; last5 for patient sid
+ ;
+ ;@stanza 2 calculate it
  ;
  quit:$get(sid)="" ""
  new root set root=$$setroot^%wd("vapals-patients")
  new ien set ien=$order(@root@("sid",sid,""))
  quit:ien=""
  ;
- quit $get(@root@(ien,"last5")) ; end of ppi $$GETLAST5^SAMIFORM
+ ;
+ ;@stanza 3 termination
+ ;
+ quit $get(@root@(ien,"last5")) ; end of pps $$GETLAST5^SAMIFORM
  ;
  ;
  ;
- ;@ppi-code FIXSRC^SAMIFORM
-FIXSRC ; fix html src lines to use resources in see/
  ;
+ ;@pps-code FIXSRC^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;procedure;clean?;silent?;sac?;tests?;port?
  ;@signature
  ; do FIXSRC^SAMIFORM(.SAMILINE)
  ;@branches-from
  ; FIXSRC^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; WSCASE^SAMICAS2
+ ; GETHOME^SAMIHOM3 [redacted]
  ; LOAD
- ;@called-by: none
+ ;@called-by none
  ;@calls
  ; findReplaceAll^%ts
  ;@thruput
  ;.SAMILINE = line of html to change
  ;@tests
- ; UTFSRC^SAMIUTF2: fix html src lines to use resources in see/
+ ; UTFSRC^SAMIUTF2 fix html src lines to use resources in see/
+ ;
+ ;
+FIXSRC ; fix html src lines to use resources in see/
  ;
  if SAMILINE["src=" do  ;
  . if SAMILINE["src=""http" quit
@@ -470,27 +591,34 @@ FIXSRC ; fix html src lines to use resources in see/
  . . quit
  . quit
  ;
- quit  ; end of ppi FIXSRC^SAMIFORM
+ quit  ; end of pps FIXSRC^SAMIFORM
  ;
  ;
  ;
- ;@ppi-code FIXHREF^SAMIFORM
-FIXHREF ; fix html href lines to use resources in see/
  ;
+ ;@pps-code FIXHREF^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;procedure;clean?;silent?;sac?;tests?;port?
  ;@signature
  ; do FIXHREF^SAMIFORM(.SAMILINE)
  ;@branches-from
  ; FIXHREF^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; WSCASE^SAMICAS2
+ ; GETHOME^SAMIHOM3 [redacted]
  ; LOAD
- ;@called-by: none
+ ;@called-by none
  ;@calls
  ; findReplaceAll^%ts
  ;@thruput
  ;.SAMILINE = line of html to change
  ;@tests
- ; UTFHREF^SAMIUTF2: fix html href lines to use resources in see/
+ ; UTFHREF^SAMIUTF2 fix html href lines to use resources in see/
+ ;
+ ;
+FIXHREF ; fix html href lines to use resources in see/
  ;
  if SAMILINE["href=" do  ;
  . quit:SAMILINE["href=""#"
@@ -508,58 +636,73 @@ FIXHREF ; fix html href lines to use resources in see/
  . . quit
  . quit
  ;
- quit  ; end of ppi FIXHREF^SAMIFORM
+ quit  ; end of pps FIXHREF^SAMIFORM
  ;
  ;
  ;
- ;@section 3 code for ppis $$GETNAME,$$GETSSN,$$GETPRFX^SAMIFORM
+ ;
+ ;@section 3 code for ppses $$GETNAME^SAMIFORM, $$GETSSN^SAMIFORM, and
+ ; $$GETPRFX^SAMIFORM
  ;
  ;
  ;
- ;@ppi-code $$GETNAME^SAMIFORM
-GETNAME ; name for patient sid
  ;
+ ;@pps-code $$GETNAME^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;function;clean?;silent?;sac?;tests?;port?
  ;@signature
  ; $$GETNAME^SAMIFORM(sid)
  ;@branches-from
  ; GETNAME^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; WSCASE^SAMICAS2
- ;@called-by: none
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
  ; sid = patient study id
  ;@output = patient's name
  ;@tests
- ; UTGTNM^SAMIUTF2: name for patient sid
+ ; UTGTNM^SAMIUTF2 name for patient sid
+ ;
+GETNAME ; name for patient sid
  ;
  quit:$get(sid)="" ""
  new root set root=$$setroot^%wd("vapals-patients")
  new ien set ien=$order(@root@("sid",sid,""))
  quit:ien=""
  ;
- quit @root@(ien,"saminame") ; end of ppi $$GETNAME^SAMIFORM
+ quit @root@(ien,"saminame") ; end of pps $$GETNAME^SAMIFORM
  ;
  ;
  ;
- ;@ppi-code $$GETSSN^SAMIFORM
-GETSSN ; ssn for patient sid
  ;
+ ;@pps-code $$GETSSN^SAMIFORM
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;function;clean?;silent?;sac?;tests?;port?
  ;@signature
  ; $$GETSSN^SAMIFORM(sid)
  ;@branches-from
  ; GETSSN^SAMIFORM
- ;@ppi-called-by
+ ;@pps-called-by
  ; WSCASE^SAMICAS2
- ;@called-by: none
+ ; NUHREF^SAMIUR
+ ; WSREPORT^SAMIUR1
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
  ; sid = patient study id
  ;@output = patient's ssn
  ;@tests
- ; UTGSSN^SAMIUTF2: ssn for patient sid
+ ; UTGSSN^SAMIUTF2 ssn for patient sid
+ ;
+ ;
+GETSSN ; ssn for patient sid
  ;
  quit:$get(sid)="" ""
  new root set root=$$setroot^%wd("vapals-patients")
@@ -575,25 +718,33 @@ GETSSN ; ssn for patient sid
  . set @root@(ien,"sissn")=pssn
  . quit
  ;
- quit pssn ; end of ppi $$GETSSN^SAMIFORM
+ quit pssn ; end of pps $$GETSSN^SAMIFORM
  ;
  ;
  ;
- ;@ppi-code $$GETPRFX^SAMIFORM [deprecated]
-GETPRFX ; Retrieve study ID prefix from parameter file
- ; This subroutine is deprecated as of the multi-tenancy features.
  ;
+ ;@pps-code $$GETPRFX^SAMIFORM [deprecated]
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;pps;function;clean;silent;sac;tests?;port
  ;@signature
  ; $$GETPRFX^SAMIFORM()
  ;@branches-from
  ; GETPRFX^SAMIFORM
- ;@ppi-called-by
- ; WSCASE^SAMICAS2
+ ;@pps-called-by
+ ; WSCASE^SAMICAS2 [commented out]
+ ; $$GENSTDID^SAMIHOM3 [commented out]
  ;@calls
- ; $$GET^XPAR
+ ; $$GET^XPAR [commented out]
  ;@output = patient's ssn
  ;@tests
  ; None yet
+ ;
+ ;
+GETPRFX ; retrieve study ID prefix from parameter file
+ ;
+ ; This subroutine is deprecated as of the multi-tenancy features.
  ;
  new prefix
  ;set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
@@ -601,7 +752,7 @@ GETPRFX ; Retrieve study ID prefix from parameter file
  i prefix="" s prefix=$g(ARG("site"))
  if $get(prefix)="" set prefix="UNK"
  ;
- quit prefix ; end of ppi $$GETPRFX^SAMIFORM
+ quit prefix ; end of pps $$GETPRFX^SAMIFORM
  ;
  ;
  ;

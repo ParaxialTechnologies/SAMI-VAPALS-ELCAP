@@ -1,6 +1,7 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2024-08-17t00:56z
- ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01;
- ;;18-17
+SAMIUR2 ;ven/gpl - user reports cont; 2024-08-22t21:20z
+ ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01-17;
+ ;mdc-e1;SAMIUR2-20240822-E018QO7h;SAMI-18-17-b6
+ ;mdc-v7;B1536139436;SAMI*18.0*17 SEQ #17
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -9,25 +10,29 @@ SAMIUR2 ;ven/gpl - user reports cont ;2024-08-17t00:56z
  ;
  ;
  ;
+ ;
  ;@section 0 primary development
  ;
  ;
  ;
+ ;
  ;@routine-credits
- ;@dev-main George P. Lilly (gpl)
+ ;
+ ;@dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@dev-org-main Vista Expertise Network (ven)
+ ;@dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2024-08-17t00:56z
- ;@application Screening Applications Management (SAM)
- ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@update 2024-08-22t21:20z
+ ;@app-suite Screening Applications Management - SAM
+ ;@app ScreeningPlus (SAM-IELCAP) - SAMI
+ ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-17
- ;@release-date 2024-08
- ;@patch-list **5,11,12,14,15,17**
+ ;@release 18-17
+ ;@edition-date 2021-01-17
+ ;@patches **5,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -38,12 +43,13 @@ SAMIUR2 ;ven/gpl - user reports cont ;2024-08-17t00:56z
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
- ;@module-credits see SAMIHUL
+ ;@module-credits see SAMIURUL
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ; see SAMIURUL
  ;
  ;@contents
+ ;
  ; RPTTBL build report-definition table
  ;
  ; $$DFN2SID study id for patient DFN
@@ -90,7 +96,9 @@ SAMIUR2 ;ven/gpl - user reports cont ;2024-08-17t00:56z
  ;
  ;
  ;
+ ;
  ;@section 1 ppi RPTTBL^SAMIUR2
+ ;
  ;
  ;
  ;
@@ -444,8 +452,8 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  . new newpy set newpy=$$PKYDT(lastdt,usedate,newpd)
  . set @vals@("sippy")=newpy
  . ;
- . set ^gpl("current","KEY")=$get(KEY)
- . set ^gpl("current","zi")=zi
+ . ; set ^gpl("current","KEY")=$get(KEY)
+ . ; set ^gpl("current","zi")=zi
  . if zi=$get(KEY) do
  . . set @PYARY@("current")=rptcnt ;this row is the current form
  . . quit

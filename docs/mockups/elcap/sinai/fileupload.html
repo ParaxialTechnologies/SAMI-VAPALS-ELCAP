@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <meta content="elcap" name="base"/>
   <meta content="sinai" name="site"/>
-  <meta content="2024.08.22" name="version"/>
+  <meta content="2024.08.26" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: File Upload
@@ -55,19 +55,19 @@
   </script>
   <script src="../../../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../../../www/jquery-conditonally-enable.js?v=2024.08.22">
+  <script src="../../../www/jquery-conditonally-enable.js?v=2024.08.26">
   </script>
-  <script src="../../../www/jquery-conditonally-display.js?v=2024.08.22">
+  <script src="../../../www/jquery-conditonally-display.js?v=2024.08.26">
   </script>
-  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.08.22">
+  <script src="../../../www/jqueryui-vista-filemanAutocomplete.js?v=2024.08.26">
   </script>
-  <script src="../../../www/vapals.js?v=2024.08.22">
+  <script src="../../../www/vapals.js?v=2024.08.26">
   </script>
-  <script src="../../../www/init.js?v=2024.08.22">
+  <script src="../../../www/init.js?v=2024.08.26">
   </script>
-  <script src="../../../www/nodule-grid.js?v=2024.08.22">
+  <script src="../../../www/nodule-grid.js?v=2024.08.26">
   </script>
-  <script src="../../../www/ai.js?v=2024.08.22">
+  <script src="../../../www/ai.js?v=2024.08.26">
   </script>
   <span id="url-prefix" src="../../../www/">
    <!--System Navigation-->
@@ -178,41 +178,205 @@
     </div>
    </div>
    <div class="container-fluid" style="max-width:1550px">
-    <div class="row">
-     <div class="col-md-12">
-      <div class="message-area-static" id="message-area-static">
-      </div>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="panel panel-default">
-       <div class="panel-heading">
-        <h3 class="panel-title">
-         Document Upload
-        </h3>
-       </div>
-       <div class="panel-body">
-        <form action="fileupload.html" enctype="multipart/form-data" method="post">
-         <input name="samiroute" type="hidden" value="fileupload"/>
-         <input name="studyid" type="hidden" value="@@SID@@"/>
-         <input name="site" type="hidden" value="@@SITE@@"/>
-         <input name="form" type="hidden" value="@@FORMKEY@@"/>
-         <div class="form-group">
-          <label>
-           Please select the file
-          </label>
-          <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv, image/*, .pdf" id="file" name="file" required="required" type="file"/>
-         </div>
-         <div class="pull-right">
-          <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
-         </div>
-        </form>
+    <h2 class="panel-title">
+     Document Upload
+    </h2>
+    <form action="fileupload.html" enctype="multipart/form-data" method="post">
+     <input name="samiroute" type="hidden" value="fileupload"/>
+     <input name="studyid" type="hidden" value="@@SID@@"/>
+     <input name="site" type="hidden" value="@@SITE@@"/>
+     <input name="form" type="hidden" value="@@FORMKEY@@"/>
+     <input name="pdtitle" type="hidden" value=""/>
+     <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+       <div class="form-group">
+        <label>
+         Select a file
+        </label>
+        <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv, image/*, .pdf" id="file" name="file" required="required" type="file"/>
+        <small class="form-text text-muted">
+         Text, CSV, Excel, PDF and Images are supported
+        </small>
        </div>
       </div>
      </div>
-    </div>
+     <div class="row">
+      <div class="col-md-3 col-sm-12">
+       <div class="form-group">
+        <label>
+         Document Date
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="pddos-addon" class="form-control" data-restriction="past" id="pddos" name="pddos" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="pddos-addon">
+           <i aria-hidden="true" class="fa-regular fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+      </div>
+      <div class="col-md-3 col-sm-12">
+       <div class="form-group">
+        <label class="control-label required" for="pdtype">
+         Document Type
+        </label>
+        <select class="form-control" id="pdtype" name="pdtype" required="required">
+         <option value="">
+         </option>
+         <option value="c">
+          CT Chest
+         </option>
+         <option value="p">
+          PET-CT
+         </option>
+         <option value="b">
+          Biopsy
+         </option>
+         <option value="s">
+          Surgical Pathology
+         </option>
+         <option value="a">
+          Operative Report
+         </option>
+         <option value="d">
+          Discharge Summary
+         </option>
+         <option value="t">
+          Treatment Summary
+         </option>
+         <option value="f">
+          PFT
+         </option>
+         <option value="m">
+          Molecular Pathology
+         </option>
+         <option value="r">
+          Bronchoscopy
+         </option>
+         <option value="cs">
+          Consent Form
+         </option>
+         <option value="o">
+          Other
+         </option>
+        </select>
+       </div>
+      </div>
+      <div class="col-md-3 col-sm-12">
+       <div class="form-group">
+        <label class="control-label required" for="pdtypeother">
+         Other
+        </label>
+        <input class="form-control" id="pdtypeother" name="pdtypeother" required="required" type="text"/>
+       </div>
+      </div>
+      <div class="col-md-3 col-sm-12">
+       <div class="form-group">
+        <label class="control-label" for="pdtitle-text">
+         Document Title
+        </label>
+        <input class="form-control" disabled="disabled" id="pdtitle-text" name="pdtitle-text" placeholder="will be generated" type="text"/>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-6 col-sm-12">
+       <div class="form-group">
+        <label for="pddesc">
+         Description
+        </label>
+        <textarea class="form-control" id="pddesc" name="pddesc"></textarea>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12">
+       <div class="pull-right">
+        <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
+       </div>
+      </div>
+     </div>
+    </form>
    </div>
+   <script>
+    $(function () {
+            $("#pdtype").conditionallyEnable({sourceValues: "o", enable: "#pdtypeother"}); // other indication
+            createFormValidator();
+            $("#pdtype, #pdtypeother,pddos").on('change', function () {
+                const fileName = generateDocumentTitle();
+                $("#pdtitle-text").val(fileName);
+                $("#pdtitle").val(fileName);
+            })
+        })
+
+        function createFormValidator() {
+
+            const $form = $('form');
+
+            // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
+            // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
+            // first control in that group
+            $form.formValidation({
+                    fields: {
+                        file: {validators: {notEmpty: {message: 'File is required'}}},
+                        pddos: {
+                            validators: {
+                                notEmpty: {message: 'Document date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Document date must not be in the future'}
+                            }
+                        },
+                        pdtype: {validators: {notEmpty: {message: 'Document type is required'}}},
+                        pdtypeother: {validators: {notEmpty: {message: 'Document other type is required'}}},
+                        
+                    },
+                    plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+        function generateDocumentTitle(i) {
+            // generate or update doc title
+            const studyId = $("[name=studyid]").val();
+            const $docTypeOption = $('#pdtype').find(":selected");
+            let docTypeDesc;
+
+            if ($docTypeOption.val() === 'o') {
+                docTypeDesc = $("#pdtypeother").val();
+            } else {
+                docTypeDesc = $docTypeOption.text().trim();
+            }
+
+            const documentDate = $("#pddos").val();
+
+            if (documentDate && studyId && docTypeDesc) {
+                const docDate = moment(documentDate, VAPALS.DATE_FORMAT).format('MM-DD-YYYY');
+                return docDate + ' ' + studyId + ' ' + docTypeDesc;
+            }
+        }
+   </script>
    <footer>
     <div class="container-fluid" style="max-width:1550px">
      <hr/>

@@ -450,6 +450,22 @@ WSVAPALS ; post vapals (main gateway)
  ;
  n route s route=$g(vars("samiroute"))
  ;i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+ ;
+ ;gpl testing
+ ;if route="fileupload" set route="postform"
+ ;
+ ;if route="fileupload" d  q 0
+ if route="fileupload" d  q 0
+ . ;SET route="postform" q  ;
+ . s HTTPRSP("mime")="application/pdf"
+ . n gn s gn=$na(^TMP("GPLTEST",$J))
+ . m @gn=^gpl("pdf")
+ . ;m @gn=^gpl("GPLPDF")
+ . ;n part s part="%PDF"_$P(@gn@(1),"%PDF",2)
+ . ;s @gn@(1)=part
+ . m SAMIRESULT=gn
+ . ;m SAMIRESULT=SAMIARG("file")
+ ;
  i route="" d  q 0
  . n vals
  . s vals("siteid")=""
@@ -501,6 +517,11 @@ WSVAPALS ; post vapals (main gateway)
  i route="nuform" d  q 0
  . m SAMIARG=vars
  . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . q
+ ;
+ i route="newfileupload" d  q 0
+ . m SAMIARG=vars
+ . d WSNUUPLD^SAMICASE(.SAMIRESULT,.SAMIARG)
  . q
  ;
  i route="addform" d  q 0

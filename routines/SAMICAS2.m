@@ -222,6 +222,7 @@ WSCASE ; post vapals casereview: generate case review page
  . . . new zform set zform=zk
  . . . new zkey set zkey=$order(items("sort",cdate,zform,""))
  . . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
+ . . . new imgid set imgid=$g(items("sort",cdate,zform,zkey,zname))
  . . . new dispdate set dispdate=$$KEY2DSPD(cdate)
  . . . set zform="vapals:"_zkey ; all the new forms are vapals:key
  . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
@@ -252,6 +253,13 @@ WSCASE ; post vapals casereview: generate case review page
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
  . . . . set rtn(cnt)=rpthref_"</tr>"
  . . . . ;set rtn(cnt)="</tr>" ; turn off report
+ . . . if zform["image" d  ;
+ . . . . new imgurl set imgurl=$$VIEWURL^SAMIDCM2(siteid)
+ . . . . new imgview s imgview=""
+ . . . . s imgview=imgview_"<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
+ . . . . s imgview=imgview_">View</a></td></tr>"
+ . . . . set rtn(cnt)=imgview
+ . . . . set cnt=cnt+1
  . . . else  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
@@ -514,6 +522,7 @@ GETITEMS ; get items available for studyid
  . set tary("sort",zdate,zform,zi,fname)=""
  . set tary("type",zform,zi,fname)=""
  . quit
+ D ADDITEMS^SAMIDCM2("tary",sid)
  merge @ary=tary
  ;
  ;
@@ -729,7 +738,102 @@ WSNUFORM ; post vapals nuform: new form for patient
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of wri WSNUFORM^SAMICASE
+ quit  ; end of wri WSNUFORM^SAMICAS
+ ;
+ ;
+ ;
+ ;@wri-code WSNUUPLD^SAMICASE
+WSNUUPLD ; post vapals nuform: new form for patient
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wri;procedure;clean;silent;sac;?? tests
+ ;@signature
+ ; do WSNUUPLD^SAMICASE(rtn,filter)
+ ;@branches-from
+ ; WSNUFORM^SAMICASE
+ ;@wri-called-by
+ ; WSVAPALS^SAMIHOM3 [wr nuform of ws post vapals]
+ ;@called-by none
+ ;@calls
+ ; $$SID2NUM^SAMIHOM3
+ ; $$setroot^%wd
+ ; GETTMPL^SAMICAS2
+ ; findReplace^%ts
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
+ ; findReplace^%ts
+ ;@input
+ ; .filter =
+ ; .filter("studyid")=studyid of the patient
+ ;@output
+ ; @rtn
+ ;@tests
+ ; UTWSNF^SAMIUTS2
+ ;
+ ;
+ ;@stanza 2 get select-new-form form
+ ;
+ new sid set sid=$get(filter("studyid"))
+ if sid="" set sid=$get(filter("sid"))
+ quit:sid=""
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+ quit:+sien=0
+ new root set root=$$setroot^%wd("vapals-patients")
+ new groot set groot=$name(@root@(sien))
+ ;
+ new saminame set saminame=$get(@groot@("saminame"))
+ quit:saminame=""
+ ;
+ new temp,tout,form
+ set return="temp",form="vapals:fileupload"
+ do GETTMPL
+ quit:'$data(temp)
+ ;
+ new cnt set cnt=0
+ new zi set zi=0
+ for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
+ . new ln set ln=temp(zi)_$CHAR(13)
+ . new touched set touched=0
+ . ;
+ . if ln["href" if 'touched do  ;
+ . . do FIXHREF^SAMIFORM(.ln)
+ . . set temp(zi)=ln
+ . ;
+ . if ln["src" d  ;
+ . . do FIXSRC^SAMIFORM(.ln)
+ . . set temp(zi)=ln
+ . ;
+ . if ln["@@SID@@" do  ;
+ . . do findReplace^%ts(.ln,"@@SID@@",sid)
+ . . set temp(zi)=ln
+ . . quit
+ . ;
+ . if ln["@@SITE@@" do  ; insert site id
+ . . n siteid s siteid=$g(filter("siteid"))
+ . . i siteid="" s siteid=$g(filter("site"))
+ . . q:siteid=""
+ . . do findReplace^%ts(.ln,"@@SITE@@",siteid)
+ . . s temp(zi)=ln
+ . ;
+ . if ln["@@SITETITLE@@" do  ; insert site title
+ . . n sitetit s sitetit=$g(filter("sitetitle"))
+ . . if sitetit="" d  ;
+ . . . n tsite s tsite=$g(filter("site"))
+ . . . q:tsite=""
+ . . . s sitetit=$$SITENM2^SAMISITE(tsite)_" - "_tsite
+ . . q:sitetit=""
+ . . do findReplace^%ts(.ln,"@@SITETITLE@@",sitetit)
+ . . s temp(zi)=ln
+ . ;
+ . set cnt=cnt+1
+ . set rtn(cnt)=temp(zi)
+ ;
+ ;D ^ZTER
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of wri WSNUUPLD^SAMICASE
  ;
  ;
  ;

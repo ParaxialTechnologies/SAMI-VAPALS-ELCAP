@@ -106,7 +106,7 @@
         $("#lung-rads").detach().appendTo("#lung-rads-bottom").show();
         if (fv) {
             $("#lung-rads-category-label").removeClass("required");
-            fv.disableValidator('celrad')
+            fv.disableValidator('celrad');
         }
     }
 
@@ -168,7 +168,7 @@
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
+            fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}});
         }
 
         {% if (isCT and isLungRads) %}

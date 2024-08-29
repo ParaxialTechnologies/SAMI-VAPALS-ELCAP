@@ -166,7 +166,7 @@
         if (sysConfig.RURAL_URBAN_CHART_ENABLED && sysConfig.VETERAN_AFFAIRS_SITE) {
             $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
                 const ruralData = json.result;
-                $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
+                $("#chart-rural-heading").text("Rural engagement in " + ruralData.site);
                 const ctx = document.getElementById('chart-rural');
                 new Chart(ctx, {
                     type: 'pie',

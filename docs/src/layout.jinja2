@@ -201,17 +201,17 @@
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
         if ($.isEmptyObject(params)) {
-            console.log("retrieveParams")
+            console.log("retrieveParams");
             retrieveParams(siteId, onRetrieveCallback);
         } else {
-            console.log("paramSubstitution")
+            console.log("paramSubstitution");
             substituteParams(params);
         }
 
         function retrieveParams(siteId, onRetrieveCallback) {
             $.ajax('/params', {data: {siteId: siteId}})
                 .done(function (data) {
-                    console.log("retrieveParams(done)")
+                    console.log("retrieveParams(done)");
                     sessionStorage.setItem(key, JSON.stringify(data));
                     substituteParams(data);
                     onRetrieveCallback();

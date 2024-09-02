@@ -34,6 +34,11 @@ WSNUFORM(rtn,filter) goto WSNUFORM^SAMICAS2
  ;
  ;
  ;
+ ;@wri WSNUUPLD^SAMICASE, post vapals file upload new for patient
+WSNUUPLD(rtn,filter) goto WSNUUPLD^SAMICAS2
+ ;
+ ;
+ ;
  ;@wri DELFORM^SAMICASE, post vapals deleteform: delete incomplete form
 DELFORM(RESULT,ARGS) goto DELFORM^SAMICAS2
  ;

@@ -220,47 +220,59 @@ WSCASE ; post vapals casereview: generate case review page
  . . new zk set zk=""
  . . for  set zk=$order(items("sort",cdate,zk)) q:zk=""  do  ;
  . . . new zform set zform=zk
- . . . new zkey set zkey=$order(items("sort",cdate,zform,""))
- . . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
- . . . new imgid set imgid=$g(items("sort",cdate,zform,zkey,zname))
- . . . new dispdate set dispdate=$$KEY2DSPD(cdate)
- . . . set zform="vapals:"_zkey ; all the new forms are vapals:key
- . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
- . . . set cnt=cnt+1
- . . . ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
- . . . set rtn(cnt)="<tr><td> "_useid_" </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
- . . . set cnt=cnt+1
- . . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
- . . . set cnt=cnt+1
- . . . set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
- . . . set cnt=cnt+1
- . . . set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
- . . . set cnt=cnt+1
- . . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
- . . . set cnt=cnt+1
- . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
- . . . ;
- . . . new samistatus set samistatus=""
- . . . if $$GSAMISTA(sid,zform)="incomplete" set samistatus="(incomplete)"
- . . . set cnt=cnt+1
- . . . set rtn(cnt)="</form>"_samistatus_$$NOTEHREF^SAMICASE(sid,zkey)_"</td>"
- . . . set cnt=cnt+1
- . . . if zform["ceform" do  ;
- . . . . new rpthref set rpthref="<form method=POST action=""/vapals"">"
- . . . . set rpthref=rpthref_"<td><input type=hidden name=""samiroute"" value=""ctreport"">"
- . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
- . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
- . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . set rtn(cnt)=rpthref_"</tr>"
- . . . . ;set rtn(cnt)="</tr>" ; turn off report
- . . . if zform["image" d  ;
- . . . . new imgurl set imgurl=$$VIEWURL^SAMIDCM2(siteid)
- . . . . new imgview s imgview=""
- . . . . s imgview=imgview_"<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
- . . . . s imgview=imgview_">View</a></td></tr>"
- . . . . set rtn(cnt)=imgview
+ . . . new zkey set zkey=""
+ . . . f  s zkey=$order(items("sort",cdate,zform,zkey)) q:zkey=""  d  ;
+ . . . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
+ . . . . new imgid set imgid=$g(items("sort",cdate,zform,zkey,zname))
+ . . . . new dispdate set dispdate=$$KEY2DSPD(cdate)
+ . . . . if zform'["file" set zform="vapals:"_zkey ; all the new forms are vapals:key
  . . . . set cnt=cnt+1
- . . . else  set rtn(cnt)="<td></td></tr>"
+ . . . . ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . . set rtn(cnt)="<tr><td> "_useid_" </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
+ . . . . ;set rtn(cnt)=" <input name=""form"" value="""_zkey_""" type=""hidden"">"_$char(13)
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ . . . . ;
+ . . . . new samistatus set samistatus=""
+ . . . . if $$GSAMISTA(sid,zform)="incomplete" set samistatus="(incomplete)"
+ . . . . set cnt=cnt+1
+ . . . . set rtn(cnt)="</form>"_samistatus_$$NOTEHREF^SAMICASE(sid,zkey)_"</td>"
+ . . . . set cnt=cnt+1
+ . . . . if zform["ceform" do  ;
+ . . . . . new rpthref set rpthref="<form method=POST action=""/vapals"">"
+ . . . . . set rpthref=rpthref_"<td><input type=hidden name=""samiroute"" value=""ctreport"">"
+ . . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
+ . . . . . ;set rpthref=rpthref_"<input type=hidden name=""form"" value="_zkey_">"
+ . . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ . . . . . set rtn(cnt)=rpthref_"</tr>"
+ . . . . . set cnt=cnt+1
+ . . . . . ;set rtn(cnt)="</tr>" ; turn off report
+ . . . . if zform["file" do  ;
+ . . . . . new filehref set filehref="<form method=POST action=""/vapals"">"
+ . . . . . set filehref=filehref_"<td><input type=hidden name=""samiroute"" value=""viewfile"">"
+ . . . . . ;set filehref=filehref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
+ . . . . . set filehref=filehref_"<input type=hidden name=""form"" value="_zkey_">"
+ . . . . . set filehref=filehref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . . . . set filehref=filehref_"<input value=""View"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ . . . . . set rtn(cnt)=filehref_"</tr>"
+ . . . . . set cnt=cnt+1
+ . . . . if zform["image" d  ;
+ . . . . . new imgurl set imgurl=$$VIEWURL^SAMIDCM2(siteid)
+ . . . . . new imgview s imgview=""
+ . . . . . s imgview=imgview_"<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
+ . . . . . s imgview=imgview_">View</a></td></tr>"
+ . . . . . set rtn(cnt)=imgview
+ . . . . . set cnt=cnt+1
+ . . . . else  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
  . quit
@@ -510,9 +522,16 @@ GETITEMS ; get items available for studyid
  . if zkey1="ptform" set fname="PET Evaluation"
  . if zkey1="itform" set zform="vapals:itform"
  . if zkey1="itform" set fname="Intervention"
+ . if zkey1="file" d  ;
+ . . s zform="file"
+ . . n doccode s doccode=$g(@groot@("graph",sid,zi,"pdtype"))
+ . . n doctype s doctype=$$DOCTYPE(doccode)
+ . . if doctype'="" s fname="Doc: "_doctype
+ . . else  s fname="file"
  . if $get(fname)="" set fname="unknown"
  . ;
- . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
+ . ;new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
+ . new zdate set zdate=$p(zi,"-",2)_"-"_$p(zi,"-",3)_"-"_$p(zi,"-",4)
  . set zdate=$$FMDT^SAMIUR2(zdate)
  . quit:$get(zdate)=""
  . quit:$get(zform)=""
@@ -552,7 +571,8 @@ GETDTKEY(formid) ; date portion of form key
  ;@stanza 2 calculate date from key
  ;
  new frm set frm=$piece(formid,"-")
- new date set date=$piece(formid,frm_"-",2)
+ ;new date set date=$piece(formid,frm_"-",2)
+ new date set date=$piece(formid,"-",2)_"-"_$piece(formid,"-",3)_"-"_$piece(formid,"-",4)
  ;
  ;@stanza 3 return & termination
  ;
@@ -691,6 +711,25 @@ WSNUFORM ; post vapals nuform: new form for patient
  new saminame set saminame=$get(@groot@("saminame"))
  quit:saminame=""
  ;
+ ;
+ ; gpl experiment to fool wsGetForm^%wf into processing this form
+ ;
+ n tmpdt
+ s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT())
+ s tmpdt=$tr(tmpdt,"/","-")
+ n tmpkey
+ s tmpkey="temp-"_tmpdt ; key to fool wsGetForm
+ s @root@("graph",sid,tmpkey,sid)=sid
+ ;
+ n filter
+ s filter("form")="vapals:nuform"
+ s filter("studyid")=sid
+ s filter("key")=tmpkey
+ d wsGetForm^%wf(.rtn,.filter)
+ k @root@("graph",sid,tmpkey) ; clean up temp false form
+ quit
+ ; 
+OLDNUFORM()
  new temp,tout,form
  set return="temp",form="vapals:nuform"
  do GETTMPL
@@ -785,15 +824,37 @@ WSNUUPLD ; post vapals nuform: new form for patient
  new saminame set saminame=$get(@groot@("saminame"))
  quit:saminame=""
  ;
+ ; gpl experiment to fool wsGetForm^%wf into processing this form
+ ;
+ n tmpdt
+ s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT())
+ s tmpdt=$tr(tmpdt,"/","-")
+ n tmpkey
+ s tmpkey="temp-"_tmpdt ; key to fool wsGetForm
+ s @root@("graph",sid,tmpkey,sid)=sid
+ ;
+ n filter
+ s filter("form")="vapals:fileupload"
+ s filter("studyid")=sid
+ s filter("key")=tmpkey
+ d wsGetForm^%wf(.rtn,.filter)
+ k @root@("graph",sid,tmpkey) ; clean up temp false form
+ quit
+ ; 
+OLDPROCESS()
  new temp,tout,form
  set return="temp",form="vapals:fileupload"
- do GETTMPL
+ ;do GETTMPL
+ ;do GETTMPL^SAMICASE("temp","vapals:fileupload")
+ do getThis^%wd("temp","fileupload.html")
+ ;d SAMIHTM^%wf("temp","fileupload","err")
+ set HTTPRSP("mime")="text/html"
  quit:'$data(temp)
  ;
  new cnt set cnt=0
  new zi set zi=0
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
- . new ln set ln=temp(zi)_$CHAR(13)
+ . new ln set ln=temp(zi)_$C(13,10)
  . new touched set touched=0
  . ;
  . if ln["href" if 'touched do  ;
@@ -838,6 +899,112 @@ WSNUUPLD ; post vapals nuform: new form for patient
  ;
  ;
  ;@ppi-code $$KEY2FM^SAMICASE
+DOCTYPE(code) ; extrinsic which returns the document type from the code
+ n dtype ; document type table
+ s dtype("c","CT Chest")=""
+ s dtype("p","PET-CT")=""
+ s dtype("b","Biopsy")=""
+ s dtype("s","Surgical")=""
+ s dtype("a","Operative Report")=""
+ s dtype("d","Discharge Summary")=""
+ s dtype("t","Treatment Summary")=""
+ s dtype("f","PFT")=""
+ s dtype("m","Molecular Pathology")=""
+ s dtype("r","Bronchoscopy")=""
+ s dtype("cs","Consent Form")=""
+ s dtype("o","Other")=""
+ n rtn s rtn=""
+ i $d(dtype(code)) s rtn=$o(dtype(code,""))
+ q rtn
+ ;
+TOADPARSE(rtn,SAMIARG,SAMIBODY) ; SURROGATE FOR TOAD'S FIELD PARSING
+ ;
+ s rtn("samiroute")="fileupload"
+ s rtn("studyid")=$g(SAMIARG("studyid"))
+ if $g(rtn("studyid"))="" s rtn("studyid")="XXX9000072"
+ s rtn("site")="XXX"
+ s rtn("form")="temp-08-31-2024"
+ s rtn("pdtitle")=""
+ s rtn("filename")="sample.txt"
+ s rtn("Content-Type")="text/plain"
+ s rtn("pddos")="08/27/2024"
+ s rtn("pdtype")="s"
+ s rtn("pddesc")="this is a description of the importance of this file"
+ n cnt s cnt=0
+ f cnt=1:1:100 d  ;
+ . s rtn("file",cnt)=$t(DOCTYPE+cnt-1^SAMICAS2)_$C(13,10)
+ q
+ ;
+FILEUP(SAMIARG,SAMIBODY,SAMIRESULT) ; process file upload
+ ;
+ N vars
+ m vars=SAMIARG
+ D TOADPARSE(.vars,.SAMIARG,.SAMIBODY)
+ ;B
+ ;d ^ZTER
+ Q:'$D(vars)
+ n pddos ; document data
+ s pddos=$g(vars("pddos"))
+ n spdt ; screening plus date
+ ;s spdt=$tr(pddos,"/","-")
+ s spdt=$p(pddos,"/",3)_"-"_$p(pddos,"/",1)_"-"_$p(pddos,"/",2)
+ ;
+ new sid set sid=$get(vars("studyid"))
+ if sid="" set sid=$get(vars("sid"))
+ set sid=$g(SAMIARG("studyid"))
+ quit:sid=""
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+ quit:+sien=0
+ new root set root=$$setroot^%wd("vapals-patients")
+ new groot set groot=$name(@root@(sien))
+ new froot set froot=$name(@root@("graph",sid)) ; form root for this person
+ ;
+ new saminame set saminame=$get(@groot@("saminame"))
+ quit:saminame=""
+ s vars("saminame")=saminame
+ ;
+ n key
+ s key="file-"_spdt
+ s key=$$DEDUP(key,froot) ; append a dash number to the key to make it unique
+ ;
+ m @froot@(key)=vars
+ m SAMIARG=vars
+ s SAMIARG("site")="XXX"
+ k SAMIRESULT
+ d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ ;
+ q
+ ;
+DEDUP(key,froot) ; extrinsic append a dash number to the key to make it unique
+ ; if needed
+ n rtn,zi,done
+ s done=0
+ s rtn=key
+ i $d(@froot@(rtn)) d  ;
+ . f zi=1:1:99 q:done  d  ;
+ . . n rtn2
+ . . s rtn2=rtn_"-"_zi
+ . . i '$d(@froot@(rtn2)) d  ;
+ . . . s done=1
+ . . . s rtn=rtn2
+ q rtn
+ ;
+FILEVIEW(SAMIARG,SAMIBODY,SAMIRESULT) ; view an uploaded document
+ n sid
+ s sid=$g(SAMIARG("studyid"))
+ q:sid=""
+ n root s root=$$setroot^%wd("vapals-patients")
+ n form
+ s form=$g(SAMIARG("form"))
+ q:'$d(@root@("graph",sid,form))
+ n gn
+ s gn=$na(^TMP("SAMIVIEW",$J))
+ q:'$d(@root@("graph",sid,form,"file"))
+ k @gn
+ m @gn=@root@("graph",sid,form,"file")
+ s SAMIRESULT=gn
+ q
+ ;
 KEY2FM ; convert key to fileman date
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -871,9 +1038,9 @@ KEY2FM ; convert key to fileman date
  ;
  new datepart set datepart=key
  ; allow key to be the whole key ie ceform-2018-10-3
- if $length(key,"-")=4 do
+ if $length(key,"-")>3 do
  . new frm set frm=$piece(key,"-")
- . set datepart=$piece(key,frm_"-",2)
+ . set datepart=$piece(key,"-",2)_"-"_$piece(key,"-",3)_"-"_$piece(key,"-",4)
  . quit
  new X set X=datepart
  new Y
@@ -905,12 +1072,16 @@ GSAMISTA(sid,form) ; extrinsic returns value of 'samistatus' from form
  ;@tests
  ; SAMIUTS2
  ;
+ if form["file" q ""
+ if form["image" q ""
  new stat,root,useform
  set root=$$setroot^%wd("vapals-patients")
  set useform=form
- if form["vapals:" set useform=$p(form,"vapals:",2)
+ ;if form["vapals:" set useform=$p(form,"vapals:",2)
+ if useform="" q ""
  set stat=$get(@root@("graph",sid,useform,"samistatus"))
  if stat="" set stat="incomplete"
+ if useform["file" set stat=""
  ;
  quit stat ; end of ppi $$GSAMISTA^SAMICAS2
  ;

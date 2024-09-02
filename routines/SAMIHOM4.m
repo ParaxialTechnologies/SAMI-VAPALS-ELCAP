@@ -402,9 +402,11 @@ WSVAPALS ; post vapals (main gateway)
  m ^SAMIUL("vapals")=SAMIARG
  m ^SAMIUL("vapals","BODY")=SAMIBODY
  ;
+ ;d ^ZTER
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
- do parseBody^%wf("vars",.SAMIBDY)
+ if $e(SAMIBDY,1,5)["-----" d TOADPARSE^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT) 
+ else  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
  i $g(vars("siteid"))'="" d  ;
  . i $g(vars("site"))'=$g(vars("siteid")) s vars("site")=$g(vars("siteid"))
@@ -432,9 +434,9 @@ WSVAPALS ; post vapals (main gateway)
  . s SAMIARG("siteid")=siteid
  . s SAMIARG("sitetitle")=$$SITENM2^SAMISITE(siteid)_" - "_siteid
  . q
- ; k ^gpl("siteselect")
- ; m ^gpl("siteselect")=SAMIARG
- ; m ^gpl("siteselect","vars")=vars
+ k ^gpl("siteselect")
+ m ^gpl("siteselect")=SAMIARG
+ m ^gpl("siteselect","vars")=vars
  if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRESULT,.SAMIARG) Q 0
  new SAMISITE,SAMITITL
  s SAMISITE=$G(SAMIARG("siteid"))
@@ -456,15 +458,21 @@ WSVAPALS ; post vapals (main gateway)
  ;
  ;if route="fileupload" d  q 0
  if route="fileupload" d  q 0
- . ;SET route="postform" q  ;
- . s HTTPRSP("mime")="application/pdf"
- . n gn s gn=$na(^TMP("GPLTEST",$J))
- . m @gn=^gpl("pdf")
- . ;m @gn=^gpl("GPLPDF")
- . ;n part s part="%PDF"_$P(@gn@(1),"%PDF",2)
- . ;s @gn@(1)=part
- . m SAMIRESULT=gn
- . ;m SAMIRESULT=SAMIARG("file")
+ . d FILEUP^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . Q
+ ;
+ ;. ;SET route="postform" q  ;
+ ;. s HTTPRSP("mime")="application/pdf"
+ ;. n gn s gn=$na(^TMP("GPLTEST",$J))
+ ;. m @gn=^gpl("pdf")
+ ;. ;m @gn=^gpl("GPLPDF")
+ ;. ;n part s part="%PDF"_$P(@gn@(1),"%PDF",2)
+ ;. ;s @gn@(1)=part
+ ;. m SAMIRESULT=gn
+ ;. ;m SAMIRESULT=SAMIARG("file")
+ ;
+ if route="viewfile" d  q 0
+ . d FILEVIEW^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
  i route="" d  q 0
  . n vals

@@ -919,12 +919,13 @@ DOCTYPE(code) ; extrinsic which returns the document type from the code
  ;
 MINIPARS(RTN,ARY) ; parse on name=
  ;
+ m ^gpl("BODY")=@ARY
  n lastline s lastline=$o(@ARY@(" "),-1)
+ n debug s debug=$g(DEBUG)
  n doline
  f doline=1,lastline-1,lastline d  ;
  . n LN s LN=@ARY@(doline)
  . n ncnt s ncnt=$l(LN,"name=")
- . n debug s debug=$g(DEBUG)
  . n i
  . for i=2:1:ncnt-1 d  ;
  . . n zp s zp=$p(LN,"name=",i)
@@ -945,30 +946,15 @@ MINIPARS(RTN,ARY) ; parse on name=
  ; now isolate the document (starting with pdf)
  s LN=@ARY@(1)
  n right s right=$e(LN,$f(LN,"Content-Type:"),$l(LN))
+ ;n mime s mime=$p(right,$C(10,13),1)
+ ;w:debug !,"mime: ",mime
  n mime s mime="application/pdf"
  s RTN("Content-Type")=mime
+ ;b
  n pdftop
  s pdftop=$p(right,"application/pdf",2) ; the biginning of the pdf
  s @ARY@(1)=pdftop
  m RTN("file")=@ARY
- q
- ;
-TOADPARSE(rtn,SAMIARG,SAMIBODY) ; SURROGATE FOR TOAD'S FIELD PARSING
- ;
- s rtn("samiroute")="fileupload"
- s rtn("studyid")=$g(SAMIARG("studyid"))
- if $g(rtn("studyid"))="" s rtn("studyid")="XXX9000072"
- s rtn("site")="XXX"
- s rtn("form")="temp-08-31-2024"
- s rtn("pdtitle")=""
- s rtn("filename")="sample.txt"
- s rtn("Content-Type")="text/plain"
- s rtn("pddos")="08/27/2024"
- s rtn("pdtype")="s"
- s rtn("pddesc")="this is a description of the importance of this file"
- n cnt s cnt=0
- f cnt=1:1:100 d  ;
- . s rtn("file",cnt)=$t(DOCTYPE+cnt-1^SAMICAS2)_$C(13,10)
  q
  ;
 FILEUP(SAMIARG,SAMIBODY,SAMIRESULT) ; process file upload
@@ -976,7 +962,7 @@ FILEUP(SAMIARG,SAMIBODY,SAMIRESULT) ; process file upload
  N vars
  m vars=SAMIARG
  ;D TOADPARSE(.vars,.SAMIARG,.SAMIBODY)
- D MINIPARS(.vars,"SAMIARG")
+ ;D MINIPARS(.vars,"SAMIARG")
  Q:'$D(vars)
  n pddos ; document data
  s pddos=$g(vars("pddos"))

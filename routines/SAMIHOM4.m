@@ -405,7 +405,7 @@ WSVAPALS ; post vapals (main gateway)
  ;d ^ZTER
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
- if $e(SAMIBDY,1,5)["-----" d TOADPARSE^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT) 
+ if $e(SAMIBDY,1,5)["-----" d MINIPARS^SAMICAS2(.SAMIARG,"SAMIBODY")
  else  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
  i $g(vars("siteid"))'="" d  ;

@@ -72,13 +72,13 @@ WSSHODOC(RETURN,FILTER)
  ;
  n gn s gn=$na(^TMP("GPLTEST",$J))
  s HTTPRSP("mime")="application/pdf"
- ;m @gn=^gpl("pdf")
+ m @gn=^gpl("pdf")
  s RETURN=""
- n g2 s g2=""
- n zi s zi=""
- f  s zi=$o(^gpl("GPLPDF",zi)) q:zi=""  s g2=g2_^gpl("GPLPDF",zi)
+ ;n g2 s g2=""
+ ;n zi s zi=""
+ ;f  s zi=$o(^gpl("GPLPDF",zi)) q:zi=""  s g2=g2_^gpl("GPLPDF",zi)
  ;s RETURN=$$URLDEC^VPRJRUT(g2)
- s RETURN=g2
+ s RETURN=gn
  q
  ;
 LOADPDF()

@@ -917,6 +917,42 @@ DOCTYPE(code) ; extrinsic which returns the document type from the code
  i $d(dtype(code)) s rtn=$o(dtype(code,""))
  q rtn
  ;
+MINIPARS(RTN,ARY) ; parse on name=
+ ;
+ n lastline s lastline=$o(@ARY@(" "),-1)
+ n doline
+ f doline=1,lastline-1,lastline d  ;
+ . n LN s LN=@ARY@(doline)
+ . n ncnt s ncnt=$l(LN,"name=")
+ . n debug s debug=$g(DEBUG)
+ . n i
+ . for i=2:1:ncnt-1 d  ;
+ . . n zp s zp=$p(LN,"name=",i)
+ . . w:debug !,"zp: ",zp
+ . . n zpp s zpp=$tr(zp,$C(34),"#")
+ . . w:debug !,"zpp: ",zpp
+ . . n tag,value
+ . . s tag=$p(zpp,"#",2)
+ . . w:debug !,"tag: ",tag
+ . . n zp2 s zp2=$e(zp,$l(tag)+3,$l(zp))
+ . . w:debug !,"zp2: ",zp2
+ . . n zp3 s zp3=$tr(zp2," ","")
+ . . w:debug !,"zp3: ",zp3
+ . . s value=$p(zp3,"-----",1)
+ . . s value=$$STRIP^XLFSTR(value,$C(10)_$C(13))
+ . . w:debug !,"value: ",value
+ . . s RTN(tag)=value
+ ; now isolate the document (starting with pdf)
+ s LN=@ARY@(1)
+ n right s right=$e(LN,$f(LN,"Content-Type:"),$l(LN))
+ n mime s mime="application/pdf"
+ s RTN("Content-Type")=mime
+ n pdftop
+ s pdftop=$p(right,"application/pdf",2) ; the biginning of the pdf
+ s @ARY@(1)=pdftop
+ m RTN("file")=@ARY
+ q
+ ;
 TOADPARSE(rtn,SAMIARG,SAMIBODY) ; SURROGATE FOR TOAD'S FIELD PARSING
  ;
  s rtn("samiroute")="fileupload"
@@ -939,9 +975,8 @@ FILEUP(SAMIARG,SAMIBODY,SAMIRESULT) ; process file upload
  ;
  N vars
  m vars=SAMIARG
- D TOADPARSE(.vars,.SAMIARG,.SAMIBODY)
- ;B
- ;d ^ZTER
+ ;D TOADPARSE(.vars,.SAMIARG,.SAMIBODY)
+ D MINIPARS(.vars,"SAMIARG")
  Q:'$D(vars)
  n pddos ; document data
  s pddos=$g(vars("pddos"))
@@ -951,7 +986,7 @@ FILEUP(SAMIARG,SAMIBODY,SAMIRESULT) ; process file upload
  ;
  new sid set sid=$get(vars("studyid"))
  if sid="" set sid=$get(vars("sid"))
- set sid=$g(SAMIARG("studyid"))
+ ;set sid=$g(SAMIARG("studyid"))
  quit:sid=""
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
@@ -1003,6 +1038,7 @@ FILEVIEW(SAMIARG,SAMIBODY,SAMIRESULT) ; view an uploaded document
  k @gn
  m @gn=@root@("graph",sid,form,"file")
  s SAMIRESULT=gn
+ s HTTPRSP("mime")="application/pdf"
  q
  ;
 KEY2FM ; convert key to fileman date

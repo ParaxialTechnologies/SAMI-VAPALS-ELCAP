@@ -1,7 +1,7 @@
-SAMICAS4 ;ven/gpl - case review sub library; 2024-08-22t21:03z
- ;;18.0;SAMI;**17**;2020-01-17;
- ;mdc-e1;SAMICAS4-20240822-E01RgJpy;SAMI-18-17-b6
- ;mdc-v7;B106029587;SAMI*18.0*17 SEQ #17
+SAMICAS4 ;ven/gpl - case review sub library; 2024-09-03t22:53z
+ ;;18.0;SAMI;**17**;2020-01-17;Build 8
+ ;mdc-e1;SAMICAS4-20240903-E3rMewp;SAMI-18-17-b8
+ ;mdc-v7;B106133479;SAMI*18.0*17 SEQ #17
  ;
  ; SAMICAS4 contains subroutines to support processing of the
  ; ScreeningPlus case review page.
@@ -70,7 +70,7 @@ CLINSUM(sid) ; extrinsic returns a one-line clinical summary
  ;@stanza 2 init main vars
  ;
  ; one-line clinical summary, set default in case we fail
- new clinstr set clinstr="[CHECK BACKGROUND - AGE/SMOKING HISTORY]"
+ n clinstr s clinstr="[CHECK BACKGROUND - AGE/SMOKING HISTORY]"
  ;
  n smoker s smoker=""
  n root s root=$$setroot^%wd("vapals-patients")
@@ -89,17 +89,17 @@ CLINSUM(sid) ; extrinsic returns a one-line clinical summary
  ;
  ;@stanza 4 if no followup forms were found, use background form
  ;
- if fufail do
+ i fufail do
  . n sbform s sbform=$o(@gn@("sbform")) ; key to form
  . n sbvars s sbvars=$na(@gn@(sbform))
  . ;
- . i @sbvars@("sbsru")="n" d  ; never smoker
+ . i $g(@sbvars@("sbsru"))="n" d  ; never smoker
  . . s smoker="n"
  . . s clinstr=""
  . . s $p(clinstr,";",3)=" Never Smoker"
  . . q
  . ;
- . i @sbvars@("sbsru")="y" d  ; smoker
+ . i $g(@sbvars@("sbsru"))="y" d  ; smoker
  . . i @sbvars@("sbshsa")="y" s smoker="c" ; current smoker
  . . i @sbvars@("sbshsa")="n" s smoker="f" ; former smoker
  . . i smoker="c" d  ; current smoker
@@ -137,7 +137,7 @@ CLINSUM(sid) ; extrinsic returns a one-line clinical summary
  ;
  ;@stanza 5 append age to clinical info
  ;
- set $piece(clinstr,";",1)="Age: "_age
+ i clinstr[";" s $p(clinstr,";",1)="Age: "_age
  ;
  ;
  ;@stanza 6 termination

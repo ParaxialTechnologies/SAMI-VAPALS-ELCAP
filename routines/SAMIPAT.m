@@ -1,7 +1,7 @@
-SAMIPAT ;ven/toad - init subroutines; 2024-08-22t21:16z
- ;;18.0;SAMI;**12,14,15,17**;2020-01-17;
- ;mdc-e1;SAMIPAT-20240822-E06GsDm;SAMI-18-17-b6
- ;mdc-v7;B16870509;SAMI*18.0*17 SEQ #17
+SAMIPAT ;ven/toad - post subroutines; 2024-08-30t03:30z
+ ;;18.0;SAMI;**12,14,15,17**;2020-01-17;Build 8
+ ;mdc-e1;SAMIPAT-20240822-E2tdr5N;SAMI-18-17-b8
+ ;mdc-v7;B17344032;SAMI*18.0*17 SEQ #17
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -25,7 +25,7 @@ SAMIPAT ;ven/toad - init subroutines; 2024-08-22t21:16z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:16z
+ ;@update 2024-08-30t03:30z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
@@ -105,15 +105,20 @@ SAMIPAT ;ven/toad - init subroutines; 2024-08-22t21:16z
  ; 2022-12-28 ven/lmry 18-17-t4 956e2716
  ;  SAMIPAT update.
  ;
- ; 2024-08-12 ven/lmry 18-17-b5
+ ; 2024-08-12 ven/lmry 18-17-b5 eea98cd
  ;  SAMIPAT add POS1818.
  ;
- ; 2024-08-16 ven/lmry 18-17-b6
+ ; 2024-08-16 ven/lmry 18-17-b6  a1a28de  d0224d9
  ;  SAMIPAT update POS1817.
  ;
  ; 2024-08-22 ven/toad 18-17-b6
  ;  SAMIPAT update history, version-control lines, hdr comments.
  ;
+ ; 2024-08-30 ven/lmry 18-17-b6
+ ;  SAMIPAT updated path for SAMIDIR under STANDARD, change update date,
+ ;   also changed routine description to post routines instead of init
+ ;   routines.
+ ;  
  ;
  ;@contents
  ;
@@ -134,7 +139,7 @@ SAMIPAT ;ven/toad - init subroutines; 2024-08-22t21:16z
  ;
 STANDARD ; usual post-install commands
  ;
- set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+ set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github/docs/form-fields/"
  ;do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
  ;do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
  ;do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")

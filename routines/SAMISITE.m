@@ -1,6 +1,6 @@
 SAMISITE ;ven/gpl - site signon & security; 2024-08-22t21:17z
- ;;18.0;SAMI;**5,12,14,17**;2020-01-17;
- ;mdc-e1;SAMISITE-20240822-E0ePfmU;SAMI-18-17-b6
+ ;;18.0;SAMI;**5,12,14,17**;2020-01-17;Build 8
+ ;mdc-e1;SAMISITE-20240822-E3+ep6+;SAMI-18-17-b8
  ;mdc-v7;B212460993;SAMI*18.0*17 SEQ #17
  ;
  ; Routine SAMISITE contains subroutines for implementing the

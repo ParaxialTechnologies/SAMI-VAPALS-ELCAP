@@ -1,6 +1,6 @@
 SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
- ;;18.0;SAMI;**7,11,17**;2020-01-17;
- ;mdc-e1;SAMICSV-20240822-E0Is5cO;SAMI-18-17-b6
+ ;;18.0;SAMI;**7,11,17**;2020-01-17;Build 8
+ ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b8
  ;mdc-v7;B104029869;SAMI*18.0*17 SEQ #17
  ;
  ; SAMICSV contains a direct-mode service to produce the ScreeningPlus
@@ -30,7 +30,7 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@release 18-17
  ;@edition-date 2020-01-17
- ;@patches **7,11**
+ ;@patches **7,11,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

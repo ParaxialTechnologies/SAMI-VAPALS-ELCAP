@@ -1,7 +1,7 @@
-SAMICUL ;ven/gpl - case review log; 2024-08-22t21:07z
- ;;18.0;SAMI;**9,11,12,14,15,17**;2020-01-17;
- ;mdc-e1;SAMICUL-20240822-E032a5Qq;SAMI-18-17-b6
- ;mdc-v7;B145904;SAMI*18.0*17 SEQ #17
+SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
+ ;;18.0;SAMI;**9,11,12,14,15,17**;2020-01-17;Build 8
+ ;mdc-e1;SAMICUL-20240903-E2pffz;SAMI-18-17-b8
+ ;mdc-v7;B147284;SAMI*18.0*17 SEQ #17
  ;
  ; SAMICUL contains the development log for the ScreeningPlus Case
  ; Review Page (SAMICA* routines). It contains no executable code.
@@ -25,13 +25,13 @@ SAMICUL ;ven/gpl - case review log; 2024-08-22t21:07z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:07z
+ ;@update 2024-09-03t23:26z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module case review - SAMICA
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@release SAMI-18-17
- ;@edition-date 2022-08
+ ;@edition-date 2020-01-17
  ;@patches **9,11,12,14,15,17**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
@@ -369,6 +369,12 @@ SAMICUL ;ven/gpl - case review log; 2024-08-22t21:07z
  ; BASELNDT,KEY2DT,PRIORCMP,SORTFRMS.
  ;  SAMICUL update history.
  ;  SAMICAS3,4,UL update version-control lines, hdr comments.
+ ;
+ ; 2024-09-03 ven/toad&gpl 18-17-b8
+ ;  SAMICAS4 stop crash when no background form.
+ ;  SAMICUL update history.
+ ;  SAMICAS3,CAS4,CSV,CUL,DCM1,FLD,FUL,HOM4,HUL,PAT,SITE,UR,UR2,URUL
+ ; bump version.
  ;
  ;@to-do
  ; finish converting SAMICAS* subroutines to service architecture

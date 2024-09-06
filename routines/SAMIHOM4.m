@@ -416,7 +416,7 @@ WSVAPALS ; post vapals (main gateway)
  . s vars("site")=""
  . q
  m SAMIARG=vars
- m SAMIARG=SAMIBODY
+ ;m SAMIARG=SAMIBODY
  ;D ^ZTER
  ;
  ; Processing for multi-tenancy
@@ -547,6 +547,32 @@ WSVAPALS ; post vapals (main gateway)
  . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  . ;
  . i $g(SAMIARG("form"))["siform" d  ;
+ . . ; in case mrn or pid have changed, update the patient record
+ . . n sid s sid=$g(SAMIARG("studyid"))
+ . . i sid="" s sid=$g(SAMIARG("sid"))
+ . . i sid="" s sid=$g(SAMIARG("samistudyid"))
+ . . n proot s proot=$$setroot^%wd("vapals-patients")
+ . . n lroot s lroot=$$setroot^%wd("patient-lookup")
+ . . n pien s pien=$o(@proot@("sid",sid,""))
+ . . n dfn s dfn=$g(@proot@(pien,"dfn"))
+ . . n lien s lien=$o(@lroot@("dfn",dfn,"")) ; graphs may not be dinum
+ . . i pien'="" i lien'="" d  ;
+ . . . n newmrn,newpid
+ . . . s newmrn=$g(SAMIARG("simrn"))
+ . . . s newpid=$g(SAMIARG("sipid"))
+ . . . ; could do a comparison here, but easiest is just to push it
+ . . . if newmrn'="" d  ;
+ . . . . s @proot@(pien,"simrn")=newmrn
+ . . . . s @proot@("mrn",newmrn,pien)="" 
+ . . . . s @lroot@(lien,"simrn")=newmrn
+ . . . . s @lroot@("mrn",newmrn,lien)="" 
+ . . . if newpid'="" d  ;
+ . . . . s @proot@(pien,"sipid")=newpid
+ . . . . s @proot@("pid",newpid,pien)=""
+ . . . . s @lroot@(lien,"sipid")=newpid
+ . . . . s @lroot@("pid",newpid,lien)=""
+ . . ; 
+ . . ; generate a note and send it to VistA
  . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
  . . ; returns the ien of the note that was created and should be sent
  . . s notr=$$NOTE^SAMINOT1(.SAMIARG)
@@ -1416,6 +1442,8 @@ REINDXPL ; reindex patient lookup
  k @root@("last5")
  k @root@("sinamef")
  k @root@("sinamel")
+ k @root@("mrn")
+ k @root@("pid") 
  ; k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . d INDXPTLK(zi)
@@ -1481,6 +1509,10 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("sinamef",x,ien)=""
  s x=$g(@proot@(ien,"sinamel")) ;w !,x
  s:x'="" @proot@("sinamel",x,ien)=""
+ s x=$g(@proot@(ien,"simrn"))
+ s:x'="" @proot@("mrn",x,ien)=""
+ s x=$g(@proot@(ien,"sipid"))
+ s:x'="" @proot@("pid",x,ien)=""
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
  ;
  quit  ; end of pps INDXPTLK

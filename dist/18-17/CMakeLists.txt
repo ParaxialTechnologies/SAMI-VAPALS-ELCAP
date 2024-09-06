@@ -8,4 +8,6 @@ copy_binaries(
 
 do_subdir(
   t[0-9]
+  b[0-9]
+  b[0-9][0-9]
   )

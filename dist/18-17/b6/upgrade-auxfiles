@@ -1,0 +1,69 @@
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+AWK="$ENV awk"
+DC="$ENV dc"
+GIT="$ENV git"
+LS="$ENV ls"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+TAR="$ENV tar"
+TEE="$ENV tee"
+TOUCH="$ENV touch"
+ZIP="$ENV zip"
+
+NOW=`date +'%Y%m%d-%H%M%S'`
+
+REPO="$HOME/lib/silver/vapals-elcap--parax-github"
+
+INDIR=`pwd`
+BACKUP="./.aux-backup"
+INSTALL="./auxfiles"
+BACKUPLOG="./.aux-backup.log"
+BACKZIP=".aux-backup-$NOW.zip"
+ROUTINE_BACKUP="$INDIR/.routine-backup-$NOW.ro"
+
+HBAR="-------------------------------------------------------------------------------"
+
+cd $INDIR
+$RM -rf $BACKUP
+$MKDIR -p $BACKUP
+echo "Backing up auxiliary files to $BACKUP:"
+for I in docs/mockups docs/src/layout.jinja2 docs/www; do
+    echo "* Backing up \$REPO/$I ..."
+    (cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -)
+done
+$TOUCH $BACKUPLOG
+echo $HBAR >> $BACKUPLOG
+echo $NOW >> $BACKUPLOG
+echo "Compressing the backup:"
+$ZIP -r $BACKZIP $BACKUP 2>&1 | $TEE $BACKUP_LOG
+echo "Cleaning up."
+$RM -rf $BACKUP
+echo "Done with backup of auxiliary files."
+# echo "Backing up routines:"
+# mumps -dir <<EOF | $TEE $BACKUP_LOG 2>&1
+# do ^%RO
+# {routines_to_backup}
+#
+# $ROUTINE_BACKUP
+# SAMI*18.0*17 SEQ #17 routine backup
+# halt
+# EOF
+# 
+# echo "Done with routine backup."
+echo ""
+if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
+    printf "Updating from $INSTALL ... "
+    (cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -)
+else
+    echo "Found a valid Git repository; pulling updates ..."
+    cd $REPO
+    $GIT pull
+fi
+
+echo "Done with install."
+echo ""
+echo "You may now proceed with the KIDS installation."
+

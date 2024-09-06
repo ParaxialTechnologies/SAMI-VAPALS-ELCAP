@@ -2,12 +2,12 @@
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: VAPALS-ELCAP
-#:version: 18-17-B6
+#:version: 18-17-b6
 #:rversion: 18-17
-#:partialdir: 18-17/B6
+#:partialdir: 18-17/b6
 #:status: release
-#:vista-version: SAMI*18.0*17 SEQ #17 B6
-#:vista-longversion: Version 18.0, Patch ID #17, Seq# 17, BUILD 6
+#:vista-version: SAMI*18.0*17 SEQ #17 b6
+#:vista-longversion: Version 18.0, Patch ID #17, Seq# 17, Build 6
 #:priority: high
 #:categories: routine, file
 $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
@@ -18,7 +18,7 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
 
 #>center: George P. Lilly, Dom DiNatale, Larry G. Carlson,
 #>center: & Frederick D. S. Marshall
-#>center: 2022-12-31
+#>center: 2024-08-27
 // #{now-iso-ymd}
 
 i. Front matter
@@ -31,20 +31,19 @@ i. Front matter
  Categories  #{categories}
  Status      #{status}: #{nmsp}-#{version}.zip
  Depends on  SAMI 18-1 (SAMI*18.0*1 SEQ #1)
-             SAMI 18-2 (SAMI*18.0*2 SEQ #2)
              SAMI 18-3 (SAMI*18.0*3 SEQ #3)
              SAMI 18-4 (SAMI*18.0*4 SEQ #4)
              SAMI 18-5 (SAMI*18.0*5 SEQ #5)
              SAMI 18-6 (SAMI*18.0*6 SEQ #6)
-             SAMI 18-8 (SAMI*18.0*8 SEQ #8)
+             SAMI 18-7 (SAMI*18.0*7 SEQ #7)
              SAMI 18-9 (SAMI*18.0*9 SEQ #9)
              SAMI 18-10 (SAMI*18.0*10 SEQ #10)
              SAMI 18-11 (SAMI*18.0*11 SEQ #11)
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
-             SAMI 18-13 (SAMI*18.0*13 SEQ #13)
+             SAMI 18-14 (SAMI*18.0*14 SEQ #14)
              SAMI 18-15 (SAMI*18.0*15 SEQ #15)
-             SAMI 18-16  (SAMI*18.O*16  SEQ# 16)
-            
+             SAMI 18-16 (SAMI*18.0*16 SEQ# 16)
+
 
 ii. Contents
 
@@ -67,6 +66,7 @@ ii. Contents
     - Enter the KIDS installation menu
     - Load KIDS package
     - Install KIDS package
+    - Optional DICOM step
  Optional backout instructions
  Routines
  Authors
@@ -74,8 +74,8 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds six high-priority updates to accomodate Mt. Sinai's
- workflow or to allow single sign-on or to improve output of reports.
+ #{nmsp} #{version} adds two high-priority updates to accomodate Mt. Sinai's
+ workflow and updates to allow single sign-on or to improve output of reports.
 
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is at
@@ -85,7 +85,7 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/newsite/project/vapals-elcap/dist/#{partialdir}/
+ https://vistaexpertise.net/project/vapals-elcap/dist/#{partialdir}/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -97,32 +97,32 @@ ii. Contents
  #.#. Insert clinical information string in CT Eval form
 
    request 1a (high priority): Clinical information field on the CT Eval form to be auto
-   filled based on responses to questions in the background form 
+   filled based on responses to questions in the background form
 
    solution: Developed clinical information string from background form and
    inserted into new CT Eval form
 
    reported: 2024-07-11 by iELCAP team
-   
+
   #.#. Support MRN and StudyID use
 
-   requests 2, 3 (high priority): iELCAP uses the Epic MRN and Study ID instead of 
+   requests 2, 3 (high priority): iELCAP uses the Epic MRN and Study ID instead of
    Social Security Number to identify patients. Screening+ needs to support the
    use of these patient IDs in the correct places.
-    
+
    solution: Changed graphstore and forms to support the use of alternate
    patient IDs
 
-   reported: 2024-07-11 by iELCAP team  
+   reported: 2024-07-11 by iELCAP team
 
  #.#. Login: Implement single sign-on
 
    Require users to login only once when single sign on in use.
 
-   issue 21-218 (high priority): When using single sign-on, user
-   should not be prompted to log in to VAPALS-ELCAP separately.
-   However, user must be matched to single sign-on SECID.
-   
+   issue 21-218: When using single sign-on, user should not be
+   prompted to log in to VAPALS-ELCAP separately.  However, user must
+   be matched to single sign-on SECID.
+
    solution: Require user to sign in once using Access and Verify
    created by system administrator. This allows SECID to be captured
    and tied to user.  For this testing version, where we don't yet
@@ -135,28 +135,28 @@ ii. Contents
 
 #.#. Logout: Upon sign-out, redirect to the correct web page
 
-   issue 21-221 (high priority): Currently users are being directed to the home
-   page of the clinical site they just logged out of.
+   issue 21-221: Currently users are being directed to the home page
+   of the clinical site they just logged out of.
 
    solution: User is redirected to correct logout page.
 
    reported: 2022-04 by Jirapatnakul.
-   
+
  #.#. Include name and last5 in every csv file on every row
 
-   unnumbered issue (high priority): A report is available to be run
-   by the sysadmin that outputs all patient data for statistical
-   analysis. Lines did not include patient ID.
+   unnumbered issue: A report is available to be run by the sysadmin
+   that outputs all patient data for statistical analysis. Lines did
+   not include patient ID.
 
    solution: Add saminame (full patient name) and last5 (First letter
    of last name and last four digits of SSN) in each line of report.
 
    reported: 2022-12-09 by Henschke and Yip.
-   
+
  #.#. Add a user report to show CT Eval recommendations
 
-   unnumbered issue (high priority): Develop a new user report that
-   shows recommendations from completed CT Evaluations. Allow sorting by
+   unnumbered issue: Develop a new user report that shows
+   recommendations from completed CT Evaluations. Allow sorting by
    type of recommendation and put totals at top of columns.
 
    solution: Added report.
@@ -397,9 +397,30 @@ ii. Contents
 
 #>include: .dtool/install-kids-snippet.txt
 
-   You now have #{appname} #{version} (#{vista-version})
-   installed in your M environment. The install is now complete. We
-   recommend running tests of your #{appname} app to confirm the
+  #.#.#. Optional DICOM step
+
+    If you have a DICOM server that you want to integrate with
+    Screening+, use "^" and then enter to get back out to the
+    programmer prompt, there use the following command:
+
+    > DO MKSVC^SAMIDMC1
+
+    This will create four new entries in the Web Service URL handler
+    file to register new web services.
+
+    Sites without a DICOM server, or sites that have a DICOM server
+    they do not want to integrate with ScreeningPlus, should not run
+    this optional step.
+
+
+   You now have #{appname} #{version} (#{vista-version}) installed in
+   your M environment. The install is now complete, and you may leave
+   the M environment by typing
+
+   > halt
+   $ _
+
+   We recommend running tests of your #{appname} app to confirm the
    environment is operational and bug-free, before notifying users
    that #{appname} is ready for their use.
 
@@ -413,8 +434,8 @@ ii. Contents
 
 #. Routines
 
- Lines 2 & 3 of each of these routines now look like:
-#>include: .dtool/routine-lines2-3.txt
+ Lines 2 of each of these routines now look like:
+#>include: .dtool/routine-lines2.txt
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
@@ -435,7 +456,7 @@ ii. Contents
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
- Released    2024-08-14         Frederick D. S. Marshall (ven)
+ Released    2024-08-27         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

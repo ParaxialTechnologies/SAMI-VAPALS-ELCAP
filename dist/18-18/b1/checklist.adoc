@@ -1,15 +1,13 @@
-:doctitle: SAMI Patching Checklist for 18-17-b8 
+:doctitle: SAMI Patching Checklist for 18-18-b1 
 
 [role="h1 center"]
-SAMI Patching Checklist for 18-17-b8
+SAMI Patching Checklist for 18-18-b1
 
 -------------------------------------------------------------------------------
  0. Project discussion
   0.1. Which changes will be included
 	    Issues included 
-	   A. Move to use of MRN and Study ID instead of SSN.
-	   B. Clinical information field on CT Eval to be 
-	   auto filled based on background form 
+	   
 
   0.2. Timeline: Release goal 8/9/24, Actual release
 
@@ -17,28 +15,24 @@ SAMI Patching Checklist for 18-17-b8
 X  1.1. git pull
 X  1.2. prepare checklist
 X  1.3. prepare recipe doc
-X  1.4. prepare template.txt doc
-X  1.5. git pull/push
-X  1.6. list updated routines
-		SAMICAS3  
-		SAMICAS4
-		SAMICSV  
-		SAMIDCM1  
-		SAMIFLD   
-		SAMIHOM4  
+  1.4. prepare template.txt doc
+  1.5. git pull/push
+  1.6. list updated routines
+		SAMICAS2
+		SAMICASE   
+		SAMIDCM1 
+		SAMIDCM2 
+		SAMIHOM4
+		SAMIMSH1 
 		SAMIPAT
-		SAMISITE
-		SAMIUR
-		SAMIUR2  
+		SAMIPTLK
   
-X  1.7. list log routines
-        SAMICUL   
-        SAMIFUL   
-        SAMIHUL  
-        SAMIURUL 
+  1.7. list log routines
+        SAMICUL      
+        SAMIHUL   
 
-X  1.8. write change descriptions for template.txt  
-X  1.9. update dashboard (Google Drive)
+  1.8. write change descriptions for template.txt  
+  1.9. update dashboard (Google Drive)
      https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
      (sami pax) use pax^ARJTXRW	to determine dependencies
   1.10. Regrettable Bodge script
@@ -48,71 +42,71 @@ X  1.9. update dashboard (Google Drive)
 
  2. Update routines
   2.1. Update SAMIPAT for pre/post-install if needed
-      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-b8")
-X 2.2. convert to new short version ids, update dates & times in each routine
+      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-18-b1")
+ 2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-X  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
-X  2.4. if you wish, use ^%ZPT1 to compare first through third lines of routine for 
+  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
+  2.4. if you wish, use ^%ZPT1 to compare first through third lines of routine for 
   		consistency. Example if you want to look at all four version control lines
   		zprint +1^SAMICAS3:+4
-X  2.5. push to repo/pull to vapalsyotta
+  2.5. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
   3.0. update recipe with before checksums -- do recipe^ARJTXRW
-X  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
+  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
 		do bash compare2.sh in routines before copying routines to make sure no 
 		changed routines were missed. This compares the routines with those in
 		~/run/routines/
-X  3.2. copy routines to ~/run/routines directory
+  3.2. copy routines to ~/run/routines directory
   		cp -v ROUTINE.m ~/run/routines/
-X  3.3. run XINDEX (refer to XINDEX below)
-X  3.4. fix any bugs,
-X  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools text file)
-X  3.6. update recipe with after information
-X  3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173
+  3.3. run XINDEX (refer to XINDEX below)
+  3.4. fix any bugs,
+  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools text file)
+  3.6. update recipe with after information
+  3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173
       (sami vers) use dash^ARJTXRW for dates and checksums
-X  3.8. git pull/push, pull to vapalsyotta
+  3.8. git pull/push, pull to vapalsyotta
 
  4. KIDS Build 
-X  4.1 In linux cd ~/run/out/sami/18-17/ then mkdir b8
-X  4.2. Re-enter mumps
-X  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions) (see KIDS BUILD)
+  4.1 In linux cd ~/run/out/sami/18-18/ then mkdir b1
+  4.2. Re-enter mumps
+  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions) (see KIDS BUILD)
   		SAMI 18.0T05 -- don't include SAMI*18.0*7 or SAMI*18.0*14 in required builds
-X  4.4. export to out dock (Transport distribution) 
-		HF: /home/osehra/run/out/sami/18-17/b8/sami-18-17-b8.kid
-		Header: Released SAMI*18.0*17 SEQ #17
-X  4.5. copy to personal repo, typing following command when you are in the correct
-        dist directory: scp 'vapalsyotta:/home/osehra/run/out/sami/18-17/b8/*.kid' ./
-X  4.6. push to sami repo, pull to vapalsyotta
+  4.4. export to out dock (Transport distribution) 
+		HF: /home/osehra/run/out/sami/18-18/b1/sami-18-18-b1.kid
+		Header: Released SAMI*18.0*18 SEQ #18
+  4.5. copy to personal repo, typing following command when you are in the correct
+        dist directory: scp 'vapalsyotta:/home/osehra/run/out/sami/18-18/b1/*.kid' ./
+  4.6. push to sami repo, pull to vapalsyotta
 
  5. Finish draft documents
-X  5.1. Review recipe and make any needed changes
-X  5.2. Review template.txt and make any needed changes
-X  5.3. Make {version}.adoc and {version}.tx doc from template.txt
+  5.1. Review recipe and make any needed changes
+  5.2. Review template.txt and make any needed changes
+  5.3. Make {version}.adoc and {version}.tx doc from template.txt
        ../../dtool --textfile
-X  5.4. Review {version}.adoc and {version}.tx doc and make any needed updates
-X  5.5. git push/pull
+  5.4. Review {version}.adoc and {version}.tx doc and make any needed updates
+  5.5. git push/pull
    
  6. Create Zip package
-X   6.1. use zip to create archive package (../../dtool --makezip)
-X   6.2. push archive package to repo
+   6.1. use zip to create archive package (../../dtool --makezip)
+   6.2. push archive package to repo
    6.3. update version website's link
 
  7. Test Install
-X  7.0 Pull to vapalsyotta and move KIDS to ~/run/in/sami/18-17/b8/
-X  7.1. install on vapalsyotta (& revise if necessary),
+  7.0 Pull to vapalsyotta and move KIDS to ~/run/in/sami/18-17/b8/
+  7.1. install on vapalsyotta (& revise if necessary),
   HF: /home/osehra/run/in/sami/18-17/b7/sami-18-17-b8.kid
-X  7.2. test changes on vapalsyotta (vapalsyotta.vistaexpertise.net:9080/vapals)
+  7.2. test changes on vapalsyotta (vapalsyotta.vistaexpertise.net:9080/vapals)
   		if possible test on multiple browsers and OSs.
   		to restart web server
   			d stop^%webreq
   			d go^%webreq
   			zwr ^%webhttp
-X  7.3. update dashboard (sami envs)
+  7.3. update dashboard (sami envs)
 N  7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
 N  7.5. test changes on vapalscache
 N  7.6. update dashboard (sami envs)

@@ -31,7 +31,7 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  n p1,p2
  s p1=$p(search,",",1)
  s p2=$p(search,",",2)
- i $l(search)=5 i +$e(search,2,5)>0 d  q  ; using last5
+ i $l(search)=5 i +$e(search,2,5)>0 d  ;q  ; using last5
  . n gn2 s gn2=$na(@root@("last5"))
  . n ii s ii=""
  . f  s ii=$o(@gn2@(search,ii)) q:ii=""  q:cnt=limit  d  ;
@@ -43,7 +43,8 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  ; 
  n have s have=""
  n q1 s q1=$na(@gn@(p1))
- n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
+ n q1x s q1x=$e(q1,1,$l(q1)-1) ; removes the )
+ i $e(q1x,$l(q1x))="""" s $e(q1x,$l(q1x))=""
  n qx s qx=q1
  f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  q:cnt=limit  d  ;
  . n exit s exit=0
@@ -51,12 +52,28 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  . . i p2'=$e($p(qx,",",5),1,$l(p2)) s exit=1
  . q:exit
  . n qx2 s qx2=+$p(qx,",",6)
- . i $g(@root@(qx2,"siteid"))'=site q  ;
- . i $d(have(qx2)) q  ; already go this one
+ . i $g(@root@(qx2,"siteid"))'[site q  ;
+ . i $d(have(qx2)) q  ; already got this one
  . s cnt=cnt+1
  . s have(qx2)=""
  . s rslt(cnt,qx2)="" ; the ien
  . ;w !,qx," ien=",$o(rslt(cnt,""))
+ s gn3=$na(@root@("emrn"))
+ s q1="e"_p1
+ ;
+ ;f  s q1=$o(@gn3@(q1)) q:$p(q1,"e"_p1,2)=""  q:cnt=limit  d  ;
+ ;f  s q1=$o(@gn3@(q1)) q:q1'[("e"_p1)  q:cnt=limit  d  ;
+ f  d:$d(@gn3@(q1))  s q1=$o(@gn3@(q1)) q:q1=""  q:$p(q1,"e"_p1)]""  q:cnt=limit  ;d  ;
+ . n lien
+ . s lien=$o(@gn3@(q1,"")) ; selection ien
+ . ;W !,"q1= ",q1
+ . i $g(@root@(lien,"siteid"))'[site q  ;
+ . i $d(have(lien)) q  ; already got this one
+ . s cnt=cnt+1
+ . s have(lien)=""
+ . s rslt(cnt,lien)="" ; the ien
+ . ;w !,q1," ien=",$o(rslt(cnt,""))
+ ;
  i cnt>0 d BUILDRTN(.rtn,.rslt,$g(filter("format")))
  q
  ;
@@ -72,7 +89,9 @@ BUILDRTN(rtn,ary,format) ; build the return json unless format=array
  . n rx s rx=$o(ary(zi,""))
  . s r1("result",zi,"name")=$g(@root@(rx,"saminame"))
  . s r1("result",zi,"dfn")=$g(@root@(rx,"dfn"))
- . s r1("result",zi,"last5")=$g(@root@(rx,"last5"))
+ . s dfn=$g(@root@(rx,"dfn"))
+ . ;s r1("result",zi,"last5")=$g(@root@(rx,"last5"))
+ . s r1("result",zi,"last5")=$$GETUID^SAMIUID(dfn)
  . s r1("result",zi,"gender")=$g(@root@(rx,"gender"))
  . s r1("result",zi,"dob")=$g(@root@(rx,"sbdob"))
  . s r1("result",zi,"vapals")=0

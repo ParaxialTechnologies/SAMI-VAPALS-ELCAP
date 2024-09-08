@@ -266,8 +266,9 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . ;set RPT(2,"header")=$$SSNLABEL(SITE)
  . ;set RPT(2,"routine")="$$SSN^SAMIUR2"
- . set RPT(3,"header")="Last5"
- . set RPT(3,"routine")="$$LAST5^SAMIUR2"
+ . set RPT(3,"header")="PID"
+ . ;set RPT(3,"routine")="$$LAST5^SAMIUR2"
+ . set RPT(3,"routine")="$$SSN^SAMIUR2"
  . set RPT(4,"header")="CT Eval Date"
  . set RPT(4,"routine")="$$ZDT^SAMIUR2"
  . set RPT(5,"header")="Antibiotics"_$$COUNTS("cefuaf")

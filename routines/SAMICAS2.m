@@ -192,7 +192,7 @@ WSCASE ; post vapals casereview: generate case review page
  new last5 set last5=$$GETLAST5^SAMIFORM(sid)
  new pssn set pssn=$$GETSSN^SAMIFORM(sid)
  new pname set pname=$$GETNAME^SAMIFORM(sid)
- new useid set useid=pssn
+ new useid set useid=$$GETIDSID^SAMIUID(sid)
  if useid="" set useid=last5
  set rtn(cnt)="<tr><td> "_useid_" </td><td> "_pname_" </td><td> "_facilitycode_" </td><td>"_sidispdate_"</td><td>"_$char(13)
  set cnt=cnt+1

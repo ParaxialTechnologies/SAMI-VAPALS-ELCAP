@@ -565,7 +565,8 @@ WSVAPALS ; post vapals (main gateway)
  . . . . s @proot@(pien,"simrn")=newmrn
  . . . . s @proot@("mrn",newmrn,pien)="" 
  . . . . s @lroot@(lien,"simrn")=newmrn
- . . . . s @lroot@("mrn",newmrn,lien)="" 
+ . . . . s @lroot@("mrn",newmrn,lien)=""
+ . . . . s @lroot@("emrn",newmrn,lien)=""
  . . . if newpid'="" d  ;
  . . . . s @proot@(pien,"sipid")=newpid
  . . . . s @proot@("pid",newpid,pien)=""
@@ -1443,6 +1444,7 @@ REINDXPL ; reindex patient lookup
  k @root@("sinamef")
  k @root@("sinamel")
  k @root@("mrn")
+ k @root@("emrn")
  k @root@("pid") 
  ; k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
@@ -1511,6 +1513,7 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("sinamel",x,ien)=""
  s x=$g(@proot@(ien,"simrn"))
  s:x'="" @proot@("mrn",x,ien)=""
+ s:x'="" @proot@("emrn","e"_x,ien)=""
  s x=$g(@proot@(ien,"sipid"))
  s:x'="" @proot@("pid",x,ien)=""
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)

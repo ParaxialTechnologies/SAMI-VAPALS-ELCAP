@@ -1,4 +1,4 @@
-#:patchtitle: FINAL PATCH 17 BUILD
+#:patchtitle: Patient ID Changes and Document Upload
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: Screening+
@@ -75,9 +75,8 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds two high-priority updates to accomodate
- Mt. Sinai's workflow as well as updates to allow single sign-on or to
- improve output of reports.
+ #{nmsp} #{version} adds three high-priority updates to accomodate
+ Mt. Sinai's workflow.
 
  The definitive source for the {appname} application - codebase,
  package distributions (including this one), and documentation - is at
@@ -96,83 +95,39 @@ ii. Contents
  The changes in this patch are:
 
 
- #.#. Insert clinical information string in CT Eval form
+ #.#. Add the ability to lookup by MRN
 
-   request 1a (high priority): Clinical information field on the CT
-   Eval form to be auto filled based on responses to questions in the
-   background form format to be:
-    Age xx; [Asymptomatic for lung cancer]; Current Smoker; xx Pack Years
-	or
-    Age xx; [Asymptomatic for lung cancer]; Former Smoker; xx Pack
-      Years; Quit xx years ago
+   Request 5 (high priority): Mt. Sinai team needs the ability to look up
+   a patient using MRN.
 
-   solution: Developed clinical information string from background
-   form and inserted into new CT Eval form
+   solution: This function now exists. Though MRN does not show up in patient
+   dropdown.
 
    reported: 2024-07-11 by iELCAP team
 
- #.#. Provide support for user controlled MRN and Study ID
+ #.#. Use StudyID throughout the application
 
-   requests 2, 3 (high priority): iELCAP uses the Epic MRN and Study
-   ID instead of Social Security Number to identify
-   patients. {appname} needs to support the use of these patient IDs
-   in the correct places.
+   requests 2, 3 (high priority): The Mt. Sinai team would like the Study ID
+   (abbreviated as PID) to be used throughout the application instead of SSN 
+   or Last5.
 
-   solutions: support the entering of the MRN on the registration
-   page, allow the modification of the MRN on the Intake form, allow
-   the entering and changing of the StudyID on the intake form,
-   support displaying of the MRN and Study ID (if assigned) on the
-   page header
+   solutions: PID now shows up in all reports, the Case Review page, the form
+   headers, and in the patient dropdown on the home page.
 
    reported: 2024-07-11 by iELCAP team
 
- #.#. Login: Implement single sign-on
+ #.#. Add ability to upload and view outside documents.
 
-   Require users to login only once when single sign on in use.
+   request 6, 13 {high priority}: Outside documents need to be included in #{appname} with
+   other patient records. Links to view the documents should be on the 
+   case review page. 
 
-   issue 21-218: When using single sign-on, user should not be
-   prompted to log in to #{appname} separately.  However, user must
-   be matched to single sign-on SECID.
+   solution: Files in .pdf format can be uploaded to #{appname} and are
+   available to view on the patient's case review page by hitting the "view"
+   button next to the title of the document.
 
-   solution: Require user to sign in once using Access and Verify
-   created by system administrator. This allows SECID to be captured
-   and tied to user.  For this testing version, where we don't yet
-   have access to SECID, the IP address is used instead. Note: for
-   testing, if user does not have a stable IP address, they will be
-   required to sign in with Access and Verify to update the IP
-   address.
+   reported: 2024-07-11 by iELCAP team
 
-   reported: 2021-03 by Lilly.
-
-#.#. Logout: Upon sign-out, redirect to the correct web page
-
-   issue 21-221: Currently users are being directed to the home page
-   of the clinical site they just logged out of.
-
-   solution: User is redirected to correct logout page.
-
-   reported: 2022-04 by Jirapatnakul.
-
- #.#. Include name and last5 in every csv file on every row
-
-   unnumbered issue: A report is available to be run by the sysadmin
-   that outputs all patient data for statistical analysis. Lines did
-   not include patient ID.
-
-   solution: Add saminame (full patient name) and last5 (First letter
-   of last name and last four digits of SSN) in each line of report.
-
-   reported: 2022-12-09 by Henschke and Yip.
-
- #.#. Add a user report to show CT Eval recommendations
-
-   unnumbered issue: Develop a new user report that shows
-   recommendations from completed CT Evaluations. Allow sorting by
-   type of recommendation and put totals at top of columns.
-
-   solution: Added report.
-
-   reported: 2022-12-09 by Henschke and Avila.
 
 #. Package elements
 

@@ -566,7 +566,7 @@ WSVAPALS ; post vapals (main gateway)
  . . . . s @proot@("mrn",newmrn,pien)="" 
  . . . . s @lroot@(lien,"simrn")=newmrn
  . . . . s @lroot@("mrn",newmrn,lien)=""
- . . . . s @lroot@("emrn",newmrn,lien)=""
+ . . . . s @lroot@("emrn","e"_newmrn,lien)=""
  . . . if newpid'="" d  ;
  . . . . s @proot@(pien,"sipid")=newpid
  . . . . s @proot@("pid",newpid,pien)=""

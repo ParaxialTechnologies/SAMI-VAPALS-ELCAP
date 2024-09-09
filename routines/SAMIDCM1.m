@@ -194,6 +194,7 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  . i gender="" s gender="M"
  . s vars("gender")=gender
  . n patid s patid=$g(@gp@("Patient ID"))
+ . i patid="" s patid=$g(@gp@("PatientID"))
  . s vars("patid")=patid
  . n studyDate s studyDate=$g(@gp@("Study Date"))
  . i studyDate'="" s vars("studyDate")=studyDate
@@ -430,11 +431,13 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  n found s found=0
  n name s name=$$NORMALIZ($g(vars("name")))
  n patid s patid=$g(vars("patid"))
+ s vars("simrn")=patid
  n dien,lien,pien
  ;
  ; first look at the dcm-intake for name matches
- s dien=$o(@droot@("name",name,""))
- i dien'="" d  ; the name has been found locally
+ s dien=$o(@droot@("mrn",patid,""))
+ i dien="" s dien=$o(@droot@("name",name,""))
+ i dien'="" d  ; the name or mrn has been found locally
  . s found=1
  . n dfn,studyid
  . s dfn=$g(@droot@(dien,"dfn"))
@@ -443,12 +446,15 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  . s studyid=$g(@droot@(dien,"studyid"))
  . i studyid="" s found=0 q  ;
  . i studyid'="" s vars("studyid")=studyid
+ . s vars("simrn")=patid
  . q
  ;
  if found=1 q found
  ;
  i dien="" d  ; not here, check patient-lookup
- . s lien=$o(@lroot@("name",name,""))
+ . n patid s patid=$g(vars("patid"))
+ . s lien=$o(@lroot@("mrn",patid,""))
+ . i lien="" s lien=$o(@lroot@("name",name,""))
  . i lien="" s found=0 q  ;
  . i lien'="" s found=1
  . n dfn,studyid
@@ -462,6 +468,7 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  . s studyid=$g(@proot@(pien,"studyid"))
  . s vars("studyid")=studyid
  . i studyid="" s found=0 q  ;
+ . s vars("simrn")=patid
  . q
  ;
  quit found ; end of $$MATCH^SAMIDCM1

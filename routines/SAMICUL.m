@@ -1,7 +1,7 @@
-SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
- ;;18.0;SAMI;**9,11,12,14,15,17**;2020-01-17;Build 8
- ;mdc-e1;SAMICUL-20240903-E2pffz;SAMI-18-17-b8
- ;mdc-v7;B147284;SAMI*18.0*17 SEQ #17
+SAMICUL ;ven/gpl - case review log; 2024-09-09t12:56z
+ ;;18.0;SAMI;**9,11,12,14,15,17,18**;2020-01-17;Build 8
+ ;mdc-e1;SAMICUL-20240909-E1nq%WL;SAMI-18-18-b1
+ ;mdc-v7;B180174;SAMI*18.0*18 SEQ #18
  ;
  ; SAMICUL contains the development log for the ScreeningPlus Case
  ; Review Page (SAMICA* routines). It contains no executable code.
@@ -25,14 +25,14 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-03t23:26z
+ ;@update 2024-09-09t12:56z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module case review - SAMICA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release SAMI-18-17
+ ;@release SAMI-18-18
  ;@edition-date 2020-01-17
- ;@patches **9,11,12,14,15,17**
+ ;@patches **9,11,12,14,15,17,18**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -233,26 +233,33 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;  SAMICAS3 prefill form date & date of baseline ct on new followup
  ; form.
  ;
- ; 2019-10-01 par/ddn 18-t4 4caf1a98 vap-344
- ;  SAMICAS2 use proper capitalization of the word "veteran".
+ ; 2019-10-01 par/dom 18-t4 4caf1a98 vap-344
+ ;  SAMICAS2 (FIM+f B309347987 E3EG98i) use proper capitalization of the word "veteran".
  ;
- ; 2020-01-11 ven/lgc 18-1 5651698a
- ;  SAMICAS2,SAMICAS3 fix duplicate form overwriting.
+ ; 2020-01-11 ven/lgc 18 5651698a
+ ;  SAMICAS2 (F2GXiGC B319162298 E1CRxLY)
+ ;  SAMICAS3 ()
+ ; fix duplicate form overwriting.
  ;
  ; 2020-01-17 ven/lgc 18-1 8557207f
- ;  SAMICAS2 followup note.
+ ;  SAMICAS2 (F1bHTm1 B331580525 EXBYvm) followup note.
  ;
  ; 2020-01-25 ven/lgc 18-3 6a07a860,6a947567
  ;  SAMICAS3 nodule copy & fix to ru, fix subtle bug in nodule copy.
  ;
- ; 2020-04-11 ven/gpl 18-5 666f5b91,2f2c29c1
- ;  SAMICAS2 multi-tenancy.
+ ; 2020-04-11 ven/gpl 18-5 666f5b91
+ ;  SAMICAS2 (F25+rkm B352281238 E11vF2K) multi-tenancy progress.
+ ;
+ ; 2020-04-11 ven/gpl 18-5 2f2c29c1
+ ;  SAMICAS2 (FbUQid B355765098 E3XONvI) the crux of multi-tenancy.
  ;
  ; 2020-05-12 ven/gpl 18-5 ad11e0ea
- ;  SAMICAS2 fix SITE on case review page.
+ ;  SAMICAS2 (F1CMJy8 B375024495 E8GidN) fix SITE on case review page.
  ;
  ; 2020-11-12 ven/gpl 18-9 cec1ccd6
- ;  SAMICAS2,SAMICAS3 ceform date refill upgrade.
+ ;  SAMICAS2 (F2Q4gQo B338677866 EAbsc%)
+ ;  SAMICAS3 ()
+ ; ceform date refill upgrade.
  ;
  ; 2020-11-13 ven/gpl 18-9 dce3c568
  ;  SAMICAS3 prefill ceform prior scans text field.
@@ -265,17 +272,22 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;  SAMICAS3 fix bug in prefill logic.
  ;
  ; 2021-03-02 ven/gpl 18-9 479dc041
- ;  SAMICAS2 return error msg if no CT Eval form exists when
- ; generating a FU note.
+ ;  SAMICAS2 (F7egiN B346281253 E1u9j9a) return error msg if no CT
+ ; Eval form exists when generating a FU note.
  ;
  ; 2021-03-10 ven/toad 18-9 a46a2cc1
  ;  SAMICUL update log, convert to new vistaver schema.
  ;  SAMICAS2,SAMICAS3 bump date & patch list, update contents, lt
  ; refactor.
  ;
- ; 2021-03-17 ven/toad 18-9 62da30b
- ;  SAMICAS2 fix xindex errors: in WSCASE add missing space between
- ; do & comment to prevent syntax error reported as block mismatch.
+ ; 2021-03-16 ven/toad 18-9 a46a2cc1
+ ;  SAMICAS2 (F1DUSfS B381191061 E3L+oln) update VAPALS-ELCAP
+ ; 1.18.0.9-i9 package elements.
+ ;
+ ; 2021-03-17 ven/toad 18-9 62da30b4
+ ;  SAMICAS2 (Fxj+tI B381201104 E34EUOc) fix xindex errors: in WSCASE
+ ; add missing space between do & comment to prevent syntax error
+ ; reported as block mismatch.
  ;  SAMICAS3 remove extra spaces at ends of 3 lines.
  ;
  ; 2021-04-16 ven/gpl 18-11 ac82eec
@@ -295,6 +307,7 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;
  ; 2021-05-25 ven/toad 18-11 801d7c74
  ;  SAMICAS3 bump date; passim lt refactor.
+ ;  SAMICUL () update logs, bump dates.
  ;
  ; 2021-05-26/27 ven/gpl 18-11 6edc0610,73728821
  ;  SAMICAS3 in MKITFORM add new nodule-copy block to copy forward
@@ -306,62 +319,116 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;  SAMICAS3 fold in gpl chgs fr 2021-05-26/27, annotate, adjust news
  ; in nodule copy blocks, bump date.
  ;
+ ; 2021-06-04 ven/toad 18-12 7dd9410c
+ ;  SAMICUL (F3jrhqk B138062 Egziza) eight versioned, logged,
+ ; annotated, refactored routines.
+ ;
  ; 2021-06-29 ven/gpl 18-12 50d3998b,a5bbd37a
  ;  SAMICAS3 in LASTCMP fix bug that excluded ct forms from today in
  ; date list, init tdt to today+1 to start today; text-box formatting
  ; for intake & followup notes, new text-processing utils; in MKFUFORM
  ; set basedt to $$BASELNDT or $$LASTCMP or now.
  ;
- ; 2021-06-30/07-06 ven/mcglk&toad&gpl 18-12 cbf7e46b,d8296fda,
- ; b248664b
- ;  SAMICASE,2,3 bump version & dates.
+ ; 2021-06-30/07-06 ven/mcglk&toad&gpl 18-12 d8296fda,b248664b
+ ;  SAMICASE,3 bump version & dates.
  ;  SAMICAS3 in MKFUFORM,LASTCMP update calls & called-by.
  ;  SAMICASE,2,3 finish converting to ppi format, annotate; fix typos.
  ;
- ; 2021-08-01 ven/gpl 18-12 5bd7c627,50620b8b
- ;  SAMICAS2 set intake form to incomplete on creation: in GSAMISTA
- ; add final line to conditionally set stat="incomplete".
+ ; 2021-07-01 ven/mcglk&toad 18-12 cbf7e46b
+ ;  SAMICAS2 (F1yRLtn B443014164 E1W9a3U)
+ ;  SAMICUL (F3uTWha B143817 E3ASV%q)
+ ; bump version & dates for sami 1.18.0.12-t2+i12.
+ ;
+ ; 2021-07-06 ven/toad 18-12-b2 b248664b
+ ;  SAMICUL (F3irXA1 B144047 E2+qPp6) fold in gpl chgs, fix other
+ ; typos, update dates & dev logs.
+ ;
+ ; 2021-07-14 ven/toad 18-12-b3 e36d755d
+ ;  SAMICAS2 (F2zRM7j B443014182 E2X9aJM)
+ ;  SAMICUL (F1v%6WV B144065 E1Bzqn7)
+ ; bump 12-t2 to 12-t3, log commit ids, date formats.
+ ;
+ ; 2021-08-01 ven/gpl 18-12 5bd7c627
+ ;  SAMICAS2 (F3vS6hS B445298931 E3TAObN) set intake form to
+ ; incomplete on creation: in GSAMISTA add final line to conditionally
+ ; set stat="incomplete".
+ ;
+ ; 2021-08-01 ven/gpl 18-12 50620b8b
  ;  SAMICAS3 exclude current date from last compare field when prev ct
  ; report exists: in LASTCMP start w/before today; in PRIORCMP add
  ; line to handle retstr="".
  ;
- ; 2021-10-04/05 ven/gpl&lmry 18-14 ec3b6e5d,d4d1b115
- ;  SAMICAS2 updated date format, bumped date and version.
+ ; 2021-08-11 ven/toad 18-12 b16cd38f
+ ;  SAMICAS2 (F1TfG16-B445469337-E11Nfz9)
+ ;  SAMICUL (F2i2oJW B134436 E1+1eLO)
+ ; SAMI 18-12 routines ready to validate.
+ ;
+ ; 2021-10-04 ven/gpl 18-14-b3 ec3b6e5d
+ ;  SAMICAS2 (F3Au2YF B447463868 E2kcIFe) fix for patch 14t3.
+ ;
+ ; 2021-10-05 ven/lmry 18-14 d4d1b115
+ ;  SAMICAS2 (Fh23Ov B447463890 E2Zcbeb)
+ ;  SAMICUL (F35Kvr%-B135148-E1mumY2)
+ ; update histories, bump vers + dates.
+ ;
+ ; 2021-10-05 ven/lmry 18-14 48a6bf42
+ ;  SAMICUL (F1gOhrP B135148 ELyjQQ) add git ids.
  ;
  ; 2021-10-26 ven/gpl 18-15 23e68f40
- ;  SAMICAS3 init last comparitive & prior scan fields to blank if
+ ;  SAMICAS3 init last comparative & prior scan fields to blank if
  ; there were none.
  ;
- ; 2024-07-24 ven/gpl 18-17-b5 fefbf29
- ;  SAMICAS3 changes for Mt. Sinai MRN & STUDYID.
+ ; 2021-10-28 ven/lmry 18-15 818f7924
+ ;  SAMICUL (F3ALMBu B136079 EAldk5)
+ ; add to module log, bump date + ver.
  ;
- ; 2024-07-25 ven/gpl 18-17-b5 21f8aa1
- ;  SAMICAS4 new routine to generate Mt. Sinai clinical info line to
- ; carry over to CTEVAL from Background form.
+ ; 2024-07-24 ven/gpl 18-17-b5 fefbf290
+ ;  SAMICAS3 (F1E7OZJ B503791124 E2BHgUe)
+ ; chgs for Mt. Sinai MRN & STUDYID.
  ;
- ; 2024-07-25 ven/gpl 18-17-b5 2e91afbf
- ;  SAMICAS4 progress on clinical info for cteval form.
+ ; 2024-07-25 ven/gpl 18-17-b5 21f8aa18
+ ;  SAMICAS4 (F3WIeHw B551554 ETT4%p)
+ ; new rtn to generate Mt. Sinai clinical info line to carry over to
+ ; CTEVAL from Background form.
  ;
- ; 2024-07-28 ven/gpl 18-17-b5 386103d
- ;  SAMICAS4 background form clinic info text extract for cteval form
- ; complete.
+ ; 2024-07-27 ven/gpl 18-17-b5 2e91afbf
+ ;  SAMICAS4 (F2yi1x8 B6039908 E3vsSN+)
+ ; progress on clinical info for cteval form.
  ;
- ; 2024-08-03 ven/gpl 18-17-b5 2524afd
- ;  SAMICAS4 add # years since quitting to clinical info string.
+ ; 2024-07-28 ven/gpl 18-17-b5 386103da
+ ;  SAMICAS4 (F9dNf B8278420 E16AsQZ)
+ ; background form clinic info text extract for cteval form complete.
  ;
- ; 2024-08-05 ven/gpl 18-17-b5 b92768b
- ;  SAMICAS4 add space after ';' in clinical info text of CT form.
+ ; 2024-08-03 ven/gpl 18-17-b5 2524afd6
+ ;  SAMICAS4 (F2bZS6W B10844433 E3YjdEP)
+ ; add # years since quitting to clinical info string.
  ;
- ; 2024-08-06 ven/gpl 18-17-b5 8e2a78f
- ;  SAMICAS4 preserve clinical info from background form to CTEVAL.
+ ; 2024-08-05 ven/gpl 18-17-b5 b92768bc
+ ;  SAMICAS4 (F3qefGe B10892126 EnpBKO)
+ ; add space after ';' in clinical info text of CT form.
  ;
- ; 2024-08-12 ven/lmry 18-17-b5
- ;  SAMICUL update history
- ;  SAMICAS3,4,UL bump dates & versions.
+ ; 2024-08-06 ven/gpl 18-17-b5 8e2a78f0
+ ;  SAMICAS4 (F1wlaE0 B12404533 E2tvwV6)
+ ; preserve clinical info fr/background form to/CTEVAL.
+ ;
+ ; 2024-08-12 ven/lmry 18-17-b5 eea98cdb
+ ;  SAMICAS3 (F2MCHYU B505739599 EDYWOu)
+ ;  SAMICAS4 (F32r7Or B12746608 EwBTMA)
+ ;  SAMICUL (FqzTTA B143242 E1nLZ+t)
+ ; update history, bump dates + vers.
+ ;
+ ; 2024-08-16 ven/lmry 18-17-b6 a1a28de6
+ ;  SAMICAS3 (F3yMXKa B505739588 EBXwUh)
+ ;  SAMICAS4 (F3RsSBA B12746597 EuBeEx)
+ ;  SAMICUL (F2GT7n B144151 EIEjF+)
+ ; update history, dates, + vers of routines for 18-17-b6.
+ ;
+ ; 2024-08-16 ven/lmry 18-17-b6 d0224d9e
+ ;  SAMICUL (FQG2XL B144151 EgEIfY) some post XINDEX fixes.
  ;
  ; 2024-18-17 ven/lmry 18-17-b6
  ;  SAMICUL update history
- ;  SAMICAS3,4,UL bump dates & versions, 18-18-t1 > 18-17-b6.
+ ;  SAMICAS3,4,UL bump dates + vers, 18-18-t1 > 18-17-b6.
  ;
  ; 2024-08-21/22 ven/toad 18-17-b6
  ;  SAMICAS3,4 reorganize subroutines, annotate, move the following
@@ -370,13 +437,89 @@ SAMICUL ;ven/gpl - case review log; 2024-09-03t23:26z
  ;  SAMICUL update history.
  ;  SAMICAS3,4,UL update version-control lines, hdr comments.
  ;
+ ; 2024-08-26 ven/toad 18-17-b6 bd5cfb4c
+ ;  SAMICAS3 (F3NI%og B334055891 E3VZs78)
+ ;  SAMICAS4 (F1sojs5 B106029587 E1t8Ort)
+ ;  SAMICUL (F1E7l9n B145904 EOAyoU)
+ ; Rick's revisions of the 14 routines + recipe file.
+ ;
+ ; 2024-08-26 ven/mcglk 18-17-b6 [a5dae8e9 in v18-17-b6-sinai]
+ ;  SAMICAS3 (F3NI%og B334055891 E3VZs78)
+ ;  SAMICAS4 (F1sojs5 B106029587 E1t8Ort)
+ ;  SAMICUL (F1E7l9n B145904 EOAyoU)
+ ; created side branch v18-17-b6-sinai fr/dev branch
+ ; mount-sinai-changes, to use to pkg 18-17. Imported M rtns fr/commit
+ ; bd5cfb4c1d58. NOTE: This history will be lost.
+ ;
+ ; 2024-08-28 ven/gpl 18-18-b1 a2470ae1
+ ;  SAMICAS2 (FYGW B567186182 E1ubCwu)
+ ; for second build, adds viewer to case review & file upload form: in
+ ; WSCASE stanza 6, near top get imgid, near bottom add para for if
+ ; zform["image"; in GETITEMS stanza 3 after loop do ADDITEMS^SAMIDCM2
+ ; before merge; add WSNUUPLD.
+ ;
+ ; 2024-09-01 ven/gpl 18-18-b1 5ed25cbc
+ ;  SAMICAS2 (FTRKZv B348504868 E2L%nJq)
+ ; progress toward file upload feature: in WSCASE stanza 6 push all
+ ; handling of zkey subscript down into third nested loop, insert new
+ ; handling if zform["file"; in GETITEMS stanza 3 add handling if
+ ; zkey1="file"; in GETITEMS & GETDTKEY chg set of zdate to piece
+ ; apart zi; in WSNUFORM move old handling of form to OLDNUFORM & r/w/
+ ; call to wsGetForm^%wf; do likewise in WSNUUPLD, moving old handling
+ ; to OLDPROCESS; add DOCTYPE, TOADPARSE, FILEUP, DEDUP, FILEVIEW; in
+ ; KEY2FM chg set of datepart to piece apart key; in GSAMISTA handle
+ ; if form["file" or "image".
+ ;  SAMICASE (F3D91S2 B2806782 E9J2Gg)
+ ; add wrs WSNUUPLD^SAMICASE.
+ ;
+ ; 2024-09-02 ven/gpl 18-18-b1 c8d135d1
+ ;  SAMICAS2 (F3UiZsU B348504868 E1NHUNy) file upload working: add
+ ; MINIPARS; in FILEUP call it, comment out set of sid from SAMIARG;
+ ; in FILEVIEW set HTTPRSP("mime").
+ ;
  ; 2024-09-03 ven/toad&gpl 18-17-b8
  ;  SAMICAS4 stop crash when no background form.
  ;  SAMICUL update history.
  ;  SAMICAS3,CAS4,CSV,CUL,DCM1,FLD,FUL,HOM4,HUL,PAT,SITE,UR,UR2,URUL
  ; bump version.
  ;
+ ; 2024-09-03 ven/gpl 18-18-b1 dc4e37b1
+ ;  SAMICAS2 (F1VsBEC B348504868 E3OQd1G) some bugs removed from file
+ ; upload: in MINIPARS revise debugging code; cut TOADPARSE; in
+ ; FILEUP comment out call to MINIPARS.
+ ;
+ ; 2024-09-04 ven/toad 18-17-b8 [9a98cb08 in v18-17-b6-sinai]
+ ;  SAMICAS3 (F3fPcga B334055891 E3VZs78)
+ ;  SAMICAS4 (F3WKTYo B106133479 E3rMewp)
+ ;  SAMICUL (F3ji8 B147284 E2pffz)
+ ; fix crash if no background form, ver + chksums: SAMI-18-17-b8.
+ ;
+ ; 2024-09-07 ven/gpl 18-18-b1 0645d7c8
+ ;  SAMICAS2 (F3a9DT5 B348790202 E1Sjqd2)
+ ; fixed mrn bugs: in WSCASE stanza 4 use $$GETIDSID^SAMIUID(sid) to
+ ; set useid.
+ ;
+ ; 2024-09-05/07,09 ven/toad 18-18-b1
+ ;  SAMICAS2 09-06 (FxOjdy B381505360 EjWhNz)
+ ; update ver-ctrl lines, version, chksums, hdr comments, subrtn hdr
+ ; comments, occasional light refactoring.
+ ;  SAMICAS2 09-09 (F2IcLpC B382829905 E1vtFzO)
+ ; convert from ssn to study id: fold in George's 09-07 mod, b1 bump.
+ ;  SAMICASE 09-07 (F3wFq3n B3026427 E1aDWct)
+ ; update ver-ctrl lines, version, chksums, hdr comments, service
+ ; comments.
+ ;  SAMICASE 09-09 (F2WE3Lb B3026427 E1aDWct)
+ ; b1 bump.
+ ;  SAMICUL 09-05 (F3KdVOH B165224 E1On9iI)
+ ;  SAMICUL 09-06 (F3lmjnD B173044 E1EBFSk)
+ ;  SAMICUL 09-07 (F2Dr%J B177874 Ek39j2)
+ ;  SAMICUL 09-09 (F??? B180174 E???)
+ ; update history with 18-17 & 18-18 work + git log + checksums; take
+ ; SAMICAS2 history back to 18-0 release; take SAMICUL history back to
+ ; 18-12.
+ ;
  ;@to-do
+ ; finish backfilling checksums + git commit IDs + chg details
  ; finish converting SAMICAS* subroutines to service architecture
  ;  convert calls to use SAMICASE
  ;  update unit tests to match

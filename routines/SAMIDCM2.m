@@ -1,31 +1,51 @@
-SAMIDCM2 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
- ;;18.0;SAMI;**16**;2020-01;Build 2
- ;18-16
+SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
+ ;;18.0;SAMI;**18**;2020-01-17;Build 1
+ ;mdc-e1;SAMIDCM2-20240909-EcvLn1;SAMI-18-18-b1
+ ;mdc-v7;B7818411;SAMI*18.0*18 SEQ #18
+ ;
+ ; SAMIDCM2 contains services to support importing a patient into
+ ; ScreeningPlus from the Siemens AI.
+ ;
+ quit  ; no entry from top
  ;
  ;@license: see routine SAMIUL
+ ;
+ ;
+ ;
  ;
  ;@section 0 primary development
  ;
  ;
  ;
+ ;
  ;@routine-credits
- ;@dev-main George P. Lilly (gpl)
+ ;
+ ;@dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@dev-org-main Vista Expertise Network (ven)
+ ;@dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright 2017/2021, gpl, all rights reserved
+ ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2022-01-18t00:42z
- ;@application Screening Applications Management (SAM)
- ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@update 2024-09-09t16:42z
+ ;@app-suite Screening Applications Management - SAM
+ ;@app ScreeningPlus (SAM-IELCAP) - SAMI
+ ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 18-16
- ;@release-date 2020-01
- ;@patch-list **16**
+ ;@release 18-18
+ ;@edition-date 2020-01-17
+ ;@patches **18**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@dev-add Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
  ;
  ;@module-credits
+ ;
  ;@project VA Partnership to Increase Access to Lung Screening
  ; (VA-PALS)
  ; http://va-pals.org/
@@ -40,14 +60,60 @@ SAMIDCM2 ;ven/gpl - VAPALS PATIENT IMPORT FROM SIEMANS AI ; 2022-01-18t00:42z
  ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
+ ;@project I-ELCAP AIRS Automated Image Reading System
+ ; https://www.ielcap-airs.org
+ ;@funding 2024, Mt. Sinai Hospital (msh)
+ ;@partner-org par
+ ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
+ ; 2024-08-28 ven/gpl 18-18-b1 a2470ae1
+ ;  SAMIDCM2 (F2mxHuw B3750990 E3TEKrb)
+ ; add rtn w/ADDITEMS,WSSHODOC,LOADPDF,VIEWURL; for 2nd bld, add
+ ; viewer to case review + file upload form.
+ ;
+ ; 2024-09-02 ven/gpl 18-18-b1 c8d135d1
+ ;  SAMIDCM2 (F2qWk B3750990 E2j7Bmz)
+ ; file upload working: overhaul WSSHODOC.
+ ;
+ ; 2024-09-09 ven/toad 18-18-b1
+ ;  SAMIDCM2 (F??? B7818411 E???)
+ ; add hdr + subrtn hdr comments, log, bump version + dates.
+ ;
+ ;@contents
+ ; ADDITEMS add Image items to Items array
+ ; WSSHODOC
+ ; LOADPDF
+ ; $$VIEWURL URL to use for image viewer
  ;
  ;
  ;
- Q
  ;
-ADDITEMS(ARY,SID) ; add Image items to the Items array
+ ;@section 1 subroutines
+ ;
+ ;
+ ;
+ ;
+ ;@proc ADDITEMS
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;silent;clean?;sac?;tests?;port?
+ ;@called-by
+ ; GETITEMS^SAMICASE
+ ;@calls
+ ; $$setroot^%wd
+ ; $$KEY2FM^SAMICASE
+ ;@input
+ ; ARY = output array, closed reference
+ ; SID = study id
+ ;@output
+ ; @ARY@("sort",times,"image",keys,"Image") = siuids
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ADDITEMS(ARY,SID) ; add Image items to Items array
  ;
  new root set root=$$setroot^%wd("dcm-intake")
  ;
@@ -58,15 +124,39 @@ ADDITEMS(ARY,SID) ; add Image items to the Items array
  f  s ien=$o(@root@("studyid",SID,ien)) q:ien=""  d  ;
  . n studydt s studydt=$g(@root@(ien,"json","StudyDate"))
  . q:studydt=""
+ . ;
  . n siuid s siuid=$g(@root@(ien,"json","StudyInstanceUID"))
  . q:siuid=""
+ . ;
+ . ; add each image item only once to Items array
  . q:$d(images(siuid))
  . s images(siuid)=""
+ . ;
  . n key s key="image-"_$e(studydt,1,4)_"-"_$e(studydt,5,6)_"-"_$e(studydt,7,8)
  . n fmdt s fmdt=$$KEY2FM^SAMICASE(key)
  . s @ARY@("sort",fmdt,"image",key,"Image")=siuid
+ . q
  ;
- Q
+ quit  ; end of ADDITEMS
+ ;
+ ;
+ ;
+ ;
+ ;@dms WSSHODOC
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;dms;procedure;silent;clean?;sac?;tests?;port?
+ ;@called-by none
+ ;@calls none
+ ;@input
+ ; FILTER
+ ;@output
+ ; RETURN = output array, closed reference
+ ; @RETURN
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
  ;
 WSSHODOC(RETURN,FILTER)
  ;
@@ -79,7 +169,25 @@ WSSHODOC(RETURN,FILTER)
  ;f  s zi=$o(^gpl("GPLPDF",zi)) q:zi=""  s g2=g2_^gpl("GPLPDF",zi)
  ;s RETURN=$$URLDEC^VPRJRUT(g2)
  s RETURN=gn
- q
+ ;
+ quit  ; end of dms WSSHODOC
+ ;
+ ;
+ ;
+ ;
+ ;@dms LOADPDF
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;dms;procedure;silent;clean?;sac?;tests?;port?
+ ;@called-by none
+ ;@calls
+ ; $$FTG^%ZISH
+ ;@input [tbd]
+ ;@output [tbd]
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
  ;
 LOADPDF()
  ;
@@ -91,13 +199,37 @@ LOADPDF()
  K @GN
  N OK
  S OK=$$FTG^%ZISH(FD,FN,GN,2)
- Q
  ;
-VIEWURL(SITE) ; extrinsic returns the URL to use for the image viewer
+ quit  ; end of dms LOADPF
+ ;
+ ;
+ ;
+ ;
+ ;@function $$VIEWURL
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;silent;clean?;sac?;tests?;port?
+ ;@called-by
+ ; WSCASE^SAMICASE
+ ;@calls none
+ ;@input
+ ; SITE
+ ;@output = url of OHIF image viewer
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+VIEWURL(SITE) ; URL to use for image viewer
+ ;
  ; for this site
+ ;
  n url s url="https://viewer.ohif.org/viewer"
  ; 
  ; todo look up the url from the parameter file
  ;
- q url
+ quit url ; end of $$VIEWURL
  ;
+ ;
+ ;
+EOR ; end of routine SAMIDCM2

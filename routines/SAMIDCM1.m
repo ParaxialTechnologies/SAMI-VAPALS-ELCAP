@@ -1,9 +1,9 @@
-SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-08-22t21:08z
- ;;18.0;SAMI;**16,17**;2020-01-17;Build 7
- ;mdc-e1;SAMIDCM1-20240822-ErbJMe;SAMI-18-17-b8
- ;mdc-v7;B200371935;SAMI*18.0*17 SEQ #17
+SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
+ ;;18.0;SAMI;**16,17,18**;2020-01-17;Build 7
+ ;mdc-e1;SAMIDCM1-20240909-E2LXhrL;SAMI-18-18-b1
+ ;mdc-v7;B233069568;SAMI*18.0*18 SEQ #18
  ;
- ; SAMIDCMa contains services to support importing a patient into
+ ; SAMIDCM1 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
  ;
  quit  ; no entry from top
@@ -27,14 +27,21 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-08-22t21:08z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:08z
+ ;@update 2024-09-09t16:33z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
- ;@module Import/Export - variable prefixes
+ ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@release 18-17
  ;@edition-date 2020-01-17
- ;@patches **16,17**
+ ;@patches **16,17,18**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@dev-add Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
  ;@module-credits
  ;
@@ -59,23 +66,56 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-08-22t21:08z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ; 2024-08-07 ven/gpl 18-17-b5 b0b3044
- ;  SAMIDCM1 added web service for sending image transactions.
+ ; 2024-08-07 ven/gpl 18-17-b5 b0b30440
+ ;  SAMIDCM1 (F2kt1Ls B105843717 E3RA5X%)
+ ; add web service to send img transactions: in MKSVC add service post
+ ; dcmimgin.
  ;
- ; 2024-08-10 ven/gpl 18-17-b5 dd7c219
- ;  SAMIDCM1 changes to accept the image json format.
+ ; 2024-08-10 ven/gpl 18-17-b5 dd7c2196
+ ;  SAMIDCM1 (F1XOyAb B109906029 E2Dhqcd)
+ ; accept img json format: in WSDCMIN process @gp@("PatientName"); in
+ ; normaliz handle Dicom separator.
  ;
- ; 2024-08-12 ven/lmry 18-17-b5
- ;  SAMIDCM1 start module-log, bump version & dates.
+ ; 2024-08-12 ven/lmry 18-17-b5 eea98cdb
+ ;  SAMIDCM1 (F3XvGle B114466365 E%EcRX)
+ ; bump dates + vers, add log.
  ;
- ; 2024-08-17 ven/lmry 18-17-b6
- ;  SAMIDCM1 correct version, bump date.
+ ; 2024-08-16 ven/lmry 18-17-b6 a1a28de6
+ ;  SAMIDCM1 (F1Lt37K B115986477 E1B17x2)
+ ; update history, dates, + vers of routines for 18-17-b6.
  ;
  ; 2024-08-21/22 ven/toad 18-17-b6
  ;  SAMIDCM1 update version-control lines, dates, history, annotate;
  ; getsid>GETSID, normaliz>NORMALIZ.
  ;
- ;@to-do enter complete module log
+ ; 2024-08-26 ven/toad 18-17-b8 bd5cfb4c
+ ;  SAMIDCM1 (F1ZaHnp B200371935 ErbJMe)
+ ; Rick's revisions of the 14 routines + recipe file: passim.
+ ;
+ ; 2024-08-26 ven/mcglk 18-17-b8 a5dae8e9 [in temp v18-17-b6-sinai]
+ ;  SAMIDCM1 (F1ZaHnp B200371935 ErbJMe)
+ ; Imported M routines from commit bd5cfb4c1d58. NOTE: This history
+ ; will be lost.
+ ;
+ ; 2024-09-04 ven/toad 18-17-b8 9a98cb08 [in temp v18-17-b6-sinai]
+ ;  SAMIDCM1 (F2CEdt9 B200371935 ErbJMe)
+ ; version & checksums: SAMI-18-17-b8.
+ ;
+ ; 2024-09-06 ven/mcglk 18-17-b8 ffdb0310
+ ;  SAMIDCM1 (F2CEdt9 B200371935 ErbJMe)
+ ; Pulling in more modified routines from 18-17-b8.
+ ;
+ ; 2024-09-08 ven/gpl 18-18-b1 e04caa1a
+ ;  SAMIDCM1 (F1wj36B B210253473 Ea3qP)
+ ; fixing an emrn processing bug: in WSDCMIN add patid chk for
+ ; @gp@("PatientID"); in $$MATCH add MRN support.
+ ;
+ ; 2024-09-09 ven/toad 18-18-b1
+ ;  SAMIDCM1 (F??? B233069568 E???)
+ ; bump version, complete log, in MKSVC add subrtn hdr comments.
+ ;
+ ;@to-do
+ ;  fill in log before 18-17
  ;
  ;@contents
  ;
@@ -95,7 +135,7 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-08-22t21:08z
  ; IDXDCM index a dcm entry after patient record creation
  ;
  ;  4. init subroutine to create web services:
- ; MKSVC create the web services
+ ; MKSVC create web services
  ;
  ;
  ;
@@ -551,7 +591,7 @@ nxtdfn() ; next available dfn
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;function;clean?;silent;sac?;??% tests;port?
- ;@called-by [tbd]
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -580,7 +620,7 @@ GETSID(name) ; return studyid
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;clean?;silent;sac?;??% tests;port?
- ;@called-by [tbd]
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -617,7 +657,27 @@ IDXDCM(dien,ARY) ; index a dcm entry after patient record creation
  ;
  ;
  ;
-MKSVC() ; create the web services
+ ;@dms MKSVC^SAMIDCM1
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;dms;procedure;silent;clean?;sac?;tests?;port?
+ ;@called-by none
+ ;@calls
+ ; deleteService^%webutils
+ ; addService^%webutils
+ ;@input none
+ ;@output
+ ; creates web services:
+ ;  post dcmimgin
+ ;  post dcmin
+ ;  post dcmquery
+ ;  post dcmreset
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+MKSVC() ; create web services
  ;
  d deleteService^%webutils("POST","dcmimgin")
  d addService^%webutils("POST","dcmimgin","WSDCMIN^SAMIDCM1")
@@ -631,7 +691,7 @@ MKSVC() ; create the web services
  d deleteService^%webutils("GET","dcmreset")
  d addService^%webutils("GET","dcmreset","WSDCMKIL^SAMIDCM1")
  ;
- quit  ; end of MKSVC^SAMIDCM1
+ quit  ; end of dms MKSVC^SAMIDCM1
  ;
  ;
  ;

@@ -92,7 +92,7 @@ ii. Contents
  usual, please capture the complete dialog of your install and send it
  to your Screening+ support team.
 
- The changes in this patch are:
+ The changes in this release are:
 
 
  #.#. Add the ability to lookup by MRN
@@ -118,7 +118,7 @@ ii. Contents
 
  #.#. Add ability to upload and view outside documents.
 
-   request 6, 13 {high priority}: Outside documents need to be included in #{appname} with
+   requests 6, 13 {high priority}: Outside documents need to be included in #{appname} with
    other patient records. Links to view the documents should be on the 
    case review page. 
 
@@ -363,7 +363,20 @@ ii. Contents
 
 #>include: .dtool/install-kids-snippet.txt
 
+  #.#.#. Optional DICOM step
 
+    If you have a DICOM server that you want to integrate with
+    Screening+, use "^" and then enter to get back out to the
+    programmer prompt, there use the following command:
+
+    > DO MKSVC^SAMIDMC1
+
+    This will create four new entries in the Web Service URL handler
+    file to register new web services.
+
+    Sites without a DICOM server, or sites that have a DICOM server
+    they do not want to integrate with ScreeningPlus, should not run
+    this optional step.
 
    You now have #{appname} #{version} (#{vista-version}) installed in
    your M environment. The install is now complete, and you may leave

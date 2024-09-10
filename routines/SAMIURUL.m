@@ -1,7 +1,7 @@
 SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
  ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIURUL-20240910-E1h%GJK;SAMI-18-18-b1
- ;mdc-v7;B116379;SAMI*18.0*18 SEQ #18
+ ;mdc-e1;SAMIURUL-20240910-E2puUIO;SAMI-18-18-b1
+ ;mdc-v7;B118219;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the ScreeningPlus user-reports routines SAMIUR & SAMIUR2. It
@@ -31,9 +31,9 @@ SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-18
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17**
+ ;@patches **12,14,15,17,18**
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net

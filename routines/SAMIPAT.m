@@ -30,9 +30,9 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-18
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17**
+ ;@patches **12,14,15,17,18**
  ;
  ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net

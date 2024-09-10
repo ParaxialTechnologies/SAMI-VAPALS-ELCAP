@@ -48,21 +48,21 @@ X  1.10. Regrettable Bodge script
  2. Update routines
 X  2.1. Update SAMIPAT for pre/post-install if needed
       do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-18-b1")
- 2.2. convert to new short version ids, update dates & times in each routine
+X  2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
+X  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
   2.4. if you wish, use ^%ZPT1 to compare first through third lines of routine for 
   		consistency. Example if you want to look at all four version control lines
   		zprint +1^SAMICAS3:+4
-  2.5. push to repo/pull to vapalsyotta
+X  2.5. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
-  3.0. update recipe with before checksums -- do recipe^ARJTXRW
-  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
+X  3.0. update recipe with before checksums -- do recipe^ARJTXRW
+N  3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
 		do bash compare2.sh in routines before copying routines to make sure no 
 		changed routines were missed. This compares the routines with those in
 		~/run/routines/

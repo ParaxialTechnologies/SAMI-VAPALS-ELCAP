@@ -1,7 +1,7 @@
-SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
- ;;18.0;SAMI;**18**;2020-01;
- ;mdc-e1:SAMIMSH1-20240910-E3IAA15;SAMI-18-18-b1
- ;mdc-v7;B4947839;SAMI*18.0*18 SEQ #18
+SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai; 2021-09-10t15:18z
+ ;;18.0;SAMI;**18**;2020-01-17;
+ ;mdc-e1;SAMIMSH1-20240910-E1pRNy6;SAMI-18-18-b1
+ ;mdc-v7;B5638128;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIMSH1 contains services to support interoperability at Mt. Sinai for
  ; ScreeningPlus
@@ -25,7 +25,7 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t03:22z
+ ;@update 2024-09-10t15:18z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM
@@ -65,12 +65,30 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ;2024-09-06 ven/gpl 18-18-b1   2bf5bb1
- ; SAMIMSH1 changes to index and update the MRN and PID
+ ; 2024-09-06 ven/gpl 18-18-b1 2bf5bb1a
+ ;  SAMIMSH1 (F1Z17Tl B57146 E2V9xAb)
+ ; new rtn w/wsMSHSCH,test,SCHURL; changes to index + update MRN &
+ ; PID.
  ;
- ;2024-09-10 ven/lmry 18-18-b1
- ; SAMIMSH1 add routine and module credits, checksums, update date, patches,
- ;  module log.
+ ; 2024-09-10 ven/lmry 18-18-b1
+ ;  SAMIMSH1 (F2dPkFY B60916 E3GuRUs) 3671229c
+ ;  SAMIMSH1 (F1ajCtc B60916 E2EBw5l) a066c4fb
+ ;  SAMIMSH1 (Fn+mSO B4947839 E3IAA15) 98bc2f20
+ ;  SAMIMSH1 (F2kPtfh B4984170 EHNST3) 77855d6f
+ ; add routine & module credits, chksums, bump date, patches,
+ ; module log.
+ ;
+ ; 2024-09-10 ven/toad 18-18-b1
+ ;  SAMIMSH1 (F??? B5638128 E???)
+ ; fix chksums, add chksums to log, add contents, bump date.
+ ;
+ ;@contents
+ ;
+ ; wsMSHSCH
+ ; test
+ ; SCHURL
+ ;
+ ;
  ;
  ;
 wsMSHSCH(RTN,FILTER) ;
@@ -138,10 +156,16 @@ wsMSHSCH(RTN,FILTER) ;
  d ENCODE^XLFJSON("ary","RTN")
  Q
  ;
+ ;
+ ;
+ ;
 test()
  s filter("sid")="XXX00217"
  d wsMSHSCH^SAMIMSH1(.result,.filter)
  q
+ ;
+ ;
+ ;
  ;
  ;From the CT eval form, we need:
  ;
@@ -167,5 +191,7 @@ SCHURL()
  ;
  W !,Y
  Q
+ ;
+ ;
  ;
 EOR ; end of routine SAMIMSH1

@@ -1,12 +1,71 @@
-SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sanai ;2021-08-09t17:16z
- ;;18.0;SAMI;**5,12**;2020-01;
- ;;18.12
+SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-08-09t17:16z
+ ;;18.0;SAMI;**5,12,18**;2020-01;
+ ;mdc-e1:SAMIMSH1-2240909-E ;SAMI-18-18-b1
+ ;mdc-v7;B  ;SAMI*18.0*18 SEQ #18
  ;
- ; 
+ ; SAMIMSH1 contains services to support interoperability at Mt. Sinai for
+ ; ScreeningPlus
  ; 
  ;
  quit  ; no entry from top
  ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;
+ ;@dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2024, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@update 2024-09-09t16:42z
+ ;@app-suite Screening Applications Management - SAM
+ ;@app ScreeningPlus (SAM-IELCAP) - SAMI
+ ;@module import/export - 
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@release 18-18
+ ;@edition-date 2020-01-17
+ ;@patches **18**
+ ;
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@dev-add Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;
+ ;@module-credits
+ ;
+ ;@project VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org Paraxial Technologies (par)
+ ; http://paraxialtech.com/
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@project I-ELCAP AIRS Automated Image Reading System
+ ; https://www.ielcap-airs.org
+ ;@funding 2024, Mt. Sinai Hospital (msh)
+ ;@partner-org par
+ ;
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ;
+ 
 wsMSHSCH(RTN,FILTER)
  ;
  ;example items array
@@ -102,3 +161,4 @@ SCHURL()
  W !,Y
  Q
  ;
+EOR ; end of routine SAMIMSH1

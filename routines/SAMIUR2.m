@@ -1,7 +1,7 @@
 SAMIUR2 ;ven/gpl - user reports cont; 2024-09-10t04:37z
  ;;18.0;SAMI;**5,11,12,14,15,17,18**;2020-01-17;
- ;mdc-e1;SAMIUR2-20240910-E018QO7h;SAMI-18-18-b1
- ;mdc-v7;B1536139436;SAMI*18.0*18 SEQ #18
+ ;mdc-e1;SAMIUR2-20240910-E3Vz62Z;SAMI-18-18-b1
+ ;mdc-v7;B1541171009;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.

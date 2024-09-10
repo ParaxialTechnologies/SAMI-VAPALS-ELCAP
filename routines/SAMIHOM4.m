@@ -1,7 +1,7 @@
-SAMIHOM4 ;ven/gpl - homepage web services; 2024-08-22t21:11z
- ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17**;2020-01-17;
- ;mdc-e1;SAMIHOM4-20240822-E036GX2U;SAMI-18-17-b6
- ;mdc-v7;B1262443514;SAMI*18.0*17 SEQ #17
+SAMIHOM4 ;ven/gpl - homepage web services; 2024-09-09t23:38z
+ ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17,18**;2020-01-17;Build 8
+ ;mdc-e1;SAMIHOM4-20240909-E3fWhBP;SAMI-18-18-b1
+ ;mdc-v7;B1434661517;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.
@@ -314,7 +314,7 @@ GETHOME ; get homepage (not subsequent visit)
  . . i setparm=0 s setman="false"
  . . do findReplace^%ts(.ln,"@@MANUALREGISTRATION@@",setman)
  . . s temp(zi)=ln
- . . quit 
+ . . quit
  . set cnt=cnt+1
  . set tout(cnt)=temp(zi)
  . quit
@@ -459,8 +459,9 @@ WSVAPALS ; post vapals (main gateway)
  ;if route="fileupload" d  q 0
  if route="fileupload" d  q 0
  . d FILEUP^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
- . Q
+ . q
  ;
+ ; old fileupload code:
  ;. ;SET route="postform" q  ;
  ;. s HTTPRSP("mime")="application/pdf"
  ;. n gn s gn=$na(^TMP("GPLTEST",$J))
@@ -470,9 +471,11 @@ WSVAPALS ; post vapals (main gateway)
  ;. ;s @gn@(1)=part
  ;. m SAMIRESULT=gn
  ;. ;m SAMIRESULT=SAMIARG("file")
+ ;. q
  ;
  if route="viewfile" d  q 0
  . d FILEVIEW^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . q
  ;
  i route="" d  q 0
  . n vals
@@ -556,23 +559,26 @@ WSVAPALS ; post vapals (main gateway)
  . . n pien s pien=$o(@proot@("sid",sid,""))
  . . n dfn s dfn=$g(@proot@(pien,"dfn"))
  . . n lien s lien=$o(@lroot@("dfn",dfn,"")) ; graphs may not be dinum
- . . i pien'="" i lien'="" d  ;
+ . . i pien]"",lien]"" d  ;
  . . . n newmrn,newpid
  . . . s newmrn=$g(SAMIARG("simrn"))
  . . . s newpid=$g(SAMIARG("sipid"))
  . . . ; could do a comparison here, but easiest is just to push it
- . . . if newmrn'="" d  ;
+ . . . if newmrn]"" d  ;
  . . . . s @proot@(pien,"simrn")=newmrn
- . . . . s @proot@("mrn",newmrn,pien)="" 
+ . . . . s @proot@("mrn",newmrn,pien)=""
  . . . . s @lroot@(lien,"simrn")=newmrn
  . . . . s @lroot@("mrn",newmrn,lien)=""
  . . . . s @lroot@("emrn","e"_newmrn,lien)=""
- . . . if newpid'="" d  ;
+ . . . . q
+ . . . if newpid]"" d  ;
  . . . . s @proot@(pien,"sipid")=newpid
  . . . . s @proot@("pid",newpid,pien)=""
  . . . . s @lroot@(lien,"sipid")=newpid
  . . . . s @lroot@("pid",newpid,lien)=""
- . . ; 
+ . . . . q
+ . . . q
+ . . ;
  . . ; generate a note and send it to VistA
  . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
  . . ; returns the ien of the note that was created and should be sent
@@ -601,6 +607,7 @@ WSVAPALS ; post vapals (main gateway)
  . . . else  d  ;
  . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
  . . . . s SAMIARG("errorMessage")=rtnmsg
+ . . . . q
  . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  . . . q
  . . q
@@ -712,7 +719,7 @@ WSVAPALS ; post vapals (main gateway)
  . m SAMIARG=vars
  . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  . q
- ; 
+ ;
  i route="editsave" d  q 0
  . m SAMIARG=vars
  . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
@@ -929,11 +936,12 @@ UPDTFRMS(dfn) ; update demographics in all forms for patient
  m @proot@(pien)=@lroot@(lien) ; refresh the demos in the patient record
  n ssn s ssn=$g(@proot@(pien,"ssn"))
  s @proot@(pien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
- n sid s sid=$g(@proot@("sisid")) ; studyid 
+ n sid s sid=$g(@proot@("sisid")) ; studyid
  q:sid=""  ; no studyid
  n zi s zi=""
  f  s zi=$o(@proot@("graph",sid,zi)) q:zi=""  d  ; for each form
  . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
+ . q
  ;
  quit  ; end of UPDTFRMS
  ;
@@ -970,15 +978,18 @@ MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
  n toien s toien=$g(SAMIARGS("toien"))
  i toien="" d  q  ;
  . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ . q
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n fromien s fromien=$g(@lroot@(toien,"MATCHLOG"))
  i fromien="" d  q  ;
  . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ . q
  ;
  ; test for remotedfn in from record - not valid if absent
  ;
  i $g(@lroot@(fromien,"remotedfn"))="" d  q  ;
  . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ . q
  ;
  ; remove index entries for from and to records
  ;
@@ -1087,7 +1098,7 @@ DELUNMAT ; deletes unmatched web service
  ;
  ;
 WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
- ; 
+ ;
  n filter,bdy
  s bdy=""
  ;s filter("siteid")="PHX"
@@ -1210,17 +1221,20 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  ;
  n dfn s dfn=$g(vars("dfn")) ; must have a dfn
  i dfn="" d  q  ;
- . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+ . q
  n root s root=$$setroot^%wd("patient-lookup")
  n sien s sien=$o(@root@("dfn",dfn,""))
  i sien="" d  q  ;
- . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
+ . q
  d UNINDXPT(sien) ; remove old index entries
  n zm
  k SAMIARG("MATCHLOG")
  s zm=$$REMATCH(sien,.SAMIARG)
  i zm>0 d  ;
  . s SAMIARG("MATCHLOG")=zm
+ . q
  d MKPTLK(sien,.SAMIARG) ; add the updated fields
  d INDXPTLK(sien) ; create new index entries
  d UPDTFRMS(dfn) ; update demographic info in all forms
@@ -1273,12 +1287,14 @@ REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
  . ;i y>9000000 s x=0
+ . q
  i x>0 q x
  i name'="" s x=$o(@lroot@("name",name,""))
  i x=sien s x=$o(@lroot@("name",name,x))
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
  . ;i y>9000000 s x=0
+ . q
  i x>0 q x
  ;i icn'="" s x=$o(@lroot@("icn",icn,""))
  ;i x=sien s x=$o(@lroot@("icn",icn,x))
@@ -1445,10 +1461,11 @@ REINDXPL ; reindex patient lookup
  k @root@("sinamel")
  k @root@("mrn")
  k @root@("emrn")
- k @root@("pid") 
+ k @root@("pid")
  ; k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . d INDXPTLK(zi)
+ . q
  ;
  quit  ; end of REINDXPL
  ;
@@ -1488,14 +1505,14 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s @proot@("name",name,ien)=""
  n ucname s ucname=$$UCASE(name)
  s @proot@("name",ucname,ien)=""
- n x
- s x=$g(@proot@(ien,"dfn")) ;w !,x
+ n x s x=$g(@proot@(ien,"dfn")) ;w !,x
  i x="" d  ;
  . s x=$o(@proot@("dfn","   "),-1)+1
  . s @proot@(ien,"dfn")=x
- s:x'="" @proot@("dfn",x,ien)=""
+ . q
+ s:x]"" @proot@("dfn",x,ien)=""
  s x=$g(@proot@(ien,"last5")) ;w !,x
- s:x'="" @proot@("last5",x,ien)=""
+ s:x]"" @proot@("last5",x,ien)=""
  ;
  ; s x=$g(@proot@(ien,"icn")) ;w !,x
  ; i x'["V" d  ;
@@ -1503,19 +1520,19 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
  ; . s @proot@(ien,"icn")=x_"V"_chk
  ; . s x=x_"V"_chk
- ; s:x'="" @proot@("icn",x,ien)=""
+ ; s:x]"" @proot@("icn",x,ien)=""
  ;
  s x=$g(@proot@(ien,"ssn")) ;w !,x
- s:x'="" @proot@("ssn",x,ien)=""
+ s:x]"" @proot@("ssn",x,ien)=""
  s x=$g(@proot@(ien,"sinamef")) ;w !,x
- s:x'="" @proot@("sinamef",x,ien)=""
+ s:x]"" @proot@("sinamef",x,ien)=""
  s x=$g(@proot@(ien,"sinamel")) ;w !,x
- s:x'="" @proot@("sinamel",x,ien)=""
+ s:x]"" @proot@("sinamel",x,ien)=""
  s x=$g(@proot@(ien,"simrn"))
- s:x'="" @proot@("mrn",x,ien)=""
- s:x'="" @proot@("emrn","e"_x,ien)=""
+ s:x]"" @proot@("mrn",x,ien)=""
+ s:x]"" @proot@("emrn","e"_x,ien)=""
  s x=$g(@proot@(ien,"sipid"))
- s:x'="" @proot@("pid",x,ien)=""
+ s:x]"" @proot@("pid",x,ien)=""
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
  ;
  quit  ; end of pps INDXPTLK

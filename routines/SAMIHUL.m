@@ -1,7 +1,7 @@
-SAMIHUL ;ven/gpl - home page log; 2024-08-21t21:13z
- ;;18.0;SAMI;**9,12,15,16,17**;2020-01-17;Build 8
- ;mdc-e1;SAMIHUL-20240822-EQzKao;SAMI-18-17-b8
- ;mdc-v7;B131888;SAMI*18.0*17 SEQ #17
+SAMIHUL ;ven/gpl - home page log; 2024-09-10t00:12z
+ ;;18.0;SAMI;**9,12,15,16,17,18**;2020-01-17;Build 8
+ ;mdc-e1;SAMIHUL-20240910-E1fnWOL;SAMI-18-18-b1
+ ;mdc-v7;B149598;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIHOM3 contains subroutines for producing the ScreeningPlus Home
  ; Page. SAMIHOM4 contains more subroutines for the S+ Home Page.
@@ -27,14 +27,14 @@ SAMIHUL ;ven/gpl - home page log; 2024-08-21t21:13z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-21t21:13z
+ ;@update 2024-09-10t00:12z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Home Page - SAMIH
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-18
  ;@edition-date 2020-01-17
- ;@patches **9,12,15,16,17**
+ ;@patches **9,12,15,16,17,18**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -275,24 +275,97 @@ SAMIHUL ;ven/gpl - home page log; 2024-08-21t21:13z
  ; 2022-04-26 ven/gpl  18-17  89497ba8
  ;  SAMIHOM4 setup for logout redirect
  ;
- ; 2022-04-27 ven/lmry 18-17
- ;  SAMIHOM4 and SAMIHUL bumped dates, inserted space for XINDEX
+ ; 2022-04-27 ven/lmry 18-17-b2
+ ;  SAMIHOM4 and SAMIHUL bump dates.
  ;
- ; 2024-07-24 ven/gpl 18-17-b5 8d86b80
- ;  SAMIHOM4 copy simrn to the vapals-patient record after entry
+ ; 2022-04-27 ven/lmry 18-17-b2 6b24f1f3
+ ;  SAMIHOM4 (F1%x8M7 B985660773 EzYHzb)
+ ; insert space for XINDEX.
  ;
- ; 2024-08-12 ven/lmry 18-17-b5
- ;  SAMIHOM4 bump version and date
- ;  SAMIHUL add history, bump version and date
+ ; 2024-07-24 ven/gpl 18-17-b5 8d86b80a
+ ;  SAMIHOM4 (F4%DW B991706712 E2zhzW+)
+ ; copy simrn to the vapals-patient record after entry: in MKPTLK let
+ ; ssn be optional, support optional simrn.
  ;
- ; 2024-08-17 ven/lmry 18-17-b6
- ;  SAMIHOM4 regress version and bump date
- ;  SAMIHUL add history, regress version and bump date
+ ; 2024-08-12 ven/lmry 18-17-b5 eea98cdb
+ ;  SAMIHOM4 (F65FvO B991706712 E2%gQq0)
+ ; bump version + date.
+ ;  SAMIHUL (F3Ls7qe B122244 E1FpY7)
+ ; update log, bump version + date.
+ ;
+ ; 2024-08-16 ven/lmry 18-17-b6 a1a28de6
+ ;  SAMIHOM4 (F57Ct8 B991706712 E2+iNl0)
+ ; regress version + bump date.
+ ;  SAMIHUL (FI8dBB B125686 E1yYBu7)
+ ; update log, regress version + bump date.
  ;
  ; 2024-08-22 ven/toad 18-17-b6
- ;  SAMIHOM4,SAMIHUL update version-control lines, dates.
- ;  SAMIHUL update history.
- ;  SAMIHOM4 annotate, comment out debugging lines.
+ ; update version-control lines, bump dates.
+ ;  SAMIHOM4 (F2uBYQN B1262443514 E3R7P91)
+ ; passim: new version-control lines, bump vers + dates, id calls +
+ ; tests, comment out debugging code, light refactoring.
+ ;  SAMIHUL (F3+z2h3 B131888 E4wwex)
+ ; update log.
+ ;
+ ; 2024-08-26 ven/toad 18-17-b8 bd5cfb4c
+ ;  SAMIHOM4 (F2uBYQN B1262443514 E3R7P91)
+ ;  SAMIHUL (FK%ycv B131888 EQzKao)
+ ; Rick's revisions of the 14 routines + recipe file.
+ ;
+ ; 2024-08-26 ven/mcglk 18-17-b8 a5dae8e9 [in temp v18-17-b6-sinai]
+ ;  SAMIHOM4 (F2uBYQN B1262443514 E3R7P91)
+ ;  SAMIHUL (FK%ycv B131888 EQzKao)
+ ; Import M routine fr/commit bd5cfb4c1d58. NOTE: This history will be
+ ; lost.
+ ;
+ ; 2024-08-28 ven/gpl 18-18-b1 a2470ae1
+ ;  SAMIHOM4 (F1S6Kk+ B1302087893 E1%2Enf)
+ ; for 2nd build, add viewer to case review + file upload form: in
+ ; WSVAPALS add route="fileupload" + route="newfileupload".
+ ;
+ ; 2024-09-01 ven/gpl 18-18-b1 5ed25cbc
+ ;  SAMIHOM4 (FkRuwr B1313883304 E1HNXis)
+ ; progress toward file upload feature: in WSVAPALS try out code to
+ ; parse PDF, uncomment debugging code, for route="fileupload" comment
+ ; out old code & call FILEUP^SAMICAS2, add route="viewfile".
+ ;
+ ; 2024-09-03 ven/gpl 18-18-b1 dc4e37b1
+ ;  SAMIHOM4 (FaoAO8 B1313429300 E17js3k)
+ ; remove some bugs fr/file upload: in WSVAPALS r/TOADPARSE w/MINIPARS
+ ;
+ ; 2024-09-04 ven/toad 18-17-b8 9a98cb08 [in temp v18-17-b6-sinai]
+ ;  SAMIHOM4 (F2pDg%9 B1262443514 E3R7P91)
+ ;  SAMIHUL (FpoHb5 B131888 EQzKao)
+ ; bump ver + chksums.
+ ;
+ ; 2024-09-06 ven/gpl 18-18-b1 2bf5bb1a
+ ;  SAMIHOM4 (F2dRlE9 B1408784186 E3ANQRl)
+ ; changes to index, update mrn + pid: in WSVAPALS comment out
+ ; m SAMIARG=SAMIBODY, in route="postform" & siform add big new block
+ ; of lines to handle ids, mrns, etc.; in REINDXPL kill mrn & pid; in
+ ; INDXPTLK set mrn & pid.
+ ;
+ ; 2024-09-06 ven/mcglk 18-17-b8 3b0b8664
+ ;  SAMIHUL (FpoHb5 B131888 EQzKao)
+ ; Pulling in modified routines from 18-17-b8.
+ ;
+ ; 2024-09-07 ven/gpl 18-18-b1 0645d7c8
+ ;  SAMIHOM4 (Fun5dl B1418234614 E1RixqQ)
+ ; fix mrn bugs: in WSVAPALS if postform & siform set emrn; in
+ ; REINDXPL kill emrn; in INDXPTLK set emrn.
+ ;
+ ; 2024-09-08 ven/gpl 18-18-b1 e04caa1a
+ ;  SAMIHOM4 (F1zY7a B1418397616 E2WTwhj)
+ ; fix emrn processing bug: in WSVAPALS if postform & siform prepend
+ ; "e" before emrn value.
+ ;
+ ; 2024-09-09 ven/toad 18-18-b1
+ ;  SAMIHOM4 (FGNuW3 B1434661517 E3fWhBP)
+ ; merge parallel work from SAMI-18-17-b8 + SAMI-18-18-b1: start w/
+ ; SAMIHOM4-20240904-F2pDg%9 & apply gpl mods from 08-28,09-01,03,06,
+ ; 07,08; slight refactoring, bump ver + date + chksums.
+ ;  SAMIHUL (F??? B149598 E???)
+ ; update log, add recent details, commit IDs, checksums.
  ;
  ;
  ;@contents
@@ -302,6 +375,10 @@ SAMIHUL ;ven/gpl - home page log; 2024-08-21t21:13z
  ; SAMIHUL homepage development log
  ; SAMIUTH3 tests for SAMIHOM3
  ; SAMIUTH4 tests for SAMIHOM4
+ ;
+ ;@to-do
+ ;
+ ; add details + checksums before SAMI-18-17-b6
  ;
  ;
  ;

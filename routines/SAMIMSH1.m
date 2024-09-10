@@ -1,7 +1,7 @@
 SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;;18.0;SAMI;**18**;2020-01;
- ;mdc-e1:SAMIMSH1-20240910-E2V9xAb;SAMI-18-18-b1
- ;mdc-v7;B57146;SAMI*18.0*18 SEQ #18
+ ;mdc-e1:SAMIMSH1-20240910-E3IAA15;SAMI-18-18-b1
+ ;mdc-v7;B4947839;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIMSH1 contains services to support interoperability at Mt. Sinai for
  ; ScreeningPlus
@@ -69,7 +69,8 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ; SAMIMSH1 changes to index and update the MRN and PID
  ;
  ;2024-09-10 ven/lmry 18-18-b1
- ; SAMIMSH1 add routine and module credits, checksums, update date, patches
+ ; SAMIMSH1 add routine and module credits, checksums, update date, patches,
+ ;  module log.
  ;
  ;
 wsMSHSCH(RTN,FILTER) ;

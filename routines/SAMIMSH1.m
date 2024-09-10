@@ -1,6 +1,6 @@
-SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-08-09t17:16z
+SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;;18.0;SAMI;**5,12,18**;2020-01;
- ;mdc-e1:SAMIMSH1-2240909-E ;SAMI-18-18-b1
+ ;mdc-e1:SAMIMSH1-20240910-E ;SAMI-18-18-b1
  ;mdc-v7;B  ;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIMSH1 contains services to support interoperability at Mt. Sinai for
@@ -25,7 +25,7 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-08-09t17:16z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-09t16:42z
+ ;@update 2024-09-10t03:22z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - 

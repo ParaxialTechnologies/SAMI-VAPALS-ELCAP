@@ -1,7 +1,7 @@
-SAMIURUL ;ven/gpl - user reports log; 2024-08-22t21:22z
- ;;18.0;SAMI;**12,14,15,17**;2020-01-17;Build 8
- ;mdc-e1;SAMIURUL-20240822-E1h%GJK;SAMI-18-17-b8
- ;mdc-v7;B116379;SAMI*18.0*17 SEQ #17
+SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
+ ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
+ ;mdc-e1;SAMIURUL-20240910-E1h%GJK;SAMI-18-18-b1
+ ;mdc-v7;B116379;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the ScreeningPlus user-reports routines SAMIUR & SAMIUR2. It
@@ -26,7 +26,7 @@ SAMIURUL ;ven/gpl - user reports log; 2024-08-22t21:22z
  ;@copyright 2021/2024, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:22z
+ ;@update 2024-09-10t05:01z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR
@@ -213,25 +213,33 @@ SAMIURUL ;ven/gpl - user reports log; 2024-08-22t21:22z
  ; 2022-12-15/17 ven/gpl 18-17
  ;  SAMIUR, SAMIUR2 develop new CT Eval Recommendation report.
  ;
- ; 2022-12-30 ven/lmry 18-17
+ ; 2022-12-30 ven/lmry 18-17  68d5a01
  ;  SAMIUR, SAMIUR2, SAMIURUL update history, bump dates & versions.
  ;
- ; 2022-12-30 ven/lmry 18-17
+ ; 2022-12-30 ven/lmry 18-17 
  ;  SAMIUR remove blank at end of line for XINDEX.
  ;
  ; 2023-01-04 ven/gpl  18-17
  ;  SAMIUR fix bug to make data appear in new report.
  ;
- ; 2024-08-17 ven/lmry 18-17
+ ; 2024-08-17 ven/lmry 18-17  a1a28de
  ;  SAMIUR bump dates, update contents, remove space at end of line.
  ;  SAMIUR2 bump dates.
  ;  SAMIURUL add history, bump dates.
  ;
- ; 2024-08-21/22 ven/toad 18-17-b6
+ ; 2024-08-21/22 ven/toad 18-17-b6  bd5cfb4
  ;  SAMIUR annotate.
  ;  SAMIURUL update history.
  ;  SAMIUR,2,UL update version-control lines, hdr comments, comment
  ; out ^gpl debugging lines.
+ ;
+ ; 2024-09-07 ven/gpl 18-18-b1  e6fdd47 4942369
+ ;  SAMIUR2 MRN lookup and display working, fix the recommendations report
+ ;   PID field
+ ;
+ ; 2024-09-10 ven/lmry 18-18-b1
+ ;  SAMIUR2 update date/time, version control lines
+ ;  SAMIURUL update date/time, version control lines, and module log
  ;
  ;
  ;@contents

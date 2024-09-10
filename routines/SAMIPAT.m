@@ -1,7 +1,7 @@
 SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIPAT-20240910-E2tdr5N;SAMI-18-18-b1
- ;mdc-v7;B17344032;SAMI*18.0*18 SEQ #18
+ ;mdc-e1;SAMIPAT-20240910-E2MdtUB;SAMI-18-18-b1
+ ;mdc-v7;B17504242;SAMI*18.0*18 SEQ #18
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.

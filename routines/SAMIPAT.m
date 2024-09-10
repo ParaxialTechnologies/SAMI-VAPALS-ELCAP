@@ -1,7 +1,7 @@
-SAMIPAT ;ven/toad - post subroutines; 2024-08-30t03:30z
- ;;18.0;SAMI;**12,14,15,17**;2020-01-17;Build 8
- ;mdc-e1;SAMIPAT-20240822-E2tdr5N;SAMI-18-17-b8
- ;mdc-v7;B17344032;SAMI*18.0*17 SEQ #17
+SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
+ ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
+ ;mdc-e1;SAMIPAT-20240910-E2tdr5N;SAMI-18-18-b1
+ ;mdc-v7;B17344032;SAMI*18.0*18 SEQ #18
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -25,7 +25,7 @@ SAMIPAT ;ven/toad - post subroutines; 2024-08-30t03:30z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-30t03:30z
+ ;@update 2024-09-10t04:27z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
@@ -111,14 +111,16 @@ SAMIPAT ;ven/toad - post subroutines; 2024-08-30t03:30z
  ; 2024-08-16 ven/lmry 18-17-b6  a1a28de  d0224d9
  ;  SAMIPAT update POS1817.
  ;
- ; 2024-08-22 ven/toad 18-17-b6
+ ; 2024-08-26 ven/toad 18-17-b6  bd5cfb4
  ;  SAMIPAT update history, version-control lines, hdr comments.
  ;
  ; 2024-08-30 ven/lmry 18-17-b6
  ;  SAMIPAT updated path for SAMIDIR under STANDARD, change update date,
  ;   also changed routine description to post routines instead of init
  ;   routines.
- ;  
+ ;
+ ; 2024-09-10 ven/lmry 18-18-b1
+ ;  SAMIPAT update date/times, checksums, patches
  ;
  ;@contents
  ;
@@ -219,7 +221,7 @@ POS1815 ; kids post-install for SAMI-18-15
 POS1817 ; kids post-install for SAMI-18-17
  ;
  do STANDARD
- do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-b6")
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-17-b8")
  ;
  quit  ; end of kids-post POS1817^SAMIPAT
  ;

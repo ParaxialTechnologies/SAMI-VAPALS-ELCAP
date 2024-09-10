@@ -1,7 +1,7 @@
 SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
- ;;18.0;SAMI;**5,12,18**;2020-01;
- ;mdc-e1:SAMIMSH1-20240910-E ;SAMI-18-18-b1
- ;mdc-v7;B  ;SAMI*18.0*18 SEQ #18
+ ;;18.0;SAMI;**18**;2020-01;
+ ;mdc-e1:SAMIMSH1-20240910-E2V9xAb;SAMI-18-18-b1
+ ;mdc-v7;B57146;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIMSH1 contains services to support interoperability at Mt. Sinai for
  ; ScreeningPlus
@@ -28,7 +28,7 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;@update 2024-09-10t03:22z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
- ;@module import/export - 
+ ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@release 18-18
  ;@edition-date 2020-01-17
@@ -65,8 +65,14 @@ SAMIMSH1 ;ven/gpl - INTEROP with Mt. Sinai ;2021-09-10t03:22z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- 
-wsMSHSCH(RTN,FILTER)
+ ;2024-09-06 ven/gpl 18-18-b1   2bf5bb1
+ ; SAMIMSH1 changes to index and update the MRN and PID
+ ;
+ ;2024-09-10 ven/lmry 18-18-b1
+ ; SAMIMSH1 add routine and module credits, checksums, update date, patches
+ ;
+ ;
+wsMSHSCH(RTN,FILTER) ;
  ;
  ;example items array
  ;g("ceform-2018-12-11")=""

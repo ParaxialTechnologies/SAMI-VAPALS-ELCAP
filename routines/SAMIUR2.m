@@ -1,7 +1,7 @@
-SAMIUR2 ;ven/gpl - user reports cont; 2024-08-22t21:20z
- ;;18.0;SAMI;**5,11,12,14,15,17**;2020-01-17;
- ;mdc-e1;SAMIUR2-20240822-E018QO7h;SAMI-18-17-b6
- ;mdc-v7;B1536139436;SAMI*18.0*17 SEQ #17
+SAMIUR2 ;ven/gpl - user reports cont; 2024-09-10t04:37z
+ ;;18.0;SAMI;**5,11,12,14,15,17,18**;2020-01-17;
+ ;mdc-e1;SAMIUR2-20240910-E018QO7h;SAMI-18-18-b1
+ ;mdc-v7;B1536139436;SAMI*18.0*18 SEQ #18
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -25,7 +25,7 @@ SAMIUR2 ;ven/gpl - user reports cont; 2024-08-22t21:20z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:20z
+ ;@update 2024-09-10t04:37z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR

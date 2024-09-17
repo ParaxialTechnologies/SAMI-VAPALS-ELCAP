@@ -2,6 +2,7 @@
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: Screening+
+#:appdir: project/screening-plus
 #:version: 18-18-b1
 #:rversion: 18-18
 #:partialdir: 18-18/b1
@@ -18,7 +19,7 @@ $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
 
 #>center: George P. Lilly, Dom DiNatale
 #>center: & Frederick D. S. Marshall
-#>center: 2024-09-05
+#>center: 2024-09-12
 // #{now-iso-ymd}
 
 i. Front matter
@@ -78,7 +79,7 @@ ii. Contents
  #{nmsp} #{version} adds three high-priority updates to accomodate
  Mt. Sinai's workflow.
 
- The definitive source for the {appname} application - codebase,
+ The definitive source for the #{appname} application - codebase,
  package distributions (including this one), and documentation - is at
  the following public Github repository:
 
@@ -86,47 +87,47 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/project/vapals-elcap/dist/#{partialdir}/
+ https://vistaexpertise.net/#{appdir}/dist/#{partialdir}/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
- to your Screening+ support team.
+ to your #{appname} support team.
 
  The changes in this release are:
 
 
  #.#. Add the ability to lookup by MRN
 
-   Request 5 (high priority): Mt. Sinai team needs the ability to look up
-   a patient using MRN.
+   Request 5 (high priority): Mt. Sinai team needs the ability to look
+   up a patient using MRN.
 
-   solution: This function now exists. Though MRN does not show up in patient
-   dropdown.
+   solution: This function now exists on the Home page, though MRN
+   does not show up in patient dropdown.
 
-   reported: 2024-07-11 by iELCAP team
+   reported: 2024-07-11 by iELCAP team.
 
  #.#. Use StudyID throughout the application
 
-   requests 2, 3 (high priority): The Mt. Sinai team would like the Study ID
-   (abbreviated as PID) to be used throughout the application instead of SSN 
-   or Last5.
+   requests 2, 3 (high priority): The Mt. Sinai team would like the
+   Study ID (abbreviated as PID) to be used throughout the application
+   instead of SSN or Last5.
 
-   solutions: PID now shows up in all reports, the Case Review page, the form
-   headers, and in the patient dropdown on the home page.
+   solution: PID now shows up in all reports, the Case Review page,
+   the form headers, and in the patient dropdown on the home page.
 
-   reported: 2024-07-11 by iELCAP team
+   reported: 2024-07-11 by iELCAP team.
 
- #.#. Add ability to upload and view outside documents.
+ #.#. Add ability to upload and view outside documents
 
-   requests 6, 13 {high priority}: Outside documents need to be included in #{appname} with
-   other patient records. Links to view the documents should be on the 
-   case review page. 
+   requests 6, 13 {high priority}: Outside documents need to be
+   included in #{appname} with other patient records. Links to view
+   the documents should be on the case review page.
 
-   solution: Files in .pdf format can be uploaded to #{appname} and are
-   available to view on the patient's case review page by hitting the "view"
-   button next to the title of the document.
+   solution: Files in PDF format can be uploaded to #{appname} and are
+   available to view on the patient's case review page by hitting the
+   "view" button next to the title of the document.
 
-   reported: 2024-07-11 by iELCAP team
+   reported: 2024-07-11 by iELCAP team.
 
 
 #. Package elements
@@ -213,7 +214,7 @@ ii. Contents
      You may now proceed with the KIDS installation.
      $ _
 
-    Outside the VA firewall, Screening+ systems maintain up-to-date
+    Outside the VA firewall, #{appname} systems maintain up-to-date
     clones of the official GitHub repository, and this script will
     have different output.
 
@@ -366,16 +367,16 @@ ii. Contents
   #.#.#. Optional DICOM step
 
     If you have a DICOM server that you want to integrate with
-    Screening+, use "^" and then enter to get back out to the
-    programmer prompt, there use the following command:
+    #{appname}, use "^" and then enter to get back out to the
+    programmer prompt, then use the following command:
 
-    > DO MKSVC^SAMIDMC1
+    > DO MKSVC^SAMIDCM1
 
     This will create four new entries in the Web Service URL handler
     file to register new web services.
 
     Sites without a DICOM server, or sites that have a DICOM server
-    they do not want to integrate with ScreeningPlus, should not run
+    they do not want to integrate with #{appname}, should not run
     this optional step.
 
    You now have #{appname} #{version} (#{vista-version}) installed in
@@ -410,18 +411,17 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2024-07-01/08-10   George P. Lilly (ven)
+ Developed   2024-07-01/09-10   George P. Lilly (ven)
                                 Domenic DiNatale (par)
-                                Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2024-08-06/09-05   George P. Lilly (ven)
+ Tested      2024-08-06/09-12   George P. Lilly (ven)
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
- Released    2024-09-06         Frederick D. S. Marshall (ven)
+ Released    2024-09-12         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

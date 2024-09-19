@@ -1,0 +1,533 @@
+:mastimg: project-va-pals
+:mastcaption: va-pals
+:mastdesc: Project: Screening+
+:doctitle: 18-17-b9 – Distribution – Screening+ – Projects – Vista Expertise Network
+:description: The Screening+ project: Increasing access to safe and effective lung-screening programs that save lives.
+:addkeywords: cancer, lung cancer, screening, early detection, cancer detection, VAPALS, Screening+, ScreeningPLUS, ELCAP, I-ELCAP, VA-PALS, SAMI routines, web application in M
+:numbered:
+:version: 18-17-b9
+:build: b9
+:doctitle: Screening+: SAMI {version}
+:vista-longversion: Version 18.0, Patch ID #17, Seq #17, Build 9
+:nmsp: SAMI
+:lnmsp: sami
+:appname: Screening+
+:va-version: {nmsp}*18.0*17 SEQ #17 b9
+:priority: High
+:categories: Routine, File
+:status: Release
+
+// grep '\$TXT' sami-18-17-b9.txt
+-------------------------------------------------------------------------------
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-11t00:43z
+-------------------------------------------------------------------------------
+
+[role="center h3"]
+CT Eval Recommendation Report
+
+[role="center h1"]
+{nmsp} ({appname}) {version}
+[role="center h3"]
+({va-version})
+
+[role="center"]
+George P. Lilly,
+Domenic DiNatale,
+Larry G. Carlson
+_&_ Frederick D. S. Marshall +
+2024-09-10
+
+[[front]]
+[role="h2"]
+{zwj}i. Front matter
+
+[cols=">.<0v,<.<1v",grid="none",frame="none",width="1%"]
+|==============================================================================
+| App         | {nmsp} ({appname})
+| Version     | {version}
+| Vista ID    | ††{va-version}††: {vista-longversion}
+| Priority    | {priority}
+| Categories  | {categories}
+| Status      | {status}: ++{nmsp}-{version}.zip++
+| Depends on  | SAMI 18-1 (††SAMI*18.0*1 SEQ #1††) +
+                SAMI 18-3 (††SAMI*18.0*3 SEQ #3††) +
+                SAMI 18-4 (††SAMI*18.0*4 SEQ #4††) +
+                SAMI 18-5 (††SAMI*18.0*5 SEQ #5††) +
+                SAMI 18-6 (††SAMI*18.0*6 SEQ #6††) +
+                SAMI 18-7 (††SAMI*18.0*6 SEQ #7††) +
+                SAMI 18-9 (††SAMI*18.0*9 SEQ #9††) +
+                SAMI 18-10 (††SAMI*18.0*10 SEQ #10††) +
+                SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
+                SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
+                link:../../18-14/[SAMI 18-14] (††SAMI*18.0*14 SEQ #14††) +
+                link:../../18-15/[SAMI 18-15] (††SAMI*18.0*15 SEQ #15††) +
+                link:../../18-16/[SAMI 18-16] (††SAMI*18.0*16 SEQ #16††)
+|==============================================================================
+
+[[toc]]
+[role="h2"]
+{zwj}ii. Contents
+
+[cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
+|==============================================================================
+|[options="compact",role="toc"]
+* <<desc,Description>>
+** <<issue-a,Insert clinical information string in CT Eval form>>
+** <<issue-b,Provide support for user-controlled MRN and Study ID>>
+** <<issue-c,Login: Implement single sign-on>>
+** <<issue-d,Logout: Upon sign-out, redirect to the correct web page>>
+** <<issue-e,Include name and last5 in every CSV file on every row>>
+** <<issue-f,Add a user report to show CT Eval recommendations>>
+* <<pkg-elements,Package elements>>
+* <<prepare,Prepare for installation>>
+** <<be-osehra,Assume the identity of your +osehra+ Unix user>>
+** <<prep-installdir,Prepare install directory>>
+** <<prep-archive,Download and prepare the archive file>>
+** <<install-www,Install web-application files>>
+** <<backup-m,Back up M routines>>
+*** <<enter-m,Enter M>>
+**** <<enter-m-cache,On Caché>>
+**** <<enter-m-yotta,On YottaDB/GT.M>>
+*** <<signin,Sign into Vista>>
+*** <<routine-list,List of routines>>
+*** <<run-ro,Run the backup>>
+**** <<backup-cache,On Caché>>
+**** <<backup-yotta,On YottaDB/GT.M>>
+|[options="compact",role="toc"]
+* <<install,Main install instructions>>
+** <<install-kids,Installing the KIDS package>>
+*** <<signin-kids,Enter the KIDS Installation menu>>
+*** <<load-pkg,Load KIDS package>>
+*** <<install-pkg,Install KIDS package>>
+*** <<dicom,Optional DICOM step>>
+* <<backout,Optional backout instructions>>
+* <<routines,Routines>>
+* <<authors,Authors>>
+|==============================================================================
+
+[[desc]]
+== Description
+
+{nmsp} {version} adds two high-priority updates to accomodate Mt.{nbsp}Sinai's
+workflow as well as updates to allow single sign-on or to improve output of
+reports.
+
+The definitive source for the {appname} application---codebase, package
+distributions (including this one), and documentation---is a
+https://github.com/ParaxialTechnologies/SAMI-VAPALS-ELCAP/[public GitHub
+repository].
+
+These instructions are for your Vista environment's sysadmin. As usual, please
+capture the complete dialog of your install and send it to your {appname}
+support team.
+
+The changes in this patch are:
+
+[options="compact"]
+* Insert clinical information string in CT Eval form (high-priority,
+  <<issue-a,A-1a, high priority>>)
+* Provide support for user-controlled MRN and Study ID (<<issue-b,A-2 and A-3,
+  high priority>>)
+* Login: Implement single sign-on (<<issue-c,21-218>>)
+* Logout: Upon sign-out, redirect to the correct web page (<<issue-d,21-221>>)
+* Include name and last5 in every CSV file on every row (<<issue-e,B-1>>)
+* Add a user report to show CT Eval recommendations (<<issue-f,B-2>>)
+
+[[issue-a]]
+=== Insert clinical information string in CT Eval form
+
+**Unnumbered Issue A-1a (high priority):** Clinical information field on the CT
+Eval form to be auto-filled based on responses to questions in the background
+form format to be:
+
+* ††Age xx; [Asymptomatic for lung cancer]; Current Smoker; xx Pack Years††
+
+or
+
+* ††Age xx; [Asymptomatic for lung cancer]; Former Smoker; xx Pack Years; Quit
+  xx years ago††
+
+**Solution:** Developed clinical information string from background form and
+inserted into new CT Eval form.
+
+**Reported:** 2024-07-11 by iELCAP team.
+
+[[issue-b]]
+=== Provide support for user-controlled MRN and Study ID
+
+**Unnumbered Issues A-2 and A-3 (high priority):** iELCAP uses the Epic MRN and
+Study ID instead of Social Security Number to identify patients. {appname}
+needs to support the use of these patient IDs in the correct places.
+
+**Solutions:** Support the entering of the MRN on the registration page, allow
+the modification of the MRN on the Intake form, allow the entering and changing
+of the StudyID on the intake form, support displaying of the MRN and Study ID
+(if assigned) on the page header.
+
+**Reported:** 2024-07-11 by iELCAP team.
+
+[[issue-c]]
+=== Login: Implement single sign-on
+
+**Issue 21-218:** When using single sign-on, user should not be prompted to log
+in to VAPALS-ELCAP separately.  However, user must be matched to single sign-on
+SECID.
+
+**Solution:** Require user to sign in once using Access and Verify created by
+system administrator. This allows SECID to be captured and tied to user.  For
+this testing version, where we don't yet have access to SECID, the IP address
+is used instead. Note: for testing, if user does not have a stable IP address,
+they will be required to sign in with Access and Verify to update the IP
+address.
+
+**Reported:** 2021-03 by Lilly.
+
+[[issue-d]]
+=== Logout: Upon sign-out, redirect to the correct web page
+
+**Issue 21-221:** Currently users are being directed to the home page of the
+clinical site they just logged out of.
+
+**Solution:** User is redirected to correct logout page.
+
+**Reported:** 2022-04 by Jirapatnakul.
+
+[[issue-e]]
+=== Include name and last5 in every csv file on every row
+
+**Unnumbered issue B-1:** A report is available to be run by the sysadmin that
+outputs all patient data for statistical analysis. Lines did not include
+patient ID.
+
+**Solution:** Add `saminame` (full patient name) and `last5` (First letter of
+last name and last four digits of SSN) in each line of report.
+
+**Reported:** 2022-12-09 by Henschke and Yip.
+
+[[issue-f]]
+=== Add a user report to show CT Eval recommendations
+
+**Unnumbered issue B-2:** Develop a new user report that shows recommendations
+from completed CT Evaluations. Allow sorting by type of recommendation and put
+totals at top of columns.
+
+**Solution:** Added report.
+
+**Reported:** 2022-12-09 by Henschke and Avila.
+
+[[pkg-elements]]
+== Package elements
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<div style="display: flex; flex-flow: row wrap; align-items: flex-start;">
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+include::.dtool/packelements.adoi[]
+
+// [cols="<.<1v,>.<0v,<.<0v",options="header,autowidth",role="center"]
+// |==============================================================================
+// | Fileman File                | Number   | Change
+// | ††SAMI PARAMETER DEFAULTS†† | `311.14` | modified (data)
+// |==============================================================================
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</div>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+[[prepare]]
+== Prepare for installation
+
+This involves creating a directory to work in, running a script to back up
+certain datafiles and web-application files, and then going through steps to
+back up M routines that will be replaced by the patch.
+
+[[be-osehra]]
+=== Assume the identity of your +osehra+ Unix user
+
+This step assumes you use a `dzdo` or `sudo` command to do this; here, the
+symbol `$DEMAND` will stand for whichever command you use. (Also, in all the
+command-line examples below, `$` simply means your command-line prompt.) If
+your configuration is different, please adjust this step to match your
+configuration:
+
+-------------------------------------------------------------------------------
+$ $DEMAND su - osehra
+$ _
+-------------------------------------------------------------------------------
+
+[[prep-installdir]]
+=== Prepare install directory
+
+If this is your first time installling this, execute the following commands.
+They create a shell variable, and then create the work directory and sets it
+as your current directory.
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-17/b9
+$ mkdir -p $INDIR
+$ cd $INDIR
+-------------------------------------------------------------------------------
+
+If you've already tried installing this before, you can use the following
+commands instead:
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-17/b9
+$ cd $INDIR
+$ rm -rf ./sami*.{txt,kid} ./auxfiles
+-------------------------------------------------------------------------------
+
+[[prep-archive]]
+=== Download and prepare the archive file
+
+You may safely download the archive file
+(link:sami-{version}.zip[++sami-{version}.zip++]) in advance of the actual
+install.
+
+include::.dtool/curl-snippet.adoi[]
+
+Then unzip the archive file with the following command.
+
+include::.dtool/unzip-snippet.adoi[]
+
+[[install-www]]
+=== Install web-application files
+
+At this point, the web-application files must be installed. This is done with a
+script that backs up the affected directories before installing anything, then
+upgrades the web-application files.
+
+-------------------------------------------------------------------------------
+$ ./upgrade-auxfiles
+Backing up files to ./.aux-backup:
+[... lists of files backed up ...]
+Compressing the backup:
+[... list of files being compressed ...]
+Cleaning up.
+Done with backup of auxiliary files.
+
+Updating from ./auxfiles
+[... list of files being updated ...]
+Done with install.
+
+You may now proceed with the KIDS installation.
+$ _
+-------------------------------------------------------------------------------
+
+Outside the VA firewall, {appname} systems maintain up-to-date clones of the
+official GitHub repository, and this script will have different output.
+
+-------------------------------------------------------------------------------
+$ ./upgrade-auxfiles
+Backing up files to ./.aux-backup
+[... lists of files backed up ...]
+Compressing the backup:
+[... list of files being compressed ...]
+Cleaning up.
+Done with backup of auxiliary files.
+
+Found a valid Git repository; pulling updates ...
+[... output varies ...]
+Done with install.
+$ _
+-------------------------------------------------------------------------------
+
+// eval::[Section.setlevel(2)]
+
+[[backup-m]]
+=== Back up M routines
+
+Before the installation, we also need to back up existing {appname} routines
+that will be overwritten by this install. To do this, you will have to start a
+Caché or YottaDB session (depending on your particular installation), sign in
+to Vista, and then call the direct-mode interface `^%RO` (“routine out”).
+
+We have made efforts to display accurate instructions, but there are likely to
+be minor differences between implementations. Be sure to follow the correct
+dialog for your implementation.
+
+[[enter-m]]
+==== Enter M
+
+At the Unix prompt, enter the M environment in direct mode, using the
+`csession` command on Caché or the `mumps` command on YottaDB/GT.M:
+
+[[enter-m-cache]]
+††**On Caché**††
+
+-------------------------------------------------------------------------------
+$ csession vapals
+
+Node: vapalscache, Instance: VAPALS
+
+>_
+-------------------------------------------------------------------------------
+
+[[enter-m-yotta]]
+††**On YottaDB/GT.M**††
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
+[[signin]]
+==== Sign into Vista
+
+At the M prompt, call Vista's direct-mode interface, enter your access code,
+and then just press return at the [ttsp nowrap]##OPTION NAME## prompt to return
+to direct mode. This sets up your authentication variables. Here's a sample
+capture of this step:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME:
+>_
+-------------------------------------------------------------------------------
+
+[[routine-list]]
+==== List of routines
+
+The routine names to save are listed below; you may copy the list and paste it
+at the appropriate `Routine` prompt. At the final `Routine` prompt, press
+return to indicate the list of routines is done.
+
+include::.dtool/routine-list.adoi[]
+
+[[run-ro]]
+==== Run the backup
+
+Creating the routine backup file differs by implementation.
+
+[[backup-cache]]
+††**On Caché**††
+
+Note that routines that don't currently exist will result in a warning message
+(specifically, the routine name will have `[???]` after it, and the line
+[ttsp]##[does not exist]## after that). These messages can be safely
+disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
++Description+ and press return at the +Parameters+ and [ttsp]##Printer Format##
+prompts to accept the defaults of +WNS+ and +No+, respectively:
+
+include::.dtool/cache-ro-snippet.adoi[]
+
+[[backup-yotta]]
+††**On YottaDB/GT.M**††
+
+Note that routines that don't currently exist will result in the routine name
+not appearing under the input line, and won't count towards the number of
+routines. These can be safely disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+include::.dtool/yotta-ro-snippet.adoi[]
+
+eval::[Section.setlevel(2)]
+
+You'll remain in the M environment for the next section.
+
+[[install]]
+== Main install instructions
+
+This consists of loading and installing the KIDS package, and activating the
+new web-application files.
+
+[[install-kids]]
+=== Installing the KIDS package
+
+This installs the various M assets required by the application.
+
+[[signin-kids]]
+==== Enter the KIDS Installation menu
+
+At the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
+[ttsp]##Kernel Installation & Distribution System## main menu, and at the
+[ttsp]##Select \... Option## prompt select +Installation+:
+
+include::.dtool/enter-kids-snippet.adoi[]
+
+[[load-pkg]]
+==== Load KIDS package
+
+Select option 1 and press return at the +Continue+ prompt.
+
+include::.dtool/load-kids-snippet.adoi[]
+
+[[install-pkg]]
+==== Install KIDS package
+
+Select option 6, enter the space bar at the [ttsp]##INSTALL NAME## prompt, and
+press return at the next three prompts. Note that `[now]` denotes the current
+time when you're doing the install.
+
+include::.dtool/install-kids-snippet.adoi[]
+
+eval::[Section.setlevel(2)]
+
+You now have {appname} {version} (††{va-version}††) installed in your M
+environment. The install is now complete. You may leave the M environment by
+typing
+
+-------------------------------------------------------------------------------
+>halt
+$ _
+-------------------------------------------------------------------------------
+
+We recommend running tests of your {appname} application to confirm the
+environment is operational and bug-free, before notifying users that {appname}
+is ready for their use.
+
+[[backout]]
+== Optional backout instructions
+
+Should errors or other problems result from installing this package, contact
+the {appname} development team for package-backout instructions.
+
+[[routines]]
+== Routines
+
+Line 2 of each of these routines now look like:
+
+include::.dtool/routine-lines2.adoi[]
+
+The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
+
+include::.dtool/checksums.adoi[]
+
+[[authors]]
+== Authors
+
+[cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
+|==============================================================================
+|           | Dates                 | By
+| Developed | 2024-07-01/08-10      | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Tested    | 2024-08-06/09-05      | George P. Lilly (VEN) +
+                                      Artit Jirapatnakul (VA-PHO) +
+                                      Linda M. R. Yaw (VEN)
+| Released  | 2024-09-10            | Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+|==============================================================================
+
+eval::[Section.setlevel(1)]
+
+-------------------------------------------------------------------------------
+$END TXT
+-------------------------------------------------------------------------------

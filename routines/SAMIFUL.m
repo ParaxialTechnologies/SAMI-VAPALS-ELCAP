@@ -1,6 +1,6 @@
 SAMIFUL ;ven/gpl - form log; 2024-08-22t21:10z
- ;;18.0;SAMI;**10,17**;2020-01-17;Build 8
- ;mdc-e1;SAMIFUL-20240822-E3%z%25;SAMI-18-17-b8
+ ;;18.0;SAMI;**10,17**;2020-01-17;Build 10
+ ;mdc-e1;SAMIFUL-20240822-E3%z%25;SAMI-18-17-b9
  ;mdc-v7;B129814;SAMI*18.0*17 SEQ #17
  ;
  ; SAMIFUL contains routine & module info & the primary development

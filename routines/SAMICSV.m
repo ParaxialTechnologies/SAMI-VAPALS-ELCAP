@@ -1,6 +1,6 @@
 SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
- ;;18.0;SAMI;**7,11,17**;2020-01-17;Build 8
- ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b8
+ ;;18.0;SAMI;**7,11,17**;2020-01-17;Build 10
+ ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b9
  ;mdc-v7;B104029869;SAMI*18.0*17 SEQ #17
  ;
  ; SAMICSV contains a direct-mode service to produce the ScreeningPlus

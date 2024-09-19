@@ -1,6 +1,6 @@
 SAMICAS4 ;ven/gpl - case review sub library; 2024-09-03t22:53z
- ;;18.0;SAMI;**17**;2020-01-17;Build 8
- ;mdc-e1;SAMICAS4-20240903-E3rMewp;SAMI-18-17-b8
+ ;;18.0;SAMI;**17**;2020-01-17;Build 10
+ ;mdc-e1;SAMICAS4-20240903-E3rMewp;SAMI-18-17-b9
  ;mdc-v7;B106133479;SAMI*18.0*17 SEQ #17
  ;
  ; SAMICAS4 contains subroutines to support processing of the

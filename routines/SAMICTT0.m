@@ -154,7 +154,7 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;
  d  ;
  . n sid s sid=$$XVAL("sisid",vals)
- . d OUT("Study ID: "_sid)
+ . d OUT("Study ID: "_$$GETIDSID^SAMIUID(sid))
  ;d OUT("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
  ;d OUT($$XVAL("sisid",vals))
  ;d OUT("</TD>")

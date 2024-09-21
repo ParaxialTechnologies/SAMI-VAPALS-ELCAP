@@ -72,14 +72,16 @@ IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
  . . s cacval=vcac
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
  ;
- i cacval>0 d  ;
+ ;i cacval>0 d  ;
+ d  ;
  . d OUT("")
- . d OUT(cac_" "_cacrec_" ") d OUT("")
+ . ;d OUT(cac_" "_cacrec_" ") d OUT("")
  . d  ;if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
  . . . if $$XVAL("ceem",vals)="nv" q  ;
  . . . d OUT("Emphysema:") d OUT("")
  . . . d OUT($$XSUB("ceem",vals,dict)_". ") d OUT("")
+ . d OUT(cac_" "_cacrec_" ") d OUT("")
  ;
  i $$XVAL("ceclini",vals)="y" d  ;
  . d OUT($$XVAL("ceclin",vals)_". ") d OUT("")
@@ -108,6 +110,20 @@ IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;
  . d OUT($$XVAL("ceimre",vals)_". ") d OUT("")
+ ;
+ n special,insuff
+ s special=$S($$XVAL("ceimspr",vals)="y":1,1:0)
+ s insuff=$S($$XVAL("ceimsii",vals)="y":1,1:0)
+ i (special)!(insuff) d  ;
+ . d OUT("")
+ . d OUT("SPECIAL HANDLING:")
+ . d OUT("")
+ . i special d  ;
+ . . d OUT("Read requires special attention by attending radiologist") 
+ . . d OUT("")
+ . i insuff d  ;
+ . . d OUT("Insufficient information for sign off")
+ . . d OUT("")
  ;
  quit  ; end of IMPRSN
  ;

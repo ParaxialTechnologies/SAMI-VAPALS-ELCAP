@@ -72,13 +72,23 @@ RCMND(rtn,vals,dict) ; recommendations section of ctreport text format
  ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" on "_$$XVAL("cefud",vals)_".</B>"_para)
  ;e  d  ;
  ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
- i fuw="" d  ;
+ ;
+ ; request 9/17/2024 to handle Annual followup differently from 
+ ; other followup
+ i $$XVAL("cefuw",vals)="1y" d  ; it is an annual followup
  . ;d OUT(para_"<B>A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".</B>"_para)
- . i $$XVAL("cefud",vals)="" q  ; no date given
- . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
- e  d  ;
- . ;d OUT(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
- . d OUT("A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_". ") d OUT("")
+ . i $$XVAL("cefud",vals)="" d  q  ; no date given
+ . . d OUT("An annual CT scan is recommended. ") d OUT("")
+ . e  d OUT("An annual CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
+ ; 
+ i $$XVAL("cefuw",vals)'="1y" d  ;
+ . i fuw="" d  ;
+ . . ;d OUT(para_"<B>A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".</B>"_para)
+ . . i $$XVAL("cefud",vals)="" q  ; no date given
+ . . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
+ . e  d  ;
+ . . ;d OUT(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
+ . . d OUT("A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_". ") d OUT("")
  ;
  ; #Other followup
  n zfu,ofu,tofu,comma

@@ -58,7 +58,7 @@ BREAST(rtn,vals,dict) ; breast abnormalities section of ct report text
  if $$XVAL("ceobard",vals)'="-" s brt=$$XVAL("ceobard",vals)
  if $$XVAL("ceobald",vals)'="-" s brt=$$XVAL("ceobald",vals)
  if (blt'=0)!(brt'=0) d  ;
- . d OUT("Breast:")
+ . d OUT("Breast: ")
  . s bd=1
  s outmode="hold"
  if $$XVAL("ceara",vals)="y" d  ; our substitute for ceoba, which is null
@@ -82,7 +82,9 @@ BREAST(rtn,vals,dict) ; breast abnormalities section of ct report text
  if bd=1 d  ;
  . if blt=brt d OUT("Density: "_$$XSUB("ceobad",vals,dict,"ceobald"))
  . else  d OUT("Density: Left "_$$XSUB("ceobad",vals,dict,"ceobald")_", Right "_$$XSUB("ceobad",vals,dict,"ceobard")_". ")
- if $$XVAL("ceobrc",vals)'="" d OUT($$XVAL("ceobrc",vals))
+ if $$XVAL("ceobrc",vals)'="" d  ;
+ . if (sba=0)&(bd=0) d OUT("Breast: ")
+ . d OUT($$XVAL("ceobrc",vals))
  else  if sba=1 d OUT("")
  s outmode="go"
  d OUT("")

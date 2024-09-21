@@ -79,9 +79,11 @@ IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
  . d  ;if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
  . . . if $$XVAL("ceem",vals)="nv" q  ;
- . . . d OUT("Emphysema:") d OUT("")
- . . . d OUT($$XSUB("ceem",vals,dict)_". ") d OUT("")
- . d OUT(cac_" "_cacrec_" ") d OUT("")
+ . . . d OUT("Emphysema: "_$$XSUB("ceem",vals,dict)) d OUT("")
+ . . . ;d OUT($$XSUB("ceem",vals,dict)_". ") d OUT("")
+ . i cacval=0 d  ;
+ . . d OUT("Coronary Artery Calcifications: None. The Visual Coronary Artery Calcium (CAC) score is 0") d OUT("")
+ . e  d OUT(cac_" "_cacrec_" ") d OUT("")
  ;
  i $$XVAL("ceclini",vals)="y" d  ;
  . d OUT($$XVAL("ceclin",vals)_". ") d OUT("")

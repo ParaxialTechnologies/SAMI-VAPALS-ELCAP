@@ -311,6 +311,8 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;
 OUT(ln) ; output a line of ct report
  ;
+ i ln[".." s ln=$p(ln,"..")_"." ; remove double periods at the end
+ ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
  n lnn

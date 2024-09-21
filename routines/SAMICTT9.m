@@ -140,6 +140,8 @@ OUT(ln) ; output a line of ct report
  ; ln = output to add
  ;@output: line added to ct report
  ;
+ ;i $e(ln,$l(ln)-2,$l(ln))=".." s ln=$e(ln,1,$l(ln)-1) ; remove double dots
+ i ln[".." s ln=$p(ln,"..")_"."
  s cnt=cnt+1
  n lnn
  ;s debug=1

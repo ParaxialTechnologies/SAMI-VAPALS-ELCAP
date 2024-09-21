@@ -216,6 +216,8 @@ OUTOLD(ln) ; old version of out
  ; ln = output to add
  ;@output: line added to report
  ;
+ i ln[".." s ln=$p(ln,"..")_"." ; remove double periods at the end
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1

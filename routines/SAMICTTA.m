@@ -181,6 +181,8 @@ OUT(ln) ; output a line of ct report
  ;@output
  ; line added to ct report
  ;
+ i ln[".." s ln=$p(ln,"..")_"." ; remove double periods at the end
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1

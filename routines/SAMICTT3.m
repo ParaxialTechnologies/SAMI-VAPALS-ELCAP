@@ -261,6 +261,13 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  . d OUT($$XSUB("cecc",vals,dict,"cecca"))
  . s outmode="go" d OUT("")
  ;
+ ; 
+ s outmode="hold"
+ if $$XVAL("ceavc",vals)'="-" d  ;
+ . d HOUT("Aortic Valve Calcifications: ")
+ . d OUT($$XSUB("cecc",vals,dict,"ceavc"))
+ . s outmode="go" d OUT("")
+ ;
  s outmode="hold"
  n ocf s ocf=0
  d HOUT("Other Cardiac Findings: ")

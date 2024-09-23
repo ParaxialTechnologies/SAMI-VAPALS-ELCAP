@@ -1,7 +1,7 @@
-SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
- ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIPAT-20240910-E3msvWY;SAMI-18-18-b1
- ;mdc-v7;B17504242;SAMI*18.0*18 SEQ #18
+SAMIPAT ;ven/toad - post subroutines; 2024-09-23t21:39z
+ ;;18.0;SAMI;**12,14,15,17,18,19**;2020-01-17;Build 1
+ ;mdc-e1;SAMIPAT-20240923-E3msvWY;SAMI-18-19-b1
+ ;mdc-v7;B17504242;SAMI*18.0*19 SEQ #19
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -25,14 +25,14 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t04:27z
+ ;@update 2024-09-23t21:39z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-19
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17,18**
+ ;@patches **12,14,15,17,18,19**
  ;
  ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
@@ -119,8 +119,13 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ;   also changed routine description to post routines instead of init
  ;   routines.
  ;
- ; 2024-09-10 ven/lmry 18-18-b1
+ ; 2024-09-10 ven/lmry 18-18-b1   f3fb050
  ;  SAMIPAT update date/times, checksums, patches
+ ;
+ ; 2024-09-23 ven/lmry 18-19-b1
+ ;  SAMIPAT add POS1819, correcting lines like this 
+ ; ";@kids-post POST1812^SAMIPAT" to remove T for consistency with sub-routine
+ ; name. Update date/times, patches, history.
  ;
  ;@contents
  ;
@@ -130,6 +135,7 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ; POS1815 kids post-install for SAMI-18-15
  ; POS1817 kids post-install for SAMI-18-17
  ; POS1818 kids post-install for SAMI-18-18
+ ; POS1819 kids post-install for SAMI-18-19
  ;
  ;
  ;
@@ -162,7 +168,7 @@ STANDARD ; usual post-install commands
  ;
  ;
  ;
- ;@kids-post POST1812^SAMIPAT
+ ;@kids-post POS1812^SAMIPAT
  ;
 POS1812 ; kids post-install for SAMI-18-12
  ;
@@ -180,7 +186,7 @@ POS1812 ; kids post-install for SAMI-18-12
  ;
  ;
  ;
- ;@kids-post POST1814^SAMIPAT
+ ;@kids-post POS1814^SAMIPAT
  ;
 POS1814 ; kids post-install for SAMI-18-14
  ;
@@ -196,7 +202,7 @@ POS1814 ; kids post-install for SAMI-18-14
  ;
  ;
  ;
- ;@kids-post POST1815^SAMIPAT
+ ;@kids-post POS1815^SAMIPAT
  ;
 POS1815 ; kids post-install for SAMI-18-15
  ;
@@ -216,7 +222,7 @@ POS1815 ; kids post-install for SAMI-18-15
  ;
  ;
  ;
- ;@kids-post POST1817^SAMIPAT
+ ;@kids-post POS1817^SAMIPAT
  ;
 POS1817 ; kids post-install for SAMI-18-17
  ;
@@ -233,7 +239,7 @@ POS1817 ; kids post-install for SAMI-18-17
  ;
  ;
  ;
- ;@kids-post POST1818^SAMIPAT
+ ;@kids-post POS1818^SAMIPAT
  ;
 POS1818 ; kids post-install for SAMI-18-18
  ;
@@ -242,6 +248,22 @@ POS1818 ; kids post-install for SAMI-18-18
  ;
  quit  ; end of kids-post POS1818^SAMIPAT
  ;
+ ;
+ ;
+ ;
+ ;@section 7 subroutines for SAMI-18-19
+ ;
+ ;
+ ;
+ ;
+ ;@kids-post POS1819^SAMIPAT
+ ;
+POS1818 ; kids post-install for SAMI-18-19
+ ;
+ do STANDARD
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-19-b1")
+ ;
+ quit  ; end of kids-post POS1819^SAMIPAT;
  ;
  ;
  ;

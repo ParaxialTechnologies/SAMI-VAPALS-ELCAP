@@ -1,4 +1,4 @@
-#:patchtitle: CT EVALUATION REPORT IMPROVEMENTS
+#:patchtitle: CT Evaluation Report Improvements
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: Screening+
@@ -93,42 +93,48 @@ ii. Contents
 
  #.#. Improve or fix items in the CT Evaluation Report.
 
-   Request (medium priority): Various changes to the CT Evaluation Report
-   have been requested by the iELCAP team and the Mount Sinai radiologists:
+   Request (medium priority): Various changes to the CT Evaluation
+   Report have been requested by the iELCAP team and the Mount Sinai
+   radiologists:
 
-   1. Annual repeat CT – when the radiologists selects ‘Annual repeat' as the 
-    LDCT follow-up, the report says “A followup CT scan is recommended…”. This 
-    should be something like “An annual repeat CT scan is recommended…”.
-   2. Follow-up recommendation uses "followup CT" - follow-up has a 
-    dash.   
-   3. Heading “Breast” is missing in the report – we had a situation where 
-    nothing was selected for the breast, but a comment was entered. The comment 
-    shows up, but there’s no heading for the Breast section, so it’s sort of a 
-    dangling sentence.
-   4. CAC score – if the CAC score is 0 (that is, the radiologist selects None 
-    for all), the report doesn’t say anything about CAC.  If it is 0, it should 
-    say: “Coronary Artery Calcifications: None. The Visual Coronary Artery 
-    Calcium (CAC) Score is 0.”
+   1. Annual repeat CT: When the radiologists selects ‘Annual repeat'
+      as the LDCT follow-up, the report says “A followup CT scan is
+      recommended...”. This should be changed to “An annual repeat CT
+      scan is recommended...”.
+   2. Follow-up recommendation is missing a dash in "followup CT."
+   3. The heading “Breast” is missing in the report: A situation arose
+      where nothing was selected for the breast, but a comment was
+      entered. The comment shows up, but there’s no heading for the
+      Breast section, so it’s sort of a dangling sentence.
+   4. CAC score: If the CAC score is 0 (that is, the radiologist
+      selects "None" for all), the report doesn’t say anything about
+      CAC.  If the CAC score is 0, it should say: “Coronary Artery
+      Calcifications: None. The Visual Coronary Artery Calcium (CAC)
+      Score is 0.”
    5. Ensure generator isn't adding periods after comment blocks.
-   6. Add text if "insufficient information for sign off" checkbox is checked.
-   7. Swap order of emphysema finding and CAC score
+   6. Add text if "insufficient information for sign off" checkbox is
+      checked.
+   7. Swap order of emphysema finding and CAC score.
    8. The wrong study ID was on the CT Eval report. 
-   9. Aortic valve calcification – similar to CAC score as above, if it’s None
-    it should explicitly say None.
+   9. Aortic valve calcification: Similar to CAC score as above -- if
+      it’s None, it should explicitly say None.
    
    solution: These changes and fixes have been made.
 
-   reported: 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai radiologists.
+   reported: 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai
+   radiologists.
 
- #.#. Install a routine that allows the movement of patients to another site.
+ #.#. Install a routine that allows the movement of patients to
+      another site.
  
-   request: Allow patient movement to another site in the same network or the 
-   movement of an accidental duplicate patient record to a faux site. This 
-   is actually from an earlier patch that was not taken up by the field.
+   change: Allow patient movement to another site in the same network
+   or the movement of an accidental duplicate patient record to a faux
+   site. This is actually from an earlier patch that was not taken up
+   by the field.
    
    solution: Include SAMIMOV in release.
    
-   reported: 2024-09-20 by F. Marshall
+   completed: 2024-09-20 by F. Marshall
 
 #. Package elements
 
@@ -352,37 +358,44 @@ ii. Contents
 
   #.# Verify checksums (NEW)
   
-  Run the Verify Checksums in the Transport Global option. This option will let
-  you ensure the integrity of this update in two ways.
+    Run the "Verify Checksums in the Transport Global" option. This
+    option will let you ensure the integrity of this update in two
+    ways.
 
-  First, it will compare the routines you already have in your habitat to what
-  this update was developed to replace, and if they don't match it will warn 
-  you. If you receive such a warning, do not proceed with the installation
-  until you understand why your Before checksums don't match and have confirmed
-  with the ScreeningPlus development team that it's safe to proceed. Otherwise,
-  you may corrupt the ScreeningPlus application, which may break certain
-  features or even endanger patient health or privacy.
+    First, it will compare the routines you already have in your
+    habitat to what this update was developed to replace, and if they
+    don't match it will warn you. If you receive such a warning, do
+    not proceed with the installation until you understand why your
+    Before checksums don't match and have confirmed with the
+    #{appname} development team that it's safe to proceed. Otherwise,
+    you may corrupt the #{appname} application, which may break
+    certain features or even endanger patient health or privacy.
 
-  Second, it will compare the routines that have been loaded from the KIDS file
-  to what the developers distributed, to be sure the KIDS file was not
-  corrupted in transit. If it was, this option will warn you that one or more 
-  After checksums don't match. In such cases, reach out to the ScreeningPlus
-  development team to get a clean copy of the release.
+    Second, it will compare the routines that have been loaded from
+    the KIDS file to what the developers distributed, to be sure the
+    KIDS file was not corrupted in transit. If it was, this option
+    will warn you that one or more After checksums don't match. In
+    such cases, reach out to the #{appname} development team to get a
+    clean copy of the release.
 
-    Select option 2 and press the space bar and enter to select the install
-    name.
-    
-    Hit enter for "Want each Routine Listed with Checksums: Yes//"
-    
-    DEVICE: HOME// ;C-SCROLL   TELNET
-    
-    You'll get a report showing if the Before Checksums are not as expected.
-    If that happens, discontinue the install until you have worked with your 
-    Screening+ Development team.
-    
-    If the report shows that After Checksums are not as expected, your file may
-    be corrupted. This would be unusual and once again, you should contact your
-    Screening+ Development Team before continuing with the install.
+    Once you're in "Verify Checksums in the Transport Global", select
+    option 2, press the space bar, and then presss the Enter key to
+    select the install name.
+
+    Hit the Enter key for "Want each Routine Listed with Checksums:
+    Yes//".
+
+    At the "DEVICE: HOME//" prompt, type ";C-SCROLL" to display the
+    entire report.
+
+    You'll get a report showing if the Before Checksums are not as
+    expected.  If that happens, discontinue the install until you have
+    worked with your #{appname} development team.
+
+    If the report shows that After checksums are not as expected, your
+    file may be corrupted. This would be unusual and once again, you
+    should contact your #{appname} development Team before continuing
+    with the install.
 
   #.#. Install KIDS package
 

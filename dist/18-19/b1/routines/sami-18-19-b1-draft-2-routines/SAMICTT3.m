@@ -811,7 +811,7 @@ GENLNL() ;
  . n norder,dec
  . s dec=0
  . s norder=$g(@droot@("field",fien,"input",1,"value"))
- . i $e(norder,1)'="N" w !,"N error!!" b
+ . i $e(norder,1)'="N" w !,"N error!!" ;b
  . s norder=$e(norder,2,$l(norder))
  . i $e(norder,$l(norder))="L" d  ;
  . . s dec=0

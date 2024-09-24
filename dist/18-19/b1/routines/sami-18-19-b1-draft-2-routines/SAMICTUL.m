@@ -223,6 +223,10 @@ SAMICTUL ;ven/gpl - ct report & copy log; 2024-09-24t17:15z
  ; log entries, update hdr comments, mv subrtn hdr comments before
  ; subs, light refactoring.
  ;
+ ; 2024-09-24 ven/lmry 18-19-b1
+ ;  SAMICTT3 insert ; before a break to make ^XINDEX happy
+ ;  SAMICTT9 remove space at the end of a line for ^XINDEX
+ ;
  ;@to-do
  ;
  ; add chksums to older log entries, add details to log

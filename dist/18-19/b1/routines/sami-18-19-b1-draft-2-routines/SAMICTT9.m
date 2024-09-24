@@ -148,7 +148,7 @@ IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
  . d OUT("SPECIAL HANDLING:")
  . d OUT("")
  . i special d  ;
- . . d OUT("Read requires special attention by attending radiologist") 
+ . . d OUT("Read requires special attention by attending radiologist")
  . . d OUT("")
  . . q
  . i insuff d  ;

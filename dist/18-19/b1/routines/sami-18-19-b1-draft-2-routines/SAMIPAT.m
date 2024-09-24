@@ -154,6 +154,9 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
  ; add chksums to log entries back to 18-17-b8, make lmry lead dev for
  ; rtn.
  ;
+ ; 2024-09-24 ven/lmry 18-19-b1 SAMIPAT
+ ; Correct label for POS1819.
+ ;
  ;@to-do
  ;
  ; extend details pre-18-17-b8, add details.
@@ -289,7 +292,7 @@ POS1818 ; kids post-install for SAMI-18-18
  ;
  ;@kids-post POS1819^SAMIPAT
  ;
-POS1818 ; kids post-install for SAMI-18-19
+POS1819 ; kids post-install for SAMI-18-19
  ;
  do STANDARD
  do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-19-b1")

@@ -64,8 +64,8 @@ ii. Contents
   o Installing the KIDS package
     - Enter the KIDS installation menu
     - Load KIDS package
+    - Verify checksums (NEW)
     - Install KIDS package
-    - Optional DICOM step
  Optional backout instructions
  Routines
  Authors
@@ -350,6 +350,39 @@ ii. Contents
 
 #>include: .dtool/load-kids-snippet.txt
 
+  #.# Verify checksums (NEW)
+  
+  Run the Verify Checksums in the Transport Global option. This option will let
+  you ensure the integrity of this update in two ways.
+
+  First, it will compare the routines you already have in your habitat to what
+  this update was developed to replace, and if they don't match it will warn 
+  you. If you receive such a warning, do not proceed with the installation
+  until you understand why your Before checksums don't match and have confirmed
+  with the ScreeningPlus development team that it's safe to proceed. Otherwise,
+  you may corrupt the ScreeningPlus application, which may break certain
+  features or even endanger patient health or privacy.
+
+  Second, it will compare the routines that have been loaded from the KIDS file
+  to what the developers distributed, to be sure the KIDS file was not
+  corrupted in transit. If it was, this option will warn you that one or more 
+  After checksums don't match. In such cases, reach out to the ScreeningPlus
+  development team to get a clean copy of the release.
+
+    Select option 2 and press the space bar and enter to select the install
+    name.
+    
+    Hit enter for "Want each Routine Listed with Checksums: Yes//"
+    
+    DEVICE: HOME// ;C-SCROLL   TELNET
+    
+    You'll get a report showing if the Before Checksums are not as expected.
+    If that happens, discontinue the install until you have worked with your 
+    Screening+ Development team.
+    
+    If the report shows that After Checksums are not as expected, your file may
+    be corrupted. This would be unusual and once again, you should contact your
+    Screening+ Development Team before continuing with the install.
 
   #.#. Install KIDS package
 

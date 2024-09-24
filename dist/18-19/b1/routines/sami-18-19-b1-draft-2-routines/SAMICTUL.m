@@ -1,7 +1,7 @@
 SAMICTUL ;ven/gpl - ct report & copy log; 2024-09-24t17:15z
  ;;18.0;SAMI;**10,11,12,13,15**;2020-01-17;Build 1
- ;mdc-e1;SAMICTUL-20240924-E1n9lRx;SAMI-18-19-b1
- ;mdc-v7;B124081;SAMI*18.0*19 SEQ #19
+ ;mdc-e1;SAMICTUL-20240924-E18XmuC;SAMI-18-19-b1
+ ;mdc-v7;B125001;SAMI*18.0*19 SEQ #19
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which

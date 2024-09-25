@@ -1,0 +1,674 @@
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-25t18:50z
+
+                  CT Evaluation Report Improvements
+                      SAMI (Screening+) 18-19-b1
+                      (SAMI*18.0*19 SEQ #19 b1)
+
+                    George P. Lilly, Dom DiNatale
+                      & Frederick D. S. Marshall
+                              2024-09-25
+
+i. Front matter
+
+ App         SAMI (Screening+)
+ Version     18-19-b1
+ Vista ID    SAMI*18.0*19 SEQ #19 b1
+             Version 18.0, Patch ID #19, Seq# 19, Build 1
+ Priority    high
+ Categories  routine, file
+ Status      release: SAMI-18-19-b1.zip
+ Depends on  SAMI 18-4 (SAMI*18.0*4 SEQ #4)
+             SAMI 18-7 (SAMI*18.0*7 SEQ #7)
+             SAMI 18-10 (SAMI*18.0*10 SEQ #10)
+             SAMI 18-11 (SAMI*18.0*11 SEQ #11)
+             SAMI 18-12 (SAMI*18.0*12 SEQ #12)
+             SAMI 18-13 (SAMI*18.0*13 SEQ #13)
+             SAMI 18-14 (SAMI*18.0*14 SEQ #14)
+             SAMI 18-15 (SAMI*18.0*15 SEQ #15)
+             SAMI 18-16 (SAMI*18.0*16 SEQ #16)
+             SAMI 18-17 (SAMI*18.0*17 SEQ #17)
+             SAMI 18-18 (SAMI*18.0*18 SEQ #18)
+
+
+ii. Contents
+
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Prepare for installation
+  o Assume the identity of your osehra Unix user
+  o Prepare install directory
+  o Download and prepare the archive file
+  o Install web-application files
+  o Back up M routines
+    - Enter M
+    - Sign into Vista
+    - List of routines
+    - Run the backup
+ Main install instructions
+  o Installing the KIDS package
+    - Enter the KIDS installation menu
+    - Load KIDS package
+    - Verify checksums (NEW)
+    - Install KIDS package
+ Optional backout instructions
+ Routines
+ Authors
+
+
+1. Description
+
+ SAMI 18-19-b1 improvements to the CT Evaluation report.
+
+ The definitive source for the Screening+ application - codebase,
+ package distributions (including this one), and documentation - is at
+ the following public Github repository:
+
+ https://github.com/ParaxialTechnologies/SAMI-VAPALS-ELCAP
+
+ The most up-to-date and accurate version of this file can be found at
+
+ https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/
+
+ These instructions are for your Vista environment’s sysadmin. As
+ usual, please capture the complete dialog of your install and send it
+ to your Screening+ support team.
+
+ The changes in this release are:
+
+ 1.1. Improve or fix items in the CT Evaluation Report.
+
+   Request (medium priority): Various changes to the CT Evaluation
+   Report have been requested by the iELCAP team and the Mount Sinai
+   radiologists:
+
+   1. Annual repeat CT: When the radiologists selects ‘Annual repeat'
+      as the LDCT follow-up, the report says “A followup CT scan is
+      recommended...”. This should be changed to “An annual repeat CT
+      scan is recommended...”.
+   2. Follow-up recommendation is missing a dash in "followup CT."
+   3. The heading “Breast” is missing in the report: A situation arose
+      where nothing was selected for the breast, but a comment was
+      entered. The comment shows up, but there’s no heading for the
+      Breast section, so it’s sort of a dangling sentence.
+   4. CAC score: If the CAC score is 0 (that is, the radiologist
+      selects "None" for all), the report doesn’t say anything about
+      CAC.  If the CAC score is 0, it should say: “Coronary Artery
+      Calcifications: None. The Visual Coronary Artery Calcium (CAC)
+      Score is 0.”
+   5. Ensure generator isn't adding periods after comment blocks.
+   6. Add text if "insufficient information for sign off" checkbox is
+      checked.
+   7. Swap order of emphysema finding and CAC score.
+   8. The wrong study ID was on the CT Eval report.
+   9. Aortic valve calcification: Similar to CAC score as above -- if
+      it’s None, it should explicitly say None.
+
+   solution: These changes and fixes have been made.
+
+   reported: 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai
+   radiologists.
+
+ 1.2. Install a routine that allows the movement of patients to
+      another site.
+
+   change: Allow patient movement to another site in the same network
+   or the movement of an accidental duplicate patient record to a faux
+   site. This is actually from an earlier patch that was not taken up
+   by the field. If needed, request instructions from your Screening+
+   support team.
+
+   solution: Include SAMIMOV in release.
+
+   completed: 2024-09-20 by F. Marshall
+
+2. Package elements
+
+ File                      Change
+ ------------------------  --------
+ sami-18-19-b1-recipe.txt  new
+ sami-18-19-b1.kid         new
+ sami-18-19-b1.txt         new
+ sami-18-19-b1.zip         new
+ upgrade-auxfiles          new
+ docs/mockups/*            modified
+ docs/src/layout.jinja2    new
+ docs/www/*                modified
+
+ Routine   Change
+ --------  --------
+ SAMICTT0  modified
+ SAMICTT1  modified
+ SAMICTT2  modified
+ SAMICTT3  modified
+ SAMICTT4  modified
+ SAMICTT9  modified
+ SAMICTTA  modified
+ SAMICTUL  modified
+ SAMIMOV   modified
+ SAMIPAT   modified
+
+
+
+3. Prepare for installation
+
+ This involves creating a directory to work in, running a script to
+ back up certain datafiles and web-application files, and then going
+ through steps to back up M routines that will be replaced by the
+ patch.
+
+
+ 3.1. Assume the identity of your osehra Unix user
+
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. (Also, in
+   all the command-line examples below, '$' simply means your
+   command-line prompt.) If your configuration is different, please
+   adjust this step to match your configuration:
+
+    $ $DEMAND su - osehra
+    $
+
+
+ 3.2. Prepare install directory
+
+   If this is your first time installling this, execute the following
+   commands.  They create a shell variable, and then create the work
+   directory and sets it as your current directory.
+
+    $ INDIR=~/run/in/sami/18-19/b1
+    $ mkdir -p $INDIR
+    $ cd $INDIR
+
+   If you've already tried installing this once, you can use the
+   following commands instead:
+
+    $ INDIR=~/run/in/sami/18-19/b1
+    $ cd $INDIR
+    $ rm -rf ./sami*.{txt,kid} ./auxfiles
+
+
+ 3.3. Download and prepare the archive file
+
+   You may safely download the archive file sami-18-19-b1.zip in
+   advance of the actual install. In the following text, "[now]"
+   represents a time stamp representing your current time, and
+   "[bits/sec]" is a data rate and "[time]" is how long the file took
+   to transfer (both of which vary based on the user's network
+   conditions).
+
+     $ wget --no-verbose 'https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/sami-18-19-b1.zip'
+     [now] URL:https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/sami-18-19-b1.zip [size/size] -> "sami-18-19-b1.zip" [1]
+     $ _
+
+   Then unzip the archive file with the following command.
+
+     $ unzip sami-18-19-b1.zip
+     Archive:  sami-18-19-b1.zip
+       ...
+     $ _
+
+
+ 3.4. Install web-application files
+
+    At this point, the web-application files must be installed. This
+    is done with a script that backs up the affected directories
+    before installing anything, then upgrades the web-application
+    files.
+
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of auxiliary files.
+
+     Updating from ./auxfiles ...
+     [... lists of files being updated ...]
+     Done with install.
+
+     You may now proceed with the KIDS installation.
+     $ _
+
+    Outside the VA firewall, Screening+ systems maintain up-to-date
+    clones of the official GitHub repository, and this script will
+    have different output.
+
+     $ ./upgrade-auxfiles
+     Backing up files to ./.aux-backup:
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done with backup of auxiliary files.
+
+     Found a valid Git repository; pulling updates ...
+     [... output varies ...]
+     Done with install.
+     $ _
+
+
+ 3.5. Back up M routines
+
+   Before the installation, we also need to back up existing
+   Screening+ routines that will be overwritten by this install. To
+   do this, you will have to start a Cache or YottaDB session
+   (depending on your particular installation), sign in to Vista, and
+   then call the direct-mode interface ^%RO ("routine out").
+
+   We have made efforts to display accurate instructions, but there
+   are likely to be minor differences between implementations. Be sure
+   to follow the correct dialog for your implementation.
+
+
+  3.5.1. Enter M
+
+    At the unix prompt, enter the M environment in direct mode, using
+    the 'csession' command on Cache or the 'mumps' command on
+    YottaDB/GT.M:
+
+    On Cache:
+    ---------
+    $ csession vapals
+
+    Node: vapalscache, Instance: VAPALS
+
+    >_
+
+
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+
+    >_
+
+
+  3.5.2. Sign into Vista
+
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+
+    > do ^XUP
+
+    Setting up programmer environment
+    This is a TEST account.
+
+    Access Code: *******
+    Terminal Type set to: C-VT100
+
+    Select OPTION NAME:
+    >_
+
+
+  3.5.3. List of routines
+
+    The routine names to save are listed below; you may copy the list
+    and paste it at the appropriate Routine prompt. At the final
+    Routine prompt, press return to indicate the list of routines is
+    done.
+
+SAMICTT0
+SAMICTT1
+SAMICTT2
+SAMICTT3
+SAMICTT4
+SAMICTT9
+SAMICTTA
+SAMICTUL
+SAMIMOV
+SAMIPAT
+
+
+  3.5.4. Run the backup
+
+    Creating the routine backup file differs by implementation.
+
+    On Caché
+    --------
+    Note that routines that don't currently exist will result in a
+    warning message (specifically, the routine name will have '[???]'
+    after it, and the line [does not exist] after it). These messages
+    can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+
+     >do ^%RO
+
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMICTT0
+     Routine(s): SAMICTT1
+     Routine(s): SAMICTT2
+     Routine(s): SAMICTT3
+     Routine(s): SAMICTT4
+     Routine(s): SAMICTT9
+     Routine(s): SAMICTTA
+     Routine(s): SAMICTUL
+     Routine(s): SAMIMOV
+     Routine(s): SAMIPAT
+     Routine(s):
+
+     Description: SAMI*18.0*19 SEQ #19 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMICTT0.INT    SAMICTT1.INT    SAMICTT2.INT    SAMICTT3.INT
+     SAMICTT4.INT    SAMICTT9.INT    SAMICTTA.INT    SAMICTUL.INT
+     SAMIMOV.INT     SAMIPAT.INT
+     >_
+
+    On YottaDB/GT.M
+    ---------------
+    Note that routines that don't currently exist will result in the
+    routine name not appearing under the input line, and won't count
+    towards the number of routines. These can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+
+     >do ^%RO
+
+     Routine Output - Save selected routines into RO file.
+
+     Routines: SAMICTT0
+     SAMICTT0
+     Current total of 1 routines.
+
+     Routines: SAMICTT1
+     SAMICTT1
+     Current total of 2 routines.
+
+     Routines: SAMICTT2
+     SAMICTT2
+     Current total of 3 routines.
+
+     Routines: SAMICTT3
+     SAMICTT3
+     Current total of 4 routines.
+
+     Routines: SAMICTT4
+     SAMICTT4
+     Current total of 5 routines.
+
+     Routines: SAMICTT9
+     SAMICTT9
+     Current total of 6 routines.
+
+     Routines: SAMICTTA
+     SAMICTTA
+     Current total of 7 routines.
+
+     Routines: SAMICTUL
+     SAMICTUL
+     Current total of 8 routines.
+
+     Routines: SAMIMOV
+     SAMIMOV
+     Current total of 9 routines.
+
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 10 routines.
+
+     Routine:
+
+     Output device <terminal>: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1-back.ro
+
+     Header Label: SAMI*18.0*19 SEQ #19 routine backup
+     Strip comments <No>?: 
+     SAMICTT0  SAMICTT1  SAMICTT2  SAMICTT3  SAMICTT4  SAMICTT9
+     SAMICTTA  SAMICTUL  SAMIMOV   SAMIPAT
+
+     Total of 3271 lines in 10 routines.
+
+     >_
+
+    You'll remain in the M environment for the next section.
+
+
+4. Main install instructions
+
+ This consists of loading and installing the KIDS package, and
+ activating the new web-application files.
+
+
+  4.1. Enter the KIDS Installation menu
+
+    At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
+    Installation & Distribution System main menu, and at the Select
+    ... Option prompt, select Installation:
+
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
+
+
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.2. Load KIDS package
+
+    Select option 1 and press return at the Continue prompt.
+
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1.kid
+
+     KIDS Distribution saved on Sep 25, 2024@10:22:01
+     Comment: Released SAMI*18.0*19 SEQ #19
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*19
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*19
+     Use INSTALL NAME: SAMI*18.0*19 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+  5.# Verify checksums (NEW)
+
+    Run the "Verify Checksums in the Transport Global" option. This
+    option will let you ensure the integrity of this update in two
+    ways.
+
+    First, it will compare the routines you already have in your
+    habitat to what this update was developed to replace, and if they
+    don't match it will warn you. If you receive such a warning, do
+    not proceed with the installation until you understand why your
+    Before checksums don't match and have confirmed with the
+    Screening+ development team that it's safe to proceed. Otherwise,
+    you may corrupt the Screening+ application, which may break
+    certain features or even endanger patient health or privacy.
+
+    Second, it will compare the routines that have been loaded from
+    the KIDS file to what the developers distributed, to be sure the
+    KIDS file was not corrupted in transit. If it was, this option
+    will warn you that one or more After checksums don't match. In
+    such cases, reach out to the Screening+ development team to get a
+    clean copy of the release.
+
+    Once you're in "Verify Checksums in the Transport Global", select
+    option 2, press the space bar, and then presss the Enter key to
+    select the install name.
+
+    Hit the Enter key for "Want each Routine Listed with Checksums:
+    Yes//".
+
+    At the "DEVICE: HOME//" prompt, type ";C-SCROLL" to display the
+    entire report.
+
+    You'll get a report showing if the Before Checksums are not as
+    expected.  If that happens, discontinue the install until you have
+    worked with your Screening+ development team.
+
+    If the report shows that After checksums are not as expected, your
+    file may be corrupted. This would be unusual and once again, you
+    should contact your Screening+ development team before continuing
+    with the install.
+
+  5.1. Install KIDS package
+
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that '[now]'
+    denotes the current time when you're doing the install.
+
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*19     Loaded from Distribution    [now]
+        => Released SAMI*18.0*19 SEQ #19  ;Created on Sep 25, 2024@10:22:01
+
+     This Distribution was loaded on [now] with header of
+        Released SAMI*18.0*19 SEQ #19  ;Created on Sep 25, 2024@10:22:01
+        It consisted of the following Install(s):
+        SAMI*18.0*19
+     Checking Install for Package SAMI*18.0*19
+
+     Install Questions for SAMI*18.0*19
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*19 :
+                    [now]
+
+     Build Distribution Date: Sep 25, 2024
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1819^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*19 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > _
+
+   You now have Screening+ 18-19-b1 (SAMI*18.0*19 SEQ #19 b1) installed in
+   your M environment. The install is now complete, and you may leave
+   the M environment by typing
+
+   > halt
+   $ _
+
+   We recommend running tests of your Screening+ app to confirm the
+   environment is operational and bug-free, before notifying users
+   that Screening+ is ready for their use.
+
+
+6. Optional backout instructions
+
+ Should errors or other problems result from installing this package
+ contact the Screening+ development team for package-backout
+ instructions.
+
+
+7. Routines
+
+ Line 2 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01-17;[optional build #]
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  ---------------------
+ SAMICTT0  B100450717       B112661946      **4,10,11,15,19**
+ SAMICTT1  B122873178       B154195678      **4,10,11,19**
+ SAMICTT2  B115984956       B144641835      **4,10,19**
+ SAMICTT3  B396705116       B483869070      **4,10,13,15,19**
+ SAMICTT4  B54435090        B62798123       **4,10,19**
+ SAMICTT9  B17246420        B30422718       **4,10,19**
+ SAMICTTA  B35698365        B49833239       **4,10,11,19**
+ SAMICTUL  B108974          B125001         **10,11,12,13,15**
+ SAMIMOV   B53328513        B126961045      **7,15,16,19**
+ SAMIPAT   B17504242        B23769617       **12,14,15,17,18,19**
+
+
+8. Authors
+
+             Dates              By
+ Developed   2024-09-12/22      George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+ Tested      2024-09-24         George P. Lilly (ven)
+                                Artit Jirapatnakul (va-pho)
+                                Linda M. R. Yaw (ven)
+
+ Released    2024-09-25         Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
+
+
+$END TXT

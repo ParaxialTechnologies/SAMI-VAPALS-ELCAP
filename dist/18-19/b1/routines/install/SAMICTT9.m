@@ -1,7 +1,7 @@
 SAMICTT9 ;ven/gpl - ctreport text impressions; 2024-09-24t15:05z
  ;;18.0;SAMI;**4,10,19**;2020-01-17;Build 1
- ;mdc-e1;SAMICTT9-20240924-E2JP4uz;SAMI-18-19-b1
- ;mdc-v7;B30429822;SAMI*18.0*19 SEQ #19
+ ;mdc-e1;SAMICTT9-20240924-E1zMgz6;SAMI-18-19-b1
+ ;mdc-v7;B30422718;SAMI*18.0*19 SEQ #19
  ;
  ; SAMICTT9 creates the Impressions section of the ELCAP CT Report in
  ; text format.
@@ -148,7 +148,7 @@ IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
  . d OUT("SPECIAL HANDLING:")
  . d OUT("")
  . i special d  ;
- . . d OUT("Read requires special attention by attending radiologist") 
+ . . d OUT("Read requires special attention by attending radiologist")
  . . d OUT("")
  . . q
  . i insuff d  ;

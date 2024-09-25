@@ -35,7 +35,7 @@ X  1.8. write change descriptions for template.txt
 X  1.9. update dashboard (Google Drive)
      https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
      (sami pax) use pax^ARJTXRW	to determine dependencies
-  1.10. Regrettable Bodge script
+X  1.10. Regrettable Bodge script
   		run within docs/www
   		../regrettable-bodge.py
   		then commit
@@ -47,6 +47,8 @@ X 2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
+      git log --abbrev -commit 
+      git log --parse --abbrev -commit {file}
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
 X  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
@@ -89,17 +91,23 @@ X  4.6. push to sami repo, pull to vapalsyotta in
  5. Finish draft documents  
 X  5.1. Review recipe and make any needed changes
 X  5.2. Review template.txt and make any needed changes
-  5.3. Make {version}.adoc and {version}.tx doc from template.txt
-       ../../dtool --textfile
-  5.4. Review {version}.adoc and {version}.tx doc and make any needed updates
-  5.5. git push/pull
+X   5.3. Review index.adoc 
+X   5.4. Make {version}.adoc and {version}.tx doc from template.txt and recipe
+       dtool --makescript   builds upgrade
+       dtool --textfile in the build directory
+       dtool --makewebzip
+X  5.4. Review {version}.adoc and {version}.tx doc and make any needed updates
+X  5.5. git push/pull
    
- 6. Create Zip package
+X 6. Create Zip package
    6.1. use zip to create archive package (../../dtool --makezip)
    6.2. push archive package to repo
    6.3. update version website's link
 
  7. Test Install
+ Copy old routines to ~/run/routines
+ Follow instructions on website (https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/) 
+ or from 18-19-b1.txt
   7.0 Pull to vapalsyotta and move KIDS to ~/run/in/sami/18-17/b8/
   7.1. install on vapalsyotta (& revise if necessary),
   HF: /home/osehra/run/in/sami/18-17/b7/sami-18-17-b8.kid

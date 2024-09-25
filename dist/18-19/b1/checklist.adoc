@@ -72,15 +72,17 @@ X  3.6. update recipe with after information
 X  3.8. git pull/push, pull to vapalsyotta
 
  4. KIDS Build 
-  4.1 In linux cd ~/run/out/sami/18-18/ then mkdir b1
-  4.2. Re-enter mumps
-  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions) (see KIDS BUILD)
+X  4.0 copy all new routines to ~/run/routines just in case
+X  4.1 In linux cd ~/run/out/sami/18-19/ then mkdir 18-19 if necessary, cd 18-19
+       mkdir b1
+X  4.2. Re-enter mumps
+X  4.3. Create KIDS build (XPD MAIN Menu)(Edits and Distributions) (see KIDS BUILD)
   		SAMI 18.0T05 -- don't include SAMI*18.0*7 or SAMI*18.0*14 in required builds
-  4.4. export to out dock (Transport distribution) 
-		HF: /home/osehra/run/out/sami/18-18/b1/sami-18-18-b1.kid
-		Header: Released SAMI*18.0*18 SEQ #18
-  4.5. copy to personal repo, typing following command when you are in the correct
-        dist directory: scp 'vapalsyotta:/home/osehra/run/out/sami/18-18/b1/*.kid' ./
+X  4.4. export to out dock (Transport distribution) 
+		HF: /home/osehra/run/out/sami/18-19/b1/sami-18-19-b1.kid
+		Header: Released SAMI*18.0*19 SEQ #19
+X  4.5. copy to personal repo, typing following command when you are in the correct
+        dist directory: scp 'vapalsyotta:/home/osehra/run/out/sami/18-19/b1/*.kid' ./
   4.6. push to sami repo, pull to vapalsyotta
 
  5. Finish draft documents  
@@ -107,6 +109,7 @@ X  3.8. git pull/push, pull to vapalsyotta
   			d go^%webreq
   			zwr ^%webhttp
   7.3. update dashboard (sami envs)
+  7.4 copy new routines to repo routines 
 N  7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
 N  7.5. test changes on vapalscache
 N  7.6. update dashboard (sami envs)
@@ -148,13 +151,15 @@ XINDEX
 KIDS BUILD
 	Enter into Vista
 	DO ^XUP 
-	Select OPTION NAME:EVE
-	Choose 1-5: 1 EVE   Systems Manager Menu
-	Select Systems Manager Menu Option: PROGrammer Options
-	Select Programmer Options Option: KIDS Kernel Installation & Distribution System
+	Select OPTION NAME:XPD MAIN
 	Select Kernel Installation & Distribution System Option: EDits and Distribution
 	Select Edits and Distribution Option: EDit a Build
-	Select BUILD NAME:SAMI*18.0*17
+	Select BUILD NAME:SAMI*18.0*19
+	Are you adding 'SAMI*18.0*19' as a new BUILD (the XXXXXth)? No// Y
+	BUILD PACKAGE FILE LINK:
+	BUILD TYPE: SINGLE PACKAGE// 
+	BUILD TRACK PACKAGE NATIONALLY: YES// N
+	
 
 	PAGE 1/5
 	Name should be entered, enter distribution date, tab through description and
@@ -168,14 +173,53 @@ KIDS BUILD
 	
 	PAGE 3/5
 	Build Components
-	Enter each routine individually, tab, then enter S for Send to Site
+	Tab down to ROUTINES and hit enter
+	Enter each routine individually, tab, then tab again to accept S for Send to Site
 	Once all the routines are entered,tab down to COMMAND: C for Close
-	Tab through the Build Components Options, making sure that Routines has
+	Tab through the remaining Build Components Options, making sure that Routines has
 	the right number of routines in the parentheses.
 	Tab down to COMMAND: N (for Next Page)
 	
 	PAGE 4/5
 	Tab down to COMMAND: N (for Next Page)
+	Later we will be adding Required Builds
 	
 	PAGE 5/5
 	Tab down to COMMAND: S (for Save) then E for Exit
+
+TRANSPORT DISTRIBUTION
+
+          Create a Build Using Namespace
+          Copy Build to Build
+          Edit a Build
+          Transport a Distribution
+          Old Checksum Update from Build
+          Old Checksum Edit
+          Routine Summary List
+          Version Number Update
+
+Select Edits and Distribution <TEST ACCOUNT> Option: transport a Distribution
+
+Enter the Package Names to be transported. The order in which
+they are entered will be the order in which they are installed.
+
+
+First Package Name:    SAMI*18.0*19       
+Another Package Name: 
+
+ORDER   PACKAGE
+  1    SAMI*18.0*19
+
+
+
+OK to continue? YES// y  YES
+Transport through (HF)Host File or (PM)PackMan: HF  Host File
+
+Enter a Host File: /home/osehra/run/out/sami/18-19/b1/sami-18-19-b1.kid
+Header Comment: Released SAMI*18.0*19 SEQ #19
+
+
+     SAMI*18.0*19...
+No Package File Link
+
+Package Transported Successfully

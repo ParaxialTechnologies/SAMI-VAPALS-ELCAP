@@ -239,7 +239,7 @@ D XPZ2^XPDIQ
 "RTN")
 10
 "RTN","SAMICTT0")
-0^1^B112661946
+0^1^B112661946^B100450717
 "RTN","SAMICTT0",1,0)
 SAMICTT0 ;ven/gpl - ctreport text main; 2024-09-24t17:09z
 "RTN","SAMICTT0",2,0)
@@ -1271,7 +1271,7 @@ T1(grtn,debug) ; test
 "RTN","SAMICTT0",515,0)
 EOR ; end of routine SAMICTT0
 "RTN","SAMICTT1")
-0^2^B154195678
+0^2^B154195678^B122873178
 "RTN","SAMICTT1",1,0)
 SAMICTT1 ;ven/gpl - ctreport text nodules; 2024-09-24t16:52z
 "RTN","SAMICTT1",2,0)
@@ -2177,7 +2177,7 @@ XSUB(var,vals,dict,valdx) ; dictionary value defined by var
 "RTN","SAMICTT1",452,0)
 EOR ; end of routine SAMICTT1
 "RTN","SAMICTT2")
-0^3^B144641835
+0^3^B144641835^B115984956
 "RTN","SAMICTT2",1,0)
 SAMICTT2 ;ven/gpl - ctreport text other lung; 2024-09-24t16:28z
 "RTN","SAMICTT2",2,0)
@@ -3173,7 +3173,7 @@ XSUB(var,vals,dict,valdx) ; dictionary value defined by var
 "RTN","SAMICTT2",497,0)
 EOR ; end of routine SAMICTT2
 "RTN","SAMICTT3")
-0^4^B483869070
+0^4^B483869070^B396705116
 "RTN","SAMICTT3",1,0)
 SAMICTT3 ;ven/gpl - ctreport text emphysema; 2024-09-24t16:04z
 "RTN","SAMICTT3",2,0)
@@ -4875,7 +4875,7 @@ GENLNL() ;
 "RTN","SAMICTT3",850,0)
 EOR ; end of routine SAMICTT3
 "RTN","SAMICTT4")
-0^5^B62798123
+0^5^B62798123^B54435090
 "RTN","SAMICTT4",1,0)
 SAMICTT4 ;ven/gpl - ctreport text breast abnorm; 2024-09-24t15:33z
 "RTN","SAMICTT4",2,0)
@@ -5571,7 +5571,7 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
 "RTN","SAMICTT4",347,0)
 EOR ; end of routine SAMICTT4
 "RTN","SAMICTT9")
-0^6^B30422718
+0^6^B30422718^B17246420
 "RTN","SAMICTT9",1,0)
 SAMICTT9 ;ven/gpl - ctreport text impressions; 2024-09-24t15:05z
 "RTN","SAMICTT9",2,0)
@@ -6141,7 +6141,7 @@ XSUB(var,vals,dict,valdx) ; dictionary value defined by var
 "RTN","SAMICTT9",284,0)
 EOR ; end of routine SAMICTT9
 "RTN","SAMICTTA")
-0^7^B49833239
+0^7^B49833239^B35698365
 "RTN","SAMICTTA",1,0)
 SAMICTTA ;ven/gpl - ctreport text recommendations; 2024-09-24t14:31z
 "RTN","SAMICTTA",2,0)
@@ -6787,7 +6787,7 @@ XSUB(var,vals,dict,valdx) ; dictionary value defined by var
 "RTN","SAMICTTA",322,0)
 EOR ; end of routine SAMICTTA
 "RTN","SAMICTUL")
-0^8^B125001
+0^8^B125001^B108974
 "RTN","SAMICTUL",1,0)
 SAMICTUL ;ven/gpl - ct report & copy log; 2024-09-24t17:15z
 "RTN","SAMICTUL",2,0)
@@ -7299,7 +7299,7 @@ SAMICTUL ;ven/gpl - ct report & copy log; 2024-09-24t17:15z
 "RTN","SAMICTUL",255,0)
 EOR ; end of routine SAMICTUL
 "RTN","SAMIMOV")
-0^9^B126961045
+0^9^B126961045^B53328513
 "RTN","SAMIMOV",1,0)
 SAMIMOV ;ven/gpl - change patient site; 2024-09-24t13:10z
 "RTN","SAMIMOV",2,0)
@@ -8145,7 +8145,7 @@ OUTAUDIT(rpt,ln) ; add line to audit report
 "RTN","SAMIMOV",422,0)
 EOR ; end of routine SAMIMOV
 "RTN","SAMIPAT")
-0^10^B23769617
+0^10^B23769617^B17504242
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
 "RTN","SAMIPAT",2,0)

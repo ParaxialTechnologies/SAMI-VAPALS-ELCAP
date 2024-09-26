@@ -1,6 +1,7 @@
-SAMICTT0 ;ven/gpl - ctreport text main ;2021-10-27t03:21z
- ;;18.0;SAMI;**4,10,11,15**;2020-01;Build 2
- ;;18-15
+SAMICTT0 ;ven/gpl - ctreport text main; 2024-09-24t17:09z
+ ;;18.0;SAMI;**4,10,11,15,19**;2020-01-17;Build 1
+ ;mdc-e1;SAMICTT0-20240924-E3wQFOj;SAMI-18-19-b1
+ ;mdc-v7;B112661946;SAMI*18.0*19 SEQ #19
  ;
  ; SAMICTT0 contains a web route & associated subroutines to produce
  ; the ELCAP CT Report in text format (route ctreport, format text).
@@ -12,21 +13,25 @@ SAMICTT0 ;ven/gpl - ctreport text main ;2021-10-27t03:21z
  ;
  ;
  ;
+ ;
  ;@section 0 primary development
+ ;
  ;
  ;
  ;
  ;@license see routine SAMIUL
  ;@documentation see SAMICTUL
+ ;
  ;@contents
+ ;
  ; WSREPORT web route: ctreport in text format
  ; OUT output a line of ct report
- ; OUTOLD old version of out
  ; HOUT output a ct report header line
  ; $$XVAL patient value for var
  ; $$XSUB dictionary value defined by var
- ; GETFILTR fill in the filter for Ct Eval for sid
+ ; GETFILTR fill in filter for Ct Eval for sid
  ; T1 test
+ ;
  ;
  ;
  ;
@@ -34,9 +39,12 @@ SAMICTT0 ;ven/gpl - ctreport text main ;2021-10-27t03:21z
  ;
  ;
  ;
- ;@wsr WSREPORT^SAMICTT0
-WSREPORT(return,filter) ; web route: ctreport in text format
  ;
+ ;@wsr WSREPORT^SAMICTT0
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wsr;procedure;silent;clean?;sac?;tests?;port?
  ;@called-by
  ; WSNOTE^SAMINOT3
  ;  (called-by wsi WSVAPALS^SAMIHOM3)
@@ -55,6 +63,9 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ; BREAST^SAMICTT4
  ; IMPRSN^SAMICTT9
  ; RCMND^SAMICTTA
+ ;
+ ;
+WSREPORT(return,filter) ; web route: ctreport in text format
  ;
  s debug=0
  n outmode s outmode="go"
@@ -79,11 +90,14 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  s si=$g(filter("studyid"))
  i si="" d  ;
  . s si="XXX00102"
+ . q
  q:si=""
+ ;
  n samikey
  s samikey=$g(filter("form"))
  i samikey="" d  ;
  . s samikey="ceform-2018-10-09"
+ . q
  n root s root=$$setroot^%wd("vapals-patients")
  i $g(filter("studyid"))="" s root=$$setroot^%wd("vapals-patients")
  s vals=$na(@root@("graph",si,samikey))
@@ -91,6 +105,7 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;zwr @vals@(*)
  i '$d(@vals) d  q  ;
  . w !,"error, patient values not found"
+ . q
  ;
  ; report parameters
  ;
@@ -119,7 +134,7 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  i $$XVAL("ceoppa",vals)'="" s newct=1
  ;
  n registryForm s registryForm=0
- i $$XVAL("ceaf",vals)'="" s registryForm=1
+ i $$XVAL("ceaf",vals)]"" s registryForm=1
  ;
  ;d OUT("<HTML>")
  ;d OUT("<HEAD>")
@@ -148,13 +163,17 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  . ;s pname=$$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals)
  . s pname=$$XVAL("saminame",vals)
  . d OUT("Participant Name: "_pname)
+ . q
+ ;
  ;d OUT("<TR><TD WIDTH=""180""><B>Participant Name:</B></TD><TD WIDTH=""365"">")
  ;d OUT($$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals))
  ;d OUT("</TD>")
  ;
  d  ;
  . n sid s sid=$$XVAL("sisid",vals)
- . d OUT("Study ID: "_sid)
+ . d OUT("Study ID: "_$$GETIDSID^SAMIUID(sid))
+ . q
+ ;
  ;d OUT("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
  ;d OUT($$XVAL("sisid",vals))
  ;d OUT("</TD>")
@@ -164,6 +183,8 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  d  ;
  . s etype=$$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict)
  . d OUT("Type of Examination: "_etype)
+ . q
+ ;
  ;d OUT("<TR><TD><B>Type of Examination:</B></TD><TD>")
  ;d OUT($$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict))
  ;d OUT("</TD>")
@@ -172,6 +193,8 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  d  ;
  . n edate s edate=$$XVAL("cedos",vals)
  . d OUT("Examination Date: "_edate)
+ . q
+ ;
  ;d OUT("<TR><TD><B>Examination Date:</B></TD><TD>")
  ;d OUT($$XVAL("cedos",vals))
  ;
@@ -184,6 +207,8 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  . n dob s dob=$$XVAL("sidob",vals)
  . i dob>0 d OUT("Date of Birth: "_dob)
  . d OUT("")
+ . q
+ ;
  ;i $$XVAL("sidob",vals)>0 d  ;
  ;. d OUT("<TD><B>Date of Birth:</B></TD><TD>")
  ;. d OUT($$XVAL("sidob",vals))
@@ -207,24 +232,27 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;
  s outmode="hold"
  s line=""
- i $$XVAL("ceclin",vals)'="" d  ;
+ i $$XVAL("ceclin",vals)]"" d  ;
  . d HOUT("Clinical Information: ")
  . d OUT($$XVAL("ceclin",vals))
  . s outmode="go" d OUT("")
+ . q
  ;
  s outmode="hold"
  n nopri s nopri=1
  d HOUT("Comparison CT Scans: ")
- if $$XVAL("cedcs",vals)'="" d  ;
+ if $$XVAL("cedcs",vals)]"" d  ;
  . ;i etype["Baseline" q  ;
  . d OUT($$XSUB("cetex",vals,dict)_". ")
  . ;d OUT("Comparisons: "_$$XVAL("cedcs",vals))
  . d OUT("Comparisons: ")
  . s nopri=0
- if $$XVAL("cedps",vals)'="" d  ;
+ . q
+ if $$XVAL("cedps",vals)]"" d  ;
  . ;i etype["Baseline" q  ;
  . d OUT(" "_$$XVAL("cedps",vals))
  . s nopri=0
+ . q
  d:nopri OUT("None")
  s outmode="go" d OUT("")
  ;
@@ -232,21 +260,28 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  d HOUT("Description: ")
  i $$XVAL("cectp",vals)="i" d  ;
  . d OUT("Limited Diagnostic CT examination was performed. ")
+ . q
  e  d  ;
  . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings. ")
+ . q
  ;
- i $$XVAL("cectrst",vals)'="" d  ;
+ i $$XVAL("cectrst",vals)]"" d  ;
  . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness. ")
  . d OUT(" Multiplanar reconstructions were performed. ")
+ . q
  ;
  i newct d  ;
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
  . . i $$XVAL(ii,vals)="y" set nvadbo=0
+ . . q
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature. ")
+ . . q
+ . q
+ ;
  s outmode="go" d OUT("")
  ;
  ; lung nodules
@@ -257,8 +292,9 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  ;
  ; see if there are any nodules using the cectXch fields
  ;
- n ij,hasnodules s hasnodules=0
- f ij=1:1:10 i ($$XVAL("cect"_ij_"ch",vals)'="")&($$XVAL("cect"_ij_"ch",vals)'="-") s hasnodules=1
+ n hasnodules s hasnodules=0
+ n ij
+ f ij=1:1:10 i $$XVAL("cect"_ij_"ch",vals)]"",$$XVAL("cect"_ij_"ch",vals)'="-" s hasnodules=1
  ;
  ; check for small nodule checkboxes
  i $$XVAL("cectancn",vals)=1 s hasnodules=1
@@ -267,13 +303,16 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  i hasnodules=0 d  ;
  . d OUT(para)
  . d OUT("No pulmonary nodules are seen. "_para)
+ . q
  ;
  ;i $$XVAL("cennod",vals)="" d  ;
  ;. d OUT(para)
  ;. d OUT("No pulmonary nodules are seen. "_para)
+ ;. q
  ;e  i $$XVAL("ceanod",vals)="n" d  ;
  ;. d OUT(para)
  ;. d OUT("No pulmonary nodules are seen. "_para)
+ ;. q
  ;
  d NODULES^SAMICTT1(rtn,.vals,.dict)
  ;
@@ -293,62 +332,91 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  . d OUT("References:")
  . d OUT("Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol. ")
  . d OUT("A summary and the full I-ELCAP protocol can be viewed at: http://ielcap.org/protocols")
+ . q
+ ;
  ;d OUT("</TABLE>")
  ;d OUT("<p><br></p><p><b>References:</b><br></p>")
  ;d OUT("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
  ;d OUT("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
  ;d OUT("</TD></TR></TABLE></TD></TR></TABLE>")
+ ;
  ;s debug=1
  d:$g(debug)  ;
  . n zi s zi=""
  . f  s zi=$o(@vals@(zi)) q:zi=""  d  ;
  . . d OUT(zi_" "_$g(@vals@(zi)))
+ . . q
+ . q
+ ;
  ;d OUT("</BODY></HTML>")
  ;
  quit  ; end of wsr WSREPORT^SAMICTT0
  ;
  ;
  ;
-OUT(ln) ; output a line of ct report
+ ;
+ ;@proc OUT
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;silent;clean;sac?;tests?;port
+ ;@called-by
+ ; WSREPORT
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ; ]rtn output array
+ ; ]debug
+ ;@thruput
+ ; cnt
+ ;@output
+ ; line added to ct report
+ ;
+ ;
+OUT(ln) ; output ct report line
+ ;
+ i ln[".." s ln=$p(ln,"..")_"." ; remove double periods at the end
  ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
- n lnn
  i $g(debug)'=1 s debug=0
- s lnn=$o(@rtn@(" "),-1)+1
+ n lnn s lnn=$o(@rtn@(" "),-1)+1
  i outmode="go" d  ;
  . s @rtn@(lnn)=line
  . s line=""
  . s lnn=$o(@rtn@(" "),-1)+1
+ . q
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
+ . q
  ;
  quit  ; end of OUT
  ;
  ;
  ;
-OUTOLD(ln) ; old version of out
  ;
- s cnt=cnt+1
- n lnn
- ;s debug=1
- s lnn=$o(@rtn@(" "),-1)+1
- s @rtn@(lnn)=ln
- i $g(debug)=1 d  ;
- . i ln["<" q  ; no markup
- . n zs s zs=$STACK
- . n zp s zp=$STACK(zs-2,"PLACE")
- . s @rtn@(lnn)=zp_":"_ln
+ ;@proc HOUT
  ;
- quit  ; end of OUTOLD
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;silent;clean;sac?;tests?;port
+ ;@called-by
+ ; WSREPORT
+ ;@calls
+ ; OUT
+ ;@input
+ ; ln = header output to add
+ ; ]rtn output array
+ ;@output
+ ; header line added to ct report
  ;
  ;
- ;
-HOUT(ln) ; output a ct report header line
+HOUT(ln) ; output ct report header line
  ;
  d OUT(ln)
  ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
@@ -357,48 +425,75 @@ HOUT(ln) ; output a ct report header line
  ;
  ;
  ;
-XVAL(var,vals) ; extrinsic returns the patient value for var
  ;
+ ;@func $$XVAL
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;silent;clean;sac?;tests?;port
+ ;@called-by
+ ; WSREPORT
+ ;@calls none
  ;@input
- ; @vals is passed by name
+ ; var
+ ; vals is passed by name
+ ;@output = patient value for var
  ;
- n zr
- s zr=$g(@vals@(var))
+ ;
+XVAL(var,vals) ; patient value for var
+ ;
+ n zr s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
  ;
  quit zr ; end of $$XVAL
  ;
  ;
  ;
-XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
  ;
- ; vals and dict are passed by name
- ; valdx is used for nodules ala cect2co with the nodule number included
+ ;@func $$XSUB
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;silent;clean;sac?;tests?;port
+ ;@called-by
+ ; WSREPORT
+ ;@calls none
+ ;@input
+ ; var
+ ; vals & dict are passed by name
+ ; valdx is used for nodules ala cect2co with nodule # included
+ ;@output = dictionary value for var
+ ;
+ ;
+XSUB(var,vals,dict,valdx) ; dictionary value defined by var
  ;
  ;n dict s dict=$$setroot^%wd("cteval-dict")
- n zr,zv,zdx
- s zdx=$g(valdx)
+ n zdx s zdx=$g(valdx)
  i zdx="" s zdx=var
- s zv=$g(@vals@(zdx))
+ ;
+ n zv s zv=$g(@vals@(zdx))
  ;i zv="" s zr="["_var_"]" q zr
  i zv="" s zr="" q zr
- s zr=$g(@dict@(var,zv))
+ ;
+ n zr s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
  ;
  quit zr ; end of $$XSUB
  ;
  ;
  ;
-GETFILTR(filter,sid) ; fill in the filter for Ct Eval for sid
+ ;
+GETFILTR(filter,sid) ; fill in filter for Ct Eval for sid
  ;
  s filter("studyid")=sid
- n items,zform
+ n items
  d GETITEMS^SAMICASE("items",sid)
- s zform=$o(items("ceform"))
+ n zform s zform=$o(items("ceform"))
  s filter("form")=zform
  ;zwr filter
  ;
  quit  ; end of GETFILTR
+ ;
  ;
  ;
  ;

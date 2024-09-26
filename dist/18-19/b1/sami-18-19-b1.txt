@@ -1,4 +1,4 @@
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-25t18:50z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-26t01:52z
 
                   CT Evaluation Report Improvements
                       SAMI (Screening+) 18-19-b1
@@ -513,38 +513,81 @@ SAMIPAT
 
     First, it will compare the routines you already have in your
     habitat to what this update was developed to replace, and if they
-    don't match it will warn you. If you receive such a warning, do
-    not proceed with the installation until you understand why your
-    Before checksums don't match and have confirmed with the
-    Screening+ development team that it's safe to proceed. Otherwise,
-    you may corrupt the Screening+ application, which may break
-    certain features or even endanger patient health or privacy.
+    don't match, it will warn you. Second, it will compare the
+    routines that have been loaded from the KIDS file to what the
+    developers distributed, to be sure the KIDS file was not corrupted
+    in transit.
 
-    Second, it will compare the routines that have been loaded from
-    the KIDS file to what the developers distributed, to be sure the
-    KIDS file was not corrupted in transit. If it was, this option
-    will warn you that one or more After checksums don't match. In
-    such cases, reach out to the Screening+ development team to get a
-    clean copy of the release.
+    To get a checksum report, you would select Installation option 2,
+    provide the distribution name, verify that you want the routines
+    listed with checksums on your screen. Here's a sample session.
 
-    Once you're in "Verify Checksums in the Transport Global", select
-    option 2, press the space bar, and then presss the Enter key to
-    select the install name.
+    Select Installation <TEST ACCOUNT> Option: 2<Enter> Verify Checksums in Transport Global
+    Select INSTALL NAME: SAMI*18.0*19<Enter>     Loaded from Distribution  [datetime]
+         => Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
 
-    Hit the Enter key for "Want each Routine Listed with Checksums:
-    Yes//".
+    This Distribution was loaded on [datetime] with header of
+       Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+       It consisted of the following Install(s):
+       SAMI*18.0*19
 
-    At the "DEVICE: HOME//" prompt, type ";C-SCROLL" to display the
-    entire report.
+    Want each Routine Listed with Checksums: Yes// <Enter>  YES
+    DEVICE: HOME// ;C-SCROLL<Enter>  TELNET
 
-    You'll get a report showing if the Before Checksums are not as
-    expected.  If that happens, discontinue the install until you have
-    worked with your Screening+ development team.
 
-    If the report shows that After checksums are not as expected, your
-    file may be corrupted. This would be unusual and once again, you
-    should contact your Screening+ development team before continuing
-    with the install.
+
+    PACKAGE: SAMI*18.0*19     [datetime]                                PAGE 1
+    ‍---------------------------------------------------------------------------
+
+
+    [list of checksums; see below]
+
+       <x> Routines checked, <y> failed.
+
+
+
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+
+    Select Installation <TEST ACCOUNT> Option: _
+
+    Checksums that matched will be displayed as
+
+    RNAME     Calculated  xxxxxxxxx
+
+    where "RNAME" is the name of the routine, and "xxxxxxxxx" is a
+    checksum value.  This is normal; "RNAME" may be safely installed.
+    If all of them match, the line below should say "<x> Routines
+    checked, 0 failed."
+
+    If the routine being replaced is not what was expected to be
+    there, you will see something like
+
+    RNAME     Before Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
+
+    where "xxxxxxxxx" is the checksum of the routine that's currently
+    installed on your system, but "yyyyyyyyy" is what was expected to
+    be there. If one of these appears, do not proceed with the
+    installation until you understand why these don't match, and have
+    confirmed with the Screening+ development team that it's safe to
+    proceed. Otherwise, you may corrupt the Screening+ application,
+    which may break certain features -- or even endanger patient
+    health or privacy.
+
+    If the routine that you're installing doesn't have a matching
+    checksum, you will see something like
+
+    RNAME     After Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
+
+    This indicates that your release has likely been corrupted
+    somewhere along the line. In such cases, reach out to the
+    Screening+ development team to get a clean copy of the release.
 
   5.1. Install KIDS package
 

@@ -19,7 +19,7 @@
 
 // grep '\$TXT' sami-18-19-b1.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-25t18:50z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-26t01:52z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -129,9 +129,9 @@ have been requested by the iELCAP team and the Mount Sinai radiologists:
 
 [options="compact"]
 . Annual repeat CT: When the radiologists selects ††Annual repeat†† as the LDCT
-  follow-up, the report says ††A followup CT scan is
-  recommended{nbsp}...††. This should be changed t ††An annual repeat CT scan
-  is recommended{nbsp}...††.
+  follow-up, the report says ††A followup CT scan is
+  recommended{nbsp}...†† This should be changed to ††An annual repeat CT scan
+  is recommended{nbsp}...††
 . Follow-up recommendation is missing a dash in “followup CT.”
 . The heading ††**Breast**†† is missing in the report: A situation arose where
   nothing was selected for the breast, but a comment was entered. The comment
@@ -158,7 +158,7 @@ have been requested by the iELCAP team and the Mount Sinai radiologists:
 **Change 1:** Allow patient movement to another site in the same network or the
 movement of an accidental duplicate patient record to a faux site. This is
 actually from an earlier patch that was not taken up by the field. If needed,
-request instructions from your #{appname} support team.
+request instructions from your {appname} support team.
 
 **Solution:** Include `SAMIMOV` in release.
 
@@ -416,35 +416,90 @@ Run the [ttsp]##Verify Checksums in the Transport Global## option. This option
 will let you ensure the integrity of this update in two ways.
 
 First, it will compare the routines you already have in your habitat to what
-this update was developed to replace, and if they don't match it will warn
-you. If you receive such a warning, do not proceed with the installation until
-you understand why your Before checksums don't match and have confirmed with
-the {appname} development team that it's safe to proceed. Otherwise, you may
-corrupt the {appname} application, which may break certain features or even
-endanger patient health or privacy.
+this update was developed to replace, and if they don't match, it will warn
+you. Second, it will compare the routines that have been loaded from the KIDS
+file to what the developers distributed, to be sure the KIDS file was not
+corrupted in transit.
 
-Second, it will compare the routines that have been loaded from the KIDS file
-to what the developers distributed, to be sure the KIDS file was not corrupted
-in transit. If it was, this option will warn you that one or more After
-checksums don't match. In such cases, reach out to the {appname} development
-team to get a clean copy of the release.
+To get a checksum report, you would select Installation option 2, provide the
+distribution name, verify that you want the routines listed with checksums on
+your screen. Here's a sample session. In the text below, ⮐ indicates pressing
+the Enter/Return key.
 
-Once you're in [ttsp]##Verify Checksums in the Transport Global##, select
-option{nbsp}2, press the space bar, and then press the Enter key to select the
-install name.
-    
-Hit the Enter key for [ttsp]##Want each Routine Listed with Checksums: Yes//##.
+// Note: the block below has a zero-width word join at the beginning of the
+// dashed line.
 
-At the [ttsp]##DEVICE: HOME//## prompt, type [ttsp]##;C-SCROLL## to display the
-entire report.
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option: 2⮐  Verify Checksums in Transport Global
+Select INSTALL NAME: SAMI*18.0*19⮐       Loaded from Distribution    [datetime]
+     => Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
 
-You'll get a report showing if the Before checksums are different than what was
-expected. If that happens, discontinue the install until you have worked with
-your {appname} development team.
+This Distribution was loaded on [datetime] with header of
+   Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+   It consisted of the following Install(s):
+   SAMI*18.0*19
 
-If the report shows that After checksums are not as expected, your file may be
-corrupted. This would be unusual, and once again, you should contact your
-{appname} development team before continuing with the install.
+Want each Routine Listed with Checksums: Yes// ⮐  YES
+DEVICE: HOME// ;C-SCROLL⮐  TELNET
+
+
+
+PACKAGE: SAMI*18.0*19     [datetime]                                    PAGE 1
+‍‍-------------------------------------------------------------------------------
+
+
+[list of checksums; see below]
+
+   <x> Routines checked, <y> failed.
+
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option: _
+-------------------------------------------------------------------------------
+
+Checksums that matched will be displayed as
+
+-------------------------------------------------------------------------------
+RNAME     Calculated  xxxxxxxxx
+-------------------------------------------------------------------------------
+
+where `RNAME` is the name of the routine, and `xxxxxxxxx` is a checksum value.
+This is normal; `RNAME` may be safely installed. If all of them match, the line
+below should say [ttsp]##<x> Routines checked, 0 failed.##
+
+If the routine being replaced is not what was expected to be there, you will
+see something like
+
+-------------------------------------------------------------------------------
+RNAME     Before Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
+-------------------------------------------------------------------------------
+
+where `xxxxxxxxx` is the checksum of the routine that's currently installed on
+your system, but `yyyyyyyyy` is what was _expected_ to be there. If one of
+these appears, do _not_ proceed with the installation until you understand why
+these don't match, and have confirmed with the {appname} development team that
+it's safe to proceed. Otherwise, you may corrupt the {appname} application,
+which may break certain features---or even endanger patient health or privacy.
+
+If the routine that you're installing doesn't have a matching checksum, you
+will see something like
+
+-------------------------------------------------------------------------------
+RNAME     After Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
+-------------------------------------------------------------------------------
+
+This indicates that your release has likely been corrupted somewhere along the
+line. In such cases, reach out to the {appname} development team to get a clean
+copy of the release.
 
 
 [[install-pkg]]

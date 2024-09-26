@@ -1,7 +1,7 @@
-SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
- ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIPAT-20240910-E3msvWY;SAMI-18-18-b1
- ;mdc-v7;B17504242;SAMI*18.0*18 SEQ #18
+SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
+ ;;18.0;SAMI;**12,14,15,17,18,19**;2020-01-17;Build 1
+ ;mdc-e1;SAMIPAT-20240924-E129BpK;SAMI-18-19-b1
+ ;mdc-v7;B23769617;SAMI*18.0*19 SEQ #19
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -18,28 +18,28 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ;
  ;@routine-credits
  ;
- ;@dev Frederick D. S. Marshall (toad)
- ; toad@vistaexpertise.net
+ ;@dev Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
  ;@dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t04:27z
+ ;@update 2024-09-24t02:16z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-19
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17,18**
+ ;@patches **12,14,15,17,18,19**
  ;
  ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
+ ;@dev-add Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
  ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
- ;@dev-add Linda M. R. Yaw (lmry)
- ; lmry@vistaexpertise.net
  ;
  ;@module-credits
  ;
@@ -111,16 +111,55 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ; 2024-08-16 ven/lmry 18-17-b6  a1a28de  d0224d9
  ;  SAMIPAT update POS1817.
  ;
- ; 2024-08-26 ven/toad 18-17-b6  bd5cfb4
- ;  SAMIPAT update history, version-control lines, hdr comments.
+ ; 2024-08-26 ven/toad 18-17-b8 SAMIPAT
+ ;  (F2z5aM B16870509 EiGtFM) bd5cfb4c
+ ; update history, ver-ctrl lines, hdr cmnts.
  ;
- ; 2024-08-30 ven/lmry 18-17-b6
- ;  SAMIPAT updated path for SAMIDIR under STANDARD, change update date,
- ;   also changed routine description to post routines instead of init
- ;   routines.
+ ; 2024-08-26 ven/mcglk 18-17-b8 SAMIPAT
+ ;  (F2z5aM B16870509 EiGtFM) a5dae8e9 [in temp v18-17-b6-sinai]
+ ; Import rtns fr/commit bd5cfb4c1d58. NOTE: This history will be lost
  ;
- ; 2024-09-10 ven/lmry 18-18-b1
- ;  SAMIPAT update date/times, checksums, patches
+ ; 2024-08-29 ven/lmry 18-17-b8 SAMIPAT
+ ;  (F2EK5r+ B17344032 E2tdr5N) 6090182e [in temp v18-17-b6-sinai]
+ ; update path for SAMIDIR under STANDARD, change update date, also
+ ; chg rtn desc to post routines instead of init routines.
+ ;
+ ; 2024-09-04 ven/toad 18-17-b8 SAMIPAT
+ ;  (F3kNXg9 B17344032 E2tdr5N) 9a98cb08 [in temp v18-17-b6-sinai]
+ ; fix crash if no background form, vers & chksum: SAMI-18-17-b8.
+ ;
+ ; 2024-09-06 ven/mcglk 18-17-b8 SAMIPAT
+ ;  (F3kNXg9 B17344032 E2tdr5N) a7e5e793
+ ; Pulling modified rtns from 18-17-b8 side branch.
+ ;
+ ; 2024-09-09 ven/lmry 18-18-b1 SAMIPAT
+ ;  (F3kp2n B17504242 E2MdtUB) d30d4032
+ ; update date/times, checksums, patches; nearly complete routine
+ ; uploaded for current checksums.
+ ;  (F3wf+B B17504242 E2MdtUB) 4315d4e4
+ ; shiny checksummed routine.
+ ;  (FR9+fj B17504242 E3msvWY) 884b6766
+ ; forgot a thing, so uploading for updated checksums.
+ ;  (F1KEQfj B17504242 E3msvWY) f3fb0509
+ ; maybe this will be the last time to upload these shiny routines for this build--fingers crossed
+ ;
+ ; 2024-09-23 ven/lmry 18-19-b1 SAMIPAT
+ ;  (F3MDo3g B20732095 E6i2qq) eb2f7628
+ ; add POS1819, correcting lines like ";@kids-post POST1812^SAMIPAT"
+ ; to remove T for consistency with sub-routine name. Update date/
+ ; times, patches, history.
+ ;
+ ; 2024-09-23 ven/toad 18-19-b1 SAMIPAT
+ ;  (F? B23501325 E?)
+ ; add chksums to log entries back to 18-17-b8, make lmry lead dev for
+ ; rtn.
+ ;
+ ; 2024-09-24 ven/lmry 18-19-b1 SAMIPAT
+ ; Correct label for POS1819.
+ ;
+ ;@to-do
+ ;
+ ; extend details pre-18-17-b8, add details.
  ;
  ;@contents
  ;
@@ -130,6 +169,7 @@ SAMIPAT ;ven/toad - post subroutines; 2024-09-10t04:27z
  ; POS1815 kids post-install for SAMI-18-15
  ; POS1817 kids post-install for SAMI-18-17
  ; POS1818 kids post-install for SAMI-18-18
+ ; POS1819 kids post-install for SAMI-18-19
  ;
  ;
  ;
@@ -162,7 +202,7 @@ STANDARD ; usual post-install commands
  ;
  ;
  ;
- ;@kids-post POST1812^SAMIPAT
+ ;@kids-post POS1812^SAMIPAT
  ;
 POS1812 ; kids post-install for SAMI-18-12
  ;
@@ -180,7 +220,7 @@ POS1812 ; kids post-install for SAMI-18-12
  ;
  ;
  ;
- ;@kids-post POST1814^SAMIPAT
+ ;@kids-post POS1814^SAMIPAT
  ;
 POS1814 ; kids post-install for SAMI-18-14
  ;
@@ -196,7 +236,7 @@ POS1814 ; kids post-install for SAMI-18-14
  ;
  ;
  ;
- ;@kids-post POST1815^SAMIPAT
+ ;@kids-post POS1815^SAMIPAT
  ;
 POS1815 ; kids post-install for SAMI-18-15
  ;
@@ -216,7 +256,7 @@ POS1815 ; kids post-install for SAMI-18-15
  ;
  ;
  ;
- ;@kids-post POST1817^SAMIPAT
+ ;@kids-post POS1817^SAMIPAT
  ;
 POS1817 ; kids post-install for SAMI-18-17
  ;
@@ -233,7 +273,7 @@ POS1817 ; kids post-install for SAMI-18-17
  ;
  ;
  ;
- ;@kids-post POST1818^SAMIPAT
+ ;@kids-post POS1818^SAMIPAT
  ;
 POS1818 ; kids post-install for SAMI-18-18
  ;
@@ -242,6 +282,22 @@ POS1818 ; kids post-install for SAMI-18-18
  ;
  quit  ; end of kids-post POS1818^SAMIPAT
  ;
+ ;
+ ;
+ ;
+ ;@section 7 subroutines for SAMI-18-19
+ ;
+ ;
+ ;
+ ;
+ ;@kids-post POS1819^SAMIPAT
+ ;
+POS1819 ; kids post-install for SAMI-18-19
+ ;
+ do STANDARD
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-19-b1")
+ ;
+ quit  ; end of kids-post POS1819^SAMIPAT;
  ;
  ;
  ;

@@ -735,7 +735,6 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3"></div>
                         <div class="col-md-3">
                             <label>Reviewed for QA?</label>
                             <div class="form-group">
@@ -749,6 +748,385 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Postoperative Events?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrpo") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rbrpo-container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unanticipated post-operative invasive procedure?</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrui") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rbrui-container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Primary Reason for Procedure</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-b", "b", "bleeding", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-f", "f", "bronchopleural", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-e", "e", "empyema", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-l", "l", "middle lobectomy", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-n", "n", "conduit necrosis/failure following esophageal surgery", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-o", "o", "other", true) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Anastomotic leak following esophageal surgery?</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadioNY("rbral") }}
+                                    </div>
+                                </div>
+                                <div id="rbral-container">
+                                    <div class="col-md-3">
+                                        <label>Surgical drainage and repair</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsdr") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Stent Placement</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsp") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Additional chest tube placement</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrctp") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Chylothorax Present?</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadioNY("rbrcp") }}
+                                    </div>
+                                </div>
+                                <div id="rbrcp-y-container">
+                                    <div class="col-md-3">
+                                        <label>Chylothorax req. surgical ligation of thoracic duct</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsd") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="rbrcp-n-container">
+                                    <div class="col-md-3">
+                                        <label>Thoracic duct embolization attempted</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrtd") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="rbrtd-container">
+                                    <div class="col-md-3">
+                                        <label>Was Thoracic duct embolization successful</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrts") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Pulmonary</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Air leak &gt; 5 days duration?</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbralf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Atelectasis req. bronchoscopy</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrab") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pleural Effusion req. drainage</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrped") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pneumonia</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrp") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Acute Respiratory Distress Syndrome(ARDS)</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrards") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Respiratory Failure</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrrf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Bronchopleural Fistula</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrbf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pulmonary Embolus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrpe") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pneumothorax req. CT reinsertion</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrpr") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Initial Vent Support &gt; 48 Hr</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbriv") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tracheostomy</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other Pulmonary Event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrope") }}
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Cardiovascular</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Atrial arrhythmia req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbraa") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Ventricular arrhythmia req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrva") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Myocardial infarct</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrmi") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Deep venous thrombosis (DVT) req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrdvt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other CV event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrocv") }}
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Gastrointestinal</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Ileus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbri") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Anastomotic leak requiring medical treatment only</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrlt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Dilation esophagus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrde") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Conduit Necrosis Requiring Surgery</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcn") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Delayed conduit emptying requiring intervention (pyloric dilatation or botox) or maintenance of NG drainage &gt; 7 days post op</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrlk") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Clostridium Difficile Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcdi") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other GI Event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrgi") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Hematology</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Packed red blood cells</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrrbc") }}
+                                    <br/>
+                                    <small class="text-muted">* transfusions documented here do not include blood given in OR *</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="rbrrbc-container">
+                                <label>Units</label>
+                                <div class="form-group">
+                                    <input name="rbrrbu" id="rbrrbu" class="form-control" size="8"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Urologic</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Urinary Tract Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbruti") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Urinary retention req. Catheterization</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbruc") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Discharged with Foley catheter</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrf") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Infection</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Empyema req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbret") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Surgical Site Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadio("rbrsi","rtfor-n","n","none") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-s","s","superficial") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-d","d","deep") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-o","o","organ space") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Sepsis</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrs") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Another infection req. IV antibiotics</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbriiv") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Neurology</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>New central neurological event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrne") }}
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <label>Recurrent laryngeal nerve paresis -unexpected</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrln") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Delirium</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrdm") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other neurological event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbron") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Miscellaneous</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>New renal failure per RIFLE criteria</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrfc") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Chylothorax req. medical intervention</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcl") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other events req. OR with gen. anesthesia</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbroa") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Unexpected admission to ICU</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbricu") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
@@ -2399,6 +2777,17 @@
             $("[name=rbal]").conditionallyDisplay({enable: "#rbal-container"});
             $("[name=rbem]").conditionallyEnable({enable: "#rbem-container"});
             $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
+            $("[name=rbrpo]").conditionallyDisplay({enable: "#rbrpo-container"});
+            $("[name=rbrui]").conditionallyDisplay({enable: "#rbrui-container"});
+            $("[name=rbral]").conditionallyDisplay({enable: "#rbral-container"});
+            $("[name=rbrcp]")
+                .conditionallyDisplay({sourceValues: "y", enable: "#rbrcp-y-container"})
+                .conditionallyDisplay({sourceValues: "n", enable: "#rbrcp-n-container"});
+            $("[name=rbrtd]")
+                .conditionallyDisplay({sourceValues: "n", enable: "#rbrtd-container"})
+            $("[name=rbrrbc]")
+                .conditionallyDisplay({enable: "#rbrrbc-container"})
+
 
             //Radiation section
             $("[name=rtfor]").conditionallyEnable({sourceValues: "o", enable: "#rtfor-container"});

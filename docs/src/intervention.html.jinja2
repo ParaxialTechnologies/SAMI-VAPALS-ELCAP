@@ -51,98 +51,297 @@
             <input type="hidden" name="site" value="@@SITE@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
 
-            {#BEGIN Treatement tab#}
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="rbcst8">Clinical TNM status
+                        <small>(8th edition modified)</small>
+                    </label>
+                    <div class="form-group form-inline">
+                        <label class="aria-hidden" for="rbcst8m">T status</label>
+                        <select name="rbcst8m" id="rbcst8m" class="form-control">
+                            <option value="-">-</option>
+                            <option value="0">T0</option>
+                            <option value="is">Tis</option>
+                            <option value="1am">T1a mi</option>
+                            <option value="1as">T1a SS</option>
+                            <option value="1a1">T1a</option>
+                            <option value="1b">T1b</option>
+                            <option value="1c">T1c</option>
+                            <option value="2v">T2 Visc Pl</option>
+                            <option value="2c">T2 Centr</option>
+                            <option value="2a">T2a</option>
+                            <option value="2b">T2b</option>
+                            <option value="3">T3</option>
+                            <option value="3i">T3 Inv</option>
+                            <option value="3s">T3 Satell</option>
+                            <option value="4">T4</option>
+                            <option value="4i">T4 Inv</option>
+                            <option value="4n">T4 Ipsi Nod</option>
+                            <option value="x">TX</option>
+                        </select>
+
+                        <label class="aria-hidden" for="rbcsn8m">N status</label>
+                        <select name="rbcsn8m" id="rbcsn8m" class="form-control">
+                            <option value="-">-</option>
+                            <option value="0">N0</option>
+                            <option value="1">N1</option>
+                            <option value="2">N2</option>
+                            <option value="3">N3</option>
+                            <option value="X">NX</option>
+                        </select>
+
+                        <label class="aria-hidden" for="rbcsm8m">M status</label>
+                        <select name="rbcsm8m" id="rbcsm8m" class="form-control">
+                            <option value="-">-</option>
+                            <option value="0">M0</option>
+                            <option value="1ap">M1a Pl Dissem</option>
+                            <option value="1ac">M1a Contr Nod</option>
+                            <option value="1b">M1b Single</option>
+                            <option value="1c">M1c Multi</option>
+                            <option value="X">MX</option>
+                        </select>
+                        {{ f.checkbox("rbcsx8m", "y","Not applicable (specify)") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="rbcsx8m-container">
+                    <div class="form-group">
+                        <label for="rbcsx8sm">Specify</label>
+                        <input name="rbcsx8sm" id="rbcsx8sm" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="rbcst8">Clinical TNM status
+                        <small>(8th edition)</small>
+                    </label>
+                    <div class="form-group form-inline">
+                        <label class="aria-hidden" for="rbcst8">T status</label>
+                        <select name="rbcst8" id="rbcst8" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="0"> T0</option>
+                            <option value="is"> Tis</option>
+                            <option value="1am"> T1a mi</option>
+                            <option value="1as"> T1a SS</option>
+                            <option value="1a1"> T1a</option>
+                            <option value="1b"> T1b</option>
+                            <option value="1c"> T1c</option>
+                            <option value="2v"> T2 Visc Pl</option>
+                            <option value="2c"> T2 Centr</option>
+                            <option value="2a"> T2a</option>
+                            <option value="2b"> T2b</option>
+                            <option value="3"> T3</option>
+                            <option value="3i"> T3 Inv</option>
+                            <option value="3s"> T3 Satell</option>
+                            <option value="4"> T4</option>
+                            <option value="4i"> T4 Inv</option>
+                            <option value="4n"> T4 Ipsi Nod</option>
+                            <option value="x"> TX</option>
+                        </select>
+
+                        <label class="aria-hidden" for="rbcsn8">N status</label>
+                        <select name="rbcsn8" id="rbcsn8" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="0"> N0</option>
+                            <option value="1"> N1</option>
+                            <option value="2"> N2</option>
+                            <option value="3"> N3</option>
+                            <option value="X"> NX</option>
+                        </select>
+
+                        <label class="aria-hidden" for="rbcsm8">M status</label>
+                        <select name="rbcsm8" id="rbcsm8" class="form-control">
+                            <option value="-"> -
+                            <option value="0"> M0</option>
+                            <option value="1ap"> M1a Pl Dissem</option>
+                            <option value="1ac"> M1a Contr Nod</option>
+                            <option value="1b"> M1b Single</option>
+                            <option value="1c"> M1c Multi</option>
+                            <option value="X"> MX</option>
+                        </select>
+                        {{ f.checkbox("rbcsx8", "y","Not applicable (specify)") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="rbcsx8-container">
+                    <div class="form-group">
+                        <label for="rbcsx8s">Specify</label>
+                        <input name="rbcsx8s" id="rbcsx8s" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="rbcsb">Clinical staging based on</label>
+                    <div class="form-group  form-inline">
+                        <label class="radio-inline">
+                            <input type="radio" name="rbcsb" id="rbcsb-c" value="c">&nbsp;only CT
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="rbcsb" id="rbcsb-p" value="p">&nbsp;only PET
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="rbcsb" id="rbcsb-b" value="b">&nbsp;both
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="rbcsb" id="rbcsb-o" value="o">&nbsp;other (specify)
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6" id="rbcsb-container">
+                    <div class="form-group">
+                        <label for="rbcsbos">Specify</label>
+                        <input type="text" name="rbcsbos" id="rbcsbos" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <label for="rbpasd">Physical Assessment Score</label>
+            <div class="row">
+                <div class="col-sm-4 col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="rbpasd">Date</label>
+                        {{ f.datepicker("rbpasd", "past") }}
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="rbpasd">Type</label>
+                        <select name="rbpasd" id="rbpasd" class="form-control">
+                            <option value="-">-</option>
+                            <option value="e">ECOG</option>
+                            <option value="k">Karnofsky</option>
+                            <option value="a">ASA</option>
+                            <option value="z">Zubrod</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="rbpass">Score</label>
+                        <input class="form-control input-sm numeric" type="text" name="rbpass" id="rbpass" size="8">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                    <label for="rbmd">Referring physician</label>
+                    <input type="text" name="rbmd" id="rbmd" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                    <label for="rbmdp">Referring physician's phone</label>
+                    <input type="text" name="rbmdp" id="rbmdp" class="form-control">
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                    <label for="rbmdf">Referring physician's fax</label>
+                    <input type="text" name="rbmdf" id="rbmdf" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                    <label for="rbsumd">Treating physician</label>
+                    <input type="text" name="rbsumd" id="rbsumd" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                    <label for="rbsumdp">Treating physician's phone</label>
+                    <input type="text" name="rbsumdp" id="rbsumdp" class="form-control">
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3">
+                    <label for="rbsumdf">Treating physician's fax</label>
+                    <input type="text" name="rbsumdf" id="rbsumdf" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="rbloc">Lesion site</label>
+                        <select name="rbloc" id="rbloc" class="form-control">
+                            <option value="-">-</option>
+                            <option value="lul">LUL</option>
+                            <option value="lll">LLL</option>
+                            <option value="rul">RUL</option>
+                            <option value="rml">RML</option>
+                            <option value="rll">RLL</option>
+                            <option value="e">Endobronchial</option>
+                            <option value="m">Mediastinum</option>
+                            <option value="p">Pleura</option>
+                            <option value="o">Other (specify)</option>
+                        </select>
+                        <span class="form-text text-muted">If multiple sites, select other and specify</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="rbloc-container">
+                    <div class="form-group">
+                        <label for="rblocs">Specify</label>
+                        <input name="rblocs" id="rblocs" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="rbtri">Indication for treatment</label>
+                        <select name="rbtri" id="rbtri" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="f"> First Lung Cancer</option>
+                            <option value="r"> Recurrence</option>
+                            <option value="n"> New Primary Lung Cancer</option>
+                            <option value="o"> Other (specify)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6" id="rbtri-container">
+                    <div class="form-group">
+                        <label for="rbtric">Specify/Comments</label>
+                        <input name="rbtric" id="rbtric" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <div class="form-group col-md-3">
+                        <label for="rbto">Treatment option</label>
+                        <select id="rbto" name="rbto" class="form-control">
+                            <option value="-"> -</option>
+                            <option value="s"> Surgery</option>
+                            <option value="r"> Radiation Therapy</option>
+                            <option value="c"> Chemotherapy</option>
+                            <option value="w"> Watchful Waiting</option>
+                            <option value="o"> Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="rbsud">Treatment <span id="treatment-start-label">start </span>date</label>
+                        {{ f.datepicker("rbsud", "past") }}
+                    </div>
+
+                </div>
+
+                <div class="col-md-6" id="rbto-container">
+                    <div class="form-group">
+                        <label for="rbtos">Specify</label>
+                        <input name="rbtos" id="rbtos" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            {#BEGIN Treatment tab#}
             <div id="treatment" style="padding-top:8px">
                 <h3>Treatment</h3> {# will get hidden with affixed menu#}
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="rbcst8">Clinical TNM status
-                            <small>(8th edition)</small>
-                        </label>
-                        <div class="form-group form-inline">
-                            <label class="aria-hidden" for="rbcst8">T status</label>
-                            <select name="rbcst8" id="rbcst8" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="0"> T0</option>
-                                <option value="is"> Tis</option>
-                                <option value="1am"> T1a mi</option>
-                                <option value="1as"> T1a SS</option>
-                                <option value="1a1"> T1a</option>
-                                <option value="1b"> T1b</option>
-                                <option value="1c"> T1c</option>
-                                <option value="2v"> T2 Visc Pl</option>
-                                <option value="2c"> T2 Centr</option>
-                                <option value="2a"> T2a</option>
-                                <option value="2b"> T2b</option>
-                                <option value="3"> T3</option>
-                                <option value="3i"> T3 Inv</option>
-                                <option value="3s"> T3 Satell</option>
-                                <option value="4"> T4</option>
-                                <option value="4i"> T4 Inv</option>
-                                <option value="4n"> T4 Ipsi Nod</option>
-                                <option value="x"> TX</option>
-                            </select>
-
-                            <label class="aria-hidden" for="rbcsn8">N status</label>
-                            <select name="rbcsn8" id="rbcsn8" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="0"> N0</option>
-                                <option value="1"> N1</option>
-                                <option value="2"> N2</option>
-                                <option value="3"> N3</option>
-                                <option value="X"> NX</option>
-                            </select>
-
-                            <label class="aria-hidden" for="rbcsm8">M status</label>
-                            <select name="rbcsm8" id="rbcsm8" class="form-control">
-                                <option value="-"> -
-                                <option value="0"> M0</option>
-                                <option value="1ap"> M1a Pl Dissem</option>
-                                <option value="1ac"> M1a Contr Nod</option>
-                                <option value="1b"> M1b Single</option>
-                                <option value="1c"> M1c Multi</option>
-                                <option value="X"> MX</option>
-                            </select>
-                            {{ f.checkbox("rbcsx8", "y","Not applicable (specify)") }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6" id="rbcsx8-container">
-                        <div class="form-group">
-                            <label for="rbcsx8s">Specify</label>
-                            <input name="rbcsx8s" id="rbcsx8s" class="form-control">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="rbcsb">Clinical staging based on</label>
-                        <div class="form-group  form-inline">
-                            <label class="radio-inline">
-                                <input type="radio" name="rbcsb" id="rbcsb-c" value="c">&nbsp;only CT
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="rbcsb" id="rbcsb-p" value="p">&nbsp;only PET
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="rbcsb" id="rbcsb-b" value="b">&nbsp;both
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="rbcsb" id="rbcsb-o" value="o">&nbsp;other (specify)
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6" id="rbcsb-container">
-                        <div class="form-group">
-                            <label for="rbcsbos">Specify</label>
-                            <input type="text" name="rbcsbos" id="rbcsbos" class="form-control">
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
@@ -185,117 +384,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="rbmd">Referring physician</label>
-                        <input type="text" name="rbmd" id="rbmd" class="form-control">
-                    </div>
-
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                        <label for="rbmdp">Referring physician's phone</label>
-                        <input type="text" name="rbmdp" id="rbmdp" class="form-control">
-                    </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                        <label for="rbmdf">Referring physician's fax</label>
-                        <input type="text" name="rbmdf" id="rbmdf" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="rbsumd">Treating physician</label>
-                        <input type="text" name="rbsumd" id="rbsumd" class="form-control">
-                    </div>
-
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                        <label for="rbsumdp">Treating physician's phone</label>
-                        <input type="text" name="rbsumdp" id="rbsumdp" class="form-control">
-                    </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                        <label for="rbsumdf">Treating physician's fax</label>
-                        <input type="text" name="rbsumdf" id="rbsumdf" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="rbloc">Lesion site</label>
-                            <select name="rbloc" id="rbloc" class="form-control">
-                                <option value="-">-</option>
-                                <option value="lul">LUL</option>
-                                <option value="lll">LLL</option>
-                                <option value="rul">RUL</option>
-                                <option value="rml">RML</option>
-                                <option value="rll">RLL</option>
-                                <option value="e">Endobronchial</option>
-                                <option value="m">Mediastinum</option>
-                                <option value="p">Pleura</option>
-                                <option value="o">Other (specify)</option>
-                            </select>
-                            <span class="form-text text-muted">If multiple sites, select other and specify</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6" id="rbloc-container">
-                        <div class="form-group">
-                            <label for="rblocs">Specify</label>
-                            <input name="rblocs" id="rblocs" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="rbtri">Indication for treatment</label>
-                            <select name="rbtri" id="rbtri" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="f"> First Lung Cancer</option>
-                                <option value="r"> Recurrence</option>
-                                <option value="n"> New Primary Lung Cancer</option>
-                                <option value="o"> Other (specify)</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6" id="rbtri-container">
-                        <div class="form-group">
-                            <label for="rbtric">Specify/Comments</label>
-                            <input name="rbtric" id="rbtric" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div>
-                        <div class="form-group col-md-3">
-                            <label for="rbto">Treatment option</label>
-                            <select id="rbto" name="rbto" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="s"> Surgery</option>
-                                <option value="r"> Radiation Therapy</option>
-                                <option value="c"> Chemotherapy</option>
-                                <option value="w"> Watchful Waiting</option>
-                                <option value="o"> Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-3">
-                            <label for="rbsud">Treatment <span id="treatment-start-label">start </span>date</label>
-                            {{ f.datepicker("rbsud", "past") }}
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6" id="rbto-container">
-                        <div class="form-group">
-                            <label for="rbtos">Specify</label>
-                            <input name="rbtos" id="rbtos" class="form-control">
-                        </div>
-                    </div>
-                </div>
 
                 {#Surgical Treatment#}
                 <div id="surgery" style="display: none;">
@@ -647,7 +735,6 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3"></div>
                         <div class="col-md-3">
                             <label>Reviewed for QA?</label>
                             <div class="form-group">
@@ -662,6 +749,385 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Postoperative Events?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrpo") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rbrpo-container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unanticipated post-operative invasive procedure?</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrui") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rbrui-container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Primary Reason for Procedure</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-b", "b", "bleeding", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-f", "f", "bronchopleural", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-e", "e", "empyema", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-l", "l", "middle lobectomy", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-n", "n", "conduit necrosis/failure following esophageal surgery", true) }}
+                                        {{ f.inlineRadio("rbrrp", "rbrrp-o", "o", "other", true) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Anastomotic leak following esophageal surgery?</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadioNY("rbral") }}
+                                    </div>
+                                </div>
+                                <div id="rbral-container">
+                                    <div class="col-md-3">
+                                        <label>Surgical drainage and repair</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsdr") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Stent Placement</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsp") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Additional chest tube placement</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrctp") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Chylothorax Present?</label>
+                                    <div class="form-group">
+                                        {{ f.inlineRadioNY("rbrcp") }}
+                                    </div>
+                                </div>
+                                <div id="rbrcp-y-container">
+                                    <div class="col-md-3">
+                                        <label>Chylothorax req. surgical ligation of thoracic duct</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrsd") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="rbrcp-n-container">
+                                    <div class="col-md-3">
+                                        <label>Thoracic duct embolization attempted</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrtd") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="rbrtd-container">
+                                    <div class="col-md-3">
+                                        <label>Was Thoracic duct embolization successful</label>
+                                        <div class="form-group">
+                                            {{ f.inlineRadioNY("rbrts") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Pulmonary</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Air leak &gt; 5 days duration?</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbralf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Atelectasis req. bronchoscopy</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrab") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pleural Effusion req. drainage</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrped") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pneumonia</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrp") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Acute Respiratory Distress Syndrome(ARDS)</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrards") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Respiratory Failure</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrrf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Bronchopleural Fistula</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrbf") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pulmonary Embolus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrpe") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Pneumothorax req. CT reinsertion</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrpr") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Initial Vent Support &gt; 48 Hr</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbriv") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tracheostomy</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other Pulmonary Event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrope") }}
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Cardiovascular</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Atrial arrhythmia req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbraa") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Ventricular arrhythmia req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrva") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Myocardial infarct</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrmi") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Deep venous thrombosis (DVT) req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrdvt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other CV event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrocv") }}
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Gastrointestinal</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Ileus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbri") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Anastomotic leak requiring medical treatment only</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrlt") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Dilation esophagus</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrde") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Conduit Necrosis Requiring Surgery</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcn") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Delayed conduit emptying requiring intervention (pyloric dilatation or botox) or maintenance of NG drainage &gt; 7 days post op</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrlk") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Clostridium Difficile Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcdi") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other GI Event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrgi") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Hematology</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Packed red blood cells</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrrbc") }}
+                                    <br/>
+                                    <small class="text-muted">* transfusions documented here do not include blood given in OR *</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="rbrrbc-container">
+                                <label>Units</label>
+                                <div class="form-group">
+                                    <input name="rbrrbu" id="rbrrbu" class="form-control" size="8"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Urologic</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Urinary Tract Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbruti") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Urinary retention req. Catheterization</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbruc") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Discharged with Foley catheter</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrf") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Infection</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Empyema req. treatment</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbret") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Surgical Site Infection</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadio("rbrsi","rtfor-n","n","none") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-s","s","superficial") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-d","d","deep") }}
+                                    {{ f.inlineRadio("rbrsi","rtfor-o","o","organ space") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Sepsis</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrs") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Another infection req. IV antibiotics</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbriiv") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Neurology</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>New central neurological event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrne") }}
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <label>Recurrent laryngeal nerve paresis -unexpected</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrln") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Delirium</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrdm") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other neurological event</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbron") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Miscellaneous</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>New renal failure per RIFLE criteria</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrfc") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Chylothorax req. medical intervention</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbrcl") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Other events req. OR with gen. anesthesia</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbroa") }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Unexpected admission to ICU</label>
+                                <div class="form-group">
+                                    {{ f.inlineRadioNY("rbricu") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
                     <div class="row">
                         <div class="col-md-6">
                             <label>Pathology tumor size (mm)</label>
@@ -2294,6 +2760,7 @@
             });
 
             $("#rbcsx8").conditionallyEnable({enable: "#rbcsx8-container"});
+            $("#rbcsx8m").conditionallyEnable({enable: "#rbcsx8m-container"});
             $("[name=rbcsb]").conditionallyEnable({sourceValues: "o", enable: "#rbcsb-container"});
             $("[name=rbloc]").conditionallyEnable({sourceValues: "o", enable: "#rbloc-container"});
             $("[name=rbtri]").conditionallyEnable({sourceValues: "o", enable: "#rbtri-container"});
@@ -2310,6 +2777,17 @@
             $("[name=rbal]").conditionallyDisplay({enable: "#rbal-container"});
             $("[name=rbem]").conditionallyEnable({enable: "#rbem-container"});
             $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
+            $("[name=rbrpo]").conditionallyDisplay({enable: "#rbrpo-container"});
+            $("[name=rbrui]").conditionallyDisplay({enable: "#rbrui-container"});
+            $("[name=rbral]").conditionallyDisplay({enable: "#rbral-container"});
+            $("[name=rbrcp]")
+                .conditionallyDisplay({sourceValues: "y", enable: "#rbrcp-y-container"})
+                .conditionallyDisplay({sourceValues: "n", enable: "#rbrcp-n-container"});
+            $("[name=rbrtd]")
+                .conditionallyDisplay({sourceValues: "n", enable: "#rbrtd-container"})
+            $("[name=rbrrbc]")
+                .conditionallyDisplay({enable: "#rbrrbc-container"})
+
 
             //Radiation section
             $("[name=rtfor]").conditionallyEnable({sourceValues: "o", enable: "#rtfor-container"});

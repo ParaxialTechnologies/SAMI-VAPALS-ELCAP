@@ -1,0 +1,436 @@
+Screening Plus
+Administration Manual
+
+Table of Contents
+Who This Manual Is For
+How To Access Programmer Mode (Administration Dashboard)
+How To Add A User
+	Superuser
+	Administrator
+	Edit an Existing User
+    Deactivate a User
+    Reactivate a User
+ 	Change Access and Verify Codes
+How To Add A Site
+How To Move A Patient To A Different Site
+	Moving A Patient To A Fake Site (Moving Duplicate Patient Records)
+How To Produce CSV Reports
+System Maintenance
+	Stopping and Restarting System
+	Integrity Checking
+	Restart Web Service
+
+Questions:
+Did we de-osehra-ify and de-vapals-ify the servers we are sending to Ethiopia?
+Adding a New Person requires a nine-digit SSN
+Would all new users be cloned from USER,ONE?
+How do we designate a Superuser?
+How do we give the correct permissions for an Administrator?
+What about that letter that appears when a New Person is created?
+I don't remember how to add a site but it might be in the .txt of some patch.
+
+
+Who This Manual Is For
+Sometimes actions need to be taken that require either more authority or more
+specialized knowledge than the are regularly performed in Screening Plus. This
+manual is intended for either the head of the lung-screening program or a
+designated medical or technological practitioner working closely with the
+person who has the authority to authorize these actions.
+
+This includes actions such as adding or removing users, changing permissions
+for certain users, move a patient, produce specialized reports for export, and
+maintaining the Screening Plus system.
+
+How To Access Programmer Mode (Administration Dashboard)
+Currently some actions require that the administrator access what is called
+programmer mode to perform them. A user authorized to take these actions needs
+to be entered in the system with special permissions. The first person to have
+permission to take these actions needs to be added by your Screening Plus
+support team. 
+
+	To Enter Programmer Mode
+		Access Screening Plus server 
+		I don't quite know how to do this. I believe someone has to set up a
+		user in Unix? to allow the person to access the server.
+		Type mumps -dir to enter Vista
+		Once in that environment,
+		  SET DUZ=X, D ^XUP
+		Then proceed as the manual instructs.
+
+How To Add A User
+Capture for adding a new person
+
+VAPALS>S DUZ=1
+
+VAPALS>D ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Terminal Type set to: C-VT220
+
+Select OPTION NAME: EVE
+     1   EVE       Systems Manager Menu
+     2   EVENT CAPTURE  ECX ECS MAINTENANCE     Event Capture
+     3   EVENT CAPTURE (ECS) EXTRACT AU  ECX ECS SOURCE AUDIT     Event Capture 
+(ECS) Extract Audit
+     4   EVENT CAPTURE DATA ENTRY  ECENTER     Event Capture Data Entry
+     5   EVENT CAPTURE EXTRACT  ECXEC     Event Capture Extract
+Press <Enter> to see more, '^' to exit this list,  OR
+CHOOSE 1-5: 1  EVE     Systems Manager Menu
+
+
+          Core Applications ...
+          Device Management ...
+          Menu Management ...
+          Programmer Options ...
+          Operations Management ...
+          Spool Management ...
+          Information Security Officer Menu ...
+          Taskman Management ...
+          User Management ...
+          Application Utilities ...
+          Capacity Planning ...
+          HL7 Main Menu ...
+          Manage Mailman ...
+
+Select Systems Manager Menu <TEST ACCOUNT> Option: USER Management
+
+
+          Add a New User to the System
+          Grant Access by Profile
+          Edit an Existing User
+          Deactivate a User
+          Reactivate a User
+          List users
+          User Inquiry
+          Switch Identities
+          File Access Security ...
+             **> Out of order:  ACCESS DISABLED
+          Clear Electronic signature code
+          Electronic Signature Block Edit
+          List Inactive Person Class Users
+          Manage User File ...
+          OAA Trainee Registration Menu ...
+          Person Class Edit
+          Reprint Access agreement letter
+
+
+
+                          Batch Entry of New Persons
+                          --------------------------
+
+Please select a person to copy from
+Template PERSON: USER,ONE       DBA       
+NAME: USER,ONE                          INITIAL: DBA
+  DISUSER: YES
+  Termination Reason: User Inactive for too long
+  PERSON FILE POINTER: 1
+  PREFERRED EDITOR: LINE EDITOR - VA FILEMAN
+  DATE ENTERED: FEB 09, 2016            CREATOR: PATCH,USER
+  LAST SIGN-ON DATE/TIME: OCT 20, 2017@11:51:21
+  XUS Logon Attempt Count: 1            XUS Active User: No
+  Entry Last Edit Date: FEB 09, 2016    TERMINAL TYPE LAST USED: C-VT220
+DIVISION: SOFTWARE SERVICE
+  NAME COMPONENTS: 200                  SERVICE/SECTION: IRM
+  SIGNATURE BLOCK PRINTED NAME: ONE USER
+KEY: XUPROG                             GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: XUMGR                              GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: XUPROGMODE                         GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: XUFILEGRAM                         GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: XUSCREENMAN                        GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: DIEXTRACT                          GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: IBDF IRM                           GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+KEY: ROR VA IRM                         GIVEN BY: PATCH,USER
+  DATE GIVEN: FEB 09, 2016
+  RESTRICT PATIENT SELECTION: NO        ASK DEVICE TYPE AT SIGN-ON: DON'T ASK
+  AUTO MENU: YES, MENUS GENERATED       TYPE-AHEAD: ALLOWED
+  TIMED READ (# OF SECONDS): 10000      PRIMARY MENU OPTION: EVE
+SECONDARY MENU OPTIONS: DIUSER          SYNONYM: FM
+SECONDARY MENU OPTIONS: XMMASTER
+SECONDARY MENU OPTIONS: XUPROGMODE      SYNONYM: .
+  TIMESTAMP: 64456,45488
+CPRS TAB: COR                           EFFECTIVE DATE: JUL 24, 2002
+User Class: PRIVACY ACT OFFICER         ISPRIMARY: Yes
+
+Is this the person whose data you want cloned? YES
+
+You may enter a date, when the users that are being created/updated
+will no longer have access to the system.
+Enter (optional) TERMINATION DATE: 
+
+                          Batch Entry of New Persons
+                          --------------------------
+
+Clone of: USER,ONE
+Enter NEW PERSON's name (Family,Given Middle Suffix): SMITH,JOHN T
+  Are you adding 'SMITH,JOHN T' as a new NEW PERSON (the 72ND)? No// Y  (Yes)
+Checking SOUNDEX for matches.
+     SMITH,MARY
+Do you still want to add this entry: NO//Y
+Name components.
+FAMILY (LAST) NAME: SMITH// 
+GIVEN (FIRST) NAME: JOHN// 
+MIDDLE NAME: T// TIBERIUS
+SUFFIX: 
+Now for the Identifiers.
+INITIAL: JTS
+SSN: 234-56-7890??
+     ANSWER MUST BE 9 CHARACTERS IN LENGTH
+SSN: 234567890
+SEX: M  MALE
+NPI: 
+Do You Want To Clone PERSON CLASS? YES
+
+Next!
+Enter NEW PERSON's name (Family,Given Middle Suffix): ^
+
+Where do you want to print the COMPUTER ACCOUNT NOTIFICATION LETTERS?
+DEVICE: HOME// TELNET  TELNET  [YOU CAN NOT SELECT A VIRTUAL TERMINAL]
+DEVICE: HOME// ;80;999  TELNET
+
+
+        CREATING A NEW ACCOUNT FOR 'SMITH,JOHN TIBERIUS'
+
+One moment please...          
+                                USER ACCOUNT NOTIFICATION
+           
+                              Department of Veterans Affairs
+                                      SuperStar VAMC
+                                       123 anywhere
+                                   anytown, state, zip
+
+
+
+
+
+
+          
+          JOHN TIBERIUS SMITH
+          IRM   ()
+
+
+
+
+          
+          ---
+           
+           
+           
+          A user account has been created in your name to enable you
+          to access on-line clinical and/or administrative data
+          required to perform your duties as an employee of the
+          Department of Veterans Affairs.  Please read the enclosed
+          NEW USER INFORMATION before you attempt your first log-on
+          to the system.  Questions about access should be referred
+          to the AIS Application Coordinator in your service, your
+          facility Information Security Officer (ISO), or your IRM
+          Service.  
+           
+           
+          Your Computer Access Coordinator is:
+                                   
+                                   
+                                   
+          Your Facility Information Security Officer:
+                                   
+          Your Alternate Information Security Officer:
+                                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+                           COMPUTER ACCOUNT ACCESS POLICY
+      
+                           Department of Veterans Affairs
+                                  Your VA Facility
+
+     
+     JOHN TIBERIUS SMITH
+     IRM   ()
+     
+  
+ As an authorized user of VHA automated information systems (AISs) and 
+ having access to data stored in them, I will be given sufficient access to 
+ perform my assigned duties.  I will use this access ONLY for its intended 
+ purpose and understand the following policies that apply to VA data and 
+ computer systems: 
+  
+ I agree to safeguard all passwords (e.g., Access/Verify codes, electronic 
+ signature codes) assigned to me and am strictly prohibited from disclosing
+ these codes to anyone including family, friends, fellow workers,
+ supervisor(s), and subordinates for ANY reason.  
+  
+ I understand that I may be held accountable for all entries/changes made to
+ any government AIS using my passwords.  
+  
+ I am aware of the regulations and facility AIS security policies designed 
+ to ensure the confidentiality of all sensitive information.  I am aware 
+ that information about patients or employees is confidential and protected
+ from unauthorized disclosure by law.  I understand that my obligation to
+ protect VA information does not end with either the termination of my
+ access to this facility's systems or with the termination of my government
+ employment.  
+  
+ I will exercise common sense and good judgment in the use of electronic 
+ mail.  I understand that electronic mail is not inherently confidential and
+ I have no expectation of privacy in using it.  I understand that technical
+ or administrative problems may create situations which requires viewing of
+ my messages.  I also understand that facility management officials may
+ authorize access to my electronic mail messages whenever there is a
+ legitimate purpose for such access.  
+  
+ I understand that a violation of this notice constitutes disregard of a 
+ local and/or VHA policy and will result in appropriate disciplinary action 
+ as defined in VA employee conduct Regulations (VAR 820(b)) as well as 
+ suspension/termination of access privileges.  
+  
+ I affirm with my signature that I have read, understand, and agree to 
+ fulfill the provisions of this User Access notice.  
+  
+    
+     Signature:________________________
+               JOHN TIBERIUS SMITH IRM
+     RETURN THIS FORM TO: IRMS - NEW ACCTS (xxx/xxx)
+
+
+
+          Add a New User to the System
+          Grant Access by Profile
+          Edit an Existing User
+          Deactivate a User
+          Reactivate a User
+          List users
+          User Inquiry
+          Switch Identities
+          File Access Security ...
+             **> Out of order:  ACCESS DISABLED
+          Clear Electronic signature code
+          Electronic Signature Block Edit
+          List Inactive Person Class Users
+          Manage User File ...
+          OAA Trainee Registration Menu ...
+          Person Class Edit
+          Reprint Access agreement letter
+
+Select User Management <TEST ACCOUNT> Option: 
+
+
+How To Move A Patient To A Different Site
+	Moving A Patient To A Fake Site (Moving Duplicate Patient Records)
+	After install, in the vapals programming environment:
+DO SITEIDX^SAMIMOV
+It won't look like anything happened, but later steps won't be possible
+without this step.
+
+In your browser, with the correct information for your site inserted in the
+url in place of "vapalsyotta.fiscientific.org", go to
+http://vapalsyotta.fiscientific.org:9080/gtree/%25wd(17.040801,%22B%22)
+
+On that page, look for 
+|--patient-lookup 
+|  |--69 
+
+The number may or may not be 69. Replace the site information
+in the following url the same way you did before and if the number is
+different replace the 69 with the correct number in the following url.
+http://vapalsyotta.fiscientific.org:9080/gtree/%25wd(17.040801,69,%22siteid%22)
+
+If it all worked right, you should see a list of patients separated by
+site. You'll notice duplicates because they'll have two or more numbers
+under their name.
+
+Choose a Site to move the duplicates to. If you don't have another site
+available follow the instructions here: 
+http://www.vistaexpertise.net/newsite/project/vapals-elcap/dist/18-x-16/t3/how-to-add-a-vapals-site.html
+
+In the vapals programming environment
+> DO DEDUP^SAMIMOV
+
+Here's an example of the interface.
+
+Pick the FROM Site -
+Select SAMI SITE: PHI  PHILADELPHIA, PA VAMC     PHI  PA  VAMC  642  
+Pick the TO Site -
+Select SAMI SITE: SEA  PUGET SOUND HCS     SEA  WA  VAMC  663  
+Confirm removing duplicates from  PHI by moving them to SEA? YES
+
+Refresh the last browser page. All of the duplicates should be moved to the
+selected site. 
+
+If any step doesn't work, please contact your VAPALS-ELCAP development team.
+
+
+System Maintenance
+	Stopping and Restarting System
+	Integrity Checking
+Here's one for your notes, if you don't have it already: mupip integ -fast
+-REGION '*' which you should run at Unix from time to time to ensure a habitat
+is healthy. Eventually, we'll have that automated to run every day, but for
+now we're just trying to remember to run it manually whenever we're working
+with one of the habitats, as a way to check in and make sure there's no
+corruption. That fast integrity check isn't as complete as a full one, but it's
+much faster and catches most serious errors. 

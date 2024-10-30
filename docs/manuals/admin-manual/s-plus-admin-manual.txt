@@ -3,7 +3,7 @@ Administration Manual
 
 Table of Contents
 Who This Manual Is For
-How To Access Programmer Mode (Administration Dashboard)
+How To Access Administrator Mode
 How To Add A User
 	Superuser
 	Administrator
@@ -17,11 +17,12 @@ How To Move A Patient To A Different Site
 How To Produce CSV Reports
 System Maintenance
 	Stopping and Restarting System
-	Integrity Checking
 	Restart Web Service
+	Integrity Checking
+	
 
 Questions:
-Did we de-osehra-ify and de-vapals-ify the servers we are sending to Ethiopia?
+Did we de-osehra-ify and de-vapals-ify the servers we are sending to Ethiopia? Yes.
 Adding a New Person requires a nine-digit SSN
 Would all new users be cloned from USER,ONE?
 How do we designate a Superuser?
@@ -30,23 +31,21 @@ What about that letter that appears when a New Person is created?
 I don't remember how to add a site but it might be in the .txt of some patch.
 
 
-Who This Manual Is For
+*Who This Manual Is For
 Sometimes actions need to be taken that require either more authority or more
-specialized knowledge than the are regularly performed in Screening Plus. This
-manual is intended for either the head of the lung-screening program or a
+specialized knowledge than those that are regularly performed in Screening Plus.
+This manual is intended for either the head of the lung-screening program or a
 designated medical or technological practitioner working closely with the
 person who has the authority to authorize these actions.
 
 This includes actions such as adding or removing users, changing permissions
-for certain users, move a patient, produce specialized reports for export, and
-maintaining the Screening Plus system.
+for certain users, moving a patient to a different site, producing specialized
+reports for export, and maintaining the Screening Plus system.
 
-How To Access Programmer Mode (Administration Dashboard)
+*How To Access Administrator Mode
 Currently some actions require that the administrator access what is called
-programmer mode to perform them. A user authorized to take these actions needs
-to be entered in the system with special permissions. The first person to have
-permission to take these actions needs to be added by your Screening Plus
-support team. 
+roll-n-scroll mode to perform them. The first person to have permission to take
+these actions needs to be added by your Screening Plus support team. 
 
 	To Enter Programmer Mode
 		Access Screening Plus server 
@@ -57,7 +56,7 @@ support team.
 		  SET DUZ=X, D ^XUP
 		Then proceed as the manual instructs.
 
-How To Add A User
+*How To Add A User
 Capture for adding a new person
 
 VAPALS>S DUZ=1
@@ -244,63 +243,6 @@ One moment please...
           Your Alternate Information Security Officer:
                                    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-          ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           
           
                            COMPUTER ACCOUNT ACCESS POLICY
@@ -378,6 +320,14 @@ One moment please...
 
 Select User Management <TEST ACCOUNT> Option: 
 
+	Superuser
+	Administrator
+	Edit an Existing User
+    Deactivate a User
+    Reactivate a User
+ 	Change Access and Verify Codes
+
+How To Add A Site
 
 How To Move A Patient To A Different Site
 	Moving A Patient To A Fake Site (Moving Duplicate Patient Records)
@@ -426,6 +376,10 @@ If any step doesn't work, please contact your VAPALS-ELCAP development team.
 
 System Maintenance
 	Stopping and Restarting System
+	
+	VAPALS-ELCAP>zwr ^%webhttp
+^%webhttp(0,"listener")="stopped"
+	
 	Integrity Checking
 Here's one for your notes, if you don't have it already: mupip integ -fast
 -REGION '*' which you should run at Unix from time to time to ensure a habitat

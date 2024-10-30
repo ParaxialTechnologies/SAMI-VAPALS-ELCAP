@@ -1,0 +1,363 @@
+MVer Foundation
+
+Overall, the name for this new versioning and distribution system is Mver.
+
+Thought of as software, for now when distributing Vista software such as 
+George's work it is just a way of using KIDS, and when distributing Mash for 
+now it is a way of using `%RO` and `%RI`.
+
+To these it adds some libraries that can be used to calculate checksums, keys, 
+and other very useful values for identifying the versions of M software.
+
+Gradually, revision by revision, Mver will add datasets and supporting 
+software to make it possible to:
+
+1. precisely identify what's in an existing M habitat and whether it is 
+caught up with the current edition and revision of the software in question,
+
+2. calculate accurately the sequence of updates required to bring that habitat 
+up to date,
+
+3. perform those updates automatically in a controlled way, and
+
+4. populate a shared dashboard that lets us simultaneously track the exact 
+update status of an entire constellation of habitats, which we will need to 
+inexpensively manage dozens of ScreeningPlus habitats around the world.
+
+Each new version of Mash will take an incremental step in this direction.
+
+To support that, in our practices, whether using KIDS or `%RO` or writing 
+documentation or putting comments in our routines, we need to start shifting 
+our mental models and terminology to match, so we can understand the changes 
+we need to make, including why we need to make them, and easily translate back 
+and forth between our old KIDS-based terminology and our new Mver terminology.
+
+My goal is to make this as simple and painless as possible, with no 
+unnecessary complications, because life is already too complicated and it 
+doesn't need me stirring the pot any more than necessary.
+
+I'm going to write about the basic ideas we need when we talk about versions 
+of software. I'm going to show in each case how the old and present 
+terminology causes big problems for us by conflating different things until 
+we're unsure which one we mean, even where it is important to be sure. I'll 
+show how our old keys and identifiers, such as patch IDs, magnify that 
+confusion and create problems that can only be resolved manually, by having 
+highly experienced and expensive professionals scratch their heads over the 
+problem each and every time, blocking any chance at automation so long as we 
+continue to use those old, confused terms and ideas.
+
+This exploration of our status quo is not just to motivate us to change but 
+also to raise our shared understanding of our real needs, until it is easy to 
+see why we need the new terminology and ideas to let us create automated 
+version-control software.
+
+I'll break this up into bite-sized discussions, usually just two ideas and 
+terms at a time, covering the old one's problems and how the new one makes 
+those problems go away.
+
+I'll space this discussion out one a day, so we have time to discuss and come 
+to grips with each before we move on, to avoid getting overwhelmed. In each 
+case, understanding the problem and solution in each pair of terms takes work 
+on our part; it challenges our existing comfortable (but confused) habits of 
+thought with a breath of (sometimes unwelcome) fresh air. I speak from 
+experience. Each big step forward Ken and I took toward Mver over the past 
+seven years came with difficulty, after getting it wrong for years and being 
+plagued by the resulting problems before figuring out we ourselves were 
+causing those very problems.
+
+I hope in this way to spare you what Ken and I went through, to make it easy 
+and quick for you to understand Mver and how to use it to manage our improving 
+ScreeningPlus software lifecycle, to make it faster and easier to release 
+updates.
+
+**Mver 1: Package, Application, & App**
+
+*Intro to Packages*
+The center of VA's existing software lifecycle, more central even than KIDS, 
+is the Package file (9.4), which lists all of Vista's packages. Packages are 
+Vista's main way of dividing up the whole of Vista into manageable pieces, 
+pieces small enough that each one can be assigned to a single development team 
+to manage that part of Vista.
+
+Each package contains all the routines, globals, and other pieces that make up 
+that package. We usually refer to these pieces of a package as package 
+elements. Each entry in Vista's Package file describes the package and lists 
+all of its package elements, or at least is supposed to. That's why this file 
+was created long, long ago.
+
+This is one of Vista's hub files, like the Patient file or New Person file. 
+That means many other files point to the Package file and otherwise depend on 
+it, and many other ideas and terms throughout Vista code, data, and 
+documentation are derived from the idea of a package.
+
+*Intro to Applications*
+Throughout the tens of thousands of routines and documents created in the 
+Vista world over the past half century, the term *application* has been used 
+as a synonym of the word package as described above. There is no "Application 
+file" in Vista; the Package file records all applications. Having application 
+be a synonym for package in this way does not cause any problem; English 
+speakers are well familiar with having choices of synonyms to pick from.
+
+*Intro to Apps*
+Apple introduced the term app to mean an application designed to be run on an 
+iPhone. From there it spread to mean an application designed to be run on any 
+smart phone, on a tablet, or on the web, and eventually its meaning has spread 
+to also be used as a synonym for application generally (though a shrinking 
+number of people sometimes still distinguish smart-phone apps from general 
+apps).
+
+For our purposes, app makes another fine synonym for package and application. 
+It's shorter and was not already used for anything else. It is convenient when 
+discussing version-control software, where we need to refer over and over and 
+over to packages. In general, good language idiom uses short words for the 
+ideas we need to say the most often, and saves longer words for the ideas we 
+say less often. As software and its ideas have grown from being obscure things 
+only encountered by professionals to becoming part of everyone's everyday 
+life, it makes sense that our term for it would start out as the 
+four-syllable, twelve-letter application before eventually shrinking to the 
+one-syllable, three-letter app.
+
+So far, no problem.
+
+*Packaging Apps Before KIDS*
+A related but very different idea from an app concerns how the software for 
+that app is distributed, which requires packaging up its elements from the 
+source system so they can be installed on many target systems.
+
+Before KIDS was introduced in 1995, this was always done in two steps.
+
+First, all package elements that were not routines (that is, all package data, 
+info stored in a package's globals) were converted into routines, called init 
+routines. If run on the target system, those init routines would recreate 
+those data elements there. A Fileman module called `DIFROM` (`DI` being 
+Fileman's main prefix, `FROM` meaning we're packaging up our data to send from 
+me to you) was run on the source system. It asked the user to select the data 
+elements to move, and then it created the set of init routines that the target 
+systems could run to recreate those elements there. Back then, every version 
+of a package shipped not just the routines that normally run in that package 
+but also its set of init routines to be run once, when upgrading to that 
+version of the package.
+
+The main problem left for distribution, then, was how to get all those 
+routines from the source system to the target system.
+
+So second, all those routines would be packaged up in one of two ways.
+
+The old way was to use `%RO` to write the routines out to a data file on a 
+9-track magnetic tape. Copies of those tapes were made, one for each target 
+site. In VA, those were packaged up and physically mailed to each VA hospital, 
+where they were loaded onto each computer and installed in each habitat. In 
+IHS, they were often loaded into the back of pickup trucks that drove out to 
+reservations across the country to be installed one by one at each site, 
+necessitated partly by uncertain mail delivery on reservations, partly by a 
+lack of trained installers at many of the smaller IHS sites.
+
+Tom Munnecke helped VA set up its nationwide intranet way back when, and he 
+wrote Mailman, so he was eager to upgrade VA's software distribution system. 
+He wrote Packman, a module of Mailman, that could package up a set of routines 
+in a source habitat and convert them into an email message, which could then 
+be sent to every VA site in the country faster and more cheaply than the 
+physical-tape method.
+
+Because of severe disk space limitations, this new method was not used for new 
+editions of the software, only for incremental revisions, what VA has for 
+decades called patches. So for a while VA adopted a hybrid system, using 
+physical tapes for new editions (e.g., Fileman version 21) and e-mail messages 
+for revisions (e.g., Fileman 21 patch 4).
+
+After a wave of hard-drive capacity upgrades across the country, VA improved 
+its software-distribution system further by replacing physical tapes with 
+direct system-to-system `ftp` transfers. The source habitat would set up a VMS 
+site to act as an ftp server and load its new edition there, in the form of a 
+`.RO` file (e.g., `FILEMAN-21.RO`), and sysadmins at the target sites would 
+ftp over to pull down the new edition, thus eliminating the need for tapes 
+entirely.
+
+IHS eventually followed suit.
+
+This was the state of affairs, more or less in 1995.
+
+So on the one hand we had Packages or Applications (or Apps later), and on the 
+other hand we had tapes or Packman messages or `.RO` files ftped from place to 
+place. There was no special confusion of terminology, despite the variety of 
+distribution mechanisms. Either a `.RO ` file was sent, by tape or ftp, or 
+else a Packman message was emailed, bypassing the need for a `.RO` file. 
+Either way loading the resulting e-mail message or `.RO` file resulted in the 
+routines being loaded into the target habitat, and running the init routines 
+recreated the new data structures (and/or converted existing ones).
+
+As yet we had no general term for the package of goodies containing the new 
+version, just specific terms depending on which distribution method was used.
+
+*Enter KIDS*
+On July 10, 1995, KIDS was released for the first time, introduced as part of 
+Kernel version 8, and Kernel itself was the first Vista package to be 
+distributed mainly by KIDS.
+
+The development of KIDS had been a joint venture between the Kernel (KIDS), 
+Fileman (DIFROM), and Mailman (Packman) teams, with the goal of a new 
+generation of Vista software distribution that could make it possible to avoid 
+two problems with the old system.
+
+First, in the old system, the only way to really inspect the new incoming 
+routines was to load them into an M habitat, which necessarily overwrote the 
+habitat's existing versions. If you decided it was a mistake and you didn't 
+actually want to install the new routines, you found out too late. So we were 
+in the habit of first loading new versions somewhere disposable, and then 
+comparing the results with our main habitats to decide if we wanted to proceed.
+
+KIDS introduced the concept of a loading dock, which it calls the "transport 
+global," which is scratch space in a new global, `^XTMP`, where the incoming 
+software is loaded instead of being dumped directly on top your habitat's 
+existing routine directory. Thus, all your new incoming routines, globals, and 
+everything else can be loaded into a habitat without being applied to it, 
+giving sysadmins the time they need to evaluate whether they want to proceed.
+
+This idea was borrowed directly from Mailman's Packman module, since, in 
+effect, the old Packman e-mail message acted as a similar loading dock. We 
+could read the message and study its contents before deciding whether to apply 
+it. KIDS just shifted the loading dock from the Message file to `^XTMP`, and 
+added a suite of tools to help with the comparisons.
+
+Second, M routines have always had strict size limits, but the size of Vista 
+data we wanted to be able to transport was growing and quickly outpaced those 
+limits. DIFROM had responded by splitting data across multiple init routines, 
+but data-heavy packages were starting to need to transport hundreds or even 
+thousands of init routines just to move their data around. It was awkward, and 
+it was running up against M portability limits for sizes of routines and 
+length of unique routine names.
+
+So KIDS used ideas from Packman to turn our old DIFROM system of distribution 
+inside out.
+
+Instead of the old DIFROM method of turning everything into routines so only 
+routines had to be distributed, KIDS exploited the Packman method of turning 
+routines into global data, so only global data had to be exploited. Where 
+Packman messages package up a set of routines, including the inits, into data, 
+KIDS cuts out the middle man. No longer did we need to first use `DIFROM` to 
+convert all our data into routines. KIDS used pretty much the same dialog as 
+`DIFROM` but instead of generating init routines it added that data to its 
+growing transport global, and also added the package's actual routines 
+alongside that data, creating a package of data to be transported. Once this 
+package was shipped one way or another to the target sites, that package could 
+be loaded into each target habitat's loading dock, analyzed, and when deemed 
+appropriate it could be installed, recreating the source habitat's data and 
+its routines in the target habitat.
+
+Together, these two changes KIDS introduced made for a more flexible, powerful 
+framework for Vista software distribution.
+
+It just required a conceptual change from a distribution being a suite of 
+routines to instead being a package of goodies (package elements) that 
+included both data and routines.
+
+*Kids & Packages*
+The obvious term for this package of goodies was a package, because Mailman's 
+Packman module was already using the verb to package in its own name as well 
+as in its operational terminology. From Mailman's standpoint, it was packaging 
+up routines into an e-mail message, but from KIDS's standpoint it made better 
+sense to think of it as packaging things up into a package, which in turn 
+could be distributed either as a `.KID` file (replacing the old `.RO` method) 
+or as an e-mail message (extending the old Packman format into a more powerful 
+KIDS format).
+
+So now package meant both the package of goodies you ship around for 
+distribution and it also still meant the app itself for which you need to ship 
+a new version. There was no clear way to disambiguate whether you were talking 
+about a suite of software or an update to that suite; the word package was 
+used for both.
+
+*Disambiguating Apps from Packages*
+Some VA documenters and teachers (such as myself) noticed this problem and 
+started pushing us to abandon the use of the word package as a synonym for 
+app. We felt we should only refer to apps as apps (or applications, never as 
+packages), and that would free up the term package to be used for the packages 
+of goodies we ship from place to place.
+
+*Where That Leaves Vista*
+Vista documentation and code and UI all remain hopelessly confused about this, 
+because the need to make this change became clear just as VA began sabotaging 
+Vista development, making widespread changes to code, documentation, and 
+shared terminology increasingly difficult and eventually impossible. VA and 
+Vista thus remain stuck.
+
+The Vista Package file, under this new schema does not describe packages. It 
+only describes apps, although it also includes a general accounting of various 
+editions and revisions that have been applied for each app.
+
+KIDS's Install file also does not describe packages. It describes when 
+packages were installed in the current habitat. It is pretty good about which 
+apps were updated and when and how, but it is unfortunately vague about 
+precisely which package was being installed to introduce those updates.
+
+KIDS's Build file also does not describe packages. It describes the recipes 
+used to create those packages. But because it uses version IDs as its main 
+database key, not package IDs, every time you install a newer build for a 
+package, KIDS overwrites the old build recipe with the new one, thus erasing 
+your history of what you earlier installed. This can make it tough to work out 
+precisely which builds were installed where and when.
+
+At the heart of this confusion is that Vista has no file anywhere that 
+documents actual packages, in this newer KIDS sense of the word. There is no 
+permanent record of the packages have been created from or installed into the 
+current habitat, only nearby concepts like apps, installs, and "builds" 
+(recipes).
+
+As we will see in the days ahead, over half of the problems with Vista's 
+versioning system stem directly from this confusion. We don't permanently 
+track KIDS packages, and we don't even have an unambiguous way to refer to 
+them generally or identify them individually. Every hack used to date to work 
+around this gap has caused as many problems as it has solved.
+
+*Mver, Apps, & Packages*
+But the first part of solving a problem is to understand that we have a 
+problem.
+
+Using package and application as synonyms has bred a rat's nest of 
+version-control problems.
+
+The first step in Mver's migration out of this Gordian knot of problems is 
+that in Mver:
+
+1. App (or Application when we're being formal) always and only refers to the 
+complete suite of software that makes up a part of Vista. The elements of a 
+single app are managed together mostly independently from the elements of 
+different apps, and usually by a single, coherent team of developers who 
+manage it for a long time to ensure stability and continuity in the app's 
+development.
+
+2. Package always and only refers to a package of goodies distributed to 
+install or upgrade an app, that is, to install a new version of that app. 
+Coming up with workable version IDs will be among the challenges addressed in 
+later discussions, but more centrally packages themselves will also need their 
+own unique IDs, to remove all the confusion about which one we mean.
+
+3. Ergo, Vista's "Package" file (9.4), despite its name, is actually an App 
+file. At present Vista has no true Package file. New Mver datasets need to be 
+introduced to permanently track every package that has been distributed from 
+or installed into each habitat, and software needs to be created and updated 
+to automate this tracking.
+
+4. Likewise, whenever we're reading KIDS documentation, UI elements, or 
+comments in routines, and whenever we're talking with VA and IHS Vista folks, 
+every single time they say the word "package" a red flag needs to go up in our 
+minds to remind us to double-check which kind of package they're referring to, 
+an app or a distribution—and especially to notice when they or we are confused 
+about which they or we mean, which happens too often for comfort.
+
+Effectively, we're going to learn to be proficient with two different dialects 
+here, the new Mver terminology and concepts for version control, and the old 
+KIDS/Patch Module terminology and concepts.
+
+The new terminology is a superset of the old one; every idea that can be clearly expressed in the KIDS/Patch Module terminology can also be clearly expressed in Mver.
+
+But the old terminology is only a subset of the new one; there are many important ideas that can be clearly expressed in Mver that are difficult to think about clearly using KIDS/Patch Module.
+
+By becoming bilingual in this way, we can not only move into a better lifecycle for ScreeningPlus, but we can also de-confuse situations involving KIDS, Patch Module, and people who think in their terms. This is going to be enormously helpful gong forward.
+
+But it all starts with disambiguating app and package as described above for our first step.
+
+Here endeth my intro to this first step today.
+
+Feel free to share any questions, comments, or concerns you have about it, so we can discuss them together.
+

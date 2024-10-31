@@ -1,14 +1,14 @@
-#:patchtitle: CT Evaluation Report Improvements
+#:patchtitle: CSV Reports Update & Fix CT Upload Misspelled Name Problem
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: Screening+
 #:appdir: project/screening-plus
-#:version: 18-19-b1
-#:rversion: 18-19
-#:partialdir: 18-19/b1
+#:version: 18-20-b1
+#:rversion: 18-20
+#:partialdir: 18-20/b1
 #:status: release
-#:vista-version: SAMI*18.0*19 SEQ #19 b1
-#:vista-longversion: Version 18.0, Patch ID #19, Seq# 19, Build 1
+#:vista-version: SAMI*18.0*20 SEQ #20 b1
+#:vista-longversion: Version 18.0, Patch ID #20, Seq# 20, Build 1
 #:priority: high
 #:categories: routine, file
 $TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
@@ -73,7 +73,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} improvements to the CT Evaluation report.
+ #{nmsp} #{version} #{patchtitle}
 
  The definitive source for the #{appname} application - codebase,
  package distributions (including this one), and documentation - is at
@@ -91,51 +91,24 @@ ii. Contents
 
  The changes in this release are:
 
- #.#. Improve or fix items in the CT Evaluation Report.
+ #.#. Update CSV reports.
 
-   Request (medium priority): Various changes to the CT Evaluation
-   Report have been requested by the iELCAP team and the Mount Sinai
-   radiologists:
-
-   1. Annual repeat CT: When the radiologists selects ‘Annual repeat'
-      as the LDCT follow-up, the report says “A followup CT scan is
-      recommended...”. This should be changed to “An annual repeat CT
-      scan is recommended...”.
-   2. Follow-up recommendation is missing a dash in "followup CT."
-   3. The heading “Breast” is missing in the report: A situation arose
-      where nothing was selected for the breast, but a comment was
-      entered. The comment shows up, but there’s no heading for the
-      Breast section, so it’s sort of a dangling sentence.
-   4. CAC score: If the CAC score is 0 (that is, the radiologist
-      selects "None" for all), the report doesn’t say anything about
-      CAC.  If the CAC score is 0, it should say: “Coronary Artery
-      Calcifications: None. The Visual Coronary Artery Calcium (CAC)
-      Score is 0.”
-   5. Ensure generator isn't adding periods after comment blocks.
-   6. Add text if "insufficient information for sign off" checkbox is
-      checked.
-   7. Swap order of emphysema finding and CAC score.
-   8. The wrong study ID was on the CT Eval report. 
-   9. Aortic valve calcification: Similar to CAC score as above -- if
-      it’s None, it should explicitly say None.
+   Request 24-002, 24-021 (medium priority): Adding MRN and StudyID as well as 
+   all new fields to the CSV reports.
    
    solution: These changes and fixes have been made.
 
-   reported: 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai
-   radiologists.
-
- #.#. Install a routine that allows the movement of patients to
-      another site.
+   reported: 2024-09-24 by L. Yaw, 2024-09-30 by A. Jirapatnikal.
+   
+ #.#. Fix issue when CT upload has a misspelled name. Currently, another 
+ 	patient record is created.
  
-   change: Allow patient movement to another site in the same network
-   or the movement of an accidental duplicate patient record to a faux
-   site. This is actually from an earlier patch that was not taken up
-   by the field. If needed, request instructions from your #{appname} 
-   support team.
+   Request 24-005 (medium priority): Allow CT upload to be matched to patient record even with 
+   misspelled names. 
    
-   solution: Include SAMIMOV in release.
+   solution: .
    
-   completed: 2024-09-20 by F. Marshall
+   reported: unknown date by G. Lilly.
 
 #. Package elements
 
@@ -375,20 +348,20 @@ ii. Contents
     listed with checksums on your screen. Here's a sample session.
 
     Select Installation <TEST ACCOUNT> Option: 2<Enter> Verify Checksums in Transport Global
-    Select INSTALL NAME: SAMI*18.0*19<Enter>     Loaded from Distribution  [datetime]
-         => Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+    Select INSTALL NAME: SAMI*18.0*20<Enter>     Loaded from Distribution  [datetime]
+         => Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
 
     This Distribution was loaded on [datetime] with header of
-       Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+       Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
        It consisted of the following Install(s):
-       SAMI*18.0*19
+       SAMI*18.0*20
 
     Want each Routine Listed with Checksums: Yes// <Enter>  YES
     DEVICE: HOME// ;C-SCROLL<Enter>  TELNET
 
 
 
-    PACKAGE: SAMI*18.0*19     [datetime]                                PAGE 1
+    PACKAGE: SAMI*18.0*20     [datetime]                                PAGE 1
     ‍---------------------------------------------------------------------------
 
 
@@ -481,17 +454,17 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2024-09-12/22      George P. Lilly (ven)
+ Developed   2024-09-25      George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2024-09-24         George P. Lilly (ven)
+ Tested      2024-         George P. Lilly (ven)
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
- Released    2024-09-25         Frederick D. S. Marshall (ven)
+ Released    2024-         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

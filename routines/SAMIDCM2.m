@@ -116,12 +116,18 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
 ADDITEMS(ARY,SID) ; add Image items to Items array
  ;
  new root set root=$$setroot^%wd("dcm-intake")
+ new proot set proot=$$setroot^%wd("vapals-patients")
+ new pien,simrn
+ set pien=$o(@proot@("sid",SID,""))
+ set simrn=$g(@proot@(pien,"simrn"))
+ q:simrn=""
  ;
- q:'$d(@root@("studyid",SID)) ; nothing to add
+ ;q:'$d(@root@("studyid",SID)) ; nothing to add
  ;
  n images s images=""
  n ien s ien=""
- f  s ien=$o(@root@("studyid",SID,ien)) q:ien=""  d  ;
+ ;f  s ien=$o(@root@("studyid",SID,ien)) q:ien=""  d  ;
+ f  s ien=$o(@root@("emrn","e"_simrn,ien)) q:ien=""  d  ;
  . n studydt s studydt=$g(@root@(ien,"json","StudyDate"))
  . q:studydt=""
  . ;

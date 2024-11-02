@@ -190,8 +190,6 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  if site="" set site="XXX" ; default to test site
  if site'="" set @root@("SITE",site,ien)="" ;
  ;
- ; patient name
- ;
  ;
  n gp s gp=$na(@root@(ien,"json","patient_study_details"))
  i '$d(@gp) d  ;
@@ -201,6 +199,37 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  . q:$d(@gp@("PatientName"))
  . s return("error")="Missing patient study details"
  . q
+ ;
+ n simrn s simrn=$g(@gp@("Patient ID"))
+ i simrn="" s simrn=$g(@gp@("PatientID"))
+ ; enter the mrn into the mrn index
+ i simrn'="" s @root@("emrn","e"_simrn,ien)=""
+ ; that's all we're going to do on receiving a json message
+ ;  announcing the availablity of an image. The "matching"
+ ;  will be done when the Case Review page is generated for the patient
+ ; The Unmatched image report will do a comparison and list those
+ ;  images which do not have a mrn which matches
+ ; 
+ ;
+ set return("status")="ok"
+ set return("siteid")=site
+ set return("ien")=ien
+ ;
+ if $get(ARGS("returngraph"))=1 do  ;
+ . merge return("graph")=@root@(ien)
+ . q
+ ;
+ n jary
+ m jary("result")=return
+ d encode^%webjson("jary","RESULT")
+ s HTTPRSP("mime")="application/json"
+ ;
+ quit  ; end of ws WSDCMIN^SAMIDCM1
+ ;  
+ ; The following comments and code is deprecated because we are not
+ ;  going to try and register a new patient based on the usually
+ ;  incomplete data accompanying the image data.
+ ;
  ;
  ;patient_study_details 
  ;--Frame of Reference UID 1.3.6.1.4.1.14519.5.2.1.6279.6001.178796764874541005921876698858
@@ -233,9 +262,28 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  . n gender s gender=$g(@gp@("Patient's Sex"))
  . i gender="" s gender="M"
  . s vars("gender")=gender
- . n patid s patid=$g(@gp@("Patient ID"))
- . i patid="" s patid=$g(@gp@("PatientID"))
- . s vars("patid")=patid
+ . ;n patid s patid=$g(@gp@("Patient ID"))
+ . ;i patid="" s patid=$g(@gp@("PatientID"))
+ . ;s vars("patid")=patid
+ . ;
+ . ; Although the json uses the label Patient ID or PatientID, 
+ . ;  the entry is interpreted as the Medical Record Number or mrn
+ . ;  and is stored in the variable simrn 
+ . ;  and is indexed in the index emrn, prefixed by an "e" to
+ . ;   insure that it is treated as a string in the index
+ . ;  it is displayed in the header of every form and can be
+ . ;  viewed and modified on the intake form
+ . ;
+ . ; Also on the intake form, another unique identifier can be
+ . ;  added for the patient, called on the form the Studyid
+ . ;  it is stored in the variable sipid
+ . ;  It is not known until it is entered manually on the intake form
+ . ;
+ . ; See more documentation in SAMIUID.m
+ . ;
+ . n simrn s simrn=$g(@gp@("Patient ID"))
+ . i simrn="" s simrn=$g(@gp@("PatientID"))
+ . s vars("simrn")=simrn
  . n studyDate s studyDate=$g(@gp@("Study Date"))
  . i studyDate'="" s vars("studyDate")=studyDate
  . n trackID s trackID=$g(@gp@("Tracking Identifier"))
@@ -252,7 +300,7 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  . i studyid'="" s @root@("studyid",studyid,ien)=""
  . n dfn s dfn=$g(vars("dfn"))
  . i dfn'="" s @root@("dfn",dfn,ien)=""
- . i patid'="" s @root@("patid",patid,ien)=""
+ . i simrn'="" s @root@("emrn","e"_simrn,ien)=""
  . q
  ;
  ;
@@ -271,6 +319,28 @@ WSDCMIN(ARGS,BODY,RESULT,ien) ; receive from addpatient
  ;
  quit  ; end of ws WSDCMIN^SAMIDCM1
  ;
+BLDEMRN() ; scan through dcm-intake and make set every PatientID 
+ ; into the emrn index
+ n root,ien
+ s root=$$setroot^%wd("dcm-intake")
+ s ien=""
+ f  s ien=$o(@root@(ien)) q:ien=""  d  ;
+ . n gp s gp=$na(@root@(ien,"json","patient_study_details"))
+ . i '$d(@gp) d  ;
+ . . s gp=$na(@root@(ien,"patient_details"))
+ . . q:$d(@gp)
+ . . s gp=$na(@root@(ien,"json"))
+ . . q:$d(@gp@("PatientName"))
+ . . w !,"Can't find patient details ien:"_ien
+ . . q
+ . ;
+ . n simrn s simrn=$g(@gp@("Patient ID"))
+ . i simrn="" s simrn=$g(@gp@("PatientID"))
+ . ; enter the mrn into the mrn index
+ . W !,"simrn="_simrn
+ . i simrn'="" s @root@("emrn","e"_simrn,ien)=""
+ ;
+ quit
  ;
  ;
  ;
@@ -397,7 +467,7 @@ WSDCMKIL(return,filter) ; kill all but the 1st entry in dcm-intake
  ;s root=$$setroot^%wd("dcm-intake")
  ;m @root@(1)=atmp
  ;s @root@("sid",sid,1)=""
- q
+ ;q
  ;
  ;
  ;
@@ -470,12 +540,11 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  s droot=$$setroot^%wd("dcm-intake")
  n found s found=0
  n name s name=$$NORMALIZ($g(vars("name")))
- n patid s patid=$g(vars("patid"))
- s vars("simrn")=patid
+ n simrn s simrn=$g(vars("simrn"))
  n dien,lien,pien
  ;
  ; first look at the dcm-intake for name matches
- s dien=$o(@droot@("mrn",patid,""))
+ s dien=$o(@droot@("emrn","e"_simrn,""))
  i dien="" s dien=$o(@droot@("name",name,""))
  i dien'="" d  ; the name or mrn has been found locally
  . s found=1
@@ -486,14 +555,13 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  . s studyid=$g(@droot@(dien,"studyid"))
  . i studyid="" s found=0 q  ;
  . i studyid'="" s vars("studyid")=studyid
- . s vars("simrn")=patid
  . q
  ;
  if found=1 q found
  ;
  i dien="" d  ; not here, check patient-lookup
- . n patid s patid=$g(vars("patid"))
- . s lien=$o(@lroot@("mrn",patid,""))
+ . n simrn s simrn=$g(vars("simrn"))
+ . s lien=$o(@lroot@("emrn","e"_simrn,""))
  . i lien="" s lien=$o(@lroot@("name",name,""))
  . i lien="" s found=0 q  ;
  . i lien'="" s found=1
@@ -502,13 +570,12 @@ MATCH(vars) ; extrinsic which tries to match the message with an
  . s vars("dfn")=dfn
  . i dfn="" s found=0 q  ;
  . s pien=$o(@proot@("dfn",dfn,""))
- . d ENROLL^SAMIZPH1(.vars)
+ . i pien="" d ENROLL^SAMIZPH1(.vars)
  . s pien=$o(@proot@("dfn",dfn,""))
  . i pien="" s found=0 q  ;
  . s studyid=$g(@proot@(pien,"studyid"))
  . s vars("studyid")=studyid
  . i studyid="" s found=0 q  ;
- . s vars("simrn")=patid
  . q
  ;
  quit found ; end of $$MATCH^SAMIDCM1

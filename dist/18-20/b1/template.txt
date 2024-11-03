@@ -1,4 +1,4 @@
-#:patchtitle: CSV Reports Update & Fix CT Upload Misspelled Name Problem
+#:patchtitle: MRN Update to CSV Export and Image Upload, Data Dump Fix
 #:nmsp: SAMI
 #:lnmsp: sami
 #:appname: Screening+
@@ -93,22 +93,32 @@ ii. Contents
 
  #.#. Update CSV reports.
 
-   Request 24-002, 24-021 (medium priority): Adding MRN and StudyID as well as 
-   all new fields to the CSV reports.
+   Request 24-0021 (medium priority): Add MRN and StudyID to the CSV 
+   reports.
    
    solution: These changes and fixes have been made.
 
-   reported: 2024-09-24 by L. Yaw, 2024-09-30 by A. Jirapatnikal.
+   reported: 2024-09-30 by A. Jirapatnikal.
    
- #.#. Fix issue when CT upload has a misspelled name. Currently, another 
- 	patient record is created.
+ #.#. Change CT Upload to match to MRN instead of name.
  
-   Request 24-005 (medium priority): Allow CT upload to be matched to patient record even with 
-   misspelled names. 
+   Request 24-005 (medium priority): Allow CT upload to be matched to patient 
+   record even with misspelled names. 
    
-   solution: Ignore name mismatch if MRN matches.
+   solution: Match by MRN. If name does not match Screening Plus user needs to 
+   correct.
    
    reported: unknown date by G. Lilly.
+
+#.#. Interrum data dump fix.
+ 
+   Request 24-040 (medium priority): Still having problems with data dump bug.
+   
+   solution: Clean-up scratch data in ^TMP and add a kill command at the 
+   correct place.
+   
+   reported: 2024-10-08 by Marshall and Yaw.
+
 
 #. Package elements
 

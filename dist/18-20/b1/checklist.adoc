@@ -6,35 +6,45 @@ SAMI Patching Checklist for 18-20-b1
 -------------------------------------------------------------------------------
  0. Project discussion
   0.1. Which changes will be included
-	    Update CSV reports to include MRN, studyID, and new fields
+	    Update CSV reports to include MRN, studyID
+	    Interrum fix of Data Dump bug
 	    Fix problem of second record being created due to misspelled name upon
 	    	CT Upload
 
   0.2. Timeline: Release goal , Actual release
 
  1. Project set up
-X  1.1. git pull
-X  1.2. prepare checklist
-X  1.3. prepare recipe doc
-X  1.4. prepare template.txt doc  
-X  1.5. git pull/push
-  1.6. list updated routines
-		
+X  1.1. create new directory for patch (i.e. dist/18-20/b1)
+X  1.2. create new directories 'routines' and within that 'old' and 'new'
+X  1.3. copy pre-development routines into routines/old
+X  1.4. git pull
+X  1.5. prepare checklist
+X  1.6. prepare recipe doc
+X  1.7. prepare template.txt doc  
+X  1.8. git pull/push
+X  1.9. list updated routines
+		SAMICSV
+		SAMIDCM1
+		SAMIDCM2
 		SAMIPAT
   
-  1.7. list log routines
-        
+X  1.10. list log routines
+        none
 
-  1.8. write change descriptions for template.txt  
-  1.9. update dashboard (Google Drive)
+X  1.11. write change descriptions for template.txt  
+X  1.12. update dashboard (Google Drive)
      https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
      (sami pax) use pax^ARJTXRW	to determine dependencies
-  1.10. Regrettable Bodge script
+        7   11   12   14   15   16
+	   17   18   19
+X  1.13. Regrettable Bodge script not needed this patch
   		run within docs/www
   		../regrettable-bodge.py
   		then commit
 
  2. Update routines
+\  2.0. update recipe with before checksums -- do recipe^ARJTXRW (NEED TO UPDATE TO
+NEW PROCESS)
   2.1. Update SAMIPAT for pre/post-install if needed
       do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-20-b1")
   2.2. convert to new short version ids, update dates & times in each routine
@@ -124,7 +134,7 @@ N  7.6. update dashboard (sami envs)
   8.1. Email interested parties
   8.2. Update VAPALS Bugs and Requested Features spreadsheet
   8.3. File any returned captures
-  8.4. Update dashboard (sami envs)
+  8.4. Update dashboard (sami envs) (sami pax Date)
   
 -------------------------------------------------------------------------------
 VERSION CONTROL LINES FORMAT

@@ -264,6 +264,10 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . S OFFSET=OFFSET+1
  . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
  . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="simrn"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sipid"
+ . S OFFSET=OFFSET+1
  ;
  I SAMIFORM="siform" d  ;
  . ;S OFFSET=OFFSET+1
@@ -301,6 +305,10 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . . S OFFSET=OFFSET+1
  . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
  . . S OFFSET=OFFSET+1
+ . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"simrn"))
+ . . S OFFSET=OFFSET+1
+ . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sipid"))
+ . . S OFFSET=OFFSET+1
  . . ;
  . . I SAMIFORM="siform" d  ;
  . . . ;n kk s kk=$o(@root@("sid",SAMII,""))
@@ -336,6 +344,8 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  n filename s filename=$$FNAME(SITEID,SAMIFORM)
  d GTF^%ZISH($na(@SAMIOUT@(1)),3,SAMIDIR,filename)
  w !,"file "_filename_" written to directory "_SAMIDIR
+ ;
+ k @SAMIOUT
  ;
  quit  ; end of ONEFORM
  ;

@@ -1,7 +1,7 @@
 SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
- ;;18.0;SAMI;**7,11,17**;2020-01-17;Build 10
- ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b9
- ;mdc-v7;B104029869;SAMI*18.0*17 SEQ #17
+ ;;18.0;SAMI;**7,11,17,20**;2020-01-17;Build 1
+ ;mdc-e1;SAMICSV-20241106-ES+7xF;SAMI-18-20-b1
+ ;mdc-v7;B104029869;SAMI*18.0*20 SEQ #20
  ;
  ; SAMICSV contains a direct-mode service to produce the ScreeningPlus
  ; CSV export.
@@ -28,9 +28,9 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Import/Export - various prefixes
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-20
  ;@edition-date 2020-01-17
- ;@patches **7,11,17**
+ ;@patches **7,11,17,20**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -79,21 +79,28 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ;  SAMICSV fix double quotes in csv output, correct csv format no
  ; quotes for null cells.
  ;
- ; 2021-05-21 ven/mcglk&toad 18-11
+ ; 2021-05-21 ven/mcglk&toad 18-11   129e96b
  ;  SAMICSV bump version, date.
  ;
- ; 2022-12-11 ven/gpl 18-17-b3
+ ; 2022-12-11 ven/gpl 18-17-b3   1ebd6e6   38a324f
  ;  SAMICSV include last5 and saminame in every csv file on every row.
  ;
- ; 2022-12-13 ven/lmry 18-17-b3
+ ; 2022-12-13 ven/lmry 18-17-b3   af8a24f   92feae4
  ;  SAMICSV update log, bump date.
  ;
- ; 2024-08-17 ven/lmry 18-17-b6
+ ; 2024-08-17 ven/lmry 18-17-b6   a1a28de
  ;  SAMICSV bump version, date.
  ;
- ; 2024-08-21/22 ven/toad 18-17-b6
+ ; 2024-08-21/22 ven/toad 18-17-b6   bd5cfb4
  ;  SAMICSV annotate, update history, update version-control lines,
  ; hdr comments.
+ ;
+ ; 2024-11-03 ven/gpl 18-20-b1  93eabcc
+ ;  SAMICSV  add mrn and studyid identifiers to all extracts and kill TMP at finish
+ ; 
+ ; 2024-11-06 ven/lmry 18-20-b1
+ ;  SAMICSV update history, dates, version control lines
+ ;
  ;
  ;@contents
  ;

@@ -43,11 +43,10 @@ X  1.13. Regrettable Bodge script not needed this patch
   		then commit
 
  2. Update routines
-\  2.0. update recipe with before checksums -- do recipe^ARJTXRW (NEED TO UPDATE TO
-NEW PROCESS)
-  2.1. Update SAMIPAT for pre/post-install if needed
+X  2.0. update recipe with before checksums -- do recipe^ARJTXRW 
+X  2.1. Update SAMIPAT for pre/post-install if needed
       do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-20-b1")
-  2.2. convert to new short version ids, update dates & times in each routine
+X  2.2. convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
@@ -149,6 +148,11 @@ Line 3: space;mdc-e1;ROUTINENAME-date-echecksum;build
 
 Line 4: space;mdc-v7;bchecksum;full patch id
 		example: ;mdc-v7;1056432;POKER*1.0*3 SEQ #3
+		
+Do select^ARJTXRW(.routines) puts the routine names entered into the symbol table like 
+this example:routines("SAMICAS3”)=“”.  You can then use this snippet of code 
+s r="" f  s r=$o(routines(r)) q:r=""  write !,r,?10,$$sumb^%r(r),?25,$$sume^%r(r),?35,$$sumf^%r(r)  
+to determine the B, E, and F checksums for the routines entered into select^ARJTXRW.
 
 
 XINDEX

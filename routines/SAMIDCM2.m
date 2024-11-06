@@ -1,7 +1,7 @@
 SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
- ;;18.0;SAMI;**18**;2020-01-17;Build 1
+ ;;18.0;SAMI;**18,20**;2020-01-17;Build 1
  ;mdc-e1;SAMIDCM2-20240909-EcvLn1;SAMI-18-18-b1
- ;mdc-v7;B7818411;SAMI*18.0*18 SEQ #18
+ ;mdc-v7;B7818411;SAMI*18.0*20 SEQ #20
  ;
  ; SAMIDCM2 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
@@ -32,9 +32,9 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-20
  ;@edition-date 2020-01-17
- ;@patches **18**
+ ;@patches **18,20**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -76,9 +76,17 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
  ;  SAMIDCM2 (F2qWk B3750990 E2j7Bmz)
  ; file upload working: overhaul WSSHODOC.
  ;
- ; 2024-09-09 ven/toad 18-18-b1
+ ; 2024-09-09 ven/toad 18-18-b1  11b65e5
  ;  SAMIDCM2 (F??? B7818411 E???)
  ; add hdr + subrtn hdr comments, log, bump version + dates.
+ ;
+ ; 2024-11-02 ven/gpl 18-20-b1   e1a8895
+ ;  SAMIDCM2	
+ ; simplified image intake to match only on MRN when case review is generated
+ ;
+ ; 2024-11-06 ven/lmry 18-20-b1
+ ;  SAMIDCM2
+ ; bump history, dates, versions
  ;
  ;@contents
  ; ADDITEMS add Image items to Items array

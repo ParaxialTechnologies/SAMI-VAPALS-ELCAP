@@ -1,7 +1,7 @@
 SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
- ;;18.0;SAMI;**12,14,15,17,18,19**;2020-01-17;Build 1
- ;mdc-e1;SAMIPAT-20240924-E129BpK;SAMI-18-19-b1
- ;mdc-v7;B23769617;SAMI*18.0*19 SEQ #19
+ ;;18.0;SAMI;**12,14,15,17,18,19,20**;2020-01-17;Build 1
+ ;mdc-e1;SAMIPAT-20240924-E129BpK;SAMI-18-20-b1
+ ;mdc-v7;B23769617;SAMI*18.0*20 SEQ #20
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -30,9 +30,9 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-19
+ ;@release 18-20
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17,18,19**
+ ;@patches **12,14,15,17,18,19,20**
  ;
  ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
@@ -157,6 +157,9 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
  ; 2024-09-24 ven/lmry 18-19-b1 SAMIPAT
  ; Correct label for POS1819.
  ;
+ ; 2024-11-06 ven/lmry 18-20-b1 SAMIPAT
+ ; add POS1820, update history, add checksums, update version control lines
+ ;
  ;@to-do
  ;
  ; extend details pre-18-17-b8, add details.
@@ -170,7 +173,7 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
  ; POS1817 kids post-install for SAMI-18-17
  ; POS1818 kids post-install for SAMI-18-18
  ; POS1819 kids post-install for SAMI-18-19
- ;
+ ; POS1820 kids post-install for SAMI-18-20
  ;
  ;
  ;
@@ -298,6 +301,24 @@ POS1819 ; kids post-install for SAMI-18-19
  do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-19-b1")
  ;
  quit  ; end of kids-post POS1819^SAMIPAT;
+ ;
+ ;
+ ;
+ ;
+ ;@section 8 subroutines for SAMI-18-20
+ ;
+ ;
+ ;
+ ;
+ ;@kids-post POS1820^SAMIPAT
+ ;
+POS1820 ; kids post-install for SAMI-18-20
+ ;
+ do STANDARD
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-20-b1")
+ ;
+ quit  ; end of kids-post POS1820^SAMIPAT;
+ ;
  ;
  ;
  ;

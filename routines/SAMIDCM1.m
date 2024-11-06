@@ -1,7 +1,7 @@
 SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
- ;;18.0;SAMI;**16,17,18**;2020-01-17;Build 7
- ;mdc-e1;SAMIDCM1-20240909-E2LXhrL;SAMI-18-18-b1
- ;mdc-v7;B233069568;SAMI*18.0*18 SEQ #18
+ ;;18.0;SAMI;**16,17,18,20**;2020-01-17;Build 1
+ ;mdc-e1;SAMIDCM1-20240909-E2LXhrL;SAMI-18-20-b1
+ ;mdc-v7;B233069568;SAMI*18.0*20 SEQ #20
  ;
  ; SAMIDCM1 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
@@ -32,9 +32,9 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-20
  ;@edition-date 2020-01-17
- ;@patches **16,17,18**
+ ;@patches **16,17,18,20**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -110,9 +110,17 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
  ; fixing an emrn processing bug: in WSDCMIN add patid chk for
  ; @gp@("PatientID"); in $$MATCH add MRN support.
  ;
- ; 2024-09-09 ven/toad 18-18-b1
+ ; 2024-09-09 ven/toad 18-18-b1  11b65e5
  ;  SAMIDCM1 (F??? B233069568 E???)
  ; bump version, complete log, in MKSVC add subrtn hdr comments.
+ ;
+ ; 2024-11-02 ven/gpl 18-20-b1 e1a8895
+ ;  SAMIDCM1
+ ; simplified image intake to match only on MRN when case review is generated
+ ;
+ ; 2024-11-06 ven/lmry 18-20-b1
+ ;  SAMIDCM1
+ ; bump history, dates, version control lines
  ;
  ;@to-do
  ;  fill in log before 18-17

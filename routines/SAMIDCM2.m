@@ -81,7 +81,7 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ; add hdr + subrtn hdr comments, log, bump version + dates.
  ;
  ; 2024-11-02 ven/gpl 18-20-b1   e1a8895
- ;  SAMIDCM2	
+ ;  SAMIDCM2
  ; simplified image intake to match only on MRN when case review is generated
  ;
  ; 2024-11-06 ven/lmry 18-20-b1
@@ -172,7 +172,7 @@ ADDITEMS(ARY,SID) ; add Image items to Items array
  ;@tests [tbd]
  ;
  ;
-WSSHODOC(RETURN,FILTER)
+WSSHODOC(RETURN,FILTER) ;
  ;
  n gn s gn=$na(^TMP("GPLTEST",$J))
  s HTTPRSP("mime")="application/pdf"
@@ -203,7 +203,7 @@ WSSHODOC(RETURN,FILTER)
  ;@tests [tbd]
  ;
  ;
-LOADPDF()
+LOADPDF() ;
  ;
  ;S FN="LCSV2_DATA_2021-06-29_REDCAP.csv"
  ;S FN="LCSV2_DATA_2021-06-29_REDCAP.tsv"

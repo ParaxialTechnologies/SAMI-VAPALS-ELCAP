@@ -1,7 +1,7 @@
 SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ;;18.0;SAMI;**7,11,17,20**;2020-01-17;Build 1
- ;mdc-e1;SAMICSV-20241106-ES+7xF;SAMI-18-20-b1
- ;mdc-v7;B104029869;SAMI*18.0*20 SEQ #20
+ ;mdc-e1;SAMICSV-20241107-EMYtiz;SAMI-18-20-b1
+ ;mdc-v7;B114652697;SAMI*18.0*20 SEQ #20
  ;
  ; SAMICSV contains a direct-mode service to produce the ScreeningPlus
  ; CSV export.
@@ -99,7 +99,8 @@ SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ;  SAMICSV  add mrn and studyid identifiers to all extracts and kill TMP at finish
  ; 
  ; 2024-11-06 ven/lmry 18-20-b1
- ;  SAMICSV update history, dates, version control lines
+ ;  SAMICSV (B114652697     EMYtiz    F26S%8V)
+ ;  update history, dates, version control lines
  ;
  ;
  ;@contents

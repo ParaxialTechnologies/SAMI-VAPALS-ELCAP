@@ -1,7 +1,7 @@
 SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ;;18.0;SAMI;**18,20**;2020-01-17;Build 1
- ;mdc-e1;SAMIDCM2-20240909-EcvLn1;SAMI-18-18-b1
- ;mdc-v7;B7818411;SAMI*18.0*20 SEQ #20
+ ;mdc-e1;SAMIDCM2-20240909-E1FKYwL;SAMI-18-18-b1
+ ;mdc-v7;B9873184;SAMI*18.0*20 SEQ #20
  ;
  ; SAMIDCM2 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
@@ -85,7 +85,7 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ; simplified image intake to match only on MRN when case review is generated
  ;
  ; 2024-11-06 ven/lmry 18-20-b1
- ;  SAMIDCM2
+ ;  SAMIDCM2 (B9873184       E1FKYwL   FX+k0E)
  ; bump history, dates, versions
  ;
  ;@contents

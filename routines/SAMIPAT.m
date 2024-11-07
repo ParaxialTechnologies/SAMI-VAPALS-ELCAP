@@ -1,7 +1,7 @@
 SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ;;18.0;SAMI;**12,14,15,17,18,19,20**;2020-01-17;Build 1
- ;mdc-e1;SAMIPAT-20240924-E129BpK;SAMI-18-20-b1
- ;mdc-v7;B23769617;SAMI*18.0*20 SEQ #20
+ ;mdc-e1;SAMIPAT-20240924-E1QEgpS;SAMI-18-20-b1
+ ;mdc-v7;B27292334;SAMI*18.0*20 SEQ #20
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -157,7 +157,8 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ; 2024-09-24 ven/lmry 18-19-b1 SAMIPAT
  ; Correct label for POS1819.
  ;
- ; 2024-11-06 ven/lmry 18-20-b1 SAMIPAT
+ ; 2024-11-06 ven/lmry 18-20-b1 
+ ; SAMIPAT (B27292334      E1QEgpS   F382aRO)
  ; add POS1820, update history, add checksums, update version control lines
  ;
  ;@to-do

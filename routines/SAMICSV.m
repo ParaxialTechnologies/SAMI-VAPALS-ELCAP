@@ -1,4 +1,4 @@
-SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
+SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ;;18.0;SAMI;**7,11,17,20**;2020-01-17;Build 1
  ;mdc-e1;SAMICSV-20241106-ES+7xF;SAMI-18-20-b1
  ;mdc-v7;B104029869;SAMI*18.0*20 SEQ #20
@@ -23,7 +23,7 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:04z
+ ;@update 2024-11-07t09:09z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Import/Export - various prefixes

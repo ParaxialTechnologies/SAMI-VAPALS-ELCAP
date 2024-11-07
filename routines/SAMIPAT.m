@@ -1,4 +1,4 @@
-SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
+SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ;;18.0;SAMI;**12,14,15,17,18,19,20**;2020-01-17;Build 1
  ;mdc-e1;SAMIPAT-20240924-E129BpK;SAMI-18-20-b1
  ;mdc-v7;B23769617;SAMI*18.0*20 SEQ #20
@@ -25,7 +25,7 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-09-24t02:16z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-24t02:16z
+ ;@update 2024-11-07t09:09z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA

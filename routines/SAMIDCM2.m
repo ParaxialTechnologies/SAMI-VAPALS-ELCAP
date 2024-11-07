@@ -1,4 +1,4 @@
-SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
+SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ;;18.0;SAMI;**18,20**;2020-01-17;Build 1
  ;mdc-e1;SAMIDCM2-20240909-EcvLn1;SAMI-18-18-b1
  ;mdc-v7;B7818411;SAMI*18.0*20 SEQ #20
@@ -27,7 +27,7 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-09-09t16:42z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-09t16:42z
+ ;@update 2024-11-07t09:09z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM

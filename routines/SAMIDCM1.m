@@ -1,4 +1,4 @@
-SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
+SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
  ;;18.0;SAMI;**16,17,18,20**;2020-01-17;Build 1
  ;mdc-e1;SAMIDCM1-20240909-E2LXhrL;SAMI-18-20-b1
  ;mdc-v7;B233069568;SAMI*18.0*20 SEQ #20
@@ -27,7 +27,7 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-09-09t16:33z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-09t16:33z
+ ;@update 2024-11-07t09:09z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM

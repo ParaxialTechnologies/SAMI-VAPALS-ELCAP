@@ -1,29 +1,29 @@
 :mastimg: project-va-pals
 :mastcaption: va-pals
 :mastdesc: Project: Screening+
-:doctitle: 18-19-b1 – Distribution – Screening+ – Projects – Vista Expertise Network
+:doctitle: 18-20-b1 – Distribution – Screening+ – Projects – Vista Expertise Network
 :description: The Screening+ project: Increasing access to safe and effective lung-screening programs that save lives.
 :addkeywords: cancer, lung cancer, screening, early detection, cancer detection, VAPALS, Screening+, ScreeningPLUS, ELCAP, I-ELCAP, VA-PALS, SAMI routines, web application in M
 :numbered:
-:version: 18-19-b1
+:version: 18-20-b1
 :build: b1
 :doctitle: Screening+: SAMI {version}
 :nmsp: SAMI
 :lnmsp: sami
 :appname: Screening+
-:va-version: {nmsp}*18.0*19 SEQ #19 b1
-:vista-longversion: Version 18.0, Patch ID #19, Seq #19, Build 1
+:va-version: {nmsp}*18.0*20 SEQ #20 b1
+:vista-longversion: Version 18.0, Patch ID #20, Seq #20, Build 1
 :priority: High
 :categories: Routine, File
 :status: Release
 
-// grep '\$TXT' sami-18-19-b1.txt
+// grep '\$TXT' sami-18-20-b1.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-26t02:00z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-11-08t03:42z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
-CT Evaluation Report Improvements
+MRN Update to CSV Export and Image Upload, Data Dump Fix
 
 [role="center h1"]
 {nmsp} ({appname}) {version}
@@ -34,7 +34,7 @@ CT Evaluation Report Improvements
 George P. Lilly,
 Domenic DiNatale,
 _&_ Frederick D. S. Marshall +
-2024-09-25
+2024-11-08
 
 [[front]]
 [role="h2"]
@@ -48,17 +48,15 @@ _&_ Frederick D. S. Marshall +
 | Priority    | {priority}
 | Categories  | {categories}
 | Status      | {status}: ++{nmsp}-{version}.zip++
-| Depends on  | SAMI 18-4 (††SAMI*18.0*4 SEQ #4††) +
-                SAMI 18-7 (††SAMI*18.0*7 SEQ #7††) +
-                SAMI 18-10 (††SAMI*18.0*10 SEQ #10††) +
+| Depends on  | SAMI 18-7 (††SAMI*18.0*7 SEQ #7††) +
                 SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
                 SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
-                SAMI 18-13 (††SAMI*18.0*13 SEQ #13††) +
                 link:../../18-14/[SAMI 18-14] (††SAMI*18.0*14 SEQ #14††) +
                 link:../../18-15/[SAMI 18-15] (††SAMI*18.0*15 SEQ #15††) +
                 link:../../18-16/[SAMI 18-16] (††SAMI*18.0*16 SEQ #16††) +
                 link:../../18-17/[SAMI 18-17] (††SAMI*18.0*17 SEQ #17††) +
-                link:../../18-18/[SAMI 18-18] (††SAMI*18.0*18 SEQ #18††)
+                link:../../18-18/[SAMI 18-18] (††SAMI*18.0*18 SEQ #18††) +
+                link:../../18-19/[SAMI 18-19] (††SAMI*18.0*19 SEQ #19††)
 |==============================================================================
 
 [[toc]]
@@ -69,9 +67,9 @@ _&_ Frederick D. S. Marshall +
 |==============================================================================
 |[options="compact",role="toc"]
 * <<desc,Description>>
-** <<issue-a,Improve or fix items in the CT Evaluation Report>>
-** <<issue-b,Install a routine that allows the movement of patients to another
-   site>>
+** <<issue-a,Add MRN and StudyID to CSV reports>>
+** <<issue-b,Change CT Upload to match to MRN instead of name>>
+** <<issue-c,Interrum data dump fix>>
 * <<pkg-elements,Package elements>>
 * <<prepare,Prepare for installation>>
 ** <<be-osehra,Assume the identity of your +osehra+ Unix user>>

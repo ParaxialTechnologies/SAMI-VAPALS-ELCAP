@@ -215,7 +215,7 @@ D XPZ2^XPDIQ
 "RTN")
 4
 "RTN","SAMICSV")
-0^1^B115005370
+0^1^B115005370^B104029869
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
 "RTN","SAMICSV",2,0)
@@ -1117,7 +1117,7 @@ DDICT(RTN,FORM) ; data dictionary for FORM
 "RTN","SAMICSV",450,0)
 EOR ; end of routine SAMICSV
 "RTN","SAMIDCM1")
-0^2^B310690378
+0^2^B310690378^B233069568
 "RTN","SAMIDCM1",1,0)
 SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
 "RTN","SAMIDCM1",2,0)
@@ -2665,7 +2665,7 @@ MKSVC() ; create web services
 "RTN","SAMIDCM1",773,0)
 EOR ; end of routine SAMIDCM1
 "RTN","SAMIDCM2")
-0^3^B16361169
+0^3^B16361169^B13901388
 "RTN","SAMIDCM2",1,0)
 SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
 "RTN","SAMIDCM2",2,0)
@@ -3165,7 +3165,7 @@ VIEWURL(SITE) ; URL to use for image viewer
 "RTN","SAMIDCM2",249,0)
 EOR ; end of routine SAMIDCM2
 "RTN","SAMIPAT")
-0^4^B27391150
+0^4^B27391150^B23769617
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
 "RTN","SAMIPAT",2,0)

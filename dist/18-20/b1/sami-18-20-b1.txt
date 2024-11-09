@@ -1,34 +1,31 @@
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-09-26t02:00z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-11-09t18:14z
 
-                  CT Evaluation Report Improvements
-                      SAMI (Screening+) 18-19-b1
-                      (SAMI*18.0*19 SEQ #19 b1)
+       MRN Update to CSV Export and Image Upload, Data Dump Fix
+                      SAMI (Screening+) 18-20-b1
+                      (SAMI*18.0*20 SEQ #20 b1)
 
                     George P. Lilly, Dom DiNatale
                       & Frederick D. S. Marshall
-                              2024-09-25
+                              2024-11-11
 
 i. Front matter
 
  App         SAMI (Screening+)
- Version     18-19-b1
- Vista ID    SAMI*18.0*19 SEQ #19 b1
-             Version 18.0, Patch ID #19, Seq# 19, Build 1
+ Version     18-20-b1
+ Vista ID    SAMI*18.0*20 SEQ #20 b1
+             Version 18.0, Patch ID #20, Seq# 20, Build 1
  Priority    high
  Categories  routine, file
- Status      release: SAMI-18-19-b1.zip
- Depends on  SAMI 18-4 (SAMI*18.0*4 SEQ #4)
-             SAMI 18-7 (SAMI*18.0*7 SEQ #7)
-             SAMI 18-10 (SAMI*18.0*10 SEQ #10)
+ Status      release: SAMI-18-20-b1.zip
+ Depends on  SAMI 18-7 (SAMI*18.0*7 SEQ #7)
              SAMI 18-11 (SAMI*18.0*11 SEQ #11)
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
-             SAMI 18-13 (SAMI*18.0*13 SEQ #13)
              SAMI 18-14 (SAMI*18.0*14 SEQ #14)
              SAMI 18-15 (SAMI*18.0*15 SEQ #15)
              SAMI 18-16 (SAMI*18.0*16 SEQ #16)
              SAMI 18-17 (SAMI*18.0*17 SEQ #17)
              SAMI 18-18 (SAMI*18.0*18 SEQ #18)
-
+             SAMI 18-19 (SAMI*18.0*19 SEQ #19)
 
 ii. Contents
 
@@ -59,7 +56,8 @@ ii. Contents
 
 1. Description
 
- SAMI 18-19-b1 improvements to the CT Evaluation report.
+ SAMI 18-20-b1 adds three medium-priority updates to improve CSV
+ reports, CT evaluation reports, and another run at a recurrent bug.
 
  The definitive source for the Screening+ application - codebase,
  package distributions (including this one), and documentation - is at
@@ -69,7 +67,7 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/
+ https://vistaexpertise.net/project/screening-plus/dist/18-20/b1/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
@@ -77,60 +75,44 @@ ii. Contents
 
  The changes in this release are:
 
- 1.1. Improve or fix items in the CT Evaluation Report.
+ 1.1. Add the MRN and StudyID fields to CSV reports.
 
-   Request (medium priority): Various changes to the CT Evaluation
-   Report have been requested by the iELCAP team and the Mount Sinai
-   radiologists:
-
-   1. Annual repeat CT: When the radiologists selects ‘Annual repeat'
-      as the LDCT follow-up, the report says “A followup CT scan is
-      recommended...”. This should be changed to “An annual repeat CT
-      scan is recommended...”.
-   2. Follow-up recommendation is missing a dash in "followup CT."
-   3. The heading “Breast” is missing in the report: A situation arose
-      where nothing was selected for the breast, but a comment was
-      entered. The comment shows up, but there’s no heading for the
-      Breast section, so it’s sort of a dangling sentence.
-   4. CAC score: If the CAC score is 0 (that is, the radiologist
-      selects "None" for all), the report doesn’t say anything about
-      CAC.  If the CAC score is 0, it should say: “Coronary Artery
-      Calcifications: None. The Visual Coronary Artery Calcium (CAC)
-      Score is 0.”
-   5. Ensure generator isn't adding periods after comment blocks.
-   6. Add text if "insufficient information for sign off" checkbox is
-      checked.
-   7. Swap order of emphysema finding and CAC score.
-   8. The wrong study ID was on the CT Eval report.
-   9. Aortic valve calcification: Similar to CAC score as above -- if
-      it’s None, it should explicitly say None.
+   Request 24-0021 (medium priority): Add MRN and StudyID to the CSV
+   reports.
 
    solution: These changes and fixes have been made.
 
-   reported: 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai
-   radiologists.
+   reported: 2024-09-30 by A. Jirapatnikal.
 
- 1.2. Install a routine that allows the movement of patients to
-      another site.
+ 1.2. Change "CT Upload" to match on MRN instead of name.
 
-   change: Allow patient movement to another site in the same network
-   or the movement of an accidental duplicate patient record to a faux
-   site. This is actually from an earlier patch that was not taken up
-   by the field. If needed, request instructions from your Screening+
-   support team.
+   Request 24-005 (medium priority): Allow CT upload to be matched to
+   patient record even with misspelled names.
 
-   solution: Include SAMIMOV in release.
+   solution: Match by MRN. If name does not match {appname} user needs
+   to correct.
 
-   completed: 2024-09-20 by F. Marshall
+   reported: 2024-09-?? by G. Lilly.
+
+1.3. Interim data-dump fix.
+
+   Request 24-040 (medium priority): Still having problems with the
+   data dump bug.
+
+   solution: Clean-up scratch data in ^TMP and add a kill command at
+   the correct place.
+
+   reported: 2024-10-08 by Marshall and Yaw.
+
 
 2. Package elements
 
  File                      Change
  ------------------------  --------
- sami-18-19-b1-recipe.txt  new
- sami-18-19-b1.kid         new
- sami-18-19-b1.txt         new
- sami-18-19-b1.zip         new
+ sami-18-20-b1-recipe.txt  new
+ sami-18-20-b1.kid         new
+ sami-18-20-b1.txt         new
+ sami-18-20-b1.zip         new
  upgrade-auxfiles          new
  docs/mockups/*            modified
  docs/src/layout.jinja2    new
@@ -138,15 +120,9 @@ ii. Contents
 
  Routine   Change
  --------  --------
- SAMICTT0  modified
- SAMICTT1  modified
- SAMICTT2  modified
- SAMICTT3  modified
- SAMICTT4  modified
- SAMICTT9  modified
- SAMICTTA  modified
- SAMICTUL  modified
- SAMIMOV   modified
+ SAMICSV   modified
+ SAMIDCM1  modified
+ SAMIDCM2  modified
  SAMIPAT   modified
 
 
@@ -161,14 +137,13 @@ ii. Contents
 
  3.1. Assume the identity of your osehra Unix user
 
-   This step assumes you type a dzdo or sudo to do this; here the
+   This step assumes you use a dzdo or sudo to do this; here the
    symbol $DEMAND will stand for whichever command you use. (Also, in
-   all the command-line examples below, '$' simply means your
-   command-line prompt.) If your configuration is different, please
-   adjust this step to match your configuration:
+   all the command-line examples below, '$' at the beginning of the
+   line represents your command-line prompt.) If your configuration is
+   different, please adjust this step to match your configuration:
 
     $ $DEMAND su - osehra
-    $
 
 
  3.2. Prepare install directory
@@ -177,35 +152,35 @@ ii. Contents
    commands.  They create a shell variable, and then create the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/sami/18-19/b1
+    $ INDIR=~/run/in/sami/18-20/b1
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/sami/18-19/b1
+    $ INDIR=~/run/in/sami/18-20/b1
     $ cd $INDIR
     $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
  3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-18-19-b1.zip in
+   You may safely download the archive file sami-18-20-b1.zip in
    advance of the actual install. In the following text, "[now]"
    represents a time stamp representing your current time, and
    "[bits/sec]" is a data rate and "[time]" is how long the file took
    to transfer (both of which vary based on the user's network
    conditions).
 
-     $ wget --no-verbose 'https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/sami-18-19-b1.zip'
-     [now] URL:https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/sami-18-19-b1.zip [size/size] -> "sami-18-19-b1.zip" [1]
+     $ wget --no-verbose 'https://vistaexpertise.net/project/screening-plus/dist/18-20/b1/sami-18-20-b1.zip'
+     [now] URL:https://vistaexpertise.net/project/screening-plus/dist/18-20/b1/sami-18-20-b1.zip [size/size] -> "sami-18-20-b1.zip" [1]
      $ _
 
    Then unzip the archive file with the following command.
 
-     $ unzip sami-18-19-b1.zip
-     Archive:  sami-18-19-b1.zip
+     $ unzip sami-18-20-b1.zip
+     Archive:  sami-18-20-b1.zip
        ...
      $ _
 
@@ -311,15 +286,9 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
-SAMICTT0
-SAMICTT1
-SAMICTT2
-SAMICTT3
-SAMICTT4
-SAMICTT9
-SAMICTTA
-SAMICTUL
-SAMIMOV
+SAMICSV
+SAMIDCM1
+SAMIDCM2
 SAMIPAT
 
 
@@ -342,27 +311,19 @@ SAMIPAT
      >do ^%RO
 
      Routine output (please use %ROMF for object code output)
-     Routine(s): SAMICTT0
-     Routine(s): SAMICTT1
-     Routine(s): SAMICTT2
-     Routine(s): SAMICTT3
-     Routine(s): SAMICTT4
-     Routine(s): SAMICTT9
-     Routine(s): SAMICTTA
-     Routine(s): SAMICTUL
-     Routine(s): SAMIMOV
+     Routine(s): SAMICSV
+     Routine(s): SAMIDCM1
+     Routine(s): SAMIDCM2
      Routine(s): SAMIPAT
      Routine(s):
 
-     Description: SAMI*18.0*19 SEQ #19 routine backup
+     Description: SAMI*18.0*20 SEQ #20 routine backup
 
      Output routines to
-     Device: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1-back.ro
+     Device: /home/osehra/run/in/sami/18-20/b1/sami-18-20-b1-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMICTT0.INT    SAMICTT1.INT    SAMICTT2.INT    SAMICTT3.INT
-     SAMICTT4.INT    SAMICTT9.INT    SAMICTTA.INT    SAMICTUL.INT
-     SAMIMOV.INT     SAMIPAT.INT
+     SAMICSV.INT     SAMIDCM1.INT    SAMIDCM2.INT    SAMIPAT.INT
      >_
 
     On YottaDB/GT.M
@@ -379,56 +340,31 @@ SAMIPAT
 
      Routine Output - Save selected routines into RO file.
 
-     Routines: SAMICTT0
-     SAMICTT0
+     Routines: SAMICSV
+     SAMICSV
      Current total of 1 routines.
 
-     Routines: SAMICTT1
-     SAMICTT1
+     Routines: SAMIDCM1
+     SAMIDCM1
      Current total of 2 routines.
 
-     Routines: SAMICTT2
-     SAMICTT2
+     Routines: SAMIDCM2
+     SAMIDCM2
      Current total of 3 routines.
-
-     Routines: SAMICTT3
-     SAMICTT3
-     Current total of 4 routines.
-
-     Routines: SAMICTT4
-     SAMICTT4
-     Current total of 5 routines.
-
-     Routines: SAMICTT9
-     SAMICTT9
-     Current total of 6 routines.
-
-     Routines: SAMICTTA
-     SAMICTTA
-     Current total of 7 routines.
-
-     Routines: SAMICTUL
-     SAMICTUL
-     Current total of 8 routines.
-
-     Routines: SAMIMOV
-     SAMIMOV
-     Current total of 9 routines.
 
      Routines: SAMIPAT
      SAMIPAT
-     Current total of 10 routines.
+     Current total of 4 routines.
 
      Routine:
 
-     Output device <terminal>: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1-back.ro
+     Output device <terminal>: /home/osehra/run/in/sami/18-20/b1/sami-18-20-b1-back.ro
 
-     Header Label: SAMI*18.0*19 SEQ #19 routine backup
+     Header Label: SAMI*18.0*20 SEQ #20 routine backup
      Strip comments <No>?: 
-     SAMICTT0  SAMICTT1  SAMICTT2  SAMICTT3  SAMICTT4  SAMICTT9
-     SAMICTTA  SAMICTUL  SAMIMOV   SAMIPAT
+     SAMICSV   SAMIDCM1  SAMIDCM2  SAMIPAT
 
-     Total of 3271 lines in 10 routines.
+     Total of 1673 lines in 4 routines.
 
      >_
 
@@ -477,21 +413,21 @@ SAMIPAT
     Select option 1 and press return at the Continue prompt.
 
      Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-     Enter a Host File: /home/osehra/run/in/sami/18-19/b1/sami-18-19-b1.kid
+     Enter a Host File: /home/osehra/run/in/sami/18-20/b1/sami-18-20-b1.kid
 
-     KIDS Distribution saved on Sep 25, 2024@10:22:01
-     Comment: Released SAMI*18.0*19 SEQ #19
+     KIDS Distribution saved on Nov 07, 2024@20:24:05
+     Comment: Released SAMI*18.0*20 SEQ #20
 
      This Distribution contains Transport Globals for the following Package(s):
-        SAMI*18.0*19
+        SAMI*18.0*20
      Distribution OK!
 
      Want to Continue with Load? YES// y
        YES
      Loading Distribution...
 
-        SAMI*18.0*19
-     Use INSTALL NAME: SAMI*18.0*19 to install this Distribution.
+        SAMI*18.0*20
+     Use INSTALL NAME: SAMI*18.0*20 to install this Distribution.
 
 
         1      Load a Distribution
@@ -523,20 +459,20 @@ SAMIPAT
     listed with checksums on your screen. Here's a sample session.
 
     Select Installation <TEST ACCOUNT> Option: 2<Enter> Verify Checksums in Transport Global
-    Select INSTALL NAME: SAMI*18.0*19<Enter>     Loaded from Distribution  [datetime]
-         => Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+    Select INSTALL NAME: SAMI*18.0*20<Enter>     Loaded from Distribution  [datetime]
+         => Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
 
     This Distribution was loaded on [datetime] with header of
-       Released SAMI*18.0*19 SEQ #19  ;Created on [datetime]
+       Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
        It consisted of the following Install(s):
-       SAMI*18.0*19
+       SAMI*18.0*20
 
     Want each Routine Listed with Checksums: Yes// <Enter>  YES
     DEVICE: HOME// ;C-SCROLL<Enter>  TELNET
 
 
 
-    PACKAGE: SAMI*18.0*19     [datetime]                                PAGE 1
+    PACKAGE: SAMI*18.0*20     [datetime]                                PAGE 1
     ‍---------------------------------------------------------------------------
 
 
@@ -596,16 +532,16 @@ SAMIPAT
     denotes the current time when you're doing the install.
 
      Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
-     Select INSTALL NAME:    SAMI*18.0*19     Loaded from Distribution    [now]
-        => Released SAMI*18.0*19 SEQ #19  ;Created on Sep 25, 2024@10:22:01
+     Select INSTALL NAME:    SAMI*18.0*20     Loaded from Distribution    [now]
+        => Released SAMI*18.0*20 SEQ #20  ;Created on Nov 07, 2024@20:24:05
 
      This Distribution was loaded on [now] with header of
-        Released SAMI*18.0*19 SEQ #19  ;Created on Sep 25, 2024@10:22:01
+        Released SAMI*18.0*20 SEQ #20  ;Created on Nov 07, 2024@20:24:05
         It consisted of the following Install(s):
-        SAMI*18.0*19
-     Checking Install for Package SAMI*18.0*19
+        SAMI*18.0*20
+     Checking Install for Package SAMI*18.0*20
 
-     Install Questions for SAMI*18.0*19
+     Install Questions for SAMI*18.0*20
 
 
 
@@ -619,21 +555,21 @@ SAMIPAT
      DEVICE: HOME// ;C-SCROLL  TELNET
 
 
-      Install Started for SAMI*18.0*19 :
+      Install Started for SAMI*18.0*20 :
                     [now]
 
-     Build Distribution Date: Sep 25, 2024
+     Build Distribution Date: Nov 07, 2024
 
       Installing Routines:.....
                     [now]
 
-      Running Post-Install Routine: POS1819^SAMIPAT.
+      Running Post-Install Routine: POS1820^SAMIPAT.
 
       Updating Routine file......
 
       Updating KIDS files.....
 
-      SAMI*18.0*19 Installed.
+      SAMI*18.0*20 Installed.
                     [now]
 
       No link to PACKAGE file
@@ -656,7 +592,7 @@ SAMIPAT
 
      > _
 
-   You now have Screening+ 18-19-b1 (SAMI*18.0*19 SEQ #19 b1) installed in
+   You now have Screening+ 18-20-b1 (SAMI*18.0*20 SEQ #20 b1) installed in
    your M environment. The install is now complete, and you may leave
    the M environment by typing
 
@@ -683,33 +619,27 @@ SAMIPAT
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
  Name      Checksum before  Checksum after  Patch list
- --------  ---------------  --------------  ---------------------
- SAMICTT0  B100450717       B112661946      **4,10,11,15,19**
- SAMICTT1  B122873178       B154195678      **4,10,11,19**
- SAMICTT2  B115984956       B144641835      **4,10,19**
- SAMICTT3  B396705116       B483869070      **4,10,13,15,19**
- SAMICTT4  B54435090        B62798123       **4,10,19**
- SAMICTT9  B17246420        B30422718       **4,10,19**
- SAMICTTA  B35698365        B49833239       **4,10,11,19**
- SAMICTUL  B108974          B125001         **10,11,12,13,15**
- SAMIMOV   B53328513        B126961045      **7,15,16,19**
- SAMIPAT   B17504242        B23769617       **12,14,15,17,18,19**
+ --------  ---------------  --------------  ------------------------
+ SAMICSV   B104029869       B115005370      **7,11,17,20**
+ SAMIDCM1  B233069568       B310690378      **16,17,18,20**
+ SAMIDCM2  B13901388        B16361169       **18,20**
+ SAMIPAT   B23769617        B27391150       **12,14,15,17,18,19,20**
 
 
 8. Authors
 
              Dates              By
- Developed   2024-09-12/22      George P. Lilly (ven)
+ Developed   2024-09-25/11-3    George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2024-09-24         George P. Lilly (ven)
+ Tested      2024-11-06/08      George P. Lilly (ven)
                                 Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
 
- Released    2024-09-25         Frederick D. S. Marshall (ven)
+ Released    2024-11-11         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

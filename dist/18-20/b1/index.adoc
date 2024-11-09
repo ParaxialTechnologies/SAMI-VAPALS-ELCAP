@@ -1,7 +1,7 @@
 :mastimg: project-va-pals
 :mastcaption: va-pals
 :mastdesc: Project: Screening+
-:doctitle: 18-20-b1 – Distribution – Screening+ – Projects – Vista Expertise Network
+:doctitle: 18-20-b1 – Screening+ – Projects – Vista Expertise Network
 :description: The Screening+ project: Increasing access to safe and effective lung-screening programs that save lives.
 :addkeywords: cancer, lung cancer, screening, early detection, cancer detection, VAPALS, Screening+, ScreeningPLUS, ELCAP, I-ELCAP, VA-PALS, SAMI routines, web application in M
 :numbered:
@@ -34,7 +34,7 @@ MRN Update to CSV Export and Image Upload, Data Dump Fix
 George P. Lilly,
 Domenic DiNatale,
 _&_ Frederick D. S. Marshall +
-2024-11-08
+2024-11-11
 
 [[front]]
 [role="h2"]
@@ -99,8 +99,8 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-{nmsp} {version} adds one medium-priority update to improve CT evaluation
-reports.
+{nmsp} {version} adds three medium-priority updates to improve CSV reports,
+CT{nbsp}evaluation reports, and another run at a recurrent bug.
 
 The definitive source for the {appname} application---codebase, package
 distributions (including this one), and documentation---is a
@@ -114,53 +114,45 @@ support team.
 The changes in this patch are:
 
 [options="compact"]
-* Improve or fix items in the CT Evaluation Report
-  (link:#issue-a[request{nbsp}1], medium{nbsp}priority)
-* Install a routine that allows the movement of patients to another site
-  (link:#issue-b[change{nbsp}1], medium priority)
+* Add the MRN and StudyID fields to CSV reports
+  (link:#issue-a[24-0021], medium{nbsp}priority)
+* Change ††CT Upload†† to match on MRN instead of name
+  (link:#issue-b[24-005], medium priority)
+* Interim data-dump fix
+  (link:#issue-c[24-040], medium priority)
 
 [[issue-a]]
-=== Improve or fix items in the CT Evaluation Report
+=== Add the MRN and StudyID fields to CSV reports
 
-**Request 1 (medium priority):** Various changes to the CT Evaluation Report
-have been requested by the iELCAP team and the Mount Sinai radiologists:
-
-[options="compact"]
-. Annual repeat CT: When the radiologists selects ††Annual repeat†† as the LDCT
-  follow-up, the report says ††A followup CT scan is
-  recommended{nbsp}...†† This should be changed to ††An annual repeat CT scan
-  is recommended{nbsp}...††
-. Follow-up recommendation is missing a dash in “followup CT.”
-. The heading ††**Breast**†† is missing in the report: A situation arose where
-  nothing was selected for the breast, but a comment was entered. The comment
-  shows up, but there’s no heading for the Breast section, so it’s sort of a
-  dangling sentence.
-. CAC score: If the CAC score is 0 (that is, the radiologist selects ††None††
-  for all), the report doesn’t say anything about CAC.  If the CAC score
-  is{nbsp}0, it should say: ††Coronary Artery Calcifications: None. The Visual
-  Coronary Artery Calcium (CAC) Score is 0.††
-. Ensure generator isn't adding periods after comment blocks.
-. Add text if ††insufficient information for sign off†† checkbox is checked.
-. Swap order of emphysema finding and CAC score.
-. The wrong study ID was on the CT Eval report. 
-. Aortic valve calcification: Similar to CAC score as above---if it’s None,
-  it should explicitly say None.
+**Request 24-0021 (medium priority):** Add the MRN and StudyID fields to the
+CSV reports.
    
 **Solution:** These changes and fixes have been made.
 
-**Reported:** 2024-07-11 by iELCAP team, 2024-09-16 by Mt. Sinai radiologists.
-
+**Reported:** 2024-09-30 by A. Jirapatnikal.
+   
 [[issue-b]]
-=== Install a routine that allows the movement of patients to another site
+=== Change “CT Upload” to match on MRN instead of name
+ 
+**Request 24-005 (medium priority):** Allow CT upload to be matched to patient
+record even with misspelled names.
+   
+**Solution:** Match by MRN. If name does not match, the Screening+ user needs
+to correct.
 
-**Change 1:** Allow patient movement to another site in the same network or the
-movement of an accidental duplicate patient record to a faux site. This is
-actually from an earlier patch that was not taken up by the field. If needed,
-request instructions from your {appname} support team.
+**Reported:** 2024-09-?? by G. Lilly.
 
-**Solution:** Include `SAMIMOV` in release.
+[[issue-c]]
+=== Interim data-dump fix
+ 
+**Request 24-040 (medium priority):** Still having problems with the data
+dump bug.
 
-**Completed:** 2024-09-20 by F. Marshall.
+**Solution:** Clean-up scratch data in `^TMP` and add a `kill` command at the
+correct place.
+
+**Reported:** 2024-10-08 by Marshall and Yaw.
+
 
 [[pkg-elements]]
 == Package elements
@@ -193,13 +185,12 @@ back up M routines that will be replaced by the patch.
 
 This step assumes you use a `dzdo` or `sudo` command to do this; here, the
 symbol `$DEMAND` will stand for whichever command you use. (Also, in all the
-command-line examples below, `$` simply means your command-line prompt.) If
-your configuration is different, please adjust this step to match your
-configuration:
+command-line examples below, `$` at the beginning of the line represents your
+command-line prompt.) If your configuration is different, please adjust this
+step to match your configuration:
 
 -------------------------------------------------------------------------------
 $ $DEMAND su - osehra
-$ _
 -------------------------------------------------------------------------------
 
 [[prep-installdir]]
@@ -210,7 +201,7 @@ They create a shell variable, and then create the work directory and sets it as
 your current directory.
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-19/b1
+$ INDIR=~/run/in/sami/18-20/b1
 $ mkdir -p $INDIR
 $ cd $INDIR
 -------------------------------------------------------------------------------
@@ -219,7 +210,7 @@ If you've already tried installing this before, you can use the following
 commands instead:
 
 -------------------------------------------------------------------------------
-$ INDIR=~/run/in/sami/18-19/b1
+$ INDIR=~/run/in/sami/18-20/b1
 $ cd $INDIR
 $ rm -rf ./sami*.{txt,kid} ./auxfiles
 -------------------------------------------------------------------------------
@@ -564,15 +555,15 @@ include::.dtool/checksums.adoi[]
 [cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
 |==============================================================================
 |           | Dates                 | By
-| Developed | 2024-09-12/22         | George P. Lilly (VEN) +
+| Developed | 2024-09-25/11-3       | George P. Lilly (VEN) +
                                       Dominic DiNatale (PAR) +
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Tested    | 2024-09-24            | George P. Lilly (VEN) +
+| Tested    | 2024-11-06/08         | George P. Lilly (VEN) +
                                       Artit Jirapatnakul (VA-PHO) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2024-09-25            | Frederick D. S. Marshall (VEN) +
+| Released  | 2024-11-11            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

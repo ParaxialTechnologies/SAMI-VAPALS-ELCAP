@@ -6,7 +6,7 @@ copy_binaries(
   sami*[0-9].zip
   *.png
   intake-test-data-tab-del.txt
-  intake.xlsx
+  # intake.xlsx
   )
 
 do_subdir(

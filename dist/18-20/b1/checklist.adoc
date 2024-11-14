@@ -8,10 +8,9 @@ SAMI Patching Checklist for 18-20-b1
   0.1. Which changes will be included
 	    Update CSV reports to include MRN, studyID
 	    Interrum fix of Data Dump bug
-	    Fix problem of second record being created due to misspelled name upon
-	    	CT Upload
-
-  0.2. Timeline: Release goal , Actual release
+	    Change Image Upload to match on MRN, not name
+	    
+  0.2. Timeline: Release goal , Actual release 2024-11-11
 
  1. Project set up
 X  1.1. create new directory for patch (i.e. dist/18-20/b1)
@@ -54,11 +53,11 @@ X  2.2. convert to new short version ids, update dates & times in each routine
       git log --parse --abbrev -commit {file}
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
+X  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
   2.4. if you wish, use ^%ZPT1 to compare first through third lines of routine for 
   		consistency. Example if you want to look at all four version control lines
   		zprint +1^SAMICAS3:+4
-  2.5. push to repo/pull to vapalsyotta
+X  2.5. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
 X  3.0. update recipe with before checksums -- do recipe^ARJTXRW
@@ -72,8 +71,8 @@ X  3.3. run XINDEX (refer to XINDEX below)
 X  3.4. fix any bugs,
 X  3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools text file)
 X  3.6. update recipe with after information
-  3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173
-      (sami vers) use dash^ARJTXRW for dates and checksums
+X  3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173
+      see temp dash below (sami vers) use dash^ARJTXRW for dates and checksums
 X  3.8. git pull/push, pull to vapalsyotta
 
  4. KIDS Build 
@@ -104,33 +103,31 @@ X   5.5. Review {version}.adoc and {version}.tx doc and make any needed updates
 X   5.6. git push/pull
    
   6. Create Zip package
-   6.1. use zip to create archive package (../../dtool --makezip)
-   6.2. push archive package to repo
-   6.3. update version website's link
+X   6.1. use zip to create archive package (../../dtool --makezip)
+X   6.2. push archive package to repo
+X   6.3. update version website's link
 
  7. Test Install
-  Copy old routines to ~/run/routines
-  Follow instructions on website (https://vistaexpertise.net/project/screening-plus/dist/18-19/b1/) 
- or from 18-19-b1.txt
-  7.0 Pull to vapalsyotta and move KIDS to ~/run/in/sami/18-18/b1/
-  7.1. install on vapalsyotta (& revise if necessary),
+X   7.1 Copy old routines to ~/run/routines
+X   7.2 Follow instructions on website (https://vistaexpertise.net/project/screening-plus/dist/18-20/b1/) 
+ or from 18-20-b1.txt
+X  7.3 Pull to vapalsyotta and move KIDS to ~/run/in/sami/18-20/b1/ or follow directions
+  	on website.
+X  7.4. install on vapalsyotta (& revise if necessary),
   HF: /home/osehra/run/in/sami/18-20/b1/sami-18-20-b1.kid
-  7.2. test changes on vapalsyotta (vapalsyotta.vistaexpertise.net:9080/vapals)
+X  7.5. test changes on vapalsyotta (vapalsyotta.vistaexpertise.net:9080/vapals)
   		if possible test on multiple browsers and OSs.
   		to restart web server
   			d stop^%webreq
   			d go^%webreq
   			zwr ^%webhttp
-  7.3. update dashboard (sami envs)
-  7.4 copy new routines to repo routines 
-N  7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
-N  7.5. test changes on vapalscache
-N  7.6. update dashboard (sami envs)
-  7.7. send any necessary updates for user and tech manual changes
-  7.8. Skype team and ask them to test
+X  7.6. update dashboard (sami envs)
+X  7.7  copy new routines to repo routines 
+  7.8. send any necessary updates for user and tech manual changes
+  7.9. Skype team and ask them to test
 
 8. Release Patch
-  8.1. Email interested parties
+X  8.1. Email interested parties
   8.2. Update VAPALS Bugs and Requested Features spreadsheet
   8.3. File any returned captures
   8.4. Update dashboard (sami envs) (sami pax Date)
@@ -165,6 +162,11 @@ XINDEX
 	Index all called routines? NO//    (leave as no)
 	DEVICE: ;c-scroll
 	Hit return then review Errors and Warnings
+	
+	
+temporary dash, do dash^ARJTXRW to get dates for routines, then do select^ARJTXRW(.routines), 
+enter routines, then run this snippet	
+s r="" f  s r=$o(routines(r)) q:r=""  write !,r,?10,$$sumf^%r(r),?20,$$sumb^%r(r),?35,$$sume^%r(r)
 	
 KIDS BUILD
 	Enter into Vista
@@ -241,3 +243,8 @@ Header Comment: Released SAMI*18.0*20 SEQ #20
 No Package File Link
 
 Package Transported Successfully
+
+Add back when cache is available
+N  7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
+N  7.5. test changes on vapalscache
+N  7.6. update dashboard (sami envs)

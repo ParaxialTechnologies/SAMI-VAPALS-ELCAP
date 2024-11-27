@@ -11,24 +11,30 @@ How To Add A User
     Deactivate a User
     Reactivate a User
  	Change Access and Verify Codes
-How To Add A Site
+How To Add A Site (Activate and deactivate)
 How To Move A Patient To A Different Site
 	Moving A Patient To A Fake Site (Moving Duplicate Patient Records)
 How To Produce CSV Reports
-System Maintenance
+Screening Plus System Maintenance
 	Stopping and Restarting System
+		Web service
+		Taskman
+		Shut down whole system (rundown, integ check)
+		Start up whole system
 	Restart Web Service
 	Integrity Checking
-	
+	Backing up database
+Unix Administrator Special Instructions for Supporting Screening Plus
 
 Questions:
 Did we de-osehra-ify and de-vapals-ify the servers we are sending to Ethiopia? Yes.
-Adding a New Person requires a nine-digit SSN
-Would all new users be cloned from USER,ONE?
-How do we designate a Superuser?
-How do we give the correct permissions for an Administrator?
-What about that letter that appears when a New Person is created?
+Adding a New Person requires a nine-digit SSN (I just used last 9 digits of phone number.)
+Would all new users be cloned from USER,ONE? (Create User,Screening and User,Splus Admin)
+How do we designate a Superuser? SAMI Options
+How do we give the correct permissions for an Administrator? User profile
+What about that letter that appears when a New Person is created? shrug
 I don't remember how to add a site but it might be in the .txt of some patch.
+Website for Unix Administrator list of the software that needs to be supported
 
 
 *Who This Manual Is For
@@ -36,19 +42,28 @@ Sometimes actions need to be taken that require either more authority or more
 specialized knowledge than those that are regularly performed in Screening Plus.
 This manual is intended for either the head of the lung-screening program or a
 designated medical or technological practitioner working closely with the
-person who has the authority to authorize these actions.
+person who can authorize these actions.
 
 This includes actions such as adding or removing users, changing permissions
 for certain users, moving a patient to a different site, producing specialized
-reports for export, and maintaining the Screening Plus system.
+reports for export, and maintaining the Screening Plus system. 
+
+The Screening Plus team offers System Administration services for an extra fee. 
+If you want to manage your own systems, one of the basic requirements is that 
+you'll need to have the necessary knowledge to correctly configure and maintain 
+a Linux system compatible with Screening Plus, such as Ubuntu or RedHat 
+Enterprise Linux (or their various clones). We will maintain on our site a 
+list of the software that needs to be supported on your system to keep 
+Screening Plus running smoothly. 
 
 *How To Access Administrator Mode
 Currently some actions require that the administrator access what is called
 roll-n-scroll mode to perform them. The first person to have permission to take
 these actions needs to be added by your Screening Plus support team. 
 
-	To Enter Programmer Mode
+	To Enter Roll-n-Scroll Mode for Administrator
 		Access Screening Plus server 
+	
 		I don't quite know how to do this. I believe someone has to set up a
 		user in Unix? to allow the person to access the server.
 		Type mumps -dir to enter Vista
@@ -329,6 +344,56 @@ Select User Management <TEST ACCOUNT> Option:
 
 How To Add A Site
 
+How To Activate/Deactivate Sites
+VAPALS-ELCAP>s DUZ=69 D ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Terminal Type set to: C-VT220
+
+Select OPTION NAME: SAMI
+     1   SAMI ACTIVATE DEACTIVATE SITE       ACTIVATE DEACTIVATE SITE
+     2   SAMI ENTER EDIT SITE       ENTER EDIT SITE
+     3   SAMI LIST SITES       LIST SITES
+     4   SAMI MAIN MENU       SAMI MAIN MENU
+     5   SAMI PULL CLINICS       Pull all active clinics from another site
+Press <Enter> to see more, '^' to exit this list,  OR
+CHOOSE 1-5: 1  SAMI ACTIVATE DEACTIVATE SITE     ACTIVATE DEACTIVATE SITE
+ACTIVATE DEACTIVATE SITE
+
+Select SAMI SITE: TIKUR ANBESSA SPEC HOSP    WA  MC(M)             TAS
+ACTIVE: YES// NO  NO
+
+Select SAMI SITE: 
+VAPALS-ELCAP>D ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Terminal Type set to: C-VT220
+
+Select OPTION NAME: SAMI
+     1   SAMI ACTIVATE DEACTIVATE SITE       ACTIVATE DEACTIVATE SITE
+     2   SAMI ENTER EDIT SITE       ENTER EDIT SITE
+     3   SAMI LIST SITES       LIST SITES
+     4   SAMI MAIN MENU       SAMI MAIN MENU
+     5   SAMI PULL CLINICS       Pull all active clinics from another site
+Press <Enter> to see more, '^' to exit this list,  OR
+CHOOSE 1-5: 3  SAMI LIST SITES     LIST SITES
+LIST SITES
+DEVICE: ;C-SCROLL  TELNET
+SAMI SITE List                                       OCT 29, 2024@18:24   PAGE 1
+SITE                            SYMBOL  ACTIVE
+--------------------------------------------------------------------------------
+
+ATHENS (GA) CBOC                QUE     NO
+BRAINERD CBOC                   BRA     NO
+JACKSON MS STATE VET HOME       JER     NO
+TIKUR ANBESSA SPEC HOSP         TAS     NO
+VISTA HEALTH CARE               XXX     YES
+
+
 How To Move A Patient To A Different Site
 	Moving A Patient To A Fake Site (Moving Duplicate Patient Records)
 	After install, in the vapals programming environment:
@@ -375,11 +440,27 @@ If any step doesn't work, please contact your VAPALS-ELCAP development team.
 
 
 System Maintenance
-	Stopping and Restarting System
+	Stopping System
+		DO stop^%webreq
+		DO ^ZSY
+		see if all of the mumps tasks are gone
+		if not, write down their job numbers
+		exit mumps with h
+		mupip stop (job number)
+		mumps -dir
+		then DO ^ZSY to make sure all jobs are gone
+		DO STOP^ZTMKU
+		exit mumps with h
+		Sudo shutdown -h now
 	
 	VAPALS-ELCAP>zwr ^%webhttp
 ^%webhttp(0,"listener")="stopped"
 	
+to restart web server
+  			d stop^%webreq
+  			d go^%webreq
+  			zwr ^%webhttp
+  			
 	Integrity Checking
 Here's one for your notes, if you don't have it already: mupip integ -fast
 -REGION '*' which you should run at Unix from time to time to ensure a habitat

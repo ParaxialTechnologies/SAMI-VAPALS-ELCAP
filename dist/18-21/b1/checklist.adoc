@@ -1,43 +1,42 @@
-:doctitle: SAMI Patching Checklist for 18-20-b1 
+:doctitle: SAMI Patching Checklist for 18-21-b1 
 
 [role="h1 center"]
-SAMI Patching Checklist for 18-20-b1
+SAMI Patching Checklist for 18-21-b1
 
 -------------------------------------------------------------------------------
  0. Project discussion
   0.1. Which changes will be included
-	    Update CSV reports to include MRN, studyID
-	    Interrum fix of Data Dump bug
-	    Fix problem of second record being created due to misspelled name upon
-	    	CT Upload
+	    Support url override for viewing images 
+	    Implement FILECSV, which generates spreadsheets from the linus files
+	    that store the forms at Mt. Sinai and inserts a column called 
+	    "separator". All fields left of the separator are in our data 
+	    dictionaries, all fields to the right of the separator are not in the
+	    DDs but are in the form files at MSH.
 
   0.2. Timeline: Release goal , Actual release
 
  1. Project set up
-   1.1. create new directory for patch (i.e. dist/18-20/b1)
-   1.2. create new directories 'routines' and within that 'old' and 'new'
-   1.3. copy pre-development routines into routines/old
-   1.4. git pull
-   1.5. prepare checklist
-   1.6. prepare recipe doc
-   1.7. prepare template.txt doc  
-   1.8. git pull/push
-   1.9. list updated routines
-		SAMICSV
-		SAMIDCM1
+X   1.1. Prepare checklist
+X   1.2. prepare recipe doc
+X   1.3. prepare template.txt doc
+X   1.4. create new directory for patch (i.e. dist/18-20/b1)
+X   1.5. create new directories 'routines' and within that 'old' and 'new'
+X   1.6. copy pre-development routines into routines/old
+X   1.7. git pull/push
+X   1.8. list updated routines
+		SAMICAS2
+		SAMICSV2
 		SAMIDCM2
 		SAMIPAT
   
-   1.10. list log routines
-        none
+X   1.9. list log routines
+        SAMICUL
 
-   1.11. write change descriptions for template.txt  
-   1.12. update dashboard (Google Drive)
+   1.10. write change descriptions for template.txt  
+   1.11. update dashboard (Google Drive)
      https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
      (sami pax) use pax^ARJTXRW	to determine dependencies
-        7   11   12   14   15   16
-	   17   18   19
-   1.13. Regrettable Bodge script not needed this patch
+   1.12. Regrettable Bodge script not needed this patch
   		run within docs/www
   		../regrettable-bodge.py
   		then commit

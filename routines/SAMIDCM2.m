@@ -141,7 +141,8 @@ ADDITEMS(ARY,SID) ; add Image items to Items array
  . ;
  . n siuid s siuid=$g(@root@(ien,"json","StudyInstanceUID"))
  . q:siuid=""
- . ;
+ . n siurl s siurl=$g(@root@(ien,"json","url"))
+ . i siurl'="" s siuid=siurl
  . ; add each image item only once to Items array
  . q:$d(images(siuid))
  . s images(siuid)=""

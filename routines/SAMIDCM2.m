@@ -239,11 +239,11 @@ VIEWURL(SITE) ; URL to use for image viewer
  ;
  ; for this site
  ;
- n url s url="https://viewer.ohif.org/viewer"
+ n zurl s zurl="https://viewer.ohif.org/viewer"
  ; 
  ; todo look up the url from the parameter file
  ;
- quit url ; end of $$VIEWURL
+ quit zurl ; end of $$VIEWURL
  ;
  ;
  ;

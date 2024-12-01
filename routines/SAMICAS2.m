@@ -292,8 +292,9 @@ WSCASE ; post vapals casereview: generate case review page
  . . . . if zform["image" d  ;
  . . . . . new imgurl set imgurl=$$VIEWURL^SAMIDCM2(siteid)
  . . . . . new imgview s imgview=""
- . . . . . i $e(imgid,4)="http" s imgview=imgview_"<td><a href="_imgurl
- . . . . . e  s imgview=imgview_"<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
+ . . . . . i $e(imgid,1,4)["http" s imgview="<td><a href="_imgid
+ . . . . . e  s imgview="<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
+ . . . . . ;e  s imgview=imgview_"<td><a href="_imgurl_"?StudyInstanceUIDs="_imgid
  . . . . . s imgview=imgview_">View</a></td></tr>"
  . . . . . set rtn(cnt)=imgview
  . . . . . set cnt=cnt+1

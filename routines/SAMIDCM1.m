@@ -370,20 +370,56 @@ BLDEMRN() ; scan through dcm-intake and make set every PatientID
  ;@tests [tbd]
  ;
  ;
+SID2MRN(SID) ; extrinsic which returns the mrn given the studyid
+ ; also creates the studyid index in patient-lookup if it does not 
+ ; exist
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ i '$d(@lroot@("studyid")) d INDXSID()
+ n dfn,lien,mrn
+ s dfn=$o(@lroot@("studyid",SID,""))
+ i dfn="" d INDXSID() ; maybe they forgot to index it
+ s dfn=$o(@lroot@("studyid",SID,""))
+ i dfn="" q ""
+ s lien=$o(@lroot@("dfn",dfn,""))
+ q:lien="" ""
+ s mrn=$g(@lroot@(lien,"simrn"))
+ q mrn
+ ;
+INDXSID() ; reindex sid
+ n proot s proot=$$setroot^%wd("vapals-patients")
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ k @lroot@("studyid")
+ n i,sid
+ s i=""
+ f  s i=$o(@proot@(i)) q:i=""  d  ;
+ . s sid=$g(@proot@(i,"studyid"))
+ . i sid="" s sid=$g(@proot@(i,"sid"))
+ . i sid="" s sid=$g(@proot@(i,"sisid"))
+ . q:sid=""
+ . s @lroot@("studyid",sid,i)=""
+ ;
+ Q
+ ; 
 WSDCMQ(return,filter) ; return dcm json
  ;
  n root s root=$$setroot^%wd("dcm-intake")
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
  i sid="" q ""
- n ien s ien=$o(@root@("studyid",sid,""))
- i ien="" q ""
+ ;n lien s lien=$o(@lroot@("studyid",sid,""))
+ ;i lien="" q ""
+ ;n mrn s mrn=@lroot@(lien,"simrn")
+ n mrn s mrn=$$SID2MRN(sid)
+ q:mrn=""
+ ;n pien s pien=$o(@root@("emrn","e"_mrn,""))
+ ;q:pien=""
  ;n ien s ien=$o(@root@(" "),-1)
  ;
  n jary,json
  n cnt s cnt=0
  s ien=""
- f  s ien=$o(@root@("studyid",sid,ien)) q:ien=""  d  ;
+ f  s ien=$o(@root@("emrn","e"_mrn,ien)) q:ien=""  d  ;
  . s cnt=cnt+1
  . m jary("result",cnt)=@root@(ien,"json")
  . q

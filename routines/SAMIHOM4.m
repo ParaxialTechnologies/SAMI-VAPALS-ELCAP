@@ -1677,6 +1677,7 @@ WSNEWCAS ; web route newcase (creates new case)
  merge ^SAMIUL("newCase","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
  ;
  new saminame set saminame=$get(vars("name"))
  if saminame="" s saminame=$get(vars("saminame"))
@@ -1706,6 +1707,8 @@ WSNEWCAS ; web route newcase (creates new case)
  new studyid set studyid=$$GENSTDID^SAMIHOM3(gien,.SAMIARGS)
  set @root@(gien,"samistudyid")=studyid
  set @root@("sid",studyid,gien)=""
+ new lien set lien=$o(@lroot@("dfn",dfn,""))
+ set @lroot@("studyid",studyid,lien)=""
  ;
  new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
  set @root@(gien,"samicreatedate")=datekey

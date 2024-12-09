@@ -20,6 +20,7 @@ forms = [
     {"template": "background", "title": "Background Form", "formPage": "background", "withNav": "true"},
     {"template": "blank", "title": "", "formPage": "blank_no_nav", "withNav": "false"},
     {"template": "intake", "title": "Lung Screening Intake Form", "formPage": "intake", "withNav": "true"},
+    {"template": "xray", "title": "Chest X-Ray Form", "formPage": "xray", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "formPage": "ctevaluation", "withNav": "true"},
     {"template": "home", "title": "Home", "formPage": "home", "withNav": "true"},
     {"template": "casereview", "title": "Case Review", "formPage": "casereview", "withNav": "true"},

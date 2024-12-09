@@ -46,6 +46,7 @@
 {% endif %}
 
 
+{% if formPage != 'xray' %}
 <div class="row">
     <div class="col-sm-12 form-group">
         <label>LDCT follow-up:</label><br/>
@@ -57,6 +58,8 @@
         {{ f.inlineRadio("cefuw", "cefuw-os", "os", "Other") }}
     </div>
 </div>
+{% endif %}
+
 <div id="follow-up-date-container">
     <div class="row">
         <div class="col-sm-4 col-md-4 form-group">
@@ -68,13 +71,24 @@
 <div class="row">
     <div class="col-sm-12 form-group">
         <label>Other follow-up:</label><br/>
-        {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
-        {{ f.inlineCheckbox("cefucc","y", "Contrast CT") }}
-        {{ f.inlineCheckbox("cefupe","y", "PET") }}
-        {{ f.inlineCheckbox("cefufn","y", "Percutaneous biopsy") }}
-        {{ f.inlineCheckbox("cefubr","y", "Bronchoscopy") }}
-        {{ f.inlineCheckbox("cefupc","y", "Pulmonary consultation") }}
-        {{ f.inlineCheckbox("cefutb","y", "Refer to tumor board") }}
+        {% if formPage == 'xray' %}
+            {{ f.inlineCheckbox("cxfucx","y", "Follow-up CXR") }}
+            {{ f.inlineCheckbox("cxfuct","y", "Follow-up CT") }}
+            {{ f.inlineCheckbox("cxfuac","y", "Abx + follow-up CT") }}
+            {{ f.inlineCheckbox("cxfupt","y", "PET") }}
+            {{ f.inlineCheckbox("cxfucc","y", "CT w contrast") }}
+            {{ f.inlineCheckbox("cxfubi","y", "CT-guided biopsy") }}
+            {{ f.inlineCheckbox("cxfubr","y", "Bronchoscopy") }}
+            {{ f.inlineCheckbox("cxfure","y", "Resection") }}
+        {% else %}
+            {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
+            {{ f.inlineCheckbox("cefucc","y", "Contrast CT") }}
+            {{ f.inlineCheckbox("cefupe","y", "PET") }}
+            {{ f.inlineCheckbox("cefufn","y", "Percutaneous biopsy") }}
+            {{ f.inlineCheckbox("cefubr","y", "Bronchoscopy") }}
+            {{ f.inlineCheckbox("cefupc","y", "Pulmonary consultation") }}
+            {{ f.inlineCheckbox("cefutb","y", "Refer to tumor board") }}
+        {% endif %}
         {{ f.inlineCheckbox("cefunf","y", "No other further follow-up") }}
         {{ f.inlineCheckbox("cefuo","y", "Other") }}
     </div>

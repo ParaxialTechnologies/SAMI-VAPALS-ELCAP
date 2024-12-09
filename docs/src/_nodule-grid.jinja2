@@ -182,6 +182,7 @@
                             {% endfor %}
                         </tr>
                     {% endif %}
+                    {% if formPage != 'xray' %}
                     <tr>
                         <td style="white-space: nowrap;">
                             <label class="control-label required">Nodule seen in series #</label>
@@ -219,6 +220,7 @@
                             </td>
                         {% endfor %}
                     </tr>
+                    {% endif %}
                     <tr>
                         <td style="white-space: nowrap;">
                             <label class="control-label required">Nodule status</label>
@@ -538,8 +540,13 @@
                                     <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action" class="form-control"
                                             tabindex="{{ i }}24">
                                         <option value="-"> -</option>
+                                        {% if formPage == 'xray' %}
+                                        <option value="x"{{ " selected" if (mockup and i==1) }}>Follow-up CXR
+                                        </option>
+                                        {% else %}
                                         <option value="s"{{ " selected" if (mockup and i==1) }}>Annual repeat CT
                                         </option>
+                                        {% endif %}
                                         <option value="f">Follow-up CT</option>
                                         <option value="a">Abx + follow-up CT</option>
                                         <option value="e">PET</option>

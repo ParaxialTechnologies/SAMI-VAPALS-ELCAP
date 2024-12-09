@@ -8,7 +8,7 @@
   <meta content="2024.12.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   @@SITETITLE@@: CT Evaluation Form
+   @@SITETITLE@@: Chest X-Ray Form
   </title>
   <link href="../../../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="../../../www/lib/fontawesome-pro-6.5.1-web/css/all.css" rel="stylesheet"/>
@@ -190,7 +190,7 @@
      </small>
     </h1>
     <h2>
-     CT Evaluation Form
+     Chest X-Ray Form
      <small class="text-muted" title="Medical Record Number">
       1234567890
      </small>
@@ -235,10 +235,12 @@
       </div>
      </div>
     </nav>
-    <form action="ctevaluation.html" class="validated" id="main-form" method="get">
+    <form action="xray.html" class="validated" id="main-form" method="get">
+     Ω
      <input name="samiroute" type="hidden" value="postform"/>
      <input name="studyid" type="hidden" value="@@SID@@"/>
      <input name="site" type="hidden" value="@@SITE@@"/>
+     Ω
      <input name="form" type="hidden" value="@@FORMKEY@@"/>
      <div id="scan" style="padding-top:8px">
       <h3>
@@ -246,13 +248,13 @@
       </h3>
       <div class="row">
        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-        <label class="control-label required" for="cedos">
-         CT study date
+        <label class="control-label required" for="cxdos">
+         CXR study date
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="cedos-addon" class="form-control" data-restriction="past" id="cedos" name="cedos" required="required"/>
+         <input aria-describedby="cxdos-addon" class="form-control" data-restriction="past" id="cxdos" name="cxdos" required="required"/>
          <div class="input-group-addon">
-          <div class="input-group-text" id="cedos-addon">
+          <div class="input-group-text" id="cxdos-addon">
            <i aria-hidden="true" class="fa-regular fa-calendar">
            </i>
           </div>
@@ -265,31 +267,31 @@
       </div>
       <div class="row">
        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-        <label for="cerads">
+        <label for="cxrads">
          Signing radiologist
         </label>
-        <select class="form-control" id="cerads" name="cerads">
+        <select class="form-control" id="cxrads" name="cxrads">
          <option value="-">
           —
          </option>
         </select>
        </div>
        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-        <label class="control-label required" for="cerad">
+        <label class="control-label required" for="cxrad">
          Radiologist
         </label>
-        <input class="form-control" id="cerad" name="cerad" required="required" type="text"/>
+        <input class="form-control" id="cxrad" name="cxrad" required="required" type="text"/>
        </div>
       </div>
       <div class="row">
        <div class="col-md-12 form-group">
-        <label class="control-label" for="ceclin">
+        <label class="control-label" for="cxclin">
          Clinical information
         </label>
-        <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
+        <textarea class="form-control" id="cxclin" name="cxclin" rows="3"></textarea>
         <label class="checkbox-inline">
-         <input name="ceclini" type="hidden" value=""/>
-         <input id="ceclini" name="ceclini" type="checkbox" value="y"/>
+         <input name="cxclini" type="hidden" value=""/>
+         <input id="cxclini" name="cxclini" type="checkbox" value="y"/>
          Include in impression
         </label>
        </div>
@@ -297,144 +299,37 @@
       <div class="row">
        <div class="form-group col-sm-12">
         <label class="checkbox-inline">
-         <input name="ceofr" type="hidden" value=""/>
-         <input id="ceofr" name="ceofr" type="checkbox" value="y"/>
-         CT scan performed at outside institution
+         <input name="cxofr" type="hidden" value=""/>
+         <input id="cxofr" name="cxofr" type="checkbox" value="y"/>
+         CXR performed at outside institution
         </label>
         <i aria-hidden="true" class="fa-regular fa-circle-question" data-content="This checkbox should be checked if the CT evaluation form is being completed based on films or a radiology report received from an outside institution." data-html="true" data-toggle="popover" title="Help">
         </i>
        </div>
       </div>
       <div class="row">
-       <div class="col-sm-12">
-        <div class="form-group">
-         <label class="required">
-          Type of exam
-         </label>
-         <br/>
-         <label class="radio-inline">
-          <input id="cetex-b" name="cetex" required="required" type="radio" value="b"/>
-          Baseline
-          <i class="fa-regular fa-microchip-ai fa-flip fa-xl" data-container="body" data-content="A structured report has been used to pre-fill some information on this form" data-toggle="popover" id="ai-imported" style="display: none;--fa-animation-duration: 0.5s;" title="AI Imported">
-          </i>
-         </label>
-         <label class="radio-inline">
-          <input id="cetex-a" name="cetex" required="required" type="radio" value="a"/>
-          Annual repeat
-         </label>
-         <label class="radio-inline">
-          <input id="cetex-d" name="cetex" required="required" type="radio" value="d"/>
-          Follow-up (not annual repeat)
-         </label>
-        </div>
-        <div class="alert alert-warning">
-         Only select Baseline if there is no prior CT or there is a prior CT scan more than 3 years
-                            ago
-        </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-sm-12 form-group">
-        <label class="control-label required">
-         CT protocol
-        </label>
-        <br/>
-        <label class="radio-inline">
-         <input id="cectp-l" name="cectp" required="required" type="radio" value="l"/>
-         Low-Dose CT
-        </label>
-        <label class="radio-inline">
-         <input id="cectp-d" name="cectp" required="required" type="radio" value="d"/>
-         Standard CT
-        </label>
-        <label class="radio-inline">
-         <input id="cectp-i" name="cectp" required="required" type="radio" value="i"/>
-         Limited
-                            CT
-        </label>
-       </div>
-      </div>
-      <div class="row">
        <div class="col-sm-4">
         <div class="form-group">
-         <label class="control-label required" for="cectrst">
-          Reconstructed slice thickness
-                                (mm)
+         <label class="radio-inline" for="xpa2">
+          <input id="xpa2" name="xpa" type="radio" value="2"/>
+          PA &amp; LAT
          </label>
-         <select class="form-control" id="cectrst" name="cectrst" required="required">
-          <option value="">
-           -
-          </option>
-          <option value="0.4">
-           0.4
-          </option>
-          <option value="0.5">
-           0.5
-          </option>
-          <option value="0.625">
-           0.625
-          </option>
-          <option value="0.75">
-           0.75
-          </option>
-          <option value="0.8">
-           0.8
-          </option>
-          <option value="1.0">
-           1.0
-          </option>
-          <option value="1.25">
-           1.25
-          </option>
-          <option value="o">
-           Other
-          </option>
-         </select>
-        </div>
-       </div>
-       <div class="col-sm-4 form-group" id="cectrsto-container">
-        <label class="control-label required" for="cectrsto">
-         Specify
-        </label>
-        <input class="form-control numeric" id="cectrsto" maxlength="5" name="cectrsto" placeholder="specify" required="required" type="text"/>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-sm-4">
-        <div class="form-group">
-         <label class="control-label" for="cectcdti">
-          CTDI (vol)
+         <label class="radio-inline" for="xpa1">
+          <input id="xpa1" name="xpa" type="radio" value="1"/>
+          PA Alone
          </label>
-         <input class="form-control decimalformat" id="cectcdti" maxlength="10" name="cectcdti" type="text"/>
-        </div>
-       </div>
-       <div class="col-sm-4">
-        <div class="form-group">
-         <label class="control-label" for="cectdlp">
-          DLP
-         </label>
-         <input class="form-control decimalformat" id="cectdlp" maxlength="10" name="cectdlp" type="text"/>
-        </div>
-       </div>
-       <div class="col-sm-4">
-        <div class="form-group">
-         <label class="control-label" for="cectssde">
-          Size-specific dose estimates
-                                (SSDE)
-         </label>
-         <input class="form-control decimalformat" id="cectssde" maxlength="10" name="cectssde" type="text"/>
         </div>
        </div>
       </div>
       <div class="row">
        <div class="col-sm-4 form-group">
-        <label class="control-label required" for="sidoe">
-         Baseline CT
+        <label class="control-label required" for="cxdoe">
+         Baseline CXR
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="sidoe-addon" class="form-control" data-restriction="past" id="sidoe" name="sidoe" required="required"/>
+         <input aria-describedby="cxdoe-addon" class="form-control" data-restriction="past" id="cxdoe" name="cxdoe" required="required"/>
          <div class="input-group-addon">
-          <div class="input-group-text" id="sidoe-addon">
+          <div class="input-group-text" id="cxdoe-addon">
            <i aria-hidden="true" class="fa-regular fa-calendar">
            </i>
           </div>
@@ -444,7 +339,7 @@
          MM/DD/YYYY
         </small>
         <small class="form-text text-muted pull-right">
-         <span id="cetsb-text">
+         <span id="cxtsb-text">
           0
          </span>
          months since baseline
@@ -452,13 +347,13 @@
        </div>
        <div>
         <div class="col-sm-4 form-group">
-         <label class="control-label" for="cedcs">
+         <label class="control-label" for="cxdcs">
           Most recent comparative study
          </label>
          <div class="input-group datepicker">
-          <input aria-describedby="cedcs-addon" class="form-control" data-restriction="past" id="cedcs" name="cedcs"/>
+          <input aria-describedby="cxdcs-addon" class="form-control" data-restriction="past" id="cxdcs" name="cxdcs"/>
           <div class="input-group-addon">
-           <div class="input-group-text" id="cedcs-addon">
+           <div class="input-group-text" id="cxdcs-addon">
             <i aria-hidden="true" class="fa-regular fa-calendar">
             </i>
            </div>
@@ -469,10 +364,10 @@
          </small>
         </div>
         <div class="col-sm-4 form-group">
-         <label class="control-label" for="cedps">
+         <label class="control-label" for="cxdps">
           Prior scans
          </label>
-         <input class="form-control" id="cedps" name="cedps" type="text"/>
+         <input class="form-control" id="cxdps" name="cxdps" type="text"/>
         </div>
        </div>
       </div>
@@ -1977,234 +1872,6 @@
                 RLL
                </option>
               </select>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td style="white-space: nowrap;">
-             <label class="control-label required">
-              Nodule seen in series #
-             </label>
-             <i aria-hidden="true" class="fa-regular fa-circle-question" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
-             </i>
-            </td>
-            <td class="form-inline" data-nodule-number="1" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect1sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text" value="1"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="2" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect2sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect2sn" name="cect2sn" required="required" size="3" tabindex="205" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="3" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect3sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect3sn" name="cect3sn" required="required" size="3" tabindex="305" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="4" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect4sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect4sn" name="cect4sn" required="required" size="3" tabindex="405" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="5" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect5sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect5sn" name="cect5sn" required="required" size="3" tabindex="505" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="6" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect6sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect6sn" name="cect6sn" required="required" size="3" tabindex="605" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="7" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect7sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect7sn" name="cect7sn" required="required" size="3" tabindex="705" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="8" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect8sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect8sn" name="cect8sn" required="required" size="3" tabindex="805" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="9" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect9sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect9sn" name="cect9sn" required="required" size="3" tabindex="905" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="10" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect10sn">
-               Nodule seen in series #
-              </label>
-              <input class="form-control" id="cect10sn" name="cect10sn" required="required" size="3" tabindex="1005" type="text"/>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td style="white-space: nowrap;">
-             <label class="control-label required">
-              Nodule seen in images
-             </label>
-             <i aria-hidden="true" class="fa-regular fa-circle-question" data-content="Indicate the CT image number in which the nodule appears." data-toggle="popover" title="Help">
-             </i>
-            </td>
-            <td class="form-inline" data-nodule-number="1" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect1inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect1inl" name="cect1inl" required="required" size="3" tabindex="106" type="text" value="1"/>
-              -
-              <label class="aria-hidden" for="cect1inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect1inh" name="cect1inh" required="required" size="3" tabindex="107" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="2" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect2inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect2inl" name="cect2inl" required="required" size="3" tabindex="206" type="text"/>
-              -
-              <label class="aria-hidden" for="cect2inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect2inh" name="cect2inh" required="required" size="3" tabindex="207" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="3" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect3inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect3inl" name="cect3inl" required="required" size="3" tabindex="306" type="text"/>
-              -
-              <label class="aria-hidden" for="cect3inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect3inh" name="cect3inh" required="required" size="3" tabindex="307" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="4" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect4inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect4inl" name="cect4inl" required="required" size="3" tabindex="406" type="text"/>
-              -
-              <label class="aria-hidden" for="cect4inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect4inh" name="cect4inh" required="required" size="3" tabindex="407" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="5" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect5inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect5inl" name="cect5inl" required="required" size="3" tabindex="506" type="text"/>
-              -
-              <label class="aria-hidden" for="cect5inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect5inh" name="cect5inh" required="required" size="3" tabindex="507" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="6" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect6inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect6inl" name="cect6inl" required="required" size="3" tabindex="606" type="text"/>
-              -
-              <label class="aria-hidden" for="cect6inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect6inh" name="cect6inh" required="required" size="3" tabindex="607" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="7" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect7inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect7inl" name="cect7inl" required="required" size="3" tabindex="706" type="text"/>
-              -
-              <label class="aria-hidden" for="cect7inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect7inh" name="cect7inh" required="required" size="3" tabindex="707" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="8" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect8inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect8inl" name="cect8inl" required="required" size="3" tabindex="806" type="text"/>
-              -
-              <label class="aria-hidden" for="cect8inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect8inh" name="cect8inh" required="required" size="3" tabindex="807" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="9" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect9inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect9inl" name="cect9inl" required="required" size="3" tabindex="906" type="text"/>
-              -
-              <label class="aria-hidden" for="cect9inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect9inh" name="cect9inh" required="required" size="3" tabindex="907" type="text"/>
-             </div>
-            </td>
-            <td class="form-inline" data-nodule-number="10" style="display:none;">
-             <div class="form-group form-group-sm">
-              <label class="aria-hidden" for="cect10inl">
-               Nodule seen in image (Low)
-              </label>
-              <input class="form-control numeric" id="cect10inl" name="cect10inl" required="required" size="3" tabindex="1006" type="text"/>
-              -
-              <label class="aria-hidden" for="cect10inh">
-               Nodule seen in image (High)
-              </label>
-              <input class="form-control" id="cect10inh" name="cect10inh" required="required" size="3" tabindex="1007" type="text"/>
              </div>
             </td>
            </tr>
@@ -4415,8 +4082,8 @@
                <option value="-">
                 -
                </option>
-               <option selected="" value="s">
-                Annual repeat CT
+               <option selected="" value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4451,8 +4118,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4487,8 +4154,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4523,8 +4190,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4559,8 +4226,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4595,8 +4262,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4631,8 +4298,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4667,8 +4334,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4703,8 +4370,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -4739,8 +4406,8 @@
                <option value="-">
                 -
                </option>
-               <option value="s">
-                Annual repeat CT
+               <option value="x">
+                Follow-up CXR
                </option>
                <option value="f">
                 Follow-up CT
@@ -8626,67 +8293,12 @@
        <i aria-hidden="true" class="fa-regular fa-circle-question fa-2xs" data-content="This section refers to the most immediate action that needs to be taken with respect to the
         patient, whether the recommendation is based on findings pertaining to nodules or other abnormalities.&lt;br/&gt;&lt;br/&gt;
         It is important that on subsequent forms the physician updates the status and action fields corresponding to
-        each abnormality and selects the most important follow-up.&lt;br/&gt;&lt;br/&gt;f/u CT includes both the limited and full
-           diagnostic CT scans which are done according to the ELCAP protocol for any follow-up CT except ones that will
-           occur on the anniversary/annual CT date." data-html="true" data-toggle="popover" title="Help">
+        each abnormality and selects the most important follow-up." data-html="true" data-toggle="popover" title="Help">
        </i>
-      </h3>
-      <div class="row">
-       <div class="col-sm-12 form-group">
-        <label class="required">
-         Follow-up approach:
-        </label>
-        <br/>
-        <label class="radio-inline" for="cefpa-lr">
-         <input id="cefpa-lr" name="cefpa" required="required" type="radio" value="lr"/>
-         Lung-RADS
-        </label>
-        <label class="radio-inline" for="cefpa-el">
-         <input id="cefpa-el" name="cefpa" type="radio" value="el"/>
-         I-ELCAP
-        </label>
-       </div>
-      </div>
-      <div id="lung-rads-top">
-      </div>
-      <h4>
-       Options
        <label class="small required">
         select one or more
        </label>
-      </h4>
-      <div class="row">
-       <div class="col-sm-12 form-group">
-        <label>
-         LDCT follow-up:
-        </label>
-        <br/>
-        <label class="radio-inline" for="cefuw-1y">
-         <input id="cefuw-1y" name="cefuw" type="radio" value="1y"/>
-         Annual repeat
-        </label>
-        <label class="radio-inline" for="cefuw-nw">
-         <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
-         Now
-        </label>
-        <label class="radio-inline" for="cefuw-1m">
-         <input id="cefuw-1m" name="cefuw" type="radio" value="1m"/>
-         1 month
-        </label>
-        <label class="radio-inline" for="cefuw-3m">
-         <input id="cefuw-3m" name="cefuw" type="radio" value="3m"/>
-         3 months
-        </label>
-        <label class="radio-inline" for="cefuw-6m">
-         <input id="cefuw-6m" name="cefuw" type="radio" value="6m"/>
-         6 months
-        </label>
-        <label class="radio-inline" for="cefuw-os">
-         <input id="cefuw-os" name="cefuw" type="radio" value="os"/>
-         Other
-        </label>
-       </div>
-      </div>
+      </h3>
       <div id="follow-up-date-container">
        <div class="row">
         <div class="col-sm-4 col-md-4 form-group">
@@ -8716,39 +8328,44 @@
         </label>
         <br/>
         <label class="checkbox-inline">
-         <input name="cefuaf" type="hidden" value=""/>
-         <input id="cefuaf" name="cefuaf" type="checkbox" value="y"/>
-         Antibiotics
+         <input name="cxfucx" type="hidden" value=""/>
+         <input id="cxfucx" name="cxfucx" type="checkbox" value="y"/>
+         Follow-up CXR
         </label>
         <label class="checkbox-inline">
-         <input name="cefucc" type="hidden" value=""/>
-         <input id="cefucc" name="cefucc" type="checkbox" value="y"/>
-         Contrast CT
+         <input name="cxfuct" type="hidden" value=""/>
+         <input id="cxfuct" name="cxfuct" type="checkbox" value="y"/>
+         Follow-up CT
         </label>
         <label class="checkbox-inline">
-         <input name="cefupe" type="hidden" value=""/>
-         <input id="cefupe" name="cefupe" type="checkbox" value="y"/>
+         <input name="cxfuac" type="hidden" value=""/>
+         <input id="cxfuac" name="cxfuac" type="checkbox" value="y"/>
+         Abx + follow-up CT
+        </label>
+        <label class="checkbox-inline">
+         <input name="cxfupt" type="hidden" value=""/>
+         <input id="cxfupt" name="cxfupt" type="checkbox" value="y"/>
          PET
         </label>
         <label class="checkbox-inline">
-         <input name="cefufn" type="hidden" value=""/>
-         <input id="cefufn" name="cefufn" type="checkbox" value="y"/>
-         Percutaneous biopsy
+         <input name="cxfucc" type="hidden" value=""/>
+         <input id="cxfucc" name="cxfucc" type="checkbox" value="y"/>
+         CT w contrast
         </label>
         <label class="checkbox-inline">
-         <input name="cefubr" type="hidden" value=""/>
-         <input id="cefubr" name="cefubr" type="checkbox" value="y"/>
+         <input name="cxfubi" type="hidden" value=""/>
+         <input id="cxfubi" name="cxfubi" type="checkbox" value="y"/>
+         CT-guided biopsy
+        </label>
+        <label class="checkbox-inline">
+         <input name="cxfubr" type="hidden" value=""/>
+         <input id="cxfubr" name="cxfubr" type="checkbox" value="y"/>
          Bronchoscopy
         </label>
         <label class="checkbox-inline">
-         <input name="cefupc" type="hidden" value=""/>
-         <input id="cefupc" name="cefupc" type="checkbox" value="y"/>
-         Pulmonary consultation
-        </label>
-        <label class="checkbox-inline">
-         <input name="cefutb" type="hidden" value=""/>
-         <input id="cefutb" name="cefutb" type="checkbox" value="y"/>
-         Refer to tumor board
+         <input name="cxfure" type="hidden" value=""/>
+         <input id="cxfure" name="cxfure" type="checkbox" value="y"/>
+         Resection
         </label>
         <label class="checkbox-inline">
          <input name="cefunf" type="hidden" value=""/>
@@ -8766,88 +8383,6 @@
          Specify
         </label>
         <input class="form-control" id="cefuoo" name="cefuoo" placeholder="specify" required="required" type="text"/>
-       </div>
-      </div>
-      <div id="lung-rads-bottom">
-      </div>
-      <div id="lung-rads">
-       <h4>
-        Lung-RADS
-       </h4>
-       <div class="row">
-        <div class="form-group col-sm-5 col-md-4">
-         <label id="lung-rads-category-label">
-          Category
-         </label>
-         <br/>
-         <div class="radio">
-          <label>
-           <input id="celrad-na" name="celrad" type="radio" value="-"/>
-           Not applicable
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-0" name="celrad" type="radio" value="0"/>
-           0 (incomplete)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-1" name="celrad" type="radio" value="1"/>
-           1 (negative)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-2" name="celrad" type="radio" value="2"/>
-           2 (benign appearance or behavior)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-3" name="celrad" type="radio" value="3"/>
-           3 (probably benign)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-4A" name="celrad" type="radio" value="4A"/>
-           4A (suspicious)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-4B" name="celrad" type="radio" value="4B"/>
-           4B (suspicious)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="celrad-4X" name="celrad" type="radio" value="4X"/>
-           4X (suspicious)
-          </label>
-         </div>
-        </div>
-        <div class="form-group col-sm-7 col-md-8">
-         <label>
-          Modifiers
-         </label>
-         <div class="checkbox">
-          <label>
-           <input name="celrads" type="hidden" value=""/>
-           <input id="celrads" name="celrads" type="checkbox" value="S"/>
-           S - clinically significant or potentially clinically significant findings (non lung cancer)
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input name="celradc" type="hidden" value=""/>
-           <input id="celradc" name="celradc" type="checkbox" value="C"/>
-           C - prior diagnosis of lung cancer who return to screening
-          </label>
-         </div>
-        </div>
        </div>
       </div>
       <script>
@@ -8930,8 +8465,6 @@
         }
 
         
-            moveLungRadsBottom(fv);
-        
     }
       </script>
       <h3>
@@ -8942,8 +8475,8 @@
       <div class="row">
        <div class="col-sm-12">
         <div class="alert alert-info">
-         Annual repeat and follow-up CT scans should utilize
-                            the same low-dose protocol used for baseline low-dose CT scans.
+         Annual repeat and follow-up CXR scans should utilize
+                            the same low-dose protocol used for baseline low-dose CXR scans.
         </div>
        </div>
       </div>
@@ -8954,26 +8487,38 @@
         </label>
         <div class="radio">
          <label>
-          <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
+          <input id="cximn-rs" name="cximn" type="radio" value="rs"/>
           No evidence of nodules. Follow-up as recommended.
          </label>
         </div>
         <div class="radio">
          <label>
-          <input id="ceimn-ro" name="ceimn" required="required" type="radio" value="ro"/>
+          <input id="cximn-ro" name="cximn" type="radio" value="ro"/>
           Nodule(s) as described. Consistent with old granulomatous disease. Follow-up as recommended.
          </label>
         </div>
         <div class="radio">
          <label>
-          <input id="ceimn-ru" name="ceimn" required="required" type="radio" value="ru"/>
+          <input id="cximn-ru" name="cximn" type="radio" value="ru"/>
           Nodule(s) unchanged, as described. Follow-up as recommended.
          </label>
         </div>
         <div class="radio">
          <label>
-          <input id="ceimn-nf" name="ceimn" required="required" type="radio" value="nf"/>
+          <input id="cximn-nf" name="cximn" type="radio" value="nf"/>
           Nodule(s) as described. Follow-up as recommended
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="cximn-no" name="cximn" type="radio" value="no"/>
+          No further follow-up
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="cximn-fx" name="cximn" type="radio" value="fx"/>
+          Follow-up CXR
          </label>
         </div>
        </div>
@@ -8985,14 +8530,14 @@
         </strong>
         <div class="radio">
          <label>
-          <input id="ceimo-no" name="ceimo" type="radio" value="no"/>
+          <input id="cximo-no" name="cximo" type="radio" value="no"/>
           No other
                                 significant abnormalities.
          </label>
         </div>
         <div class="radio">
          <label>
-          <input id="ceimn-oa" name="ceimo" type="radio" value="oa"/>
+          <input id="cximn-oa" name="cximo" type="radio" value="oa"/>
           Other
                                 abnormalities and suggested follow-up as described above.
          </label>
@@ -9001,10 +8546,10 @@
       </div>
       <div class="row">
        <div class="col-sm-12 form-group">
-        <label for="ceimre">
+        <label for="cximre">
          Impression remarks
         </label>
-        <textarea class="form-control" id="ceimre" name="ceimre"></textarea>
+        <textarea class="form-control" id="cximre" name="cximre"></textarea>
        </div>
       </div>
      </div>
@@ -9025,37 +8570,6 @@
       </a>
      </div>
     </form>
-   </div>
-   <div aria-labelledby="dataImportModalLabel" class="modal fade" id="dataImportModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog" role="document">
-     <div class="modal-content">
-      <div class="modal-header">
-       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-        <span aria-hidden="true">
-         ×
-        </span>
-       </button>
-       <h4 class="modal-title" id="dataImportModalLabel">
-        Import Data
-       </h4>
-      </div>
-      <div class="modal-body">
-       Select which data set to import.
-      </div>
-      <div class="modal-footer">
-       <button class="btn btn-primary importDICOM" data-dismiss="modal" type="button">
-        Import DICOM Header
-                    Information
-       </button>
-       <button class="btn btn-primary importAI" data-dismiss="modal" type="button">
-        Import AI Findings
-       </button>
-       <button class="btn btn-default" data-dismiss="modal" type="button">
-        Cancel
-       </button>
-      </div>
-     </div>
-    </div>
    </div>
    <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
     <div class="modal-dialog" role="document">
@@ -9079,7 +8593,7 @@
        <a class="btn btn-primary" data-dismiss="modal" id="delete-form-cancel">
         No
        </a>
-       <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="ctevaluation.html" id="delete-form-btn">
+       <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="xray.html" id="delete-form-btn">
         Yes
        </a>
       </div>
@@ -9297,17 +8811,17 @@
    <script>
     //calculate Time Since Baseline (TSB)
         function calculateTimeSinceBaseline() {
-            const baselineDateString = $("#sidoe").val();
-            const studyDateString = $("#cedos").val();
+            const baselineDateString = $("#cxdoe").val();
+            const studyDateString = $("#cxdos").val();
             if (baselineDateString && studyDateString) {
                 const baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
                 const studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
                 if (baselineDate.isValid() && studyDate.isValid()) {
                     const months = parseInt(studyDate.diff(baselineDate, "months", true));
-                    $("#cetsb-text").text(months);
-                    $("#cetsb").val(months);
+                    $("#cxtsb-text").text(months);
+                    $("#cxtsb").val(months);
                 } else {
-                    $("#cetsb-text").text("error")
+                    $("#cxtsb-text").text("error")
                 }
             }
         }
@@ -9320,48 +8834,31 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['followup', 'cetex', 'cectp', 'ceimn'];
+            const multiInputValidators = ['followup', 'cximn'];
 
             $form.formValidation({
                     fields: {
                         // SCAN
-                        cedos: {
+                        cxdos: {
                             validators: {
                                 notEmpty: {message: 'Study date is required'},
                                 date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
                             }
                         },
-                        cerad: {validators: {notEmpty: {message: 'Radioligist is required'}}},
-                        cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
-                        cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
-                        cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
-                        cectrsto: {
-                            validators: {
-                                notEmpty: {message: 'Other reconstructed slice thickness is required'},
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-
-                        cectcdti: {
+                        cxrad: {validators: {notEmpty: {message: 'Radioligist is required'}}},
+                        cxctdlp: {
                             validators: {
                                 numeric: {message: 'Must be a number'},
                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
                             }
                         },
-                        cectdlp: {
+                        cxctssde: {
                             validators: {
                                 numeric: {message: 'Must be a number'},
                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
                             }
                         },
-                        cectssde: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        sidoe: {
+                        cxdoe: {
                             validators: {
                                 notEmpty: {message: 'Baseline CT date is required'},
                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
@@ -9371,11 +8868,11 @@
                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
                         //Impression
-                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        cximn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
 
                         //Virtual fields don't work with fv.addField, so we have to add it here
                         followup: {
-                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
+                            selector: '[name^=cxfu][type=checkbox], [name^=cxfu][type=radio]',
                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow-up option'}}
                         },
 
@@ -9427,167 +8924,23 @@
 
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
-            const $tsbFields = $("#sidoe, #cedos");
+            const $tsbFields = $("#cxdoe, #cxdos");
             $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
             $tsbFields.first().trigger("change"); //trigger on page load for existing data;
 
-            const $cedos = $("#cedos");
-            if (!$cedos.val()) {
-                $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
+            const $cxdos = $("#cxdos");
+            if (!$cxdos.val()) {
+                $cxdos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
-
-            let hasImported = false;
-            let aiStructuredReport = null;
-            //type of exam
-            $("[name=cetex]").on("change", function () {
-                let isBaseline = $("[name=cetex]:checked").val() === "b";
-                console.debug("cetex:change(): isBaseline=%s, hasImported=%s, available=%s", isBaseline,
-                    hasImported, aiStructuredReport != null);
-                if (isBaseline) { // type of exam (tex) is baseline
-                    const $sidoe = $("#sidoe");
-                    if (!$sidoe.val()) {
-                        $sidoe.val($("#cedos").val()).trigger('change');
-                    }
-
-                    if (!hasImported && aiStructuredReport) {
-                        importAllData(aiStructuredReport);
-                        hasImported = true;
-                        const $ai = $("#ai-imported");
-                        $ai.show();
-                        setTimeout(function () {
-                            $ai.removeClass("fa-flip");
-                        }, 1000);
-                    }
-                }
-            });
-
-            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
-            const ctProtocol = $("[name=cectp]:checked").val();
-            if (ctProtocol === undefined) {
-                $("#cectp-l").prop("checked", true);
-            }
-
-            //reconstructed slice thickness
-            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             
             $noduleGrid = initNoduleGrid(fv);
 
-            AI.queryStructuredReport(studyId, siteId, function (structuredReport) {
-                aiStructuredReport = structuredReport
 
-                //trigger change event on type of exam to display import buttons now that data is set.
-                $("[name=cetex]").trigger('change');
-            })
-
-            function importAllData(structuredReport) {
-                importDicomHeader(structuredReport);
-
-                const study = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY];
-                const seriesNumber = study["Series Number"]
-                const nodules = structuredReport[AI.SR_NODULES_KEY]
-                $noduleGrid.importData(nodules, seriesNumber);
-            }
-
-            function importDicomHeader(structuredReport) {
-                console.debug("importDicomHeader(): structuredReport=%o", structuredReport);
-                const patientData = structuredReport[AI.SR_PATIENT_STUDY_DETAILS_KEY]
-                console.debug("importDicomHeader(): patientData=%o", patientData)
-                Object.entries(patientData).forEach(([key, value]) => {
-                    if (key === "Study Date") {
-                        const fieldSelector = "#cedos";
-                        const $field = $(fieldSelector);
-
-                        //convert value to VAPALS format
-                        const studyDateMoment = moment(value);
-                        if (studyDateMoment.isValid()) {
-                            value = studyDateMoment.format(VAPALS.DATE_FORMAT);
-                        }
-
-                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass(AI.IMPORT_FIELD_CLASS);
-                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
-                            const originalValue = $field.val();
-                            $field.val(value);
-                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
-
-                            AI.createRevertElement(fieldSelector, originalValue).insertAfter($("#cedos-addon").parent().parent());
-                        }
-                    }
-                    if (key === "Slice Thickness") {
-                        const fieldSelector = "#cectrst";
-                        const $field = $(fieldSelector);
-                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass(AI.IMPORT_FIELD_CLASS);
-                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
-                            const originalValue = $field.val();
-                            if (!isNaN(value)) { //value is a valid number either as a string or Number
-                                if (value === 1) { //handle JSON conversion of 1.0 to 1 (back to 1.0)
-                                    value = '1.0';
-                                }
-                                const strValue = value.toString();
-                                $field.val(strValue);
-                                $field.attr(AI.IMPORT_VALUE_ATTR, strValue);
-                                if (value === "o") {
-                                    $("#cectrsto-container").show();
-                                } else {
-                                    $("#cectrsto-container").hide();
-                                }
-                                AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                            }
-
-                        }
-                    }
-                    if (key === "Specify") {
-                        const fieldSelector = "#cectrsto";
-                        const $field = $(fieldSelector);
-                        $("#cectrsto-container").show();
-                        if ($field.hasClass(AI.IMPORT_FIELD_CLASS)) {
-                            $field.val(value);
-                        } else {
-                            $field.addClass(AI.IMPORT_FIELD_CLASS);
-                            $field.attr(AI.IMPORT_ORIGINAL_VALUE_ATTR, $field.val());
-                            const originalValue = $field.val();
-                            $field.val(value);
-                            $field.attr(AI.IMPORT_VALUE_ATTR, value);
-                            AI.createRevertElement(fieldSelector, originalValue).insertAfter(fieldSelector);
-                        }
-                    }
-                });
-            }
-
-            $(".revert-data-button").on('click', function () {
-                // for fields not in "#nodule-table"
-                $("." + AI.IMPORT_FIELD_CLASS).each(function () {
-                    $(this).val($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR));
-                    if ($(this).attr("id") === "cectrst") {
-                        if ($(this).attr(AI.IMPORT_ORIGINAL_VALUE_ATTR) == "o") {
-                            $("#cectrsto-container").show();
-                        } else {
-                            $("#cectrsto-container").hide();
-                        }
-                    }
-                    $(this).removeAttr(AI.IMPORT_ORIGINAL_VALUE_ATTR);
-                    $(this).removeAttr(AI.IMPORT_VALUE_ATTR);
-                    $(this).removeClass(AI.IMPORT_FIELD_CLASS);
-                });
-
-                $noduleGrid.revertData();
-
-                AI.removeImportIcons();
-            });
             initAbnormalities(fv);
             initFollowup(fv);
 
             fv.on('core.form.valid', function () {
-                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
-                if (examType === 'b') {
-                    $noduleGrid.sortData();
-                }
                 $("form").trigger('submit');
             });
 

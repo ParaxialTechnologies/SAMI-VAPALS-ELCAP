@@ -256,32 +256,10 @@
                 <div class="row">
                     <div class="col-sm-12 form-group">
                         <label class="required">Nodules</label>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required">
-                                No evidence of nodules. Follow-up as recommended.
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="ceimn" id="ceimn-ro" value="ro"> Nodule(s) as
-                                described. Consistent with old granulomatous disease. Follow-up as recommended.
-                            </label>
-                        </div>
-
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="ceimn" id="ceimn-ru" value="ru"> Nodule(s)
-                                unchanged, as described. Follow-up as recommended.
-                            </label>
-                        </div>
-
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="ceimn" id="ceimn-nf" value="nf"> Nodule(s) as
-                                described. Follow-up as recommended.
-                            </label>
-                        </div>
+                        {{ f.radio("ceimn", "ceimn-rs", "rs", "No evidence of nodules. Follow-up as recommended.", true) }}
+                        {{ f.radio("ceimn", "ceimn-ro", "ro", "Nodule(s) as described. Consistent with old granulomatous disease. Follow-up as recommended.", true) }}
+                        {{ f.radio("ceimn", "ceimn-ru", "ru", "Nodule(s) unchanged, as described. Follow-up as recommended.", true) }}
+                        {{ f.radio("ceimn", "ceimn-nf", "nf", "Nodule(s) as described. Follow-up as recommended", true) }}
                     </div>
                 </div>
 

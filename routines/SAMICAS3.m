@@ -183,6 +183,14 @@ WSNFPOST ; post screeningplus addform: new form
  . do MKPTFORM^SAMICAS3(sid,key)
  . quit
  ;
+ if nuform="cxform" do  ; make pet eval form
+ . new key set key="cxform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:cxform"
+ . do MKCXFORM^SAMICAS3(sid,key)
+ . quit
+ ;
  do wsGetForm^%wf(.RESULT,.ARGS)
  ;
  ;
@@ -581,6 +589,50 @@ MKPTFORM(sid,key) ; create pet evaluation form
  ;
  ;
  ;
+MKCXFORM(sid,key) ; create pet evaluation form
+ ;
+ ;@stanza 2 make it
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+ quit:+sien=0
+ ;
+ ; nodule copy
+ ; new srckey set srckey=$$PREVNOD^SAMICAS4(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP^SAMICAS3(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
+ ; end nodule copy
+ ;
+ new cdate set cdate=$piece(key,"ptform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
+ do  ;
+ . new basedt
+ . set basedt=$$BASELNDT^SAMICAS4(sid)
+ . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
+ . if lastdt=-1 set lastdt=basedt
+ . new priordt set priordt=$$PRIORCMP^SAMICAS4(sid)
+ . if priordt=-1 set priordt=lastdt
+ . set @root@("graph",sid,key,"sidoe")=basedt
+ . ; set @root@("graph",sid,key,"cedcs")=lastdt
+ . set @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ . ; set @root@("graph",sid,key,"cedps")=priordt
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of MKCXFORM
+ ;
+ ;
+ ;
  ;
  ;@section 3 supplementary subroutine
  ;
@@ -706,6 +758,11 @@ CASETBL(ary) ; generates case review table
  set @ary@("ptform","js")="subPr"
  set @ary@("ptform","name")="PET Evaluation"
  set @ary@("ptform","image")="preview.gif"
+ ;
+ set @ary@("cxform","form")="cxform"
+ set @ary@("cxform","js")="subPr"
+ set @ary@("cxform","name")="Chest X-Ray"
+ set @ary@("cxform","image")="preview.gif"
  ;
  set @ary@("bxform","form")="bxform"
  set @ary@("bxform","js")="subPr"

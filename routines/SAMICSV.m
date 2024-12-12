@@ -200,6 +200,7 @@ SAYFORM() ; prompts for the form
  S ZF(5)="bxform"
  S ZF(6)="itform"
  S ZF(7)="ptform"
+ S ZF(8)="cxform"
  N DIR S DIR(0)="SO^"
  N ZI
  F ZI=1:1:7 S DIR(0)=DIR(0)_ZI_":"_ZF(ZI)_";"
@@ -215,6 +216,7 @@ SAYFORM() ; prompts for the form
  S DIR("L",5)="5 Biopsy form (bxform)"
  S DIR("L",6)="6 Intervention form (itform)"
  S DIR("L",7)="7 Pet Evaluation form (ptform)"
+ S DIR("L",8)="8 Chest X-Ray form (cxform)"
  ;
  ;
  ;@stanza 4 prompt user to select a form

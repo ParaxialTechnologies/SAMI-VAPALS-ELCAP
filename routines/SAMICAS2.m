@@ -228,7 +228,7 @@ WSCASE ; post vapals casereview: generate case review page
  set rtn(cnt)=rtn(cnt)_" <input value=""Intake"" class=""btn btn-link"" role=""link"" type=""submit"">"
  ;
  new samistatus set samistatus=""
- if $$GSAMISTA(sid,sikey)="incomplete" set samistatus="(incomplete)"
+ if $$GSAMISTA(sid,sikey)["incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
  set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
  set cnt=cnt+1
@@ -266,7 +266,7 @@ WSCASE ; post vapals casereview: generate case review page
  . . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
  . . . . ;
  . . . . new samistatus set samistatus=""
- . . . . if $$GSAMISTA(sid,zform)="incomplete" set samistatus="(incomplete)"
+ . . . . if $$GSAMISTA(sid,zform)["incomplete" set samistatus="(incomplete)"
  . . . . set cnt=cnt+1
  . . . . set rtn(cnt)="</form>"_samistatus_$$NOTEHREF^SAMICASE(sid,zkey)_"</td>"
  . . . . set cnt=cnt+1
@@ -1288,7 +1288,7 @@ GSAMISTA(sid,form) ; extrinsic returns value of 'samistatus' from form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new useform set useform=form
- ;if form["vapals:" set useform=$p(form,"vapals:",2)
+ if form["vapals:" set useform=$p(form,"vapals:",2)
  if useform="" q ""
  ;
  new stat set stat=$get(@root@("graph",sid,useform,"samistatus"))

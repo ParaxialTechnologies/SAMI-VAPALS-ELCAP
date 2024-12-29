@@ -589,7 +589,7 @@ MKPTFORM(sid,key) ; create pet evaluation form
  ;
  ;
  ;
-MKCXFORM(sid,key) ; create pet evaluation form
+MKCXFORM(sid,key) ; create xray evaluation form
  ;
  ;@stanza 2 make it
  ;
@@ -597,34 +597,36 @@ MKCXFORM(sid,key) ; create pet evaluation form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  ;
+ ; no nodule copy for xray forms
  ; nodule copy
  ; new srckey set srckey=$$PREVNOD^SAMICAS4(sid)
- new srckey,srcdate set srcdate=$$LASTCMP^SAMICAS3(sid,.srckey)
- if srckey'="" do  ;
- . new source set source=$name(@root@("graph",sid,srckey))
- . new target set target=$name(@root@("graph",sid,key))
- . do CTCOPY^SAMICTC1(source,target,key)
- . quit
+ ;new srckey,srcdate set srcdate=$$LASTCMP^SAMICAS3(sid,.srckey)
+ ;if srckey'="" do  ;
+ ;. new source set source=$name(@root@("graph",sid,srckey))
+ ;. new target set target=$name(@root@("graph",sid,key))
+ ;. do CTCOPY^SAMICTC1(source,target,key)
+ ;. quit
  ; end nodule copy
  ;
- new cdate set cdate=$piece(key,"ptform-",2)
+ new cdate set cdate=$piece(key,"cxform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ;
- do  ;
- . new basedt
- . set basedt=$$BASELNDT^SAMICAS4(sid)
- . if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
- . new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
- . if lastdt=-1 set lastdt=basedt
- . new priordt set priordt=$$PRIORCMP^SAMICAS4(sid)
- . if priordt=-1 set priordt=lastdt
- . set @root@("graph",sid,key,"sidoe")=basedt
- . ; set @root@("graph",sid,key,"cedcs")=lastdt
- . set @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
- . ; set @root@("graph",sid,key,"cedps")=priordt
- . quit
+ ; xray forms are always baseline
+ ;do  ;
+ ;. new basedt
+ ;. set basedt=$$BASELNDT^SAMICAS4(sid)
+ ;. if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;. new lastdt set lastdt=$$LASTCMP^SAMICAS3(sid)
+ ;. if lastdt=-1 set lastdt=basedt
+ ;. new priordt set priordt=$$PRIORCMP^SAMICAS4(sid)
+ ;. if priordt=-1 set priordt=lastdt
+ ;. set @root@("graph",sid,key,"sidoe")=basedt
+ ;. ; set @root@("graph",sid,key,"cedcs")=lastdt
+ ;. set @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ ;. ; set @root@("graph",sid,key,"cedps")=priordt
+ ;. quit
  ;
  ;
  ;@stanza 3 termination

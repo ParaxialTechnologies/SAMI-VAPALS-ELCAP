@@ -580,7 +580,8 @@ ACTIVE(zdt,dfn,SAMIPATS) ; Active/Inactive column
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  new active set active="inactive"
- if $get(@vals@("sistatus"))="active" set active="active"
+ if $d(@vals@("sies")),$get(@vals@("sies"))="ac" set active="active" ;
+ e  if $d(@vals@("sistatus")),$get(@vals@("sistatus"))="active" set active="active"
  ;
  quit active
  ; 

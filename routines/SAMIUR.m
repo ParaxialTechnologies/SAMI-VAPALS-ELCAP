@@ -555,14 +555,44 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . ;
  . new efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . set siform=$order(items("siform-"))
- . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
- . if type="inactive",status="active" quit  ; for inactive report
- . ;if type'="inactive",status'="active" quit  ; for other reports
- . if type'="inactive",type'="activity",type'="enrollment",status'="active" quit  ;other rpts
- . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
- . if type="enrollment",eligible'="y" quit  ; must be eligible
- . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))
- . if type="enrollment",enrolled'="y" quit  ; must be enrolled
+ . new status s status="active"
+ . if $get(@root@("graph",sid,siform,"sistatus"))["inactive" d  ;
+ . . set status="inactive"
+ . e  if $d(@root@("graph",sid,siform,"sies")) d  ;
+ . . new sies set sies=$get(@root@("graph",sid,siform,"sies"))
+ . . i $l(sies)=0 s status="active" quit
+ . . i sies["ac" s status="active" quit
+ . . ;s status="inactive" ; anything but ac or null
+ . . ; all the options for sies 
+ . . ;        <option value="ac">
+ . . ;         active
+ . . ;        </option>
+ . . ;        <option value="tr">
+ . . i sies["tr" s status="inactive" quit
+ . . ;         transferred to another institution  </option>
+ . . ;        <option value="nr">
+ . . i sies["nr" s status="inactive" quit
+ . . ;         no response to 3 calls + 3 letters
+ . . ;        </option>
+ . . ;        <option value="nc">
+ . . i sies["tr" s status="inactive" quit
+ . . ;         unable to contact
+ . . ;        </option>
+ . . ;        <option value="fe">
+ . . i sies["tr" s status="inactive" quit
+ . . ;         being followed elsewhere
+ . . ;       </option>
+ . . ;        <option value="ex">
+ . . i sies["ex" s status="inactive" quit
+ . . ;         expired ()""
+ . ;b
+ . if ((type["inactive")&(status'["inactive")) quit  ; for inactive report
+ . ;
+ . if type'["inactive",type'["activity",status'["active" quit  ;other rpts
+ . new eligible set eligible=$na(@root@("graph",sid,siform,"sicechrt"))
+ . if $d(@eligible),type="enrollment",@eligible'="y" quit  ; must be eligible
+ . new enrolled set enrolled=$na(@root@("graph",sid,siform,"sildct"))
+ . if $d(@enrolled),type="enrollment",@enrolled'="y" quit  ; must be enrolled
  . ;
  . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
  . new lastce,sifm,cefm,baseline

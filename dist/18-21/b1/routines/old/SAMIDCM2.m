@@ -141,7 +141,8 @@ ADDITEMS(ARY,SID) ; add Image items to Items array
  . ;
  . n siuid s siuid=$g(@root@(ien,"json","StudyInstanceUID"))
  . q:siuid=""
- . ;
+ . n siurl s siurl=$g(@root@(ien,"json","url"))
+ . i siurl'="" s siuid=siurl
  . ; add each image item only once to Items array
  . q:$d(images(siuid))
  . s images(siuid)=""
@@ -238,11 +239,11 @@ VIEWURL(SITE) ; URL to use for image viewer
  ;
  ; for this site
  ;
- n url s url="https://viewer.ohif.org/viewer"
+ n zurl s zurl="https://viewer.ohif.org/viewer"
  ; 
  ; todo look up the url from the parameter file
  ;
- quit url ; end of $$VIEWURL
+ quit zurl ; end of $$VIEWURL
  ;
  ;
  ;

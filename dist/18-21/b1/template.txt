@@ -71,8 +71,7 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds three medium-priority updates to improve CSV
- reports, CT evaluation reports, and another run at a recurrent bug.
+ #{nmsp} #{version} adds four updates to add new features or fix bugs.
 
  The definitive source for the #{appname} application - codebase,
  package distributions (including this one), and documentation - is at
@@ -90,15 +89,47 @@ ii. Contents
 
  The changes in this release are:
 
- #.#. Problem description
+ #.#. Support URL override for viewing images
 
-   Request 24-0000 (high priority): More about the specific request.
+   Request 24-0000 (high priority): Changes were made to the dicom server which
+         necessitated the change.
    
-   solution: Whatever that was.
+   solution: Feature was added to override the url.
 
-   reported: 2024-11-14 by Whoever Itwas.
+   reported: Karthik
    
+ #.#. Generate spreadsheets from current MSH files.
 
+   Request 24-0000 (high priority): Implement FILECSV, which generates 
+        spreadsheets from the linus files that store the forms at Mt. Sinai. 
+   
+   solution:  Inserts a column called "separator". All fields left of the 
+        separator are in our data dictionaries, all fields to the right of the 
+        separator are not in the DDs but are in the form files at MSH.
+
+   reported: Artit Jaripatnikal.
+   
+    #.#. Add the X-ray form: cxform.
+
+   Request: Ethiopia does a lot of their scanning by x-ray instead of CT, so 
+   		they need a form to properly log the information observed in the x-rays.
+   
+   solution: Develop cxform and integrate information into database.
+
+   reported: Rick Avila.
+   
+    #.#. Make form changes for MSH.
+
+   Request: Reports ran inccorrectly.
+   
+   solution: the changes made to the intake form for MSH eliminated three
+		variables and changed the meaning of another variable so that the 
+		report generator could not tell who was enrolled and also who was 
+		active. the logic in the report generator was enhanced to work with 
+		either VA or MSH versions of the intake form
+		
+   reported: Artit.
+   
 #. Package elements
 
 #>include: .dtool/packelements.txt

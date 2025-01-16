@@ -506,6 +506,8 @@ FILECSV(directory) ; build a csv output from a directory of files
  if '% write "Failed to read any files. Check directory.",! quit
  ;
  ;
+ ;n graph s graph="_G"_$$LKY9^C0XMAIN ; graph name for this run
+ ;K C0XFDA
  ;
  new file set file=""
  for  set file=$order(samifiles(file)) q:file=""  do
@@ -529,10 +531,13 @@ FILECSV(directory) ; build a csv output from a directory of files
  . . s val=$p(^TMP("SAMIFILE",$J,i),"=",2)
  . . q:var=""
  . . d SETCELL(SAMIOUT,CNT,var,val,"SAMIDICT",SAMIHDR)
+ . . q:$l(val)>30
+ . . ;D ADD^C0XMAIN(graph,file,var,$S(val'="":val,1:":null"))
+ . ;D UPDIE^C0XMAIN(.C0XFDA) 
  . ;
  . d SETCELL(SAMIOUT,CNT,"separator","*","SAMIDICT",SAMIHDR)
- . ;B ;                                                                        
- ; prompt for the directory
+ . ;B
+ ; prompt for the directory 
  N SAMIDIR
  D GETDIR^SAMIFDM(.SAMIDIR)
  Q:SAMIDIR=""
@@ -595,5 +600,27 @@ INITHDR(CSVHDR,CSVDICT,form) ; initialize the csvheader and csvdict
  ;
  s x=$$VARNUM(CSVHDR,CSVDICT,"separator") 
  q
+ ;
+BYNAME(RTN,ZNAME) ; extrinsic look up in triple store by name
+ ; 1 if any found
+ ; RTN returns multiple matches ... partials are allowed
+ ;
+ q
+ ;
+ ; lets step through retrieving the case review page and then
+ ; the forms for a patient from the triple store
+ ;
+ ;  the root of the tree is the mrn. it is only found on the siform
+ ;  so, we will start with the mrn
+ ;
+SPOMRN(TRTN,MRN,format) ; 
+ ;
+ N TMRN
+ s:format="" format="json"
+ S TMRN="?SI simrn "_MRN_" ."
+ ;S TMRN="?SI simrn ?MRN ."
+ ;D rpctrip^C0XGET2(.TRTN,TMRN,format)
+ ZWR TRTN
+ Q
  ;
 EOR ; end of routine SAMICSV2

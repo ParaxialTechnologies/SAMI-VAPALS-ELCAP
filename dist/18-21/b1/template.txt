@@ -1,5 +1,4 @@
-#:patchtitle: Allow url changes for images, determine new fields in forms.
-#:nmsp: SAMI
+#:patchtitle: Add cxform, generate spreadsheets from current MSH files, etc.
 #:lnmsp: sami
 #:appname: Screening+
 #:appdir: project/screening-plus
@@ -64,6 +63,7 @@ ii. Contents
     - Load KIDS package
     - Verify checksums (NEW)
     - Install KIDS package
+    - Add X-ray form to Screening+
  Optional backout instructions
  Routines
  Authors
@@ -247,21 +247,19 @@ ii. Contents
   #.#.#. Enter M
 
     At the unix prompt, enter the M environment in direct mode, using
-    the 'csession' command on Cache or the 'mumps' command on
-    YottaDB/GT.M:
-
-    On Cache:
-    ---------
-    $ csession vapals
-
-    Node: vapalscache, Instance: VAPALS
-
-    >_
-
+    the 'mumps' command on YottaDB/GT.M or the 'csession' command on Cache:
 
     On YottaDB/GT.M:
     ----------------
     $ mumps -dir
+
+    >_
+
+  On Cache:
+    ---------
+    $ csession vapals
+
+    Node: vapalscache, Instance: VAPALS
 
     >_
 
@@ -299,6 +297,18 @@ ii. Contents
 
     Creating the routine backup file differs by implementation.
 
+    On YottaDB/GT.M
+    ---------------
+    Note that routines that don't currently exist will result in the
+    routine name not appearing under the input line, and won't count
+    towards the number of routines. These can be safely disregarded.
+
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+
+#>include: .dtool/yotta-ro-snippet.txt
+
     On Caché
     --------
     Note that routines that don't currently exist will result in a
@@ -312,18 +322,6 @@ ii. Contents
     respectively:
 
 #>include: .dtool/cache-ro-snippet.txt
-
-    On YottaDB/GT.M
-    ---------------
-    Note that routines that don't currently exist will result in the
-    routine name not appearing under the input line, and won't count
-    towards the number of routines. These can be safely disregarded.
-
-    In addition to naming the routines and routine-out file, we also
-    provide a Header Label and press return at the Strip comments
-    prompt to accept the default of No:
-
-#>include: .dtool/yotta-ro-snippet.txt
 
     You'll remain in the M environment for the next section.
 
@@ -451,7 +449,40 @@ ii. Contents
    We recommend running tests of your #{appname} app to confirm the
    environment is operational and bug-free, before notifying users
    that #{appname} is ready for their use.
+   
+***Start new part for adding cxform
+VAPALS YottaDB> D Q^DI
 
+
+VA FileMan 22.2
+
+
+Select OPTION: ENTER OR EDIT FILE ENTRIES
+
+
+
+Input to what File: SAMI FOR
+     1   SAMI FORM                        (0 entries)
+     2   SAMI FORM MAPPING                (30 entries)
+CHOOSE 1-2: 2  SAMI FORM MAPPING          (30 entries)
+EDIT WHICH FIELD: ALL//
+
+You may enter a new SAMI FORM MAPPING, if you wish
+        NAME MUST BE 3-30 CHARACTERS, NOT NUMERIC OR STARTING WITH
+        PUNCTUATION
+
+Select SAMI FORM MAPPING: vapals:cxform
+  Are you adding 'vapals:cxform' as a new SAMI FORM MAPPING (the 31ST)? No// ye
+s  (Yes)
+INDEXED BY:
+FILEMAN FILE (DEFAULT):
+GRAPH:
+Select VARIABLE:
+HTML TEMPLATE NAME: xray.html
+
+
+Select SAMI FORM MAPPING:
+***End new part
 
 #. Optional backout instructions
 
@@ -473,17 +504,18 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2024-09-25/11-3    George P. Lilly (ven)
-                                Domenic DiNatale (par)
+ Developed   2024-11-04/        George P. Lilly (ven)
+             2025-01-12         Domenic DiNatale (par)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Tested      2024-11-06/08      George P. Lilly (ven)
-                                Artit Jirapatnakul (va-pho)
+ Tested      2024-11-06/        George P. Lilly (ven)
+             2025-01-12         Artit Jirapatnakul (va-pho)
                                 Linda M. R. Yaw (ven)
+                                Domenic DiNatale (par)
 
- Released    2024-11-11         Frederick D. S. Marshall (ven)
+ Released    2025-01-20         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

@@ -1,10 +1,9 @@
-SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
- ;;18.0;SAMI;**7,11,17**;2020-01-17;Build 10
+SAMICSV2 ;ven/gpl - export csv; 2024-08-22t21:04z
+ ;;18.0;SAMI;**21**;2020-01-17;
  ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b9
  ;mdc-v7;B104029869;SAMI*18.0*17 SEQ #17
  ;
- ; SAMICSV contains a direct-mode service to produce the ScreeningPlus
- ; CSV export.
+ ; SAMICSV2 adds the ability to handle exports from the MSH linux system
  ;
  ; allow entry from top, fallthrough to EN
  ;
@@ -95,6 +94,18 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ;  SAMICSV annotate, update history, update version-control lines,
  ; hdr comments.
  ;
+ ; 2024-11-30 ven/gpl 18-21-b1 7c15c6d
+ ;  SAMICSV2 new CSV file generator implementing FILECSV for analysis of DM
+ ;   files (this routine used SAMICSV as base and then added subroutines)
+ ;
+ ; 2025-01-16 ven/gpl 18-21-b1 5478404
+ ;  SAMICSV2 turned off testing calls
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMICSV2 entered purpose of routine at top, updated contents, fussed over
+ ;   how to handle fork from SAMICSV, updated history, bumped date-time,
+ ;   updated version control lines
+ ;
  ;@contents
  ;
  ; EN entry point to generate csv files from forms for a site
@@ -102,8 +113,11 @@ SAMICSV ;ven/gpl - export csv; 2024-08-22t21:04z
  ; ONEFORM process one form for a site
  ; $$FNAME filename for site/form
  ; DDICT data dictionary for form
- ;
- ;
+ ; WSFIELDS(RTN,FILTER) ; web service which returns a list of fields
+ ; FILECSV(directory) ; build a csv output from a directory of files
+ ; VARNUM(CSVHDR,CSVDICT,VAR) ; extrinic returns the offset of the var
+ ; INITHDR(CSVHDR,CSVDICT,form) ; initialize the csvheader and csvdict
+ ; BYNAME(RTN,ZNAME) ; extrinsic look up in triple store by name
  ;
  ;
  ;@dms-code EN^SAMICSV
@@ -546,7 +560,7 @@ FILECSV(directory) ; build a csv output from a directory of files
  ;
  Q
  ;
-SETCELL(OUT,ROW,VAR,val,CSVDICT,CSVHDR)
+SETCELL(OUT,ROW,VAR,val,CSVDICT,CSVHDR) ;
  ;
  i val'="" d  ;
  s val=$tr(val,$char(11))

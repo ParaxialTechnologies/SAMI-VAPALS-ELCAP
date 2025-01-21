@@ -122,6 +122,13 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
  ;  SAMIDCM1 (B310690378     E1Q3QyF   F11PIek)
  ; bump history, dates, version control lines
  ;
+ ; 2024-12-04 ven/gpl 18-21-b1
+ ;  SAMIDCM1 changes to make images and nodules work
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMIDCM1 update history, dates, version control lines
+ ;
+ ;
  ;@to-do
  ;  fill in log before 18-17
  ;

@@ -367,6 +367,13 @@ SAMIHUL ;ven/gpl - home page log; 2024-09-10t00:12z
  ;  SAMIHUL (F??? B149598 E???)
  ; update log, add recent details, commit IDs, checksums.
  ;
+ ; 2024-12-04 ven/gpl 18-21-b1 352c813
+ ;  SAMIHOM4 changes to make images and nodules work
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMIHOM4 update date-time, version control lines
+ ;  SAMIHUL update history, version control lines
+ ;
  ;
  ;@contents
  ;

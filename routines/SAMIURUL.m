@@ -241,6 +241,14 @@ SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
  ;  SAMIUR2 update date/time, version control lines
  ;  SAMIURUL update date/time, version control lines, and module log
  ;
+ ; 2025-01-12 ven/gpl 18-21-b1
+ ;  SAMIUR fixed inactive status, enrollment, and eligibility tests for MSH and VA
+ ;  SAMIUR2 fixed inactive status, enrollment, and eligibility tests for MSH and VA
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMIUR bump dates, version control lines
+ ;  SAMIUR2 bump dates, version control lines
+ ;  SAMIUR update histories, bump dates, version control lines
  ;
  ;@contents
  ;

@@ -158,8 +158,12 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ; Correct label for POS1819.
  ;
  ; 2024-11-06 ven/lmry 18-20-b1 
- ; SAMIPAT (B27292334      E1QEgpS   F382aRO)
+ ; SAMIPAT (B27292334  E1QEgpS   F382aRO) dbdb3c3  2989a91  eb1d173
  ; add POS1820, update history, add checksums, update version control lines
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ; SAMIPAT ()
+ ; add POS1821, update history, add checksums, update version control lines      
  ;
  ;@to-do
  ;
@@ -175,12 +179,11 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ; POS1818 kids post-install for SAMI-18-18
  ; POS1819 kids post-install for SAMI-18-19
  ; POS1820 kids post-install for SAMI-18-20
+ ; POS1821 kids post-install for SAMI-18-21
  ;
  ;
  ;
  ;@section 1 subroutine for most patches
- ;
- ;
  ;
  ;
 STANDARD ; usual post-install commands
@@ -204,8 +207,6 @@ STANDARD ; usual post-install commands
  ;@section 2 subroutines for SAMI-18-12
  ;
  ;
- ;
- ;
  ;@kids-post POS1812^SAMIPAT
  ;
 POS1812 ; kids post-install for SAMI-18-12
@@ -218,10 +219,7 @@ POS1812 ; kids post-install for SAMI-18-12
  ;
  ;
  ;
- ;
  ;@section 3 subroutines for SAMI-18-14
- ;
- ;
  ;
  ;
  ;@kids-post POS1814^SAMIPAT
@@ -234,10 +232,7 @@ POS1814 ; kids post-install for SAMI-18-14
  ;
  ;
  ;
- ;
  ;@section 4 subroutines for SAMI-18-15
- ;
- ;
  ;
  ;
  ;@kids-post POS1815^SAMIPAT
@@ -254,10 +249,7 @@ POS1815 ; kids post-install for SAMI-18-15
  ;
  ;
  ;
- ;
  ;@section 5 subroutines for SAMI-18-17
- ;
- ;
  ;
  ;
  ;@kids-post POS1817^SAMIPAT
@@ -271,10 +263,7 @@ POS1817 ; kids post-install for SAMI-18-17
  ;
  ;
  ;
- ;
  ;@section 6 subroutines for SAMI-18-18
- ;
- ;
  ;
  ;
  ;@kids-post POS1818^SAMIPAT
@@ -288,10 +277,7 @@ POS1818 ; kids post-install for SAMI-18-18
  ;
  ;
  ;
- ;
  ;@section 7 subroutines for SAMI-18-19
- ;
- ;
  ;
  ;
  ;@kids-post POS1819^SAMIPAT
@@ -305,11 +291,7 @@ POS1819 ; kids post-install for SAMI-18-19
  ;
  ;
  ;
- ;
  ;@section 8 subroutines for SAMI-18-20
- ;
- ;
- ;
  ;
  ;@kids-post POS1820^SAMIPAT
  ;
@@ -320,6 +302,20 @@ POS1820 ; kids post-install for SAMI-18-20
  ;
  quit  ; end of kids-post POS1820^SAMIPAT;
  ;
+ ;
+ ;
+ ;@section 9 subroutines for SAMI-18-21
+ ;
+ ;@kids-post POS1821^SAMIPAT
+ ;
+POS1821 ; kids post-install for SAMI-18-21
+ ;
+ set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github/docs/form-fields/"
+ do CLRWEB^SAMIADMN ; Clear the M Web Server files cache
+ do INIT2GPH^SAMICTD2 ; initialize CTEVAL dictionary into graph cteval-dict 
+ do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-21-b1")
+ ;
+ quit  ; end of kids-post POS1821^SAMIPAT;
  ;
  ;
  ;

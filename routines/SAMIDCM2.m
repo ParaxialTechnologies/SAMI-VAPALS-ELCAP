@@ -84,9 +84,16 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ;  SAMIDCM2
  ; simplified image intake to match only on MRN when case review is generated
  ;
- ; 2024-11-06 ven/lmry 18-20-b1
+ ; 2024-11-06 ven/lmry 18-20-b1 eb1d173 2989a91 dbdb3c3 7ac045c
  ;  SAMIDCM2 (B9873184       E1FKYwL   FX+k0E)
- ; bump history, dates, versions
+ ; bump history, dates, versions 
+ ;
+ ; 2024-11-30 ven/gpl 18-21-b1 7b26f97 63fd6f6
+ ;  SAMIDCM2 update and support url override for image viewer 
+ ;
+ 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMIDCM2 update history, bump version, dates-times, version control lines
+ ;
  ;
  ;@contents
  ; ADDITEMS add Image items to Items array

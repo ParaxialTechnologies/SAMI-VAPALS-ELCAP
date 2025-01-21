@@ -31,6 +31,7 @@ X   1.7. git pull/push
 X   1.8. list updated routines
 		SAMICAS2
 		SAMICAS3
+		SAMICSV
 		SAMICSV2
 		SAMIDCM1
 		SAMIDCM2
@@ -41,24 +42,25 @@ X   1.8. list updated routines
   
 X   1.9. list log routines
         SAMICUL
+        SAMIHUL
         SAMIURUL
 
 x   1.10. write change descriptions for template.txt
 /   1.10.b Add instructions to template to add cxform (see Adding form to SPlus)
-   1.11. update dashboard (Google Drive)
+X   1.11. update dashboard (Google Drive)
      https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173 
      (sami pax) use pax^ARJTXRW	to determine dependencies
      don't use SAMIPAT in list
-   1.12. Regrettable Bodge script
+X    1.12. Regrettable Bodge script
   		run within docs/www
   		../regrettable-bodge.py
   		then commit
 
  2. Update routines
-   2.0. update recipe with before checksums -- do recipe^ARJTRW
-   2.1. Update SAMIPAT for pre/post-install if needed
-      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-20-b1")
-   2.2. convert to new short version ids, update dates & times in each routine
+X   2.0. update recipe with before checksums -- do recipe^ARJTRW
+X   2.1. Update SAMIPAT for pre/post-install if needed
+      do SETPARM^SAMIPARM("SYS","samiSystemVersion","sami-18-21-b1")
+   2.2. update routine histories, convert to new short version ids, update dates & times in each routine
    or routine log (q to get out of log)
       view log with files
       git log --source --name-status
@@ -66,22 +68,21 @@ x   1.10. write change descriptions for template.txt
       git log --parse --abbrev -commit {file}
       or example: git log routines/SAMIUR.m
       or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m 
-  2.3. update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
-  2.4. if you wish, use ^%ZPT1 to compare first through third lines of routine for 
-  		consistency. Example if you want to look at all four version control lines
-  		zprint +1^SAMICAS3:+4
   2.5. push to repo/pull to vapalsyotta
 
  3. Run XINDEX and ARJT
-   3.0. update recipe with before checksums -- do recipe^ARJTXRW
    3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vv-paraxtech-github
-		do bash compare2.sh in routines before copying routines to make sure no 
+		 ./compare2.sh in routines before copying routines to make sure no 
 		changed routines were missed. This compares the routines with those in
 		~/run/routines/
    3.2. copy routines to ~/run/routines directory
   		cp -v ROUTINE.m ~/run/routines/
    3.3. run XINDEX (refer to XINDEX below)
    3.4. fix any bugs,
+   3.4.1.update first four lines of routines (See VERSION CONTROL LINES FORMAT below)
+   3.4.2 if you wish, use ^%ZPT1 to compare first through third lines of routine for 
+  		consistency. Example if you want to look at all four version control lines
+  		zprint +1^SAMICAS3:+4
    3.5. use ARJT tools -- do recipe^ARJTXRW (see Introduction to ARJT tools text file)
    3.6. update recipe with after information
   3.7. update dashboard https://docs.google.com/spreadsheets/d/1tWV8QQfLURjmypkk0Wbddwad_8UbUv1f9sf6ext1_Q0/edit?gid=1956251173#gid=1956251173

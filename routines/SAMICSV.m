@@ -98,10 +98,15 @@ SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ; 2024-11-03 ven/gpl 18-20-b1  93eabcc
  ;  SAMICSV  add mrn and studyid identifiers to all extracts and kill TMP at finish
  ; 
- ; 2024-11-06 ven/lmry 18-20-b1
+ ; 2024-11-06 ven/lmry 18-20-b1 eb1d173 2989a91 dbdb3c3
  ;  SAMICSV (B114652697     EMYtiz    F26S%8V)
  ;  update history, dates, version control lines
  ;
+ ; 2024-12-12 ven/gpl 18-21-b1 c39ee53
+ ;  SAMICSV adding chest X-ray (cxform) processing
+ ;
+ ; 2025-01-20 ven/lmry 18-21-b1
+ ;  SAMICSV bump history, date-time, version control lines
  ;
  ;@contents
  ;

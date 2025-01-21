@@ -518,6 +518,22 @@ SAMICUL ;ven/gpl - case review log; 2024-09-09t12:56z
  ; SAMICAS2 history back to 18-0 release; take SAMICUL history back to
  ; 18-12.
  ;
+ ; 2024-11-30 ven/gpl 18-21-b1 
+ ;  SAMICAS2 support the url ovverride to view an image 7b26f97
+ ;  SAMICAS2 update to url override for image viewer  63fd6f6
+ ;
+ ; 2024-12-12 ven/gpl 18-21-b1
+ ;  SAMICAS2 adding Chest X-ray (cxform) processing c39ee53
+ ;  SAMICAS3 adding Chest X-ray (cxform) processing c39ee53
+ ;
+ ; 2024-12-29 ven/gpl 18-21-b1
+ ;  SAMICAS2 update to X-ray form creation,and fixed complete error a194a1a
+ ;  SAMICAS3 update to X-ray form creation,and fixed complete error a194a1a
+ ;
+ ; 2025-01-20 ven/lmry
+ ;  SAMICUL updating history, etc.
+ ;
+ ;
  ;@to-do
  ; finish backfilling checksums + git commit IDs + chg details
  ; finish converting SAMICAS* subroutines to service architecture

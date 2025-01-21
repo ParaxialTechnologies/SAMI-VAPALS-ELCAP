@@ -563,10 +563,10 @@ FILECSV(directory) ; build a csv output from a directory of files
 SETCELL(OUT,ROW,VAR,val,CSVDICT,CSVHDR) ;
  ;
  i val'="" d  ;
- s val=$tr(val,$char(11))
- s val=$tr(val,$char(13))
- d findReplaceAll^%ts(.val,"""","""""")
- s val=""""_val_""""
+ . s val=$tr(val,$char(11))
+ . s val=$tr(val,$char(13))
+ . d findReplaceAll^%ts(.val,"""","""""")
+ . s val=""""_val_""""
  S $P(@OUT@(ROW),"|",$$VARNUM(CSVHDR,CSVDICT,VAR))=val
  ;
  Q

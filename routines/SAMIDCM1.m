@@ -1,7 +1,7 @@
-SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
- ;;18.0;SAMI;**16,17,18,20**;2020-01-17;Build 1
- ;mdc-e1;SAMIDCM1-20240909-E1Q3QyF;SAMI-18-20-b1
- ;mdc-v7;B310690378;SAMI*18.0*20 SEQ #20
+SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2025-01-21t05:58z
+ ;;18.0;SAMI;**16,17,18,20,21**;2020-01-17;
+ ;mdc-e1;SAMIDCM1-20250121-E3jkcs7;SAMI-18-21-b1
+ ;mdc-v7;B352174351;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIDCM1 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
@@ -27,14 +27,14 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-11-07t09:09z
+ ;@update 2025-01-21t05:58z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-20
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **16,17,18,20**
+ ;@patches **16,17,18,20,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -125,7 +125,7 @@ SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2024-11-07t09:09z
  ; 2024-12-04 ven/gpl 18-21-b1
  ;  SAMIDCM1 changes to make images and nodules work
  ;
- ; 2025-01-20 ven/lmry 18-21-b1
+ ; 2025-01-21 ven/lmry 18-21-b1
  ;  SAMIDCM1 update history, dates, version control lines
  ;
  ;

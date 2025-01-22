@@ -1,7 +1,7 @@
-SAMIUR2 ;ven/gpl - user reports cont; 2024-09-10t04:37z
- ;;18.0;SAMI;**5,11,12,14,15,17,18**;2020-01-17;
- ;mdc-e1;SAMIUR2-20240910-ERKKN;SAMI-18-18-b1
- ;mdc-v7;B1541171009;SAMI*18.0*18 SEQ #18
+SAMIUR2 ;ven/gpl - user reports cont; 2025-01-22t06:06z
+ ;;18.0;SAMI;**5,11,12,14,15,17,18,21**;2020-01-17;
+ ;mdc-e1;SAMIUR2-20250122-E;SAMI-18-21-b1
+ ;mdc-v7;B1547164807;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -25,14 +25,14 @@ SAMIUR2 ;ven/gpl - user reports cont; 2024-09-10t04:37z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t04:37z
+ ;@update 2025-01-22t06:06z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-21
  ;@edition-date 2021-01-17
- ;@patches **5,11,12,14,15,17,18**
+ ;@patches **5,11,12,14,15,17,18,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

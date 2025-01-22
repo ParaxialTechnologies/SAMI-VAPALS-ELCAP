@@ -1,7 +1,7 @@
-SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
- ;;18.0;SAMI;**7,11,17,20**;2020-01-17;Build 1
- ;mdc-e1;SAMICSV-20241107-EMYtiz;SAMI-18-20-b1
- ;mdc-v7;B114652697;SAMI*18.0*20 SEQ #20
+SAMICSV ;ven/gpl - export csv; 2025-01-21t05:44z
+ ;;18.0;SAMI;**7,11,17,20,21**;2020-01-17;
+ ;mdc-e1;SAMICSV-20250121-E3Kwy54;SAMI-18-21-b1
+ ;mdc-v7;B118422208;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICSV contains a direct-mode service to produce the ScreeningPlus
  ; CSV export.
@@ -23,14 +23,14 @@ SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-11-07t09:09z
+ ;@update 2025-01-21t05:44z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Import/Export - various prefixes
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-20
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **7,11,17,20**
+ ;@patches **7,11,17,20,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -105,7 +105,7 @@ SAMICSV ;ven/gpl - export csv; 2024-11-07t09:09z
  ; 2024-12-12 ven/gpl 18-21-b1 c39ee53
  ;  SAMICSV adding chest X-ray (cxform) processing
  ;
- ; 2025-01-20 ven/lmry 18-21-b1
+ ; 2025-01-21 ven/lmry 18-21-b1
  ;  SAMICSV bump history, date-time, version control lines
  ;
  ;@contents

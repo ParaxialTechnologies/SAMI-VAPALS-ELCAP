@@ -1,7 +1,7 @@
-SAMICUL ;ven/gpl - case review log; 2024-09-09t12:56z
- ;;18.0;SAMI;**9,11,12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMICUL-20240909-E1nq%WL;SAMI-18-18-b1
- ;mdc-v7;B180174;SAMI*18.0*18 SEQ #18
+SAMICUL ;ven/gpl - case review log; 2025-01-21t05:53z
+ ;;18.0;SAMI;**9,11,12,14,15,17,18.21**;2020-01-17;
+ ;mdc-e1;SAMICUL-20250121-E1ClsMy;SAMI-18-21-b1
+ ;mdc-v7;B183854;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICUL contains the development log for the ScreeningPlus Case
  ; Review Page (SAMICA* routines). It contains no executable code.
@@ -25,14 +25,14 @@ SAMICUL ;ven/gpl - case review log; 2024-09-09t12:56z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-09t12:56z
+ ;@update 2025-01-21t05:53z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module case review - SAMICA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release SAMI-18-18
+ ;@release SAMI-18-21
  ;@edition-date 2020-01-17
- ;@patches **9,11,12,14,15,17,18**
+ ;@patches **9,11,12,14,15,17,18,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -530,8 +530,8 @@ SAMICUL ;ven/gpl - case review log; 2024-09-09t12:56z
  ;  SAMICAS2 update to X-ray form creation,and fixed complete error a194a1a
  ;  SAMICAS3 update to X-ray form creation,and fixed complete error a194a1a
  ;
- ; 2025-01-20 ven/lmry
- ;  SAMICUL updating history, etc.
+ ; 2025-01-21 ven/lmry
+ ;  SAMICUL updating history, version control lines
  ;
  ;
  ;@to-do

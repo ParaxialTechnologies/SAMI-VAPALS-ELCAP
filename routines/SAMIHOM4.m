@@ -1,7 +1,7 @@
-SAMIHOM4 ;ven/gpl - homepage web services; 2024-09-09t23:38z
- ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIHOM4-20240909-E3fWhBP;SAMI-18-18-b1
- ;mdc-v7;B1434661517;SAMI*18.0*18 SEQ #18
+SAMIHOM4 ;ven/gpl - homepage web services; 2025-01-22t05:56z
+ ;;18.0;SAMI;**1,4,5,6,9,12,15,16,17,18,21**;2020-01-17;
+ ;mdc-e1;SAMIHOM4-20250122-E;SAMI-18-21-b1
+ ;mdc-v7;B1455047932;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.
@@ -31,9 +31,9 @@ SAMIHOM4 ;ven/gpl - homepage web services; 2024-09-09t23:38z
  ;
  ;  2. web service post vapals & related subroutines:
  ; WSVAPALS code for ws WSVAPALS^SAMIHOM3
- ;    post vapals (main gateway)
- ;
- ;  3. other subroutines:
+ ;    post vapals (main gatewa
+ ;  3. other subry)
+ ;outines:
  ; REG manual registration
  ; MKPTLK creates patient-lookup record
  ; UPDTFRMS update demographics in all forms for patient

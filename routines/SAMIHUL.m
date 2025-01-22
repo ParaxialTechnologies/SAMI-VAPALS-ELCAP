@@ -1,7 +1,7 @@
-SAMIHUL ;ven/gpl - home page log; 2024-09-10t00:12z
- ;;18.0;SAMI;**9,12,15,16,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIHUL-20240910-E1fnWOL;SAMI-18-18-b1
- ;mdc-v7;B149598;SAMI*18.0*18 SEQ #18
+SAMIHUL ;ven/gpl - home page log; 2025-01-21t22:44z
+ ;;18.0;SAMI;**9,12,15,16,17,18,21**;2020-01-17;
+ ;mdc-e1;SAMIHUL-20250121-E1fnWOL;SAMI-18-21-b1
+ ;mdc-v7;B151208;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIHOM3 contains subroutines for producing the ScreeningPlus Home
  ; Page. SAMIHOM4 contains more subroutines for the S+ Home Page.
@@ -27,14 +27,14 @@ SAMIHUL ;ven/gpl - home page log; 2024-09-10t00:12z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t00:12z
+ ;@update 2025-01-21t22:44z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Home Page - SAMIH
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **9,12,15,16,17,18**
+ ;@patches **9,12,15,16,17,18,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

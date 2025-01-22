@@ -1,7 +1,7 @@
-SAMICSV2 ;ven/gpl - export csv; 2024-08-22t21:04z
+SAMICSV2 ;ven/gpl - export csv; 2025-01-22t05:53z
  ;;18.0;SAMI;**21**;2020-01-17;
- ;mdc-e1;SAMICSV-20240822-ES+7xF;SAMI-18-17-b9
- ;mdc-v7;B104029869;SAMI*18.0*17 SEQ #17
+ ;mdc-e1;SAMICSV-20250122-E;SAMI-18-21-b1
+ ;mdc-v7;B;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICSV2 adds the ability to handle exports from the MSH linux system
  ;
@@ -357,7 +357,7 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  ;
  Q
  ;
-CSVOUT(SAMIOUT,SITEID,SAMIFORM,SAMIDIR)
+CSVOUT(SAMIOUT,SITEID,SAMIFORM,SAMIDIR) ;
  ;w !,cnt_" patients, "_forms_" forms"
  n filename s filename=$$FNAME(SITEID,SAMIFORM)
  d GTF^%ZISH($na(@SAMIOUT@(1)),3,SAMIDIR,filename)
@@ -583,7 +583,7 @@ VARNUM(CSVHDR,CSVDICT,VAR) ; extrinic returns the offset of the var
  s rslt=$o(@CSVDICT@(" "),-1)+1
  s @CSVDICT@(rslt)=VAR
  s @CSVDICT@("B",VAR,rslt)=""
- s $p(@CSVHDR,"|",rslt)=VAR 
+ s $p(@CSVHDR,"|",rslt)=VAR
  Q rslt
  ;
 INITHDR(CSVHDR,CSVDICT,form) ; initialize the csvheader and csvdict
@@ -612,7 +612,7 @@ INITHDR(CSVHDR,CSVDICT,form) ; initialize the csvheader and csvdict
  f  s i=$o(DICT(i)) q:+i=0  d  ;
  . s x=$$VARNUM(CSVHDR,CSVDICT,$g(DICT(i)))
  ;
- s x=$$VARNUM(CSVHDR,CSVDICT,"separator") 
+ s x=$$VARNUM(CSVHDR,CSVDICT,"separator")
  q
  ;
 BYNAME(RTN,ZNAME) ; extrinsic look up in triple store by name

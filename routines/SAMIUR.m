@@ -1,7 +1,7 @@
-SAMIUR ;ven/gpl - user reports; 2024-08-22t21:19z
- ;;18.0;SAMI;**5,10,11,12,14,15,17**;2020-01-17;Build 10
- ;mdc-e1;SAMIUR-20240822-Exvkxj;SAMI-18-17-b9
- ;mdc-v7;B1025197513;SAMI*18.0*17 SEQ #17
+SAMIUR ;ven/gpl - user reports; 2025-01-22t06:02z
+ ;;18.0;SAMI;**5,10,11,12,14,15,17,21**;2020-01-17;
+ ;mdc-e1;SAMIUR-20250122-E;SAMI-18-21-b1
+ ;mdc-v7;B1100438489;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; ScreeningPlus user reports.
@@ -25,14 +25,14 @@ SAMIUR ;ven/gpl - user reports; 2024-08-22t21:19z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-08-22t21:19z
+ ;@update 2025-01-22t06:02z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-17
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **5,10,11,12,14,15,17**
+ ;@patches **5,10,11,12,14,15,17,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

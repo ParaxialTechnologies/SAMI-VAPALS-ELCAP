@@ -1,7 +1,7 @@
-SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
- ;;18.0;SAMI;**18,20**;2020-01-17;Build 1
- ;mdc-e1;SAMIDCM2-20240909-E1FKYwL;SAMI-18-18-b1
- ;mdc-v7;B9873184;SAMI*18.0*20 SEQ #20
+SAMIDCM2 ;ven/gpl - import from siemens ai; 2025-01-21t06:02z
+ ;;18.0;SAMI;**18,20,21**;2020-01-17;
+ ;mdc-e1;SAMIDCM2-20250121-E1i09fI;SAMI-18-21-b1
+ ;mdc-v7;B18377334;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIDCM2 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.
@@ -27,14 +27,14 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ;@copyright 2017/2024, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-11-07t09:09z
+ ;@update 2025-01-21t06:02z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module import/export - SAMIDCM
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-20
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **18,20**
+ ;@patches **18,20,21**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -91,7 +91,7 @@ SAMIDCM2 ;ven/gpl - import from siemens ai; 2024-11-07t09:09z
  ; 2024-11-30 ven/gpl 18-21-b1 7b26f97 63fd6f6
  ;  SAMIDCM2 update and support url override for image viewer 
  ;
- 2025-01-20 ven/lmry 18-21-b1
+ ; 2025-01-21 ven/lmry 18-21-b1
  ;  SAMIDCM2 update history, bump version, dates-times, version control lines
  ;
  ;

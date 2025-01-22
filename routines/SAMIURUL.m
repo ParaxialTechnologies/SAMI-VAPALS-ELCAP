@@ -1,7 +1,7 @@
-SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
- ;;18.0;SAMI;**12,14,15,17,18**;2020-01-17;Build 8
- ;mdc-e1;SAMIURUL-20240910-EE7ZuE;SAMI-18-18-b1
- ;mdc-v7;B118219;SAMI*18.0*18 SEQ #18
+SAMIURUL ;ven/gpl - user reports log; 2025-01-22t06:09z
+ ;;18.0;SAMI;**12,14,15,17,18,21**;2020-01-17;
+ ;mdc-e1;SAMIURUL-20250122-E;SAMI-18-21-b1
+ ;mdc-v7;B120059;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the ScreeningPlus user-reports routines SAMIUR & SAMIUR2. It
@@ -26,14 +26,14 @@ SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
  ;@copyright 2021/2024, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-09-10t05:01z
+ ;@update 2025-01-22t06:09z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module User Reports - SAMIUR
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-18
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17,18**
+ ;@patches **12,14,15,17,18,21**
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
@@ -248,7 +248,7 @@ SAMIURUL ;ven/gpl - user reports log; 2024-09-10t05:01z
  ; 2025-01-20 ven/lmry 18-21-b1
  ;  SAMIUR bump dates, version control lines
  ;  SAMIUR2 bump dates, version control lines
- ;  SAMIUR update histories, bump dates, version control lines
+ ;  SAMIURUL update histories, bump dates, version control lines
  ;
  ;@contents
  ;

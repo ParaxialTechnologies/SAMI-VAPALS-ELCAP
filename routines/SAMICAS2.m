@@ -1,7 +1,7 @@
-SAMICAS2 ;ven/gpl - case review cont; 2024-09-09t12:42z
- ;;18.0;SAMI;**1,5,9,12,14,18**;2020-01-17;
- ;mdc-e1;SAMICAS2-20240909-E1vtFzO;SAMI-18-18-b1
- ;mdc-v7;B382829905;SAMI*18.0*18 SEQ #18
+SAMICAS2 ;ven/gpl - case review cont; 2025-01-21t05:42z
+ ;;18.0;SAMI;**1,5,9,12,14,18,21**;2020-01-17;
+ ;mdc-e1;SAMICAS2-20250121-E1aXEAT;SAMI-18-21-b1
+ ;mdc-v7;B392346199;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICAS2 contains ppses and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -800,7 +800,7 @@ WSNUFORM ; post vapals nuform: new form for patient
  ; findReplace^%ts
  ; $$SITENM2^SAMISITE
  ;
-OLDNUFORM()
+OLDNUFORM() ;
  ;
  new temp,tout
  set return="temp"
@@ -942,7 +942,7 @@ WSNUUPLD ; post vapals nuform: new form for patient
  ; ^ZTER
  ;
  ;
-OLDPROCESS()
+OLDPROCESS() ;
  ;
  new temp,tout,form
  set return="temp",form="vapals:fileupload"

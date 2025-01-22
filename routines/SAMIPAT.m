@@ -1,7 +1,7 @@
-SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
- ;;18.0;SAMI;**12,14,15,17,18,19,20**;2020-01-17;Build 1
- ;mdc-e1;SAMIPAT-20240924-E1QEgpS;SAMI-18-20-b1
- ;mdc-v7;B27292334;SAMI*18.0*20 SEQ #20
+SAMIPAT ;ven/lmry - post subroutines; 2025-01-22t05:59z
+ ;;18.0;SAMI;**12,14,15,17,18,19,20,21**;2020-01-17;
+ ;mdc-e1;SAMIPAT-20250122-ES;SAMI-18-21-b1
+ ;mdc-v7;B36919790;SAMI*18.0*21 SEQ #21
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines
  ; to use as KIDS pre- & post-installs & environment checks.
@@ -25,14 +25,14 @@ SAMIPAT ;ven/lmry - post subroutines; 2024-11-07t09:09z
  ;@copyright 2024, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@update 2024-11-07t09:09z
+ ;@update 2025-01-22t05:59z
  ;@app-suite Screening Applications Management - SAM
  ;@app ScreeningPlus (SAM-IELCAP) - SAMI
  ;@module Inits (patching) - SAMIPA
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@release 18-20
+ ;@release 18-21
  ;@edition-date 2020-01-17
- ;@patches **12,14,15,17,18,19,20**
+ ;@patches **12,14,15,17,18,19,20,21**
  ;
  ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net

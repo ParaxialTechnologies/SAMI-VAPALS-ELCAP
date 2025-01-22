@@ -1,6 +1,6 @@
 SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2025-01-21t05:58z
  ;;18.0;SAMI;**16,17,18,20,21**;2020-01-17;
- ;mdc-e1;SAMIDCM1-20250121-E3jkcs7;SAMI-18-21-b1
+ ;mdc-e1;SAMIDCM1-20250121-E17wYFE;SAMI-18-21-b1
  ;mdc-v7;B352174351;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIDCM1 contains services to support importing a patient into

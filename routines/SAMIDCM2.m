@@ -1,7 +1,7 @@
 SAMIDCM2 ;ven/gpl - import from siemens ai; 2025-01-21t06:02z
  ;;18.0;SAMI;**18,20,21**;2020-01-17;
- ;mdc-e1;SAMIDCM2-20250121-E1i09fI;SAMI-18-21-b1
- ;mdc-v7;B18377334;SAMI*18.0*21 SEQ #21
+ ;mdc-e1;SAMIDCM2-20250121-E3UNctO;SAMI-18-21-b1
+ ;mdc-v7;B18174028;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIDCM2 contains services to support importing a patient into
  ; ScreeningPlus from the Siemens AI.

@@ -1,6 +1,6 @@
 SAMIURUL ;ven/gpl - user reports log; 2025-01-22t06:09z
  ;;18.0;SAMI;**12,14,15,17,18,21**;2020-01-17;
- ;mdc-e1;SAMIURUL-20250122-E;SAMI-18-21-b1
+ ;mdc-e1;SAMIURUL-20250122-E24%5v5;SAMI-18-21-b1
  ;mdc-v7;B120059;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIURUL contains the development log & module documentation for

@@ -1,6 +1,6 @@
 SAMIUR2 ;ven/gpl - user reports cont; 2025-01-22t06:06z
  ;;18.0;SAMI;**5,11,12,14,15,17,18,21**;2020-01-17;
- ;mdc-e1;SAMIUR2-20250122-E;SAMI-18-21-b1
+ ;mdc-e1;SAMIUR2-20250122-E2nlnaB+.;SAMI-18-21-b1
  ;mdc-v7;B1547164807;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the

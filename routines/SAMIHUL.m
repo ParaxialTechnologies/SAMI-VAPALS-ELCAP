@@ -1,6 +1,6 @@
 SAMIHUL ;ven/gpl - home page log; 2025-01-21t22:44z
  ;;18.0;SAMI;**9,12,15,16,17,18,21**;2020-01-17;
- ;mdc-e1;SAMIHUL-20250121-E1fnWOL;SAMI-18-21-b1
+ ;mdc-e1;SAMIHUL-20250121-E1JZIW5;SAMI-18-21-b1
  ;mdc-v7;B151208;SAMI*18.0*21 SEQ #21
  ;
  ; SAMIHOM3 contains subroutines for producing the ScreeningPlus Home

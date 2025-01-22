@@ -1,7 +1,7 @@
 SAMICSV2 ;ven/gpl - export csv; 2025-01-22t05:53z
  ;;18.0;SAMI;**21**;2020-01-17;
- ;mdc-e1;SAMICSV-20250122-E;SAMI-18-21-b1
- ;mdc-v7;B;SAMI*18.0*21 SEQ #21
+ ;mdc-e1;SAMICSV-20250122-E3Usvnx;SAMI-18-21-b1
+ ;mdc-v7;B264423593;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICSV2 adds the ability to handle exports from the MSH linux system
  ;

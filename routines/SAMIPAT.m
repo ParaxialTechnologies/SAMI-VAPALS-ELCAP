@@ -1,6 +1,6 @@
 SAMIPAT ;ven/lmry - post subroutines; 2025-01-22t05:59z
  ;;18.0;SAMI;**12,14,15,17,18,19,20,21**;2020-01-17;
- ;mdc-e1;SAMIPAT-20250122-ES;SAMI-18-21-b1
+ ;mdc-e1;SAMIPAT-20250122-E2Ge2ws;SAMI-18-21-b1
  ;mdc-v7;B36919790;SAMI*18.0*21 SEQ #21
  ;
  ; Routine SAMIPAT contains ScreeningPlus initialization subroutines

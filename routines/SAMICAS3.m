@@ -1,6 +1,6 @@
 SAMICAS3 ;ven/gpl - case review cont; 2025-01-21t05:42z
  ;;18.0;SAMI;**3,9,11,12,15,17,21**;2020-01-17;
- ;mdc-e1;SAMICAS3-20250121-EEfArT;SAMI-18-21-b1
+ ;mdc-e1;SAMICAS3-20250121-EFediR;SAMI-18-21-b1
  ;mdc-v7;B377582177;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICAS3 contains ppses and other subroutines to support processing

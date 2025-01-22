@@ -1,6 +1,6 @@
 SAMICUL ;ven/gpl - case review log; 2025-01-21t05:53z
  ;;18.0;SAMI;**9,11,12,14,15,17,18.21**;2020-01-17;
- ;mdc-e1;SAMICUL-20250121-E1ClsMy;SAMI-18-21-b1
+ ;mdc-e1;SAMICUL-20250121-E1%+SeG;SAMI-18-21-b1
  ;mdc-v7;B183854;SAMI*18.0*21 SEQ #21
  ;
  ; SAMICUL contains the development log for the ScreeningPlus Case

@@ -251,7 +251,7 @@ D XPZ2^XPDIQ
 "RTN")
 13
 "RTN","SAMICAS2")
-0^1^B1056274605
+0^1^B1056274605^B1038606997
 "RTN","SAMICAS2",1,0)
 SAMICAS2 ;ven/gpl - case review cont; 2025-01-21t05:42z
 "RTN","SAMICAS2",2,0)
@@ -3131,7 +3131,7 @@ INITSTAT ; set all forms to 'incomplete'
 "RTN","SAMICAS2",1439,0)
 EOR ; end of routine SAMICAS2
 "RTN","SAMICAS3")
-0^2^B377582177
+0^2^B377582177^B334055891
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - case review cont; 2025-01-21t05:42z
 "RTN","SAMICAS3",2,0)
@@ -4715,7 +4715,7 @@ CASETBL(ary) ; generates case review table
 "RTN","SAMICAS3",791,0)
 EOR ; end of routine SAMICAS3
 "RTN","SAMICSV")
-0^3^B118422208
+0^3^B118422208^B115005370
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - export csv; 2025-01-21t05:44z
 "RTN","SAMICSV",2,0)
@@ -6913,7 +6913,7 @@ SPOMRN(TRTN,MRN,format) ;
 "RTN","SAMICSV2",640,0)
 EOR ; end of routine SAMICSV2
 "RTN","SAMICUL")
-0^5^B183854
+0^5^B183854^B180174
 "RTN","SAMICUL",1,0)
 SAMICUL ;ven/gpl - case review log; 2025-01-21t05:53z
 "RTN","SAMICUL",2,0)
@@ -8023,7 +8023,7 @@ SAMICUL ;ven/gpl - case review log; 2025-01-21t05:53z
 "RTN","SAMICUL",554,0)
 EOR ; end of routine SAMICUL
 "RTN","SAMIDCM1")
-0^6^B352174351
+0^6^B352174351^B310690378
 "RTN","SAMIDCM1",1,0)
 SAMIDCM1 ;ven/gpl - import patient from siemens ai; 2025-01-21t05:58z
 "RTN","SAMIDCM1",2,0)
@@ -9657,7 +9657,7 @@ MKSVC() ; create web services
 "RTN","SAMIDCM1",816,0)
 EOR ; end of routine SAMIDCM1
 "RTN","SAMIDCM2")
-0^7^B18174028
+0^7^B18174028^B16361169
 "RTN","SAMIDCM2",1,0)
 SAMIDCM2 ;ven/gpl - import from siemens ai; 2025-01-21t06:02z
 "RTN","SAMIDCM2",2,0)
@@ -10173,7 +10173,7 @@ VIEWURL(SITE) ; URL to use for image viewer
 "RTN","SAMIDCM2",257,0)
 EOR ; end of routine SAMIDCM2
 "RTN","SAMIHOM4")
-0^8^B1455047932
+0^8^B1455047932^B1434661517
 "RTN","SAMIHOM4",1,0)
 SAMIHOM4 ;ven/gpl - homepage web services; 2025-01-22t05:56z
 "RTN","SAMIHOM4",2,0)
@@ -13649,7 +13649,7 @@ WSNEWCAS ; web route newcase (creates new case)
 "RTN","SAMIHOM4",1737,0)
 EOR ; end of routine SAMIHOM4
 "RTN","SAMIHUL")
-0^9^B151208
+0^9^B151208^B149598
 "RTN","SAMIHUL",1,0)
 SAMIHUL ;ven/gpl - home page log; 2025-01-21t22:44z
 "RTN","SAMIHUL",2,0)
@@ -14435,7 +14435,7 @@ SAMIHUL ;ven/gpl - home page log; 2025-01-21t22:44z
 "RTN","SAMIHUL",392,0)
 EOR ; end of routine SAMIHUL
 "RTN","SAMIPAT")
-0^10^B36919790
+0^10^B36919790^B27391150
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/lmry - post subroutines; 2025-01-22t05:59z
 "RTN","SAMIPAT",2,0)
@@ -15089,7 +15089,7 @@ POS1821 ; kids post-install for SAMI-18-21
 "RTN","SAMIPAT",326,0)
 EOR ; end of routine SAMIPAT
 "RTN","SAMIUR")
-0^11^B1100438489
+0^11^B1100438489^B1025197513
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports; 2025-01-22t06:02z
 "RTN","SAMIUR",2,0)
@@ -17225,7 +17225,7 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
 "RTN","SAMIUR",1067,0)
 EOR ; end of SAMIUR
 "RTN","SAMIUR2")
-0^12^B1547164807
+0^12^B1547164807^B1541171009
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - user reports cont; 2025-01-22t06:06z
 "RTN","SAMIUR2",2,0)
@@ -19951,7 +19951,7 @@ WSVALS(RTN,FILTER) ; display form values from graph
 "RTN","SAMIUR2",1362,0)
 EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL")
-0^13^B120059
+0^13^B120059^B118219
 "RTN","SAMIURUL",1,0)
 SAMIURUL ;ven/gpl - user reports log; 2025-01-22t06:09z
 "RTN","SAMIURUL",2,0)

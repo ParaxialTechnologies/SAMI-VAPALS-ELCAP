@@ -1,3 +1,4 @@
+:patchtitle: Add cxform, generate spreadsheets from current MSH files, etc.
 :mastimg: project-va-pals
 :mastcaption: va-pals
 :mastdesc: Project: Screening+
@@ -19,11 +20,11 @@
 
 // grep '\$TXT' sami-18-21-b1.txt
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2024-11-08t03:42z
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2025-01-24t01:41z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
-MRN Update to CSV Export and Image Upload, Data Dump Fix
+{patchtitle}
 
 [role="center h1"]
 {nmsp} ({appname}) {version}
@@ -57,6 +58,7 @@ _&_ Frederick D. S. Marshall +
                 link:../../18-17/[SAMI 18-17] (††SAMI*18.0*17 SEQ #17††) +
                 link:../../18-18/[SAMI 18-18] (††SAMI*18.0*18 SEQ #18††) +
                 link:../../18-19/[SAMI 18-19] (††SAMI*18.0*19 SEQ #19††)
+                link:../../18-20/[SAMI 18-20] (††SAMI*18.0*20 SEQ #20††)
 |==============================================================================
 
 [[toc]]
@@ -78,13 +80,13 @@ _&_ Frederick D. S. Marshall +
 ** <<install-www,Install web-application files>>
 ** <<backup-m,Back up M routines>>
 *** <<enter-m,Enter M>>
-**** <<enter-m-cache,On Caché>>
 **** <<enter-m-yotta,On YottaDB/GT.M>>
+**** <<enter-m-cache,On Caché>>
 *** <<signin,Sign into Vista>>
 *** <<routine-list,List of routines>>
 *** <<run-ro,Run the backup>>
-**** <<backup-cache,On Caché>>
 **** <<backup-yotta,On YottaDB/GT.M>>
+**** <<backup-cache,On Caché>>
 |[options="compact",role="toc"]
 * <<install,Main install instructions>>
 ** <<signin-kids,Enter the KIDS Installation menu>>
@@ -99,8 +101,7 @@ _&_ Frederick D. S. Marshall +
 [[desc]]
 == Description
 
-{nmsp} {version} adds three medium-priority updates to improve CSV reports,
-CT{nbsp}evaluation reports, and another run at a recurrent bug.
+{nmsp} {version} adds four updates to add new features or fix bugs.
 
 The definitive source for the {appname} application---codebase, package
 distributions (including this one), and documentation---is a
@@ -114,46 +115,62 @@ support team.
 The changes in this patch are:
 
 [options="compact"]
-* Add the MRN and StudyID fields to CSV reports
-  (link:#issue-a[24-0021], medium{nbsp}priority)
-* Change ††CT Upload†† to match on MRN instead of name
-  (link:#issue-b[24-005], medium priority)
-* Interim data-dump fix
-  (link:#issue-c[24-040], medium priority)
+* Support URL override for viewing images
+  (link:#issue-a[24-0000], high{nbsp}priority)
+* Generate spreadsheets from current MSH files
+  (link:#issue-b[24-0000], high{nbsp}priority)
+* Add the X-ray form: ††cxform††
+  (link:#issue-c[24-0000], high{nbsp}priority)
+* Make form changes for MSH
+  (link:#issue-d[24-0000], high{nbsp}priority)
 
 [[issue-a]]
-=== Add the MRN and StudyID fields to CSV reports
+=== Support URL override for viewing images
 
-**Request 24-0021 (medium priority):** Add the MRN and StudyID fields to the
-CSV reports.
+**Request 24-0000 (high priority):** Changes were made to the DICOM server
+which necessitated the change.
    
-**Solution:** These changes and fixes have been made.
+**Solution:** Feature was added to override the URL.
 
-**Reported:** 2024-09-30 by A. Jirapatnikal.
+**Reported:** Karthik (date unknown).
    
 [[issue-b]]
-=== Change “CT Upload” to match on MRN instead of name
+=== Generate spreadsheets from current MSH files
  
-**Request 24-005 (medium priority):** Allow CT upload to be matched to patient
-record even with misspelled names.
+**Request 24-0000 (high priority):** Implement FILECSV, which generates
+spreadsheets from the linus files that store the forms at Mt.{nbsp}Sinai.
    
-**Solution:** Match by MRN. If name does not match, the Screening+ user needs
-to correct.
+**Solution:** Inserts a column called "separator". All fields left of the
+separator are in our data dictionaries, all fields to the right of the
+separator are not in the DDs but are in the form files at MSH.
 
-**Reported:** 2024-09-?? by G. Lilly.
+**Reported:** Artit Jirapatnakul (date unknown).
 
 [[issue-c]]
-=== Interim data-dump fix
+=== Add the X-ray form: ‘cxform’
  
-**Request 24-040 (medium priority):** Still having problems with the data
-dump bug.
+**Request 24-0000 (high priority):** Ethiopia does a lot of their
+scanning by x-ray instead of CT, so they need a form to properly log
+the information observed in the x-rays.
 
-**Solution:** Clean-up scratch data in `^TMP` and add a `kill` command at the
-correct place.
+**Solution:** Develop cxform and integrate information into database.
 
-**Reported:** 2024-10-08 by Marshall and Yaw.
+**Reported:** Rick Avila (date unknown).
 
+[[issue-d]]
+=== Make form changes for MSH
+ 
+**Request 24-0000 (high priority):** Reports ran incorrectly.
 
+**Solution:** The changes made to the intake form for MSH eliminated
+three variables and changed the meaning of another variable so that
+the report generator could not tell who was enrolled or active. The
+logic in the report generator was enhanced to work with either the VA
+or MSH versions of the intake form.
+
+**Reported:** Artit Jirapatnakul (date unknown).
+
+   
 [[pkg-elements]]
 == Package elements
 
@@ -277,8 +294,9 @@ $ _
 
 Before the installation, we also need to back up existing {appname} routines
 that will be overwritten by this install. To do this, you will have to start a
-Caché or YottaDB session (depending on your particular installation), sign in
-to Vista, and then call the direct-mode interface `^%RO` (“routine out”).
+YottaDB, GT.M, or Caché session (depending on your particular installation),
+sign in to Vista, and then call the direct-mode interface `^%RO` (“routine
+out”).
 
 We have made efforts to display accurate instructions, but there are likely to
 be minor differences between implementations. Be sure to follow the correct
@@ -290,6 +308,15 @@ dialog for your implementation.
 At the Unix prompt, enter the M environment in direct mode, using the
 `csession` command on Caché or the `mumps` command on YottaDB/GT.M:
 
+[[enter-m-yotta]]
+††**On YottaDB/GT.M**††
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
 [[enter-m-cache]]
 ††**On Caché**††
 
@@ -297,15 +324,6 @@ At the Unix prompt, enter the M environment in direct mode, using the
 $ csession vapals
 
 Node: vapalscache, Instance: VAPALS
-
->_
--------------------------------------------------------------------------------
-
-[[enter-m-yotta]]
-††**On YottaDB/GT.M**††
-
--------------------------------------------------------------------------------
-$ mumps -dir
 
 >_
 -------------------------------------------------------------------------------
@@ -345,6 +363,19 @@ include::.dtool/routine-list.adoi[]
 
 Creating the routine backup file differs by implementation.
 
+[[backup-yotta]]
+††**On YottaDB/GT.M**††
+
+Note that routines that don't currently exist will result in the routine name
+not appearing under the input line, and won't count towards the number of
+routines. These can be safely disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+include::.dtool/yotta-ro-snippet.adoi[]
+
 [[backup-cache]]
 ††**On Caché**††
 
@@ -358,19 +389,6 @@ In addition to naming the routines and routine-out file, we also provide a
 prompts to accept the defaults of +WNS+ and +No+, respectively:
 
 include::.dtool/cache-ro-snippet.adoi[]
-
-[[backup-yotta]]
-††**On YottaDB/GT.M**††
-
-Note that routines that don't currently exist will result in the routine name
-not appearing under the input line, and won't count towards the number of
-routines. These can be safely disregarded.
-
-In addition to naming the routines and routine-out file, we also provide a
-[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
-to accept the default of +no+:
-
-include::.dtool/yotta-ro-snippet.adoi[]
 
 eval::[Section.setlevel(2)]
 
@@ -387,7 +405,8 @@ new web-application files.
 
 At the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
 [ttsp]##Kernel Installation & Distribution System## main menu, and at the
-[ttsp]##Select \... Option## prompt select +Installation+:
+[ttsp]##Select Kernel Installation & Distribution System \... Option## prompt
+select +Installation+:
 
 include::.dtool/enter-kids-snippet.adoi[]
 
@@ -399,7 +418,7 @@ Select option 1 and press return at the +Continue+ prompt.
 include::.dtool/load-kids-snippet.adoi[]
 
 [[verify-checksums]]
-=== Verify checksums (_NEW_)
+=== Verify checksums
 
 Run the [ttsp]##Verify Checksums in the Transport Global## option. This option
 will let you ensure the integrity of this update in two ways.
@@ -555,15 +574,15 @@ include::.dtool/checksums.adoi[]
 [cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
 |==============================================================================
 |           | Dates                 | By
-| Developed | 2024-09-25/11-3       | George P. Lilly (VEN) +
+| Developed | 2024-11-04/2025-01-12 | George P. Lilly (VEN) +
                                       Dominic DiNatale (PAR) +
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Tested    | 2024-11-06/08         | George P. Lilly (VEN) +
+| Tested    | 2024-11-06/2025-01-12 | George P. Lilly (VEN) +
                                       Artit Jirapatnakul (VA-PHO) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2024-11-11            | Frederick D. S. Marshall (VEN) +
+| Released  | 2025-01-23            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

@@ -1,36 +1,22 @@
-#:patchtitle: Add cxform, generate spreadsheets from current MSH files, etc.
-#:nmsp: SAMI
-#:lnmsp: sami
-#:appname: Screening+
-#:appdir: project/screening-plus
-#:version: 18-21-b1
-#:rversion: 18-21
-#:partialdir: 18-21/b1
-#:status: release
-#:vista-version: SAMI*18.0*21 SEQ #21 b1
-#:vista-longversion: Version 18.0, Patch ID #21, Seq# 21, Build 1
-#:priority: high
-#:categories: routine, file
-$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) #{now-txt-z}
+$TXT by YAW,LINDA linda.yaw@vistaexpertise.net (KIDS) 2025-01-24t01:41z
 
-#>center: #{patchtitle}
-#>center: #{nmsp} (#{appname}) #{version}
-#>center: (#{vista-version})
+    Add cxform, generate spreadsheets from current MSH files, etc.
+                      SAMI (Screening+) 18-21-b1
+                      (SAMI*18.0*21 SEQ #21 b1)
 
-#>center: George P. Lilly, Dom DiNatale
-#>center: & Frederick D. S. Marshall
-#>center: 2024-11-11
-// #{now-iso-ymd}
+                    George P. Lilly, Dom DiNatale
+                      & Frederick D. S. Marshall
+                              2024-11-11
 
 i. Front matter
 
- App         #{nmsp} (#{appname})
- Version     #{version}
- Vista ID    #{vista-version}
-             #{vista-longversion}
- Priority    #{priority}
- Categories  #{categories}
- Status      #{status}: #{nmsp}-#{version}.zip
+ App         SAMI (Screening+)
+ Version     18-21-b1
+ Vista ID    SAMI*18.0*21 SEQ #21 b1
+             Version 18.0, Patch ID #21, Seq# 21, Build 1
+ Priority    high
+ Categories  routine, file
+ Status      release: SAMI-18-21-b1.zip
  Depends on  SAMI 18-7 (SAMI*18.0*7 SEQ #7)
              SAMI 18-11 (SAMI*18.0*11 SEQ #11)
              SAMI 18-12 (SAMI*18.0*12 SEQ #12)
@@ -70,11 +56,11 @@ ii. Contents
  Authors
 
 
-#. Description
+1. Description
 
- #{nmsp} #{version} adds four updates to add new features or fix bugs.
+ SAMI 18-21-b1 adds four updates to add new features or fix bugs.
 
- The definitive source for the #{appname} application - codebase,
+ The definitive source for the Screening+ application - codebase,
  package distributions (including this one), and documentation - is at
  the following public Github repository:
 
@@ -82,67 +68,90 @@ ii. Contents
 
  The most up-to-date and accurate version of this file can be found at
 
- https://vistaexpertise.net/#{appdir}/dist/#{partialdir}/
+ https://vistaexpertise.net/project/screening-plus/dist/18-21/b1/
 
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
- to your #{appname} support team.
+ to your Screening+ support team.
 
  The changes in this release are:
 
- #.#. Support URL override for viewing images
+ 1.1. Support URL override for viewing images
 
    Request 24-0000 (high priority): Changes were made to the DICOM
      server which necessitated the change.
-   
+
    solution: Feature was added to override the URL.
 
    reported: Karthik (date unknown).
-   
- #.#. Generate spreadsheets from current MSH files.
+
+ 1.2. Generate spreadsheets from current MSH files.
 
    Request 24-0000 (high priority): Implement FILECSV, which generates
      spreadsheets from the linus files that store the forms at
      Mt. Sinai.
-   
+
    solution: Inserts a column called "separator". All fields left of
      the separator are in our data dictionaries, all fields to the
      right of the separator are not in the DDs but are in the form
      files at MSH.
 
    reported: Artit Jirapatnakul (date unknown).
-   
- #.#. Add the X-ray form: cxform.
+
+ 1.3. Add the X-ray form: cxform.
 
    Request 24-0000 (high priority): Ethiopia does a lot of their
      scanning by x-ray instead of CT, so they need a form to properly
      log the information observed in the x-rays.
-   
+
    solution: Develop cxform and integrate information into database.
 
    reported: Rick Avila (date unknown).
-   
- #.#. Make form changes for MSH.
+
+ 1.4. Make form changes for MSH.
 
    Request 24-0000 (high priority): Reports ran incorrectly.
-   
+
    solution: The changes made to the intake form for MSH eliminated
      three variables and changed the meaning of another variable so
      that the report generator could not tell who was enrolled or
      active. the logic in the report generator was enhanced to work
      with either VA or MSH versions of the intake form.
-		
+
    reported: Artit Jirapatnakul (date unknown).
-   
-#. Package elements
 
-#>include: .dtool/packelements.txt
+2. Package elements
 
-// File                     Number  Change
-// -----------------------  ------  ---------------
+ File                      Change
+ ------------------------  --------
+ sami-18-21-b1-recipe.txt  new
+ sami-18-21-b1.kid         new
+ sami-18-21-b1.txt         new
+ sami-18-21-b1.zip         new
+ upgrade-auxfiles          new
+ docs/mockups/*            modified
+ docs/src/layout.jinja2    new
+ docs/www/*                modified
+
+ Routine   Change
+ --------  --------
+ SAMICAS2  modified
+ SAMICAS3  modified
+ SAMICSV   modified
+ SAMICSV2  new
+ SAMICUL   modified
+ SAMIDCM1  modified
+ SAMIDCM2  modified
+ SAMIHOM4  modified
+ SAMIHUL   modified
+ SAMIPAT   modified
+ SAMIUR    modified
+ SAMIUR2   modified
+ SAMIURUL  modified
 
 
-#. Prepare for installation
+
+3. Prepare for installation
 
  This involves creating a directory to work in, running a script to
  back up certain datafiles and web-application files, and then going
@@ -150,7 +159,7 @@ ii. Contents
  patch.
 
 
- #.#. Assume the identity of your osehra Unix user
+ 3.1. Assume the identity of your osehra Unix user
 
    This step assumes you use a dzdo or sudo to do this; here the
    symbol $DEMAND will stand for whichever command you use. (Also, in
@@ -161,41 +170,46 @@ ii. Contents
     $ $DEMAND su - osehra
 
 
- #.#. Prepare install directory
+ 3.2. Prepare install directory
 
    If this is your first time installling this, execute the following
    commands.  They create a shell variable, and then create the work
    directory and sets it as your current directory.
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-21/b1
     $ mkdir -p $INDIR
     $ cd $INDIR
 
    If you've already tried installing this once, you can use the
    following commands instead:
 
-    $ INDIR=~/run/in/#{lnmsp}/#{partialdir}
+    $ INDIR=~/run/in/sami/18-21/b1
     $ cd $INDIR
     $ rm -rf ./sami*.{txt,kid} ./auxfiles
 
 
- #.#. Download and prepare the archive file
+ 3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-#{version}.zip in
+   You may safely download the archive file sami-18-21-b1.zip in
    advance of the actual install. In the following text, "[now]"
    represents a time stamp representing your current time, and
    "[bits/sec]" is a data rate and "[time]" is how long the file took
    to transfer (both of which vary based on the user's network
    conditions).
 
-#>include: .dtool/curl-snippet.txt
+     $ curl -# -O 'https://vistaexpertise.net/project/screening-plus/dist/18-21/b1/sami-18-21-b1.zip'
+     ######################################################################## 100.0%
+     $ _
 
    Then unzip the archive file with the following command.
 
-#>include: .dtool/unzip-snippet.txt
+     $ unzip sami-18-21-b1.zip
+     Archive:  sami-18-21-b1.zip
+       ...
+     $ _
 
 
- #.#. Install web-application files
+ 3.4. Install web-application files
 
     At this point, the web-application files must be installed. This
     is done with a script that backs up the affected directories
@@ -217,7 +231,7 @@ ii. Contents
      You may now proceed with the KIDS installation.
      $ _
 
-    Outside the VA firewall, #{appname} systems maintain up-to-date
+    Outside the VA firewall, Screening+ systems maintain up-to-date
     clones of the official GitHub repository, and this script will
     have different output.
 
@@ -235,10 +249,10 @@ ii. Contents
      $ _
 
 
- #.#. Back up M routines
+ 3.5. Back up M routines
 
    Before the installation, we also need to back up existing
-   #{appname} routines that will be overwritten by this install. To do
+   Screening+ routines that will be overwritten by this install. To do
    this, you will have to start a YottaDB, GT.M, or Cache session
    (depending on your particular installation), sign in to Vista, and
    then call the direct-mode interface ^%RO ("routine out").
@@ -248,7 +262,7 @@ ii. Contents
    to follow the correct dialog for your implementation.
 
 
-  #.#.#. Enter M
+  3.5.1. Enter M
 
     At the unix prompt, enter the M environment in direct mode, using
     the 'mumps' command on YottaDB/GT.M or the 'csession' command on Cache:
@@ -268,7 +282,7 @@ ii. Contents
     >_
 
 
-  #.#.#. Sign into Vista
+  3.5.2. Sign into Vista
 
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -287,17 +301,28 @@ ii. Contents
     >_
 
 
-  #.#.#. List of routines
+  3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
     Routine prompt, press return to indicate the list of routines is
     done.
 
-#>include: .dtool/routine-list.txt
+SAMICAS2
+SAMICAS3
+SAMICSV
+SAMICUL
+SAMIDCM1
+SAMIDCM2
+SAMIHOM4
+SAMIHUL
+SAMIPAT
+SAMIUR
+SAMIUR2
+SAMIURUL
 
 
-  #.#.#. Run the backup
+  3.5.4. Run the backup
 
     Creating the routine backup file differs by implementation.
 
@@ -311,7 +336,70 @@ ii. Contents
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
 
-#>include: .dtool/yotta-ro-snippet.txt
+     >do ^%RO
+
+     Routine Output - Save selected routines into RO file.
+
+     Routines: SAMICAS2
+     SAMICAS2
+     Current total of 1 routines.
+
+     Routines: SAMICAS3
+     SAMICAS3
+     Current total of 2 routines.
+
+     Routines: SAMICSV
+     SAMICSV
+     Current total of 3 routines.
+
+     Routines: SAMICUL
+     SAMICUL
+     Current total of 4 routines.
+
+     Routines: SAMIDCM1
+     SAMIDCM1
+     Current total of 5 routines.
+
+     Routines: SAMIDCM2
+     SAMIDCM2
+     Current total of 6 routines.
+
+     Routines: SAMIHOM4
+     SAMIHOM4
+     Current total of 7 routines.
+
+     Routines: SAMIHUL
+     SAMIHUL
+     Current total of 8 routines.
+
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 9 routines.
+
+     Routines: SAMIUR
+     SAMIUR
+     Current total of 10 routines.
+
+     Routines: SAMIUR2
+     SAMIUR2
+     Current total of 11 routines.
+
+     Routines: SAMIURUL
+     SAMIURUL
+     Current total of 12 routines.
+
+     Routine:
+
+     Output device <terminal>: /home/osehra/run/in/sami/18-21/b1/sami-18-21-b1-back.ro
+
+     Header Label: SAMI*18.0*21 SEQ #21 routine backup
+     Strip comments <No>?: 
+     SAMICAS2  SAMICAS3  SAMICSV   SAMICUL   SAMIDCM1  SAMIDCM2
+     SAMIHOM4  SAMIHUL   SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
+
+     Total of 9279 lines in 12 routines.
+
+     >_
 
     On Caché
     --------
@@ -325,35 +413,110 @@ ii. Contents
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
 
-#>include: .dtool/cache-ro-snippet.txt
+     >do ^%RO
+
+     Routine output (please use %ROMF for object code output)
+     Routine(s): SAMICAS2
+     Routine(s): SAMICAS3
+     Routine(s): SAMICSV
+     Routine(s): SAMICUL
+     Routine(s): SAMIDCM1
+     Routine(s): SAMIDCM2
+     Routine(s): SAMIHOM4
+     Routine(s): SAMIHUL
+     Routine(s): SAMIPAT
+     Routine(s): SAMIUR
+     Routine(s): SAMIUR2
+     Routine(s): SAMIURUL
+     Routine(s):
+
+     Description: SAMI*18.0*21 SEQ #21 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18-21/b1/sami-18-21-b1-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMICAS2.INT    SAMICAS3.INT    SAMICSV.INT     SAMICUL.INT
+     SAMIDCM1.INT    SAMIDCM2.INT    SAMIHOM4.INT    SAMIHUL.INT
+     SAMIPAT.INT     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
+     >_
 
     You'll remain in the M environment for the next section.
 
 
-#. Main install instructions
+4. Main install instructions
 
  This consists of loading and installing the KIDS package, and
  activating the new web-application files.
 
 
-  #.#. Enter the KIDS Installation menu
+  4.1. Enter the KIDS Installation menu
 
     At the OPTION NAME prompt, select XPD MAIN to enter the Kernel
     Installation & Distribution System main menu, and at the Select
     Kernel Installation & Distribution System ... Option prompt,
     select Installation:
 
-#>include: .dtool/enter-kids-snippet.txt
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
 
 
-  #.#. Load KIDS package
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+
+  4.2. Load KIDS package
 
     Select option 1 and press return at the Continue prompt.
 
-#>include: .dtool/load-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18-21/b1/sami-18-21-b1.kid
 
-  #.# Verify checksums
-  
+     KIDS Distribution saved on Jan 22, 2025@12:21:20
+     Comment: Released SAMI*18.0*21 SEQ #21
+
+     This Distribution contains Transport Globals for the following Package(s):
+        SAMI*18.0*21
+     Distribution OK!
+
+     Want to Continue with Load? YES// y
+       YES
+     Loading Distribution...
+
+        SAMI*18.0*21
+     Use INSTALL NAME: SAMI*18.0*21 to install this Distribution.
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option: _
+
+  5.# Verify checksums
+
     Run the "Verify Checksums in the Transport Global" option. This
     option will let you ensure the integrity of this update in two
     ways.
@@ -422,8 +585,8 @@ ii. Contents
     installed on your system, but "yyyyyyyyy" is what was expected to
     be there. If one of these appears, do not proceed with the
     installation until you understand why these don't match, and have
-    confirmed with the #{appname} development team that it's safe to
-    proceed. Otherwise, you may corrupt the #{appname} application,
+    confirmed with the Screening+ development team that it's safe to
+    proceed. Otherwise, you may corrupt the Screening+ application,
     which may break certain features -- or even endanger patient
     health or privacy.
 
@@ -434,30 +597,89 @@ ii. Contents
 
     This indicates that your release has likely been corrupted
     somewhere along the line. In such cases, reach out to the
-    #{appname} development team to get a clean copy of the release.
+    Screening+ development team to get a clean copy of the release.
 
-  #.#. Install KIDS package
+  5.1. Install KIDS package
 
     Select option 6, enter the space bar at the INSTALL NAME prompt,
     and press return at the next three prompts. Note that '[now]'
     denotes the current time when you're doing the install.
 
-#>include: .dtool/install-kids-snippet.txt
+     Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+     Select INSTALL NAME:    SAMI*18.0*21     Loaded from Distribution    [now]
+        => Released SAMI*18.0*21 SEQ #21  ;Created on Jan 22, 2025@12:21:20
 
-   You now have #{appname} #{version} (#{vista-version}) installed in
+     This Distribution was loaded on [now] with header of
+        Released SAMI*18.0*21 SEQ #21  ;Created on Jan 22, 2025@12:21:20
+        It consisted of the following Install(s):
+        SAMI*18.0*21
+     Checking Install for Package SAMI*18.0*21
+
+     Install Questions for SAMI*18.0*21
+
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+      Install Started for SAMI*18.0*21 :
+                    [now]
+
+     Build Distribution Date: Jan 22, 2025
+
+      Installing Routines:.....
+                    [now]
+
+      Running Post-Install Routine: POS1821^SAMIPAT.
+
+      Updating Routine file......
+
+      Updating KIDS files.....
+
+      SAMI*18.0*21 Installed.
+                    [now]
+
+      No link to PACKAGE file
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:_
+
+     > _
+
+   You now have Screening+ 18-21-b1 (SAMI*18.0*21 SEQ #21 b1) installed in
    your M environment. The install is now complete, and you may leave
    the M environment by typing
 
    > halt
    $ _
 
-   We recommend running tests of your #{appname} app to confirm the
+   We recommend running tests of your Screening+ app to confirm the
    environment is operational and bug-free, before notifying users
-   that #{appname} is ready for their use.
-   
+   that Screening+ is ready for their use.
+
 ***Start new part for adding cxform
 
- #.#. Add X-ray Form to ScreeningPlus
+ 5.2. Add X-ray Form to ScreeningPlus
 VAPALS YottaDB> D Q^DI
 
 
@@ -491,24 +713,38 @@ HTML TEMPLATE NAME: xray.html
 Select SAMI FORM MAPPING:
 ***End new part
 
-#. Optional backout instructions
+6. Optional backout instructions
 
  Should errors or other problems result from installing this package
- contact the #{appname} development team for package-backout
+ contact the Screening+ development team for package-backout
  instructions.
 
 
-#. Routines
+7. Routines
 
  Line 2 of each of these routines now look like:
-#>include: .dtool/routine-lines2.txt
+  ;;18.0;SAMI;[Patch List];2020-01-17;[optional build #]
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
-#>include: .dtool/checksums.txt
+ Name      Checksum before  Checksum after  Patch list
+ --------  ---------------  --------------  -------------------------------
+ SAMICAS2  B1038606997      B1056274605     **1,5,9,12,14,18,21**
+ SAMICAS3  B334055891       B377582177      **3,9,11,12,15,17,21**
+ SAMICSV   B115005370       B118422208      **7,11,17,20,21**
+ SAMICSV2  ---              B264423593      **21**
+ SAMICUL   B180174          B183854         **9,11,12,14,15,17,18.21**
+ SAMIDCM1  B310690378       B352174351      **16,17,18,20,21**
+ SAMIDCM2  B16361169        B18174028       **18,20,21**
+ SAMIHOM4  B1434661517      B1455047932     **1,4,5,6,9,12,15,16,17,18,21**
+ SAMIHUL   B149598          B151208         **9,12,15,16,17,18,21**
+ SAMIPAT   B27391150        B36919790       **12,14,15,17,18,19,20,21**
+ SAMIUR    B1025197513      B1100438489     **5,10,11,12,14,15,17,21**
+ SAMIUR2   B1541171009      B1547164807     **5,11,12,14,15,17,18,21**
+ SAMIURUL  B118219          B120059         **12,14,15,17,18,21**
 
 
-#. Authors
+8. Authors
 
              Dates              By
  Developed   2024-11-04/        George P. Lilly (ven)

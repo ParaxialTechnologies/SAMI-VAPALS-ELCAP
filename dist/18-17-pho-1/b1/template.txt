@@ -68,8 +68,8 @@ ii. Contents
 
 #. Description
 
- #{nmsp} #{version} adds three medium-priority updates to improve CSV
- reports, CT evaluation reports, and another run at a recurrent bug.
+ #{nmsp} #{version} adds one high-priority update as part one of a three part
+ fix for the data-dump issue.
 
  The definitive source for the #{appname} application - codebase,
  package distributions (including this one), and documentation - is at
@@ -87,35 +87,13 @@ ii. Contents
 
  The changes in this release are:
 
- #.#. Add the MRN and StudyID fields to CSV reports.
+ #.#. Fix the data-dump issue.
 
-   Request 24-0021 (medium priority): Add MRN and StudyID to the CSV 
-   reports.
+   Request (high priority): When a CSV export is created,the data sticks
+   around in the ^TMP global where it can randomly show up in user reports.
    
-   solution: These changes and fixes have been made.
-
-   reported: 2024-09-30 by A. Jirapatnikal.
+   solution: Erase the data after a CSV export is created.
    
- #.#. Change "CT Upload" to match on MRN instead of name.
- 
-   Request 24-005 (medium priority): Allow CT upload to be matched to
-   patient record even with misspelled names.
-   
-   solution: Match by MRN. If name does not match {appname} user needs
-   to correct.
-   
-   reported: 2024-09-?? by G. Lilly.
-
-#.#. Interim data-dump fix.
- 
-   Request 24-040 (medium priority): Still having problems with the
-   data dump bug.
-   
-   solution: Clean-up scratch data in ^TMP and add a kill command at
-   the correct place.
-   
-   reported: 2024-10-08 by Marshall and Yaw.
-
 
 #. Package elements
 
@@ -336,89 +314,6 @@ ii. Contents
 
 #>include: .dtool/load-kids-snippet.txt
 
-  #.# Verify checksums (NEW)
-  
-    Run the "Verify Checksums in the Transport Global" option. This
-    option will let you ensure the integrity of this update in two
-    ways.
-
-    First, it will compare the routines you already have in your
-    habitat to what this update was developed to replace, and if they
-    don't match, it will warn you. Second, it will compare the
-    routines that have been loaded from the KIDS file to what the
-    developers distributed, to be sure the KIDS file was not corrupted
-    in transit.
-
-    To get a checksum report, you would select Installation option 2,
-    provide the distribution name, verify that you want the routines
-    listed with checksums on your screen. Here's a sample session.
-
-    Select Installation <TEST ACCOUNT> Option: 2<Enter> Verify Checksums in Transport Global
-    Select INSTALL NAME: SAMI*18.0*20<Enter>     Loaded from Distribution  [datetime]
-         => Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
-
-    This Distribution was loaded on [datetime] with header of
-       Released SAMI*18.0*20 SEQ #20  ;Created on [datetime]
-       It consisted of the following Install(s):
-       SAMI*18.0*20
-
-    Want each Routine Listed with Checksums: Yes// <Enter>  YES
-    DEVICE: HOME// ;C-SCROLL<Enter>  TELNET
-
-
-
-    PACKAGE: SAMI*18.0*20     [datetime]                                PAGE 1
-    ‍---------------------------------------------------------------------------
-
-
-    [list of checksums; see below]
-
-       <x> Routines checked, <y> failed.
-
-
-
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-
-    Select Installation <TEST ACCOUNT> Option: _
-
-    Checksums that matched will be displayed as
-
-    RNAME     Calculated  xxxxxxxxx
-
-    where "RNAME" is the name of the routine, and "xxxxxxxxx" is a
-    checksum value.  This is normal; "RNAME" may be safely installed.
-    If all of them match, the line below should say "<x> Routines
-    checked, 0 failed."
-
-    If the routine being replaced is not what was expected to be
-    there, you will see something like
-
-    RNAME     Before Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
-
-    where "xxxxxxxxx" is the checksum of the routine that's currently
-    installed on your system, but "yyyyyyyyy" is what was expected to
-    be there. If one of these appears, do not proceed with the
-    installation until you understand why these don't match, and have
-    confirmed with the #{appname} development team that it's safe to
-    proceed. Otherwise, you may corrupt the #{appname} application,
-    which may break certain features -- or even endanger patient
-    health or privacy.
-
-    If the routine that you're installing doesn't have a matching
-    checksum, you will see something like
-
-    RNAME     After Checksum Calculated xxxxxxxxx expected value yyyyyyyyy
-
-    This indicates that your release has likely been corrupted
-    somewhere along the line. In such cases, reach out to the
-    #{appname} development team to get a clean copy of the release.
 
   #.#. Install KIDS package
 
@@ -460,17 +355,11 @@ ii. Contents
 #. Authors
 
              Dates              By
- Developed   2024-09-25/11-3    George P. Lilly (ven)
-                                Domenic DiNatale (par)
-                                Frederick D. S. Marshall (ven)
-                                Kennneth W. McGlothlen (ven)
-                                Linda M. R. Yaw (ven)
+ Developed   2025-01-15         George P. Lilly (ven)
+                                
+ Tested      2025-01-20         George P. Lilly (ven)
 
- Tested      2024-11-06/08      George P. Lilly (ven)
-                                Artit Jirapatnakul (va-pho)
-                                Linda M. R. Yaw (ven)
-
- Released    2024-11-11         Frederick D. S. Marshall (ven)
+ Released    2025-01-28         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
